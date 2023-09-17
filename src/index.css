@@ -1,13 +1,287 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: manjari-bold;
+  src: url('./fonts/Manjari-Bold.ttf');
+}
+@font-face {
+  font-family: manjari-regular;
+  src: url('./fonts/Manjari-Regular.ttf');
+}
+@font-face {
+  font-family: manjari-thin;
+  src: url('./fonts/Manjari-Thin.ttf');
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.font-mine-bold {
+  font-family: manjari-bold;
+}
+.font-mine-regular {
+  font-family: manjari-regular;
+}
+.font-mine-thin {
+  font-family: manjari-thin;
+}
+
+.login-back {
+  background-image: url('./Images/pages/Login/back.png');
+  background-size: cover;
+}
+
+.bg-light {
+  background-color: #fff;
+}
+
+.bg-light-hover:hover {
+  background-color: #F0F2F6 !important;
+}
+
+.bg-light-back {
+  background-color: #F0F2F6;
+}
+
+.bg-light-glass {
+  background-color: #F0F2F6;
+}
+
+.text-light {
+  color: #fff;
+}
+.text-hover-light {
+  transition: all 100ms linear;
+}
+.text-hover-light:hover {
+  color: #fff;
+}
+
+.bg-dark {
+  background-color: #2A2B2E;
+}
+
+.bg-dark-hover:hover {
+  background-color: #393C42 !important;
+}
+
+.bg-dark-back {
+  background-color: #393C42;
+}
+
+.bg-dark-glass {
+  background: rgba(57, 60, 66, 0.50);
+}
+
+.bg-modal-glass {
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.text-dark {
+  color: #2A2B2E;
+}
+
+.text-gray {
+  color: #8F97A6;
+}
+
+.border-gray {
+  border-color: #8F97A6;
+}
+
+.text-blue {
+  color: #7161EF;
+}
+
+.hover-text-blue:hover {
+  color: #7161EF !important;
+}
+
+.bg-blue {
+  background-color: #7161EF;
+}
+
+.border-blue {
+  border-color: #7161EF;
+}
+
+.outline-blue {
+  outline: #7161EF !important;
+}
+
+.focus-outline-blue:focus {
+  outline: #7161EF !important;
+} 
+
+.bg-blue-gradient {
+  background: linear-gradient(157deg, #7161EF 0%, #619AEF  100%);
+}
+.bg-blue-gradient-opposite {
+  background: linear-gradient(157deg, #619AEF 0%, #7161EF  100%);
+}
+
+.fill-blue {
+  fill: #7161EF;
+}
+
+.text-blue-gradient {
+  background: linear-gradient(157deg, #7161EF 0%, #619AEF 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-green {
+  color: #5FDA41;
+}
+
+.border-green {
+  border-color: #5FDA41;
+}
+
+.text-red {
+  color: #FF5959;
+}
+
+.border-red {
+  border-color: #FF5959;
+}
+
+.rounded-tl-4xl {
+  border-top-left-radius: 2rem;
+}
+
+.rounded-tl-5xl {
+  border-top-left-radius: 2.5rem;
+}
+
+.rounded-tr-5xl {
+  border-top-right-radius: 2.5rem;
+}
+
+.tooltip-light {
+  background-color: #F0F2F6 !important;
+  color: #2A2B2E !important;
+  border-radius: 0.4rem !important;
+  font-family: manjari-bold !important;
+  padding-inline: .8rem !important;
+  padding-top: .5rem !important;
+  padding-bottom: .2rem !important;
+  z-index: 100 !important;
+}
+
+.tooltip-dark {
+  background-color: #393C42 !important;
+  color: #fff !important;
+  border-radius: 0.4rem !important;
+  font-family: manjari-bold !important;
+  padding-inline: .8rem !important;
+  padding-top: .5rem !important;
+  padding-bottom: .2rem !important;
+  z-index: 100 !important;
+}
+
+.active-route-shape {
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+.bg-login {
+  background-image: url('./Images/pages/Login/back.png');
+  background-size: cover;
+}
+
+.input-dark {
+  background-color: #2A2B2E;
+  font-family: manjari-regular;
+  width: 100%;
+  border-radius: 0.4rem;
+  padding-inline: 15px;
+  padding-top: 12px;
+  padding-bottom: 6px;
+  color: #fff;
+  letter-spacing: 0.05rem;
+}
+.input-dark:focus {
+  outline-color: #fff;
+  outline-width: 0.5px;
+}
+
+.input-light {
+  background-color: #fff;
+  font-family: manjari-regular;
+  width: 100%;
+  border-radius: 0.4rem;
+  padding-inline: 15px;
+  padding-top: 12px;
+  padding-bottom: 6px;
+  color: #2A2B2E;
+  letter-spacing: 0.05rem;
+}
+.input-light:focus {
+  outline-color: #2A2B2E;
+  outline-width: 0.5px;
+}
+
+.button {
+  font-family: manjari-bold;
+  padding-inline: 20px;
+  padding-top: 17px;
+  padding-bottom: 8px;
+  border-radius: 10px;
+  background: linear-gradient(157deg, #7161EF 0%, #619AEF 100%);
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.disabled-button {
+  font-family: manjari-bold;
+  padding-inline: 20px;
+  padding-top: 15px;
+  padding-bottom: 8px;
+  border-radius: 10px;
+  background: #8F97A6;
+  color: #fff;
+}
+
+.login-width {
+  width: 450px;
+}
+
+.loading {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.834)
+      url('./Images/pages/Login/loading.gif') center
+      no-repeat;
+  z-index: 100;
+}
+
+.navbar-setting-height {
+  height: 23px;
+  width: 40px;
+}
+
+.h-0-important {
+  height: 0px !important;
+  overflow: hidden;
+}
+
+ 
+.hide-input-arrows::-webkit-outer-spin-button,
+.hide-input-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.hide-input-arrows[type=number] {
+  -moz-appearance: textfield;
+}
+
+.min-w-toast {
+  min-width: 16rem;
+}
+
+.-z-10 {
+  z-index: -10;
 }
