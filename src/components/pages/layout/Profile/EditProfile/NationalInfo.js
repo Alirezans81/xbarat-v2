@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import EditButton from "./common/EditButton";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
@@ -14,11 +14,14 @@ export default function NationalInfo({ userInfo }) {
   const lang = useLanguageState();
 
   const updateNationalInfo = () => {};
-
+  
   const [nationalitiesList, setNationalitiesList] = useState([
     { title: "Iranian" },
     { title: "Afghan" },
   ]);
+  useEffect(() => {
+    
+  }, []);
   const [nationalityIndex, setNationalityIndex] = useState(-1);
   const [countriesList, setCountriesList] = useState([
     { title: "Iran" },
@@ -32,6 +35,15 @@ export default function NationalInfo({ userInfo }) {
     { title: "Esfahan" },
   ]);
   const [cityIndex, setCityIndex] = useState(-1);
+
+
+  useEffect(() => {
+    if (!canEdit) {
+      setNationalityIndex(-1);
+      setCountriesIndex(-1);
+      setCityIndex(-1);
+    }
+  }, [canEdit]);
 
   return (
     <div
@@ -50,7 +62,9 @@ export default function NationalInfo({ userInfo }) {
           <CustomDropdown2
             className="flex-1 font-mine-regular"
             label={
-              userInfo && userInfo.nationality && userInfo.nationality.title
+              nationalityIndex > -1
+                ? nationalitiesList[nationalityIndex].title
+                : userInfo && userInfo.nationality && userInfo.nationality.title
                 ? userInfo.nationality.title
                 : ""
             }
@@ -116,7 +130,9 @@ export default function NationalInfo({ userInfo }) {
           <CustomDropdown2
             className="flex-1 font-mine-regular"
             label={
-              userInfo && userInfo.country && userInfo.country.title
+              countriesIndex > -1
+                ? countriesList[countriesIndex].title
+                : userInfo && userInfo.country && userInfo.country.title
                 ? userInfo.country.title
                 : ""
             }
@@ -182,7 +198,9 @@ export default function NationalInfo({ userInfo }) {
           <CustomDropdown2
             className="flex-1 font-mine-regular"
             label={
-              userInfo && userInfo.city && userInfo.city.title
+              cityIndex > -1
+                ? citiesList[cityIndex].title
+                : userInfo && userInfo.city && userInfo.city.title
                 ? userInfo.city.title
                 : ""
             }

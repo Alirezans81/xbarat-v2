@@ -1,3 +1,7 @@
 {
-  "log-in": "http://94.74.145.156:5271/mobile-api/identity/login"
+  "sign-up": "https://smicln.ir/api/user/",
+  "log-in": "https://smicln.ir/api/user/login/",
+  "log-out": "https://smicln.ir/api/user/logout/",
+  "patch-profile": "https://smicln.ir/api/user/",
+  "nationality": "https://smicln.ir/api/location/nationality/"
 }

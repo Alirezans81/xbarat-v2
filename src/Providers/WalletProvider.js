@@ -14,19 +14,19 @@ const WalletProvider = ({ children }) => {
         light: require("../Images/currency symbols/usd-light.png"),
       },
       money: 1000,
-      pneding: 100,
+      pending: 100,
       locked: 50,
     },
     {
       currencyId: 2,
       title: "IRR",
       imageSource: {
-        dark: require("../Images/currency symbols/irr-gray.png"),
+        gray: require("../Images/currency symbols/irr-gray.png"),
         dark: require("../Images/currency symbols/irr-dark.png"),
         light: require("../Images/currency symbols/irr-light.png"),
       },
       money: 10000000,
-      pneding: 100000,
+      pending: 100000,
       locked: 5000000,
     },
     {
@@ -38,7 +38,7 @@ const WalletProvider = ({ children }) => {
         light: require("../Images/currency symbols/usd-light.png"),
       },
       money: 2000,
-      pneding: 1000,
+      pending: 1000,
       locked: 100,
     },
     {
@@ -50,7 +50,7 @@ const WalletProvider = ({ children }) => {
         light: require("../Images/currency symbols/usd-light.png"),
       },
       money: 100,
-      pneding: 500,
+      pending: 500,
       locked: 0,
     },
   ]);

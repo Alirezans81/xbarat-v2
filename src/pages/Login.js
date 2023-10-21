@@ -26,8 +26,10 @@ export default function Login() {
 
   const navigate = useNavigate();
   useEffect(() => {
-    if (token && new Date(token.expiration) > new Date()) navigate("/home");
-    else resetApp();
+    // if (token && new Date(token.expiration) > new Date()) navigate("/home");
+    // else resetApp();
+
+    resetApp();
   }, []);
 
   return (

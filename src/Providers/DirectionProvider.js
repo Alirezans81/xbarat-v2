@@ -7,6 +7,7 @@ const DirectionProvider = ({ children }) => {
   const [direction, setDirection] = useState({
     three: "ltr",
     one: "l",
+    oneEnd: "r",
     startComplete: "left",
     endComplete: "right",
   });

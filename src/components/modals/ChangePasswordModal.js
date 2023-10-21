@@ -63,7 +63,11 @@ export default function ChangePasswordModal({ token }) {
               value={values.confirmationPassword}
             />
           </div>
-          <SubmitButton rounded="lg" className="mt-6 mb-3" onClick={submitForm}>
+          <SubmitButton
+            rounded="lg"
+            className="mt-6 mb-3 h-10"
+            onClick={submitForm}
+          >
             {lang["submit"]}
           </SubmitButton>
         </div>

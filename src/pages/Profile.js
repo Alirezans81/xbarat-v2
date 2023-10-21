@@ -9,7 +9,7 @@ export default function Profile() {
   const { one: oneDirection } = useDirectionState();
 
   return (
-    <div className="grid grid-cols-12 grid-rows-2 gap-8 h-full w-full">
+    <div className="grid grid-cols-12 grid-rows-2 gap-x-10 gap-y-7 h-full w-full">
       <div className={`col-span-5 row-span-2 bg-${theme} rounded-3xl`}>
         <EditProfile />
       </div>

@@ -13,6 +13,7 @@ import NavbarSetting from "../components/pages/layout/NavbarSetting";
 import LoadingSplashScreen from "../components/common/LoadingSplashScreen";
 import CustomToast from "../components/common/CustomToast";
 import CustomModal from "../components/common/CustomModal";
+import { useUserSetState } from "../Providers/UserProvider";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -20,14 +21,20 @@ export default function Layout() {
   const { three: direction, one: oneDirection } = useDirectionState();
   const token = useTokenState();
   const setToken = useTokenSetState();
+  const setUser = useUserSetState();
   const lang = useLanguageState();
   const { pathname: activeRoute } = useLocation();
   const [links, setLinks] = useState([]);
 
   useEffect(() => {
-    const savedToken = JSON.parse(window.localStorage.getItem("authToken"));
-    if (savedToken) {
+    const savedStringToken = window.localStorage.getItem("authToken");
+    const savedStringUser = window.localStorage.getItem("userInfo");
+
+    if (savedStringToken !== "undefined" && savedStringUser !== "undefined") {
+      const savedToken = JSON.parse(savedStringToken);
+      const savedUser = JSON.parse(savedStringUser);
       setToken(savedToken);
+      setUser(savedUser);
     }
   }, []);
 
@@ -51,7 +58,7 @@ export default function Layout() {
           className="w-screen h-screen flex flex-col"
         >
           <TopBar />
-          <div className="flex-1 flex">
+          <div className="flex-1 flex h-5/6">
             <Navbar links={links} />
             <div
               className={`flex-1 max-h-full bg-${theme}-back rounded-t${oneDirection}-5xl p${oneDirection}-8 py-8 z-20`}

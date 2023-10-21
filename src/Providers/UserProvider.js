@@ -15,7 +15,7 @@ const UserProvider = ({ children }) => {
     personCode: "C102578432",
     nationalCode: "0926388053",
     role: "Supervisor",
-    isActive: false,
+    isActive: true,
     isAdmin: true,
   });
 

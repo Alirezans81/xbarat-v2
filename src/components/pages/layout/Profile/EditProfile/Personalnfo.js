@@ -1,16 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import EditButton from "./common/EditButton";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import { Formik } from "formik";
+import OTPCodeModal from "../../../../modals/OTPCodeModal";
+import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
 
 export default function Personalnfo({ userInfo }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const [canEdit, setCanEdit] = useState();
   const lang = useLanguageState();
+  const [canEdit, setCanEdit] = useState();
+  const formikRef = useRef();
 
-  const updatePersonalInfo = () => {};
+  useEffect(() => {
+    if (!canEdit) {
+      formikRef.current?.resetForm();
+    }
+  }, [canEdit]);
+
+  const setModalData = useModalDataSetState();
+  const openOTPCodeModal = () => {
+    setModalData({
+      title: lang["verifying-phone-number"],
+      children: <OTPCodeModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
 
   return (
     <div
@@ -19,9 +36,10 @@ export default function Personalnfo({ userInfo }) {
       <EditButton
         canEdit={canEdit}
         setCanEdit={setCanEdit}
-        customFunction={updatePersonalInfo}
+        customFunction={openOTPCodeModal}
       />
       <Formik
+        innerRef={formikRef}
         initialValues={{
           email: userInfo && userInfo.email ? userInfo.email : "",
           phoneNumber:
@@ -36,11 +54,12 @@ export default function Personalnfo({ userInfo }) {
               </span>
               {canEdit ? (
                 <input
-                  className={`bg-${theme} focus-outline-blue px-2.5 font-mint-regular outline-1 outline-white py-1 w-52 rounded-lg text-${oppositeTheme}`}
+                  className={`bg-${theme} focus-outline-blue px-2.5 font-mint-regular outline-1 outline-white py-1 w-52 rounded-lg text-gray`}
                   type="text"
                   onChange={handleChange("email")}
                   onBlur={handleBlur("email")}
                   value={values.email}
+                  disabled
                 />
               ) : (
                 <span

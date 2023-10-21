@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 import { CustomTooltip } from "../../common/CustomTooltip";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
-import { useTokenSetState } from "../../../Providers/TokenProvider";
+import { useLogout } from "../../../apis/pages/Layout/hooks";
 
 export default function Navbar({ links }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
 
-  const setToken = useTokenSetState();
+  const { logout, error, isLoading } = useLogout();
 
   return (
     <div className="flex flex-col transition-all duration-200 justify-between py-6 items-center">
@@ -28,7 +28,7 @@ export default function Navbar({ links }) {
           style={oppositeTheme}
         >
           <Link
-            onClick={() => setToken(null)}
+            onClick={() => logout()}
             to="/login"
             data-tooltip-id="logout-tooltip"
           >

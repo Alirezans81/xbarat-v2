@@ -30,11 +30,11 @@ export default function LeftSide() {
       <div className={`flex flex-col justify-center ml-2 pt-1.5`}>
         <div className="flex justify-start items-start">
           <h1
-            className={`text-${oppositeTheme} font-mine-bold text-5xl text-blue -mb-3`}
+            className={`text-blue-gradient font-mine-bold text-5xl text-blue -mb-3`}
           >
             {lang["logo-header"]}
           </h1>
-          {userInfo.isAdmin && (
+          {userInfo && userInfo["is_admin"] && (
             <button
               onClick={togglePagesModalOpen}
               className={`m${direction}-1 flex`}

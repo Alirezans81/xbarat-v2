@@ -20,7 +20,7 @@ export default function PendingOrders() {
     setShowOrdersType(showOrdersType !== "today" ? "today" : "");
   };
 
-  const allPendingOrders = [
+  const [allPendingOrders, setAllPendingOrders] = useState([
     {
       currencyPair: {
         source: { title: "USD" },
@@ -31,6 +31,7 @@ export default function PendingOrders() {
       targetAmount: 15000000,
       rate: 497500,
       date: new Date(),
+      status: "open",
     },
     {
       currencyPair: {
@@ -42,6 +43,7 @@ export default function PendingOrders() {
       targetAmount: 15000000,
       rate: 497500,
       date: new Date(),
+      status: "open",
     },
     {
       currencyPair: {
@@ -53,6 +55,7 @@ export default function PendingOrders() {
       targetAmount: 15000000,
       rate: 497500,
       date: new Date(),
+      status: "done",
     },
     {
       currencyPair: {
@@ -64,6 +67,7 @@ export default function PendingOrders() {
       targetAmount: 15000000,
       rate: 497500,
       date: new Date(),
+      status: "done",
     },
     {
       currencyPair: {
@@ -75,6 +79,7 @@ export default function PendingOrders() {
       targetAmount: 15000000,
       rate: 497500,
       date: new Date(),
+      status: "done",
     },
     {
       currencyPair: {
@@ -86,8 +91,9 @@ export default function PendingOrders() {
       targetAmount: 15000000,
       rate: 497500,
       date: new Date(),
+      status: "done",
     },
-  ];
+  ]);
 
   const isToday = (dateToCheck) => {
     // Get today's date

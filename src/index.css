@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  overflow: hidden;
+}
+
 @font-face {
   font-family: manjari-bold;
   src: url('./fonts/Manjari-Bold.ttf');
@@ -47,7 +51,7 @@
 }
 
 .text-light {
-  color: #fff;
+  color: #ffffff !important;
 }
 .text-hover-light {
   transition: all 100ms linear;
@@ -57,7 +61,7 @@
 }
 
 .bg-dark {
-  background-color: #2A2B2E;
+  background-color: #2A2B2E !important;
 }
 
 .bg-dark-hover:hover {
@@ -65,7 +69,7 @@
 }
 
 .bg-dark-back {
-  background-color: #393C42;
+  background-color: #393C42 !important;
 }
 
 .bg-dark-glass {
@@ -82,7 +86,7 @@
 }
 
 .text-gray {
-  color: #8F97A6;
+  color: #8F97A6 !important;
 }
 
 .border-gray {
@@ -135,6 +139,10 @@
   color: #5FDA41;
 }
 
+.bg-green {
+  background-color: #5FDA41;
+}
+
 .border-green {
   border-color: #5FDA41;
 }
@@ -143,8 +151,16 @@
   color: #FF5959;
 }
 
+.bg-red {
+  background-color: #FF5959;
+}
+
 .border-red {
   border-color: #FF5959;
+}
+
+.text-yellow {
+  color: #FFD600;
 }
 
 .rounded-tl-4xl {

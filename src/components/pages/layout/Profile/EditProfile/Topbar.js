@@ -1,10 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useUserState } from "../../../../../Providers/UserProvider";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
 import ChangePasswordModal from "../../../../modals/ChangePasswordModal";
 import { Formik } from "formik";
+import { useUpdateName } from "../../../../../apis/pages/Profile/hooks";
+import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 
 export default function Topbar({ userInfo }) {
   const lang = useLanguageState();
@@ -22,10 +24,12 @@ export default function Topbar({ userInfo }) {
   };
 
   const [canEditName, setCanEditName] = useState(false);
-  const updateName = (name) => {
-    console.log(name);
-    setCanEditName(false);
-  };
+
+  const setLoading = useIsLoadingSplashScreenSetState();
+  const { updateName, error, isLoading } = useUpdateName();
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
 
   const profilePicRef = useRef();
   const pickPhoto = () => {
@@ -36,7 +40,7 @@ export default function Topbar({ userInfo }) {
     <>
       <div className="w-full flex justify-between items-start">
         <div className="flex gap-3 items-center">
-          {userInfo && userInfo.isActive ? (
+          {userInfo && userInfo["is_active"] ? (
             <button onClick={pickPhoto}>
               <input
                 ref={profilePicRef}
@@ -48,7 +52,7 @@ export default function Topbar({ userInfo }) {
               <img
                 className="w-16 h-16"
                 src={
-                  userInfo.avatar && userInfo.avatar
+                  userInfo && userInfo.avatar
                     ? userInfo.avatar
                     : require("../../../../../Images/pages/layout/Profile/no-profile.png")
                 }
@@ -58,7 +62,7 @@ export default function Topbar({ userInfo }) {
             <img
               className="w-16 h-16"
               src={
-                userInfo.avatar && userInfo.avatar
+                userInfo && userInfo.avatar
                   ? userInfo.avatar
                   : require("../../../../../Images/pages/layout/Profile/no-profile.png")
               }
@@ -69,19 +73,41 @@ export default function Topbar({ userInfo }) {
               {canEditName ? (
                 <Formik
                   initialValues={{
-                    name: userInfo && userInfo.name ? userInfo.name : "",
+                    first_name:
+                      userInfo && userInfo["first_name"]
+                        ? userInfo["first_name"]
+                        : "",
+                    last_name:
+                      userInfo && userInfo["last_name"]
+                        ? userInfo["last_name"]
+                        : "",
                   }}
-                  onSubmit={(values) => updateName(values.name)}
+                  onSubmit={(values) => {
+                    updateName(values, () => {
+                      setCanEditName(false);
+                    });
+                  }}
                 >
                   {({ handleChange, handleBlur, values, submitForm }) => (
                     <div className="mb-2 flex gap-2">
-                      <input
-                        className={`bg-${theme}-back focus-outline-blue px-2.5 font-mint-regular py-1 w-44 rounded-lg text-${oppositeTheme}`}
-                        type="text"
-                        onChange={handleChange("name")}
-                        onBlur={handleBlur("name")}
-                        value={values.name}
-                      />
+                      <div className="flex flex-row gap-x-2">
+                        <input
+                          className={`bg-${theme}-back focus-outline-blue px-2.5 font-mint-regular py-1 w-28 rounded-lg text-${oppositeTheme}`}
+                          type="text"
+                          onChange={handleChange("first_name")}
+                          onBlur={handleBlur("first_name")}
+                          value={values.first_name}
+                          placeholder={lang["first-name"]}
+                        />
+                        <input
+                          className={`bg-${theme}-back focus-outline-blue px-2.5 font-mint-regular py-1 w-28 rounded-lg text-${oppositeTheme}`}
+                          type="text"
+                          onChange={handleChange("last_name")}
+                          onBlur={handleBlur("last_name")}
+                          value={values.last_name}
+                          placeholder={lang["last-name"]}
+                        />
+                      </div>
                       <div className="flex gap-1">
                         <button onClick={submitForm}>
                           <img
@@ -104,9 +130,11 @@ export default function Topbar({ userInfo }) {
                   <span
                     className={`font-mine-bold text-xl pt-2.5 text-${oppositeTheme}`}
                   >
-                    {userInfo && userInfo.name ? userInfo.name : ""}
+                    {userInfo && userInfo["first_name"] && userInfo["last_name"]
+                      ? userInfo["first_name"] + " " + userInfo["last_name"]
+                      : ""}
                   </span>
-                  {userInfo && userInfo.isActive && (
+                  {userInfo && userInfo["is_active"] && (
                     <button onClick={() => setCanEditName(true)}>
                       <img
                         className="w-4 h-4"

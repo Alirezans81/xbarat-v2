@@ -33,9 +33,11 @@ export default function RightSide() {
       />
       <div className={`flex flex-col m${direction}-3`}>
         <span className={`${nameClass} font-mine-regular -mb-2 text-lg`}>
-          {user.name}
+          {user && user["first_name"] && user["last_name"]
+            ? user["first_name"] + " " + user["last_name"]
+            : ""}
         </span>
-        {user.isActive ? (
+        {user && user["is_active"] ? (
           <span className={`${roleClass} font-mine-regular text-sm`}>
             {user.role}
           </span>

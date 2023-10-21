@@ -11,14 +11,17 @@ export default function OnLoad() {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
-  const savedToken = JSON.parse(window.localStorage.getItem("authToken"));
-
   useEffect(() => {
-    if (savedToken) {
-      if (new Date(savedToken.expiration) > new Date()) {
-        setToken(savedToken);
-        navigate("/home");
-      } else navigate("/login");
+    const saveStringToken = window.localStorage.getItem("authToken");
+    if (saveStringToken !== "undefined") {
+      const savedToken = JSON.parse(saveStringToken);
+
+      // if (new Date(savedToken.expiration) > new Date()) {
+      //   setToken(savedToken);
+      //   navigate("/home");
+      // } else navigate("/login");
+
+      navigate("/login");
     } else {
       window.localStorage.removeItem("linksShown");
       navigate("/login");

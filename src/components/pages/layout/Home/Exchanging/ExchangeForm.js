@@ -12,6 +12,7 @@ import {
 } from "../../../../../hooks/useNumberFunctions";
 import commaNumber from "comma-number";
 import { useDirectionState } from "../../../../../Providers/DirectionProvider";
+import SubmitButton from "../../../../common/SubmitButton";
 
 export default function ExchangeForm({
   currencies,
@@ -387,7 +388,7 @@ export default function ExchangeForm({
                   </span>
                 </div>
               )}
-            <button
+            <SubmitButton
               type="submit"
               onClick={handleSubmit}
               className={
@@ -395,12 +396,13 @@ export default function ExchangeForm({
                 removeComma(values.amount) !== 0 &&
                 (formDefaultRate ||
                   (values.rate && removeComma(values.rate) !== 0))
-                  ? "flex justify-center mt-0.5 items-center w-full bg-blue-gradient text-light h-9 rounded-lg font-mine-bold pt-2.5 pb-1 "
-                  : "flex justify-center mt-7 items-center w-full bg-blue-gradient text-light h-9 rounded-lg font-mine-bold pt-2.5 pb-1 "
+                  ? "flex justify-center mt-0.5 items-center w-full py-0.5"
+                  : "flex justify-center mt-7 items-center w-full py-0.5"
               }
+              rounded="lg"
             >
-              Submit
-            </button>
+              {lang["submit"]}
+            </SubmitButton>
           </form>
         );
       }}

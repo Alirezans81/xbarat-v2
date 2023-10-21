@@ -36,6 +36,12 @@ import Pair from "./pages/Currency/Pair";
 import Robots from "./pages/More/Robots";
 import { ToastDataProvider } from "./Providers/ToastDataProvider";
 import { ModalDataProvider } from "./Providers/ModalDataProvider";
+import ExchangeHistoryScreen from "./pages/Profile/ExchangeHistoryScreen";
+import DepositHistoryScreen from "./pages/Profile/DepositHistoryScreen";
+import WithdrawalHistoryScreen from "./pages/Profile/WithdrawalHistoryScreen";
+import TransferHistoryScreen from "./pages/Profile/TransferHistoryScreen";
+import Signup from "./pages/Signup";
+import WaitLink from "./pages/WaitLink";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -54,12 +60,30 @@ root.render(
                           <BrowserRouter>
                             <Routes>
                               <Route path="/login" element={<Login />} />
+                              <Route path="/signup" element={<Signup />} />
+                              <Route path="/wait-link" element={<WaitLink />} />
                               <Route path="*" element={<NoPage />} />
                               <Route path="/" element={<Layout />}>
                                 <Route index element={<OnLoad />} />
                                 <Route path="home" element={<Home />} />
                                 <Route path="wallet" element={<Wallet />} />
                                 <Route path="reports" element={<Reports />} />
+                                <Route
+                                  path="exchange-history"
+                                  element={<ExchangeHistoryScreen />}
+                                />
+                                <Route
+                                  path="deposit-history"
+                                  element={<DepositHistoryScreen />}
+                                />
+                                <Route
+                                  path="withdrawal-history"
+                                  element={<WithdrawalHistoryScreen />}
+                                />
+                                <Route
+                                  path="transfer-history"
+                                  element={<TransferHistoryScreen />}
+                                />
                                 <Route path="profile" element={<Profile />} />
                                 <Route path="tickets" element={<Tickets />} />
                                 <Route path="submitting">
