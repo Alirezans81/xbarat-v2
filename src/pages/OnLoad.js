@@ -13,8 +13,10 @@ export default function OnLoad() {
 
   useEffect(() => {
     const saveStringToken = window.localStorage.getItem("authToken");
-    if (saveStringToken !== "undefined") {
+    const saveStringUserInfo = window.localStorage.getItem("userInfo");
+    if (saveStringToken !== "undefined" && saveStringUserInfo !== "undefined") {
       const savedToken = JSON.parse(saveStringToken);
+      const savedUserInfo = JSON.parse(saveStringUserInfo);
 
       // if (new Date(savedToken.expiration) > new Date()) {
       //   setToken(savedToken);

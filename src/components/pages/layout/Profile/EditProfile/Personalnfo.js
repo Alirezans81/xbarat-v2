@@ -42,8 +42,7 @@ export default function Personalnfo({ userInfo }) {
         innerRef={formikRef}
         initialValues={{
           email: userInfo && userInfo.email ? userInfo.email : "",
-          phoneNumber:
-            userInfo && userInfo.phoneNumber ? userInfo.phoneNumber : "",
+          phone: userInfo && userInfo.phone ? userInfo.phone : "",
         }}
       >
         {({ handleChange, handleBlur, values, handleSubmit }) => (
@@ -77,15 +76,15 @@ export default function Personalnfo({ userInfo }) {
                 <input
                   className={`bg-${theme} focus-outline-blue px-2.5 font-mint-regular outline-1 outline-white py-1 w-52 rounded-lg text-${oppositeTheme}`}
                   type="text"
-                  onChange={handleChange("phoneNumber")}
-                  onBlur={handleBlur("phoneNumber")}
-                  value={values.phoneNumber}
+                  onChange={handleChange("phone")}
+                  onBlur={handleBlur("phone")}
+                  value={values.phone}
                 />
               ) : (
                 <span
                   className={`font-mine-regular -mt-1 text-${oppositeTheme}`}
                 >
-                  {userInfo && userInfo.email ? userInfo.phoneNumber : ""}
+                  {userInfo && userInfo.phone ? userInfo.phone : ""}
                 </span>
               )}
             </div>

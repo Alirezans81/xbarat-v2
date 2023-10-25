@@ -27,15 +27,20 @@ export default function RightSide() {
       className={`flex items-center transition-all duration-200 rounded-${direction}-full p${direction}-3 py-3 ${backgroundClass}`}
     >
       <img
-        className="w-12 h-w-12"
-        src={require("../../../../Images/pages/layout/fake-profile.png")}
+        className="w-12 h-12 rounded-full"
+        src={
+          user && user.avatar
+            ? user.avatar
+            : require("../../../../Images/pages/layout/Profile/no-profile.png")
+        }
+        style={{ objectFit: "cover" }}
         alt="avatar"
       />
       <div className={`flex flex-col m${direction}-3`}>
         <span className={`${nameClass} font-mine-regular -mb-2 text-lg`}>
-          {user && user["first_name"] && user["last_name"]
-            ? user["first_name"] + " " + user["last_name"]
-            : ""}
+          {(user && user["first_name"] ? user["first_name"] : "") +
+            " " +
+            (user && user["last_name"] ? user["last_name"] : "")}
         </span>
         {user && user["is_active"] ? (
           <span className={`${roleClass} font-mine-regular text-sm`}>

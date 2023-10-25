@@ -7,7 +7,7 @@ export default function Temp() {
       <div className="rotate-180 top-2 bottom-2 w-5 h-5 w-8 h-8 hover:text-dark hover:text-light left-0 right-0 mr-3 right-4 left-4" />
       <div className="rounded-r-3xl rounded-l-3xl left-32 right-7 -ml-0.5 -mr-0.5 -mr-2 -ml-2" />
       <div className="rounded-r-full rounded-l-full left-24 right-2 -ml-1 -mr-1 grid-cols-3 col-span-1 right-3 left-3" />
-      <div className="pr-2.5 pl-2.5" />
+      <div className="pr-2.5 pl-2.5 w-40 h-0.5 bg-blue bg-gray relative text-center" />
     </>
   );
 }

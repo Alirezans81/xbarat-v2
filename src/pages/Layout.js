@@ -30,11 +30,19 @@ export default function Layout() {
     const savedStringToken = window.localStorage.getItem("authToken");
     const savedStringUser = window.localStorage.getItem("userInfo");
 
-    if (savedStringToken !== "undefined" && savedStringUser !== "undefined") {
+    if (
+      savedStringToken !== "undefined" &&
+      savedStringToken !== "null" &&
+      savedStringUser !== "undefined" &&
+      savedStringUser !== "null"
+    ) {
       const savedToken = JSON.parse(savedStringToken);
       const savedUser = JSON.parse(savedStringUser);
       setToken(savedToken);
       setUser(savedUser);
+    } else {
+      setToken(null);
+      setUser(null);
     }
   }, []);
 

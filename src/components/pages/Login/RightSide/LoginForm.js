@@ -73,7 +73,7 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
       initialValues={{ email: "", password: "" }}
       onSubmit={(values) => login(values, navigateToHome, rememberMeCheck)}
     >
-      {({ errors, values, handleBlur, handleChange, handleSubmit }) => (
+      {({ values, handleBlur, handleChange, handleSubmit }) => (
         <form
           className="p-8"
           onSubmit={(e) => {

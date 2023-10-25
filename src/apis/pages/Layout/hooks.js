@@ -13,25 +13,25 @@ const useLogout = () => {
   const fetch = async () => {
     setIsLoading(true);
 
-    const userInfo = window.localStorage.getItem("userInfo");
-    const userId = userInfo && userInfo.id ? userInfo.id : null;
-    logout(userId)
-      .then((data) => {
-        console.log(data);
+    const token = window.localStorage.getItem("authToken");
+    token &&
+      logout(token)
+        .then((data) => {
+          console.log(data);
 
-        setUser(null);
-        window.localStorage.removeItem("userInfo");
+          setUser(null);
+          window.localStorage.removeItem("userInfo");
 
-        setToken(null);
-        window.localStorage.removeItem("authToken");
+          setToken(null);
+          window.localStorage.removeItem("authToken");
 
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error);
-        setIsLoading(false);
-      });
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
   };
 
   return { logout: fetch, error, isLoading };

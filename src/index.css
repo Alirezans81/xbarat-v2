@@ -85,6 +85,10 @@ body {
   color: #2A2B2E;
 }
 
+.bg-gray {
+  background-color: #8F97A6 !important;
+}
+
 .text-gray {
   color: #8F97A6 !important;
 }

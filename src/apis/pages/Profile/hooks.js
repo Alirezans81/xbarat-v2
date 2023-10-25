@@ -1,8 +1,8 @@
 import { useUserSetState, useUserState } from "../../../Providers/UserProvider";
-import { updateName } from "./apis";
+import { updateNameAndAvatar } from "./apis";
 import { useState } from "react";
 
-const useUpdateName = () => {
+const useUpdateNameAndAvatar = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
@@ -13,8 +13,8 @@ const useUpdateName = () => {
 
   const fetch = async (params, customFunction) => {
     setIsLoading(true);
-    userInfo && userInfo.id
-      ? await updateName(userInfo.id, params)
+    userInfo && userInfo.username
+      ? await updateNameAndAvatar(userInfo.username, params)
           .then((data) => {
             console.log(data);
             setUser(data.data);
@@ -31,7 +31,7 @@ const useUpdateName = () => {
       : setError("Somthing Wrong!");
   };
 
-  return { updateName: fetch, error, isLoading };
+  return { updateNameAndAvatar: fetch, error, isLoading };
 };
 
-export { useUpdateName };
+export { useUpdateNameAndAvatar };
