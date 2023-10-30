@@ -2,7 +2,7 @@ import { Spinner } from "flowbite-react";
 import React from "react";
 
 export default function LoadingSplashScreen({ isLoading }) {
-  const containerClass = isLoading ? "z-40 opacity-100" : "-z-10 opacity-0";
+  const containerClass = isLoading ? "z-100 opacity-100" : "-z-10 opacity-0";
 
   if (isLoading) {
     return (

@@ -15,12 +15,19 @@ export default function AllOreders({
 
   const data = {
     head: ["quantity", "amount", "rate"],
-    data: [
-      { quantity: 10, amount: 10000, rate: 497500 },
-      { quantity: 10, amount: 10000, rate: 497500 },
-      { quantity: 10, amount: 10000, rate: 497500 },
-      { quantity: 10, amount: 10000, rate: 497500 },
-      { quantity: 10, amount: 10000, rate: 497500 },
+    SToT: [
+      { quantity: 4, amount: 253500000, rate: 1.411 },
+      { quantity: 16, amount: 916000000, rate: 1.412 },
+      { quantity: 13, amount: 551000000, rate: 1.413 },
+      { quantity: 17, amount: 728500000, rate: 1.414 },
+      { quantity: 15, amount: 651500000, rate: 1.415 },
+    ],
+    TToS: [
+      { quantity: 6, amount: 78200, rate: 1.408 },
+      { quantity: 18, amount: 197900, rate: 1.407 },
+      { quantity: 25, amount: 286500, rate: 1.406 },
+      { quantity: 14, amount: 249500, rate: 1.405 },
+      { quantity: 19, amount: 258300, rate: 1.404 },
     ],
   };
 
@@ -61,7 +68,7 @@ export default function AllOreders({
           <div className="w-full flex-1 pt-4 px-10">
             <CustomTable
               heads={data.head}
-              rows={data.data}
+              rows={data.SToT}
               setFormDefaultRate={setFormDefaultRate}
             />
           </div>
@@ -96,7 +103,7 @@ export default function AllOreders({
           <div className="w-full flex-1 pt-4 px-10">
             <CustomTable
               heads={data.head}
-              rows={data.data}
+              rows={data.TToS}
               setFormDefaultRate={setFormDefaultRate}
             />
           </div>

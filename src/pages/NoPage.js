@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useLanguageState } from "../Providers/LanguageProvider";
 import { useNavigate } from "react-router-dom";
-import { useTokenState } from "../Providers/TokenProvider";
+import { useTokenState, useTokenSetState } from "../Providers/TokenProvider";
+import { useUserSetState } from "../Providers/UserProvider";
 
 export default function NoPage() {
   const theme = useThemeState();
@@ -10,6 +11,28 @@ export default function NoPage() {
   const lang = useLanguageState();
   const navigate = useNavigate();
   const token = useTokenState();
+  const setToken = useTokenSetState();
+  const setUser = useUserSetState();
+
+  useEffect(() => {
+    const savedStringToken = window.localStorage.getItem("authToken");
+    const savedStringUser = window.localStorage.getItem("userInfo");
+
+    if (
+      savedStringToken !== "undefined" &&
+      savedStringToken !== "null" &&
+      savedStringUser !== "undefined" &&
+      savedStringUser !== "null"
+    ) {
+      const savedToken = JSON.parse(savedStringToken);
+      const savedUser = JSON.parse(savedStringUser);
+      setToken(savedToken);
+      setUser(savedUser);
+    } else {
+      setToken(null);
+      setUser(null);
+    }
+  }, []);
 
   return (
     <div className={`w-screen h-screen bg-${theme}`}>

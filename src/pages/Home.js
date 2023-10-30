@@ -25,6 +25,15 @@ export default function Home() {
           setFormDefaultRate={setFormDefaultRate}
         />
       </div>
+      <div className={`bg-${theme} rounded-3xl col-span-5 row-span-3`}></div>
+      <div
+        className={`bg-${theme} rounded-${oneDirection}-3xl col-span-4 row-span-3`}
+      >
+        <OtherExcahnges />
+      </div>
+      <div className={`bg-${theme} rounded-3xl col-span-3 row-span-3`}>
+        <PendingOrders selectedCurrecnyPair={selectedCurrecnyPair} />
+      </div>
       <div
         className={`bg-${theme} rounded-${oneDirection}-3xl col-span-8 xl:col-span-9 row-span-3 pr-24`}
       >
@@ -32,14 +41,6 @@ export default function Home() {
           selectedCurrecnyPair={selectedCurrecnyPair}
           setFormDefaultRate={setFormDefaultRate}
         />
-      </div>
-      <div className={`bg-${theme} rounded-3xl col-span-8 row-span-3`}>
-        <PendingOrders selectedCurrecnyPair={selectedCurrecnyPair} />
-      </div>
-      <div
-        className={`bg-${theme} rounded-${oneDirection}-3xl col-span-4 row-span-3`}
-      >
-        <OtherExcahnges />
       </div>
     </div>
   );

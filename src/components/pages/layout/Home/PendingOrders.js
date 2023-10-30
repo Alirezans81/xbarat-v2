@@ -133,20 +133,14 @@ export default function PendingOrders() {
         <span className={`text-2xl text-${oppositeTheme} mx-0.5`}>
           {lang["pending-orders"]}
         </span>
-        <FilterButtons
-          showOrdersType={showOrdersType}
-          toggleShowOpenOrders={toggleShowOpenOrders}
-          toggleShowDoneOrders={toggleShowDoneOrders}
-          toggleShowTodayOrders={toggleShowTodayOrders}
-        />
       </div>
-      <div className="mt-3.5 w-full px-7 h-full relative">
+      <div className="mt-3.5 w-full px-4 h-full relative">
         {pendingOrders.length !== 0 ? (
-          <CustomSlider slidesToShow={3} slidesToScroll={3}>
+          <CustomSlider slidesToShow={1} slidesToScroll={1}>
             {pendingOrders.map((pendingOrder, index) => (
               <div
                 key={index}
-                className="flex justify-center items-center h-full px-4"
+                className="flex justify-center items-center h-full px-1"
               >
                 <PendingOrderCard lang={lang} data={pendingOrder} />
               </div>

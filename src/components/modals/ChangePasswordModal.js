@@ -5,7 +5,7 @@ import { useThemeState } from "../../Providers/ThemeProvider";
 import { useModalDataClose } from "../../Providers/ModalDataProvider";
 import SubmitButton from "../common/SubmitButton";
 
-export default function ChangePasswordModal({ token }) {
+export default function ChangePasswordModal() {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();

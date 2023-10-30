@@ -57,6 +57,7 @@
   "other-exchanges": "Other Exchanges",
   "first-name": "First Name",
   "last-name": "Last Name",
+  "phone": "Phone",
   "change-password": "Change Password",
   "phone-number": "Phone Number",
   "nationality": "Nationality",
@@ -105,5 +106,16 @@
   "sended-otp-code-message-2nd": "Please enter the code below",
   "otp-code": "OTP Code",
   "resend": "Resend",
-  "wait-link-message": "Please go to your email and click on the link we’ve sent you"
+  "wait-link-message": "Please go to your email and click on the link we’ve sent you",
+  "personal-information": "Personal Information",
+  "national-information": "National Information",
+  "bank-information": "Bank Information",
+  "note": "Note",
+  "skip": "Skip",
+  "next": "Next",
+  "complete-profile-modal-step1-note-1st": "To create a user account, your contact number needs to be registered in the system",
+  "complete-profile-modal-step1-note-2nd": "And the security of your account and the notifications of your account operations will depend on this contact number",
+  "complete-profile-modal-step1-note-3rd": "If you ever forgot your password, your only way recover your password is your number",
+  "complete-profile-modal-step2-note-1st": "We need to know your nationality to receive a proper identity document",
+  "complete-profile-modal-step2-note-2nd": "And also we need your location to find out how we are going to cooperate together"
 }

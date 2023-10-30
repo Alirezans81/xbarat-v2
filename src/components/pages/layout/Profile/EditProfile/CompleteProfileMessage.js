@@ -14,7 +14,7 @@ export default function CompleteProfileMessage() {
     setModalData({
       title: "",
       children: <CompleteProfileModal />,
-      canClose: true,
+      canClose: false,
       isOpen: true,
     });
   };

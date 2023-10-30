@@ -49,9 +49,9 @@ export default function RateType({
         <button
           className={
             !areRatesReversed
-              ? `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-white transition-all font-mine-regular duration-500 rounded-${oneDirection}-full ` +
+              ? `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-light transition-all font-mine-regular duration-500 rounded-${oneDirection}-full ` +
                 activeButtonClass
-              : `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-white transition-all font-mine-regular duration-500 rounded-${oneDirection}-full`
+              : `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-${oppositeTheme} transition-all font-mine-regular duration-500 rounded-${oneDirection}-full`
           }
           onClick={() => {
             setAreRatesReversed(false);
@@ -64,9 +64,9 @@ export default function RateType({
           disabled={!hasReversedRate}
           className={
             areRatesReversed
-              ? `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-white transition-all font-mine-regular duration-500 rounded-${oppositOneDirection}-full ` +
+              ? `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-light transition-all font-mine-regular duration-500 rounded-${oppositOneDirection}-full ` +
                 activeButtonClass
-              : `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-white transition-all font-mine-regular duration-500 rounded-${oppositOneDirection}-full`
+              : `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-${oppositeTheme} transition-all font-mine-regular duration-500 rounded-${oppositOneDirection}-full`
           }
           onClick={() => {
             setAreRatesReversed(true);

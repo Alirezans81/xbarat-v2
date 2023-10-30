@@ -9,11 +9,15 @@ function getNumber(_str) {
   return Number(out.join(""));
 }
 function addComma(number, returnsZero) {
-  var num = getNumber(number);
-  if (num === 0) {
-    return returnsZero ? 0 : "";
+  if (+number < 1000) {
+    return number;
   } else {
-    return num.toLocaleString();
+    var num = getNumber(number);
+    if (num === 0) {
+      return returnsZero ? 0 : "";
+    } else {
+      return num.toLocaleString();
+    }
   }
 }
 const useAddComma = () => {
