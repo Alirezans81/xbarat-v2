@@ -21,18 +21,13 @@ export default function CompleteProfileModal() {
   const userInfo = useUserState();
   useEffect(() => {
     if (userInfo) {
-      console.log(userInfo.first_name, userInfo.last_name, userInfo.phone);
-      userInfo.first_name &&
-        userInfo.last_name &&
-        userInfo.phone &&
-        setStep(2) &&
-        userInfo.nationality &&
-        userInfo.country &&
-        userInfo.city &&
-        setStep(3) &&
-        (userInfo.nationality_number ||
-          userInfo.passport_number ||
-          userInfo.tazkare_number) &&
+      userInfo.first_name && userInfo.last_name && userInfo.phone && setStep(2);
+
+      userInfo.nationality && userInfo.country && userInfo.city && setStep(3);
+
+      (userInfo.nationality_number ||
+        userInfo.passport_number ||
+        userInfo.tazkare_number) &&
         userInfo.document &&
         setStep(4);
     }
@@ -87,6 +82,20 @@ export default function CompleteProfileModal() {
               userInfo && userInfo.phone && userInfo.phone !== "undefined"
                 ? userInfo.phone
                 : "",
+            nationality:
+              userInfo &&
+              userInfo.nationality &&
+              userInfo.nationality !== "undefined"
+                ? userInfo.nationality
+                : "",
+            country:
+              userInfo && userInfo.country && userInfo.country !== "undefined"
+                ? userInfo.country
+                : "",
+            city:
+              userInfo && userInfo.city && userInfo.city !== "undefined"
+                ? userInfo.city
+                : "",
           }}
           onSubmit={(values) => {
             step === 1 && fetchStep1(values, nextStep);
@@ -95,7 +104,13 @@ export default function CompleteProfileModal() {
             step === 4 && fetchStep4(values, nextStep);
           }}
         >
-          {({ handleBlur, handleChange, values, handleSubmit }) => {
+          {({
+            handleBlur,
+            handleChange,
+            values,
+            handleSubmit,
+            setFieldValue,
+          }) => {
             if (step === 1) {
               return (
                 <>
@@ -110,11 +125,7 @@ export default function CompleteProfileModal() {
             } else if (step === 2) {
               return (
                 <>
-                  <Step2
-                    handleBlur={handleBlur}
-                    handleChange={handleChange}
-                    values={values}
-                  />
+                  <Step2 setFieldValue={setFieldValue} />
                   <Buttons nextFunction={handleSubmit} />
                 </>
               );

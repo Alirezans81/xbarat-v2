@@ -3,5 +3,7 @@
   "log-in": "https://smicln.ir/api/user/login/",
   "log-out": "https://smicln.ir/api/user/logout/",
   "patch-profile": "https://smicln.ir/api/user/",
-  "nationality": "https://smicln.ir/api/location/nationality/"
+  "nationality": "https://smicln.ir/api/location/nationality/",
+  "country": "https://smicln.ir/api/location/country/",
+  "city": "https://smicln.ir/api/location/city/"
 }

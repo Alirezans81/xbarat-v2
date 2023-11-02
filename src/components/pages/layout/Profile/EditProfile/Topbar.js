@@ -58,7 +58,6 @@ export default function Topbar({ userInfo }) {
               avatar: null,
             }}
             onSubmit={(values) => {
-              console.log(values);
               if (!values.avatar || limitImageSize(values.avatar)) {
                 updateNameAndAvatar(values, () => {
                   setCanEditNameAndAvatar(false);

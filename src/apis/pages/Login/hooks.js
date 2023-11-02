@@ -15,7 +15,6 @@ const useLogin = () => {
     login(params)
       .then((data) => {
         console.log(data);
-
         setUser(data.data.user);
         rememberMe &&
           window.localStorage.setItem(

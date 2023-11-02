@@ -19,7 +19,7 @@ export default function ExchangeHistoryScreen() {
         />
       </div>
       <div
-        className={`col-span-4 bg-${theme} rounded-${oneDirection}-3xl py-5 px-7`}
+        className={`col-span-4 bg-${theme} rounded-${oneDirection}-3xl py-5 px-7 overflow-y-scroll`}
       >
         <Cards />
       </div>

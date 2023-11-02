@@ -117,5 +117,10 @@
   "complete-profile-modal-step1-note-2nd": "And the security of your account and the notifications of your account operations will depend on this contact number",
   "complete-profile-modal-step1-note-3rd": "If you ever forgot your password, your only way recover your password is your number",
   "complete-profile-modal-step2-note-1st": "We need to know your nationality to receive a proper identity document",
-  "complete-profile-modal-step2-note-2nd": "And also we need your location to find out how we are going to cooperate together"
+  "complete-profile-modal-step2-note-2nd": "And also we need your location to find out how we are going to cooperate together",
+  "type-of-identity-document": "Type of identity document",
+  "number-of-document": "Number of document",
+  "upload-your-document": "Upload your document",
+  "complete-profile-modal-step3-note-1st": "To authenticate and secure your account you need to specify your identity document type",
+  "complete-profile-modal-step3-note-2nd": "And after that, enter the number of your document so that our admins can approve your account as soon as possible"
 }

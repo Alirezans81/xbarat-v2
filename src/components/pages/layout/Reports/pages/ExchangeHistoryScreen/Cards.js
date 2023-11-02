@@ -105,9 +105,9 @@ export default function Cards() {
   ]);
 
   return (
-    <div className="w-full max-h-full grid grid-cols-3 grid-rows-2">
+    <div className="w-full max-h-full grid grid-cols-3 mb-14">
       {datas.map((data, index) => (
-        <div key={index} className="col-span-1 h-48 row-span-1 p-2">
+        <div key={index} className="col-span-1 h-48 p-2">
           <ExchangeCard data={data} lang={lang} />
         </div>
       ))}

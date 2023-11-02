@@ -5,12 +5,13 @@ const useGetNationalities = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState) => {
+  const fetch = async (setState, customFunction) => {
     setIsLoading(true);
     await getNationalities()
       .then((data) => {
         console.log(data);
         setState(data.data);
+        customFunction && customFunction();
         setIsLoading(false);
         return data.data;
       })
@@ -24,16 +25,17 @@ const useGetNationalities = () => {
   return { getNationalities: fetch, error, isLoading };
 };
 
-const useGetCounties = () => {
+const useGetCountries = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState) => {
+  const fetch = async (setState, customFunction) => {
     setIsLoading(true);
     await getCounties()
       .then((data) => {
         console.log(data);
         setState(data.data);
+        customFunction && customFunction();
         setIsLoading(false);
         return data.data;
       })
@@ -44,19 +46,20 @@ const useGetCounties = () => {
       });
   };
 
-  return { getCounties: fetch, error, isLoading };
+  return { getCountries: fetch, error, isLoading };
 };
 
 const useGetCities = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState) => {
+  const fetch = async (filtersObject, setState, customFunction) => {
     setIsLoading(true);
-    await getCities()
+    await getCities(filtersObject)
       .then((data) => {
         console.log(data);
         setState(data.data);
+        customFunction && customFunction();
         setIsLoading(false);
         return data.data;
       })
@@ -67,7 +70,7 @@ const useGetCities = () => {
       });
   };
 
-  return { getCounties: fetch, error, isLoading };
+  return { getCities: fetch, error, isLoading };
 };
 
-export { useGetNationalities, useGetCounties, useGetCities };
+export { useGetNationalities, useGetCountries, useGetCities };

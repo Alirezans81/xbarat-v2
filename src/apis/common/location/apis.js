@@ -1,4 +1,5 @@
 import axios from "axios";
+import queryString from "query-string";
 
 const api = require("../../api.json");
 
@@ -7,11 +8,16 @@ const getNationalities = () => {
 };
 
 const getCounties = () => {
-  return axios.get(api["nationality"]);
+  return axios.get(api["country"]);
 };
 
-const getCities = () => {
-  return axios.get(api["nationality"]);
+const getCities = (filtersObject) => {
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["city"],
+    query: filtersObject,
+  });
+
+  return axios.get(urlWithQueries);
 };
 
-export { updateNameAndAvatar, getNationalities, getCounties, getCities };
+export { getNationalities, getCounties, getCities };
