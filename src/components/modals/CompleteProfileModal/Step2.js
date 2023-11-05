@@ -62,7 +62,7 @@ export default function Step2({ setFieldValue }) {
   useEffect(() => {
     if (countries[selectedCountryIndex]) {
       setSelectedCityIndex(-1);
-      getCities({ country: selectedCountryIndex + 1 }, setCities);
+      getCities({ country: countries[selectedCountryIndex].slug }, setCities);
     }
   }, [selectedCountryIndex]);
 

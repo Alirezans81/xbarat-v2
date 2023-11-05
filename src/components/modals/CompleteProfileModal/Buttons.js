@@ -3,7 +3,7 @@ import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useModalDataClose } from "../../../Providers/ModalDataProvider";
 
-export default function Buttons({ nextFunction }) {
+export default function Buttons({ step, nextFunction }) {
   const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -22,7 +22,7 @@ export default function Buttons({ nextFunction }) {
         onClick={nextFunction ? nextFunction : () => {}}
         className={`bg-blue rounded-full px-10 pt-2.5 pb-1 font-mine-bold text-${oppositeTheme}`}
       >
-        {lang["next"]}
+        {step === 4 ? lang["done"] : lang["next"]}
       </button>
     </div>
   );

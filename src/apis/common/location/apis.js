@@ -20,4 +20,18 @@ const getCities = (filtersObject) => {
   return axios.get(urlWithQueries);
 };
 
-export { getNationalities, getCounties, getCities };
+const getNationality = (nationalityUrl) => {
+  return axios.get(nationalityUrl);
+};
+
+const getRequiredFeild = (requiredFeildUrl) => {
+  return axios.get(requiredFeildUrl);
+};
+
+export {
+  getNationalities,
+  getCounties,
+  getCities,
+  getNationality,
+  getRequiredFeild,
+};

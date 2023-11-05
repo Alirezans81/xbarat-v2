@@ -4,7 +4,6 @@ import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignup } from "../../../apis/pages/Signup/hooks";
-import axios from "axios";
 
 export default function Form({ setIsSplashScreenLoading }) {
   const theme = useThemeState();
@@ -84,15 +83,24 @@ export default function Form({ setIsSplashScreenLoading }) {
 
   return (
     <Formik
-      initialValues={{ email: "", password: "", confirmPassword: "" }}
+      initialValues={{
+        email: "",
+        password: "",
+        confirmPassword: "",
+        referral_code: "",
+      }}
       onSubmit={(values) =>
         signup(
-          { email: values.email, password: values.password },
+          {
+            email: values.email,
+            password: values.password,
+            referral_code: values.referral_code,
+          },
           navigateToWaitLink
         )
       }
     >
-      {({ errors, values, handleBlur, handleChange, handleSubmit }) => (
+      {({ values, handleBlur, handleChange, handleSubmit }) => (
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -165,6 +173,15 @@ export default function Form({ setIsSplashScreenLoading }) {
               {validationErrors.confirmPassword}
             </span>
           )}
+          <input
+            name="referral_code"
+            type="text"
+            placeholder={lang["referral-code-placeholder"]}
+            className={`input-${theme} mt-4 focus:outline-none`}
+            onChange={handleChange("referral_code")}
+            onBlur={handleBlur("referral_code")}
+            value={values.referral_code}
+          />
           {error && (
             <span className="font-mine-thin text-red">{error.message}</span>
           )}

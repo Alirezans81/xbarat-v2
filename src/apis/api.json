@@ -5,5 +5,9 @@
   "patch-profile": "https://smicln.ir/api/user/",
   "nationality": "https://smicln.ir/api/location/nationality/",
   "country": "https://smicln.ir/api/location/country/",
-  "city": "https://smicln.ir/api/location/city/"
+  "city": "https://smicln.ir/api/location/city/",
+  "currency": "https://smicln.ir/api/currency/",
+  "wallet": "https://smicln.ir/api/wallet/",
+  "wallet-asset": "https://smicln.ir/api/wallet/asset/",
+  "wallet-tank": "https://smicln.ir/api/wallet/tank/"
 }

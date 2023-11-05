@@ -5,6 +5,7 @@ import Step1 from "./CompleteProfileModal/Step1";
 import Step2 from "./CompleteProfileModal/Step2";
 import Step3 from "./CompleteProfileModal/Step3";
 import Step4 from "./CompleteProfileModal/Step4";
+import Step5 from "./CompleteProfileModal/Step5";
 import Buttons from "./CompleteProfileModal/Buttons";
 import {
   useFetchStep1,
@@ -14,22 +15,70 @@ import {
 } from "../../apis/modal/CompleteProfileModal/hooks";
 import { Formik } from "formik";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
+import {
+  useGetWalletAssets,
+  useGetWalletTanks,
+  useGetWallets,
+} from "../../apis/common/wallet/hooks";
 
 export default function CompleteProfileModal() {
+  const userInfo = useUserState();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+
   const [step, setStep] = useState(1);
 
-  const userInfo = useUserState();
+  const { getWallets, isLoading: getWalletsIsLoading } = useGetWallets();
+  useEffect(
+    () => setIsLoadingSplashScreen(getWalletsIsLoading),
+    [getWalletsIsLoading]
+  );
+  const { getWalletAssets, isLoading: getWalletAssetsIsLoading } =
+    useGetWalletAssets();
+  useEffect(
+    () => setIsLoadingSplashScreen(getWalletAssetsIsLoading),
+    [getWalletAssetsIsLoading]
+  );
+  const { getWalletTanks, isLoading: getWalletTanksIsLoading } =
+    useGetWalletTanks();
+  useEffect(
+    () => setIsLoadingSplashScreen(getWalletTanksIsLoading),
+    [getWalletTanksIsLoading]
+  );
+
+  const [wallets, setWallets] = useState([]);
+  const wallet = wallets[0] ? wallets[0] : null;
+  useEffect(() => {
+    userInfo &&
+      userInfo.username &&
+      getWallets({ user: userInfo.username }, setWallets);
+  }, []);
+  const [walletAssets, setWalletAssets] = useState([]);
+  const walletAsset = walletAssets[0] ? walletAssets[0] : null;
+  useEffect(() => {
+    wallet &&
+      wallet.url &&
+      getWalletAssets({ wallet: wallet.url }, setWalletAssets);
+  }, [wallets]);
+  const [walletTanks, setWalletTanks] = useState([]);
+  const walletTank = walletTanks[0] ? walletTanks[0] : null;
+  useEffect(() => {
+    walletAsset &&
+      walletAsset.url &&
+      getWalletTanks({ walletAsset: walletAsset.url }, setWalletTanks);
+  }, [walletAssets]);
+
   useEffect(() => {
     if (userInfo) {
       userInfo.first_name && userInfo.last_name && userInfo.phone && setStep(2);
 
       userInfo.nationality && userInfo.country && userInfo.city && setStep(3);
 
-      (userInfo.nationality_number ||
-        userInfo.passport_number ||
-        userInfo.tazkare_number) &&
+      userInfo.identity_type &&
+        userInfo.identity_code &&
         userInfo.document &&
         setStep(4);
+
+      walletTank && setStep(5);
     }
   }, []);
 
@@ -38,7 +87,6 @@ export default function CompleteProfileModal() {
   const { fetchStep3, isLoading: fetchStep3IsLoading } = useFetchStep3();
   const { fetchStep4, isLoading: fetchStep4IsLoading } = useFetchStep4();
 
-  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   useEffect(
     () => setIsLoadingSplashScreen(fetchStep1IsLoading),
     [fetchStep1IsLoading]
@@ -96,6 +144,22 @@ export default function CompleteProfileModal() {
               userInfo && userInfo.city && userInfo.city !== "undefined"
                 ? userInfo.city
                 : "",
+            identity_type:
+              userInfo &&
+              userInfo.identity_type &&
+              userInfo.identity_type !== "undefined"
+                ? userInfo.identity_type
+                : "",
+            identity_code:
+              userInfo &&
+              userInfo.identity_code &&
+              userInfo.identity_code !== "undefined"
+                ? userInfo.identity_code
+                : "",
+            document:
+              userInfo && userInfo.document && userInfo.document !== "undefined"
+                ? userInfo.document
+                : "",
           }}
           onSubmit={(values) => {
             step === 1 && fetchStep1(values, nextStep);
@@ -119,14 +183,14 @@ export default function CompleteProfileModal() {
                     handleChange={handleChange}
                     values={values}
                   />
-                  <Buttons nextFunction={handleSubmit} />
+                  <Buttons step={step} nextFunction={handleSubmit} />
                 </>
               );
             } else if (step === 2) {
               return (
                 <>
                   <Step2 setFieldValue={setFieldValue} />
-                  <Buttons nextFunction={handleSubmit} />
+                  <Buttons step={step} nextFunction={handleSubmit} />
                 </>
               );
             } else if (step === 3) {
@@ -136,13 +200,26 @@ export default function CompleteProfileModal() {
                     handleBlur={handleBlur}
                     handleChange={handleChange}
                     values={values}
+                    setFieldValue={setFieldValue}
                   />
-                  <Buttons nextFunction={handleSubmit} />
+                  <Buttons step={step} nextFunction={handleSubmit} />
                 </>
               );
             } else if (step === 4) {
               return (
-                <Step4
+                <>
+                  <Step4
+                    handleBlur={handleBlur}
+                    handleChange={handleChange}
+                    values={values}
+                    setFieldValue={setFieldValue}
+                  />
+                  <Buttons step={step} nextFunction={handleSubmit} />
+                </>
+              );
+            } else if (step === 5) {
+              return (
+                <Step5
                   handleBlur={handleBlur}
                   handleChange={handleChange}
                   values={values}

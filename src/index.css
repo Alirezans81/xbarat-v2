@@ -309,3 +309,22 @@ body {
 .z-100 {
   z-index: 100;
 }
+
+.z-150 {
+  z-index: 150;
+}
+
+.complete-profile-back {
+  background-image: url('./Images/pages/Login/back.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.w-done-complete-profile {
+  width: 45vw;
+}
+
+.h-done-complete-profile {
+  height: 70vh;
+}

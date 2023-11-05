@@ -23,7 +23,7 @@ export default function CustomToast() {
 
   return (
     <div
-      className={`flex items-center gap-2 bg-blue-gradient min-w-toast rounded-full pl-1 pr-3 pt-1 pb-1 font-mine-regular border-2 border-gray absolute mx-auto transition-all duration-300 left-4 ${containerClass}`}
+      className={`z-150 flex items-center gap-2 bg-blue-gradient min-w-toast rounded-full pl-1 pr-3 pt-1 pb-1 font-mine-regular border-2 border-gray absolute mx-auto transition-all duration-300 left-4 ${containerClass}`}
     >
       {toastData.status === "success" && (
         <div

@@ -68,6 +68,7 @@
   "current-password": "Current Password",
   "new-password": "New Password",
   "confirm-password": "Confirm Password",
+  "referral-code-placeholder": "Referral Code (Optional)",
   "last-tickets": "Last Tickets",
   "ticket-new-message": "You have a new message",
   "ticket-ended": "Ended",
@@ -113,6 +114,7 @@
   "note": "Note",
   "skip": "Skip",
   "next": "Next",
+  "done": "Done",
   "complete-profile-modal-step1-note-1st": "To create a user account, your contact number needs to be registered in the system",
   "complete-profile-modal-step1-note-2nd": "And the security of your account and the notifications of your account operations will depend on this contact number",
   "complete-profile-modal-step1-note-3rd": "If you ever forgot your password, your only way recover your password is your number",
@@ -122,5 +124,13 @@
   "number-of-document": "Number of document",
   "upload-your-document": "Upload your document",
   "complete-profile-modal-step3-note-1st": "To authenticate and secure your account you need to specify your identity document type",
-  "complete-profile-modal-step3-note-2nd": "And after that, enter the number of your document so that our admins can approve your account as soon as possible"
+  "complete-profile-modal-step3-note-2nd": "And after that, enter the number of your document so that our admins can approve your account as soon as possible",
+  "card-number": "Card number",
+  "shaba-number": "Shaba number",
+  "paypal-email": "Paypal email",
+  "complete-profile-modal-step4-note-1st": "To send your money to your real account we need to have some information about it",
+  "complete-profile-modal-step4-note-2nd": "Card number is for times that the money is not much",
+  "complete-profile-modal-step4-note-3rd": "And Shaba number is for time we want to send you a big amount of money",
+  "complete-profile-modal-step5-note-1st": "Thank you for completing your profile",
+  "complete-profile-modal-step5-note-2nd": "Please wait for admin approve"
 }

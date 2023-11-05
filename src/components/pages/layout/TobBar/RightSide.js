@@ -4,6 +4,8 @@ import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useDirectionState } from "../../../../Providers/DirectionProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { Link, useLocation } from "react-router-dom";
+import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
+import CompleteProfileModal from "../../../modals/CompleteProfileModal";
 
 export default function RightSide() {
   const user = useUserState();
@@ -11,6 +13,15 @@ export default function RightSide() {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: direction, endComplete: endDirection } = useDirectionState();
   const lang = useLanguageState();
+  const setModalData = useModalDataSetState();
+  const openCompleteProfileModal = () => {
+    setModalData({
+      title: "",
+      children: <CompleteProfileModal />,
+      canClose: false,
+      isOpen: true,
+    });
+  };
   const { pathname: currentRoute } = useLocation();
   const backgroundClass =
     currentRoute === "/profile" ? "bg-blue" : `bg-${theme}-back`;
@@ -47,7 +58,7 @@ export default function RightSide() {
             {user.role}
           </span>
         ) : (
-          <Link to="/profile">
+          <Link to="/profile" onClick={openCompleteProfileModal}>
             <div
               className={`bg-blue rounded-full ${completePrfoileClass} mt-1 flex flex-col justify-center transition-all duration-300 hover:bg-${theme} border-2 border-blue`}
             >

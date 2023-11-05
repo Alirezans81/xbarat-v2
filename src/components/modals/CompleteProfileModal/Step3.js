@@ -1,13 +1,67 @@
 import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
+import { useUserState } from "../../../Providers/UserProvider";
+import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
+import {
+  useGetNationality,
+  useGetRequiredFeild,
+} from "../../../apis/common/location/hooks";
+import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
+import CustomUploader from "../../common/CustomUploader";
 
-export default function Step3({ handleBlur, handleChange, values }) {
+export default function Step3({
+  handleBlur,
+  handleChange,
+  values,
+  setFieldValue,
+}) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+
+  const [nationality, setNationality] = useState();
+  const { getNationality, isLoading: isLoadingNationality } =
+    useGetNationality();
+  useEffect(
+    () => setIsLoadingSplashScreen(isLoadingNationality),
+    [isLoadingNationality]
+  );
+  const userInfo = useUserState();
+  useEffect(() => {
+    userInfo &&
+      userInfo.nationality &&
+      getNationality(userInfo.nationality, setNationality);
+  }, []);
 
   const [requiredFeilds, setRequiredFeilds] = useState([]);
+  const [selectedRequiredFeildIndex, setSelectedRequiredFeildIndex] =
+    useState(-1);
+  const { getRequiredFeild, isLoading: isLoadingRequiredFeild } =
+    useGetRequiredFeild();
+  useEffect(
+    () => setIsLoadingSplashScreen(isLoadingRequiredFeild),
+    [isLoadingRequiredFeild]
+  );
+  useEffect(() => {
+    nationality &&
+      nationality.required_fields &&
+      nationality.required_fields.map((requiredFieldUrl) => {
+        getRequiredFeild(requiredFieldUrl, requiredFeilds, setRequiredFeilds);
+      });
+  }, [nationality]);
+  useEffect(() => {
+    if (
+      selectedRequiredFeildIndex >= 0 &&
+      requiredFeilds[selectedRequiredFeildIndex].url
+    ) {
+      setFieldValue(
+        "identity_type",
+        requiredFeilds[selectedRequiredFeildIndex].url
+      );
+    }
+  }, [selectedRequiredFeildIndex]);
 
   if (handleBlur && handleChange && values) {
     return (
@@ -16,43 +70,90 @@ export default function Step3({ handleBlur, handleChange, values }) {
           <form className="w-full h-full">
             <div className="flex-1 w-full flex flex-col gap-y-2">
               <span className={`font-mine-regular text-${oppositeTheme}`}>
-                {lang["first-name"]}
+                {lang["type-of-identity-document"]}
+              </span>
+              <div className="w-full flex">
+                <CustomDropdown
+                  label={
+                    selectedRequiredFeildIndex >= 0
+                      ? requiredFeilds[selectedRequiredFeildIndex].title
+                      : ""
+                  }
+                >
+                  {requiredFeilds.map((requiredFeild, index) => {
+                    if (index === 0 && index === requiredFeilds.length - 1) {
+                      return (
+                        <CustomItem
+                          key={index}
+                          className="rounded-xl"
+                          onClick={() => setSelectedRequiredFeildIndex(index)}
+                        >
+                          {requiredFeild && requiredFeild.title
+                            ? requiredFeild.title
+                            : "error"}
+                        </CustomItem>
+                      );
+                    } else if (index === 0) {
+                      return (
+                        <CustomItem
+                          key={index}
+                          className="rounded-t-xl"
+                          onClick={() => setSelectedRequiredFeildIndex(index)}
+                        >
+                          {requiredFeild && requiredFeild.title
+                            ? requiredFeild.title
+                            : "error"}
+                        </CustomItem>
+                      );
+                    } else if (index === requiredFeilds.length - 1) {
+                      return (
+                        <CustomItem
+                          key={index}
+                          className="rounded-b-xl"
+                          onClick={() => setSelectedRequiredFeildIndex(index)}
+                        >
+                          {requiredFeild && requiredFeild.title
+                            ? requiredFeild.title
+                            : "error"}
+                        </CustomItem>
+                      );
+                    } else {
+                      return (
+                        <CustomItem
+                          key={index}
+                          onClick={() => setSelectedRequiredFeildIndex(index)}
+                        >
+                          {requiredFeild && requiredFeild.title
+                            ? requiredFeild.title
+                            : "error"}
+                        </CustomItem>
+                      );
+                    }
+                  })}
+                </CustomDropdown>
+              </div>
+            </div>
+            <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+              <span className={`font-mine-regular text-${oppositeTheme}`}>
+                {lang["number-of-document"]}
               </span>
               <div className="w-full flex">
                 <input
                   className={`flex-1 hide-input-arrows bg-${theme}-back font-mine-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
-                  name="first_name"
-                  onBlur={handleBlur("first_name")}
-                  onChange={handleChange("first_name")}
-                  value={values.first_name ? values.first_name : ""}
+                  name="identity_code"
+                  onBlur={handleBlur("identity_code")}
+                  onChange={handleChange("identity_code")}
+                  value={values.identity_code ? values.identity_code : ""}
                 />
               </div>
             </div>
             <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
               <span className={`font-mine-regular text-${oppositeTheme}`}>
-                {lang["last-name"]}
+                {lang["upload-document"]}
               </span>
               <div className="w-full flex">
-                <input
-                  className={`flex-1 hide-input-arrows bg-${theme}-back font-mine-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
-                  name="last_name"
-                  onBlur={handleBlur("last_name")}
-                  onChange={handleChange("last_name")}
-                  value={values.last_name ? values.last_name : ""}
-                />
-              </div>
-            </div>
-            <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-              <span className={`font-mine-regular text-${oppositeTheme}`}>
-                {lang["phone"]}
-              </span>
-              <div className="w-full flex">
-                <input
-                  className={`flex-1 hide-input-arrows bg-${theme}-back font-mine-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
-                  name="phone"
-                  onBlur={handleBlur("phone")}
-                  onChange={handleChange("phone")}
-                  value={values.phone ? values.phone : ""}
+                <CustomUploader
+                  setImage={(image) => setFieldValue("document", image)}
                 />
               </div>
             </div>
@@ -72,9 +173,8 @@ export default function Step3({ handleBlur, handleChange, values }) {
             </span>
           </div>
           <div className="mt-4 flex flex-col gap-y-3 text-gray font-mine-regular w-64">
-            <span>{lang["complete-profile-modal-step1-note-1st"] + "."}</span>
-            <span>{lang["complete-profile-modal-step1-note-2nd"] + "."}</span>
-            <span>{lang["complete-profile-modal-step1-note-3rd"] + "."}</span>
+            <span>{lang["complete-profile-modal-step3-note-1st"] + "."}</span>
+            <span>{lang["complete-profile-modal-step3-note-2nd"] + "."}</span>
           </div>
         </div>
       </div>

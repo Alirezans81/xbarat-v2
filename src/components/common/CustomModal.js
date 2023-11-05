@@ -23,7 +23,9 @@ export default function CustomModal() {
         containerClass
       }
     >
-      <div className={`w-max bg-${theme} rounded-2xl px-4 py-2`}>
+      <div
+        className={`w-max bg-${theme} rounded-2xl px-4 py-2 overflow-hidden`}
+      >
         <div className="flex justify-between items-center mb-3">
           <span
             className={`font-mine-bold text-${oppositeTheme} mt-2 mr-10 text-xl`}

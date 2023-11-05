@@ -11,7 +11,7 @@ export default function Stepper({ step }) {
 
   const lang = useLanguageState();
 
-  if (step === 4) {
+  if (step === 5) {
   } else {
     return (
       <div className="flex flex-row items-center pl-12 pr-14 pt-12">
