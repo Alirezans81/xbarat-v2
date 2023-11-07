@@ -11,11 +11,12 @@ import {
   useFetchStep1,
   useFetchStep2,
   useFetchStep3,
-  useFetchStep4,
 } from "../../apis/modal/CompleteProfileModal/hooks";
 import { Formik } from "formik";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import {
+  useCreateWalletAsset,
+  useCreateWalletTank,
   useGetWalletAssets,
   useGetWalletTanks,
   useGetWallets,
@@ -82,10 +83,27 @@ export default function CompleteProfileModal() {
     }
   }, []);
 
+  const { createWalletAsset, isLoading: createWalletAssetIsLoading } =
+    useCreateWalletAsset();
+  useEffect(
+    () => setIsLoadingSplashScreen(createWalletAssetIsLoading),
+    [createWalletAssetIsLoading]
+  );
+  const { createWalletTank, isLoading: createWalletTankIsLoading } =
+    useCreateWalletTank();
+  useEffect(
+    () => setIsLoadingSplashScreen(createWalletTankIsLoading),
+    [createWalletTankIsLoading]
+  );
+
   const { fetchStep1, isLoading: fetchStep1IsLoading } = useFetchStep1();
   const { fetchStep2, isLoading: fetchStep2IsLoading } = useFetchStep2();
   const { fetchStep3, isLoading: fetchStep3IsLoading } = useFetchStep3();
-  const { fetchStep4, isLoading: fetchStep4IsLoading } = useFetchStep4();
+  const fetchStep4 = (values) => {
+    !walletAsset
+      ? createWalletAsset(values, () => createWalletTank(values))
+      : createWalletTank(values);
+  };
 
   useEffect(
     () => setIsLoadingSplashScreen(fetchStep1IsLoading),
@@ -99,11 +117,6 @@ export default function CompleteProfileModal() {
     () => setIsLoadingSplashScreen(fetchStep3IsLoading),
     [fetchStep3IsLoading]
   );
-  useEffect(
-    () => setIsLoadingSplashScreen(fetchStep4IsLoading),
-    [fetchStep4IsLoading]
-  );
-
   const nextStep = () => {
     step < 4 && setStep(step + 1);
   };
@@ -160,6 +173,8 @@ export default function CompleteProfileModal() {
               userInfo && userInfo.document && userInfo.document !== "undefined"
                 ? userInfo.document
                 : "",
+            title: "",
+            bank_info: "",
           }}
           onSubmit={(values) => {
             step === 1 && fetchStep1(values, nextStep);
@@ -213,18 +228,14 @@ export default function CompleteProfileModal() {
                     handleChange={handleChange}
                     values={values}
                     setFieldValue={setFieldValue}
+                    walletAsset={walletAsset}
+                    walletTank={walletTank}
                   />
                   <Buttons step={step} nextFunction={handleSubmit} />
                 </>
               );
             } else if (step === 5) {
-              return (
-                <Step5
-                  handleBlur={handleBlur}
-                  handleChange={handleChange}
-                  values={values}
-                />
-              );
+              return <Step5 />;
             }
           }}
         </Formik>

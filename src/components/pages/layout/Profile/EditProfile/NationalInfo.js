@@ -6,36 +6,89 @@ import {
   CustomDropdown2,
   CustomItem2,
 } from "../../../../common/CustomDropdown2";
+import {
+  useGetCities,
+  useGetCountries,
+  useGetNationalities,
+  useGetNationality,
+  useGetCountry,
+  useGetCity,
+} from "../../../../../apis/common/location/hooks";
+import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
+import { useUpdateNationalInfo } from "../../../../../apis/pages/Profile/hooks";
 
 export default function NationalInfo({ userInfo }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [canEdit, setCanEdit] = useState();
   const lang = useLanguageState();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
-  const updateNationalInfo = () => {};
-  
-  const [nationalitiesList, setNationalitiesList] = useState([
-    { title: "Iranian" },
-    { title: "Afghan" },
-  ]);
+  const [nationality, setNationality] = useState();
+  const [country, setCountry] = useState();
+  const [city, setCity] = useState();
+
+  const { getNationality, isLoading: getNationalityIsLoading } =
+    useGetNationality();
+  useEffect(
+    () => setIsLoadingSplashScreen(getNationalityIsLoading),
+    [getNationalityIsLoading]
+  );
+  const { getCountry, isLoading: getCountryIsLoading } = useGetCountry();
+  useEffect(
+    () => setIsLoadingSplashScreen(getCountryIsLoading),
+    [getCountryIsLoading]
+  );
+  const { getCity, isLoading: getCityIsLoading } = useGetCity();
+  useEffect(
+    () => setIsLoadingSplashScreen(getCityIsLoading),
+    [getCityIsLoading]
+  );
+
   useEffect(() => {
-    
+    userInfo.nationality &&
+      getNationality(userInfo.nationality, setNationality);
+
+    userInfo.country && getCountry(userInfo.country, setCountry);
+    userInfo.city && getCity(userInfo.city, setCity);
   }, []);
+
+  const { getNationalities, isLoading: getNationalitiesIsLoading } =
+    useGetNationalities();
+  useEffect(
+    () => setIsLoadingSplashScreen(getNationalitiesIsLoading),
+    [getNationalitiesIsLoading]
+  );
+  const { getCountries, isLoading: getCountriesIsLoading } = useGetCountries();
+  useEffect(
+    () => setIsLoadingSplashScreen(getCountriesIsLoading),
+    [getCountriesIsLoading]
+  );
+  const { getCities, isLoading: getCitiesIsLoading } = useGetCities();
+  useEffect(
+    () => setIsLoadingSplashScreen(getCitiesIsLoading),
+    [getCitiesIsLoading]
+  );
+
+  const { updateNationalInfo, isLoading } = useUpdateNationalInfo();
+  useEffect(() => setIsLoadingSplashScreen(isLoading), [isLoading]);
+
+  const [nationalitiesList, setNationalitiesList] = useState([]);
   const [nationalityIndex, setNationalityIndex] = useState(-1);
-  const [countriesList, setCountriesList] = useState([
-    { title: "Iran" },
-    { title: "Afghanistan" },
-    { title: "Germany" },
-  ]);
+  const [countriesList, setCountriesList] = useState([]);
   const [countriesIndex, setCountriesIndex] = useState(-1);
-  const [citiesList, setCitiesList] = useState([
-    { title: "Mashhad" },
-    { title: "Tehran" },
-    { title: "Esfahan" },
-  ]);
+  const [citiesList, setCitiesList] = useState([]);
   const [cityIndex, setCityIndex] = useState(-1);
 
+  useEffect(() => {
+    getNationalities(setNationalitiesList);
+    getCountries(setCountriesList);
+  }, []);
+  useEffect(() => {
+    countriesIndex >= 0 &&
+      countriesList[countriesIndex].slug &&
+      getCities({ country: countriesList[countriesIndex].slug }, setCitiesList);
+  }, [countriesIndex]);
 
   useEffect(() => {
     if (!canEdit) {
@@ -52,77 +105,23 @@ export default function NationalInfo({ userInfo }) {
       <EditButton
         canEdit={canEdit}
         setCanEdit={setCanEdit}
-        customFunction={updateNationalInfo}
+        customFunction={() => {
+          if (countriesIndex >= 0 && cityIndex >= 0) {
+            const params = {
+              country: countriesList[countriesIndex].url,
+              city: citiesList[cityIndex].url,
+            };
+            updateNationalInfo(params);
+          }
+        }}
       />
       <div className="col-span-2 row-span-1 flex flex-col">
         <span className="text-gray font-mine-regular">
           {lang["nationality"]}
         </span>
-        {canEdit ? (
-          <CustomDropdown2
-            className="flex-1 font-mine-regular"
-            label={
-              nationalityIndex > -1
-                ? nationalitiesList[nationalityIndex].title
-                : userInfo && userInfo.nationality && userInfo.nationality.title
-                ? userInfo.nationality.title
-                : ""
-            }
-          >
-            {nationalitiesList.map((nationality, index) => {
-              if (nationality && nationality.title) {
-                if (index === 0) {
-                  if (index === nationalitiesList.length - 1) {
-                    return (
-                      <CustomItem2
-                        onClick={() => setNationalityIndex(index)}
-                        className="rounded-xl"
-                        key={index}
-                      >
-                        <span>{nationality.title}</span>
-                      </CustomItem2>
-                    );
-                  } else {
-                    return (
-                      <CustomItem2
-                        onClick={() => setNationalityIndex(index)}
-                        className="rounded-t-xl"
-                        key={index}
-                      >
-                        <span>{nationality.title}</span>
-                      </CustomItem2>
-                    );
-                  }
-                } else if (index === nationalitiesList.length - 1) {
-                  return (
-                    <CustomItem2
-                      onClick={() => setNationalityIndex(index)}
-                      className="rounded-b-xl"
-                      key={index}
-                    >
-                      <span>{nationality.title}</span>
-                    </CustomItem2>
-                  );
-                } else {
-                  return (
-                    <CustomItem2
-                      onClick={() => setNationalityIndex(index)}
-                      key={index}
-                    >
-                      <span>{nationality.title}</span>
-                    </CustomItem2>
-                  );
-                }
-              }
-            })}
-          </CustomDropdown2>
-        ) : (
-          <span className={`font-mine-regular -mt-1 text-${oppositeTheme}`}>
-            {userInfo && userInfo.nationality && userInfo.nationality.title
-              ? userInfo.nationality.title
-              : ""}
-          </span>
-        )}
+        <span className={`font-mine-regular -mt-1 text-${oppositeTheme}`}>
+          {nationality && nationality.title ? nationality.title : ""}
+        </span>
       </div>
       <div className="col-span-1 row-span-1 flex flex-col">
         <span className="text-gray font-mine-regular">{lang["country"]}</span>
@@ -186,9 +185,7 @@ export default function NationalInfo({ userInfo }) {
           </CustomDropdown2>
         ) : (
           <span className={`font-mine-regular -mt-1 text-${oppositeTheme}`}>
-            {userInfo && userInfo.country && userInfo.country.title
-              ? userInfo.country.title
-              : ""}
+            {country && country.title ? country.title : ""}
           </span>
         )}
       </div>
@@ -254,9 +251,7 @@ export default function NationalInfo({ userInfo }) {
           </CustomDropdown2>
         ) : (
           <span className={`font-mine-regular -mt-1 text-${oppositeTheme}`}>
-            {userInfo && userInfo.city && userInfo.city.title
-              ? userInfo.city.title
-              : ""}
+            {city && city.title ? city.title : ""}
           </span>
         )}
       </div>

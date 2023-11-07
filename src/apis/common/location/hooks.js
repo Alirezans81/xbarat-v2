@@ -4,6 +4,8 @@ import {
   getCities,
   getNationality,
   getRequiredFeild,
+  getCountry,
+  getCity,
 } from "./apis";
 import { useState } from "react";
 
@@ -103,6 +105,54 @@ const useGetNationality = () => {
   return { getNationality: fetch, error, isLoading };
 };
 
+const useGetCountry = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (countryUrl, setState, customFunction) => {
+    setIsLoading(true);
+    await getCountry(countryUrl)
+      .then((data) => {
+        console.log(data);
+        setState(data.data);
+        customFunction && customFunction();
+        setIsLoading(false);
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { getCountry: fetch, error, isLoading };
+};
+
+const useGetCity = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (cityUrl, setState, customFunction) => {
+    setIsLoading(true);
+    await getCity(cityUrl)
+      .then((data) => {
+        console.log(data);
+        setState(data.data);
+        customFunction && customFunction();
+        setIsLoading(false);
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { getCity: fetch, error, isLoading };
+};
+
 const useGetRequiredFeild = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -140,5 +190,7 @@ export {
   useGetCountries,
   useGetCities,
   useGetNationality,
+  useGetCountry,
+  useGetCity,
   useGetRequiredFeild,
 };

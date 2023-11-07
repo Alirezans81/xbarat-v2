@@ -328,3 +328,15 @@ body {
 .h-done-complete-profile {
   height: 70vh;
 }
+
+.w-preview-image-modal {
+  width: 45vw;
+}
+
+.h-preview-image-modal {
+  height: 70vh;
+}
+
+.w-88 {
+  width: 22rem;
+}

@@ -24,6 +24,14 @@ const getNationality = (nationalityUrl) => {
   return axios.get(nationalityUrl);
 };
 
+const getCountry = (countryUrl) => {
+  return axios.get(countryUrl);
+};
+
+const getCity = (cityUrl) => {
+  return axios.get(cityUrl);
+};
+
 const getRequiredFeild = (requiredFeildUrl) => {
   return axios.get(requiredFeildUrl);
 };
@@ -33,5 +41,7 @@ export {
   getCounties,
   getCities,
   getNationality,
+  getCountry,
+  getCity,
   getRequiredFeild,
 };

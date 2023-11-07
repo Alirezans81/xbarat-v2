@@ -6,20 +6,33 @@ import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSp
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import { useGetCurrencies } from "../../../apis/common/currency/hooks";
 
-export default function Step4({ handleBlur, handleChange, values }) {
+export default function Step4({
+  handleBlur,
+  handleChange,
+  values,
+  setFieldValue,
+  walletAsset,
+  walletTank,
+}) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
-  const { getCurrencies, isLoading } = useGetCurrencies();
-  useEffect(() => setIsLoadingSplashScreen(isLoading), [isLoading]);
+  const { getCurrencies, isLoading: getCurrenciesIsLoading } =
+    useGetCurrencies();
+  useEffect(
+    () => setIsLoadingSplashScreen(getCurrenciesIsLoading),
+    [getCurrenciesIsLoading]
+  );
 
   const [currencies, setCurrencies] = useState([]);
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
   useEffect(() => {
     getCurrencies(setCurrencies);
   }, []);
+
+  
 
   if (handleBlur && handleChange && values) {
     return (

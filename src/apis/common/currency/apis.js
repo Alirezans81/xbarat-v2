@@ -6,4 +6,8 @@ const getCurrencies = () => {
   return axios.get(api["currency"]);
 };
 
-export { getCurrencies };
+const getCurrency = (currencyUrl) => {
+  return axios.get(currencyUrl);
+};
+
+export { getCurrencies, getCurrency };

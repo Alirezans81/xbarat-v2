@@ -1,16 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { Formik } from "formik";
-import { CustomDropdown } from "../../../common/CustomDropdown";
+import { CustomDropdown, CustomItem } from "../../../common/CustomDropdown";
 import SubmitButton from "../../../common/SubmitButton";
-import { useDirectionState } from "../../../../Providers/DirectionProvider";
+import { useGetCurrencies } from "../../../../apis/common/currency/hooks";
+import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
 
 export default function QuickDeposit() {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
-  const { oneEnd: oneEndDirection } = useDirectionState();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+
+  const [currencies, setCurrencies] = useState([]);
+  const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
+  const { getCurrencies, isLoading } = useGetCurrencies();
+  useEffect(() => setIsLoadingSplashScreen(isLoading), [isLoading]);
+
+  useEffect(() => {
+    getCurrencies(setCurrencies);
+  }, []);
+
+  const locationDropdownClass =
+    currencies[selectedCurrencyIndex] &&
+    currencies[selectedCurrencyIndex].hasBranch
+      ? "col-span-1 row-span-1 flex"
+      : "hidden";
+  const submitButtonClass =
+    currencies[selectedCurrencyIndex] &&
+    currencies[selectedCurrencyIndex].hasBranch
+      ? "col-span-1 row-span-1 flex"
+      : "col-span-2 row-span-1 flex";
 
   return (
     <div className="flex flex-col h-full justify-between">
@@ -29,13 +50,72 @@ export default function QuickDeposit() {
             <div className="col-span-1 row-span-1 flex">
               <CustomDropdown
                 label={
-                  <span className="text-gray font-mine-regular">
-                    {lang["currency"]}
-                  </span>
+                  selectedCurrencyIndex >= 0 &&
+                  currencies[selectedCurrencyIndex] &&
+                  currencies[selectedCurrencyIndex].abbreviation ? (
+                    <span className={`text-${oppositeTheme} font-mine-regular`}>
+                      {currencies[selectedCurrencyIndex].abbreviation}
+                    </span>
+                  ) : (
+                    <span className="text-gray font-mine-regular">
+                      {lang["currency"]}
+                    </span>
+                  )
                 }
-              ></CustomDropdown>
+              >
+                {currencies.map((currency, index) => {
+                  if (index === 0 && index === currencies.length - 1) {
+                    return (
+                      <CustomItem
+                        key={index}
+                        className="rounded-xl"
+                        onClick={() => setSelectedCurrencyIndex(index)}
+                      >
+                        {currency && currency.abbreviation
+                          ? currency.abbreviation
+                          : "error"}
+                      </CustomItem>
+                    );
+                  } else if (index === 0) {
+                    return (
+                      <CustomItem
+                        key={index}
+                        className="rounded-t-xl"
+                        onClick={() => setSelectedCurrencyIndex(index)}
+                      >
+                        {currency && currency.abbreviation
+                          ? currency.abbreviation
+                          : "error"}
+                      </CustomItem>
+                    );
+                  } else if (index === currencies.length - 1) {
+                    return (
+                      <CustomItem
+                        key={index}
+                        className="rounded-b-xl"
+                        onClick={() => setSelectedCurrencyIndex(index)}
+                      >
+                        {currency && currency.abbreviation
+                          ? currency.abbreviation
+                          : "error"}
+                      </CustomItem>
+                    );
+                  } else {
+                    return (
+                      <CustomItem
+                        key={index}
+                        onClick={() => setSelectedCurrencyIndex(index)}
+                      >
+                        {currency && currency.abbreviation
+                          ? currency.abbreviation
+                          : "error"}
+                      </CustomItem>
+                    );
+                  }
+                })}
+              </CustomDropdown>
             </div>
-            <div className="col-span-1 row-span-1 flex">
+            <div className={locationDropdownClass}>
               <CustomDropdown
                 label={
                   <span className="text-gray font-mine-regular">
@@ -54,7 +134,7 @@ export default function QuickDeposit() {
                 value={values.amount}
               />
             </div>
-            <div className="col-span-1 row-span-1 flex">
+            <div className={submitButtonClass}>
               <SubmitButton
                 className="w-full h-9"
                 rounded="lg"
