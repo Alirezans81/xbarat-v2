@@ -1,47 +1,42 @@
 import React from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
-import { useAddComma } from "../../hooks/useNumberFunctions";
 
-export default function CustomTable({
-  rows,
-  heads,
-  setFormDefaultRate,
-  haverable,
-}) {
+export default function CustomTable({ rows, heads, selectRow, haverable }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
-  const addComma = useAddComma();
+  const colsQuantity = heads.length;
+  console.log(heads);
 
   return (
-    <div className="w-full h-full flex flex-col">
-      <div className="flex w-full flex-1">
+    <div className="w-full flex flex-col">
+      <div className={`grid grid-cols-${colsQuantity} gap-x-4 w-full`}>
         {heads.map((head, index) => (
           <span
             key={index}
-            className="flex-1 text-center font-mine-regular text-gray"
+            className="col-span-1 text-center font-mine-regular text-gray"
           >
             {head}
           </span>
         ))}
       </div>
-      {setFormDefaultRate
+      {selectRow
         ? rows.map((row, trIndex) => (
             <button
               key={trIndex}
               className={
                 haverable
-                  ? `flex w-full flex-1 bg-${theme}-back hover:bg-blue my-1 py-1 rounded-full hover-text-blue`
-                  : `flex w-full flex-1 bg-${theme}-back my-1 py-1 rounded-full hover-text-blue`
+                  ? `grid grid-cols-${colsQuantity} gap-x-4 w-full bg-${theme}-back items-center hover:bg-blue my-1 py-1 rounded-full hover-text-blue`
+                  : `grid grid-cols-${colsQuantity} gap-x-4 w-full bg-${theme}-back items-center my-1 py-1 rounded-full hover-text-blue`
               }
-              onClick={() => setFormDefaultRate(+row.rate)}
+              onClick={() => selectRow(row)}
             >
               {Object.values(row).map((value, tdIndex) => (
                 <span
                   key={tdIndex}
-                  className={`flex-1 text-center font-mine-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
+                  className={`col-span-1 text-center font-mine-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
                 >
-                  {addComma(value)}
+                  {value}
                 </span>
               ))}
             </button>
@@ -49,16 +44,17 @@ export default function CustomTable({
         : rows.map((row, trIndex) => (
             <div
               key={trIndex}
-              className={`flex w-full flex-1 bg-${theme}-back my-1 py-1 rounded-full`}
+              className={`grid grid-cols-${colsQuantity} gap-x-4 w-full bg-${theme}-back items-center my-1 py-1 rounded-full`}
             >
-              {Object.values(row).map((value, tdIndex) => (
-                <span
-                  key={tdIndex}
-                  className={`flex-1 text-center font-mine-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
-                >
-                  {addComma(value)}
-                </span>
-              ))}
+              {row &&
+                Object.values(row).map((value, tdIndex) => (
+                  <span
+                    key={tdIndex}
+                    className={`col-span-1 text-center font-mine-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
+                  >
+                    {value}
+                  </span>
+                ))}
             </div>
           ))}
     </div>

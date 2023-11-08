@@ -132,5 +132,9 @@
   "complete-profile-modal-step4-note-2nd": "Card number is for times that the money is not much",
   "complete-profile-modal-step4-note-3rd": "And Shaba number is for time we want to send you a big amount of money",
   "complete-profile-modal-step5-note-1st": "Thank you for completing your profile",
-  "complete-profile-modal-step5-note-2nd": "Please wait for admin approve"
+  "complete-profile-modal-step5-note-2nd": "Please wait for admin approve",
+  "person-code": "Person Code",
+  "from-date": "From Date",
+  "until-date": "Until Date",
+  "assign": "Assign"
 }
