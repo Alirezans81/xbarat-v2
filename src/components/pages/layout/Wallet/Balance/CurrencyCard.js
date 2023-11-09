@@ -4,14 +4,25 @@ import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import { useAddComma } from "../../../../../hooks/useNumberFunctions";
 import { useGetCurrency } from "../../../../../apis/common/currency/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
+import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
+import TransactionModal from "../../../../modals/TransactionModal";
 
 export default function CurrencyCard({ balance }) {
   const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
-
   const addComma = useAddComma();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const setModalData = useModalDataSetState();
+
+  const openTransactionModal = (defaultType) => {
+    setModalData({
+      title: lang["transaction"],
+      children: <TransactionModal data={balance} defaultType={defaultType} />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
 
   const { getCurrency, isLoading } = useGetCurrency();
   useEffect(() => setIsLoadingSplashScreen(isLoading), [isLoading]);
@@ -20,8 +31,6 @@ export default function CurrencyCard({ balance }) {
   useEffect(() => {
     getCurrency(balance.currency, setCurrency);
   }, []);
-
-  console.log(balance);
 
   if (currency) {
     return (
@@ -53,10 +62,16 @@ export default function CurrencyCard({ balance }) {
           </span>
         </div>
         <div className="flex flex-col gap-y-2 font-mine-bold w-full text-sm items-center mt-1">
-          <button className="border-2 border-blue text-blue rounded-lg pt-2 pb-0.5 w-9/12">
+          <button
+            onClick={() => openTransactionModal("transfer")}
+            className="border-2 border-blue text-blue rounded-lg pt-2 pb-0.5 w-9/12"
+          >
             {lang["transfer"]}
           </button>
-          <button className="border-2 border-red text-red rounded-lg pt-2 pb-0.5 w-9/12">
+          <button
+            onClick={() => openTransactionModal("withdrawal")}
+            className="border-2 border-red text-red rounded-lg pt-2 pb-0.5 w-9/12"
+          >
             {lang["withdrawal"]}
           </button>
         </div>

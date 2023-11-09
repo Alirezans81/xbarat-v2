@@ -22,8 +22,6 @@ export default function CustomPreviewer({ imageUrl }) {
     ? imageUrlSplited[imageUrlSplited.length - 1]
     : "";
 
-  console.log(fileName);
-
   return (
     <div
       className={`flex flex-row justify-between gap-x-2 bg-${theme} py-2.5 px-2.5 rounded-md`}

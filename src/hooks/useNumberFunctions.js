@@ -34,7 +34,11 @@ const useReverseRate = () => {
 };
 
 const removeComma = (string) => {
-  return +string.replaceAll(",", "");
+  if (string.length >= 3) {
+    return +string.replaceAll(",", "");
+  } else {
+    return string;
+  }
 };
 
 const useRemoveComma = () => {

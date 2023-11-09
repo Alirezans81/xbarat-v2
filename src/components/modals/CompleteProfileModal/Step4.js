@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
-
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import { useGetCurrencies } from "../../../apis/common/currency/hooks";
+import { useGetWalletTankTypes } from "../../../apis/common/wallet/hooks";
 
 export default function Step4({
   handleBlur,
@@ -25,14 +25,41 @@ export default function Step4({
     () => setIsLoadingSplashScreen(getCurrenciesIsLoading),
     [getCurrenciesIsLoading]
   );
+  const { getWalletTankTypes, isLoading: getWalletTankTypesIsLoading } =
+    useGetWalletTankTypes();
+  useEffect(
+    () => setIsLoadingSplashScreen(getWalletTankTypesIsLoading),
+    [getWalletTankTypesIsLoading]
+  );
 
   const [currencies, setCurrencies] = useState([]);
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
+  const [walletTankTypes, setWalletTankTypes] = useState([]);
+  const [selectedWalletTankType, setSelectedWalletTankType] = useState(-1);
+
   useEffect(() => {
     getCurrencies(setCurrencies);
+    getWalletTankTypes({}, setWalletTankTypes);
   }, []);
 
-  
+  useEffect(() => {
+    selectedCurrencyIndex >= 0 &&
+      currencies[selectedCurrencyIndex] &&
+      currencies[selectedCurrencyIndex].url &&
+      setFieldValue(
+        "wallet_asset_currency",
+        currencies[selectedCurrencyIndex].url
+      );
+  }, [selectedCurrencyIndex]);
+  useEffect(() => {
+    selectedWalletTankType >= 0 &&
+      walletTankTypes[selectedWalletTankType] &&
+      walletTankTypes[selectedWalletTankType].url &&
+      setFieldValue(
+        "wallet_tank_type",
+        walletTankTypes[selectedWalletTankType].url
+      );
+  }, [selectedWalletTankType]);
 
   if (handleBlur && handleChange && values) {
     return (
@@ -106,23 +133,96 @@ export default function Step4({
             </div>
             <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
               <span className={`font-mine-regular text-${oppositeTheme}`}>
-                {lang["number-of-document"]}
+                {lang["type-of-document"]}
+              </span>
+              <div className="w-full flex">
+                <CustomDropdown
+                  label={
+                    selectedWalletTankType >= 0
+                      ? walletTankTypes[selectedWalletTankType].title
+                      : ""
+                  }
+                >
+                  {walletTankTypes.map((walletTankType, index) => {
+                    if (index === 0 && index === walletTankTypes.length - 1) {
+                      return (
+                        <CustomItem
+                          key={index}
+                          className="rounded-xl"
+                          onClick={() => setSelectedWalletTankType(index)}
+                        >
+                          {walletTankType && walletTankType.title
+                            ? walletTankType.title
+                            : "error"}
+                        </CustomItem>
+                      );
+                    } else if (index === 0) {
+                      return (
+                        <CustomItem
+                          key={index}
+                          className="rounded-t-xl"
+                          onClick={() => setSelectedWalletTankType(index)}
+                        >
+                          {walletTankType && walletTankType.title
+                            ? walletTankType.title
+                            : "error"}
+                        </CustomItem>
+                      );
+                    } else if (index === walletTankTypes.length - 1) {
+                      return (
+                        <CustomItem
+                          key={index}
+                          className="rounded-b-xl"
+                          onClick={() => setSelectedWalletTankType(index)}
+                        >
+                          {walletTankType && walletTankType.title
+                            ? walletTankType.title
+                            : "error"}
+                        </CustomItem>
+                      );
+                    } else {
+                      return (
+                        <CustomItem
+                          key={index}
+                          onClick={() => setSelectedWalletTankType(index)}
+                        >
+                          {walletTankType && walletTankType.title
+                            ? walletTankType.title
+                            : "error"}
+                        </CustomItem>
+                      );
+                    }
+                  })}
+                </CustomDropdown>
+              </div>
+            </div>
+            <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+              <span className={`font-mine-regular text-${oppositeTheme}`}>
+                {lang["bank-account-title"]}
               </span>
               <div className="w-full flex">
                 <input
                   className={`flex-1 hide-input-arrows bg-${theme}-back font-mine-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
-                  name="identity_code"
-                  onBlur={handleBlur("identity_code")}
-                  onChange={handleChange("identity_code")}
-                  value={values.identity_code ? values.identity_code : ""}
+                  name="title"
+                  onBlur={handleBlur("title")}
+                  onChange={handleChange("title")}
+                  value={values.title ? values.title : ""}
                 />
               </div>
             </div>
             <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
               <span className={`font-mine-regular text-${oppositeTheme}`}>
-                {lang["upload-document"]}
+                {lang["bank-account-number"]}
               </span>
-              <div className="w-full flex"></div>
+              <div className="w-full flex">
+                <input
+                  className={`flex-1 hide-input-arrows bg-${theme}-back font-mine-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                  name="bank_info"
+                  onBlur={handleBlur("bank_info")}
+                  onChange={handleChange("bank_info")}
+                  value={values.bank_info ? values.bank_info : ""}
+                />
+              </div>
             </div>
           </form>
         </div>

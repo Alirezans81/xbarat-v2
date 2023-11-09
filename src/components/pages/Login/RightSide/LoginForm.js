@@ -5,17 +5,41 @@ import { useDirectionState } from "../../../../Providers/DirectionProvider";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../../../apis/pages/Login/hooks";
+import {
+  useGetWalletAssets,
+  useGetWalletTanks,
+  useGetWallets,
+} from "../../../../apis/common/wallet/hooks";
+import { useUserState } from "../../../../Providers/UserProvider";
+import { useWalletSetState } from "../../../../Providers/WalletProvider";
 
 export default function LoginForm({ setIsSplashScreenLoading }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
   const lang = useLanguageState();
   const { one: direction } = useDirectionState();
+  const userInfo = useUserState();
+  const setWallet = useWalletSetState();
 
-  const { login, isLoading, error } = useLogin();
+  const { login, isLoading: loginIsLoading, error } = useLogin();
   useEffect(() => {
-    setIsSplashScreenLoading(isLoading);
-  });
+    setIsSplashScreenLoading(loginIsLoading);
+  }, [loginIsLoading]);
+  const { getWallets, isLoading: getWalletsIsLoading } = useGetWallets();
+  useEffect(() => {
+    setIsSplashScreenLoading(getWalletsIsLoading);
+  }, [getWalletsIsLoading]);
+  const { getWalletAssets, isLoading: getWalletAssetsIsLoading } =
+    useGetWalletAssets();
+  useEffect(() => {
+    setIsSplashScreenLoading(getWalletAssetsIsLoading);
+  }, [getWalletAssetsIsLoading]);
+  const { getWalletTanks, isLoading: getWalletTanksIsLoading } =
+    useGetWalletTanks();
+  useEffect(() => {
+    setIsSplashScreenLoading(getWalletTanksIsLoading);
+  }, [getWalletTanksIsLoading]);
+
   const navigate = useNavigate();
   const navigateToHome = () => {
     navigate("/home");
@@ -68,10 +92,58 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
     return result;
   };
 
+  const [wallets, setWallets] = useState([]);
+  const [walletAssets, setWalletAssets] = useState([]);
+  const [walletTanks, setWalletTanks] = useState([]);
+
+  useEffect(() => {
+    getWalletAssets(
+      {
+        wallet: wallets[0] && wallets[0].slug ? wallets[0].slug : "",
+      },
+      setWalletAssets
+    );
+  }, [wallets]);
+  useEffect(() => {
+    getWalletTanks(
+      {
+        wallet_asset:
+          walletAssets[0] && walletAssets[0].slug ? walletAssets[0].slug : "",
+      },
+      setWalletTanks
+    );
+  }, [walletAssets]);
+  useEffect(() => {
+    if (wallets[0] && walletAssets[0] && walletTanks[0]) {
+      const walletObject = {
+        wallet: wallets[0],
+        walletAsset: walletAssets[0],
+        walletTank: walletTanks[0],
+      };
+      console.log("walletObject: ", walletObject);
+      setWallet(walletObject);
+      window.localStorage.setItem("wallet", JSON.stringify(walletObject));
+    }
+  }, [walletTanks]);
+
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
-      onSubmit={(values) => login(values, navigateToHome, rememberMeCheck)}
+      onSubmit={(values) =>
+        login(
+          values,
+          () => {
+            getWallets(
+              {
+                user: userInfo && userInfo.username ? userInfo.username : "",
+              },
+              setWallets
+            );
+            navigateToHome();
+          },
+          rememberMeCheck
+        )
+      }
     >
       {({ values, handleBlur, handleChange, handleSubmit }) => (
         <form

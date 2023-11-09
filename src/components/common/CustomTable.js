@@ -6,10 +6,9 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
   const colsQuantity = heads.length;
-  console.log(heads);
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="flex-1 w-full flex flex-col overflow-y-visible">
       <div className={`grid grid-cols-${colsQuantity} gap-x-4 w-full`}>
         {heads.map((head, index) => (
           <span

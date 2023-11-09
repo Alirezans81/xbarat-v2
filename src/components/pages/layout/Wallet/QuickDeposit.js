@@ -6,32 +6,59 @@ import { CustomDropdown, CustomItem } from "../../../common/CustomDropdown";
 import SubmitButton from "../../../common/SubmitButton";
 import { useGetCurrencies } from "../../../../apis/common/currency/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
+import { useGetBranches } from "../../../../apis/common/branch/hooks";
+import { useCreateDeposit } from "../../../../apis/common/wallet/hooks";
+import { useUserState } from "../../../../Providers/UserProvider";
 
 export default function QuickDeposit() {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const userInfo = useUserState();
 
   const [currencies, setCurrencies] = useState([]);
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
-  const { getCurrencies, isLoading } = useGetCurrencies();
-  useEffect(() => setIsLoadingSplashScreen(isLoading), [isLoading]);
+  const [locations, setLocations] = useState([]);
+  const [selectedLocationIndex, setSelectedLocationIndex] = useState(-1);
+  const { getCurrencies, isLoading: getCurrenciesIsLoading } =
+    useGetCurrencies();
+  useEffect(
+    () => setIsLoadingSplashScreen(getCurrenciesIsLoading),
+    [getCurrenciesIsLoading]
+  );
+  const { getBranches, isLoading: getBranchesIsLoading } = useGetBranches();
+  useEffect(
+    () => setIsLoadingSplashScreen(getBranchesIsLoading),
+    [getBranchesIsLoading]
+  );
 
   useEffect(() => {
     getCurrencies(setCurrencies);
   }, []);
 
-  const locationDropdownClass =
-    currencies[selectedCurrencyIndex] &&
-    currencies[selectedCurrencyIndex].hasBranch
-      ? "col-span-1 row-span-1 flex"
-      : "hidden";
-  const submitButtonClass =
-    currencies[selectedCurrencyIndex] &&
-    currencies[selectedCurrencyIndex].hasBranch
-      ? "col-span-1 row-span-1 flex"
-      : "col-span-2 row-span-1 flex";
+  const [locationDropdownClass, setLocationDropdownClass] = useState("");
+  const [submitButtonClass, setSubmitButtonClass] = useState("");
+  useEffect(() => {
+    if (
+      currencies[selectedCurrencyIndex] &&
+      currencies[selectedCurrencyIndex].has_branches
+    ) {
+      getBranches(
+        { currencies: currencies[selectedCurrencyIndex].slug },
+        setLocations
+      );
+
+      setLocationDropdownClass("col-span-1 row-span-1 flex");
+      setSubmitButtonClass("col-span-1 row-span-1 flex");
+    } else {
+      setLocationDropdownClass("hidden");
+      setSubmitButtonClass("col-span-2 row-span-1 flex");
+    }
+  }, [selectedCurrencyIndex]);
+
+  const { createDeposit, isLoading: createDepositIsLoading } =
+    useCreateDeposit();
 
   return (
     <div className="flex flex-col h-full justify-between">
@@ -44,7 +71,25 @@ export default function QuickDeposit() {
           {lang["deposit"]}
         </span>
       </div>
-      <Formik initialValues={{ amount: "" }}>
+      <Formik
+        initialValues={{ amount: "" }}
+        onSubmit={(values) => {
+          createDeposit({
+            user_sender: userInfo && userInfo.url ? userInfo.url : "",
+            currency:
+              currencies[selectedCurrencyIndex] &&
+              currencies[selectedCurrencyIndex].url
+                ? currencies[selectedCurrencyIndex].url
+                : "",
+            amount: values.amount,
+            branch:
+              locations[selectedLocationIndex] &&
+              locations[selectedLocationIndex].url
+                ? locations[selectedLocationIndex].url
+                : "",
+          });
+        }}
+      >
         {({ handleChange, handleBlur, values, handleSubmit }) => (
           <div className="grid grid-cols-2 grid-rows-2 gap-2">
             <div className="col-span-1 row-span-1 flex">
@@ -118,11 +163,60 @@ export default function QuickDeposit() {
             <div className={locationDropdownClass}>
               <CustomDropdown
                 label={
-                  <span className="text-gray font-mine-regular">
-                    {lang["location"]}
-                  </span>
+                  selectedLocationIndex >= 0 &&
+                  locations[selectedLocationIndex] &&
+                  locations[selectedLocationIndex].title ? (
+                    locations[selectedLocationIndex].title
+                  ) : (
+                    <span className="text-gray font-mine-regular">
+                      {lang["location"]}
+                    </span>
+                  )
                 }
-              ></CustomDropdown>
+              >
+                {locations.map((location, index) => {
+                  if (index === 0 && index === locations.length - 1) {
+                    return (
+                      <CustomItem
+                        key={index}
+                        className="rounded-xl"
+                        onClick={() => setSelectedLocationIndex(index)}
+                      >
+                        {location && location.title ? location.title : "error"}
+                      </CustomItem>
+                    );
+                  } else if (index === 0) {
+                    return (
+                      <CustomItem
+                        key={index}
+                        className="rounded-t-xl"
+                        onClick={() => setSelectedLocationIndex(index)}
+                      >
+                        {location && location.title ? location.title : "error"}
+                      </CustomItem>
+                    );
+                  } else if (index === locations.length - 1) {
+                    return (
+                      <CustomItem
+                        key={index}
+                        className="rounded-b-xl"
+                        onClick={() => setSelectedLocationIndex(index)}
+                      >
+                        {location && location.title ? location.title : "error"}
+                      </CustomItem>
+                    );
+                  } else {
+                    return (
+                      <CustomItem
+                        key={index}
+                        onClick={() => setSelectedLocationIndex(index)}
+                      >
+                        {location && location.title ? location.title : "error"}
+                      </CustomItem>
+                    );
+                  }
+                })}
+              </CustomDropdown>
             </div>
             <div className="col-span-1 row-span-1 flex">
               <input

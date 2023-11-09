@@ -8,8 +8,6 @@ export default function DocumentInfo({ userInfo }) {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
 
-  console.log("Document: ", userInfo.document);
-
   return (
     <div
       className={`bg-${theme}-back grid grid-cols-2 rounded-3xl w-full flex-1 px-5 py-4`}

@@ -4,56 +4,7 @@ const WalletContext = createContext();
 const WalletContextSetState = createContext();
 
 const WalletProvider = ({ children }) => {
-  const [wallet, setWallet] = useState([
-    {
-      currencyId: 1,
-      title: "USD",
-      imageSource: {
-        gray: require("../Images/currency symbols/usd-gray.png"),
-        dark: require("../Images/currency symbols/usd-dark.png"),
-        light: require("../Images/currency symbols/usd-light.png"),
-      },
-      money: 1000,
-      pending: 100,
-      locked: 50,
-    },
-    {
-      currencyId: 2,
-      title: "IRR",
-      imageSource: {
-        gray: require("../Images/currency symbols/irr-gray.png"),
-        dark: require("../Images/currency symbols/irr-dark.png"),
-        light: require("../Images/currency symbols/irr-light.png"),
-      },
-      money: 10000000,
-      pending: 100000,
-      locked: 5000000,
-    },
-    {
-      currencyId: 3,
-      title: "AFN",
-      imageSource: {
-        gray: require("../Images/currency symbols/usd-gray.png"),
-        dark: require("../Images/currency symbols/usd-dark.png"),
-        light: require("../Images/currency symbols/usd-light.png"),
-      },
-      money: 2000,
-      pending: 1000,
-      locked: 100,
-    },
-    {
-      currencyId: 5,
-      title: "EUR",
-      imageSource: {
-        gray: require("../Images/currency symbols/usd-gray.png"),
-        dark: require("../Images/currency symbols/usd-dark.png"),
-        light: require("../Images/currency symbols/usd-light.png"),
-      },
-      money: 100,
-      pending: 500,
-      locked: 0,
-    },
-  ]);
+  const [wallet, setWallet] = useState([]);
 
   return (
     <WalletContext.Provider value={wallet}>

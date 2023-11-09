@@ -182,11 +182,11 @@ export default function Tables() {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 grid grid-cols-2 gap-x-20">
-        <div className="col-span-1">
+      <div className="flex-1 grid grid-cols-2 grid-rows-1 gap-x-20">
+        <div className="col-span-1 overflow-y-visible">
           <CustomTable heads={tableHead} rows={depositsTableData} />
         </div>
-        <div className="col-span-1">
+        <div className="col-span-1 flex">
           <CustomTable heads={tableHead} rows={withdrawalsTableData} />
         </div>
       </div>

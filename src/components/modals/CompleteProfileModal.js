@@ -15,11 +15,11 @@ import {
 import { Formik } from "formik";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import {
-  useCreateWalletAsset,
-  useCreateWalletTank,
   useGetWalletAssets,
   useGetWalletTanks,
   useGetWallets,
+  useCreateWalletAsset,
+  useCreateWalletTank,
 } from "../../apis/common/wallet/hooks";
 
 export default function CompleteProfileModal() {
@@ -63,9 +63,9 @@ export default function CompleteProfileModal() {
   const [walletTanks, setWalletTanks] = useState([]);
   const walletTank = walletTanks[0] ? walletTanks[0] : null;
   useEffect(() => {
-    walletAsset &&
-      walletAsset.url &&
-      getWalletTanks({ walletAsset: walletAsset.url }, setWalletTanks);
+    userInfo &&
+      userInfo.username &&
+      getWalletTanks({ user: userInfo.username }, setWalletTanks);
   }, [walletAssets]);
 
   useEffect(() => {
@@ -78,10 +78,11 @@ export default function CompleteProfileModal() {
         userInfo.identity_code &&
         userInfo.document &&
         setStep(4);
-
-      walletTank && setStep(5);
     }
   }, []);
+  useEffect(() => {
+    walletTank && setStep(5);
+  }, [walletTanks]);
 
   const { createWalletAsset, isLoading: createWalletAssetIsLoading } =
     useCreateWalletAsset();
@@ -99,10 +100,37 @@ export default function CompleteProfileModal() {
   const { fetchStep1, isLoading: fetchStep1IsLoading } = useFetchStep1();
   const { fetchStep2, isLoading: fetchStep2IsLoading } = useFetchStep2();
   const { fetchStep3, isLoading: fetchStep3IsLoading } = useFetchStep3();
-  const fetchStep4 = (values) => {
+  const fetchStep4 = (values, customFunction) => {
+    const createWalletAssetParams = {
+      wallet: wallet && wallet.url ? wallet.url : "",
+      currency: values.wallet_asset_currency,
+    };
+    const createWalletTankParams = {
+      title: values.title,
+      wallet_tank_type: values.wallet_tank_type,
+      bank_info: values.bank_info,
+    };
+
     !walletAsset
-      ? createWalletAsset(values, () => createWalletTank(values))
-      : createWalletTank(values);
+      ? createWalletAsset(createWalletAssetParams, (created_wallet_asset) => {
+          createWalletTank(
+            {
+              wallet_asset:
+                created_wallet_asset && created_wallet_asset.url
+                  ? created_wallet_asset.url
+                  : "",
+              ...createWalletTankParams,
+            },
+            customFunction
+          );
+        })
+      : createWalletTank(
+          {
+            wallet: wallet && wallet.url ? wallet.url : "",
+            ...createWalletTankParams,
+          },
+          customFunction
+        );
   };
 
   useEffect(
@@ -118,7 +146,7 @@ export default function CompleteProfileModal() {
     [fetchStep3IsLoading]
   );
   const nextStep = () => {
-    step < 4 && setStep(step + 1);
+    step <= 4 && setStep(step + 1);
   };
 
   return (
@@ -173,7 +201,9 @@ export default function CompleteProfileModal() {
               userInfo && userInfo.document && userInfo.document !== "undefined"
                 ? userInfo.document
                 : "",
+            wallet_asset_currency: "",
             title: "",
+            wallet_tank_type: "",
             bank_info: "",
           }}
           onSubmit={(values) => {

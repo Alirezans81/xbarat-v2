@@ -2,8 +2,12 @@ import {
   getWallets,
   getWalletAssets,
   getWalletTanks,
+  getWalletTankTypes,
   createWalletAsset,
   createWalletTank,
+  createDeposit,
+  createTransfer,
+  createWithdrawal,
 } from "./apis";
 import { useState } from "react";
 
@@ -79,16 +83,40 @@ const useGetWalletTanks = () => {
   return { getWalletTanks: fetch, error, isLoading };
 };
 
+const useGetWalletTankTypes = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (filtersObject, setState, customFunction) => {
+    setIsLoading(true);
+    await getWalletTankTypes(filtersObject)
+      .then((data) => {
+        console.log(data);
+        setState(data.data);
+        customFunction && customFunction();
+        setIsLoading(false);
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { getWalletTankTypes: fetch, error, isLoading };
+};
+
 const useCreateWalletAsset = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (params, customFunction) => {
+  const fetch = async (params, customFunctionWithData) => {
     setIsLoading(true);
     await createWalletAsset(params)
       .then((data) => {
         console.log(data);
-        customFunction && customFunction();
+        customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
         return data.data;
       })
@@ -125,10 +153,83 @@ const useCreateWalletTank = () => {
   return { createWalletTank: fetch, error, isLoading };
 };
 
+const useCreateDeposit = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (params, customFunction) => {
+    setIsLoading(true);
+    await createDeposit(params)
+      .then((data) => {
+        console.log(data);
+        customFunction && customFunction();
+        setIsLoading(false);
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { createDeposit: fetch, error, isLoading };
+};
+
+const useCreateWithdrawal = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (params, customFunction) => {
+    setIsLoading(true);
+    await createWithdrawal(params)
+      .then((data) => {
+        console.log(data);
+        customFunction && customFunction();
+        setIsLoading(false);
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { createWithdrawal: fetch, error, isLoading };
+};
+
+const useCreateTransfer = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (params, customFunction) => {
+    setIsLoading(true);
+    await createTransfer(params)
+      .then((data) => {
+        console.log(data);
+        customFunction && customFunction();
+        setIsLoading(false);
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { createTransfer: fetch, error, isLoading };
+};
+
 export {
   useGetWallets,
   useGetWalletAssets,
   useGetWalletTanks,
+  useGetWalletTankTypes,
   useCreateWalletAsset,
   useCreateWalletTank,
+  useCreateDeposit,
+  useCreateWithdrawal,
+  useCreateTransfer,
 };

@@ -9,5 +9,10 @@
   "currency": "https://smicln.ir/api/currency/",
   "wallet": "https://smicln.ir/api/wallet/",
   "wallet-asset": "https://smicln.ir/api/wallet/asset/",
-  "wallet-tank": "https://smicln.ir/api/wallet/tank/"
+  "wallet-tank": "https://smicln.ir/api/wallet/tank/",
+  "wallet-tank-type": "https://smicln.ir/api/wallet/tank/type/",
+  "branch": "https://smicln.ir/api/branch/",
+  "deposit": "https://smicln.ir/api/order/deposit/",
+  "withdrawal": "https://smicln.ir/api/order/withdrawal/",
+  "transfer": "https://smicln.ir/api/order/transfer/"
 }

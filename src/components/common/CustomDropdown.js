@@ -60,7 +60,7 @@ function CustomDropdown({ children, label, className }) {
       theme={customTheme}
       color="dark"
       label={<span className={className + " -mb-6"}>{label}</span>}
-      className={className + ` bg-${theme} rounded-xl hover:bg-${theme}`}
+      className={className + ` bg-${theme} rounded-xl hover:bg-${theme} z-20`}
       style={buttonStyle}
     >
       {children}

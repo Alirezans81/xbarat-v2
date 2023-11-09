@@ -21,6 +21,8 @@ export default function Login() {
   const resetApp = () => {
     setToken(null);
     window.localStorage.removeItem("authToken");
+    window.localStorage.removeItem("userInfo");
+    window.localStorage.removeItem("wallet");
     window.localStorage.removeItem("linksShown");
   };
 

@@ -136,5 +136,10 @@
   "person-code": "Person Code",
   "from-date": "From Date",
   "until-date": "Until Date",
-  "assign": "Assign"
+  "assign": "Assign",
+  "type-of-document": "Type of Document",
+  "bank-account": "Bank Account",
+  "bank-account-title": "Bank Account Title",
+  "bank-account-number": "Bank Account Number",
+  "transaction": "Transaction"
 }
