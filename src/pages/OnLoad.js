@@ -5,7 +5,6 @@ import { useUserSetState } from "../Providers/UserProvider";
 import { useLanguageState } from "../Providers/LanguageProvider";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useWalletSetState } from "../Providers/WalletProvider";
-import Wallet from "./Wallet";
 
 export default function OnLoad() {
   const navigate = useNavigate();
@@ -31,10 +30,11 @@ export default function OnLoad() {
       const savedToken = JSON.parse(saveStringToken);
       const savedUserInfo = JSON.parse(saveStringUserInfo);
       const savedWallet = JSON.parse(saveStringWallet);
+      console.log("savedWallet: ", savedWallet);
 
       setToken(savedToken);
       setUser(savedUserInfo);
-      setWallet(Wallet);
+      setWallet(savedWallet);
       navigate("/home");
     } else {
       window.localStorage.removeItem("linksShown");

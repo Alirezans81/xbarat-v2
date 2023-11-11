@@ -14,6 +14,7 @@ import LoadingSplashScreen from "../components/common/LoadingSplashScreen";
 import CustomToast from "../components/common/CustomToast";
 import CustomModal from "../components/common/CustomModal";
 import { useUserSetState } from "../Providers/UserProvider";
+import { useWalletSetState } from "../Providers/WalletProvider";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -22,6 +23,7 @@ export default function Layout() {
   const token = useTokenState();
   const setToken = useTokenSetState();
   const setUser = useUserSetState();
+  const setWallet = useWalletSetState();
   const lang = useLanguageState();
   const { pathname: activeRoute } = useLocation();
   const [links, setLinks] = useState([]);
@@ -29,20 +31,26 @@ export default function Layout() {
   useEffect(() => {
     const savedStringToken = window.localStorage.getItem("authToken");
     const savedStringUser = window.localStorage.getItem("userInfo");
+    const saveStringWallet = window.localStorage.getItem("wallet");
 
     if (
       savedStringToken !== "undefined" &&
       savedStringToken !== "null" &&
       savedStringUser !== "undefined" &&
-      savedStringUser !== "null"
+      savedStringUser !== "null" &&
+      saveStringWallet !== "undefined" &&
+      saveStringWallet !== "null"
     ) {
       const savedToken = JSON.parse(savedStringToken);
       const savedUser = JSON.parse(savedStringUser);
+      const savedWallet = JSON.parse(saveStringWallet);
       setToken(savedToken);
       setUser(savedUser);
+      setWallet(savedWallet);
     } else {
       setToken(null);
       setUser(null);
+      setWallet({ wallets: [], walletAssets: [], walletTanks: [] });
     }
   }, []);
 

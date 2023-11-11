@@ -37,8 +37,8 @@ export default function QuickDeposit() {
     getCurrencies(setCurrencies);
   }, []);
 
-  const [locationDropdownClass, setLocationDropdownClass] = useState("");
   const [submitButtonClass, setSubmitButtonClass] = useState("");
+  const [locationDropdownClass, setLocationDropdownClass] = useState("");
   useEffect(() => {
     if (
       currencies[selectedCurrencyIndex] &&
@@ -74,20 +74,35 @@ export default function QuickDeposit() {
       <Formik
         initialValues={{ amount: "" }}
         onSubmit={(values) => {
-          createDeposit({
-            user_sender: userInfo && userInfo.url ? userInfo.url : "",
-            currency:
-              currencies[selectedCurrencyIndex] &&
-              currencies[selectedCurrencyIndex].url
-                ? currencies[selectedCurrencyIndex].url
-                : "",
-            amount: values.amount,
-            branch:
-              locations[selectedLocationIndex] &&
-              locations[selectedLocationIndex].url
-                ? locations[selectedLocationIndex].url
-                : "",
-          });
+          if (
+            currencies[selectedCurrencyIndex] &&
+            currencies[selectedCurrencyIndex].has_branches
+          ) {
+            createDeposit({
+              user_sender: userInfo && userInfo.url ? userInfo.url : "",
+              currency:
+                currencies[selectedCurrencyIndex] &&
+                currencies[selectedCurrencyIndex].url
+                  ? currencies[selectedCurrencyIndex].url
+                  : "",
+              amount: values.amount,
+              branch:
+                locations[selectedLocationIndex] &&
+                locations[selectedLocationIndex].url
+                  ? locations[selectedLocationIndex].url
+                  : "",
+            });
+          } else {
+            createDeposit({
+              user_sender: userInfo && userInfo.url ? userInfo.url : "",
+              currency:
+                currencies[selectedCurrencyIndex] &&
+                currencies[selectedCurrencyIndex].url
+                  ? currencies[selectedCurrencyIndex].url
+                  : "",
+              amount: values.amount,
+            });
+          }
         }}
       >
         {({ handleChange, handleBlur, values, handleSubmit }) => (

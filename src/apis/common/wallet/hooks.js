@@ -15,13 +15,19 @@ const useGetWallets = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (filtersObject, setState, customFunction) => {
+  const fetch = async (
+    filtersObject,
+    setState,
+    customFunction,
+    customFunctionWithData
+  ) => {
     setIsLoading(true);
     await getWallets(filtersObject)
       .then((data) => {
         console.log(data);
         setState(data.data);
         customFunction && customFunction();
+        customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
         return data.data;
       })
@@ -39,13 +45,19 @@ const useGetWalletAssets = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (filtersObject, setState, customFunction) => {
+  const fetch = async (
+    filtersObject,
+    setState,
+    customFunction,
+    customFunctionWithData
+  ) => {
     setIsLoading(true);
     await getWalletAssets(filtersObject)
       .then((data) => {
         console.log(data);
         setState(data.data);
         customFunction && customFunction();
+        customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
         return data.data;
       })

@@ -7,7 +7,7 @@ import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoa
 import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
 import TransactionModal from "../../../../modals/TransactionModal";
 
-export default function CurrencyCard({ balance }) {
+export default function CurrencyCard({ walletAsset }) {
   const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -18,7 +18,9 @@ export default function CurrencyCard({ balance }) {
   const openTransactionModal = (defaultType) => {
     setModalData({
       title: lang["transaction"],
-      children: <TransactionModal data={balance} defaultType={defaultType} />,
+      children: (
+        <TransactionModal data={walletAsset} defaultType={defaultType} />
+      ),
       canClose: true,
       isOpen: true,
     });
@@ -29,7 +31,7 @@ export default function CurrencyCard({ balance }) {
 
   const [currency, setCurrency] = useState();
   useEffect(() => {
-    getCurrency(balance.currency, setCurrency);
+    getCurrency(walletAsset.currency, setCurrency);
   }, []);
 
   if (currency) {
@@ -49,16 +51,16 @@ export default function CurrencyCard({ balance }) {
             </span>
           )}
           <span className={`text-${oppositeTheme}`}>
-            {addComma(+balance.balance)}
+            {addComma(+walletAsset.balance)}
           </span>
-          <span className="text-gray mx-1">{balance.title}</span>
+          <span className="text-gray mx-1">{walletAsset.title}</span>
         </div>
         <div className="-mt-1.5  flex flex-col font-mine-regular items-center">
           <span className="text-green">
-            {"+ " + addComma(+balance.pending) + " " + lang["pending"]}
+            {"+ " + addComma(+walletAsset.pending) + " " + lang["pending"]}
           </span>
           <span className="text-red -mt-1">
-            {"- " + addComma(+balance.locked) + " " + lang["locked"]}
+            {"- " + addComma(+walletAsset.locked) + " " + lang["locked"]}
           </span>
         </div>
         <div className="flex flex-col gap-y-2 font-mine-bold w-full text-sm items-center mt-1">

@@ -10,7 +10,7 @@ const useLogin = () => {
   const setToken = useTokenSetState();
   const setUser = useUserSetState();
 
-  const fetch = async (params, customFunction, rememberMe) => {
+  const fetch = async (params, customFunctionWithData, rememberMe) => {
     setIsLoading(true);
     login(params)
       .then((data) => {
@@ -22,14 +22,14 @@ const useLogin = () => {
             JSON.stringify(data.data.user)
           );
 
-        setToken(data.data);
+        setToken(data.data.token);
         rememberMe &&
           window.localStorage.setItem(
             "authToken",
             JSON.stringify(data.data.token)
           );
 
-        customFunction();
+        customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
       })
       .catch((error) => {

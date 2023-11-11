@@ -3,75 +3,91 @@ import { useUserState } from "../../../Providers/UserProvider";
 import { Formik } from "formik";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../Providers/ThemeProvider";
-import { useGetCurrencies } from "../../../apis/common/currency/hooks";
+import { useGetBranches } from "../../../apis/common/branch/hooks";
+import { useCreateDeposit } from "../../../apis/common/wallet/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
-import {
-  useGetWalletAssets,
-  useGetWalletTanks,
-} from "../../../apis/common/wallet/hooks";
+import { useAddComma } from "../../../hooks/useNumberFunctions";
+import SubmitButton from "../../common/SubmitButton";
 
-export default function Deposit() {
+export default function Deposit({ currencies, data }) {
   const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const addComma = useAddComma();
 
   const userInfo = useUserState();
 
-  const { getCurrencies, isLoading: getCurrenciesIsLoading } =
-    useGetCurrencies();
+  const { getBranches, isLoading: getBranchesIsLoading } = useGetBranches();
   useEffect(
-    () => setIsLoadingSplashScreen(getCurrenciesIsLoading),
-    [getCurrenciesIsLoading]
+    () => setIsLoadingSplashScreen(getBranchesIsLoading),
+    [getBranchesIsLoading]
   );
-  const { getWalletAssets, isLoading: getWalletAssetsIsLoading } =
-    useGetWalletAssets();
+  const { createDeposit, isLoading: createDepositIsLoading } =
+    useCreateDeposit();
   useEffect(
-    () => setIsLoadingSplashScreen(getWalletAssetsIsLoading),
-    [getWalletAssetsIsLoading]
-  );
-  const { getWalletTanks, isLoading: getWalletTanksIsLoading } =
-    useGetWalletTanks();
-  useEffect(
-    () => setIsLoadingSplashScreen(getWalletTanksIsLoading),
-    [getWalletTanksIsLoading]
+    () => setIsLoadingSplashScreen(createDepositIsLoading),
+    [createDepositIsLoading]
   );
 
-  const [currencies, setCurrencies] = useState([]);
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
-  useEffect(() => {
-    getCurrencies(setCurrencies);
-  }, []);
+  const [locations, setLocations] = useState([]);
+  const [selectedLocationIndex, setSelectedLocationIndex] = useState(-1);
+  const [locationDivClass, setLocationDivClass] = useState("");
 
-  const [walletAssets, setWalletAssets] = useState([]);
   useEffect(() => {
-    selectedCurrencyIndex >= 0 &&
+    if (
       currencies[selectedCurrencyIndex] &&
-      currencies[selectedCurrencyIndex].slug &&
-      getWalletAssets(
-        { currency: currencies[selectedCurrencyIndex].slug },
-        setWalletAssets
+      currencies[selectedCurrencyIndex].has_branches
+    ) {
+      getBranches(
+        { currencies: currencies[selectedCurrencyIndex].slug },
+        setLocations
       );
+      setLocationDivClass("flex-1 w-full flex flex-col gap-y-2 mt-5");
+    } else {
+      setLocationDivClass("hidden");
+    }
   }, [selectedCurrencyIndex]);
-  const walletAsset = walletAssets[0] ? walletAssets[0] : null;
-
-  const [walletTanks, setWalletTanks] = useState([]);
-  useEffect(() => {
-    walletAsset &&
-      getWalletTanks(
-        {
-          wallet_asset: walletAsset && walletAsset.slug ? walletAsset.slug : "",
-        },
-        setWalletTanks
-      );
-  }, [walletAssets]);
-  const [selectedWalletTankIndex, setSelectedWalletTankIndex] = useState(-1);
 
   return (
-    <Formik initialValues={{}}>
-      {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
-        <form className="flex flex-col">
+    <Formik
+      initialValues={{ amount: "" }}
+      onSubmit={(values) => {
+        if (
+          currencies[selectedCurrencyIndex] &&
+          currencies[selectedCurrencyIndex].has_branch
+        ) {
+          createDeposit({
+            user_sender: userInfo && userInfo.url ? userInfo.url : "",
+            currency:
+              currencies[selectedCurrencyIndex] &&
+              currencies[selectedCurrencyIndex].url
+                ? currencies[selectedCurrencyIndex].url
+                : "",
+            amount: values.amount,
+            branch:
+              locations[selectedLocationIndex] &&
+              locations[selectedLocationIndex].url
+                ? locations[selectedLocationIndex].url
+                : "",
+          });
+        } else {
+          createDeposit({
+            user_sender: userInfo && userInfo.url ? userInfo.url : "",
+            currency:
+              currencies[selectedCurrencyIndex] &&
+              currencies[selectedCurrencyIndex].url
+                ? currencies[selectedCurrencyIndex].url
+                : "",
+            amount: values.amount,
+          });
+        }
+      }}
+    >
+      {({ handleChange, handleBlur, handleSubmit, values }) => (
+        <div className="flex flex-col">
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-mine-regular text-${oppositeTheme}`}>
               {lang["currency"]}
@@ -137,29 +153,29 @@ export default function Deposit() {
               </CustomDropdown>
             </div>
           </div>
-          <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+          <div className={locationDivClass}>
             <span className={`font-mine-regular text-${oppositeTheme}`}>
-              {lang["bank-account"]}
+              {lang["location"]}
             </span>
             <div className="w-full flex">
               <CustomDropdown
                 label={
-                  selectedWalletTankIndex >= 0
-                    ? walletTanks[selectedWalletTankIndex].title
+                  selectedLocationIndex >= 0 &&
+                  locations[selectedLocationIndex] &&
+                  locations[selectedLocationIndex].title
+                    ? locations[selectedLocationIndex].title
                     : ""
                 }
               >
-                {walletTanks.map((walletTank, index) => {
-                  if (index === 0 && index === walletTanks.length - 1) {
+                {locations.map((location, index) => {
+                  if (index === 0 && index === locations.length - 1) {
                     return (
                       <CustomItem
                         key={index}
                         className="rounded-xl"
-                        onClick={() => setSelectedWalletTankIndex(index)}
+                        onClick={() => setSelectedLocationIndex(index)}
                       >
-                        {walletTank && walletTank.title
-                          ? walletTank.title
-                          : "error"}
+                        {location && location.title ? location.title : "error"}
                       </CustomItem>
                     );
                   } else if (index === 0) {
@@ -167,34 +183,28 @@ export default function Deposit() {
                       <CustomItem
                         key={index}
                         className="rounded-t-xl"
-                        onClick={() => setSelectedWalletTankIndex(index)}
+                        onClick={() => setSelectedLocationIndex(index)}
                       >
-                        {walletTank && walletTank.title
-                          ? walletTank.title
-                          : "error"}
+                        {location && location.title ? location.title : "error"}
                       </CustomItem>
                     );
-                  } else if (index === walletTanks.length - 1) {
+                  } else if (index === locations.length - 1) {
                     return (
                       <CustomItem
                         key={index}
                         className="rounded-b-xl"
-                        onClick={() => setSelectedWalletTankIndex(index)}
+                        onClick={() => setSelectedLocationIndex(index)}
                       >
-                        {walletTank && walletTank.title
-                          ? walletTank.title
-                          : "error"}
+                        {location && location.title ? location.title : "error"}
                       </CustomItem>
                     );
                   } else {
                     return (
                       <CustomItem
                         key={index}
-                        onClick={() => setSelectedWalletTankIndex(index)}
+                        onClick={() => setSelectedLocationIndex(index)}
                       >
-                        {walletTank && walletTank.title
-                          ? walletTank.title
-                          : "error"}
+                        {location && location.title ? location.title : "error"}
                       </CustomItem>
                     );
                   }
@@ -212,11 +222,20 @@ export default function Deposit() {
                 name="amount"
                 onBlur={handleBlur("amount")}
                 onChange={handleChange("amount")}
-                value={values.amount ? values.amount : ""}
+                value={values.amount ? addComma(values.amount) : ""}
               />
             </div>
           </div>
-        </form>
+          <div className="mt-10">
+            <SubmitButton
+              onClick={handleSubmit}
+              className="w-full py-0.5 text-lg"
+              rounded="lg"
+            >
+              {lang["submit"]}
+            </SubmitButton>
+          </div>
+        </div>
       )}
     </Formik>
   );

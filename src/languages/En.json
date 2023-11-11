@@ -141,5 +141,6 @@
   "bank-account": "Bank Account",
   "bank-account-title": "Bank Account Title",
   "bank-account-number": "Bank Account Number",
-  "transaction": "Transaction"
+  "transaction": "Transaction",
+  "user-code": "User Code"
 }

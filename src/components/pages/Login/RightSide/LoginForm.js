@@ -10,15 +10,17 @@ import {
   useGetWalletTanks,
   useGetWallets,
 } from "../../../../apis/common/wallet/hooks";
-import { useUserState } from "../../../../Providers/UserProvider";
-import { useWalletSetState } from "../../../../Providers/WalletProvider";
+import {
+  useWalletSetState,
+  useWalletState,
+} from "../../../../Providers/WalletProvider";
 
 export default function LoginForm({ setIsSplashScreenLoading }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
   const lang = useLanguageState();
   const { one: direction } = useDirectionState();
-  const userInfo = useUserState();
+  const wallet = useWalletState();
   const setWallet = useWalletSetState();
 
   const { login, isLoading: loginIsLoading, error } = useLogin();
@@ -92,39 +94,30 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
     return result;
   };
 
-  const [wallets, setWallets] = useState([]);
-  const [walletAssets, setWalletAssets] = useState([]);
-  const [walletTanks, setWalletTanks] = useState([]);
-
-  useEffect(() => {
-    getWalletAssets(
-      {
-        wallet: wallets[0] && wallets[0].slug ? wallets[0].slug : "",
-      },
-      setWalletAssets
-    );
-  }, [wallets]);
-  useEffect(() => {
-    getWalletTanks(
-      {
-        wallet_asset:
-          walletAssets[0] && walletAssets[0].slug ? walletAssets[0].slug : "",
-      },
-      setWalletTanks
-    );
-  }, [walletAssets]);
-  useEffect(() => {
-    if (wallets[0] && walletAssets[0] && walletTanks[0]) {
-      const walletObject = {
-        wallet: wallets[0],
-        walletAsset: walletAssets[0],
-        walletTank: walletTanks[0],
-      };
-      console.log("walletObject: ", walletObject);
-      setWallet(walletObject);
-      window.localStorage.setItem("wallet", JSON.stringify(walletObject));
+  const setWallets = (data) => {
+    if (wallet && data) {
+      let temp = wallet;
+      temp.wallets = data;
+      setWallet(temp);
+      window.localStorage.setItem("wallet", JSON.stringify(temp));
     }
-  }, [walletTanks]);
+  };
+  const setWalletAssets = (data) => {
+    if (wallet && data) {
+      let temp = wallet;
+      temp.walletAssets = data;
+      setWallet(temp);
+      window.localStorage.setItem("wallet", JSON.stringify(temp));
+    }
+  };
+  const setWalletTanks = (data) => {
+    if (wallet && data) {
+      let temp = wallet;
+      temp.walletTanks = data;
+      setWallet(temp);
+      window.localStorage.setItem("wallet", JSON.stringify(temp));
+    }
+  };
 
   return (
     <Formik
@@ -132,13 +125,18 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
       onSubmit={(values) =>
         login(
           values,
-          () => {
-            getWallets(
-              {
-                user: userInfo && userInfo.username ? userInfo.username : "",
-              },
-              setWallets
-            );
+          (data) => {
+            const userFilter = {
+              user:
+                data && data.user && data.user.username
+                  ? data.user.username
+                  : "",
+            };
+
+            getWallets(userFilter, setWallets);
+            getWalletAssets(userFilter, setWalletAssets);
+            getWalletTanks(userFilter, setWalletTanks);
+
             navigateToHome();
           },
           rememberMeCheck
