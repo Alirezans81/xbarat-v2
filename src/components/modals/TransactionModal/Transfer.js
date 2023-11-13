@@ -7,17 +7,25 @@ import { useGetCurrencies } from "../../../apis/common/currency/hooks";
 import { useCreateTransfer } from "../../../apis/common/wallet/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
-import { useAddComma } from "../../../hooks/useNumberFunctions";
+import { useAddComma, useRemoveComma } from "../../../hooks/useNumberFunctions";
 import SubmitButton from "../../common/SubmitButton";
+import { useStatusesState } from "../../../Providers/StatusesProvider";
 
-export default function Transfer({ currencies, data }) {
+export default function Transfer({
+  currencies,
+  data,
+  closeModal,
+  refreshPendingRequests,
+}) {
   const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
+  const removeComma = useRemoveComma();
 
   const userInfo = useUserState();
+  const statuses = useStatusesState();
 
   const { createTransfer, isLoading: createTransferIsLoading } =
     useCreateTransfer();
@@ -32,16 +40,25 @@ export default function Transfer({ currencies, data }) {
     <Formik
       initialValues={{ user_receiver: "", amount: "" }}
       onSubmit={(values) => {
-        createTransfer({
-          user_sender: userInfo && userInfo.url ? userInfo.url : "",
-          currency:
-            currencies[selectedCurrencyIndex] &&
-            currencies[selectedCurrencyIndex].url
-              ? currencies[selectedCurrencyIndex].url
+        createTransfer(
+          {
+            user_sender: userInfo && userInfo.url ? userInfo.url : "",
+            currency:
+              currencies[selectedCurrencyIndex] &&
+              currencies[selectedCurrencyIndex].url
+                ? currencies[selectedCurrencyIndex].url
+                : "",
+            user_receiver: values.user_receiver,
+            amount: removeComma(values.amount),
+            status: statuses
+              ? statuses.find((status) => status.title === "Admin Approve").url
               : "",
-          user_receiver: values.user_receiver,
-          amount: values.amount,
-        });
+          },
+          () => {
+            refreshPendingRequests();
+            closeModal();
+          }
+        );
       }}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (

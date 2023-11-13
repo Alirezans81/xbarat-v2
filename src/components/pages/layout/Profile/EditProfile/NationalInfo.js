@@ -9,13 +9,13 @@ import {
 import {
   useGetCities,
   useGetCountries,
-  useGetNationalities,
   useGetNationality,
   useGetCountry,
   useGetCity,
 } from "../../../../../apis/common/location/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { useUpdateNationalInfo } from "../../../../../apis/pages/Profile/hooks";
+import { useUserSetState } from "../../../../../Providers/UserProvider";
 
 export default function NationalInfo({ userInfo }) {
   const theme = useThemeState();
@@ -23,6 +23,7 @@ export default function NationalInfo({ userInfo }) {
   const [canEdit, setCanEdit] = useState();
   const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const setUser = useUserSetState();
 
   const [nationality, setNationality] = useState();
   const [country, setCountry] = useState();
@@ -53,12 +54,6 @@ export default function NationalInfo({ userInfo }) {
     userInfo.city && getCity(userInfo.city, setCity);
   }, []);
 
-  const { getNationalities, isLoading: getNationalitiesIsLoading } =
-    useGetNationalities();
-  useEffect(
-    () => setIsLoadingSplashScreen(getNationalitiesIsLoading),
-    [getNationalitiesIsLoading]
-  );
   const { getCountries, isLoading: getCountriesIsLoading } = useGetCountries();
   useEffect(
     () => setIsLoadingSplashScreen(getCountriesIsLoading),
@@ -73,15 +68,12 @@ export default function NationalInfo({ userInfo }) {
   const { updateNationalInfo, isLoading } = useUpdateNationalInfo();
   useEffect(() => setIsLoadingSplashScreen(isLoading), [isLoading]);
 
-  const [nationalitiesList, setNationalitiesList] = useState([]);
-  const [nationalityIndex, setNationalityIndex] = useState(-1);
   const [countriesList, setCountriesList] = useState([]);
   const [countriesIndex, setCountriesIndex] = useState(-1);
   const [citiesList, setCitiesList] = useState([]);
   const [cityIndex, setCityIndex] = useState(-1);
 
   useEffect(() => {
-    getNationalities(setNationalitiesList);
     getCountries(setCountriesList);
   }, []);
   useEffect(() => {
@@ -92,7 +84,6 @@ export default function NationalInfo({ userInfo }) {
 
   useEffect(() => {
     if (!canEdit) {
-      setNationalityIndex(-1);
       setCountriesIndex(-1);
       setCityIndex(-1);
     }
@@ -111,7 +102,14 @@ export default function NationalInfo({ userInfo }) {
               country: countriesList[countriesIndex].url,
               city: citiesList[cityIndex].url,
             };
-            updateNationalInfo(params);
+            updateNationalInfo(params, (newUserData) => {
+              setUser(newUserData);
+              if (newUserData && newUserData.country && newUserData.city) {
+                getCountry(newUserData.country, setCountry);
+                getCity(newUserData.city, setCity);
+              }
+              setCanEdit(false);
+            });
           }
         }}
       />

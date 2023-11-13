@@ -7,10 +7,16 @@ import ThemeSwitcher from "../components/pages/layout/Navbar/ThemeSwitcher";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import LoadingSplashScreen from "../components/common/LoadingSplashScreen";
 import { useTokenSetState, useTokenState } from "../Providers/TokenProvider";
+import { useUserSetState } from "../Providers/UserProvider";
+import { useWalletSetState } from "../Providers/WalletProvider";
+import { useStatusesSetState } from "../Providers/StatusesProvider";
 
 export default function Login() {
   const token = useTokenState();
   const setToken = useTokenSetState();
+  const setUserInfo = useUserSetState();
+  const setWallet = useWalletSetState();
+  const setStatuses = useStatusesSetState();
 
   const theme = useThemeState();
   const { three: direction } = useDirectionState();
@@ -20,9 +26,13 @@ export default function Login() {
 
   const resetApp = () => {
     setToken(null);
+    // setUserInfo(null);
+    // setWallet(null);
+    // setStatuses(null);
     window.localStorage.removeItem("authToken");
     window.localStorage.removeItem("userInfo");
     window.localStorage.removeItem("wallet");
+    window.localStorage.removeItem("statuses");
     window.localStorage.removeItem("linksShown");
   };
 

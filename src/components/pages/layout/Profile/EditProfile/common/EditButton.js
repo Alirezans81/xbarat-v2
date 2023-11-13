@@ -7,13 +7,13 @@ export default function EditButton({ canEdit, setCanEdit, customFunction }) {
   if (canEdit) {
     return (
       <div className={`flex gap-1 absolute ${direction}-4 top-4`}>
-        <button onClick={customFunction}>
+        <button type="button" onClick={customFunction}>
           <img
             className="w-5 h-5"
             src={require("../../../../../../Images/check.png")}
           />
         </button>
-        <button onClick={() => setCanEdit(false)}>
+        <button type="button" onClick={() => setCanEdit(false)}>
           <img
             className="w-5 h-5"
             src={require("../../../../../../Images/multiplication.png")}
@@ -24,6 +24,7 @@ export default function EditButton({ canEdit, setCanEdit, customFunction }) {
   } else {
     return (
       <button
+        type="button"
         onClick={() => setCanEdit(true)}
         className={`absolute ${direction}-4 top-4`}
       >

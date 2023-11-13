@@ -142,5 +142,11 @@
   "bank-account-title": "Bank Account Title",
   "bank-account-number": "Bank Account Number",
   "transaction": "Transaction",
-  "user-code": "User Code"
+  "user-code": "User Code",
+
+  "pending-request": "Pending Request",
+  "are-you-sure-modal-title": "Are You Sure",
+  "yes": "Yes",
+  "cancel-request-modal-message": "Are you sure you want to cancel the request",
+  "accept-transaction-message": "Your transaction was succssesfuly done"
 }

@@ -5,7 +5,10 @@ import { useThemeState } from "../../../../Providers/ThemeProvider";
 import CustomSlider from "../../../common/CustomSlider";
 import RequestCard from "./PendingRequests/RequestCard";
 
-export default function PendingRequests() {
+export default function PendingRequests({
+  refreshPendingRequests,
+  pendingRequests: allPendingOrders,
+}) {
   const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -20,66 +23,53 @@ export default function PendingRequests() {
     setShowOrdersType(showOrdersType !== "transfer" ? "transfer" : "");
   };
 
-  const [allPendingOrders, setAllPendingOrders] = useState([
-    {
-      type: "deposit",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "uploadDocument",
-      date: "2022 Feb 13  15:55",
-    },
-    {
-      type: "deposit",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "new",
-      date: "2022 Feb 13  15:55",
-    },
-    {
-      type: "withdrawal",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "reject",
-      date: "2022 Feb 13  15:55",
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "transfer",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "adminAssign",
-      date: "2022 Feb 13  15:55",
-    },
-    {
-      type: "transfer",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "adminApprove",
-      date: "2022 Feb 13  15:55",
-    },
-  ]);
+  const resetPending = () => {
+    if (
+      allPendingOrders &&
+      allPendingOrders.deposit &&
+      allPendingOrders.withdrawal &&
+      allPendingOrders.transfer
+    ) {
+      const convertedDeposits = allPendingOrders.deposit.map((deposit) => {
+        deposit.type = "deposit";
+        return deposit;
+      });
+      const convertedWithdrawals = allPendingOrders.withdrawal.map(
+        (withdrawal) => {
+          withdrawal.type = "withdrawal";
+          return withdrawal;
+        }
+      );
+      const convertedTransfers = allPendingOrders.transfer.map((transfer) => {
+        transfer.type = "transfer";
+        return transfer;
+      });
 
-  const [pendingOrders, setPendingOrders] = useState(allPendingOrders);
+      setPendingOrders([
+        ...convertedDeposits,
+        ...convertedWithdrawals,
+        ...convertedTransfers,
+      ]);
+    }
+  };
+
+  const [pendingOrders, setPendingOrders] = useState([]);
+  useEffect(() => resetPending(), [allPendingOrders]);
+
   useEffect(() => {
-    if (showOrdersType === "deposit") {
-      setPendingOrders(
-        allPendingOrders.filter((order) => order.type === "deposit")
-      );
-    } else if (showOrdersType === "withdrawal") {
-      setPendingOrders(
-        allPendingOrders.filter((order) => order.type === "withdrawal")
-      );
-    } else if (showOrdersType === "transfer") {
-      setPendingOrders(
-        allPendingOrders.filter((order) => order.type === "transfer")
-      );
-    } else {
-      setPendingOrders(allPendingOrders);
+    if (
+      allPendingOrders &&
+      allPendingOrders.deposit &&
+      allPendingOrders.withdrawal &&
+      allPendingOrders.transfer
+    ) {
+      if (showOrdersType === "deposit") {
+        setPendingOrders(allPendingOrders.deposit);
+      } else if (showOrdersType === "withdrawal") {
+        setPendingOrders(allPendingOrders.withdrawal);
+      } else if (showOrdersType === "transfer") {
+        setPendingOrders(allPendingOrders.transfer);
+      } else resetPending();
     }
   }, [showOrdersType]);
 
@@ -104,7 +94,10 @@ export default function PendingRequests() {
                 key={index}
                 className="flex justify-center items-center h-full px-4"
               >
-                <RequestCard pendingOrder={pendingOrder} />
+                <RequestCard
+                  refreshPendingRequests={refreshPendingRequests}
+                  pendingOrder={pendingOrder}
+                />
               </div>
             ))}
           </CustomSlider>

@@ -7,7 +7,7 @@ import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoa
 import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
 import TransactionModal from "../../../../modals/TransactionModal";
 
-export default function CurrencyCard({ walletAsset }) {
+export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
   const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -19,7 +19,11 @@ export default function CurrencyCard({ walletAsset }) {
     setModalData({
       title: lang["transaction"],
       children: (
-        <TransactionModal data={walletAsset} defaultType={defaultType} />
+        <TransactionModal
+          refreshPendingRequests={refreshPendingRequests}
+          data={walletAsset}
+          defaultType={defaultType}
+        />
       ),
       canClose: true,
       isOpen: true,

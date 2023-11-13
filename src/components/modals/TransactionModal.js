@@ -5,9 +5,15 @@ import Withdrawal from "./TransactionModal/Withdrawal";
 import Transfer from "./TransactionModal/Transfer";
 import { useGetCurrencies } from "../../apis/common/currency/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
+import { useModalDataClose } from "../../Providers/ModalDataProvider";
 
-export default function TransactionModal({ data, defaultType }) {
+export default function TransactionModal({
+  data,
+  defaultType,
+  refreshPendingRequests,
+}) {
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const closeModal = useModalDataClose();
 
   const [type, selectType] = useState(defaultType || "deposit");
   const [currencies, setCurrencies] = useState([]);
@@ -25,11 +31,30 @@ export default function TransactionModal({ data, defaultType }) {
   return (
     <div className="pb-3">
       <SelectType type={type} selectType={selectType} />
-      {type === "deposit" && <Deposit currencies={currencies} data={data} />}
-      {type === "withdrawal" && (
-        <Withdrawal currencies={currencies} data={data} />
+      {type === "deposit" && (
+        <Deposit
+          refreshPendingRequests={refreshPendingRequests}
+          currencies={currencies}
+          data={data}
+          closeModal={closeModal}
+        />
       )}
-      {type === "transfer" && <Transfer currencies={currencies} data={data} />}
+      {type === "withdrawal" && (
+        <Withdrawal
+          refreshPendingRequests={refreshPendingRequests}
+          currencies={currencies}
+          data={data}
+          closeModal={closeModal}
+        />
+      )}
+      {type === "transfer" && (
+        <Transfer
+          refreshPendingRequests={refreshPendingRequests}
+          currencies={currencies}
+          data={data}
+          closeModal={closeModal}
+        />
+      )}
     </div>
   );
 }

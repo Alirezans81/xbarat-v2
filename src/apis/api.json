@@ -14,5 +14,7 @@
   "branch": "https://smicln.ir/api/branch/",
   "deposit": "https://smicln.ir/api/order/deposit/",
   "withdrawal": "https://smicln.ir/api/order/withdrawal/",
-  "transfer": "https://smicln.ir/api/order/transfer/"
+  "transfer": "https://smicln.ir/api/order/transfer/",
+  "pending-requests": "https://smicln.ir/api/wallet/pending-request/",
+  "status": "https://smicln.ir/api/status/"
 }

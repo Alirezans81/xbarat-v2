@@ -15,6 +15,9 @@ import CustomToast from "../components/common/CustomToast";
 import CustomModal from "../components/common/CustomModal";
 import { useUserSetState } from "../Providers/UserProvider";
 import { useWalletSetState } from "../Providers/WalletProvider";
+import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
+import { useStatusesSetState } from "../Providers/StatusesProvider";
+import { useGetStatuses } from "../apis/common/status/hooks";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -25,10 +28,27 @@ export default function Layout() {
   const setUser = useUserSetState();
   const setWallet = useWalletSetState();
   const lang = useLanguageState();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const setStatuses = useStatusesSetState();
   const { pathname: activeRoute } = useLocation();
   const [links, setLinks] = useState([]);
 
+  const { getStatuses, isLoading: getStatusesIsLoading } = useGetStatuses();
+  useEffect(
+    () => setIsLoadingSplashScreen(getStatusesIsLoading),
+    [getStatusesIsLoading]
+  );
+
   useEffect(() => {
+    const stringStatues = window.localStorage.getItem("statues");
+    if (stringStatues !== "undefined" && stringStatues !== null) {
+      setStatuses(JSON.parse(stringStatues));
+    } else {
+      getStatuses(setStatuses, null, (statuses) =>
+        localStorage.setItem("statuses", JSON.stringify(statuses))
+      );
+    }
+
     const savedStringToken = window.localStorage.getItem("authToken");
     const savedStringUser = window.localStorage.getItem("userInfo");
     const saveStringWallet = window.localStorage.getItem("wallet");

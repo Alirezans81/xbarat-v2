@@ -5,7 +5,7 @@ import CustomSlider from "../../../common/CustomSlider";
 import CurrencyCard from "./Balance/CurrencyCard";
 import { useWalletState } from "../../../../Providers/WalletProvider";
 
-export default function Balance() {
+export default function Balance({ refreshPendingRequests }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
@@ -40,7 +40,10 @@ export default function Balance() {
               key={index}
               className="w-88 flex justify-center items-center h-full px-4"
             >
-              <CurrencyCard walletAsset={walletAsset} />
+              <CurrencyCard
+                refreshPendingRequests={refreshPendingRequests}
+                walletAsset={walletAsset}
+              />
             </div>
           ))}
         </div>

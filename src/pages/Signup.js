@@ -7,10 +7,16 @@ import LoadingSplashScreen from "../components/common/LoadingSplashScreen";
 import { useTokenSetState, useTokenState } from "../Providers/TokenProvider";
 import Form from "../components/pages/Signup/Form";
 import LeftSide from "../components/pages/Login/LeftSide";
+import { useUserSetState } from "../Providers/UserProvider";
+import { useWalletSetState } from "../Providers/WalletProvider";
+import { useStatusesSetState } from "../Providers/StatusesProvider";
 
 export default function Signup() {
   const token = useTokenState();
   const setToken = useTokenSetState();
+  const setUserInfo = useUserSetState();
+  const setWallet = useWalletSetState();
+  const setStatuses = useStatusesSetState();
 
   const theme = useThemeState();
   const { three: direction } = useDirectionState();
@@ -20,7 +26,13 @@ export default function Signup() {
 
   const resetApp = () => {
     setToken(null);
+    // setUserInfo(null);
+    // setWallet(null);
+    // setStatuses(null);
     window.localStorage.removeItem("authToken");
+    window.localStorage.removeItem("userInfo");
+    window.localStorage.removeItem("wallet");
+    window.localStorage.removeItem("statuses");
     window.localStorage.removeItem("linksShown");
   };
 

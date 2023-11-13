@@ -9,13 +9,25 @@ import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadin
 import { useGetBranches } from "../../../../apis/common/branch/hooks";
 import { useCreateDeposit } from "../../../../apis/common/wallet/hooks";
 import { useUserState } from "../../../../Providers/UserProvider";
+import {
+  useAddComma,
+  useRemoveComma,
+} from "../../../../hooks/useNumberFunctions";
+import { useStatusesState } from "../../../../Providers/StatusesProvider";
+import { useGetPendingRequests } from "../../../../apis/pages/Wallet/hooks";
+import { useTokenState } from "../../../../Providers/TokenProvider";
 
-export default function QuickDeposit() {
+export default function QuickDeposit({ refreshPendingRequests }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const userInfo = useUserState();
+  const token = useTokenState();
+  const addComma = useAddComma();
+  const removeComma = useRemoveComma();
+
+  const statuses = useStatusesState();
 
   const [currencies, setCurrencies] = useState([]);
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
@@ -31,6 +43,12 @@ export default function QuickDeposit() {
   useEffect(
     () => setIsLoadingSplashScreen(getBranchesIsLoading),
     [getBranchesIsLoading]
+  );
+  const { getPendingRequests, isLoading: getPendingRequestsIsLoading } =
+    useGetPendingRequests();
+  useEffect(
+    () => setIsLoadingSplashScreen(getPendingRequestsIsLoading),
+    [getPendingRequestsIsLoading]
   );
 
   useEffect(() => {
@@ -59,6 +77,10 @@ export default function QuickDeposit() {
 
   const { createDeposit, isLoading: createDepositIsLoading } =
     useCreateDeposit();
+  useEffect(
+    () => setIsLoadingSplashScreen(createDepositIsLoading),
+    [createDepositIsLoading]
+  );
 
   return (
     <div className="flex flex-col h-full justify-between">
@@ -78,30 +100,44 @@ export default function QuickDeposit() {
             currencies[selectedCurrencyIndex] &&
             currencies[selectedCurrencyIndex].has_branches
           ) {
-            createDeposit({
-              user_sender: userInfo && userInfo.url ? userInfo.url : "",
-              currency:
-                currencies[selectedCurrencyIndex] &&
-                currencies[selectedCurrencyIndex].url
-                  ? currencies[selectedCurrencyIndex].url
+            createDeposit(
+              {
+                user_sender: userInfo && userInfo.url ? userInfo.url : "",
+                currency:
+                  currencies[selectedCurrencyIndex] &&
+                  currencies[selectedCurrencyIndex].url
+                    ? currencies[selectedCurrencyIndex].url
+                    : "",
+                amount: removeComma(values.amount),
+                status: statuses
+                  ? statuses.find((status) => status.title === "Admin Assign")
+                      .url
                   : "",
-              amount: values.amount,
-              branch:
-                locations[selectedLocationIndex] &&
-                locations[selectedLocationIndex].url
-                  ? locations[selectedLocationIndex].url
-                  : "",
-            });
+                branch:
+                  locations[selectedLocationIndex] &&
+                  locations[selectedLocationIndex].url
+                    ? locations[selectedLocationIndex].url
+                    : "",
+              },
+              refreshPendingRequests
+            );
           } else {
-            createDeposit({
-              user_sender: userInfo && userInfo.url ? userInfo.url : "",
-              currency:
-                currencies[selectedCurrencyIndex] &&
-                currencies[selectedCurrencyIndex].url
-                  ? currencies[selectedCurrencyIndex].url
+            createDeposit(
+              {
+                user_sender: userInfo && userInfo.url ? userInfo.url : "",
+                currency:
+                  currencies[selectedCurrencyIndex] &&
+                  currencies[selectedCurrencyIndex].url
+                    ? currencies[selectedCurrencyIndex].url
+                    : "",
+                amount: removeComma(values.amount),
+                status: statuses
+                  ? statuses.find((status) => status.title === "Admin Assign")
+                      .url
                   : "",
-              amount: values.amount,
-            });
+              },
+              refreshPendingRequests
+            );
           }
         }}
       >
@@ -240,11 +276,12 @@ export default function QuickDeposit() {
                 name="amount"
                 onBlur={handleBlur("amount")}
                 onChange={handleChange("amount")}
-                value={values.amount}
+                value={values && values.amount ? addComma(values.amount) : ""}
               />
             </div>
             <div className={submitButtonClass}>
               <SubmitButton
+                type="button"
                 className="w-full h-9"
                 rounded="lg"
                 onClick={handleSubmit}

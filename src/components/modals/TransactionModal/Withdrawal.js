@@ -7,19 +7,27 @@ import { useGetBranches } from "../../../apis/common/branch/hooks";
 import { useCreateWithdrawal } from "../../../apis/common/wallet/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
-import { useAddComma } from "../../../hooks/useNumberFunctions";
+import { useAddComma, useRemoveComma } from "../../../hooks/useNumberFunctions";
 import SubmitButton from "../../common/SubmitButton";
 import { useGetWalletTankByCurrency } from "../../../hooks/useWalletFilter";
+import { useStatusesState } from "../../../Providers/StatusesProvider";
 
-export default function Withdrawal({ currencies, data }) {
+export default function Withdrawal({
+  currencies,
+  data,
+  closeModal,
+  refreshPendingRequests,
+}) {
   const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
+  const removeComma = useRemoveComma();
 
   const getWalletTankByCurrency = useGetWalletTankByCurrency();
   const userInfo = useUserState();
+  const statuses = useStatusesState();
 
   const { getBranches, isLoading: getBranchesIsLoading } = useGetBranches();
   useEffect(
@@ -39,7 +47,6 @@ export default function Withdrawal({ currencies, data }) {
   const [locations, setLocations] = useState([]);
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(-1);
   const [locationDivClass, setLocationDivClass] = useState("");
-  const [bankAccountDivClass, setBankAccountDivClass] = useState("");
 
   useEffect(() => {
     currencies[selectedCurrencyIndex] &&
@@ -57,10 +64,8 @@ export default function Withdrawal({ currencies, data }) {
         setLocations
       );
       setLocationDivClass("flex-1 w-full flex flex-col gap-y-2 mt-5");
-      setBankAccountDivClass("hidden");
     } else {
       setLocationDivClass("hidden");
-      setBankAccountDivClass("flex-1 w-full flex flex-col gap-y-2 mt-5");
     }
   }, [selectedCurrencyIndex]);
 
@@ -70,34 +75,60 @@ export default function Withdrawal({ currencies, data }) {
       onSubmit={(values) => {
         if (
           currencies[selectedCurrencyIndex] &&
-          currencies[selectedCurrencyIndex].has_branch
+          currencies[selectedCurrencyIndex].has_branches
         ) {
-          createWithdrawal({
-            user_receiver: userInfo && userInfo.url ? userInfo.url : "",
-            currency:
-              currencies[selectedCurrencyIndex] &&
-              currencies[selectedCurrencyIndex].url
-                ? currencies[selectedCurrencyIndex].url
+          createWithdrawal(
+            {
+              user_receiver: userInfo && userInfo.url ? userInfo.url : "",
+              currency:
+                currencies[selectedCurrencyIndex] &&
+                currencies[selectedCurrencyIndex].url
+                  ? currencies[selectedCurrencyIndex].url
+                  : "",
+              wallet_tank_receiver:
+                walletTanks[selectedWalletTankIndex] &&
+                walletTanks[selectedWalletTankIndex].url
+                  ? walletTanks[selectedWalletTankIndex].url
+                  : "",
+              amount: removeComma(values.amount),
+              status: statuses
+                ? statuses.find((status) => status.title === "Admin Assign").url
                 : "",
-            wallet_tank_receiver: "",
-            amount: values.amount,
-            branch:
-              locations[selectedLocationIndex] &&
-              locations[selectedLocationIndex].url
-                ? locations[selectedLocationIndex].url
-                : "",
-          });
+              branch:
+                locations[selectedLocationIndex] &&
+                locations[selectedLocationIndex].url
+                  ? locations[selectedLocationIndex].url
+                  : "",
+            },
+            () => {
+              refreshPendingRequests();
+              closeModal();
+            }
+          );
         } else {
-          createWithdrawal({
-            user_receiver: userInfo && userInfo.url ? userInfo.url : "",
-            currency:
-              currencies[selectedCurrencyIndex] &&
-              currencies[selectedCurrencyIndex].url
-                ? currencies[selectedCurrencyIndex].url
+          createWithdrawal(
+            {
+              user_receiver: userInfo && userInfo.url ? userInfo.url : "",
+              currency:
+                currencies[selectedCurrencyIndex] &&
+                currencies[selectedCurrencyIndex].url
+                  ? currencies[selectedCurrencyIndex].url
+                  : "",
+              wallet_tank_receiver:
+                walletTanks[selectedWalletTankIndex] &&
+                walletTanks[selectedWalletTankIndex].url
+                  ? walletTanks[selectedWalletTankIndex].url
+                  : "",
+              amount: removeComma(values.amount),
+              status: statuses
+                ? statuses.find((status) => status.title === "Admin Assign").url
                 : "",
-            wallet_tank_receiver: "",
-            amount: values.amount,
-          });
+            },
+            () => {
+              refreshPendingRequests();
+              closeModal();
+            }
+          );
         }
       }}
     >
@@ -168,7 +199,7 @@ export default function Withdrawal({ currencies, data }) {
               </CustomDropdown>
             </div>
           </div>
-          <div className={bankAccountDivClass}>
+          <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-mine-regular text-${oppositeTheme}`}>
               {lang["bank-account"]}
             </span>

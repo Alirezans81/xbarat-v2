@@ -12,6 +12,14 @@ const updateNameAndAvatar = (username, params) => {
   return axios.patch(api["patch-profile"] + username + "/", formData);
 };
 
+const updatePhone = (username, params) => {
+  const formData = new FormData();
+
+  formData.append("phone", params.phone);
+
+  return axios.patch(api["patch-profile"] + username + "/", formData);
+};
+
 const updateNationalInfo = (username, params) => {
   const formData = new FormData();
 
@@ -21,4 +29,4 @@ const updateNationalInfo = (username, params) => {
   return axios.patch(api["patch-profile"] + username + "/", formData);
 };
 
-export { updateNameAndAvatar, updateNationalInfo };
+export { updateNameAndAvatar,updatePhone,  updateNationalInfo };

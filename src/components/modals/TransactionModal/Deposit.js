@@ -7,17 +7,25 @@ import { useGetBranches } from "../../../apis/common/branch/hooks";
 import { useCreateDeposit } from "../../../apis/common/wallet/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
-import { useAddComma } from "../../../hooks/useNumberFunctions";
+import { useAddComma, useRemoveComma } from "../../../hooks/useNumberFunctions";
 import SubmitButton from "../../common/SubmitButton";
+import { useStatusesState } from "../../../Providers/StatusesProvider";
 
-export default function Deposit({ currencies, data }) {
+export default function Deposit({
+  currencies,
+  data,
+  closeModal,
+  refreshPendingRequests,
+}) {
   const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
+  const removeComma = useRemoveComma();
 
   const userInfo = useUserState();
+  const statuses = useStatusesState();
 
   const { getBranches, isLoading: getBranchesIsLoading } = useGetBranches();
   useEffect(
@@ -57,32 +65,50 @@ export default function Deposit({ currencies, data }) {
       onSubmit={(values) => {
         if (
           currencies[selectedCurrencyIndex] &&
-          currencies[selectedCurrencyIndex].has_branch
+          currencies[selectedCurrencyIndex].has_branches
         ) {
-          createDeposit({
-            user_sender: userInfo && userInfo.url ? userInfo.url : "",
-            currency:
-              currencies[selectedCurrencyIndex] &&
-              currencies[selectedCurrencyIndex].url
-                ? currencies[selectedCurrencyIndex].url
+          createDeposit(
+            {
+              user_sender: userInfo && userInfo.url ? userInfo.url : "",
+              currency:
+                currencies[selectedCurrencyIndex] &&
+                currencies[selectedCurrencyIndex].url
+                  ? currencies[selectedCurrencyIndex].url
+                  : "",
+              amount: removeComma(values.amount),
+              status: statuses
+                ? statuses.find((status) => status.title === "Admin Assign").url
                 : "",
-            amount: values.amount,
-            branch:
-              locations[selectedLocationIndex] &&
-              locations[selectedLocationIndex].url
-                ? locations[selectedLocationIndex].url
-                : "",
-          });
+              branch:
+                locations[selectedLocationIndex] &&
+                locations[selectedLocationIndex].url
+                  ? locations[selectedLocationIndex].url
+                  : "",
+            },
+            () => {
+              refreshPendingRequests();
+              closeModal();
+            }
+          );
         } else {
-          createDeposit({
-            user_sender: userInfo && userInfo.url ? userInfo.url : "",
-            currency:
-              currencies[selectedCurrencyIndex] &&
-              currencies[selectedCurrencyIndex].url
-                ? currencies[selectedCurrencyIndex].url
+          createDeposit(
+            {
+              user_sender: userInfo && userInfo.url ? userInfo.url : "",
+              currency:
+                currencies[selectedCurrencyIndex] &&
+                currencies[selectedCurrencyIndex].url
+                  ? currencies[selectedCurrencyIndex].url
+                  : "",
+              amount: removeComma(values.amount),
+              status: statuses
+                ? statuses.find((status) => status.title === "Admin Assign").url
                 : "",
-            amount: values.amount,
-          });
+            },
+            () => {
+              refreshPendingRequests();
+              closeModal();
+            }
+          );
         }
       }}
     >

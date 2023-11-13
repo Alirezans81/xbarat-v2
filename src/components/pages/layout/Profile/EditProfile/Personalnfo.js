@@ -5,6 +5,7 @@ import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import { Formik } from "formik";
 import OTPCodeModal from "../../../../modals/OTPCodeModal";
 import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
+import { useUpdatePhone } from "../../../../../apis/pages/Profile/hooks";
 
 export default function Personalnfo({ userInfo }) {
   const theme = useThemeState();
@@ -18,6 +19,11 @@ export default function Personalnfo({ userInfo }) {
       formikRef.current?.resetForm();
     }
   }, [canEdit]);
+
+  const { updatePhone, isLoading: updatePhoneIsLoading } = useUpdatePhone();
+  const updatePhoneMine = (values) => {
+    updatePhone({ phone: values && values.phone ? values.phone : "" });
+  };
 
   const setModalData = useModalDataSetState();
   const openOTPCodeModal = () => {
@@ -33,11 +39,6 @@ export default function Personalnfo({ userInfo }) {
     <div
       className={`bg-${theme}-back rounded-3xl w-full relative grid grid-cols-2 grid-rows-2 px-5 py-4`}
     >
-      <EditButton
-        canEdit={canEdit}
-        setCanEdit={setCanEdit}
-        customFunction={openOTPCodeModal}
-      />
       <Formik
         innerRef={formikRef}
         initialValues={{
@@ -45,8 +46,16 @@ export default function Personalnfo({ userInfo }) {
           phone: userInfo && userInfo.phone ? userInfo.phone : "",
         }}
       >
-        {({ handleChange, handleBlur, values, handleSubmit }) => (
+        {({ handleChange, handleBlur, values }) => (
           <>
+            <EditButton
+              canEdit={canEdit}
+              setCanEdit={setCanEdit}
+              customFunction={() => {
+                setCanEdit(false);
+                updatePhoneMine(values);
+              }}
+            />
             <div className="col-span-1 row-span-1 flex flex-col">
               <span className="text-gray font-mine-regular">
                 {lang["email"]}
