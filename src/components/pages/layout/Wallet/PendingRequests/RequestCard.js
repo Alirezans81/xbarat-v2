@@ -46,7 +46,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
 
   const opneAreYouSureModal = () => {
     setModalData({
-      title: lang["wallet-request"] + "?",
+      title: lang["are-you-sure-modal-title"] + "?",
       children: (
         <AreYouSureModal
           onClick={() => {

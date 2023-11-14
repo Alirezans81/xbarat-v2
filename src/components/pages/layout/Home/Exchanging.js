@@ -189,7 +189,7 @@ export default function Exchanging({
     }
   }, [selectedTargetIndex]);
   useEffect(() => {
-    findCurrencyInWallet();
+    // findCurrencyInWallet();
     setFormDefaultRate(null);
     setAreRatesReversed(false);
     setSelectedTargetIndex(-1);
