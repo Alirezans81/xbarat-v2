@@ -1,30 +1,17 @@
 import { Formik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
-import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
-import { useGetCurrencies } from "../../../../../apis/common/currency/hooks";
 import { CustomDropdown, CustomItem } from "../../../../common/CustomDropdown";
+import { useCurrenciesState } from "../../../../../Providers/CurrenciesProvider";
 
 export default function Filters() {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
-  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
-  const [currencies, setCurrencies] = useState([]);
+  const currencies = useCurrenciesState();
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState();
-
-  const { getCurrencies, isLoading: getCurrenciesIsLoading } =
-    useGetCurrencies();
-  useEffect(
-    () => setIsLoadingSplashScreen(getCurrenciesIsLoading),
-    [getCurrenciesIsLoading]
-  );
-
-  useEffect(() => {
-    getCurrencies(setCurrencies);
-  }, []);
 
   return (
     <div className="h-full flex items-center">

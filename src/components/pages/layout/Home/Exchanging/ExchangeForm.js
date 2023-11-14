@@ -4,13 +4,10 @@ import { CustomDropdown, CustomItem } from "../../../../common/CustomDropdown";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
-import { useAreRatesReversedState } from "../../../../../Providers/AreRatesReversedProvider";
 import {
   useAddComma,
-  useReverseRate,
   useRemoveComma,
 } from "../../../../../hooks/useNumberFunctions";
-import commaNumber from "comma-number";
 import { useDirectionState } from "../../../../../Providers/DirectionProvider";
 import SubmitButton from "../../../../common/SubmitButton";
 
@@ -25,8 +22,6 @@ export default function ExchangeForm({
   setSelectedTargetIndex,
   formDefaultRate,
   setFormDefaultRate,
-  rateInputReversedEnabled,
-  setRateInputReversedEnabled,
   defaultRateType,
 }) {
   const lang = useLanguageState();
@@ -36,8 +31,6 @@ export default function ExchangeForm({
 
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
-  const areRatesReversed = useAreRatesReversedState();
-  const reverseRate = useReverseRate();
 
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
@@ -54,21 +47,13 @@ export default function ExchangeForm({
         if (formDefaultRate) {
           return amount * formDefaultRate;
         } else {
-          if (areRatesReversed) {
-            return (amount / rate).toFixed();
-          } else {
-            return amount * rate;
-          }
+          return amount * rate;
         }
       } else {
         if (formDefaultRate) {
           return (amount / formDefaultRate).toFixed();
         } else {
-          if (areRatesReversed) {
-            return amount * rate;
-          } else {
-            return (amount / rate).toFixed();
-          }
+          return (amount / rate).toFixed();
         }
       }
     }
@@ -76,7 +61,7 @@ export default function ExchangeForm({
 
   useEffect(() => {
     selectedSourceIndex >= 0 &&
-      setSourceLabel(currencies[selectedSourceIndex].title);
+      setSourceLabel(currencies[selectedSourceIndex].abbreviation);
 
     findPossiblePairs();
   }, [selectedSourceIndex]);
@@ -154,7 +139,7 @@ export default function ExchangeForm({
                     {selectedSourceIndex >= 0 && (
                       <img
                         className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
-                        src={currencies[selectedSourceIndex].imageSource.gray}
+                        src={currencies[selectedSourceIndex].sym_pic_gray}
                       />
                     )}
                     <span className={`-m${oneDirection}-0.5`}>
@@ -164,12 +149,7 @@ export default function ExchangeForm({
                 }
               >
                 {currencies.map((currency, index) => {
-                  if (
-                    currency &&
-                    currency.title &&
-                    currency.imageSource &&
-                    currency.imageSource.gray
-                  ) {
+                  if (currency && currency.abbreviation) {
                     if (index === 0) {
                       if (index === currencies.length - 1) {
                         return (
@@ -178,12 +158,12 @@ export default function ExchangeForm({
                             className="rounded-xl"
                             key={index}
                           >
-                            <div className="flex">
+                            <div className="flex pl-4">
                               <img
                                 className="w-7 h-7 -mt-1.5 mx-0.5"
-                                src={currency.imageSource.gray}
+                                src={currency.sym_pic_gray}
                               />
-                              <span>{currency.title}</span>
+                              <span>{currency.abbreviation}</span>
                             </div>
                           </CustomItem>
                         );
@@ -194,12 +174,12 @@ export default function ExchangeForm({
                             className="rounded-t-xl"
                             key={index}
                           >
-                            <div className="flex">
+                            <div className="flex pl-4">
                               <img
                                 className="w-7 h-7 -mt-1.5 mx-0.5"
-                                src={currency.imageSource.gray}
+                                src={currency.sym_pic_gray}
                               />
-                              <span>{currency.title}</span>
+                              <span>{currency.abbreviation}</span>
                             </div>
                           </CustomItem>
                         );
@@ -211,12 +191,12 @@ export default function ExchangeForm({
                           className="rounded-b-xl"
                           key={index}
                         >
-                          <div className="flex">
+                          <div className="flex pl-4">
                             <img
                               className="w-7 h-7 -mt-1.5 mx-0.5"
-                              src={currency.imageSource.gray}
+                              src={currency.sym_pic_gray}
                             />
-                            <span>{currency.title}</span>
+                            <span>{currency.abbreviation}</span>
                           </div>
                         </CustomItem>
                       );
@@ -226,12 +206,12 @@ export default function ExchangeForm({
                           onClick={() => setSelectedSourceIndex(index)}
                           key={index}
                         >
-                          <div className="flex">
+                          <div className="flex pl-4">
                             <img
                               className="w-7 h-7 -mt-1.5 mx-0.5"
-                              src={currency.imageSource.gray}
+                              src={currency.sym_pic_gray}
                             />
-                            <span>{currency.title}</span>
+                            <span>{currency.abbreviation}</span>
                           </div>
                         </CustomItem>
                       );
@@ -348,19 +328,10 @@ export default function ExchangeForm({
                 name="rate"
                 onBlur={handleBlur("rate")}
                 onChange={(e) => {
-                  setRateInputReversedEnabled(false);
                   setFormDefaultRate(null);
                   handleChange(e);
                 }}
-                value={
-                  formDefaultRate
-                    ? commaNumber(formDefaultRate)
-                    : commaNumber(
-                        rateInputReversedEnabled
-                          ? reverseRate(+(values.rate + "").replace(",", ""))
-                          : (values.rate + "").replace(",", "")
-                      )
-                }
+                value={values.rate}
               />
             </div>
             {values.amount &&

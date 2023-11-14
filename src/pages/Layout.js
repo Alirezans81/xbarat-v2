@@ -14,10 +14,17 @@ import LoadingSplashScreen from "../components/common/LoadingSplashScreen";
 import CustomToast from "../components/common/CustomToast";
 import CustomModal from "../components/common/CustomModal";
 import { useUserSetState } from "../Providers/UserProvider";
-import { useWalletSetState } from "../Providers/WalletProvider";
+import { useWalletSetState, useWalletState } from "../Providers/WalletProvider";
 import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
 import { useStatusesSetState } from "../Providers/StatusesProvider";
+import { useCurrenciesSetState } from "../Providers/CurrenciesProvider";
 import { useGetStatuses } from "../apis/common/status/hooks";
+import {
+  useGetWalletAssets,
+  useGetWalletTanks,
+  useGetWallets,
+} from "../apis/common/wallet/hooks";
+import { useGetCurrencies } from "../apis/common/currency/hooks";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -26,7 +33,9 @@ export default function Layout() {
   const token = useTokenState();
   const setToken = useTokenSetState();
   const setUser = useUserSetState();
+  const wallet = useWalletState();
   const setWallet = useWalletSetState();
+  const setCurrencies = useCurrenciesSetState();
   const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const setStatuses = useStatusesSetState();
@@ -39,10 +48,70 @@ export default function Layout() {
     [getStatusesIsLoading]
   );
 
+  const { getCurrencies, isLoading: getCurrenciesIsLoading } =
+    useGetCurrencies();
+  useEffect(
+    () => setIsLoadingSplashScreen(getCurrenciesIsLoading),
+    [getCurrenciesIsLoading]
+  );
+
+  const { getWallets, isLoading: getWalletsIsLoading } = useGetWallets();
   useEffect(() => {
-    const stringStatues = window.localStorage.getItem("statues");
-    if (stringStatues !== "undefined" && stringStatues !== null) {
-      setStatuses(JSON.parse(stringStatues));
+    setIsLoadingSplashScreen(getWalletsIsLoading);
+  }, [getWalletsIsLoading]);
+  const { getWalletAssets, isLoading: getWalletAssetsIsLoading } =
+    useGetWalletAssets();
+  useEffect(() => {
+    setIsLoadingSplashScreen(getWalletAssetsIsLoading);
+  }, [getWalletAssetsIsLoading]);
+  const { getWalletTanks, isLoading: getWalletTanksIsLoading } =
+    useGetWalletTanks();
+  useEffect(() => {
+    setIsLoadingSplashScreen(getWalletTanksIsLoading);
+  }, [getWalletTanksIsLoading]);
+
+  const setWallets = (data) => {
+    if (wallet && data) {
+      let temp = wallet;
+      temp.wallets = data;
+      setWallet(temp);
+    }
+  };
+  const setWalletAssets = (data) => {
+    if (wallet && data) {
+      let temp = wallet;
+      temp.walletAssets = data;
+      setWallet(temp);
+    }
+  };
+  const setWalletTanks = (data) => {
+    if (wallet && data) {
+      let temp = wallet;
+      temp.walletTanks = data;
+      setWallet(temp);
+    }
+  };
+
+  const getWalletData = (username) => {
+    const userFilter = {
+      user: username,
+    };
+
+    getWallets(userFilter, setWallets);
+    getWalletAssets(userFilter, setWalletAssets);
+    getWalletTanks(userFilter, setWalletTanks);
+  };
+
+  useEffect(() => {
+    getCurrencies(setCurrencies);
+
+    const stringStatuses = window.localStorage.getItem("statues");
+    if (
+      stringStatuses !== "undefined" &&
+      stringStatuses !== "null" &&
+      stringStatuses !== null
+    ) {
+      setStatuses(JSON.parse(stringStatuses));
     } else {
       getStatuses(setStatuses, null, (statuses) =>
         localStorage.setItem("statuses", JSON.stringify(statuses))
@@ -51,22 +120,17 @@ export default function Layout() {
 
     const savedStringToken = window.localStorage.getItem("authToken");
     const savedStringUser = window.localStorage.getItem("userInfo");
-    const saveStringWallet = window.localStorage.getItem("wallet");
-
     if (
       savedStringToken !== "undefined" &&
       savedStringToken !== "null" &&
       savedStringUser !== "undefined" &&
-      savedStringUser !== "null" &&
-      saveStringWallet !== "undefined" &&
-      saveStringWallet !== "null"
+      savedStringUser !== "null"
     ) {
       const savedToken = JSON.parse(savedStringToken);
       const savedUser = JSON.parse(savedStringUser);
-      const savedWallet = JSON.parse(saveStringWallet);
       setToken(savedToken);
       setUser(savedUser);
-      setWallet(savedWallet);
+      savedUser && savedUser.username && getWalletData(savedUser.username);
     } else {
       setToken(null);
       setUser(null);

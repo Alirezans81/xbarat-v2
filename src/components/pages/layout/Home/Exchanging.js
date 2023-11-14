@@ -2,205 +2,72 @@ import React, { useEffect, useState } from "react";
 import Wallet from "./Exchanging/Wallet";
 import RateType from "./Exchanging/RateType";
 import ExchangeForm from "./Exchanging/ExchangeForm";
-import {
-  useAreRatesReversedSetState,
-  useAreRatesReversedState,
-} from "../../../../Providers/AreRatesReversedProvider";
-import { useReverseRate } from "../../../../hooks/useNumberFunctions";
 import { useWalletState } from "../../../../Providers/WalletProvider";
+import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
+import { useCurrencyPairsState } from "../../../../Providers/CurrencyPairsProvider";
 
 export default function Exchanging({
   selectedCurrecnyPair,
   setSelectedCurrencnyPair,
   formDefaultRate,
-  setFormDefaultRate,
+  rateIsReversed,
+  setRateIsReversed,
 }) {
-  const [currencies, setCurrencies] = useState([
-    {
-      id: 1,
-      title: "USD",
-      imageSource: {
-        gray: require("../../../../Images/currency symbols/usd-gray.png"),
-        dark: require("../../../../Images/currency symbols/usd-dark.png"),
-        light: require("../../../../Images/currency symbols/usd-light.png"),
-      },
-    },
-    {
-      id: 2,
-      title: "IRR",
-      imageSource: {
-        gray: require("../../../../Images/currency symbols/irr-gray.png"),
-        dark: require("../../../../Images/currency symbols/irr-dark.png"),
-        light: require("../../../../Images/currency symbols/irr-light.png"),
-      },
-    },
-    {
-      id: 3,
-      title: "AFN",
-      imageSource: {
-        gray: require("../../../../Images/currency symbols/usd-gray.png"),
-        dark: require("../../../../Images/currency symbols/usd-dark.png"),
-        light: require("../../../../Images/currency symbols/usd-light.png"),
-      },
-    },
-    {
-      id: 4,
-      title: "TRY",
-      imageSource: {
-        gray: require("../../../../Images/currency symbols/try-gray.png"),
-        dark: require("../../../../Images/currency symbols/try-dark.png"),
-        light: require("../../../../Images/currency symbols/try-light.png"),
-      },
-    },
-    {
-      id: 5,
-      title: "EUR",
-      imageSource: {
-        gray: require("../../../../Images/currency symbols/eur-gray.png"),
-        dark: require("../../../../Images/currency symbols/eur-dark.png"),
-        light: require("../../../../Images/currency symbols/eur-light.png"),
-      },
-    },
-  ]);
-  const [currencyPairs, setCurrenciesPairs] = useState([
-    {
-      id: 1,
-      source: {
-        id: 2,
-        title: "IRR",
-        imageSource: {
-          gray: require("../../../../Images/currency symbols/irr-gray.png"),
-          dark: require("../../../../Images/currency symbols/irr-dark.png"),
-          light: require("../../../../Images/currency symbols/irr-light.png"),
-        },
-      },
-      target: {
-        id: 3,
-        title: "AFN",
-        imageSource: {
-          gray: require("../../../../Images/currency symbols/usd-gray.png"),
-          dark: require("../../../../Images/currency symbols/usd-dark.png"),
-          light: require("../../../../Images/currency symbols/usd-light.png"),
-        },
-      },
-      rate: 1.717,
-      defaultRateType: "IRR/AFN",
-      hasReversedRate: true,
-    },
-    {
-      id: 2,
-      source: {
-        id: 3,
-        title: "AFN",
-        imageSource: {
-          gray: require("../../../../Images/currency symbols/usd-gray.png"),
-          dark: require("../../../../Images/currency symbols/usd-dark.png"),
-          light: require("../../../../Images/currency symbols/usd-light.png"),
-        },
-      },
-      target: {
-        id: 2,
-        title: "IRR",
-        imageSource: {
-          gray: require("../../../../Images/currency symbols/irr-gray.png"),
-          dark: require("../../../../Images/currency symbols/irr-dark.png"),
-          light: require("../../../../Images/currency symbols/irr-light.png"),
-        },
-      },
-      rate: 1.717,
-      defaultRateType: "IRR/AFN",
-      hasReversedRate: true,
-    },
-    {
-      id: 3,
-      source: {
-        id: 1,
-        title: "USD",
-        imageSource: {
-          gray: require("../../../../Images/currency symbols/usd-gray.png"),
-          dark: require("../../../../Images/currency symbols/usd-dark.png"),
-          light: require("../../../../Images/currency symbols/usd-light.png"),
-        },
-      },
-      target: {
-        id: 2,
-        title: "IRR",
-        imageSource: {
-          gray: require("../../../../Images/currency symbols/irr-gray.png"),
-          dark: require("../../../../Images/currency symbols/irr-dark.png"),
-          light: require("../../../../Images/currency symbols/irr-light.png"),
-        },
-      },
-      rate: 497500,
-      defaultRateType: "USD/IRR",
-      hasReversedRate: false,
-    },
-    {
-      id: 4,
-      source: {
-        id: 2,
-        title: "IRR",
-        imageSource: {
-          gray: require("../../../../Images/currency symbols/irr-gray.png"),
-          dark: require("../../../../Images/currency symbols/irr-dark.png"),
-          light: require("../../../../Images/currency symbols/irr-light.png"),
-        },
-      },
-      target: {
-        id: 1,
-        title: "USD",
-        imageSource: {
-          gray: require("../../../../Images/currency symbols/usd-gray.png"),
-          dark: require("../../../../Images/currency symbols/usd-dark.png"),
-          light: require("../../../../Images/currency symbols/usd-light.png"),
-        },
-      },
-      rate: 497500,
-      defaultRateType: "USD/IRR",
-      hasReversedRate: false,
-    },
-  ]);
+  const currencies = useCurrenciesState();
+  const currencyPairs = useCurrencyPairsState();
   const wallet = useWalletState();
 
   const [selectedSourceIndex, setSelectedSourceIndex] = useState(-1);
-
-  const [selectedCurrecnyBalance, setSelectedCurrecnyBalance] = useState([]);
-  const findCurrencyInWallet = () => {
+  const [selectedCurrecnyWalletData, setSelectedCurrecnyWalletData] =
+    useState(0);
+  const findCurrencyBalanceInWallet = () => {
     if (selectedSourceIndex >= 0) {
-      const found = wallet.find(
+      const found = wallet.walletAssets.find(
         (e) => e.currencyId === currencies[selectedSourceIndex].id
       );
-      setSelectedCurrecnyBalance([found]);
+      found && found && setSelectedCurrecnyWalletData(found);
     }
   };
+  const findAvailableTargets = () => {
+    const foundCurrencyPairs = currencyPairs.filter(
+      (currencyPair) =>
+        currencyPair.currency_source === currencies[selectedSourceIndex].id
+    );
+
+    let foundAvailableTargets = [];
+    for (let i = 0; i < foundCurrencyPairs.length; i++) {
+      for (let j = 0; j < currencies.length; j++) {
+        if (foundCurrencyPairs.currency_destination === currencies[j].id) {
+          foundAvailableTargets.push(currencies[j]);
+          break;
+        }
+      }
+    }
+
+    setAvailableTargets(foundAvailableTargets);
+  };
+  useEffect(() => {
+    findCurrencyBalanceInWallet();
+    findAvailableTargets();
+    setRateIsReversed(false);
+    setSelectedTargetIndex(-1);
+    setSelectedCurrencnyPair(null);
+  }, [selectedSourceIndex]);
 
   const [availableTargets, setAvailableTargets] = useState([]);
   const [selectedTargetIndex, setSelectedTargetIndex] = useState(-1);
-
   useEffect(() => {
     if (selectedSourceIndex >= 0 && selectedTargetIndex >= 0) {
       const found = currencyPairs.find(
         (currencyPair) =>
-          currencyPair.source.id === currencies[selectedSourceIndex].id &&
-          currencyPair.target.id === availableTargets[selectedTargetIndex].id
+          currencyPair.currency_source === currencies[selectedSourceIndex].id &&
+          currencyPair.currency_destination ===
+            availableTargets[selectedTargetIndex].id
       );
 
       found ? setSelectedCurrencnyPair(found) : selectedCurrecnyPair(null);
     }
   }, [selectedTargetIndex]);
-  useEffect(() => {
-    // findCurrencyInWallet();
-    setFormDefaultRate(null);
-    setAreRatesReversed(false);
-    setSelectedTargetIndex(-1);
-    setSelectedCurrencnyPair(null);
-  }, [selectedSourceIndex]);
-
-  const areRatesReversed = useAreRatesReversedState();
-  const setAreRatesReversed = useAreRatesReversedSetState();
-  const reverseRate = useReverseRate();
-  const [rateInputReversedEnabled, setRateInputReversedEnabled] =
-    useState(areRatesReversed);
 
   return (
     <div className="flex flex-col px-6 w-full h-full py-5">
@@ -208,20 +75,20 @@ export default function Exchanging({
         <div className="row-span-6">
           {selectedSourceIndex >= 0 && (
             <Wallet
-              money={
-                selectedCurrecnyBalance[0]
-                  ? selectedCurrecnyBalance[0].money
+              balance={
+                selectedCurrecnyWalletData && selectedCurrecnyWalletData.balance
+                  ? +selectedCurrecnyWalletData.balance
                   : 0
               }
-              currency={currencies[selectedSourceIndex].title}
+              currency={currencies[selectedSourceIndex].abbreviation}
               pending={
-                selectedCurrecnyBalance[0]
-                  ? selectedCurrecnyBalance[0].pneding
+                selectedCurrecnyWalletData && selectedCurrecnyWalletData.pending
+                  ? +selectedCurrecnyWalletData.pending
                   : 0
               }
               locked={
-                selectedCurrecnyBalance[0]
-                  ? selectedCurrecnyBalance[0].locked
+                selectedCurrecnyWalletData && selectedCurrecnyWalletData.locked
+                  ? +selectedCurrecnyWalletData.locked
                   : 0
               }
             />
@@ -232,10 +99,14 @@ export default function Exchanging({
           {selectedCurrecnyPair && (
             <RateType
               rate={selectedCurrecnyPair.rate}
-              defaultRateType={selectedCurrecnyPair.defaultRateType}
-              hasReversedRate={selectedCurrecnyPair.hasReversedRate}
-              setFormDefaultRate={setFormDefaultRate}
-              setRateInputReversedEnabled={setRateInputReversedEnabled}
+              defaultRateType={
+                currencies[selectedSourceIndex].abbreviation +
+                "/" +
+                availableTargets[selectedTargetIndex].abbreviation
+              }
+              hasReversedRate={selectedCurrecnyPair.has_reverse_rate}
+              rateIsReversed={rateIsReversed}
+              setRateIsReversed={setRateIsReversed}
             />
           )}
         </div>
@@ -250,12 +121,8 @@ export default function Exchanging({
           selectedTargetIndex={selectedTargetIndex}
           setSelectedTargetIndex={setSelectedTargetIndex}
           currencyPairs={currencyPairs}
-          formDefaultRate={
-            areRatesReversed ? reverseRate(formDefaultRate) : formDefaultRate
-          }
-          setFormDefaultRate={setFormDefaultRate}
-          rateInputReversedEnabled={rateInputReversedEnabled}
-          setRateInputReversedEnabled={setRateInputReversedEnabled}
+          formDefaultRate={formDefaultRate}
+          setRateIsReversed={setRateIsReversed}
           defaultRateType={
             selectedCurrecnyPair ? selectedCurrecnyPair.defaultRateType : ""
           }

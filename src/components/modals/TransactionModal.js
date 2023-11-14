@@ -3,30 +3,18 @@ import SelectType from "./TransactionModal/SelectType";
 import Deposit from "./TransactionModal/Deposit";
 import Withdrawal from "./TransactionModal/Withdrawal";
 import Transfer from "./TransactionModal/Transfer";
-import { useGetCurrencies } from "../../apis/common/currency/hooks";
-import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useModalDataClose } from "../../Providers/ModalDataProvider";
+import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
 
 export default function TransactionModal({
   data,
   defaultType,
   refreshPendingRequests,
 }) {
-  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const currencies = useCurrenciesState();
   const closeModal = useModalDataClose();
 
   const [type, selectType] = useState(defaultType || "deposit");
-  const [currencies, setCurrencies] = useState([]);
-
-  const { getCurrencies, isLoading: getCurrenciesIsLoading } =
-    useGetCurrencies();
-  useEffect(
-    () => setIsLoadingSplashScreen(getCurrenciesIsLoading),
-    [getCurrenciesIsLoading]
-  );
-  useEffect(() => {
-    getCurrencies(setCurrencies);
-  }, []);
 
   return (
     <div className="pb-3">

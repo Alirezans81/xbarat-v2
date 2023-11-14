@@ -3,28 +3,21 @@ import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
-import { useGetCurrencies } from "../../../apis/common/currency/hooks";
 import { useGetWalletTankTypes } from "../../../apis/common/wallet/hooks";
+import { useCurrenciesState } from "../../../Providers/CurrenciesProvider";
 
 export default function Step4({
   handleBlur,
   handleChange,
   values,
   setFieldValue,
-  walletAsset,
-  walletTank,
 }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const currencies = useCurrenciesState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
-  const { getCurrencies, isLoading: getCurrenciesIsLoading } =
-    useGetCurrencies();
-  useEffect(
-    () => setIsLoadingSplashScreen(getCurrenciesIsLoading),
-    [getCurrenciesIsLoading]
-  );
   const { getWalletTankTypes, isLoading: getWalletTankTypesIsLoading } =
     useGetWalletTankTypes();
   useEffect(
@@ -32,13 +25,11 @@ export default function Step4({
     [getWalletTankTypesIsLoading]
   );
 
-  const [currencies, setCurrencies] = useState([]);
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
   const [walletTankTypes, setWalletTankTypes] = useState([]);
   const [selectedWalletTankType, setSelectedWalletTankType] = useState(-1);
 
   useEffect(() => {
-    getCurrencies(setCurrencies);
     getWalletTankTypes({}, setWalletTankTypes);
   }, []);
 

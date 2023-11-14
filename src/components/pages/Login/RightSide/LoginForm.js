@@ -68,17 +68,6 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
     setValidationErrors(newValidationErrors);
     return result;
   };
-  const passwordContainsCheck = (password) => {
-    if (
-      !Boolean(password.match(/[a-z]/)) ||
-      !Boolean(password.match(/[A-Z]/)) ||
-      !Boolean(password.match(/[0-9]/)) ||
-      !Boolean(password.match(/[!@#$%*?]/))
-    ) {
-      return false;
-    }
-    return true;
-  };
   const validatePassword = (password) => {
     let newValidationErrors = validationErrors;
     let result = true;
@@ -126,16 +115,16 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
         login(
           values,
           (data) => {
-            const userFilter = {
-              user:
-                data && data.user && data.user.username
-                  ? data.user.username
-                  : "",
-            };
+            // const userFilter = {
+            //   user:
+            //     data && data.user && data.user.username
+            //       ? data.user.username
+            //       : "",
+            // };
 
-            getWallets(userFilter, setWallets);
-            getWalletAssets(userFilter, setWalletAssets);
-            getWalletTanks(userFilter, setWalletTanks);
+            // getWallets(userFilter, setWallets);
+            // getWalletAssets(userFilter, setWalletAssets);
+            // getWalletTanks(userFilter, setWalletTanks);
 
             navigateToHome();
           },

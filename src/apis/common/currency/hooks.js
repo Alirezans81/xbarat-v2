@@ -1,4 +1,4 @@
-import { getCurrencies, getCurrency } from "./apis";
+import { getCurrencies, getCurrency, getCurrencyPairs } from "./apis";
 import { useState } from "react";
 
 const useGetCurrencies = () => {
@@ -49,4 +49,28 @@ const useGetCurrency = () => {
   return { getCurrency: fetch, error, isLoading };
 };
 
-export { useGetCurrencies, useGetCurrency };
+const useGetCurrencyPairs = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (filtersObject, setState, customFunctionWithData) => {
+    setIsLoading(true);
+    await getCurrencyPairs(filtersObject)
+      .then((data) => {
+        console.log(data);
+        setState(data.data);
+        customFunctionWithData && customFunctionWithData(data.data);
+        setIsLoading(false);
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { getCurrencyPairs: fetch, error, isLoading };
+};
+
+export { useGetCurrencies, useGetCurrency, useGetCurrencyPairs };

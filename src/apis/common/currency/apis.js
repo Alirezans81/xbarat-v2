@@ -1,4 +1,5 @@
 import axios from "axios";
+import queryString from "query-string";
 
 const api = require("../../api.json");
 
@@ -10,4 +11,16 @@ const getCurrency = (currencyUrl) => {
   return axios.get(currencyUrl);
 };
 
-export { getCurrencies, getCurrency };
+const getCurrencyPairs = (filtersObject) => {
+  if (filtersObject) {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["currency-pair"],
+      query: filtersObject,
+    });
+
+    return axios.get(urlWithQueries);
+  }
+  return axios.get(api["currency-pair"]);
+};
+
+export { getCurrencies, getCurrency, getCurrencyPairs };

@@ -4,7 +4,6 @@ import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { Formik } from "formik";
 import { CustomDropdown, CustomItem } from "../../../common/CustomDropdown";
 import SubmitButton from "../../../common/SubmitButton";
-import { useGetCurrencies } from "../../../../apis/common/currency/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
 import { useGetBranches } from "../../../../apis/common/branch/hooks";
 import { useCreateDeposit } from "../../../../apis/common/wallet/hooks";
@@ -14,8 +13,7 @@ import {
   useRemoveComma,
 } from "../../../../hooks/useNumberFunctions";
 import { useStatusesState } from "../../../../Providers/StatusesProvider";
-import { useGetPendingRequests } from "../../../../apis/pages/Wallet/hooks";
-import { useTokenState } from "../../../../Providers/TokenProvider";
+import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 
 export default function QuickDeposit({ refreshPendingRequests }) {
   const theme = useThemeState();
@@ -23,37 +21,21 @@ export default function QuickDeposit({ refreshPendingRequests }) {
   const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const userInfo = useUserState();
-  const token = useTokenState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
 
   const statuses = useStatusesState();
 
-  const [currencies, setCurrencies] = useState([]);
+  const currencies = useCurrenciesState();
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
   const [locations, setLocations] = useState([]);
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(-1);
-  const { getCurrencies, isLoading: getCurrenciesIsLoading } =
-    useGetCurrencies();
-  useEffect(
-    () => setIsLoadingSplashScreen(getCurrenciesIsLoading),
-    [getCurrenciesIsLoading]
-  );
+
   const { getBranches, isLoading: getBranchesIsLoading } = useGetBranches();
   useEffect(
     () => setIsLoadingSplashScreen(getBranchesIsLoading),
     [getBranchesIsLoading]
   );
-  const { getPendingRequests, isLoading: getPendingRequestsIsLoading } =
-    useGetPendingRequests();
-  useEffect(
-    () => setIsLoadingSplashScreen(getPendingRequestsIsLoading),
-    [getPendingRequestsIsLoading]
-  );
-
-  useEffect(() => {
-    getCurrencies(setCurrencies);
-  }, []);
 
   const [submitButtonClass, setSubmitButtonClass] = useState("");
   const [locationDropdownClass, setLocationDropdownClass] = useState("");
