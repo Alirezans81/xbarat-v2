@@ -17,5 +17,7 @@
   "withdrawal": "https://smicln.ir/api/order/withdrawal/",
   "transfer": "https://smicln.ir/api/order/transfer/",
   "pending-requests": "https://smicln.ir/api/wallet/pending-request/",
+  "table-exchange": "https://smicln.ir/api/index/table-exchange/",
+  "pending-exchange": "https://smicln.ir/api/index/pending-exchange/",
   "status": "https://smicln.ir/api/status/"
 }
