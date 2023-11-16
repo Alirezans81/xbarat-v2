@@ -5,6 +5,7 @@ import ExchangeForm from "./Exchanging/ExchangeForm";
 import { useWalletState } from "../../../../Providers/WalletProvider";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useCurrencyPairsState } from "../../../../Providers/CurrencyPairsProvider";
+import { useLanguageState } from "../../../../Providers/LanguageProvider";
 
 export default function Exchanging({
   selectedCurrecnyPair,
@@ -13,13 +14,31 @@ export default function Exchanging({
   rateIsReversed,
   setRateIsReversed,
 }) {
+  const lang = useLanguageState();
+
   const currencies = useCurrenciesState();
   const currencyPairs = useCurrencyPairsState();
   const wallet = useWalletState();
 
   const [selectedSourceIndex, setSelectedSourceIndex] = useState(-1);
   const [selectedCurrecnyWalletData, setSelectedCurrecnyWalletData] =
-    useState(0);
+    useState();
+  const [availableTargets, setAvailableTargets] = useState([]);
+  const [selectedTargetIndex, setSelectedTargetIndex] = useState(-1);
+
+  const [sourceLabel, setSourceLabel] = useState(lang["source"]);
+  useEffect(() => {
+    selectedSourceIndex >= 0
+      ? setSourceLabel(currencies[selectedSourceIndex].abbreviation)
+      : setSourceLabel(lang["source"]);
+  }, [selectedSourceIndex]);
+  const [targetLabel, setTargetLabel] = useState(lang["target"]);
+  useEffect(() => {
+    selectedTargetIndex >= 0
+      ? setTargetLabel(availableTargets[selectedTargetIndex].abbreviation)
+      : setTargetLabel(lang["target"]);
+  }, [selectedTargetIndex]);
+
   const findCurrencyBalanceInWallet = () => {
     if (selectedSourceIndex >= 0) {
       const found = wallet.walletAssets.find(
@@ -31,13 +50,14 @@ export default function Exchanging({
   const findAvailableTargets = () => {
     const foundCurrencyPairs = currencyPairs.filter(
       (currencyPair) =>
-        currencyPair.currency_source === currencies[selectedSourceIndex].id
+        currencies[selectedSourceIndex] &&
+        currencyPair.currency_source === currencies[selectedSourceIndex].url
     );
 
     let foundAvailableTargets = [];
     for (let i = 0; i < foundCurrencyPairs.length; i++) {
       for (let j = 0; j < currencies.length; j++) {
-        if (foundCurrencyPairs.currency_destination === currencies[j].id) {
+        if (foundCurrencyPairs[i].currency_destination === currencies[j].url) {
           foundAvailableTargets.push(currencies[j]);
           break;
         }
@@ -46,6 +66,7 @@ export default function Exchanging({
 
     setAvailableTargets(foundAvailableTargets);
   };
+
   useEffect(() => {
     findCurrencyBalanceInWallet();
     findAvailableTargets();
@@ -54,18 +75,19 @@ export default function Exchanging({
     setSelectedCurrencnyPair(null);
   }, [selectedSourceIndex]);
 
-  const [availableTargets, setAvailableTargets] = useState([]);
-  const [selectedTargetIndex, setSelectedTargetIndex] = useState(-1);
   useEffect(() => {
     if (selectedSourceIndex >= 0 && selectedTargetIndex >= 0) {
       const found = currencyPairs.find(
         (currencyPair) =>
-          currencyPair.currency_source === currencies[selectedSourceIndex].id &&
+          currencyPair.currency_source ===
+            currencies[selectedSourceIndex].url &&
           currencyPair.currency_destination ===
-            availableTargets[selectedTargetIndex].id
+            availableTargets[selectedTargetIndex].url
       );
 
-      found ? setSelectedCurrencnyPair(found) : selectedCurrecnyPair(null);
+      found ? setSelectedCurrencnyPair(found) : setSelectedCurrencnyPair(null);
+
+      setRateIsReversed(false);
     }
   }, [selectedTargetIndex]);
 
@@ -113,15 +135,18 @@ export default function Exchanging({
       </div>
       <div className="flex-1 mt-auto">
         <ExchangeForm
+          selectedCurrecnyPair={selectedCurrecnyPair}
           currencies={currencies}
           selectedSourceIndex={selectedSourceIndex}
           setSelectedSourceIndex={setSelectedSourceIndex}
+          sourceLabel={sourceLabel}
           availableTargets={availableTargets}
-          setAvailableTargets={setAvailableTargets}
           selectedTargetIndex={selectedTargetIndex}
+          targetLabel={targetLabel}
           setSelectedTargetIndex={setSelectedTargetIndex}
           currencyPairs={currencyPairs}
           formDefaultRate={formDefaultRate}
+          rateIsReversed={rateIsReversed}
           setRateIsReversed={setRateIsReversed}
           defaultRateType={
             selectedCurrecnyPair ? selectedCurrecnyPair.defaultRateType : ""

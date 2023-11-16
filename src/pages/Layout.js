@@ -13,18 +13,20 @@ import NavbarSetting from "../components/pages/layout/NavbarSetting";
 import LoadingSplashScreen from "../components/common/LoadingSplashScreen";
 import CustomToast from "../components/common/CustomToast";
 import CustomModal from "../components/common/CustomModal";
-import { useUserSetState } from "../Providers/UserProvider";
-import { useWalletSetState, useWalletState } from "../Providers/WalletProvider";
+import { useUserSetState, useUserState } from "../Providers/UserProvider";
+import {
+  useWalletSetState,
+  useGetWalletData,
+} from "../Providers/WalletProvider";
 import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
 import { useStatusesSetState } from "../Providers/StatusesProvider";
 import { useCurrenciesSetState } from "../Providers/CurrenciesProvider";
 import { useGetStatuses } from "../apis/common/status/hooks";
 import {
-  useGetWalletAssets,
-  useGetWalletTanks,
-  useGetWallets,
-} from "../apis/common/wallet/hooks";
-import { useGetCurrencies } from "../apis/common/currency/hooks";
+  useGetCurrencies,
+  useGetCurrencyPairs,
+} from "../apis/common/currency/hooks";
+import { useCurrencyPairsSetState } from "../Providers/CurrencyPairsProvider";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -33,19 +35,29 @@ export default function Layout() {
   const token = useTokenState();
   const setToken = useTokenSetState();
   const setUser = useUserSetState();
-  const wallet = useWalletState();
+  const user = useUserState();
   const setWallet = useWalletSetState();
   const setCurrencies = useCurrenciesSetState();
+  const setCurrencyPairs = useCurrencyPairsSetState();
   const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const setStatuses = useStatusesSetState();
   const { pathname: activeRoute } = useLocation();
   const [links, setLinks] = useState([]);
 
+  const getWalletData = useGetWalletData();
+
   const { getStatuses, isLoading: getStatusesIsLoading } = useGetStatuses();
   useEffect(
     () => setIsLoadingSplashScreen(getStatusesIsLoading),
     [getStatusesIsLoading]
+  );
+
+  const { getCurrencyPairs, isLoading: getCurrencyPairsIsLoading } =
+    useGetCurrencyPairs();
+  useEffect(
+    () => setIsLoadingSplashScreen(getCurrencyPairsIsLoading),
+    [getCurrencyPairsIsLoading]
   );
 
   const { getCurrencies, isLoading: getCurrenciesIsLoading } =
@@ -55,55 +67,9 @@ export default function Layout() {
     [getCurrenciesIsLoading]
   );
 
-  const { getWallets, isLoading: getWalletsIsLoading } = useGetWallets();
-  useEffect(() => {
-    setIsLoadingSplashScreen(getWalletsIsLoading);
-  }, [getWalletsIsLoading]);
-  const { getWalletAssets, isLoading: getWalletAssetsIsLoading } =
-    useGetWalletAssets();
-  useEffect(() => {
-    setIsLoadingSplashScreen(getWalletAssetsIsLoading);
-  }, [getWalletAssetsIsLoading]);
-  const { getWalletTanks, isLoading: getWalletTanksIsLoading } =
-    useGetWalletTanks();
-  useEffect(() => {
-    setIsLoadingSplashScreen(getWalletTanksIsLoading);
-  }, [getWalletTanksIsLoading]);
-
-  const setWallets = (data) => {
-    if (wallet && data) {
-      let temp = wallet;
-      temp.wallets = data;
-      setWallet(temp);
-    }
-  };
-  const setWalletAssets = (data) => {
-    if (wallet && data) {
-      let temp = wallet;
-      temp.walletAssets = data;
-      setWallet(temp);
-    }
-  };
-  const setWalletTanks = (data) => {
-    if (wallet && data) {
-      let temp = wallet;
-      temp.walletTanks = data;
-      setWallet(temp);
-    }
-  };
-
-  const getWalletData = (username) => {
-    const userFilter = {
-      user: username,
-    };
-
-    getWallets(userFilter, setWallets);
-    getWalletAssets(userFilter, setWalletAssets);
-    getWalletTanks(userFilter, setWalletTanks);
-  };
-
   useEffect(() => {
     getCurrencies(setCurrencies);
+    getCurrencyPairs(null, setCurrencyPairs);
 
     const stringStatuses = window.localStorage.getItem("statues");
     if (
@@ -118,23 +84,27 @@ export default function Layout() {
       );
     }
 
-    const savedStringToken = window.localStorage.getItem("authToken");
-    const savedStringUser = window.localStorage.getItem("userInfo");
-    if (
-      savedStringToken !== "undefined" &&
-      savedStringToken !== "null" &&
-      savedStringUser !== "undefined" &&
-      savedStringUser !== "null"
-    ) {
-      const savedToken = JSON.parse(savedStringToken);
-      const savedUser = JSON.parse(savedStringUser);
-      setToken(savedToken);
-      setUser(savedUser);
-      savedUser && savedUser.username && getWalletData(savedUser.username);
+    if (!token || !user) {
+      const savedStringToken = window.localStorage.getItem("authToken");
+      const savedStringUser = window.localStorage.getItem("userInfo");
+      if (
+        savedStringToken !== "undefined" &&
+        savedStringToken !== "null" &&
+        savedStringUser !== "undefined" &&
+        savedStringUser !== "null"
+      ) {
+        const savedToken = JSON.parse(savedStringToken);
+        const savedUser = JSON.parse(savedStringUser);
+        setToken(savedToken);
+        setUser(savedUser);
+        savedUser && savedUser.username && getWalletData(savedUser.username);
+      } else {
+        setToken(null);
+        setUser(null);
+        setWallet({ wallets: [], walletAssets: [], walletTanks: [] });
+      }
     } else {
-      setToken(null);
-      setUser(null);
-      setWallet({ wallets: [], walletAssets: [], walletTanks: [] });
+      user && user.username && getWalletData(user.username);
     }
   }, []);
 

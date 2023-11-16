@@ -16,6 +16,7 @@ export default function Deposit({
   data,
   closeModal,
   refreshPendingRequests,
+  getWalletData,
 }) {
   const lang = useLanguageState();
   const theme = useThemeState();
@@ -105,6 +106,7 @@ export default function Deposit({
                 : "",
             },
             () => {
+              getWalletData();
               refreshPendingRequests();
               closeModal();
             }

@@ -4,7 +4,7 @@ import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import CustomSlider from "../../../common/CustomSlider";
 import OtherExchangeCard from "./OtherExchanges/OtherExchangeCard";
 
-export default function OtherExcahnges() {
+export default function OtherExchanges() {
   const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";

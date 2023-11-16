@@ -10,18 +10,21 @@ import {
 } from "../../../../../hooks/useNumberFunctions";
 import { useDirectionState } from "../../../../../Providers/DirectionProvider";
 import SubmitButton from "../../../../common/SubmitButton";
+import { useUserState } from "../../../../../Providers/UserProvider";
+import { useExchange } from "../../../../../apis/pages/Home/hooks";
 
 export default function ExchangeForm({
+  selectedCurrecnyPair,
   currencies,
-  currencyPairs,
   selectedSourceIndex,
   setSelectedSourceIndex,
+  sourceLabel,
   availableTargets,
-  setAvailableTargets,
   selectedTargetIndex,
   setSelectedTargetIndex,
+  rateIsReversed,
+  targetLabel,
   formDefaultRate,
-  setFormDefaultRate,
   defaultRateType,
 }) {
   const lang = useLanguageState();
@@ -29,75 +32,26 @@ export default function ExchangeForm({
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: oneDirection } = useDirectionState();
 
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const user = useUserState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
 
-  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
-
-  const [sourceLabel, setSourceLabel] = useState(lang["source"]);
-
-  const computingTargetAmount = (amount, rate) => {
-    if (selectedSourceIndex >= 0 && selectedTargetIndex >= 0) {
-      const selectedCurrencies = defaultRateType.split("/");
-      if (
-        currencies[selectedSourceIndex] &&
-        currencies[selectedSourceIndex].title &&
-        selectedCurrencies[0] === currencies[selectedSourceIndex].title
-      ) {
-        if (formDefaultRate) {
-          return amount * formDefaultRate;
-        } else {
-          return amount * rate;
-        }
-      } else {
-        if (formDefaultRate) {
-          return (amount / formDefaultRate).toFixed();
-        } else {
-          return (amount / rate).toFixed();
-        }
-      }
-    }
-  };
-
-  useEffect(() => {
-    selectedSourceIndex >= 0 &&
-      setSourceLabel(currencies[selectedSourceIndex].abbreviation);
-
-    findPossiblePairs();
-  }, [selectedSourceIndex]);
-
-  useEffect(() => {
-    selectedTargetIndex >= 0 &&
-      setTargetLabel(availableTargets[selectedTargetIndex].title);
-  }, [selectedTargetIndex]);
-
-  const findPossiblePairs = () => {
-    let pairs = [];
-    for (let i = 0; i < currencyPairs.length; i++) {
-      if (
-        selectedSourceIndex >= 0 &&
-        currencyPairs[i].source.id === currencies[selectedSourceIndex].id
-      ) {
-        pairs.push(currencyPairs[i].target);
-      }
-    }
-
-    setAvailableTargets(pairs);
-  };
-
-  const [targetLabel, setTargetLabel] = useState(lang["target"]);
-
-  useEffect(() => {
-    selectedTargetIndex >= 0
-      ? setTargetLabel(availableTargets[selectedTargetIndex].title)
-      : setTargetLabel(lang["target"]);
-  }, [selectedTargetIndex]);
+  const { exchange, isLoading: exchangeIsLoading } = useExchange();
+  useEffect(
+    () => setIsLoadingSplashScreen(exchangeIsLoading),
+    [exchangeIsLoading]
+  );
 
   const [errorMessage, setErrorMessage] = useState();
-
-  const exchange = (params) => {
-    console.log(params);
-    setIsLoadingSplashScreen(true);
+  const computingTargetAmount = (amount, rate, multi) => {
+    if (selectedSourceIndex >= 0 && selectedTargetIndex >= 0) {
+      if (!rateIsReversed) {
+        return (amount * rate) / multi;
+      } else {
+        return amount / rate;
+      }
+    }
   };
 
   return (
@@ -106,27 +60,7 @@ export default function ExchangeForm({
         amount: "",
         rate: "",
       }}
-      onSubmit={(values) => {
-        if (selectedSourceIndex >= 0 && selectedTargetIndex >= 0) {
-          if (values.amount > 0 && (values.rate > 0 || formDefaultRate)) {
-            setErrorMessage(null);
-
-            values.sourceId = currencies[selectedSourceIndex].id;
-            values.targetId = availableTargets[selectedTargetIndex].id;
-
-            values.amount = +values.amount;
-            values.rate = formDefaultRate
-              ? formDefaultRate
-              : removeComma(values.rate);
-
-            exchange(values);
-          } else {
-            setErrorMessage(lang["empty-fields-error"]);
-          }
-        } else {
-          setErrorMessage(lang["select-currency-error"]);
-        }
-      }}
+      onSubmit={(values) => {}}
     >
       {({ handleBlur, handleChange, values, handleSubmit }) => {
         return (
@@ -230,9 +164,7 @@ export default function ExchangeForm({
                     {selectedTargetIndex >= 0 && (
                       <img
                         className="w-7 h-7 -mt-1.5 mx-0.5"
-                        src={
-                          availableTargets[selectedTargetIndex].imageSource.gray
-                        }
+                        src={availableTargets[selectedTargetIndex].sym_pic_gray}
                       />
                     )}
                     <span>{targetLabel}</span>
@@ -248,12 +180,12 @@ export default function ExchangeForm({
                           className="rounded-xl"
                           key={index}
                         >
-                          <div className="flex">
+                          <div className="flex pl-4">
                             <img
                               className="w-7 h-7 -mt-1.5 mx-0.5"
-                              src={currency.imageSource.gray}
+                              src={currency.sym_pic_gray}
                             />
-                            <span>{currency.title}</span>
+                            <span>{currency.abbreviation}</span>
                           </div>
                         </CustomItem>
                       );
@@ -264,12 +196,12 @@ export default function ExchangeForm({
                           className="rounded-t-xl"
                           key={index}
                         >
-                          <div className="flex">
+                          <div className="flex pl-4">
                             <img
                               className="w-7 h-7 -mt-1.5 mx-0.5"
-                              src={currency.imageSource.gray}
+                              src={currency.sym_pic_gray}
                             />
-                            <span>{currency.title}</span>
+                            <span>{currency.abbreviation}</span>
                           </div>
                         </CustomItem>
                       );
@@ -281,12 +213,12 @@ export default function ExchangeForm({
                         className="rounded-b-xl"
                         key={index}
                       >
-                        <div className="flex">
+                        <div className="flex pl-4">
                           <img
                             className="w-7 h-7 -mt-1.5 mx-0.5"
-                            src={currency.imageSource.gray}
+                            src={currency.sym_pic_gray}
                           />
-                          <span>{currency.title}</span>
+                          <span>{currency.abbreviation}</span>
                         </div>
                       </CustomItem>
                     );
@@ -296,12 +228,12 @@ export default function ExchangeForm({
                         onClick={() => setSelectedTargetIndex(index)}
                         key={index}
                       >
-                        <div className="flex">
+                        <div className="flex pl-4">
                           <img
                             className="w-7 h-7 -mt-1.5 mx-0.5"
-                            src={currency.imageSource.gray}
+                            src={currency.sym_pic_gray}
                           />
-                          <span>{currency.title}</span>
+                          <span>{currency.abbreviation}</span>
                         </div>
                       </CustomItem>
                     );
@@ -328,7 +260,6 @@ export default function ExchangeForm({
                 name="rate"
                 onBlur={handleBlur("rate")}
                 onChange={(e) => {
-                  setFormDefaultRate(null);
                   handleChange(e);
                 }}
                 value={values.rate}
@@ -354,7 +285,7 @@ export default function ExchangeForm({
                     ) +
                       " " +
                       (availableTargets[selectedTargetIndex]
-                        ? availableTargets[selectedTargetIndex].title
+                        ? availableTargets[selectedTargetIndex].abbreviation
                         : "")}
                   </span>
                 </div>

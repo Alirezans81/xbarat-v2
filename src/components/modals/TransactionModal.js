@@ -5,6 +5,7 @@ import Withdrawal from "./TransactionModal/Withdrawal";
 import Transfer from "./TransactionModal/Transfer";
 import { useModalDataClose } from "../../Providers/ModalDataProvider";
 import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
+import { useGetWalletData } from "../../Providers/WalletProvider";
 
 export default function TransactionModal({
   data,
@@ -13,6 +14,7 @@ export default function TransactionModal({
 }) {
   const currencies = useCurrenciesState();
   const closeModal = useModalDataClose();
+  const getWalletData = useGetWalletData();
 
   const [type, selectType] = useState(defaultType || "deposit");
 
@@ -25,6 +27,7 @@ export default function TransactionModal({
           currencies={currencies}
           data={data}
           closeModal={closeModal}
+          getWalletData={getWalletData}
         />
       )}
       {type === "withdrawal" && (
@@ -33,6 +36,7 @@ export default function TransactionModal({
           currencies={currencies}
           data={data}
           closeModal={closeModal}
+          getWalletData={getWalletData}
         />
       )}
       {type === "transfer" && (
@@ -41,6 +45,7 @@ export default function TransactionModal({
           currencies={currencies}
           data={data}
           closeModal={closeModal}
+          getWalletData={getWalletData}
         />
       )}
     </div>

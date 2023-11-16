@@ -40,8 +40,6 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     return false;
   };
 
-  console.log(data && data.document !== null && hasPreviewImage());
-
   return (
     <div className="flex flex-col">
       {data && data.type === "deposit" && (

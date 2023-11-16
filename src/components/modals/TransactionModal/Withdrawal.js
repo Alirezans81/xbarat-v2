@@ -17,6 +17,7 @@ export default function Withdrawal({
   data,
   closeModal,
   refreshPendingRequests,
+  getWalletData,
 }) {
   const lang = useLanguageState();
   const theme = useThemeState();
@@ -101,6 +102,7 @@ export default function Withdrawal({
                   : "",
             },
             () => {
+              getWalletData();
               refreshPendingRequests();
               closeModal();
             }
@@ -125,6 +127,7 @@ export default function Withdrawal({
                 : "",
             },
             () => {
+              getWalletData();
               refreshPendingRequests();
               closeModal();
             }

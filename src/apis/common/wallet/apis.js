@@ -45,7 +45,8 @@ const getWalletTankTypes = (filtersObject) => {
 const createWalletAsset = (params) => {
   const formData = new FormData();
 
-  formData.append("title", "");
+  formData.append("wallet", params.wallet);
+  formData.append("currency", params.currency);
 
   return axios.post(api["wallet-asset"], params);
 };

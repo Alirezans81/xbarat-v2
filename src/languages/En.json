@@ -148,5 +148,6 @@
   "are-you-sure-modal-title": "Are You Sure",
   "yes": "Yes",
   "cancel-request-modal-message": "Are you sure you want to cancel the request",
+  "cancel-exchange-modal-message": "Are you sure you want to cancel the exchange",
   "accept-transaction-message": "Your transaction was succssesfuly done"
 }

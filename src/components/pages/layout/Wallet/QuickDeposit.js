@@ -14,6 +14,7 @@ import {
 } from "../../../../hooks/useNumberFunctions";
 import { useStatusesState } from "../../../../Providers/StatusesProvider";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
+import { useGetWalletData } from "../../../../Providers/WalletProvider";
 
 export default function QuickDeposit({ refreshPendingRequests }) {
   const theme = useThemeState();
@@ -25,6 +26,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
   const removeComma = useRemoveComma();
 
   const statuses = useStatusesState();
+  const getWalletData = useGetWalletData();
 
   const currencies = useCurrenciesState();
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
@@ -101,7 +103,10 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                     ? locations[selectedLocationIndex].url
                     : "",
               },
-              refreshPendingRequests
+              () => {
+                getWalletData();
+                refreshPendingRequests();
+              }
             );
           } else {
             createDeposit(
@@ -118,7 +123,10 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                       .url
                   : "",
               },
-              refreshPendingRequests
+              () => {
+                getWalletData();
+                refreshPendingRequests();
+              }
             );
           }
         }}

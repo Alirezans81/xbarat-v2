@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useDirectionState } from "../../../../Providers/DirectionProvider";
 import CustomTable from "../../../common/CustomTable";
+import { useGetTableExchange } from "../../../../apis/pages/Home/hooks";
+import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
+import { useTokenState } from "../../../../Providers/TokenProvider";
 
 export default function AllOreders({
   selectedCurrecnyPair,
@@ -11,10 +14,33 @@ export default function AllOreders({
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const setLoading = useIsLoadingSplashScreenSetState();
   const { endComplete: direction } = useDirectionState();
 
+  const [tableExchangeData, setTableExchangeData] = useState([]);
+
+  const { getTableExchange, isLoading: getTableExchangeIsLoading } =
+    useGetTableExchange();
+  useEffect(
+    () => setLoading(getTableExchangeIsLoading),
+    [getTableExchangeIsLoading]
+  );
+
+  useEffect(() => {
+    selectedCurrecnyPair &&
+      selectedCurrecnyPair.currency_source_slug &&
+      selectedCurrecnyPair.currency_target_slug &&
+      getTableExchange(
+        {
+          source: selectedCurrecnyPair.currency_source_slug,
+          target: selectedCurrecnyPair.currency_target_slug,
+        },
+        setTableExchangeData
+      );
+  }, [selectedCurrecnyPair]);
+
+  const head = [lang["quantity"], lang["amount"], lang["rate"]];
   const data = {
-    head: ["quantity", "amount", "rate"],
     SToT: [
       { quantity: 4, amount: 253500000, rate: 1.411 },
       { quantity: 16, amount: 916000000, rate: 1.412 },
@@ -67,7 +93,7 @@ export default function AllOreders({
           </div>
           <div className="w-full flex-1 pt-4 px-10">
             <CustomTable
-              heads={data.head}
+              heads={head}
               rows={data.SToT}
               setFormDefaultRate={setFormDefaultRate}
             />
