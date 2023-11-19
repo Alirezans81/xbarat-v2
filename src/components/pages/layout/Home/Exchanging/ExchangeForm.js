@@ -6,14 +6,17 @@ import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoa
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import {
   useAddComma,
+  useIsNumberFloat,
   useRemoveComma,
 } from "../../../../../hooks/useNumberFunctions";
 import { useDirectionState } from "../../../../../Providers/DirectionProvider";
 import SubmitButton from "../../../../common/SubmitButton";
 import { useUserState } from "../../../../../Providers/UserProvider";
+import { useStatusesState } from "../../../../../Providers/StatusesProvider";
 import { useExchange } from "../../../../../apis/pages/Home/hooks";
 
 export default function ExchangeForm({
+  walletBalance,
   selectedCurrecnyPair,
   currencies,
   selectedSourceIndex,
@@ -26,6 +29,7 @@ export default function ExchangeForm({
   targetLabel,
   formDefaultRate,
   defaultRateType,
+  refreshPendingExchange,
 }) {
   const lang = useLanguageState();
   const theme = useThemeState();
@@ -34,8 +38,10 @@ export default function ExchangeForm({
 
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const user = useUserState();
+  const statuses = useStatusesState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
+  const isNumberFloat = useIsNumberFloat();
 
   const { exchange, isLoading: exchangeIsLoading } = useExchange();
   useEffect(
@@ -43,13 +49,85 @@ export default function ExchangeForm({
     [exchangeIsLoading]
   );
 
-  const [errorMessage, setErrorMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState("");
   const computingTargetAmount = (amount, rate, multi) => {
-    if (selectedSourceIndex >= 0 && selectedTargetIndex >= 0) {
-      if (!rateIsReversed) {
-        return (amount * rate) / multi;
+    if (
+      selectedCurrecnyPair &&
+      selectedSourceIndex >= 0 &&
+      selectedTargetIndex >= 0
+    ) {
+      const newAmount =
+        +selectedCurrecnyPair.fee_percentage === 0
+          ? amount
+          : amount * ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
+      if (
+        selectedCurrecnyPair.default_numerator ===
+        currencies[selectedSourceIndex].url
+      ) {
+        if (!rateIsReversed) {
+          return (newAmount * rate) / multi;
+        } else {
+          return newAmount / rate;
+        }
       } else {
-        return amount / rate;
+        if (!rateIsReversed) {
+          return newAmount / rate;
+        } else {
+          return (newAmount * rate) / multi;
+        }
+      }
+    }
+  };
+
+  const findError = (amount, rate) => {
+    if (selectedCurrecnyPair && +amount !== 0 && +rate !== 0) {
+      const min_amount =
+        selectedCurrecnyPair.min_limit_amount_lot *
+        currencies[selectedSourceIndex].lot;
+      const max_amount =
+        selectedCurrecnyPair.max_limit_amount_lot *
+        currencies[selectedSourceIndex].lot;
+
+      const min_rate =
+        selectedCurrecnyPair.rate +
+        +selectedCurrecnyPair.rate_lot_user *
+          +selectedCurrecnyPair.min_limit_rate_lot_user;
+      const max_rate =
+        selectedCurrecnyPair.rate +
+        +selectedCurrecnyPair.rate_lot_user *
+          +selectedCurrecnyPair.max_limit_rate_lot_user;
+
+      // if (+walletBalance < amount) {
+      //   setErrorMessage(lang["not-enough-balance-error"] + ".");
+      //   return false;
+      // } else
+      if (amount < min_amount) {
+        setErrorMessage(
+          lang["low-amount-error"] + " " + addComma(min_amount) + "."
+        );
+        return false;
+      } else if ((max_amount !== 0) & (amount > max_amount)) {
+        setErrorMessage(
+          lang["high-amount-error"] + " " + addComma(max_amount) + "."
+        );
+        return false;
+      } else if (min_rate > rate || max_rate < rate) {
+        setErrorMessage(
+          lang["not-in-range-rate-error-1st"] +
+            " " +
+            addComma(min_rate) +
+            " " +
+            lang["not-in-range-rate-error-&"] +
+            " " +
+            addComma(max_rate) +
+            (lang["not-in-range-rate-error-2nd"] === ""
+              ? "."
+              : " " + lang["not-in-range-rate-error-2nd"] + ".")
+        );
+        return false;
+      } else {
+        setErrorMessage(null);
+        return true;
       }
     }
   };
@@ -60,7 +138,36 @@ export default function ExchangeForm({
         amount: "",
         rate: "",
       }}
-      onSubmit={(values) => {}}
+      onSubmit={(values) => {
+        const newAmount =
+          +selectedCurrecnyPair.fee_percentage === 0
+            ? +removeComma(values.amount)
+            : +removeComma(values.amount) *
+              ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
+        if (findError(+newAmount, +removeComma(values.rate))) {
+          const params = {
+            user: user && user.url ? user.url : "",
+            currency_pair:
+              selectedCurrecnyPair && selectedCurrecnyPair.url
+                ? selectedCurrecnyPair.url
+                : "",
+            amount_source: +removeComma(values.amount),
+            rate: +removeComma(values.rate),
+            amount_destination:
+              selectedCurrecnyPair && selectedCurrecnyPair.rate_multiplier
+                ? computingTargetAmount(
+                    removeComma(values.amount),
+                    removeComma(values.rate),
+                    selectedCurrecnyPair.rate_multiplier
+                  )
+                : 0,
+            status:
+              statuses.find((status) => status.title === "Pending").url || "",
+          };
+
+          exchange(params, refreshPendingExchange);
+        }
+      }}
     >
       {({ handleBlur, handleChange, values, handleSubmit }) => {
         return (
@@ -249,8 +356,20 @@ export default function ExchangeForm({
                 placeholder={lang["amount"]}
                 disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
                 name="amount"
-                onBlur={handleBlur("amount")}
-                onChange={handleChange("amount")}
+                onBlur={(e) => {
+                  handleBlur(e);
+                  findError(
+                    removeComma(values.amount),
+                    removeComma(values.rate)
+                  );
+                }}
+                onChange={(e) => {
+                  handleChange(e);
+                  findError(
+                    removeComma(values.amount),
+                    removeComma(values.rate)
+                  );
+                }}
                 value={addComma(values.amount, false)}
               />
               <input
@@ -258,38 +377,74 @@ export default function ExchangeForm({
                 placeholder={lang["rate"]}
                 disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
                 name="rate"
-                onBlur={handleBlur("rate")}
+                onBlur={(e) => {
+                  handleBlur(e);
+                  findError(
+                    removeComma(values.amount),
+                    removeComma(values.rate)
+                  );
+                }}
                 onChange={(e) => {
                   handleChange(e);
+                  findError(
+                    removeComma(values.amount),
+                    removeComma(values.rate)
+                  );
                 }}
-                value={values.rate}
+                value={addComma(values.rate, true)}
               />
             </div>
+
             {values.amount &&
               removeComma(values.amount) !== 0 &&
+              selectedCurrecnyPair &&
               (formDefaultRate ||
                 (values.rate && removeComma(values.rate) !== 0)) && (
                 <div className="mt-1 flex items-center">
-                  <img
-                    className="w-5 h-5"
-                    src={require(`../../../../../Images/arrow-right-${oppositeTheme}.png`)}
-                  />
-                  <span
-                    className={`text-${oppositeTheme} font-mine-regular mt-0.5 text-sm`}
-                  >
-                    {addComma(
-                      computingTargetAmount(
-                        removeComma(values.amount),
-                        removeComma(values.rate)
-                      )
-                    ) +
-                      " " +
-                      (availableTargets[selectedTargetIndex]
-                        ? availableTargets[selectedTargetIndex].abbreviation
-                        : "")}
-                  </span>
+                  {errorMessage && errorMessage !== "" ? (
+                    <span
+                      className={`text-red font-mine-regular mt-0.5 text-sm`}
+                    >
+                      {errorMessage}
+                    </span>
+                  ) : (
+                    <>
+                      <img
+                        className="w-5 h-5"
+                        src={require(`../../../../../Images/arrow-right-${oppositeTheme}.png`)}
+                      />
+                      <span
+                        className={`text-${oppositeTheme} font-mine-regular mt-0.5 text-sm`}
+                      >
+                        {addComma(
+                          isNumberFloat(
+                            computingTargetAmount(
+                              removeComma(values.amount),
+                              removeComma(values.rate),
+                              selectedCurrecnyPair.rate_multiplier
+                            )
+                          )
+                            ? computingTargetAmount(
+                                removeComma(values.amount),
+                                removeComma(values.rate),
+                                selectedCurrecnyPair.rate_multiplier
+                              ).toFixed(selectedCurrecnyPair.floating_number)
+                            : computingTargetAmount(
+                                removeComma(values.amount),
+                                removeComma(values.rate),
+                                selectedCurrecnyPair.rate_multiplier
+                              )
+                        ) +
+                          " " +
+                          (availableTargets[selectedTargetIndex]
+                            ? availableTargets[selectedTargetIndex].abbreviation
+                            : "")}
+                      </span>
+                    </>
+                  )}
                 </div>
               )}
+
             <SubmitButton
               type="submit"
               onClick={handleSubmit}

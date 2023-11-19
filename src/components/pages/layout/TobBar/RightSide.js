@@ -58,7 +58,7 @@ export default function RightSide() {
             {user.role}
           </span>
         ) : (
-          <Link to="/profile" onClick={openCompleteProfileModal}>
+          <Link to="/profile">
             <div
               className={`bg-blue rounded-full ${completePrfoileClass} mt-1 flex flex-col justify-center transition-all duration-300 hover:bg-${theme} border-2 border-blue`}
             >

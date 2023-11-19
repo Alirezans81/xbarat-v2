@@ -13,6 +13,7 @@ export default function Exchanging({
   formDefaultRate,
   rateIsReversed,
   setRateIsReversed,
+  refreshPendingExchange,
 }) {
   const lang = useLanguageState();
 
@@ -42,9 +43,10 @@ export default function Exchanging({
   const findCurrencyBalanceInWallet = () => {
     if (selectedSourceIndex >= 0) {
       const found = wallet.walletAssets.find(
-        (e) => e.currencyId === currencies[selectedSourceIndex].id
+        (walletAsset) =>
+          walletAsset.currency === currencies[selectedSourceIndex].url
       );
-      found && found && setSelectedCurrecnyWalletData(found);
+      found && setSelectedCurrecnyWalletData(found);
     }
   };
   const findAvailableTargets = () => {
@@ -129,12 +131,22 @@ export default function Exchanging({
               hasReversedRate={selectedCurrecnyPair.has_reverse_rate}
               rateIsReversed={rateIsReversed}
               setRateIsReversed={setRateIsReversed}
+              selectedCurrecnyPair={selectedCurrecnyPair}
+              default_rate_type_title={
+                selectedCurrecnyPair &&
+                selectedCurrecnyPair.default_rate_type_title
+                  ? selectedCurrecnyPair.default_rate_type_title
+                  : ""
+              }
             />
           )}
         </div>
       </div>
       <div className="flex-1 mt-auto">
         <ExchangeForm
+          walletBalance={
+            selectedCurrecnyWalletData ? selectedCurrecnyWalletData.balance : 0
+          }
           selectedCurrecnyPair={selectedCurrecnyPair}
           currencies={currencies}
           selectedSourceIndex={selectedSourceIndex}
@@ -151,6 +163,7 @@ export default function Exchanging({
           defaultRateType={
             selectedCurrecnyPair ? selectedCurrecnyPair.defaultRateType : ""
           }
+          refreshPendingExchange={refreshPendingExchange}
         />
       </div>
     </div>

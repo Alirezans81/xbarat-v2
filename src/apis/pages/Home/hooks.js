@@ -3,8 +3,33 @@ import {
   exchange,
   getPendingExchanges,
   cancelPendingExchange,
+  getWatchList,
 } from "./apis";
 import { useState } from "react";
+
+const useGetWatchList = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (setState, customFunctionWithData) => {
+    setIsLoading(true);
+    await getWatchList()
+      .then((data) => {
+        console.log(data);
+        setState(data.data);
+        customFunctionWithData && customFunctionWithData(data.data);
+        setIsLoading(false);
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { getTableExchange: fetch, error, isLoading };
+};
 
 const useGetTableExchange = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,12 +59,11 @@ const useExchange = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (params, setState, customFunctionWithData) => {
+  const fetch = async (params, customFunctionWithData) => {
     setIsLoading(true);
     await exchange(params)
       .then((data) => {
         console.log(data);
-        setState(data.data);
         customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
         return data.data;

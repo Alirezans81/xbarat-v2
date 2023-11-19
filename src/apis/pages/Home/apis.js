@@ -2,6 +2,10 @@ import axios from "axios";
 
 const api = require("../../api.json");
 
+const getWatchList = () => {
+  return api["watch-list"];
+};
+
 const getTableExchange = (params) => {
   const formData = new FormData();
 
@@ -19,8 +23,9 @@ const exchange = (params) => {
   formData.append("amount_source", params.amount_source);
   formData.append("amount_destination", params.amount_destination);
   formData.append("rate", params.rate);
+  formData.append("status", params.status);
 
-  return axios.post(api["table-exchange"], formData);
+  return axios.post(api["exchange"], formData);
 };
 
 const getPendingExchanges = (token) => {
@@ -36,6 +41,7 @@ const cancelPendingExchange = (pendingExchangeUrl) => {
 };
 
 export {
+  getWatchList,
   getTableExchange,
   exchange,
   getPendingExchanges,

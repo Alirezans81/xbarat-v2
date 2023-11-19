@@ -8,20 +8,44 @@ function getNumber(_str) {
   }
   return Number(out.join(""));
 }
+function getIntegerPart(number) {
+  let str = number + "";
+  return str.split(".")[0];
+}
+function getFloatPart(number) {
+  let str = number + "";
+  return str.split(".")[1];
+}
 function addComma(number, returnsZero) {
   if (+number < 1000) {
     return number;
   } else {
-    var num = getNumber(number);
+    var num = getNumber(getIntegerPart(number));
     if (num === 0) {
       return returnsZero ? 0 : "";
     } else {
-      return num.toLocaleString();
+      return (
+        num.toLocaleString() +
+        (getFloatPart(number) ? "." + getFloatPart(number) : "")
+      );
     }
   }
 }
+
 const useAddComma = () => {
   return addComma;
+};
+
+const isNumberFloat = (number) => {
+  const result = getFloatPart(number);
+  if (result) {
+    return true;
+  } else {
+    return false;
+  }
+};
+const useIsNumberFloat = () => {
+  return isNumberFloat;
 };
 
 const reverseRate = (number) => {
@@ -45,4 +69,4 @@ const useRemoveComma = () => {
   return removeComma;
 };
 
-export { useAddComma, useReverseRate, useRemoveComma };
+export { useAddComma, useIsNumberFloat, useReverseRate, useRemoveComma };

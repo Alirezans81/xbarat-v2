@@ -17,7 +17,40 @@ export default function AllOreders({
   const setLoading = useIsLoadingSplashScreenSetState();
   const { endComplete: direction } = useDirectionState();
 
-  const [tableExchangeData, setTableExchangeData] = useState([]);
+  const [tableExchangeData, setTableExchangeData] = useState();
+
+  const source_to_target_head = [
+    lang["quantity"],
+    lang["amount"],
+    lang["rate"],
+  ];
+  const target_to_source_head = [
+    lang["rate"],
+    lang["amount"],
+    lang["quantity"],
+  ];
+  const source_to_target_data =
+    tableExchangeData && tableExchangeData.source_to_target
+      ? tableExchangeData.source_to_target.map((row) => {
+          let temp = {};
+          temp.quantity = row.quantity;
+          temp.total_amount = row.total_amount;
+          temp.rate = row.rate;
+
+          return temp;
+        })
+      : [];
+  const target_to_source_data =
+    tableExchangeData && tableExchangeData.target_to_source
+      ? tableExchangeData.target_to_source.map((row) => {
+          let temp = {};
+          temp.rate = row.rate;
+          temp.total_amount = row.total_amount;
+          temp.quantity = row.quantity;
+
+          return temp;
+        })
+      : [];
 
   const { getTableExchange, isLoading: getTableExchangeIsLoading } =
     useGetTableExchange();
@@ -29,38 +62,21 @@ export default function AllOreders({
   useEffect(() => {
     selectedCurrecnyPair &&
       selectedCurrecnyPair.currency_source_slug &&
-      selectedCurrecnyPair.currency_target_slug &&
+      selectedCurrecnyPair.currency_destination_slug &&
       getTableExchange(
         {
           source: selectedCurrecnyPair.currency_source_slug,
-          target: selectedCurrecnyPair.currency_target_slug,
+          target: selectedCurrecnyPair.currency_destination_slug,
         },
         setTableExchangeData
       );
   }, [selectedCurrecnyPair]);
 
-  const head = [lang["quantity"], lang["amount"], lang["rate"]];
-  const data = {
-    SToT: [
-      { quantity: 4, amount: 253500000, rate: 1.411 },
-      { quantity: 16, amount: 916000000, rate: 1.412 },
-      { quantity: 13, amount: 551000000, rate: 1.413 },
-      { quantity: 17, amount: 728500000, rate: 1.414 },
-      { quantity: 15, amount: 651500000, rate: 1.415 },
-    ],
-    TToS: [
-      { quantity: 6, amount: 78200, rate: 1.408 },
-      { quantity: 18, amount: 197900, rate: 1.407 },
-      { quantity: 25, amount: 286500, rate: 1.406 },
-      { quantity: 14, amount: 249500, rate: 1.405 },
-      { quantity: 19, amount: 258300, rate: 1.404 },
-    ],
-  };
 
   if (
     selectedCurrecnyPair &&
-    selectedCurrecnyPair.source &&
-    selectedCurrecnyPair.target
+    selectedCurrecnyPair.currency_source &&
+    selectedCurrecnyPair.currency_destination
   ) {
     return (
       <div className="p-3 grid grid-cols-2 gap-y-2 mr-2">
@@ -71,10 +87,10 @@ export default function AllOreders({
             <div className="flex items-center">
               <img
                 className="w-6 h-6"
-                src={selectedCurrecnyPair.source.imageSource.light}
+                src={selectedCurrecnyPair.currency_source_sym_pic_light}
               />
               <span className={`text-light font-mine-bold -mb-1.5`}>
-                {selectedCurrecnyPair.source.title}
+                {selectedCurrecnyPair.currency_source_abb}
               </span>
             </div>
             <img
@@ -84,17 +100,17 @@ export default function AllOreders({
             <div className="flex items-center">
               <img
                 className="w-6 h-6"
-                src={selectedCurrecnyPair.target.imageSource.light}
+                src={selectedCurrecnyPair.currency_destination_sym_pic_light}
               />
               <span className={`text-light font-mine-bold -mb-1.5`}>
-                {selectedCurrecnyPair.target.title}
+                {selectedCurrecnyPair.currency_destination_abb}
               </span>
             </div>
           </div>
           <div className="w-full flex-1 pt-4 px-10">
             <CustomTable
-              heads={head}
-              rows={data.SToT}
+              heads={source_to_target_head}
+              rows={source_to_target_data}
               setFormDefaultRate={setFormDefaultRate}
             />
           </div>
@@ -106,10 +122,10 @@ export default function AllOreders({
             <div className="flex items-center">
               <img
                 className="w-6 h-6"
-                src={selectedCurrecnyPair.target.imageSource.light}
+                src={selectedCurrecnyPair.currency_destination_sym_pic_light}
               />
               <span className={`text-light font-mine-bold -mb-1.5`}>
-                {selectedCurrecnyPair.target.title}
+                {selectedCurrecnyPair.currency_destination_abb}
               </span>
             </div>
             <img
@@ -119,17 +135,17 @@ export default function AllOreders({
             <div className="flex items-center">
               <img
                 className="w-6 h-6"
-                src={selectedCurrecnyPair.source.imageSource.light}
+                src={selectedCurrecnyPair.currency_source_sym_pic_light}
               />
               <span className={`text-light font-mine-bold -mb-1.5`}>
-                {selectedCurrecnyPair.source.title}
+                {selectedCurrecnyPair.currency_source_abb}
               </span>
             </div>
           </div>
           <div className="w-full flex-1 pt-4 px-10">
             <CustomTable
-              heads={data.head}
-              rows={data.TToS}
+              heads={target_to_source_head}
+              rows={target_to_source_data}
               setFormDefaultRate={setFormDefaultRate}
             />
           </div>

@@ -9,6 +9,8 @@ export default function RateType({
   hasReversedRate,
   rateIsReversed,
   setRateIsReversed,
+  selectedCurrecnyPair,
+  default_rate_type_title,
 }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -21,7 +23,10 @@ export default function RateType({
     ? `text-${oppositeTheme}`
     : "text-gray";
 
-  const reversedRateType = defaultRateType.split("/").reverse().join("/");
+  const reversedRateType = default_rate_type_title
+    .split("/")
+    .reverse()
+    .join("/");
 
   const addComma = useAddComma();
 
@@ -31,11 +36,14 @@ export default function RateType({
         <button>
           <span className={`font-mine-thin text-${oppositeTheme} `}>
             {rateIsReversed
-              ? rate && (1 / +rate).toFixed(4)
+              ? rate &&
+                ((1 / +rate) * +selectedCurrecnyPair.rate_multiplier).toFixed(
+                  selectedCurrecnyPair.floating_number
+                )
               : rate && (rate < 1000 ? rate : addComma(rate))}
           </span>
           <span className={`font-mine-thin text-blue  m${oneDirection}-1`}>
-            {rateIsReversed ? reversedRateType : defaultRateType}
+            {rateIsReversed ? reversedRateType : default_rate_type_title}
           </span>
         </button>
       </div>
@@ -49,7 +57,7 @@ export default function RateType({
           }
           onClick={() => setRateIsReversed(false)}
         >
-          {defaultRateType}
+          {default_rate_type_title}
         </button>
         <button
           disabled={!hasReversedRate}

@@ -149,5 +149,12 @@
   "yes": "Yes",
   "cancel-request-modal-message": "Are you sure you want to cancel the request",
   "cancel-exchange-modal-message": "Are you sure you want to cancel the exchange",
-  "accept-transaction-message": "Your transaction was succssesfuly done"
+  "accept-transaction-message": "Your transaction was succssesfuly done",
+  "not-enough-balance-error": "You don't have enough money",
+  "low-amount-error": "Your amount must be more than",
+  "high-amount-error": "Your amount must be less than",
+  "not-in-range-rate-error-1st": "Your rate must be between",
+  "not-in-range-rate-error-&": "&",
+  "not-in-range-rate-error-2nd": "",
+  "quantity": "Quantity"
 }

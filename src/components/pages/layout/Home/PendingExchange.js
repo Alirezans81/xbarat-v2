@@ -3,31 +3,14 @@ import CustomSlider from "../../../common/CustomSlider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import PendingExchangeCard from "./PendingExchange/PendingExchangeCard";
-import { useGetPendingExchanges } from "../../../../apis/pages/Home/hooks";
-import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
-import { useTokenState } from "../../../../Providers/TokenProvider";
 
-export default function PendingExchange() {
+export default function PendingExchange({
+  pendingExchanges,
+  refreshPendingExchange,
+}) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
-  const setLoading = useIsLoadingSplashScreenSetState();
-  const token = useTokenState();
-
-  const [pendingExchanges, setPendingExchanges] = useState([]);
-
-  const { getPendingExchanges, isLoading: getPendingExchangesIsLoading } =
-    useGetPendingExchanges();
-  useEffect(
-    () => setLoading(getPendingExchangesIsLoading),
-    [getPendingExchangesIsLoading]
-  );
-
-  const refreshPendingExchange = () => {
-    getPendingExchanges(token, setPendingExchanges);
-  };
-
-  useEffect(() => refreshPendingExchange(), []);
 
   return (
     <div className="px-5 py-3 h-full">
