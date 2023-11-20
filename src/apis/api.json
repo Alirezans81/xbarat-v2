@@ -18,7 +18,7 @@
   "transfer": "https://smicln.ir/api/order/transfer/",
   "exchange": "https://smicln.ir/api/order/exchange/",
   "pending-requests": "https://smicln.ir/api/wallet/pending-request/",
-  "watch-list": "https://smicln.ir/api/index/table-list/",
+  "watch-list": "https://smicln.ir/api/index/watch-list/",
   "table-exchange": "https://smicln.ir/api/index/table-exchange/",
   "pending-exchange": "https://smicln.ir/api/index/pending-exchange/",
   "status": "https://smicln.ir/api/status/"

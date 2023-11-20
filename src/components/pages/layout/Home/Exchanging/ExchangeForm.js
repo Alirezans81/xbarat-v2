@@ -88,20 +88,31 @@ export default function ExchangeForm({
         selectedCurrecnyPair.max_limit_amount_lot *
         currencies[selectedSourceIndex].lot;
 
-      const min_rate =
+      let min_rate = (
         selectedCurrecnyPair.rate +
         +selectedCurrecnyPair.rate_lot_user *
-          +selectedCurrecnyPair.min_limit_rate_lot_user;
-      const max_rate =
+          +selectedCurrecnyPair.min_limit_rate_lot_user
+      ).toFixed(selectedCurrecnyPair.floating_number);
+      let max_rate = (
         selectedCurrecnyPair.rate +
         +selectedCurrecnyPair.rate_lot_user *
-          +selectedCurrecnyPair.max_limit_rate_lot_user;
+          +selectedCurrecnyPair.max_limit_rate_lot_user
+      ).toFixed(selectedCurrecnyPair.floating_number);
+      if (rateIsReversed) {
+        let temp = min_rate;
+        min_rate = (
+          (1 / max_rate) *
+          selectedCurrecnyPair.rate_multiplier
+        ).toFixed(selectedCurrecnyPair.floating_number);
+        max_rate = ((1 / temp) * selectedCurrecnyPair.rate_multiplier).toFixed(
+          selectedCurrecnyPair.floating_number
+        );
+      }
 
-      // if (+walletBalance < amount) {
-      //   setErrorMessage(lang["not-enough-balance-error"] + ".");
-      //   return false;
-      // } else
-      if (amount < min_amount) {
+      if (+walletBalance < amount) {
+        setErrorMessage(lang["not-enough-balance-error"] + ".");
+        return false;
+      } else if (amount < min_amount) {
         setErrorMessage(
           lang["low-amount-error"] + " " + addComma(min_amount) + "."
         );
@@ -159,12 +170,13 @@ export default function ExchangeForm({
                     removeComma(values.amount),
                     removeComma(values.rate),
                     selectedCurrecnyPair.rate_multiplier
-                  )
+                  ).toFixed(6)
                 : 0,
             status:
               statuses.find((status) => status.title === "Pending").url || "",
           };
 
+          console.log(params);
           exchange(params, refreshPendingExchange);
         }
       }}

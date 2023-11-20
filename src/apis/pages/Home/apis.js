@@ -3,7 +3,7 @@ import axios from "axios";
 const api = require("../../api.json");
 
 const getWatchList = () => {
-  return api["watch-list"];
+  return axios.get(api["watch-list"]);
 };
 
 const getTableExchange = (params) => {

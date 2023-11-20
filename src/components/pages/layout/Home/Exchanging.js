@@ -46,7 +46,9 @@ export default function Exchanging({
         (walletAsset) =>
           walletAsset.currency === currencies[selectedSourceIndex].url
       );
-      found && setSelectedCurrecnyWalletData(found);
+      found
+        ? setSelectedCurrecnyWalletData(found)
+        : setSelectedCurrecnyWalletData(null);
     }
   };
   const findAvailableTargets = () => {

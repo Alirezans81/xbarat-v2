@@ -8,6 +8,7 @@ import OtherExcahnges from "../components/pages/layout/Home/OtherExchanges";
 import { useGetPendingExchanges } from "../apis/pages/Home/hooks";
 import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
 import { useTokenState } from "../Providers/TokenProvider";
+import WatchList from "../components/pages/layout/Home/WatchList";
 
 export default function Home() {
   const theme = useThemeState();
@@ -45,7 +46,9 @@ export default function Home() {
           refreshPendingExchange={refreshPendingExchange}
         />
       </div>
-      <div className={`bg-${theme} rounded-3xl col-span-5 row-span-3`}></div>
+      <div className={`bg-${theme} rounded-3xl col-span-5 row-span-3`}>
+        <WatchList setSelectedCurrencnyPair={setSelectedCurrencnyPair} />
+      </div>
       <div
         className={`bg-${theme} rounded-${oneDirection}-3xl col-span-4 row-span-3`}
       >

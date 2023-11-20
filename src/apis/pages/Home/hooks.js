@@ -1,9 +1,9 @@
 import {
+  getWatchList,
   getTableExchange,
   exchange,
   getPendingExchanges,
   cancelPendingExchange,
-  getWatchList,
 } from "./apis";
 import { useState } from "react";
 
@@ -28,7 +28,7 @@ const useGetWatchList = () => {
       });
   };
 
-  return { getTableExchange: fetch, error, isLoading };
+  return { getWatchList: fetch, error, isLoading };
 };
 
 const useGetTableExchange = () => {
@@ -126,6 +126,7 @@ const useCancelPendingExchange = () => {
 };
 
 export {
+  useGetWatchList,
   useGetTableExchange,
   useExchange,
   useGetPendingExchanges,

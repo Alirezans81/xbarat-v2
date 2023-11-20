@@ -156,5 +156,8 @@
   "not-in-range-rate-error-1st": "Your rate must be between",
   "not-in-range-rate-error-&": "&",
   "not-in-range-rate-error-2nd": "",
-  "quantity": "Quantity"
+  "watch-list-label": "Watch",
+  "quantity": "Quantity",
+  "low": "Low",
+  "high": "High"
 }
