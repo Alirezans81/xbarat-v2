@@ -21,6 +21,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import Wallet from "./pages/Wallet";
 import Reports from "./pages/Reports";
 import Profile from "./pages/Profile";
+import Cards from "./pages/Cards/Cards";
 import OnLoad from "./pages/OnLoad";
 import Tickets from "./pages/Tickets";
 import Assignment from "./pages/Submitting/Assignment";
@@ -97,6 +98,10 @@ root.render(
                                     <Route
                                       path="profile"
                                       element={<Profile />}
+                                    />
+                                    <Route
+                                      path="profile/cards"
+                                      element={<Cards />}
                                     />
                                     <Route
                                       path="tickets"
