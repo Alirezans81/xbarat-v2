@@ -41,14 +41,14 @@ function CustomDropdown({ children, label, className }) {
   const buttonStyle =
     theme === "dark"
       ? {
-          backgroundColor: "#393C42",
+          backgroundColor: "#152831",
           color: "#fff",
           fontFamily: "manjari-bold",
           flex: 1,
           minWidth: 0,
         }
       : {
-          backgroundColor: "#F0F2F6",
+          backgroundColor: "#EEEEEE",
           color: "#2A2B2E",
           fontFamily: "manjari-bold",
           flex: 1,
