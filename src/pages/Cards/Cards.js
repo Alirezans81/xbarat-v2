@@ -32,7 +32,7 @@ const Cards = () => {
       ></div>
 
       <div
-        className={`bg-${theme} overflow-y-scroll`}
+        className={`bg-${theme}`}
         style={{
           position: "absolute",
           left: "6.4%",

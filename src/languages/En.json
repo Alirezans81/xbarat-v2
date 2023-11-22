@@ -14,7 +14,7 @@
   "forgot-password": "Forgot Password?",
   "not-logged-in-error": "You should be logged in to access this page",
   "email-empty-error": "Enter your email address",
-  "email-invalid-error" : "Enter a valid email address",
+  "email-invalid-error": "Enter a valid email address",
   "password-empty-error": "Enter your password",
   "password-short-error": "Password should be at least 8 characters long",
   "password-contain-error": "Password should contain one of the following characters: [a-z], [A-Z], [0-9], [!@#$%*?]",
@@ -159,5 +159,6 @@
   "watch-list-label": "Watch",
   "quantity": "Quantity",
   "low": "Low",
-  "high": "High"
+  "high": "High",
+  "cards-profile": "Cards"
 }
