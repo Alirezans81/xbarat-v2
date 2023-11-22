@@ -29,9 +29,7 @@ export default function LeftSide() {
       />
       <div className={`flex flex-col justify-center ml-2 pt-1.5`}>
         <div className="flex justify-start items-start">
-          <h1
-            className={`text-blue-gradient font-mine-bold text-5xl text-blue -mb-3`}
-          >
+          <h1 className={`font-mine-bold text-5xl text-yellow-gradient pt-1 -mt-1 -mb-3`}>
             {lang["logo-header"]}
           </h1>
           {userInfo && userInfo["is_admin"] && (

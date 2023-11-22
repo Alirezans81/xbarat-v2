@@ -7,9 +7,9 @@ const customTheme = {
   arrow: {
     base: "absolute z-10 h-2 w-2 rotate-45",
     style: {
-      dark: "bg-[#393C42]",
+      dark: "bg-[#152831]",
       light: "bg-white",
-      auto: "bg-white dark:bg-[#393C42]",
+      auto: "bg-white dark:bg-[#152831]",
     },
     placement: "-4px",
   },

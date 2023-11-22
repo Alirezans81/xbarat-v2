@@ -7,15 +7,15 @@ module.exports = {
   theme: {
     colors: {
       dark: "#2A2B2E",
-      "dark-back": "#393C42",
+      "dark-back": "#152831",
       light: "#FFFFFF",
-      "light-back": "#F0F2F6",
-      blue: "#7161EF",
-      green: "#5FDA41",
-      red: "#FF5959",
-      "blue-gradient": "linear-gradient(157deg, #7161EF 0%, #619AEF  100%)",
+      "light-back": "#EEEEEE",
+      blue: "#0A8DFF",
+      green: "#0B9B08",
+      red: "#E42F08",
+      "blue-gradient": "linear-gradient(157deg, #0A8DFF 0%, #619AEF  100%)",
       "blue-gradient-opposite":
-        "linear-gradient(157deg, #619AEF 0%, #7161EF  100%)",
+        "linear-gradient(157deg, #619AEF 0%, #0A8DFF  100%)",
     },
   },
   plugins: [require("flowbite/plugin")],
