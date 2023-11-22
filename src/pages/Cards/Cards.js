@@ -1,15 +1,17 @@
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useWalletState } from "../../Providers/WalletProvider";
+import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
+import { useGetWallets } from "../../apis/common/wallet/hooks";
 import { useState, useEffect } from "react";
 import SingleCardAssets from "./singleCardAssets";
+import SingleCardTank from "./singleCardTank";
 const Cards = () => {
   const wallet = useWalletState();
-
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
-  console.log(wallet.walletTanks);
+
   return (
     <div
       className="bg-transparent  font-bold "
@@ -30,7 +32,9 @@ const Cards = () => {
           borderTopLeftRadius: "50px",
           borderBottomLeftRadius: "50px",
         }}
-      ></div>
+      >
+        <SingleCardTank />
+      </div>
 
       <div
         className={`bg-${theme}`}
@@ -63,9 +67,13 @@ const Cards = () => {
         </div>
 
         <div className="grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-16 h-96">
-          {wallet.walletAssets.map((assetData, assetIndex) => (
-            <SingleCardAssets assetIndex={assetIndex} assetData={assetData} />
-          ))}
+          {wallet && wallet.walletAssets ? (
+            wallet.walletAssets.map((assetData, assetIndex) => (
+              <SingleCardAssets assetIndex={assetIndex} assetData={assetData} />
+            ))
+          ) : (
+            <div className="text-white">Loading...</div>
+          )}
         </div>
       </div>
     </div>

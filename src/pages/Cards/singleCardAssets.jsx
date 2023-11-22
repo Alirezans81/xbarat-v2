@@ -4,6 +4,7 @@ import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useState, useEffect } from "react";
 import arrowRightLight from "../../Images/arrow-right-light.png";
 import arrowRightDark from "../../Images/arrow-right-dark.png";
+import SingleCardTank from "./singleCardTank";
 const SingleCardAssets = ({ assetData, assetIndex }) => {
   const wallet = useWalletState();
   const theme = useThemeState();
@@ -12,7 +13,8 @@ const SingleCardAssets = ({ assetData, assetIndex }) => {
   const walletTanks = wallet.walletTanks.filter(
     (data) => data.currency_abb === assetData.currency_abb
   );
-  console.log(assetData.currency_abb + walletTanks.length);
+
+  console.log(walletTanks);
   return (
     <>
       <div
@@ -25,6 +27,7 @@ const SingleCardAssets = ({ assetData, assetIndex }) => {
         >
           {assetData.currency_abb}
         </span>
+
         <div className="w-full grid grid-rows-1 grid-cols-2">
           <span
             className={`text-gray ml-5 flex items-center`}
@@ -32,7 +35,11 @@ const SingleCardAssets = ({ assetData, assetIndex }) => {
           >
             {walletTanks.length + " " + lang["cards-profile"]}
           </span>
+
           <button
+            onClick={() => (
+              <SingleCardTank assetData={assetData} assetIndex={assetIndex} />
+            )}
             className="flex justify-end"
             style={{ gridRow: 1, gridColumn: 2 }}
           >
