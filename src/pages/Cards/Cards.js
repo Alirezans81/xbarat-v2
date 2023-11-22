@@ -9,6 +9,7 @@ const Cards = () => {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  console.log(wallet.walletTanks);
   return (
     <div
       className="bg-transparent  font-bold "
@@ -57,11 +58,11 @@ const Cards = () => {
             className={`text-base bg-blue-gradient rounded-lg px-5 py-1 text-white`}
             style={{ position: "absolute", top: "4.5%", right: "13%" }}
           >
-            {[lang["cards-profile-add"], "+"].join(" ")}
+            +
           </button>
         </div>
 
-        <div className="flex flex-col items-center justify-center mt-16">
+        <div className="grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-16 h-96">
           {wallet.walletAssets.map((assetData, assetIndex) => (
             <SingleCardAssets assetIndex={assetIndex} assetData={assetData} />
           ))}

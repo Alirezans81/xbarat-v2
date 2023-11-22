@@ -5,12 +5,15 @@ import { useDirectionState } from "../Providers/DirectionProvider";
 import EditProfile from "../components/pages/layout/Profile/EditProfile";
 import LastTickets from "../components/pages/layout/Profile/LastTickets";
 import { useLanguageState } from "../Providers/LanguageProvider";
-import cards from "../Images/pages/layout/Profile/cards.png";
+import cardsDark from "../Images/pages/layout/Profile/cardsDark.png";
+import cardsLight from "../Images/pages/layout/Profile/cardsLight.png";
 
 export default function Profile() {
   const navigate = useNavigate();
   const lang = useLanguageState();
   const theme = useThemeState();
+
+  const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: oneDirection } = useDirectionState();
   function handleCards() {
     navigate("cards");
@@ -30,10 +33,14 @@ export default function Profile() {
             className={`flex items-center justify-center bg-${theme}-back w-16 h-16 rounded-lg`}
             style={{ gridRow: 1, gridColumn: 1 }}
           >
-            <img className="w-1/2 h-1/2" src={cards} alt="" />
+            <img
+              className="w-1/2 h-1/2"
+              src={theme === "light" ? cardsDark : cardsLight}
+              alt=""
+            />
           </button>
           <span
-            className="flex justify-start ml-3 mt-4"
+            className={`flex justify-start ml-3 mt-4 text-${oppositeTheme}`}
             style={{ gridRow: 2, gridColumn: 1 }}
           >
             {lang["cards-profile"]}
