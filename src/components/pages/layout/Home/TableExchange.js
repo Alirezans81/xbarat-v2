@@ -5,7 +5,7 @@ import { useDirectionState } from "../../../../Providers/DirectionProvider";
 import CustomTable from "../../../common/CustomTable";
 import { useGetTableExchange } from "../../../../apis/pages/Home/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
-import { useTokenState } from "../../../../Providers/TokenProvider";
+import { useAddComma } from "../../../../hooks/useNumberFunctions";
 
 export default function AllOreders({
   selectedCurrecnyPair,
@@ -14,6 +14,7 @@ export default function AllOreders({
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const addComma = useAddComma();
   const setLoading = useIsLoadingSplashScreenSetState();
   const { endComplete: direction } = useDirectionState();
 
@@ -33,9 +34,9 @@ export default function AllOreders({
     tableExchangeData && tableExchangeData.source_to_target
       ? tableExchangeData.source_to_target.map((row) => {
           let temp = {};
-          temp.quantity = row.quantity;
-          temp.total_amount = row.total_amount;
-          temp.rate = row.rate;
+          temp.quantity = addComma(row.quantity);
+          temp.total_amount = addComma(row.total_amount);
+          temp.rate = addComma(row.rate);
 
           return temp;
         })
@@ -44,9 +45,9 @@ export default function AllOreders({
     tableExchangeData && tableExchangeData.target_to_source
       ? tableExchangeData.target_to_source.map((row) => {
           let temp = {};
-          temp.rate = row.rate;
-          temp.total_amount = row.total_amount;
-          temp.quantity = row.quantity;
+          temp.rate = addComma(row.rate);
+          temp.total_amount = addComma(row.total_amount);
+          temp.quantity = addComma(row.quantity);
 
           return temp;
         })
@@ -71,7 +72,6 @@ export default function AllOreders({
         setTableExchangeData
       );
   }, [selectedCurrecnyPair]);
-
 
   if (
     selectedCurrecnyPair &&

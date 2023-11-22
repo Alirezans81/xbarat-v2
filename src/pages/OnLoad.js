@@ -14,11 +14,14 @@ export default function OnLoad() {
   useEffect(() => {
     const saveStringToken = window.localStorage.getItem("authToken");
     const saveStringUserInfo = window.localStorage.getItem("userInfo");
+    console.log("saveStringToken: ", saveStringToken);
+    console.log("saveStringUserInfo: ", saveStringUserInfo);
+
     if (
       (saveStringToken !== "undefined" &&
-        saveStringToken !== "null" &&
+        saveStringToken !== null &&
         saveStringUserInfo !== "undefined" &&
-        saveStringUserInfo !== "null") ||
+        saveStringUserInfo !== null) ||
       token
     ) {
       navigate("/home");
