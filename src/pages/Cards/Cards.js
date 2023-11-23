@@ -11,7 +11,10 @@ const Cards = () => {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
-
+  const [show, setShow] = useState([]);
+  const updateShowState = (newState) => {
+    setShow(newState);
+  };
   return (
     <div
       className="bg-transparent  font-bold "
@@ -22,7 +25,7 @@ const Cards = () => {
       }}
     >
       <div
-        className={`bg-${theme}`}
+        className={`bg-${theme} grid grid-rows-3 grid-cols-2 gap-4 items-center justify-center overflow-y-scroll`}
         style={{
           position: "absolute",
           right: "0%",
@@ -33,7 +36,7 @@ const Cards = () => {
           borderBottomLeftRadius: "50px",
         }}
       >
-        <SingleCardTank />
+        <SingleCardTank show={show} />
       </div>
 
       <div
@@ -69,7 +72,11 @@ const Cards = () => {
         <div className="grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-16 h-96">
           {wallet && wallet.walletAssets ? (
             wallet.walletAssets.map((assetData, assetIndex) => (
-              <SingleCardAssets assetIndex={assetIndex} assetData={assetData} />
+              <SingleCardAssets
+                assetIndex={assetIndex}
+                assetData={assetData}
+                updateShowState={updateShowState}
+              />
             ))
           ) : (
             <div className="text-white">Loading...</div>
