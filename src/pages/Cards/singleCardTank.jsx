@@ -86,6 +86,7 @@ const SingleCardTank = ({ show }) => {
             >
               <label className={`text-${oppositeTheme}`}>Is Active</label>
               <input
+                onChange={handleIsActive}
                 className="ml-8 bg-transparent border-2 border-solid border-blue rounded-sm focus:border-0"
                 type="checkbox"
               />

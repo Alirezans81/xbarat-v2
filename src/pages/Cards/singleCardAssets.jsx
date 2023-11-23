@@ -1,10 +1,8 @@
 import { useWalletState } from "../../Providers/WalletProvider";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
-import { useState, useEffect } from "react";
 import arrowRightLight from "../../Images/arrow-right-light.png";
 import arrowRightDark from "../../Images/arrow-right-dark.png";
-import SingleCardTank from "./singleCardTank";
 const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   const wallet = useWalletState();
   const theme = useThemeState();
@@ -43,6 +41,7 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
             style={{ gridRow: 1, gridColumn: 2 }}
           >
             <img
+              alt=""
               className="h-10"
               src={theme === "dark" ? arrowRightLight : arrowRightDark}
             />
