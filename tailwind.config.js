@@ -16,6 +16,7 @@ module.exports = {
       "blue-gradient": "linear-gradient(157deg, #0A8DFF 0%, #619AEF  100%)",
       "blue-gradient-opposite":
         "linear-gradient(157deg, #619AEF 0%, #0A8DFF  100%)",
+      gray: "#8F97A6",
     },
   },
   plugins: [require("flowbite/plugin")],

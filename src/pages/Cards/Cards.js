@@ -1,14 +1,20 @@
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useWalletState } from "../../Providers/WalletProvider";
+import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
+import { useGetWallets } from "../../apis/common/wallet/hooks";
 import { useState, useEffect } from "react";
 import SingleCardAssets from "./singleCardAssets";
+import SingleCardTank from "./singleCardTank";
 const Cards = () => {
   const wallet = useWalletState();
-
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const [show, setShow] = useState([]);
+  const updateShowState = (newState) => {
+    setShow(newState);
+  };
   return (
     <div
       className="bg-transparent  font-bold "
@@ -19,7 +25,7 @@ const Cards = () => {
       }}
     >
       <div
-        className={`bg-${theme}`}
+        className={`bg-${theme} grid grid-rows-3 grid-cols-2 gap-4 items-center justify-center overflow-y-scroll`}
         style={{
           position: "absolute",
           right: "0%",
@@ -29,10 +35,12 @@ const Cards = () => {
           borderTopLeftRadius: "50px",
           borderBottomLeftRadius: "50px",
         }}
-      ></div>
+      >
+        <SingleCardTank show={show} />
+      </div>
 
       <div
-        className={`bg-${theme} overflow-y-scroll`}
+        className={`bg-${theme}`}
         style={{
           position: "absolute",
           left: "6.4%",
@@ -57,14 +65,22 @@ const Cards = () => {
             className={`text-base bg-blue-gradient rounded-lg px-5 py-1 text-white`}
             style={{ position: "absolute", top: "4.5%", right: "13%" }}
           >
-            {[lang["cards-profile-add"], "+"].join(" ")}
+            +
           </button>
         </div>
 
-        <div className="flex flex-col items-center justify-center mt-16">
-          {wallet.walletAssets.map((assetData, assetIndex) => (
-            <SingleCardAssets assetIndex={assetIndex} assetData={assetData} />
-          ))}
+        <div className="grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-16 h-96">
+          {wallet && wallet.walletAssets ? (
+            wallet.walletAssets.map((assetData, assetIndex) => (
+              <SingleCardAssets
+                assetIndex={assetIndex}
+                assetData={assetData}
+                updateShowState={updateShowState}
+              />
+            ))
+          ) : (
+            <div className="text-white">Loading...</div>
+          )}
         </div>
       </div>
     </div>
