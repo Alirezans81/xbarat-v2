@@ -4,6 +4,7 @@ import {
   exchange,
   getPendingExchanges,
   cancelPendingExchange,
+  getOtherExchangesRate,
 } from "./apis";
 import { useState } from "react";
 
@@ -53,6 +54,30 @@ const useGetTableExchange = () => {
   };
 
   return { getTableExchange: fetch, error, isLoading };
+};
+
+const useGetOtherExchangesRate = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (filtersObject, setState, customFunctionWithData) => {
+    setIsLoading(true);
+    await getOtherExchangesRate(filtersObject)
+      .then((data) => {
+        console.log(data);
+        setState(data.data);
+        customFunctionWithData && customFunctionWithData(data.data);
+        setIsLoading(false);
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { getOtherExchangesRate: fetch, error, isLoading };
 };
 
 const useExchange = () => {
@@ -128,6 +153,7 @@ const useCancelPendingExchange = () => {
 export {
   useGetWatchList,
   useGetTableExchange,
+  useGetOtherExchangesRate,
   useExchange,
   useGetPendingExchanges,
   useCancelPendingExchange,

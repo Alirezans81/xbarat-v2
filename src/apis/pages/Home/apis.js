@@ -1,4 +1,5 @@
 import axios from "axios";
+import queryString from "query-string";
 
 const api = require("../../api.json");
 
@@ -13,6 +14,15 @@ const getTableExchange = (params) => {
   formData.append("target", params.target);
 
   return axios.post(api["table-exchange"], formData);
+};
+
+const getOtherExchangesRate = (filtersObject) => {
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["other-exchanges-rate"],
+    query: filtersObject,
+  });
+
+  return axios.get(urlWithQueries);
 };
 
 const exchange = (params) => {
@@ -43,6 +53,7 @@ const cancelPendingExchange = (pendingExchangeUrl) => {
 export {
   getWatchList,
   getTableExchange,
+  getOtherExchangesRate,
   exchange,
   getPendingExchanges,
   cancelPendingExchange,

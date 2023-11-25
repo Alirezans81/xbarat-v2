@@ -2,12 +2,14 @@ import React from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useDirectionState } from "../../../../../Providers/DirectionProvider";
 import { useAddComma } from "../../../../../hooks/useNumberFunctions";
+import { useConvertDateTime } from "../../../../../hooks/useConvertDateTime";
 
-export default function OtherExchangeCard({ data }) {
+export default function OtherExchangeCard({ selectedCurrecnyPair, data }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { endComplete: endCompleteDirection } = useDirectionState();
   const addComma = useAddComma();
+  const convertDateTime = useConvertDateTime();
 
   return (
     <div
@@ -15,14 +17,25 @@ export default function OtherExchangeCard({ data }) {
     >
       <div className="flex flex-col items-center">
         <span className={`text-2xl font-mine-regular text-${oppositeTheme}`}>
-          {data.title}
+          {data.exchange_title}
         </span>
         <div className="flex flex-col gap-0.5 items-center">
           <div className="flex items-center gap-1">
             <div className="flex items-center">
-              <img className="w-8 h-8" src={data.buy.source.imageSource.gray} />
+              <img
+                className="w-8 h-8"
+                src={
+                  selectedCurrecnyPair &&
+                  selectedCurrecnyPair.currency_source_sym_pic_gray
+                    ? selectedCurrecnyPair.currency_source_sym_pic_gray
+                    : ""
+                }
+              />
               <span className="font-mine-regular text-lg text-gray mt-1.5">
-                {data.buy.source.title}
+                {selectedCurrecnyPair &&
+                selectedCurrecnyPair.currency_source_abb
+                  ? selectedCurrecnyPair.currency_source_abb
+                  : ""}
               </span>
             </div>
             <img
@@ -30,18 +43,32 @@ export default function OtherExchangeCard({ data }) {
               src={require(`../../../../../Images/arrow-${endCompleteDirection}-blue.png`)}
             />
             <div className="flex items-center pr-2.5">
-              <img className="w-8 h-8" src={data.buy.target.imageSource.gray} />
+              <img
+                className="w-8 h-8"
+                src={
+                  selectedCurrecnyPair &&
+                  selectedCurrecnyPair.currency_destination_sym_pic_gray
+                    ? selectedCurrecnyPair.currency_destination_sym_pic_gray
+                    : ""
+                }
+              />
               <span className="font-mine-regular text-lg text-gray mt-2">
-                {data.buy.target.title}
+                {selectedCurrecnyPair &&
+                selectedCurrecnyPair.currency_destination_abb
+                  ? selectedCurrecnyPair.currency_destination_abb
+                  : ""}
               </span>
             </div>
           </div>
           <div className="flex justify-center gap-1 -mt-2 mx-auto">
             <span className="font-mine-regular text-xl text-green">
-              {addComma(data.buy.rate)}
+              {addComma(data.source_to_destination_rate)}
             </span>
             <span className="font-mine-regular text-xl text-blue-gradient">
-              {data.rateType}
+              {selectedCurrecnyPair &&
+              selectedCurrecnyPair.default_rate_type_title
+                ? selectedCurrecnyPair.default_rate_type_title
+                : ""}
             </span>
           </div>
         </div>
@@ -50,10 +77,18 @@ export default function OtherExchangeCard({ data }) {
             <div className="flex items-center">
               <img
                 className="w-8 h-8"
-                src={data.sell.source.imageSource.gray}
+                src={
+                  selectedCurrecnyPair &&
+                  selectedCurrecnyPair.currency_destination_sym_pic_gray
+                    ? selectedCurrecnyPair.currency_destination_sym_pic_gray
+                    : ""
+                }
               />
               <span className="font-mine-regular text-lg text-gray mt-1.5">
-                {data.sell.source.title}
+                {selectedCurrecnyPair &&
+                selectedCurrecnyPair.currency_destination_abb
+                  ? selectedCurrecnyPair.currency_destination_abb
+                  : ""}
               </span>
             </div>
             <img
@@ -63,24 +98,35 @@ export default function OtherExchangeCard({ data }) {
             <div className="flex items-center pr-2.5">
               <img
                 className="w-8 h-8"
-                src={data.sell.target.imageSource.gray}
+                src={
+                  selectedCurrecnyPair &&
+                  selectedCurrecnyPair.currency_source_sym_pic_gray
+                    ? selectedCurrecnyPair.currency_source_sym_pic_gray
+                    : ""
+                }
               />
               <span className="font-mine-regular text-lg text-gray mt-2">
-                {data.sell.target.title}
+                {selectedCurrecnyPair &&
+                selectedCurrecnyPair.currency_source_abb
+                  ? selectedCurrecnyPair.currency_source_abb
+                  : ""}
               </span>
             </div>
           </div>
           <div className="flex justify-center gap-1 -mt-2 mx-auto">
             <span className="font-mine-regular text-xl text-red">
-              {addComma(data.sell.rate)}
+              {addComma(data.destination_to_source_rate)}
             </span>
             <span className="font-mine-regular text-xl text-blue-gradient">
-              {data.rateType}
+              {selectedCurrecnyPair &&
+              selectedCurrecnyPair.default_rate_type_title
+                ? selectedCurrecnyPair.default_rate_type_title
+                : ""}
             </span>
           </div>
         </div>
         <span className={`font-mine-regular text-sm text-gray mt-3`}>
-          {data.date.toLocaleString()}
+          {convertDateTime(data.datetime)}
         </span>
       </div>
     </div>
