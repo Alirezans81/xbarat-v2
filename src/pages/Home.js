@@ -52,7 +52,10 @@ export default function Home() {
       <div
         className={`bg-${theme} rounded-${oneDirection}-3xl col-span-4 row-span-3`}
       >
-        <OtherExcahnges rateIsReversed={rateIsReversed} />
+        <OtherExcahnges
+          selectedCurrecnyPair={selectedCurrecnyPair}
+          rateIsReversed={rateIsReversed}
+        />
       </div>
       <div className={`bg-${theme} rounded-3xl col-span-3 row-span-3`}>
         <PendingExchange

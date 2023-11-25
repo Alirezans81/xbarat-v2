@@ -64,7 +64,7 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
             {"+ " + addComma(+walletAsset.pending) + " " + lang["pending"]}
           </span>
           <span className="text-red -mt-1">
-            {"- " + addComma(+walletAsset.locked) + " " + lang["locked"]}
+            {"+ " + addComma(+walletAsset.locked) + " " + lang["locked"]}
           </span>
         </div>
         <div className="flex flex-col gap-y-2 font-mine-bold w-full text-sm items-center mt-1">
