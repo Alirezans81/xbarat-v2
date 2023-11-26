@@ -10,10 +10,18 @@ import { useLanguageState } from "../../../../Providers/LanguageProvider";
 export default function Exchanging({
   selectedCurrecnyPair,
   setSelectedCurrencnyPair,
-  formDefaultRate,
   rateIsReversed,
   setRateIsReversed,
   refreshPendingExchange,
+  formDefaultRate,
+  setFormDefaultRate,
+  selectedSourceIndex,
+  setSelectedSourceIndex,
+  availableTargets,
+  selectedTargetIndex,
+  setAvailableTargets,
+  setSelectedTargetIndex,
+  rateInputRef,
 }) {
   const lang = useLanguageState();
 
@@ -21,11 +29,8 @@ export default function Exchanging({
   const currencyPairs = useCurrencyPairsState();
   const wallet = useWalletState();
 
-  const [selectedSourceIndex, setSelectedSourceIndex] = useState(-1);
   const [selectedCurrecnyWalletData, setSelectedCurrecnyWalletData] =
     useState();
-  const [availableTargets, setAvailableTargets] = useState([]);
-  const [selectedTargetIndex, setSelectedTargetIndex] = useState(-1);
 
   const [sourceLabel, setSourceLabel] = useState(lang["source"]);
   useEffect(() => {
@@ -140,6 +145,7 @@ export default function Exchanging({
                   ? selectedCurrecnyPair.default_rate_type_title
                   : ""
               }
+              setFormDefaultRate={setFormDefaultRate}
             />
           )}
         </div>
@@ -160,12 +166,14 @@ export default function Exchanging({
           setSelectedTargetIndex={setSelectedTargetIndex}
           currencyPairs={currencyPairs}
           formDefaultRate={formDefaultRate}
+          setFormDefaultRate={setFormDefaultRate}
           rateIsReversed={rateIsReversed}
           setRateIsReversed={setRateIsReversed}
           defaultRateType={
             selectedCurrecnyPair ? selectedCurrecnyPair.defaultRateType : ""
           }
           refreshPendingExchange={refreshPendingExchange}
+          rateInputRef={rateInputRef}
         />
       </div>
     </div>

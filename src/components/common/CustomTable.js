@@ -28,7 +28,7 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
                   ? `grid grid-cols-${colsQuantity} gap-x-4 w-full bg-${theme}-back items-center hover:bg-blue my-1 py-1 rounded-full hover-text-blue`
                   : `grid grid-cols-${colsQuantity} gap-x-4 w-full bg-${theme}-back items-center my-1 py-1 rounded-full hover-text-blue`
               }
-              onClick={() => selectRow(row)}
+              onClick={() => selectRow(row, trIndex)}
             >
               {Object.values(row).map((value, tdIndex) => (
                 <span

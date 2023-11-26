@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import Exchanging from "../components/pages/layout/Home/Exchanging";
@@ -16,9 +16,18 @@ export default function Home() {
   const setLoading = useIsLoadingSplashScreenSetState();
   const token = useTokenState();
 
+  const rateInputRef = useRef();
+  const focusOnInput = () => {
+    rateInputRef.current.focus();
+  };
+
   const [selectedCurrecnyPair, setSelectedCurrencnyPair] = useState();
   const [formDefaultRate, setFormDefaultRate] = useState();
   const [rateIsReversed, setRateIsReversed] = useState(true);
+
+  const [selectedSourceIndex, setSelectedSourceIndex] = useState(-1);
+  const [availableTargets, setAvailableTargets] = useState([]);
+  const [selectedTargetIndex, setSelectedTargetIndex] = useState(-1);
 
   const [pendingExchanges, setPendingExchanges] = useState([]);
   const { getPendingExchanges, isLoading: getPendingExchangesIsLoading } =
@@ -44,10 +53,22 @@ export default function Home() {
           rateIsReversed={rateIsReversed}
           setRateIsReversed={setRateIsReversed}
           refreshPendingExchange={refreshPendingExchange}
+          setFormDefaultRate={setFormDefaultRate}
+          selectedSourceIndex={selectedSourceIndex}
+          setSelectedSourceIndex={setSelectedSourceIndex}
+          availableTargets={availableTargets}
+          selectedTargetIndex={selectedTargetIndex}
+          setAvailableTargets={setAvailableTargets}
+          setSelectedTargetIndex={setSelectedTargetIndex}
+          rateInputRef={rateInputRef}
         />
       </div>
       <div className={`bg-${theme} rounded-3xl col-span-5 row-span-3`}>
-        <WatchList setSelectedCurrencnyPair={setSelectedCurrencnyPair} />
+        <WatchList
+          setSelectedSourceIndex={setSelectedSourceIndex}
+          availableTargets={availableTargets}
+          setSelectedTargetIndex={setSelectedTargetIndex}
+        />
       </div>
       <div
         className={`bg-${theme} rounded-${oneDirection}-3xl col-span-4 row-span-3`}
@@ -69,6 +90,7 @@ export default function Home() {
         <TableExchange
           selectedCurrecnyPair={selectedCurrecnyPair}
           setFormDefaultRate={setFormDefaultRate}
+          focusOnInput={focusOnInput}
         />
       </div>
     </div>
