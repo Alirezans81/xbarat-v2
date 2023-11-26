@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useThemeState } from "../../Providers/ThemeProvider";
+import cross from "../../Images/pages/layout/Profile/cross.png";
 import axios from "axios";
 const Addcard = ({ addCard, setAddCard }) => {
   const theme = useThemeState();
@@ -15,19 +16,29 @@ const Addcard = ({ addCard, setAddCard }) => {
     e.preventDefault();
     setAddCard(false);
   };
+  const discard = () => {
+    setAddCard(false);
+  };
   return (
     <>
       <div
         className={
           addCard
-            ? `bg-${theme}-back w-11/12 ml-10 h-72 mt-16 mb-0 rounded-lg p-2`
+            ? `bg-${theme}-back w-11/12 h-1/2 ml-11 mb-0 rounded-lg p-2 absolute top-5 z-10`
             : "hidden"
         }
       >
+        <button
+          className={`bg-transparent rounded-lg w-2/5 absolute top-1 z-10 right-0`}
+          onClick={discard}
+          type="button"
+        >
+          <img className="w-5 absolute right-5 top-2" alt="" src={cross} />
+        </button>
         <form onSubmit={handleAddCards}>
           <div className="flex flex-col">
             <span
-              className={`text-${oppositeTheme} text-xl font-mine-bold mt-1`}
+              className={`text-${oppositeTheme} text-xl font-mine-bold mt-6`}
             >
               {lang["add_cards_title"]}
             </span>
@@ -77,7 +88,7 @@ const Addcard = ({ addCard, setAddCard }) => {
 
           <button
             type="submit"
-            className={`bg-blue text-${theme} rounded-lg w-2/5 pt-1`}
+            className={`bg-blue text-${theme} rounded-lg w-2/5 pt-1 mt-1`}
           >
             {lang["submit"]}
           </button>
