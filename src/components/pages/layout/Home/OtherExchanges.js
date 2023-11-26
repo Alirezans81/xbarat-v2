@@ -17,8 +17,6 @@ export default function OtherExchanges({ selectedCurrecnyPair }) {
   const { getOtherExchangesRate, isLoading } = useGetOtherExchangesRate();
   useEffect(() => setLoading(isLoading), [isLoading]);
 
-  console.log(selectedCurrecnyPair);
-
   useEffect(() => {
     selectedCurrecnyPair
       ? getOtherExchangesRate(

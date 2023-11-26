@@ -131,6 +131,10 @@ body {
   background-color: #0A8DFF;
 }
 
+.hover-bg-blue:hover {
+  background-color: #0A8DFF;
+}
+
 .border-blue {
   border-color: #0A8DFF;
 }

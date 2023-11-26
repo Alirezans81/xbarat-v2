@@ -10,6 +10,7 @@ import { useAddComma } from "../../../../hooks/useNumberFunctions";
 export default function AllOreders({
   selectedCurrecnyPair,
   setFormDefaultRate,
+  focusOnInput,
 }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -111,7 +112,11 @@ export default function AllOreders({
             <CustomTable
               heads={source_to_target_head}
               rows={source_to_target_data}
-              setFormDefaultRate={setFormDefaultRate}
+              haverable={true}
+              selectRow={(row) => {
+                setFormDefaultRate(row.rate);
+                focusOnInput();
+              }}
             />
           </div>
         </div>
@@ -146,7 +151,10 @@ export default function AllOreders({
             <CustomTable
               heads={target_to_source_head}
               rows={target_to_source_data}
-              setFormDefaultRate={setFormDefaultRate}
+              selectRow={(row) => {
+                setFormDefaultRate(row.rate);
+                focusOnInput();
+              }}
             />
           </div>
         </div>

@@ -14,6 +14,7 @@ import SubmitButton from "../../../../common/SubmitButton";
 import { useUserState } from "../../../../../Providers/UserProvider";
 import { useStatusesState } from "../../../../../Providers/StatusesProvider";
 import { useExchange } from "../../../../../apis/pages/Home/hooks";
+import { useCurrenciesState } from "../../../../../Providers/CurrenciesProvider";
 
 export default function ExchangeForm({
   walletBalance,
@@ -28,8 +29,9 @@ export default function ExchangeForm({
   rateIsReversed,
   targetLabel,
   formDefaultRate,
-  defaultRateType,
+  setFormDefaultRate,
   refreshPendingExchange,
+  rateInputRef,
 }) {
   const lang = useLanguageState();
   const theme = useThemeState();
@@ -50,6 +52,37 @@ export default function ExchangeForm({
   );
 
   const [errorMessage, setErrorMessage] = useState("");
+
+  const [targetSlug, setTargetSlug] = useState();
+
+  const findSource = (currency_slug) => {
+    let result = -1;
+    result = currencies.findIndex(
+      (currency) => currency.slug === currency_slug
+    );
+    result >= 0 && setSelectedSourceIndex(result);
+  };
+
+  const findTarget = (currency_slug) => {
+    let result = -1;
+    result = availableTargets.findIndex(
+      (currency) => currency.slug === currency_slug
+    );
+    result >= 0 && setSelectedTargetIndex(result);
+  };
+
+  useEffect(() => {
+    if (availableTargets.length > 0 && targetSlug) {
+      findTarget(targetSlug);
+    }
+  }, [availableTargets, targetSlug]);
+
+  const switchSourceAndTarget = () => {
+    const newTargetSlug = currencies[selectedSourceIndex].slug;
+    setTargetSlug(newTargetSlug);
+    findSource(availableTargets[selectedTargetIndex].slug);
+  };
+
   const computingTargetAmount = (amount, rate, multi) => {
     if (
       selectedCurrecnyPair &&
@@ -155,7 +188,9 @@ export default function ExchangeForm({
             ? +removeComma(values.amount)
             : +removeComma(values.amount) *
               ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
-        if (findError(+newAmount, +removeComma(values.rate))) {
+
+        const selectedRate = formDefaultRate || +removeComma(values.rate);
+        if (findError(+newAmount, +selectedRate)) {
           const params = {
             user: user && user.url ? user.url : "",
             currency_pair:
@@ -163,12 +198,12 @@ export default function ExchangeForm({
                 ? selectedCurrecnyPair.url
                 : "",
             amount_source: +removeComma(values.amount),
-            rate: +removeComma(values.rate),
+            rate: +formDefaultRate || +removeComma(values.rate),
             amount_destination:
               selectedCurrecnyPair && selectedCurrecnyPair.rate_multiplier
                 ? computingTargetAmount(
                     removeComma(values.amount),
-                    removeComma(values.rate),
+                    selectedRate,
                     selectedCurrecnyPair.rate_multiplier
                   ).toFixed(6)
                 : 0,
@@ -176,7 +211,6 @@ export default function ExchangeForm({
               statuses.find((status) => status.title === "Pending").url || "",
           };
 
-          console.log(params);
           exchange(params, refreshPendingExchange);
         }
       }}
@@ -272,10 +306,16 @@ export default function ExchangeForm({
                   }
                 })}
               </CustomDropdown>
-              <img
-                className="w-5 h-5"
-                src={require("../../../../../Images/pages/layout/Home/exchange-arrow.png")}
-              />
+              <button
+                disabled={!selectedCurrecnyPair}
+                onClick={switchSourceAndTarget}
+                type="button"
+              >
+                <img
+                  className="w-5 h-5"
+                  src={require("../../../../../Images/pages/layout/Home/exchange-arrow.png")}
+                />
+              </button>
               <CustomDropdown
                 className="flex-1 font-mine-regular"
                 label={
@@ -385,6 +425,7 @@ export default function ExchangeForm({
                 value={addComma(values.amount, false)}
               />
               <input
+                ref={rateInputRef}
                 className={`flex-1 hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                 placeholder={lang["rate"]}
                 disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
@@ -398,20 +439,30 @@ export default function ExchangeForm({
                 }}
                 onChange={(e) => {
                   handleChange(e);
-                  findError(
-                    removeComma(values.amount),
-                    removeComma(values.rate)
-                  );
+                  formDefaultRate && setFormDefaultRate(null);
+                  formDefaultRate
+                    ? findError(removeComma(values.amount), formDefaultRate)
+                    : findError(
+                        removeComma(values.amount),
+                        removeComma(values.rate)
+                      );
                 }}
-                value={addComma(values.rate, true)}
+                value={
+                  rateIsReversed && formDefaultRate
+                    ? (
+                        (1 / +formDefaultRate) *
+                        +selectedCurrecnyPair.rate_multiplier
+                      ).toFixed(selectedCurrecnyPair.floating_number) ||
+                      addComma(values.rate, true)
+                    : formDefaultRate || addComma(values.rate, true)
+                }
               />
             </div>
-
             {values.amount &&
               removeComma(values.amount) !== 0 &&
               selectedCurrecnyPair &&
-              (formDefaultRate ||
-                (values.rate && removeComma(values.rate) !== 0)) && (
+              values.rate &&
+              removeComma(values.rate) !== 0 && (
                 <div className="mt-1 flex items-center">
                   {errorMessage && errorMessage !== "" ? (
                     <span
@@ -456,15 +507,14 @@ export default function ExchangeForm({
                   )}
                 </div>
               )}
-
             <SubmitButton
               type="submit"
               onClick={handleSubmit}
               className={
                 values.amount &&
                 removeComma(values.amount) !== 0 &&
-                (formDefaultRate ||
-                  (values.rate && removeComma(values.rate) !== 0))
+                values.rate &&
+                removeComma(values.rate) !== 0
                   ? "flex justify-center mt-0.5 items-center w-full py-0.5"
                   : "flex justify-center mt-7 items-center w-full py-0.5"
               }

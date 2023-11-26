@@ -5,12 +5,12 @@ import { useAddComma } from "../../../../../hooks/useNumberFunctions";
 
 export default function RateType({
   rate,
-  defaultRateType,
   hasReversedRate,
   rateIsReversed,
   setRateIsReversed,
   selectedCurrecnyPair,
   default_rate_type_title,
+  setFormDefaultRate,
 }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -33,7 +33,7 @@ export default function RateType({
   return (
     <div className="flex flex-col w-full">
       <div className="flex">
-        <button>
+        <button onClick={() => setFormDefaultRate(rate)}>
           <span className={`font-mine-thin text-${oppositeTheme} `}>
             {rateIsReversed
               ? rate &&
