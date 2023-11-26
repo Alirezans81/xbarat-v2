@@ -164,5 +164,10 @@
   "account_name_null_cards": "Title",
   "bank_name_null_cards": "Bank name",
   "bank_info_null_cards": "0000 0000 0000 0000",
-  "wallet_tank_type_title_null_cards": "Card OR Shaba Number"
+  "wallet_tank_type_title_null_cards": "Card OR Shaba Number",
+  "add_cards_title": "Title",
+  "cards_card_number": "Card Number",
+  "cards_card_number_placeholder": "0000 0000 0000 0000",
+  "cards_shaba_number": "Shaba Number",
+  "cards_shaba_number_placeholder": "IR-000000000000000000000000"
 }
