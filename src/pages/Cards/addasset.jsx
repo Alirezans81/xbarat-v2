@@ -4,15 +4,18 @@ import { useThemeState } from "../../Providers/ThemeProvider";
 import cross from "../../Images/pages/layout/Profile/cross.png";
 import { CustomDropdown } from "../../components/common/CustomDropdown";
 import axios from "axios";
-const Addcard = ({ addAsset, setAddAsset }) => {
+const Addcard = ({ addAsset, setAddAsset, walletAsset }) => {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
-
-  const [title, setTitle] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [shabaNumber, setShabaNumber] = useState("");
-
+  const [currency, setCurrency] = useState("");
+  let listCurrency = ["TMN", "TRY", "AFN", "EUR", "USD"];
+  let listAsset = walletAsset.map((data) => data.currency_abb);
+  console.log(listAsset);
+  let AvailableNewAssets = listCurrency.filter(
+    (data) => listAsset.includes(data) === false
+  );
+  console.log(AvailableNewAssets);
   const handleAddAssets = async (e) => {
     e.preventDefault();
     setAddAsset(false);

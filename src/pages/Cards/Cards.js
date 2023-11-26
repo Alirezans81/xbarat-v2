@@ -78,7 +78,12 @@ const Cards = () => {
         }}
       >
         <div className="">
-          <Addasset addAsset={addAsset} setAddAsset={setAddAsset} show={show} />
+          <Addasset
+            addAsset={addAsset}
+            setAddAsset={setAddAsset}
+            show={show}
+            walletAsset={wallet.walletAssets}
+          />
         </div>
         <div className="w-full">
           <span
