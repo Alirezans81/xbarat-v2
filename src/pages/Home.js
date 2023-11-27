@@ -61,6 +61,7 @@ export default function Home() {
           setAvailableTargets={setAvailableTargets}
           setSelectedTargetIndex={setSelectedTargetIndex}
           rateInputRef={rateInputRef}
+          focusOnInput={focusOnInput}
         />
       </div>
       <div className={`bg-${theme} rounded-3xl col-span-5 row-span-3`}>

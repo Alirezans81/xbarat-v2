@@ -32,22 +32,32 @@ export default function AllOreders({
     lang["quantity"],
   ];
   const source_to_target_data =
-    tableExchangeData && tableExchangeData.source_to_target
+    tableExchangeData &&
+    tableExchangeData.source_to_target &&
+    selectedCurrecnyPair
       ? tableExchangeData.source_to_target.map((row) => {
           let temp = {};
           temp.quantity = addComma(row.quantity);
-          temp.total_amount = addComma(row.total_amount);
+          temp.total_amount =
+            addComma(row.total_amount) +
+            " " +
+            selectedCurrecnyPair.currency_source_abb;
           temp.rate = addComma(row.rate);
 
           return temp;
         })
       : [];
   const target_to_source_data =
-    tableExchangeData && tableExchangeData.target_to_source
+    tableExchangeData &&
+    tableExchangeData.target_to_source &&
+    selectedCurrecnyPair
       ? tableExchangeData.target_to_source.map((row) => {
           let temp = {};
           temp.rate = addComma(row.rate);
-          temp.total_amount = addComma(row.total_amount);
+          temp.total_amount =
+            addComma(row.total_amount) +
+            " " +
+            selectedCurrecnyPair.currency_destination_abb;
           temp.quantity = addComma(row.quantity);
 
           return temp;

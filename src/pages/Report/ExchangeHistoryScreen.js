@@ -11,17 +11,22 @@ export default function ExchangeHistoryScreen() {
   const [selectionRange, setSelectionRange] = useState();
 
   return (
-    <div className="w-full h-full grid grid-cols-5 gap-10">
-      <div className={`col-span-1 bg-${theme} rounded-3xl py-5 px-7`}>
+    <div className="w-full h-full grid grid-cols-5 grid-rows-1 gap-10">
+      <div
+        className={`col-span-1 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
+      >
         <Filters
           selectionRange={selectionRange}
           setSelectionRange={setSelectionRange}
         />
       </div>
+
       <div
-        className={`col-span-4 bg-${theme} rounded-${oneDirection}-3xl py-5 px-7 overflow-y-scroll`}
+        className={`col-span-4 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4 `}
       >
-        <Cards />
+        <div className="overflow-y-auto h-full pr-3">
+          <Cards />
+        </div>
       </div>
     </div>
   );
