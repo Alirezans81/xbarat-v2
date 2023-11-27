@@ -11,6 +11,7 @@ export default function RateType({
   selectedCurrecnyPair,
   default_rate_type_title,
   setFormDefaultRate,
+  focusOnInput,
 }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -33,7 +34,12 @@ export default function RateType({
   return (
     <div className="flex flex-col w-full">
       <div className="flex">
-        <button onClick={() => setFormDefaultRate(rate)}>
+        <button
+          onClick={() => {
+            setFormDefaultRate(rate);
+            focusOnInput();
+          }}
+        >
           <span className={`font-mine-thin text-${oppositeTheme} `}>
             {rateIsReversed
               ? rate &&

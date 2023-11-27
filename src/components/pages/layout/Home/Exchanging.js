@@ -22,6 +22,7 @@ export default function Exchanging({
   setAvailableTargets,
   setSelectedTargetIndex,
   rateInputRef,
+  focusOnInput,
 }) {
   const lang = useLanguageState();
 
@@ -146,6 +147,7 @@ export default function Exchanging({
                   : ""
               }
               setFormDefaultRate={setFormDefaultRate}
+              focusOnInput={focusOnInput}
             />
           )}
         </div>
