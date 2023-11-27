@@ -27,7 +27,7 @@ const SingleCardTank = ({ show }) => {
     <>
       {walletTanks.map((data, index) => (
         <div
-          className={`bg-${theme}-back h-5/6 w-5/6 ml-11 rounded-lg`}
+          className={`bg-${theme}-back h-full w-5/6  ml-11 rounded-lg`}
           style={{
             gridRow: Math.ceil(index / 2),
             gridColumn: index % 2 === 0 ? 1 : 2,
@@ -36,13 +36,13 @@ const SingleCardTank = ({ show }) => {
           <div className="grid grid-cols-10 grid-rows-3 gap-x-2 gap-y-4 w-full h-full">
             <span
               style={{ gridRow: 1, gridColumn: 1 }}
-              className={`col-span-7 w-72 text-blue text-lg ml-2`}
+              className={`col-span-7 w-72 text-blue text-lg ml-2 mt-1`}
             >
               {data.title}
             </span>
             <button
               onClick={handleCheckboxChange}
-              className="flex justify-end w-32"
+              className="flex justify-end w-32 mt-1 mr-1"
               style={{ gridRow: 1, gridColumn: 8 }}
             >
               <img
@@ -60,10 +60,10 @@ const SingleCardTank = ({ show }) => {
                 ? lang["wallet_tank_type_title_null_cards"]
                 : data.wallet_tank_type}
             </span>
-            <span
+            <button
               style={{ gridRow: 2, gridColumn: 8 }}
               className="col-span-2  w-32"
-            ></span>
+            ></button>
             <span
               style={{ gridRow: 3, gridColumn: 1 }}
               className={`col-span-7 text-${oppositeTheme}  w-72 ml-2`}

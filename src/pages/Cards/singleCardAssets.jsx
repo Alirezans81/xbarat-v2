@@ -17,7 +17,7 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   return (
     <>
       <div
-        className={`bg-${theme}-back h-full rounded-lg`}
+        className={`bg-${theme}-back h-full rounded-lg mb-0 mt-0`}
         style={{ gridRow: assetIndex, gridColumn: 1 }}
       >
         <span
