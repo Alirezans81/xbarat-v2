@@ -33,12 +33,12 @@ const Addcard = ({ addCard, setAddCard }) => {
           onClick={discard}
           type="button"
         >
-          <img className="w-5 absolute right-5 top-2" alt="" src={cross} />
+          <img className="w-5 absolute right-5 top-1" alt="" src={cross} />
         </button>
         <form onSubmit={handleAddCards}>
           <div className="flex flex-col">
             <span
-              className={`text-${oppositeTheme} text-xl font-mine-bold mt-6`}
+              className={`text-${oppositeTheme} text-xl font-mine-bold mt-3`}
             >
               {lang["add_cards_title"]}
             </span>

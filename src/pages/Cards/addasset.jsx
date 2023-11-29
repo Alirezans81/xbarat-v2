@@ -2,8 +2,12 @@ import { useState } from "react";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import cross from "../../Images/pages/layout/Profile/cross.png";
-import { CustomDropdown } from "../../components/common/CustomDropdown";
+import {
+  CustomDropdown,
+  CustomItem,
+} from "../../components/common/CustomDropdown";
 import axios from "axios";
+import { da } from "date-fns/locale";
 const Addcard = ({ addAsset, setAddAsset, walletAsset }) => {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -28,18 +32,33 @@ const Addcard = ({ addAsset, setAddAsset, walletAsset }) => {
       <div
         className={
           addAsset
-            ? `bg-${theme}-back w-10/12 h-1/2 ml-8 mb-0 rounded-lg p-2 absolute left-0 z-10`
+            ? `bg-${theme}-back w-10/12 h-fit ml-8 mb-0 rounded-lg p-2 absolute left-0 z-10`
             : "hidden"
         }
       >
-        <button
-          className={`bg-transparent rounded-lg w-2/5 absolute top-1 z-10 right-0`}
-          onClick={discard}
-          type="button"
-        >
-          <img className="w-5 absolute right-5 top-2" alt="" src={cross} />
-        </button>
-        <form onSubmit={handleAddAssets}></form>
+        <div className="w-full h-full bg-transparent grid grid-cols-1 grid-rows-10">
+          <button
+            className={`bg-transparent rounded-lg flex justify-end`}
+            style={{ gridRow: 1, gridColumn: 1 }}
+            onClick={discard}
+            type="button"
+          >
+            <img className="" alt="" src={cross} />
+          </button>
+          <span
+            className={`text-${oppositeTheme}  row-span-1`}
+            style={{ gridRow: 2, gridColumn: 1 }}
+          >
+            {lang["choose_add_currency_cards_add_asset"]}
+          </span>
+          <form className="flex justify-center row-span-8 h-80">
+            <CustomDropdown className={"bg-transparent"} label="Currency">
+              {AvailableNewAssets.map((data) => (
+                <CustomItem className={"bg-transparent"}>{data}</CustomItem>
+              ))}
+            </CustomDropdown>
+          </form>
+        </div>
       </div>
     </>
   );
