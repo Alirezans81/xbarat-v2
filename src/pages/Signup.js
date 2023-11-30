@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useThemeState } from "../Providers/ThemeProvider";
-import ThemeSwitcher from "../components/pages/layout/Navbar/ThemeSwitcher";
+import ThemeSwitcher from "../components/common/ThemeSwitcher";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import LoadingSplashScreen from "../components/common/LoadingSplashScreen";
 import { useTokenSetState, useTokenState } from "../Providers/TokenProvider";

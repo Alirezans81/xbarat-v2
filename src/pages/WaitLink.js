@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import ThemeSwitcher from "../components/pages/layout/Navbar/ThemeSwitcher";
+import ThemeSwitcher from "../components/common/ThemeSwitcher";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import { useLanguageState } from "../Providers/LanguageProvider";

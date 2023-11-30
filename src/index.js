@@ -45,125 +45,137 @@ import WaitLink from "./pages/WaitLink";
 import { StatusesProvider } from "./Providers/StatusesProvider";
 import { CurrenciesProvider } from "./Providers/CurrenciesProvider";
 import { CurrencyPairsProvider } from "./Providers/CurrencyPairsProvider";
+import { LanguageListProvider } from "./Providers/LanguageListProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <MyQueryClientProvider>
     <IsPagesModalOpenProvider>
-      <LanguageProvider>
-        <ThemeProvider>
-          <DirectionProvider>
-            <ModalDataProvider>
-              <ToastDataProvider>
-                <IsLoadingSplashScreenProvider>
-                  <StatusesProvider>
-                    <CurrenciesProvider>
-                      <CurrencyPairsProvider>
-                        <TokenProvider>
-                          <UserProvider>
-                            <WalletProvider>
-                              <BrowserRouter>
-                                <Routes>
-                                  <Route path="/login" element={<Login />} />
-                                  <Route path="/signup" element={<Signup />} />
-                                  <Route
-                                    path="/wait-link"
-                                    element={<WaitLink />}
-                                  />
-                                  <Route path="*" element={<NoPage />} />
-                                  <Route path="/" element={<Layout />}>
-                                    <Route index element={<OnLoad />} />
-                                    <Route path="home" element={<Home />} />
-                                    <Route path="wallet" element={<Wallet />} />
+      <LanguageListProvider>
+        <LanguageProvider>
+          <ThemeProvider>
+            <DirectionProvider>
+              <ModalDataProvider>
+                <ToastDataProvider>
+                  <IsLoadingSplashScreenProvider>
+                    <StatusesProvider>
+                      <CurrenciesProvider>
+                        <CurrencyPairsProvider>
+                          <TokenProvider>
+                            <UserProvider>
+                              <WalletProvider>
+                                <BrowserRouter>
+                                  <Routes>
+                                    <Route path="/login" element={<Login />} />
                                     <Route
-                                      path="reports"
-                                      element={<Reports />}
+                                      path="/signup"
+                                      element={<Signup />}
                                     />
                                     <Route
-                                      path="exchange-history"
-                                      element={<ExchangeHistoryScreen />}
+                                      path="/wait-link"
+                                      element={<WaitLink />}
                                     />
-                                    <Route
-                                      path="deposit-history"
-                                      element={<DepositHistoryScreen />}
-                                    />
-                                    <Route
-                                      path="withdrawal-history"
-                                      element={<WithdrawalHistoryScreen />}
-                                    />
-                                    <Route
-                                      path="transfer-history"
-                                      element={<TransferHistoryScreen />}
-                                    />
-                                    <Route
-                                      path="profile"
-                                      element={<Profile />}
-                                    />
-                                    <Route
-                                      path="profile/cards"
-                                      element={<Cards />}
-                                    />
-                                    <Route
-                                      path="tickets"
-                                      element={<Tickets />}
-                                    />
-                                    <Route path="submitting">
+                                    <Route path="*" element={<NoPage />} />
+                                    <Route path="/" element={<Layout />}>
+                                      <Route index element={<OnLoad />} />
+                                      <Route path="home" element={<Home />} />
                                       <Route
-                                        path="assignment"
-                                        element={<Assignment />}
+                                        path="wallet"
+                                        element={<Wallet />}
                                       />
                                       <Route
-                                        path="exchanges"
-                                        element={<ExConfirmation />}
+                                        path="reports"
+                                        element={<Reports />}
                                       />
                                       <Route
-                                        path="transfers"
-                                        element={<Transfers />}
+                                        path="exchange-history"
+                                        element={<ExchangeHistoryScreen />}
                                       />
                                       <Route
-                                        path="accounting"
-                                        element={<Accounting />}
+                                        path="deposit-history"
+                                        element={<DepositHistoryScreen />}
                                       />
+                                      <Route
+                                        path="withdrawal-history"
+                                        element={<WithdrawalHistoryScreen />}
+                                      />
+                                      <Route
+                                        path="transfer-history"
+                                        element={<TransferHistoryScreen />}
+                                      />
+                                      <Route
+                                        path="profile"
+                                        element={<Profile />}
+                                      />
+                                      <Route
+                                        path="profile/cards"
+                                        element={<Cards />}
+                                      />
+                                      <Route
+                                        path="tickets"
+                                        element={<Tickets />}
+                                      />
+                                      <Route path="submitting">
+                                        <Route
+                                          path="assignment"
+                                          element={<Assignment />}
+                                        />
+                                        <Route
+                                          path="exchanges"
+                                          element={<ExConfirmation />}
+                                        />
+                                        <Route
+                                          path="transfers"
+                                          element={<Transfers />}
+                                        />
+                                        <Route
+                                          path="accounting"
+                                          element={<Accounting />}
+                                        />
+                                      </Route>
+                                      <Route path="user-management">
+                                        <Route
+                                          path="users"
+                                          element={<Users />}
+                                        />
+                                        <Route
+                                          path="admins"
+                                          element={<Admins />}
+                                        />
+                                        <Route
+                                          path="branches"
+                                          element={<Branches />}
+                                        />
+                                      </Route>
+                                      <Route path="currency">
+                                        <Route
+                                          path="singular"
+                                          element={<Singular />}
+                                        />
+                                        <Route path="pair" element={<Pair />} />
+                                      </Route>
+                                      <Route path="more">
+                                        <Route
+                                          path="robots"
+                                          element={<Robots />}
+                                        />
+                                      </Route>
                                     </Route>
-                                    <Route path="user-management">
-                                      <Route path="users" element={<Users />} />
-                                      <Route
-                                        path="admins"
-                                        element={<Admins />}
-                                      />
-                                      <Route
-                                        path="branches"
-                                        element={<Branches />}
-                                      />
-                                    </Route>
-                                    <Route path="currency">
-                                      <Route
-                                        path="singular"
-                                        element={<Singular />}
-                                      />
-                                      <Route path="pair" element={<Pair />} />
-                                    </Route>
-                                    <Route path="more">
-                                      <Route
-                                        path="robots"
-                                        element={<Robots />}
-                                      />
-                                    </Route>
-                                  </Route>
-                                </Routes>
-                              </BrowserRouter>
-                            </WalletProvider>
-                          </UserProvider>
-                        </TokenProvider>
-                      </CurrencyPairsProvider>
-                    </CurrenciesProvider>
-                  </StatusesProvider>
-                </IsLoadingSplashScreenProvider>
-              </ToastDataProvider>
-            </ModalDataProvider>
-          </DirectionProvider>
-        </ThemeProvider>
-      </LanguageProvider>
+                                  </Routes>
+                                </BrowserRouter>
+                              </WalletProvider>
+                            </UserProvider>
+                          </TokenProvider>
+                        </CurrencyPairsProvider>
+                      </CurrenciesProvider>
+                    </StatusesProvider>
+                  </IsLoadingSplashScreenProvider>
+                </ToastDataProvider>
+              </ModalDataProvider>
+            </DirectionProvider>
+          </ThemeProvider>
+        </LanguageProvider>
+      </LanguageListProvider>
     </IsPagesModalOpenProvider>
   </MyQueryClientProvider>
 );

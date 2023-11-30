@@ -6,6 +6,7 @@ import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { Link, useLocation } from "react-router-dom";
 import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
 import CompleteProfileModal from "../../../modals/CompleteProfileModal";
+import LanguageSwitcher from "../../../common/LanguageSwitcher";
 
 export default function RightSide() {
   const user = useUserState();
@@ -34,50 +35,55 @@ export default function RightSide() {
     currentRoute === "/profile" ? "text-dark" : `text-${theme}`;
 
   return (
-    <div
-      className={`flex items-center transition-all duration-200 rounded-${direction}-full p${direction}-3 py-3 ${backgroundClass}`}
-    >
-      <img
-        className="w-12 h-12 rounded-full"
-        src={
-          user && user.avatar
-            ? user.avatar
-            : require("../../../../Images/pages/layout/Profile/no-profile.png")
-        }
-        style={{ objectFit: "cover" }}
-        alt="avatar"
-      />
-      <div className={`flex flex-col m${direction}-3`}>
-        <span className={`${nameClass} font-mine-regular -mb-2 text-lg`}>
-          {(user && user["first_name"] ? user["first_name"] : "") +
-            " " +
-            (user && user["last_name"] ? user["last_name"] : "")}
-        </span>
-        {user && user["is_active"] ? (
-          <span className={`${roleClass} font-mine-regular text-sm`}>
-            {user.role}
-          </span>
-        ) : (
-          <Link to="/profile">
-            <div
-              className={`bg-blue rounded-full ${completePrfoileClass} mt-1 flex flex-col justify-center transition-all duration-300 hover:bg-${theme} border-2 border-blue`}
-            >
-              <span
-                className={`text-xs font-mine-bold ${completePrfoileTextClass}`}
-              >
-                {lang["complete-profile"]}
-              </span>
-            </div>
-          </Link>
-        )}
+    <div className="flex items-center">
+      <div className="mx-3 z-100">
+        <LanguageSwitcher />
       </div>
-      <Link to="/profile">
+      <div
+        className={`flex items-center transition-all duration-200 rounded-${direction}-full p${direction}-3 py-3 ${backgroundClass}`}
+      >
         <img
-          className="w-5 h-5 mx-4"
-          src={require(`../../../../Images/arrow-${endDirection}-${oppositeTheme}.png`)}
-          alt="arrow-right"
+          className="w-12 h-12 rounded-full"
+          src={
+            user && user.avatar
+              ? user.avatar
+              : require("../../../../Images/pages/layout/Profile/no-profile.png")
+          }
+          style={{ objectFit: "cover" }}
+          alt="avatar"
         />
-      </Link>
+        <div className={`flex flex-col m${direction}-3`}>
+          <span className={`${nameClass} font-mine-regular -mb-2 text-lg`}>
+            {(user && user["first_name"] ? user["first_name"] : "") +
+              " " +
+              (user && user["last_name"] ? user["last_name"] : "")}
+          </span>
+          {user && user["is_active"] ? (
+            <span className={`${roleClass} font-mine-regular text-sm`}>
+              {user.role}
+            </span>
+          ) : (
+            <Link to="/profile">
+              <div
+                className={`bg-blue rounded-full ${completePrfoileClass} mt-1 flex flex-col justify-center transition-all duration-300 hover:bg-${theme} border-2 border-blue`}
+              >
+                <span
+                  className={`text-xs font-mine-bold ${completePrfoileTextClass}`}
+                >
+                  {lang["complete-profile"]}
+                </span>
+              </div>
+            </Link>
+          )}
+        </div>
+        <Link to="/profile">
+          <img
+            className="w-5 h-5 mx-4"
+            src={require(`../../../../Images/arrow-${endDirection}-${oppositeTheme}.png`)}
+            alt="arrow-right"
+          />
+        </Link>
+      </div>
     </div>
   );
 }
