@@ -22,5 +22,6 @@
   "table-exchange": "https://smicln.ir/api/index/table-exchange/",
   "pending-exchange": "https://smicln.ir/api/index/pending-exchange/",
   "status": "https://smicln.ir/api/status/",
-  "other-exchanges-rate": "https://smicln.ir/api/exchange/rate"
+  "other-exchanges-rate": "https://smicln.ir/api/exchange/rate",
+  "locale" : "https://smicln.ir/api/locale/"
 }

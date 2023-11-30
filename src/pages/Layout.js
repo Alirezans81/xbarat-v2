@@ -27,6 +27,8 @@ import {
   useGetCurrencyPairs,
 } from "../apis/common/currency/hooks";
 import { useCurrencyPairsSetState } from "../Providers/CurrencyPairsProvider";
+import { useGetLanguages } from "../apis/common/language/hooks";
+import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -41,6 +43,7 @@ export default function Layout() {
   const setCurrencyPairs = useCurrencyPairsSetState();
   const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const setLanguageList = useLanguageListSetState();
   const setStatuses = useStatusesSetState();
   const { pathname: activeRoute } = useLocation();
   const [links, setLinks] = useState([]);
@@ -67,9 +70,28 @@ export default function Layout() {
     [getCurrenciesIsLoading]
   );
 
+  const { getLanguages, isLoading: getLanguagesIsLoading } = useGetLanguages();
+  useEffect(
+    () => setIsLoadingSplashScreen(getLanguagesIsLoading),
+    [getLanguagesIsLoading]
+  );
+
   useEffect(() => {
     getCurrencies(setCurrencies);
     getCurrencyPairs(null, setCurrencyPairs);
+
+    const stringLanguages = window.localStorage.getItem("languageList");
+    if (
+      stringLanguages !== "undefined" &&
+      stringLanguages !== "null" &&
+      stringLanguages !== null
+    ) {
+      setLanguageList(JSON.parse(stringLanguages));
+    } else {
+      getLanguages(setLanguageList, null, (languageList) =>
+        localStorage.setItem("languageList", JSON.stringify(languageList))
+      );
+    }
 
     const stringStatuses = window.localStorage.getItem("statues");
     if (

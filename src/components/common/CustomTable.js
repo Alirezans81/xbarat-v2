@@ -33,7 +33,7 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
               {Object.values(row).map((value, tdIndex) => (
                 <span
                   key={tdIndex}
-                  className={`col-span-1 text-center font-mine-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
+                  className={`flex justify-center col-span-1 text-center font-mine-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
                 >
                   {value}
                 </span>
@@ -49,7 +49,7 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
                 Object.values(row).map((value, tdIndex) => (
                   <span
                     key={tdIndex}
-                    className={`col-span-1 text-center font-mine-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
+                    className={`flex justify-center col-span-1 text-center font-mine-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
                   >
                     {value}
                   </span>

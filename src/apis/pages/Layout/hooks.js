@@ -25,6 +25,9 @@ const useLogout = () => {
           setToken(null);
           window.localStorage.removeItem("authToken");
 
+          window.localStorage.removeItem("statuses");
+          window.localStorage.removeItem("languageList");
+
           setIsLoading(false);
         })
         .catch((error) => {

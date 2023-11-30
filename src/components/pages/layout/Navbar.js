@@ -1,6 +1,6 @@
 import React from "react";
 import Links from "./Navbar/Links";
-import ThemeSwitcher from "./Navbar/ThemeSwitcher";
+import ThemeSwitcher from "../../common/ThemeSwitcher";
 import { Link } from "react-router-dom";
 import { CustomTooltip } from "../../common/CustomTooltip";
 import { useThemeState } from "../../../Providers/ThemeProvider";

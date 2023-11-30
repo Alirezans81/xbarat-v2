@@ -209,7 +209,9 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
             </Link>
           </div>
           {error && (
-            <span className="font-mine-thin text-red">{error.message}</span>
+            <span className="font-mine-thin text-red">
+              {error.response.data}
+            </span>
           )}
           <button type="submit" className="button w-full mt-10">
             {lang["submit"]}
