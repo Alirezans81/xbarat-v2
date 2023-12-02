@@ -100,13 +100,13 @@ export default function ExchangeForm({
         if (!rateIsReversed) {
           return (newAmount * rate) / multi;
         } else {
-          return newAmount / rate;
+          return newAmount / rate / multi;
         }
       } else {
         if (!rateIsReversed) {
-          return newAmount / rate;
+          return (newAmount * multi) / rate;
         } else {
-          return (newAmount * rate) / multi;
+          return newAmount * multi * rate;
         }
       }
     }
@@ -480,23 +480,14 @@ export default function ExchangeForm({
                         className={`text-${oppositeTheme} font-mine-regular mt-0.5 text-sm`}
                       >
                         {addComma(
-                          isNumberFloat(
-                            computingTargetAmount(
-                              removeComma(values.amount),
-                              removeComma(values.rate),
-                              selectedCurrecnyPair.rate_multiplier
-                            )
+                          computingTargetAmount(
+                            removeComma(values.amount),
+                            removeComma(values.rate),
+                            selectedCurrecnyPair.rate_multiplier
+                          ).toFixed(
+                            availableTargets[selectedTargetIndex]
+                              .floating_number
                           )
-                            ? computingTargetAmount(
-                                removeComma(values.amount),
-                                removeComma(values.rate),
-                                selectedCurrecnyPair.rate_multiplier
-                              ).toFixed(selectedCurrecnyPair.floating_number)
-                            : computingTargetAmount(
-                                removeComma(values.amount),
-                                removeComma(values.rate),
-                                selectedCurrecnyPair.rate_multiplier
-                              )
                         ) +
                           " " +
                           (availableTargets[selectedTargetIndex]

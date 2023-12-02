@@ -89,6 +89,9 @@ export default function Home() {
         className={`bg-${theme} rounded-${oneDirection}-3xl col-span-8 xl:col-span-9 row-span-3 pr-24`}
       >
         <TableExchange
+          selectedSourceIndex={selectedSourceIndex}
+          availableTargets={availableTargets}
+          selectedTargetIndex={selectedTargetIndex}
           selectedCurrecnyPair={selectedCurrecnyPair}
           setFormDefaultRate={setFormDefaultRate}
           focusOnInput={focusOnInput}
