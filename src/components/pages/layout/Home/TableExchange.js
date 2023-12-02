@@ -7,8 +7,12 @@ import { useGetTableExchange } from "../../../../apis/pages/Home/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
 import { useAddComma } from "../../../../hooks/useNumberFunctions";
 import { CustomTooltip } from "../../../common/CustomTooltip";
+import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 
 export default function AllOreders({
+  selectedSourceIndex,
+  availableTargets,
+  selectedTargetIndex,
   selectedCurrecnyPair,
   setFormDefaultRate,
   focusOnInput,
@@ -19,22 +23,50 @@ export default function AllOreders({
   const addComma = useAddComma();
   const setLoading = useIsLoadingSplashScreenSetState();
   const { endComplete: direction } = useDirectionState();
+  const currencies = useCurrenciesState();
 
   const [tableExchangeData, setTableExchangeData] = useState();
 
-  const computeSourceToTargetReversedAmount = (amount, rate) => {
-    return (
-      addComma((amount * rate) / +selectedCurrecnyPair.rate_multiplier) +
-      " " +
-      selectedCurrecnyPair.currency_destination_abb
-    );
+  const computeSourceToTargetReversedAmount = (amount, rate, multi) => {
+    if (
+      selectedCurrecnyPair &&
+      selectedSourceIndex >= 0 &&
+      selectedTargetIndex >= 0
+    ) {
+      const newAmount =
+        +selectedCurrecnyPair.fee_percentage === 0
+          ? amount
+          : amount * ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
+      if (
+        selectedCurrecnyPair.default_numerator ===
+        availableTargets[selectedTargetIndex].url
+      ) {
+        return (newAmount * multi) / rate;
+      } else {
+        return (newAmount * rate) / multi;
+      }
+    }
   };
-  const computeTargetToSourceReversedAmount = (amount, rate) => {
-    return (
-      addComma((amount * +selectedCurrecnyPair.rate_multiplier) / rate) +
-      " " +
-      selectedCurrecnyPair.currency_source_abb
-    );
+
+  const computeTargetToSourceReversedAmount = (amount, rate, multi) => {
+    if (
+      selectedCurrecnyPair &&
+      selectedSourceIndex >= 0 &&
+      selectedTargetIndex >= 0
+    ) {
+      const newAmount =
+        +selectedCurrecnyPair.fee_percentage === 0
+          ? amount
+          : amount * ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
+      if (
+        selectedCurrecnyPair.default_numerator ===
+        availableTargets[selectedTargetIndex].url
+      ) {
+        return (newAmount * rate) / multi;
+      } else {
+        return (newAmount * multi) / rate;
+      }
+    }
   };
 
   const source_to_target_head = [
@@ -57,10 +89,19 @@ export default function AllOreders({
           temp.total_amount = (
             <CustomTooltip
               placement="top"
-              content={computeSourceToTargetReversedAmount(
-                row.total_amount,
-                row.rate
-              )}
+              content={
+                addComma(
+                  computeSourceToTargetReversedAmount(
+                    row.total_amount,
+                    row.rate,
+                    +selectedCurrecnyPair.rate_multiplier
+                  ).toFixed(
+                    availableTargets[selectedTargetIndex].floating_number
+                  )
+                ) +
+                " " +
+                selectedCurrecnyPair.currency_destination_abb
+              }
               className={`tooltip-${oppositeTheme}`}
               style={oppositeTheme}
             >
@@ -86,10 +127,17 @@ export default function AllOreders({
           temp.total_amount = (
             <CustomTooltip
               placement="top"
-              content={computeTargetToSourceReversedAmount(
-                row.total_amount,
-                row.rate
-              )}
+              content={
+                addComma(
+                  computeTargetToSourceReversedAmount(
+                    row.total_amount,
+                    row.rate,
+                    +selectedCurrecnyPair.rate_multiplier
+                  ).toFixed(currencies[selectedSourceIndex].floating_number)
+                ) +
+                " " +
+                selectedCurrecnyPair.currency_source_abb
+              }
               className={`tooltip-${oppositeTheme}`}
               style={oppositeTheme}
             >

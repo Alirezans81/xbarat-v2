@@ -46,7 +46,9 @@ import { StatusesProvider } from "./Providers/StatusesProvider";
 import { CurrenciesProvider } from "./Providers/CurrenciesProvider";
 import { CurrencyPairsProvider } from "./Providers/CurrencyPairsProvider";
 import { LanguageListProvider } from "./Providers/LanguageListProvider";
+import RayChat from "raychat-react";
 
+const raychatToken = "a559abdf-5472-4786-b84c-e4f121a1010f";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <MyQueryClientProvider>
@@ -65,6 +67,8 @@ root.render(
                             <UserProvider>
                               <WalletProvider>
                                 <BrowserRouter>
+                                <RayChat rayToken={raychatToken} />
+
                                   <Routes>
                                     <Route path="/login" element={<Login />} />
                                     <Route

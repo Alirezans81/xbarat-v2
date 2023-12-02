@@ -31,6 +31,7 @@ import { useGetLanguages } from "../apis/common/language/hooks";
 import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 
 export default function Layout() {
+
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
   const { three: direction, one: oneDirection } = useDirectionState();
