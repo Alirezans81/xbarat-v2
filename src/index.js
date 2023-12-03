@@ -67,7 +67,7 @@ root.render(
                             <UserProvider>
                               <WalletProvider>
                                 <BrowserRouter>
-                                <RayChat rayToken={raychatToken} />
+                                  <RayChat rayToken={raychatToken} />
 
                                   <Routes>
                                     <Route path="/login" element={<Login />} />

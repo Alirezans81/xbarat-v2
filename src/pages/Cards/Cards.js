@@ -1,6 +1,8 @@
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useWalletState } from "../../Providers/WalletProvider";
+import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
+
 import Addcard from "./addcard";
 import Addasset from "./addasset";
 import { useState, useEffect } from "react";
@@ -8,6 +10,7 @@ import SingleCardAssets from "./singleCardAssets";
 import SingleCardTank from "./singleCardTank";
 import edit from "../../Images/pages/layout/Profile/editBlue.png";
 const Cards = () => {
+  const currencies = useCurrenciesState();
   const wallet = useWalletState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -94,7 +97,11 @@ const Cards = () => {
           </span>
           <button
             onClick={handleAddAsset}
-            className={`text-base bg-blue-gradient rounded-lg px-5 py-1 text-white`}
+            className={
+              wallet.walletAssets.length !== currencies.length
+                ? `text-base bg-blue-gradient rounded-lg px-5 py-1 text-white`
+                : "hidden"
+            }
             style={{ position: "absolute", top: "4.5%", right: "13%" }}
           >
             +
