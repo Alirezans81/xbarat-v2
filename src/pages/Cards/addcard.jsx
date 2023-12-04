@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { createWalletTank } from "../../apis/common/wallet/apis";
@@ -6,6 +6,7 @@ import { useWalletState } from "../../Providers/WalletProvider";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import cross from "../../Images/pages/layout/Profile/cross.png";
 import axios from "axios";
+import { useCreateWalletTank } from "../../apis/common/wallet/hooks";
 const Addcard = ({ addCard, setAddCard, show }) => {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
