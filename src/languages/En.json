@@ -168,6 +168,6 @@
   "add_cards_title": "Title",
   "cards_card_number": "Card Number",
   "cards_card_number_placeholder": "0000 0000 0000 0000",
-  "cards_shaba_number": "Shaba Number",
-  "cards_shaba_number_placeholder": "IR-000000000000000000000000"
+  "cards_shaba_number_placeholder": "IR-000000000000000000000000",
+  "choose_add_currency_cards_add_asset": "Please Select The Currency You want to Have"
 }

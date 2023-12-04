@@ -48,7 +48,7 @@ const createWalletAsset = (params) => {
   formData.append("wallet", params.wallet);
   formData.append("currency", params.currency);
 
-  return axios.post(api["wallet-asset"], params);
+  return axios.post(api["wallet-asset"], formData);
 };
 
 const createWalletTank = (params) => {
