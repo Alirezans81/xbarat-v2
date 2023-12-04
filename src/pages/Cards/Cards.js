@@ -61,8 +61,10 @@ const Cards = () => {
         </button>
 
         <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
-        <div className="grid grid-rows-3 grid-cols-2 gap-4 items-center justify-center mt-10">
-          <SingleCardTank show={show} />
+        <div className="grid grid-rows-3 grid-cols-2 gap-4 items-center mt-10 pb-0 h-full w-full">
+          <div className="flex justify-center w-full h-full">
+            <SingleCardTank show={show} />
+          </div>
         </div>
       </div>
       <div
