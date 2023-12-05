@@ -7,7 +7,7 @@ import { useGetLanguages } from "../apis/common/language/hooks";
 import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
 
-export default function OnLoad() {
+export default function OnLoad({ children }) {
   const navigate = useNavigate();
   const lang = useLanguageState();
   const theme = useThemeState();
@@ -51,15 +51,19 @@ export default function OnLoad() {
       navigate("/home");
     } else {
       window.localStorage.removeItem("linksShown");
-      navigate("/login");
+      // navigate("/login");
     }
   }, []);
 
-  return (
-    <div className="h-full w-full flex justify-center items-center">
-      <span className={`text-${oppositeTheme} font-mine-thin text-3xl`}>
-        {lang["loading"]}
-      </span>
-    </div>
-  );
+  if (children) {
+    return <div>{children}</div>;
+  } else {
+    return (
+      <div className="h-full w-full flex justify-center items-center">
+        <span className={`text-${oppositeTheme} font-mine-thin text-3xl`}>
+          {lang["loading"]}
+        </span>
+      </div>
+    );
+  }
 }
