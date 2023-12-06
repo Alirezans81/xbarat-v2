@@ -77,7 +77,14 @@ root.render(
                                     />
                                     <Route path="*" element={<NoPage />} />
                                     <Route path="/" element={<Layout />}>
-                                      <Route index element={<OnLoad />} />
+                                      <Route
+                                        index
+                                        element={
+                                          <OnLoad>
+                                            <Home isDemo />
+                                          </OnLoad>
+                                        }
+                                      />
                                       <Route path="home" element={<Home />} />
                                       <Route
                                         path="wallet"

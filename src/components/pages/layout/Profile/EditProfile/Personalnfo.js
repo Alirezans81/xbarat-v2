@@ -6,6 +6,7 @@ import { Formik } from "formik";
 import OTPCodeModal from "../../../../modals/OTPCodeModal";
 import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
 import { useUpdatePhone } from "../../../../../apis/pages/Profile/hooks";
+import CopyText from "../../../../common/CopyText";
 
 export default function Personalnfo({ userInfo }) {
   const theme = useThemeState();
@@ -96,6 +97,29 @@ export default function Personalnfo({ userInfo }) {
                   {userInfo && userInfo.phone ? userInfo.phone : ""}
                 </span>
               )}
+            </div>
+            <div className="col-span-2 row-span-1 flex flex-col">
+              <span className="text-gray font-mine-regular">
+                {lang["referral-code"]}
+              </span>
+              <span
+                className={`flex items-center font-mine-regular border-2 border-dashed border-gray rounded-full w-fit px-3 mt-1 text-${oppositeTheme}`}
+              >
+                <span className="pt-1.5 pb-1">
+                  {userInfo && userInfo.referral_code
+                    ? userInfo.referral_code
+                    : ""}
+                </span>
+                <div className="h-full border border-gray border-dashed mx-2" />
+
+                <CopyText
+                  text={
+                    userInfo && userInfo.referral_code
+                      ? userInfo.referral_code
+                      : ""
+                  }
+                />
+              </span>
             </div>
           </>
         )}

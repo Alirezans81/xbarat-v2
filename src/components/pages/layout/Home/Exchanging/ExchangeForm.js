@@ -15,6 +15,7 @@ import { useUserState } from "../../../../../Providers/UserProvider";
 import { useStatusesState } from "../../../../../Providers/StatusesProvider";
 import { useExchange } from "../../../../../apis/pages/Home/hooks";
 import { useCurrenciesState } from "../../../../../Providers/CurrenciesProvider";
+import { useNavigate } from "react-router-dom";
 
 export default function ExchangeForm({
   walletBalance,
@@ -32,9 +33,11 @@ export default function ExchangeForm({
   setFormDefaultRate,
   refreshPendingExchange,
   rateInputRef,
+  isDemo,
 }) {
   const lang = useLanguageState();
   const theme = useThemeState();
+  const navigate = useNavigate();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: oneDirection } = useDirectionState();
 
@@ -175,6 +178,8 @@ export default function ExchangeForm({
       }
     }
   };
+
+  const navigateToLogin = () => navigate("login");
 
   return (
     <Formik
@@ -410,17 +415,21 @@ export default function ExchangeForm({
                 name="amount"
                 onBlur={(e) => {
                   handleBlur(e);
-                  findError(
-                    removeComma(values.amount),
-                    removeComma(values.rate)
-                  );
+                  if (!isDemo) {
+                    findError(
+                      removeComma(values.amount),
+                      removeComma(values.rate)
+                    );
+                  }
                 }}
                 onChange={(e) => {
                   handleChange(e);
-                  findError(
-                    removeComma(values.amount),
-                    removeComma(values.rate)
-                  );
+                  if (!isDemo) {
+                    findError(
+                      removeComma(values.amount),
+                      removeComma(values.rate)
+                    );
+                  }
                 }}
                 value={addComma(values.amount, false)}
               />
@@ -432,20 +441,24 @@ export default function ExchangeForm({
                 name="rate"
                 onBlur={(e) => {
                   handleBlur(e);
-                  findError(
-                    removeComma(values.amount),
-                    removeComma(values.rate)
-                  );
+                  if (!isDemo) {
+                    findError(
+                      removeComma(values.amount),
+                      removeComma(values.rate)
+                    );
+                  }
                 }}
                 onChange={(e) => {
                   handleChange(e);
                   formDefaultRate && setFormDefaultRate(null);
-                  formDefaultRate
-                    ? findError(removeComma(values.amount), formDefaultRate)
-                    : findError(
-                        removeComma(values.amount),
-                        removeComma(values.rate)
-                      );
+                  if (!isDemo) {
+                    formDefaultRate
+                      ? findError(removeComma(values.amount), formDefaultRate)
+                      : findError(
+                          removeComma(values.amount),
+                          removeComma(values.rate)
+                        );
+                  }
                 }}
                 value={
                   rateIsReversed && formDefaultRate
@@ -500,7 +513,7 @@ export default function ExchangeForm({
               )}
             <SubmitButton
               type="submit"
-              onClick={handleSubmit}
+              onClick={isDemo ? navigateToLogin : handleSubmit}
               className={
                 values.amount &&
                 removeComma(values.amount) !== 0 &&

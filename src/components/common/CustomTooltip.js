@@ -23,9 +23,17 @@ const customTheme = {
   content: "relative z-20 font",
 };
 
-const CustomTooltip = ({ children, placement, className, content, style }) => {
+const CustomTooltip = ({
+  trigger,
+  children,
+  placement,
+  className,
+  content,
+  style,
+}) => {
   return (
     <Tooltip
+      trigger={trigger}
       theme={customTheme}
       placement={placement}
       className={className}

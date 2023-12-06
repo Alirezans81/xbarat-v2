@@ -10,7 +10,7 @@ import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashSc
 import { useTokenState } from "../Providers/TokenProvider";
 import WatchList from "../components/pages/layout/Home/WatchList";
 
-export default function Home() {
+export default function Home({ isDemo }) {
   const theme = useThemeState();
   const { one: oneDirection } = useDirectionState();
   const setLoading = useIsLoadingSplashScreenSetState();
@@ -62,6 +62,7 @@ export default function Home() {
           setSelectedTargetIndex={setSelectedTargetIndex}
           rateInputRef={rateInputRef}
           focusOnInput={focusOnInput}
+          isDemo={isDemo}
         />
       </div>
       <div className={`bg-${theme} rounded-3xl col-span-5 row-span-3`}>

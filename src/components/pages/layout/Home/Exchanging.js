@@ -23,6 +23,7 @@ export default function Exchanging({
   setSelectedTargetIndex,
   rateInputRef,
   focusOnInput,
+  isDemo,
 }) {
   const lang = useLanguageState();
 
@@ -176,6 +177,7 @@ export default function Exchanging({
           }
           refreshPendingExchange={refreshPendingExchange}
           rateInputRef={rateInputRef}
+          isDemo={isDemo}
         />
       </div>
     </div>

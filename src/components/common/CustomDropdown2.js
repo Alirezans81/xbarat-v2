@@ -41,7 +41,7 @@ function CustomDropdown2({ children, label, className }) {
   const buttonStyle =
     theme === "dark"
       ? {
-          backgroundColor: "#2A2B2E",
+          backgroundColor: "#171D20",
           color: "#fff",
           fontFamily: "manjari-bold",
           flex: 1,
@@ -63,7 +63,9 @@ function CustomDropdown2({ children, label, className }) {
       className={className + ` bg-${theme} rounded-xl hover:bg-${theme}`}
       style={buttonStyle}
     >
-      {children}
+      <div className="max-h-40 pr-1.5 py-2">
+        <div className="max-h-36 overflow-y-scroll">{children}</div>
+      </div>
     </Dropdown>
   );
 }

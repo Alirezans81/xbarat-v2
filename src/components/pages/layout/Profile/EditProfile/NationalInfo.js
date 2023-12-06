@@ -121,7 +121,13 @@ export default function NationalInfo({ userInfo }) {
           {nationality && nationality.title ? nationality.title : ""}
         </span>
       </div>
-      <div className="col-span-1 row-span-1 flex flex-col">
+      <div
+        className={
+          canEdit
+            ? "col-span-1 row-span-1 flex flex-col -mt-2.5"
+            : "col-span-1 row-span-1 flex flex-col"
+        }
+      >
         <span className="text-gray font-mine-regular">{lang["country"]}</span>
         {canEdit ? (
           <CustomDropdown2
@@ -187,7 +193,13 @@ export default function NationalInfo({ userInfo }) {
           </span>
         )}
       </div>
-      <div className="col-span-1 row-span-1 flex flex-col">
+      <div
+        className={
+          canEdit
+            ? "col-span-1 row-span-1 flex flex-col -mt-2.5"
+            : "col-span-1 row-span-1 flex flex-col"
+        }
+      >
         <span className="text-gray font-mine-regular">{lang["city"]}</span>
         {canEdit ? (
           <CustomDropdown2
