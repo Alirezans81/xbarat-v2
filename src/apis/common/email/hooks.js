@@ -1,16 +1,17 @@
-import { signup } from "./apis";
+import { sendEmail } from "./apis";
 import { useState } from "react";
 
-const useSignup = () => {
+const useSendEmail = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (params, customFunction) => {
+  const fetch = async (params, customFunction, customFunctionWithData) => {
     setIsLoading(true);
-    await signup(params)
+    await sendEmail({ from_name: "Xbarat Team", ...params })
       .then((data) => {
         console.log(data);
         customFunction && customFunction();
+        customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
         return data.data;
       })
@@ -21,7 +22,7 @@ const useSignup = () => {
       });
   };
 
-  return { signup: fetch, error, isLoading };
+  return { sendEmail: fetch, error, isLoading };
 };
 
-export { useSignup };
+export { useSendEmail };

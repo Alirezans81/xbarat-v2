@@ -8,9 +8,10 @@ import { useTokenSetState, useTokenState } from "../Providers/TokenProvider";
 import Form from "../components/pages/Signup/Form";
 import LeftSide from "../components/pages/Login/LeftSide";
 import LanguageSwitcher from "../components/common/LanguageSwitcher";
+import { useGetLanguages } from "../apis/common/language/hooks";
+import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 
 export default function Signup() {
-  const token = useTokenState();
   const setToken = useTokenSetState();
 
   const theme = useThemeState();
@@ -19,23 +20,28 @@ export default function Signup() {
   const languageSwitcherDivClasses = direction === "rtl" ? "right-4" : "left-4";
 
   const [isSplashScreenLoading, setIsSplashScreenLoading] = useState(false);
+  const setLanguageList = useLanguageListSetState();
+
+  const { getLanguages, isLoading: getLanguagesIsLoading } = useGetLanguages();
+  useEffect(
+    () => setIsSplashScreenLoading(getLanguagesIsLoading),
+    [getLanguagesIsLoading]
+  );
 
   const resetApp = () => {
     setToken(null);
-    // setUserInfo(null);
-    // setWallet(null);
-    // setStatuses(null);
     window.localStorage.removeItem("authToken");
     window.localStorage.removeItem("userInfo");
-    window.localStorage.removeItem("wallet");
     window.localStorage.removeItem("statuses");
     window.localStorage.removeItem("linksShown");
   };
 
-  const navigate = useNavigate();
   useEffect(() => {
-    if (token && new Date(token.expiration) > new Date()) navigate("/home");
-    else resetApp();
+    resetApp();
+
+    getLanguages(setLanguageList, null, (languageList) =>
+      localStorage.setItem("languageList", JSON.stringify(languageList))
+    );
   }, []);
 
   return (
