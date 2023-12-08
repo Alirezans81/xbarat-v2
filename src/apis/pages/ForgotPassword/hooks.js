@@ -1,13 +1,13 @@
-import { signup } from "./apis";
+import { forgotPassword } from "./apis";
 import { useState } from "react";
 
-const useSignup = () => {
+const useForgotPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
   const fetch = async (params, customFunction) => {
     setIsLoading(true);
-    await signup(params)
+    await forgotPassword(params)
       .then((data) => {
         console.log(data);
         customFunction && customFunction();
@@ -21,7 +21,7 @@ const useSignup = () => {
       });
   };
 
-  return { signup: fetch, error, isLoading };
+  return { forgotPassword: fetch, error, isLoading };
 };
 
-export { useSignup };
+export { useForgotPassword };

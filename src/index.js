@@ -46,6 +46,7 @@ import { StatusesProvider } from "./Providers/StatusesProvider";
 import { CurrenciesProvider } from "./Providers/CurrenciesProvider";
 import { CurrencyPairsProvider } from "./Providers/CurrencyPairsProvider";
 import { LanguageListProvider } from "./Providers/LanguageListProvider";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -70,6 +71,10 @@ root.render(
                                     <Route
                                       path="/signup"
                                       element={<Signup />}
+                                    />
+                                    <Route
+                                      path="/forgot-password"
+                                      element={<ForgotPassword />}
                                     />
                                     <Route
                                       path="/wait-link"
