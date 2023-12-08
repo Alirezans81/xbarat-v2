@@ -2,6 +2,14 @@ import axios from "axios";
 
 const api = require("../../api.json");
 
+const checkEmail = (email) => {
+  const formData = new FormData();
+
+  formData.append("email", email);
+
+  return axios.post(api["check-email"], formData);
+};
+
 const sendEmail = (params) => {
   const data = {
     service_id: "service_7hdualx",
@@ -18,4 +26,4 @@ const sendEmail = (params) => {
   return axios.post(api["send-email"], data);
 };
 
-export { sendEmail };
+export { checkEmail, sendEmail };

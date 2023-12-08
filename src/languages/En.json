@@ -177,5 +177,6 @@
   "code-sended-to-email-message-2nd": "Enter the code here",
   "email-varification-subject": "Email Varification",
   "email-varification-message": "Your code is",
-  "email-varification-code-error": "The code was not correct"
+  "email-varification-code-error": "The code was not correct",
+  "email-not-exist-error-message": "The email does not exist"
 }

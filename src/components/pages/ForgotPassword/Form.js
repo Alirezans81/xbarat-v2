@@ -4,7 +4,7 @@ import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { useForgotPassword } from "../../../apis/pages/ForgotPassword/hooks";
-import { useSendEmail } from "../../../apis/common/email/hooks";
+import { useCheckEmail, useSendEmail } from "../../../apis/common/email/hooks";
 import { useGenerateCode } from "../../../hooks/useGenerateCode";
 
 export default function Form({ setIsSplashScreenLoading }) {
@@ -13,15 +13,23 @@ export default function Form({ setIsSplashScreenLoading }) {
   const lang = useLanguageState();
 
   const [mode, setMode] = useState("");
+  const [token, setToken] = useState();
+
+  const {
+    checkEmail,
+    isLoading: checkEmailIsLoading,
+    error: checkEmailError,
+  } = useCheckEmail();
+  useEffect(() => {
+    setIsSplashScreenLoading(checkEmailIsLoading);
+  }, [checkEmailIsLoading]);
 
   const generateCode = useGenerateCode();
   const [code, setCode] = useState();
-
   const { sendEmail, isLoading: sendEmailIsLoading } = useSendEmail();
   useEffect(() => {
     setIsSplashScreenLoading(sendEmailIsLoading);
   }, [sendEmailIsLoading]);
-
   const [codeError, setCodeError] = useState();
 
   const navigate = useNavigate();
@@ -41,10 +49,10 @@ export default function Form({ setIsSplashScreenLoading }) {
     let result = true;
 
     if (!email) {
-      newValidationErrors.email = lang["email-empty-error"];
+      newValidationErrors.email = lang["email-empty-error"] + "!";
       result = false;
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      newValidationErrors.email = lang["email-invalid-error"];
+      newValidationErrors.email = lang["email-invalid-error"] + "!";
       result = false;
     } else {
       newValidationErrors.email = null;
@@ -69,7 +77,7 @@ export default function Form({ setIsSplashScreenLoading }) {
     let result = true;
 
     if (!password) {
-      newValidationErrors.password = lang["password-empty-error"];
+      newValidationErrors.password = lang["password-empty-error"] + "!";
       result = false;
     } else {
       newValidationErrors.password = null;
@@ -83,10 +91,10 @@ export default function Form({ setIsSplashScreenLoading }) {
     let result = true;
 
     if (password && !confirmPassword) {
-      newValidationErrors.confirmPassword = lang["password-empty-error"];
+      newValidationErrors.confirmPassword = lang["password-empty-error"] + "!";
       result = false;
     } else if (password && confirmPassword !== password) {
-      newValidationErrors.confirmPassword = lang["password-match-error"];
+      newValidationErrors.confirmPassword = lang["password-match-error"] + "!";
       result = false;
     } else {
       newValidationErrors.confirmPassword = null;
@@ -106,21 +114,28 @@ export default function Form({ setIsSplashScreenLoading }) {
       }}
       onSubmit={(values) => {
         if (mode === "") {
-          const generatedCode = generateCode(6);
-          setCode(generatedCode);
-
-          setMode("verify");
-          sendEmail({
-            to_email: values.email,
-            subject: lang["email-varification-subject"],
-            message: lang["email-varification-message"] + ": " + generatedCode,
+          checkEmail(values.email, null, (data) => {
+            const generatedCode = generateCode(6);
+            data && data.token && setToken(data.token);
+            setCode(generatedCode);
+            sendEmail({
+              to_email: values.email,
+              subject: lang["email-varification-subject"],
+              message:
+                lang["email-varification-message"] + ": " + generatedCode,
+            });
+            setMode("verify");
           });
         } else if (mode === "verify") {
           if (values.verify_email_code === code) {
             setMode("confirm");
           } else setCodeError(lang["email-varification-code-error"] + "!");
         } else if (mode === "confirm") {
-          forgotPassword({ password: values.password }, navigateToLogin);
+          token &&
+            forgotPassword(
+              { password: values.password, token },
+              navigateToLogin
+            );
         }
       }}
     >
@@ -148,6 +163,32 @@ export default function Form({ setIsSplashScreenLoading }) {
               <span>{lang["log-in"]}</span>
             </Link>
           </div>
+          {mode === "" && (
+            <>
+              <input
+                name="email"
+                type="email"
+                placeholder={lang["email"]}
+                className={`input-${theme} mt-4 focus:outline-none`}
+                onChange={handleChange("email")}
+                onBlur={(e) => {
+                  validateEmail(e.target.value);
+                  handleBlur(e);
+                }}
+                value={values.email}
+              />
+              {validationErrors.email && (
+                <span className="font-mine-thin text-red">
+                  {validationErrors.email}
+                </span>
+              )}
+              {checkEmailError && (
+                <span className="font-mine-thin text-red">
+                  {lang["email-not-exist-error-message"] + "!"}
+                </span>
+              )}
+            </>
+          )}
           {mode === "verify" && (
             <>
               <div className="flex flex-col">
@@ -172,27 +213,6 @@ export default function Form({ setIsSplashScreenLoading }) {
               />
               {codeError && (
                 <span className="font-mine-thin text-red">{codeError}</span>
-              )}
-            </>
-          )}
-          {mode === "" && (
-            <>
-              <input
-                name="email"
-                type="email"
-                placeholder={lang["email"]}
-                className={`input-${theme} mt-4 focus:outline-none`}
-                onChange={handleChange("email")}
-                onBlur={(e) => {
-                  validateEmail(e.target.value);
-                  handleBlur(e);
-                }}
-                value={values.email}
-              />
-              {validationErrors.email && (
-                <span className="font-mine-thin text-red">
-                  {validationErrors.email}
-                </span>
               )}
             </>
           )}
@@ -238,7 +258,19 @@ export default function Form({ setIsSplashScreenLoading }) {
             </>
           )}
           <button
-            onClick={handleSubmit}
+            onClick={(e) => {
+              e.preventDefault();
+              if (mode === "") {
+                validateEmail(values.email) && handleSubmit(e);
+              } else if (mode === "confirm") {
+                validatePassword(values.password) &&
+                  validateConfirmPassword(
+                    values.password,
+                    values.confirmPassword
+                  ) &&
+                  handleSubmit(e);
+              } else handleSubmit(e);
+            }}
             type="submit"
             className="button w-full mt-10"
           >
