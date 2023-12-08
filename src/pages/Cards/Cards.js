@@ -27,6 +27,7 @@ const Cards = () => {
   function handleAddAsset() {
     setAddAsset(true);
   }
+  const Tanks = wallet.walletTanks.filter((data) => data.currency_abb === show);
   const walletAssetNumber = wallet.walletAssets.length;
   return (
     <div
@@ -61,8 +62,10 @@ const Cards = () => {
         </button>
 
         <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
-        <div className="grid grid-rows-3 grid-cols-2 gap-4 items-center justify-center mt-10">
-          <SingleCardTank show={show} />
+        <div className="grid grid-rows-3 grid-cols-2 gap-4 items-center mt-10 pb-0 h-full w-full">
+          {Tanks.map((data, index) => (
+            <SingleCardTank show={show} index={index} data={data} />
+          ))}
         </div>
       </div>
       <div
