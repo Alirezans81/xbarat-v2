@@ -29,9 +29,10 @@ import {
 import { useCurrencyPairsSetState } from "../Providers/CurrencyPairsProvider";
 import { useGetLanguages } from "../apis/common/language/hooks";
 import { useLanguageListSetState } from "../Providers/LanguageListProvider";
+import CompleteProfileModal from "../components/modals/CompleteProfileModal";
+import { useModalDataSetState } from "../Providers/ModalDataProvider";
 
 export default function Layout() {
-
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
   const { three: direction, one: oneDirection } = useDirectionState();
@@ -48,6 +49,23 @@ export default function Layout() {
   const setStatuses = useStatusesSetState();
   const { pathname: activeRoute } = useLocation();
   const [links, setLinks] = useState([]);
+
+  const { pathname: currentRoute } = useLocation();
+  const userInfo = useUserState();
+  const setModalData = useModalDataSetState();
+  const openCompleteProfileModal = () => {
+    setModalData({
+      title: "",
+      children: <CompleteProfileModal />,
+      canClose: false,
+      isOpen: true,
+    });
+  };
+  useEffect(() => {
+    !(currentRoute === "/") &&
+      !userInfo.is_active &&
+      openCompleteProfileModal();
+  }, []);
 
   const getWalletData = useGetWalletData();
 

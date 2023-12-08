@@ -115,17 +115,6 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
         login(
           values,
           (data) => {
-            // const userFilter = {
-            //   user:
-            //     data && data.user && data.user.username
-            //       ? data.user.username
-            //       : "",
-            // };
-
-            // getWallets(userFilter, setWallets);
-            // getWalletAssets(userFilter, setWalletAssets);
-            // getWalletTanks(userFilter, setWalletTanks);
-
             navigateToHome();
           },
           rememberMeCheck
@@ -204,13 +193,13 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
             </div>
             <Link to={"/forgot-password"}>
               <span className="font-mine-regular text-blue text-sm">
-                {lang["forgot-password"]}
+                {lang["forgot-password"] + "?"}
               </span>
             </Link>
           </div>
           {error && (
             <span className="font-mine-thin text-red">
-              {error.response.data}
+              {error.response.data.error}
             </span>
           )}
           <button type="submit" className="button w-full mt-10">

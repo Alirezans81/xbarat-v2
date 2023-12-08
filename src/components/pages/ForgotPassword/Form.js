@@ -3,8 +3,8 @@ import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { useSignup } from "../../../apis/pages/Signup/hooks";
-import { useSendEmail } from "../../../apis/common/email/hooks";
+import { useForgotPassword } from "../../../apis/pages/ForgotPassword/hooks";
+import { useCheckEmail, useSendEmail } from "../../../apis/common/email/hooks";
 import { useGenerateCode } from "../../../hooks/useGenerateCode";
 
 export default function Form({ setIsSplashScreenLoading }) {
@@ -12,26 +12,36 @@ export default function Form({ setIsSplashScreenLoading }) {
   const oppositeTheme = theme === "light" ? "dark" : "light";
   const lang = useLanguageState();
 
-  const [verifyEamilMode, setVerifyEmailMode] = useState(false);
+  const [mode, setMode] = useState("");
+  const [token, setToken] = useState();
+
+  const {
+    checkEmail,
+    isLoading: checkEmailIsLoading,
+    error: checkEmailError,
+  } = useCheckEmail();
+  useEffect(() => {
+    setIsSplashScreenLoading(checkEmailIsLoading);
+  }, [checkEmailIsLoading]);
 
   const generateCode = useGenerateCode();
-  const [code, setCode] = useState("");
-  const [codeError, setCodeError] = useState();
-
+  const [code, setCode] = useState();
   const { sendEmail, isLoading: sendEmailIsLoading } = useSendEmail();
   useEffect(() => {
     setIsSplashScreenLoading(sendEmailIsLoading);
   }, [sendEmailIsLoading]);
-
-  const { signup, isLoading: signupIsLoading, error } = useSignup();
-  useEffect(() => {
-    setIsSplashScreenLoading(signupIsLoading);
-  }, [signupIsLoading]);
+  const [codeError, setCodeError] = useState();
 
   const navigate = useNavigate();
   const navigateToLogin = () => {
     navigate("/login");
   };
+
+  const { forgotPassword, isLoading: forgotPasswordIsLoading } =
+    useForgotPassword();
+  useEffect(() => {
+    setIsSplashScreenLoading(forgotPasswordIsLoading);
+  }, [forgotPasswordIsLoading]);
 
   const [validationErrors, setValidationErrors] = useState({});
   const validateEmail = (email) => {
@@ -39,10 +49,10 @@ export default function Form({ setIsSplashScreenLoading }) {
     let result = true;
 
     if (!email) {
-      newValidationErrors.email = lang["email-empty-error"];
+      newValidationErrors.email = lang["email-empty-error"] + "!";
       result = false;
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      newValidationErrors.email = lang["email-invalid-error"];
+      newValidationErrors.email = lang["email-invalid-error"] + "!";
       result = false;
     } else {
       newValidationErrors.email = null;
@@ -67,7 +77,7 @@ export default function Form({ setIsSplashScreenLoading }) {
     let result = true;
 
     if (!password) {
-      newValidationErrors.password = lang["password-empty-error"];
+      newValidationErrors.password = lang["password-empty-error"] + "!";
       result = false;
     } else {
       newValidationErrors.password = null;
@@ -81,10 +91,10 @@ export default function Form({ setIsSplashScreenLoading }) {
     let result = true;
 
     if (password && !confirmPassword) {
-      newValidationErrors.confirmPassword = lang["password-empty-error"];
+      newValidationErrors.confirmPassword = lang["password-empty-error"] + "!";
       result = false;
     } else if (password && confirmPassword !== password) {
-      newValidationErrors.confirmPassword = lang["password-match-error"];
+      newValidationErrors.confirmPassword = lang["password-match-error"] + "!";
       result = false;
     } else {
       newValidationErrors.confirmPassword = null;
@@ -100,32 +110,32 @@ export default function Form({ setIsSplashScreenLoading }) {
         email: "",
         password: "",
         confirmPassword: "",
-        referral_code: "",
         verify_email_code: "",
       }}
       onSubmit={(values) => {
-        if (!verifyEamilMode) {
-          const generatedCode = generateCode(6);
-          setCode(generatedCode);
-          console.log(generatedCode);
-
-          sendEmail({
-            to_email: values.email,
-            subject: lang["email-varification-subject"],
-            message: lang["email-varification-message"] + ": " + generatedCode,
+        if (mode === "") {
+          checkEmail(values.email, null, (data) => {
+            const generatedCode = generateCode(6);
+            data && data.token && setToken(data.token);
+            setCode(generatedCode);
+            sendEmail({
+              to_email: values.email,
+              subject: lang["email-varification-subject"],
+              message:
+                lang["email-varification-message"] + ": " + generatedCode,
+            });
+            setMode("verify");
           });
-          setVerifyEmailMode(true);
-        } else {
+        } else if (mode === "verify") {
           if (values.verify_email_code === code) {
-            signup(
-              {
-                email: values.email,
-                password: values.password,
-                referral_code: values.referral_code,
-              },
+            setMode("confirm");
+          } else setCodeError(lang["email-varification-code-error"] + "!");
+        } else if (mode === "confirm") {
+          token &&
+            forgotPassword(
+              { password: values.password, token },
               navigateToLogin
             );
-          } else setCodeError(lang["email-varification-code-error"] + ".");
         }
       }}
     >
@@ -143,7 +153,9 @@ export default function Form({ setIsSplashScreenLoading }) {
           }}
         >
           <div className="flex justify-between font-mine-bold items-center mb-3">
-            <span className="text-blue text-3xl">{lang["sign-up"]}</span>
+            <span className="text-blue text-3xl">
+              {lang["forgot-password"]}
+            </span>
             <Link
               to={"/login"}
               className={`text-gray text-hover-${oppositeTheme}`}
@@ -151,7 +163,33 @@ export default function Form({ setIsSplashScreenLoading }) {
               <span>{lang["log-in"]}</span>
             </Link>
           </div>
-          {verifyEamilMode ? (
+          {mode === "" && (
+            <>
+              <input
+                name="email"
+                type="email"
+                placeholder={lang["email"]}
+                className={`input-${theme} mt-4 focus:outline-none`}
+                onChange={handleChange("email")}
+                onBlur={(e) => {
+                  validateEmail(e.target.value);
+                  handleBlur(e);
+                }}
+                value={values.email}
+              />
+              {validationErrors.email && (
+                <span className="font-mine-thin text-red">
+                  {validationErrors.email}
+                </span>
+              )}
+              {checkEmailError && (
+                <span className="font-mine-thin text-red">
+                  {lang["email-not-exist-error-message"] + "!"}
+                </span>
+              )}
+            </>
+          )}
+          {mode === "verify" && (
             <>
               <div className="flex flex-col">
                 <span className={`"font-mine-thin text-${oppositeTheme}`}>
@@ -173,26 +211,13 @@ export default function Form({ setIsSplashScreenLoading }) {
                 }}
                 value={values.verify_email_code}
               />
-            </>
-          ) : (
-            <>
-              <input
-                name="email"
-                type="email"
-                placeholder={lang["email"]}
-                className={`input-${theme} mt-4 focus:outline-none`}
-                onChange={handleChange("email")}
-                onBlur={(e) => {
-                  validateEmail(e.target.value);
-                  handleBlur(e);
-                }}
-                value={values.email}
-              />
-              {validationErrors.email && (
-                <span className="font-mine-thin text-red">
-                  {validationErrors.email}
-                </span>
+              {codeError && (
+                <span className="font-mine-thin text-red">{codeError}</span>
               )}
+            </>
+          )}
+          {mode === "confirm" && (
+            <>
               <input
                 name="password"
                 type="password"
@@ -227,22 +252,28 @@ export default function Form({ setIsSplashScreenLoading }) {
                   {validationErrors.confirmPassword}
                 </span>
               )}
-              <input
-                name="referral_code"
-                type="text"
-                placeholder={lang["referral-code-placeholder"]}
-                className={`input-${theme} mt-4 focus:outline-none`}
-                onChange={handleChange("referral_code")}
-                onBlur={handleBlur("referral_code")}
-                value={values.referral_code}
-              />
-              {error && (
+              {/* {error && (
                 <span className="font-mine-thin text-red">{error.message}</span>
-              )}
+              )} */}
             </>
           )}
-
-          <button type="submit" className="button w-full mt-10">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              if (mode === "") {
+                validateEmail(values.email) && handleSubmit(e);
+              } else if (mode === "confirm") {
+                validatePassword(values.password) &&
+                  validateConfirmPassword(
+                    values.password,
+                    values.confirmPassword
+                  ) &&
+                  handleSubmit(e);
+              } else handleSubmit(e);
+            }}
+            type="submit"
+            className="button w-full mt-10"
+          >
             {lang["submit"]}
           </button>
         </form>
