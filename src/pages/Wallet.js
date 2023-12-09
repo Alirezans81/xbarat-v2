@@ -27,7 +27,9 @@ export default function Wallet() {
     getPendingRequests(token, setPendingRequests);
   };
 
-  useEffect(refreshPendingRequests, []);
+  useEffect(() => {
+    refreshPendingRequests();
+  }, []);
 
   return (
     <div className="h-full w-full grid grid-cols-12 grid-rows-6 gap-x-10 gap-y-7">
@@ -38,7 +40,16 @@ export default function Wallet() {
           <QuickDeposit refreshPendingRequests={refreshPendingRequests} />
         </div>
         <div className={`flex-1`}>
-          <LastDeposit pendingRequests={pendingRequests} />
+          <LastDeposit
+            refreshPendingRequests={refreshPendingRequests}
+            lastDeposit={
+              pendingRequests &&
+              pendingRequests.deposit &&
+              pendingRequests.deposit[0]
+                ? pendingRequests.deposit[0]
+                : null
+            }
+          />
         </div>
       </div>
       <div

@@ -169,7 +169,7 @@ export default function Topbar({ userInfo }) {
                         >
                           {userInfo["first_name"] + " " + userInfo["last_name"]}
                         </span>
-                        {userInfo && userInfo["is_active"] && (
+                        {userInfo && userInfo["is_verified"] && (
                           <button onClick={() => setCanEditNameAndAvatar(true)}>
                             <img
                               className="w-4 h-4"

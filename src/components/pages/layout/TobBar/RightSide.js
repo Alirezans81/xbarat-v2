@@ -58,7 +58,7 @@ export default function RightSide() {
               " " +
               (user && user["last_name"] ? user["last_name"] : "")}
           </span>
-          {user && user["is_active"] ? (
+          {user && user["is_verified"] ? (
             <span className={`${roleClass} font-mine-regular text-sm`}>
               {user.role}
             </span>

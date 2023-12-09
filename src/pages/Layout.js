@@ -62,9 +62,10 @@ export default function Layout() {
     });
   };
   useEffect(() => {
-    !(currentRoute === "/") &&
-      !userInfo.is_active &&
+    console.log(userInfo && userInfo.is_verified && !(currentRoute === "/"));
+    if (userInfo && userInfo.is_verified && !(currentRoute === "/")) {
       openCompleteProfileModal();
+    }
   }, []);
 
   const getWalletData = useGetWalletData();

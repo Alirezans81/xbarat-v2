@@ -4,35 +4,7 @@ const UserContext = createContext();
 const UserContextSetState = createContext();
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    url: "",
-    first_name: "",
-    last_name: "",
-    email: "",
-    username: "",
-    phone: "",
-    gender: "",
-    is_active: false,
-    nationality: "",
-    nationality_number: "",
-    passport_number: "",
-    tazkare_number: "",
-    avatar: "",
-    document: "",
-    get_full_name: "",
-    country: "",
-    city: "",
-    nickname: "",
-    referral_code: "",
-    how_to_know: "",
-    default_locale: "",
-    signup_link: "",
-    date_joined: "",
-    is_staff: false,
-    is_admin: false,
-    is_ban: false,
-    is_superuser: false,
-  });
+  const [user, setUser] = useState();
 
   return (
     <UserContext.Provider value={user}>

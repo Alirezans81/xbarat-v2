@@ -12,7 +12,7 @@ const checkEmail = (email) => {
 
 const sendEmail = (params) => {
   const data = {
-    service_id: "service_7hdualx",
+    service_id: "service_8sxros2",
     template_id: "template_ayphmem",
     user_id: "Pn5coBxG6mXj-eatL",
     template_params: {

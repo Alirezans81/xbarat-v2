@@ -173,6 +173,9 @@ export default function Form({ setIsSplashScreenLoading }) {
                 }}
                 value={values.verify_email_code}
               />
+              {codeError && (
+                <span className="font-mine-thin text-red">{codeError}</span>
+              )}
             </>
           ) : (
             <>
