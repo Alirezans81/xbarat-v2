@@ -47,21 +47,18 @@ export default function CompleteProfileModal() {
   );
 
   const [wallets, setWallets] = useState([]);
-  const wallet = wallets[0] ? wallets[0] : null;
   useEffect(() => {
     userInfo &&
       userInfo.username &&
       getWallets({ user: userInfo.username }, setWallets);
   }, []);
   const [walletAssets, setWalletAssets] = useState([]);
-  const walletAsset = walletAssets[0] ? walletAssets[0] : null;
   useEffect(() => {
-    wallet &&
-      wallet.url &&
-      getWalletAssets({ wallet: wallet.url }, setWalletAssets);
+    wallets[0] &&
+      wallets[0].url &&
+      getWalletAssets({ wallet: wallets[0].url }, setWalletAssets);
   }, [wallets]);
   const [walletTanks, setWalletTanks] = useState([]);
-  const walletTank = walletTanks[0] ? walletTanks[0] : null;
   useEffect(() => {
     userInfo &&
       userInfo.username &&
@@ -81,7 +78,7 @@ export default function CompleteProfileModal() {
     }
   }, []);
   useEffect(() => {
-    walletTank && setStep(5);
+    walletTanks[0] && setStep(5);
   }, [walletTanks]);
 
   const { createWalletAsset, isLoading: createWalletAssetIsLoading } =
@@ -102,7 +99,7 @@ export default function CompleteProfileModal() {
   const { fetchStep3, isLoading: fetchStep3IsLoading } = useFetchStep3();
   const fetchStep4 = (values, customFunction) => {
     const createWalletAssetParams = {
-      wallet: wallet && wallet.url ? wallet.url : "",
+      wallet: wallets[0] && wallets[0].url ? wallets[0].url : "",
       currency: values.wallet_asset_currency,
     };
     const createWalletTankParams = {
@@ -111,7 +108,7 @@ export default function CompleteProfileModal() {
       bank_info: values.bank_info,
     };
 
-    !walletAsset
+    !walletAssets[0]
       ? createWalletAsset(createWalletAssetParams, (created_wallet_asset) => {
           createWalletTank(
             {
@@ -126,7 +123,7 @@ export default function CompleteProfileModal() {
         })
       : createWalletTank(
           {
-            wallet: wallet && wallet.url ? wallet.url : "",
+            wallet: wallets[0] && wallets[0].url ? wallets[0].url : "",
             ...createWalletTankParams,
           },
           customFunction
@@ -146,8 +143,14 @@ export default function CompleteProfileModal() {
     [fetchStep3IsLoading]
   );
   const nextStep = () => {
+    if (step === 3) {
+      userInfo &&
+        userInfo.username &&
+        getWallets({ user: userInfo.username }, setWallets);
+    }
     step <= 4 && setStep(step + 1);
   };
+  console.log(userInfo);
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -258,8 +261,8 @@ export default function CompleteProfileModal() {
                     handleChange={handleChange}
                     values={values}
                     setFieldValue={setFieldValue}
-                    walletAsset={walletAsset}
-                    walletTank={walletTank}
+                    walletAsset={walletAssets[0]}
+                    walletTank={walletTanks[0]}
                   />
                   <Buttons step={step} nextFunction={handleSubmit} />
                 </>

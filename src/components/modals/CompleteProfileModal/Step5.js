@@ -24,7 +24,7 @@ export default function Step5() {
           {lang["complete-profile-modal-step5-note-1st"] + "."}
         </span>
         <span className={`text-${oppositeTheme} font-mine-bold text-2xl`}>
-          {lang["complete-profile-modal-step5-note-1st"] + "."}
+          {lang["complete-profile-modal-step5-note-2nd"] + "."}
         </span>
         <SubmitButton
           onClick={closeModal}

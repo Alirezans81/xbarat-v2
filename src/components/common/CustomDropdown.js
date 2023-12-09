@@ -63,7 +63,9 @@ function CustomDropdown({ children, label, className }) {
       className={className + ` bg-${theme} rounded-xl hover:bg-${theme} z-20`}
       style={buttonStyle}
     >
-      {children}
+      <div className="max-h-40 pr-1.5 py-2">
+        <div className="max-h-36 overflow-y-scroll">{children}</div>
+      </div>
     </Dropdown>
   );
 }
