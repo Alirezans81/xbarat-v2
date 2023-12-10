@@ -16,12 +16,14 @@ import {
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { useUpdateNationalInfo } from "../../../../../apis/pages/Profile/hooks";
 import { useUserSetState } from "../../../../../Providers/UserProvider";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function NationalInfo({ userInfo }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [canEdit, setCanEdit] = useState();
   const lang = useLanguageState();
+  const font = useFontState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const setUser = useUserSetState();
 
@@ -114,10 +116,10 @@ export default function NationalInfo({ userInfo }) {
         }}
       />
       <div className="col-span-2 row-span-1 flex flex-col">
-        <span className="text-gray font-mine-regular">
+        <span className={`text-gray font-${font}-regular`}>
           {lang["nationality"]}
         </span>
-        <span className={`font-mine-regular -mt-1 text-${oppositeTheme}`}>
+        <span className={`font-${font}-regular -mt-1 text-${oppositeTheme}`}>
           {nationality && nationality.title ? nationality.title : ""}
         </span>
       </div>
@@ -128,10 +130,12 @@ export default function NationalInfo({ userInfo }) {
             : "col-span-1 row-span-1 flex flex-col"
         }
       >
-        <span className="text-gray font-mine-regular">{lang["country"]}</span>
+        <span className={`text-gray font-${font}-regular`}>
+          {lang["country"]}
+        </span>
         {canEdit ? (
           <CustomDropdown2
-            className="flex-1 font-mine-regular"
+            className={`flex-1 font-${font}-regular`}
             label={
               countriesIndex > -1
                 ? countriesList[countriesIndex].title
@@ -188,7 +192,7 @@ export default function NationalInfo({ userInfo }) {
             })}
           </CustomDropdown2>
         ) : (
-          <span className={`font-mine-regular -mt-1 text-${oppositeTheme}`}>
+          <span className={`font-${font}-regular -mt-1 text-${oppositeTheme}`}>
             {country && country.title ? country.title : ""}
           </span>
         )}
@@ -200,10 +204,10 @@ export default function NationalInfo({ userInfo }) {
             : "col-span-1 row-span-1 flex flex-col"
         }
       >
-        <span className="text-gray font-mine-regular">{lang["city"]}</span>
+        <span className={`text-gray font-${font}-regular`}>{lang["city"]}</span>
         {canEdit ? (
           <CustomDropdown2
-            className="flex-1 font-mine-regular"
+            className={`flex-1 font-${font}-regular`}
             label={
               cityIndex > -1
                 ? citiesList[cityIndex].title
@@ -260,7 +264,7 @@ export default function NationalInfo({ userInfo }) {
             })}
           </CustomDropdown2>
         ) : (
-          <span className={`font-mine-regular -mt-1 text-${oppositeTheme}`}>
+          <span className={`font-${font}-regular -mt-1 text-${oppositeTheme}`}>
             {city && city.title ? city.title : ""}
           </span>
         )}

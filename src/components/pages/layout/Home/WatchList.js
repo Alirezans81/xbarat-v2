@@ -7,6 +7,7 @@ import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useAddComma } from "../../../../hooks/useNumberFunctions";
 import { useDirectionState } from "../../../../Providers/DirectionProvider";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function WatchList({
   setSelectedSourceIndex,
@@ -14,6 +15,7 @@ export default function WatchList({
   setSelectedTargetIndex,
 }) {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { oneEnd: endDirection } = useDirectionState();
@@ -70,7 +72,7 @@ export default function WatchList({
 
   return (
     <div className="px-6 py-5 h-full flex flex-col">
-      <h1 className={`font-mine-regular text-2xl text-${oppositeTheme}`}>
+      <h1 className={`font-${font}-regular text-2xl text-${oppositeTheme}`}>
         {lang["watch-list-label"]}
       </h1>
       <div className={`flex-1 overflow-y-auto mt-2 p${endDirection}-4`}>

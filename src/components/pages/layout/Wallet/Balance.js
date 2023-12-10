@@ -4,11 +4,13 @@ import { useThemeState } from "../../../../Providers/ThemeProvider";
 import CustomSlider from "../../../common/CustomSlider";
 import CurrencyCard from "./Balance/CurrencyCard";
 import { useWalletState } from "../../../../Providers/WalletProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function Balance({ refreshPendingRequests }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
 
   const wallet = useWalletState();
   const walletAssets = wallet && wallet.walletAssets ? wallet.walletAssets : [];
@@ -16,12 +18,14 @@ export default function Balance({ refreshPendingRequests }) {
   if (walletAssets.length === 0) {
     return (
       <div className="h-full flex flex-col gap-y-2">
-        <span className={`font-mine-bold text-${oppositeTheme} text-2xl`}>
+        <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
           {lang["your-balance"]}
         </span>
         <div className="flex-1 px-7 relative">
           <div className="absolute left-0 h-full w-full top-0 flex justify-center items-center">
-            <span className={`font-mine-thin text-3xl text-${oppositeTheme}`}>
+            <span
+              className={`font-${font}-thin text-3xl text-${oppositeTheme}`}
+            >
               {lang["no-data"]}
             </span>
           </div>
@@ -31,7 +35,7 @@ export default function Balance({ refreshPendingRequests }) {
   } else if (walletAssets.length < 3) {
     return (
       <div className="h-full flex flex-col gap-y-2">
-        <span className={`font-mine-bold text-${oppositeTheme} text-2xl`}>
+        <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
           {lang["your-balance"]}
         </span>
         <div className="flex-1 px-7 relative flex flex-row justify-center items-center w-full">
@@ -52,7 +56,7 @@ export default function Balance({ refreshPendingRequests }) {
   } else {
     return (
       <div className="h-full flex flex-col gap-y-2">
-        <span className={`font-mine-bold text-${oppositeTheme} text-2xl`}>
+        <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
           {lang["your-balance"]}
         </span>
         <div className="flex-1 px-7 relative">
@@ -69,7 +73,9 @@ export default function Balance({ refreshPendingRequests }) {
             </CustomSlider>
           ) : (
             <div className="absolute left-0 h-full w-full top-0 flex justify-center items-center">
-              <span className={`font-mine-thin text-3xl text-${oppositeTheme}`}>
+              <span
+                className={`font-${font}-thin text-3xl text-${oppositeTheme}`}
+              >
                 {lang["no-data"]}
               </span>
             </div>

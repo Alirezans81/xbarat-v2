@@ -11,6 +11,7 @@ import { useAddComma, useRemoveComma } from "../../../hooks/useNumberFunctions";
 import SubmitButton from "../../common/SubmitButton";
 import { useGetWalletTankByCurrency } from "../../../hooks/useWalletFilter";
 import { useStatusesState } from "../../../Providers/StatusesProvider";
+import { useFontState } from "../../../Providers/FontProvider";
 
 export default function Withdrawal({
   currencies,
@@ -20,6 +21,7 @@ export default function Withdrawal({
   getWalletData,
 }) {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
@@ -138,7 +140,7 @@ export default function Withdrawal({
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <div className="flex flex-col">
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-            <span className={`font-mine-regular text-${oppositeTheme}`}>
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["currency"]}
             </span>
             <div className="w-full flex">
@@ -203,7 +205,7 @@ export default function Withdrawal({
             </div>
           </div>
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-            <span className={`font-mine-regular text-${oppositeTheme}`}>
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["bank-account"]}
             </span>
             <div className="w-full flex">
@@ -270,7 +272,7 @@ export default function Withdrawal({
             </div>
           </div>
           <div className={locationDivClass}>
-            <span className={`font-mine-regular text-${oppositeTheme}`}>
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["location"]}
             </span>
             <div className="w-full flex">
@@ -329,12 +331,12 @@ export default function Withdrawal({
             </div>
           </div>
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-            <span className={`font-mine-regular text-${oppositeTheme}`}>
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["amount"]}
             </span>
             <div className="w-full flex">
               <input
-                className={`flex-1 hide-input-arrows bg-${theme}-back font-mine-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                 name="amount"
                 onBlur={handleBlur("amount")}
                 onChange={handleChange("amount")}

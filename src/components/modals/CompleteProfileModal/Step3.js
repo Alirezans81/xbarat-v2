@@ -9,6 +9,7 @@ import {
 } from "../../../apis/common/location/hooks";
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import CustomUploader from "../../common/CustomUploader";
+import { useFontState } from "../../../Providers/FontProvider";
 
 export default function Step3({
   handleBlur,
@@ -19,6 +20,7 @@ export default function Step3({
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
   const [nationality, setNationality] = useState();
@@ -69,7 +71,7 @@ export default function Step3({
         <div className="flex-1">
           <form className="w-full h-full">
             <div className="flex-1 w-full flex flex-col gap-y-2">
-              <span className={`font-mine-regular text-${oppositeTheme}`}>
+              <span className={`font-${font}-regular text-${oppositeTheme}`}>
                 {lang["type-of-identity-document"]}
               </span>
               <div className="w-full flex">
@@ -134,12 +136,12 @@ export default function Step3({
               </div>
             </div>
             <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-              <span className={`font-mine-regular text-${oppositeTheme}`}>
+              <span className={`font-${font}-regular text-${oppositeTheme}`}>
                 {lang["number-of-document"]}
               </span>
               <div className="w-full flex">
                 <input
-                  className={`flex-1 hide-input-arrows bg-${theme}-back font-mine-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                  className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                   name="identity_code"
                   onBlur={handleBlur("identity_code")}
                   onChange={handleChange("identity_code")}
@@ -148,7 +150,7 @@ export default function Step3({
               </div>
             </div>
             <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-              <span className={`font-mine-regular text-${oppositeTheme}`}>
+              <span className={`font-${font}-regular text-${oppositeTheme}`}>
                 {lang["upload-document"]}
               </span>
               <div className="w-full flex">
@@ -168,11 +170,11 @@ export default function Step3({
               src={require(`../../../Images/common/info-${oppositeTheme}.png`)}
               alt="info"
             />
-            <span className={`font-mine-bold text-${oppositeTheme} pt-1.5`}>
+            <span className={`font-${font}-bold text-${oppositeTheme} pt-1.5`}>
               {lang["note"]}
             </span>
           </div>
-          <div className="mt-4 flex flex-col gap-y-3 text-gray font-mine-regular w-64">
+          <div className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}>
             <span>{lang["complete-profile-modal-step3-note-1st"] + "."}</span>
             <span>{lang["complete-profile-modal-step3-note-2nd"] + "."}</span>
           </div>

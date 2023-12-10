@@ -3,12 +3,14 @@ import { DateRange } from "react-date-range";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import SubmitButton from "../common/SubmitButton";
 import { useModalDataClose } from "../../Providers/ModalDataProvider";
+import { useFontState } from "../../Providers/FontProvider";
 
 export default function DateTimePickerModal({
   selectionRange,
   setSelectionRange,
 }) {
   const lang = useLanguageState();
+  const font = useFontState();
 
   const closeModal = useModalDataClose();
 
@@ -46,7 +48,7 @@ export default function DateTimePickerModal({
           submit();
           closeModal();
         }}
-        className="py-1 font-mine-bold mt-3"
+        className={`py-1 font-${font}-bold mt-3`}
         rounded="lg"
       >
         {lang["submit"]}

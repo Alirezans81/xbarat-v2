@@ -2,9 +2,11 @@ import React, { useRef, useState } from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLimitSize } from "../../hooks/useImageUploaderFunctions";
 import { useToastDataSetState } from "../../Providers/ToastDataProvider";
+import { useFontState } from "../../Providers/FontProvider";
 
 export default function CustomUploader({ setImage }) {
   const theme = useThemeState();
+  const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const limitImageSize = useLimitSize();
   const setToastData = useToastDataSetState();
@@ -43,7 +45,7 @@ export default function CustomUploader({ setImage }) {
 
       <img className="h-5 w-5" src={require("../../Images/common/file.png")} />
       <span
-        className={`text-${oppositeTheme} font-mine-regular flex-1 w-48 whitespace-nowrap overflow-hidden text-ellipsis`}
+        className={`text-${oppositeTheme} font-${font}-regular flex-1 w-48 whitespace-nowrap overflow-hidden text-ellipsis`}
       >
         {fileName}
       </span>

@@ -6,10 +6,12 @@ import { useWalletState } from "../../Providers/WalletProvider";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import cross from "../../Images/pages/layout/Profile/crossCardsGray.png";
 import axios from "axios";
+import { useFontState } from "../../Providers/FontProvider";
 const Addcard = ({ addCard, setAddCard, show }) => {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
   const wallet = useWalletState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
@@ -89,7 +91,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
           <form onSubmit={handleAddCards}>
             <div className="flex flex-col">
               <span
-                className={`text-${oppositeTheme} text-xl font-mine-bold mt-3`}
+                className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
               >
                 {lang["add_cards_title"]}
               </span>
@@ -98,7 +100,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                   <input
                     onChange={(e) => setTitle(e.target.value)}
                     required
-                    className={`flex-1 hide-input-arrows text-center font-mine-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
+                    className={`flex-1 hide-input-arrows text-center font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                     placeholder={lang["add_cards_title"]}
                   />
                 </div>
@@ -106,7 +108,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
             </div>
             <div className="flex flex-col">
               <span
-                className={`text-${oppositeTheme} text-xl font-mine-bold mt-1`}
+                className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
               >
                 {lang["cards_card_number"]}
               </span>
@@ -114,7 +116,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                 <div className="w-full flex mt-0 px-2">
                   <input
                     onChange={(e) => setCardNumber(e.target.value)}
-                    className={`flex-1 hide-input-arrows text-center font-mine-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
+                    className={`flex-1 hide-input-arrows text-center font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                     placeholder={lang["cards_card_number_placeholder"]}
                   />
                 </div>
@@ -122,7 +124,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
             </div>
             <div className="flex flex-col">
               <span
-                className={`text-${oppositeTheme} text-xl font-mine-bold mt-1`}
+                className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
               >
                 {lang["cards_shaba_number"]}
               </span>
@@ -130,7 +132,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                 <div className="w-full flex mt-0 px-2">
                   <input
                     onChange={(e) => setShabaNumber(e.target.value)}
-                    className={`flex-1 hide-input-arrows text-center font-mine-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
+                    className={`flex-1 hide-input-arrows text-center font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                     placeholder={lang["cards_shaba_number_placeholder"]}
                   />
                 </div>

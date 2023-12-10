@@ -8,9 +8,11 @@ import { Formik } from "formik";
 import { useUpdateNameAndAvatar } from "../../../../../apis/pages/Profile/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { useLimitSize } from "../../../../../hooks/useImageUploaderFunctions";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function Topbar({ userInfo }) {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
@@ -165,7 +167,7 @@ export default function Topbar({ userInfo }) {
                     ) : (
                       <div className="flex gap-2 items-center -mt-0.5">
                         <span
-                          className={`font-mine-bold text-xl pt-2.5 text-${oppositeTheme}`}
+                          className={`font-${font}-bold text-xl pt-2.5 text-${oppositeTheme}`}
                         >
                           {userInfo["first_name"] + " " + userInfo["last_name"]}
                         </span>
@@ -180,7 +182,7 @@ export default function Topbar({ userInfo }) {
                       </div>
                     )}
                   </div>
-                  <span className={`font-mine-regular text-gray -mt-1.5`}>
+                  <span className={`font-${font}-regular text-gray -mt-1.5`}>
                     {(userInfo && userInfo.personCode
                       ? userInfo.personCode + " ("
                       : "") +

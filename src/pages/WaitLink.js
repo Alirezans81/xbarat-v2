@@ -4,9 +4,11 @@ import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import { useLanguageState } from "../Providers/LanguageProvider";
 import { useNavigate } from "react-router-dom";
+import { useFontState } from "../Providers/FontProvider";
 
 export default function WaitLink() {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { three: direction } = useDirectionState();
@@ -37,7 +39,7 @@ export default function WaitLink() {
               src={require("../Images/pages/layout/WaitLink/key.png")}
             />
             <span
-              className={`text-center text-2xl font-mine-bold text-${oppositeTheme}`}
+              className={`text-center text-2xl font-${font}-bold text-${oppositeTheme}`}
             >
               {lang["wait-link-message"] + "."}
             </span>

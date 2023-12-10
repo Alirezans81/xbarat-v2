@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function TicketCards({
   lastTickets,
@@ -8,6 +9,8 @@ export default function TicketCards({
   theme,
   oppositeTheme,
 }) {
+  const font = useFontState();
+
   return (
     <>
       {lastTickets.map((ticket, index) => {
@@ -20,7 +23,7 @@ export default function TicketCards({
               <div className="w-full">
                 <div className="w-full flex flex-row justify-between items-center">
                   <span
-                    className={`mx-1.5 font-mine-bold text-${oppositeTheme} text-lg pt-1.5 -mb-2.5`}
+                    className={`mx-1.5 font-${font}-bold text-${oppositeTheme} text-lg pt-1.5 -mb-2.5`}
                   >
                     {ticket.title}
                   </span>
@@ -32,22 +35,22 @@ export default function TicketCards({
                   </Link>
                 </div>
                 {ticket.status === "newMessage" && (
-                  <span className="text-blue font-mine-regular text-sm mx-1.5">
+                  <span className={`text-blue font-${font}-regular text-sm mx-1.5`}>
                     {lang["ticket-new-message"] + "."}
                   </span>
                 )}
                 {ticket.status === "ended" && (
-                  <span className="text-red font-mine-regular text-sm mx-1.5">
+                  <span className={`text-red font-${font}-regular text-sm mx-1.5`}>
                     {lang["ticket-ended"] + "."}
                   </span>
                 )}
                 {ticket.status === "sendedMessage" && (
-                  <span className="text-gray font-mine-regular text-sm mx-1.5">
+                  <span className={`text-gray font-${font}-regular text-sm mx-1.5`}>
                     {lang["ticket-sended-message"] + "."}
                   </span>
                 )}
               </div>
-              <span className="font-mine-regular mx-1.5 text-gray text-sm">
+              <span className={`font-${font}-regular mx-1.5 text-gray text-sm`}>
                 {ticket && ticket.date ? ticket.date : ""}
               </span>
             </div>

@@ -5,9 +5,11 @@ import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadin
 import CustomSlider from "../../../common/CustomSlider";
 import OtherExchangeCard from "./OtherExchanges/OtherExchangeCard";
 import { useGetOtherExchangesRate } from "../../../../apis/pages/Home/hooks";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function OtherExchanges({ selectedCurrecnyPair }) {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const setLoading = useIsLoadingSplashScreenSetState();
@@ -54,7 +56,7 @@ export default function OtherExchanges({ selectedCurrecnyPair }) {
         </div>
       ) : (
         <div className="flex-1 flex justify-center items-center">
-          <span className={`font-mine-thin text-3xl text-${oppositeTheme}`}>
+          <span className={`font-${font}-thin text-3xl text-${oppositeTheme}`}>
             {lang["no-data"]}
           </span>
         </div>

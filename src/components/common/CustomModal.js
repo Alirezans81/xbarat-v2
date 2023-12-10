@@ -5,9 +5,11 @@ import {
   useModalDataState,
 } from "../../Providers/ModalDataProvider";
 import { useDirectionState } from "../../Providers/DirectionProvider";
+import { useFontState } from "../../Providers/FontProvider";
 
 export default function CustomModal() {
   const theme = useThemeState();
+  const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: oneDirection } = useDirectionState();
 
@@ -28,7 +30,7 @@ export default function CustomModal() {
       >
         <div className="flex justify-between items-center mb-3">
           <span
-            className={`font-mine-bold text-${oppositeTheme} mt-2 mr-10 text-xl`}
+            className={`font-${font}-bold text-${oppositeTheme} mt-2 mr-10 text-xl`}
           >
             {title}
           </span>

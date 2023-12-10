@@ -31,6 +31,7 @@ import { useGetLanguages } from "../apis/common/language/hooks";
 import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 import CompleteProfileModal from "../components/modals/CompleteProfileModal";
 import { useModalDataSetState } from "../Providers/ModalDataProvider";
+import { useFontState } from "../Providers/FontProvider";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -44,6 +45,7 @@ export default function Layout() {
   const setCurrencies = useCurrenciesSetState();
   const setCurrencyPairs = useCurrencyPairsSetState();
   const lang = useLanguageState();
+  const font = useFontState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const setLanguageList = useLanguageListSetState();
   const setStatuses = useStatusesSetState();
@@ -62,8 +64,7 @@ export default function Layout() {
     });
   };
   useEffect(() => {
-    console.log(userInfo && userInfo.is_verified && !(currentRoute === "/"));
-    if (userInfo && userInfo.is_verified && !(currentRoute === "/")) {
+    if (userInfo && !userInfo.is_verified && !(currentRoute === "/")) {
       openCompleteProfileModal();
     }
   }, []);
@@ -180,7 +181,7 @@ export default function Layout() {
               ) : (
                 <div className="w-full h-full flex flex-col justify-center items-center">
                   <span
-                    className={`font-mine-thin text-3xl text-${oppositeTheme} text-center`}
+                    className={`font-${font}-thin text-3xl text-${oppositeTheme} text-center`}
                   >
                     {lang["not-logged-in-error"] + "."}
                   </span>

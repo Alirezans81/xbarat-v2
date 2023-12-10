@@ -2,9 +2,11 @@ import React, { useRef, useState } from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useModalDataSetState } from "../../Providers/ModalDataProvider";
 import PreviewImageModal from "../modals/PreviewImageModal";
+import { useFontState } from "../../Providers/FontProvider";
 
 export default function CustomPreviewer({ imageUrl }) {
   const theme = useThemeState();
+  const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const setModalData = useModalDataSetState();
 
@@ -28,7 +30,7 @@ export default function CustomPreviewer({ imageUrl }) {
     >
       <img className="h-5 w-5" src={require("../../Images/common/file.png")} />
       <span
-        className={`text-${oppositeTheme} font-mine-regular flex-1 w-48 whitespace-nowrap overflow-hidden text-ellipsis`}
+        className={`text-${oppositeTheme} font-${font}-regular flex-1 w-48 whitespace-nowrap overflow-hidden text-ellipsis`}
       >
         {fileName}
       </span>

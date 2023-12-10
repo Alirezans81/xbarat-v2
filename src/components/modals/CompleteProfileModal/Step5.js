@@ -3,11 +3,13 @@ import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import SubmitButton from "../../common/SubmitButton";
 import { useModalDataClose } from "../../../Providers/ModalDataProvider";
+import { useFontState } from "../../../Providers/FontProvider";
 
 export default function Step5() {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
 
   const closeModal = useModalDataClose();
 
@@ -20,10 +22,10 @@ export default function Step5() {
           className="w-28 h-28"
           src={require("../../../Images/common/green-check.png")}
         />
-        <span className="text-gray font-mine-regular text-lg mt-5">
+        <span className={`text-gray font-${font}-regular text-lg mt-5`}>
           {lang["complete-profile-modal-step5-note-1st"] + "."}
         </span>
-        <span className={`text-${oppositeTheme} font-mine-bold text-2xl`}>
+        <span className={`text-${oppositeTheme} font-${font}-bold text-2xl`}>
           {lang["complete-profile-modal-step5-note-2nd"] + "."}
         </span>
         <SubmitButton

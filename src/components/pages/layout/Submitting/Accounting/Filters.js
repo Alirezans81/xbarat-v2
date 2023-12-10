@@ -4,11 +4,13 @@ import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import { CustomDropdown, CustomItem } from "../../../../common/CustomDropdown";
 import { useCurrenciesState } from "../../../../../Providers/CurrenciesProvider";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function Filters() {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
 
   const currencies = useCurrenciesState();
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState();
@@ -21,7 +23,7 @@ export default function Filters() {
             <div className="flex-1 grid grid-cols-2 gap-5 grid-rows-2">
               <div className="col-span-1 row-span-1 flex flex-col">
                 <span
-                  className={`font-mine-bold text-${oppositeTheme} text-lg`}
+                  className={`font-${font}-bold text-${oppositeTheme} text-lg`}
                 >
                   {lang["person-code"]}
                 </span>
@@ -35,7 +37,7 @@ export default function Filters() {
               </div>
               <div className="col-span-1 row-span-1 flex flex-col">
                 <span
-                  className={`font-mine-bold text-${oppositeTheme} text-lg`}
+                  className={`font-${font}-bold text-${oppositeTheme} text-lg`}
                 >
                   {lang["amount"]}
                 </span>
@@ -49,7 +51,7 @@ export default function Filters() {
               </div>
               <div className="col-span-1 row-span-1 flex flex-col">
                 <span
-                  className={`font-mine-bold text-${oppositeTheme} text-lg`}
+                  className={`font-${font}-bold text-${oppositeTheme} text-lg`}
                 >
                   {lang["from-date"]}
                 </span>
@@ -63,7 +65,7 @@ export default function Filters() {
               </div>
               <div className="col-span-1 row-span-1 flex flex-col">
                 <span
-                  className={`font-mine-bold text-${oppositeTheme} text-lg`}
+                  className={`font-${font}-bold text-${oppositeTheme} text-lg`}
                 >
                   {lang["until-date"]}
                 </span>
@@ -77,7 +79,9 @@ export default function Filters() {
               </div>
             </div>
             <div className="flex flex-col mx-10 w-64">
-              <span className={`font-mine-bold text-${oppositeTheme} text-lg`}>
+              <span
+                className={`font-${font}-bold text-${oppositeTheme} text-lg`}
+              >
                 {lang["currency"]}
               </span>
               <div className="w-full flex">
@@ -127,7 +131,7 @@ export default function Filters() {
             <div className="flex-1 grid grid-cols-2 gap-5 grid-rows-2">
               <div className="col-span-1 row-span-1 flex flex-col">
                 <span
-                  className={`font-mine-bold text-${oppositeTheme} text-lg`}
+                  className={`font-${font}-bold text-${oppositeTheme} text-lg`}
                 >
                   {lang["person-code"]}
                 </span>
@@ -141,7 +145,7 @@ export default function Filters() {
               </div>
               <div className="col-span-1 row-span-1 flex flex-col">
                 <span
-                  className={`font-mine-bold text-${oppositeTheme} text-lg`}
+                  className={`font-${font}-bold text-${oppositeTheme} text-lg`}
                 >
                   {lang["amount"]}
                 </span>
@@ -155,7 +159,7 @@ export default function Filters() {
               </div>
               <div className="col-span-1 row-span-1 flex flex-col">
                 <span
-                  className={`font-mine-bold text-${oppositeTheme} text-lg`}
+                  className={`font-${font}-bold text-${oppositeTheme} text-lg`}
                 >
                   {lang["from-date"]}
                 </span>
@@ -169,7 +173,7 @@ export default function Filters() {
               </div>
               <div className="col-span-1 row-span-1 flex flex-col">
                 <span
-                  className={`font-mine-bold text-${oppositeTheme} text-lg`}
+                  className={`font-${font}-bold text-${oppositeTheme} text-lg`}
                 >
                   {lang["until-date"]}
                 </span>

@@ -15,11 +15,13 @@ import {
 import { useStatusesState } from "../../../../Providers/StatusesProvider";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useGetWalletData } from "../../../../Providers/WalletProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function QuickDeposit({ refreshPendingRequests }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const userInfo = useUserState();
   const addComma = useAddComma();
@@ -73,7 +75,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
           className="w-7 h-7 -mt-1"
           src={require("../../../../Images/pages/layout/Wallet/deposit.png")}
         />
-        <span className={`text-green text-xl font-mine-bold mx-1.5`}>
+        <span className={`text-green text-xl font-${font}-bold mx-1.5`}>
           {lang["deposit"]}
         </span>
       </div>
@@ -139,11 +141,13 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                   selectedCurrencyIndex >= 0 &&
                   currencies[selectedCurrencyIndex] &&
                   currencies[selectedCurrencyIndex].abbreviation ? (
-                    <span className={`text-${oppositeTheme} font-mine-regular`}>
+                    <span
+                      className={`text-${oppositeTheme} font-${font}-regular`}
+                    >
                       {currencies[selectedCurrencyIndex].abbreviation}
                     </span>
                   ) : (
-                    <span className="text-gray font-mine-regular">
+                    <span className={`text-gray font-${font}-regular`}>
                       {lang["currency"]}
                     </span>
                   )
@@ -209,7 +213,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                   locations[selectedLocationIndex].title ? (
                     locations[selectedLocationIndex].title
                   ) : (
-                    <span className="text-gray font-mine-regular">
+                    <span className={`text-gray font-${font}-regular`}>
                       {lang["location"]}
                     </span>
                   )
@@ -261,7 +265,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
             </div>
             <div className="col-span-1 row-span-1 flex">
               <input
-                className={`flex-1 hide-input-arrows text-center font-mine-regular text-${oppositeTheme} bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
+                className={`flex-1 hide-input-arrows text-center font-${font}-regular text-${oppositeTheme} bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
                 placeholder={lang["amount"]}
                 name="amount"
                 onBlur={handleBlur("amount")}

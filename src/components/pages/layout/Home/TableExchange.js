@@ -8,6 +8,7 @@ import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadin
 import { useAddComma } from "../../../../hooks/useNumberFunctions";
 import { CustomTooltip } from "../../../common/CustomTooltip";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function AllOreders({
   selectedSourceIndex,
@@ -20,6 +21,7 @@ export default function AllOreders({
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
   const addComma = useAddComma();
   const setLoading = useIsLoadingSplashScreenSetState();
   const { endComplete: direction } = useDirectionState();
@@ -190,7 +192,7 @@ export default function AllOreders({
                 className="w-6 h-6"
                 src={selectedCurrecnyPair.currency_source_sym_pic_light}
               />
-              <span className={`text-light font-mine-bold -mb-1.5`}>
+              <span className={`text-light font-${font}-bold -mb-1.5`}>
                 {selectedCurrecnyPair.currency_source_abb}
               </span>
             </div>
@@ -203,7 +205,7 @@ export default function AllOreders({
                 className="w-6 h-6"
                 src={selectedCurrecnyPair.currency_destination_sym_pic_light}
               />
-              <span className={`text-light font-mine-bold -mb-1.5`}>
+              <span className={`text-light font-${font}-bold -mb-1.5`}>
                 {selectedCurrecnyPair.currency_destination_abb}
               </span>
             </div>
@@ -229,7 +231,7 @@ export default function AllOreders({
                 className="w-6 h-6"
                 src={selectedCurrecnyPair.currency_destination_sym_pic_light}
               />
-              <span className={`text-light font-mine-bold -mb-1.5`}>
+              <span className={`text-light font-${font}-bold -mb-1.5`}>
                 {selectedCurrecnyPair.currency_destination_abb}
               </span>
             </div>
@@ -242,7 +244,7 @@ export default function AllOreders({
                 className="w-6 h-6"
                 src={selectedCurrecnyPair.currency_source_sym_pic_light}
               />
-              <span className={`text-light font-mine-bold -mb-1.5`}>
+              <span className={`text-light font-${font}-bold -mb-1.5`}>
                 {selectedCurrecnyPair.currency_source_abb}
               </span>
             </div>
@@ -263,7 +265,7 @@ export default function AllOreders({
   } else {
     return (
       <div className="h-full w-full flex justify-center items-center">
-        <span className={`text-3xl text-${oppositeTheme} font-mine-thin`}>
+        <span className={`text-3xl text-${oppositeTheme} font-${font}-thin`}>
           {lang["select-currency-error"] + "."}
         </span>
       </div>
