@@ -10,9 +10,11 @@ import { useUploadRequestDocument } from "../../apis/pages/Wallet/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useStatusesState } from "../../Providers/StatusesProvider";
 import { useModalDataClose } from "../../Providers/ModalDataProvider";
+import { useFontState } from "../../Providers/FontProvider";
 
 export default function PendingRequestModal({ refreshPendingRequests, data }) {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const addComma = useAddComma();
@@ -43,15 +45,21 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
   return (
     <div className="flex flex-col">
       {data && data.type === "deposit" && (
-        <span className="font-mine-regular text-green">{lang["deposit"]}</span>
+        <span className={`font-${font}-regular text-green`}>
+          {lang["deposit"]}
+        </span>
       )}
       {data && data.type === "withdrawal" && (
-        <span className="font-mine-regular text-red">{lang["withdrawal"]}</span>
+        <span className={`font-${font}-regular text-red`}>
+          {lang["withdrawal"]}
+        </span>
       )}
       {data && data.type === "transfer" && (
-        <span className="font-mine-regular text-blue">{lang["transfer"]}</span>
+        <span className={`font-${font}-regular text-blue`}>
+          {lang["transfer"]}
+        </span>
       )}
-      <span className={`font-mine-regular text-xl text-${oppositeTheme}`}>
+      <span className={`font-${font}-regular text-xl text-${oppositeTheme}`}>
         {addComma(+data.amount) + " " + data.currency_abb}
       </span>
       <div className="w-72 mt-3">

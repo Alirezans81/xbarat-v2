@@ -1,9 +1,11 @@
 import React from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useAddComma } from "../../../../../hooks/useNumberFunctions";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function Wallet({ balance, currency, pending, locked }) {
   const theme = useThemeState();
+  const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
   const addComma = useAddComma();
@@ -11,10 +13,10 @@ export default function Wallet({ balance, currency, pending, locked }) {
   return (
     <div className="flex flex-col">
       <div className="">
-        <span className={`text-2xl font-mine-bold text-${oppositeTheme}`}>
+        <span className={`text-2xl font-${font}-bold text-${oppositeTheme}`}>
           {addComma(balance, true)}
         </span>
-        <span className={`text-2xl font-mine-bold text-gray ml-1`}>
+        <span className={`text-2xl font-${font}-bold text-gray ml-1`}>
           {currency}
         </span>
       </div>
@@ -22,7 +24,7 @@ export default function Wallet({ balance, currency, pending, locked }) {
         {(pending || pending !== 0) && (
           <span
             dir="ltr"
-            className="w-fit text-sm font-mine-regular text-green"
+            className={`w-fit text-sm font-${font}-regular text-green`}
           >
             {"+ " + addComma(pending) + " pending"}
           </span>
@@ -30,7 +32,7 @@ export default function Wallet({ balance, currency, pending, locked }) {
         {(locked || locked !== 0) && (
           <span
             dir="ltr"
-            className="w-fit text-sm font-mine-regular text-red -mt-1"
+            className={`w-fit text-sm font-${font}-regular text-red -mt-1`}
           >
             {"- " + addComma(locked) + " locked"}
           </span>

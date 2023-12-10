@@ -7,9 +7,12 @@ import {
   useTogglePagesModal,
 } from "../../../../Providers/IsPagesModalOpenProvider";
 import { useUserState } from "../../../../Providers/UserProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function LeftSide() {
   const lang = useLanguageState();
+  const font = useFontState();
+  console.log(font);
   const { one: direction } = useDirectionState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -29,7 +32,9 @@ export default function LeftSide() {
       />
       <div className={`flex flex-col justify-center ml-2 pt-1.5`}>
         <div className="flex justify-start items-start">
-          <h1 className={`font-mine-bold text-5xl text-yellow-gradient pt-1 -mt-1 -mb-3`}>
+          <h1
+            className={`font-${font}-bold text-5xl text-yellow-gradient pt-1 -mt-1 -mb-3`}
+          >
             {lang["logo-header"]}
           </h1>
           {userInfo && userInfo["is_admin"] && (
@@ -48,8 +53,8 @@ export default function LeftSide() {
             </button>
           )}
         </div>
-        <h5 className={`text-${oppositeTheme} font-mine-thin text-base`}>
-          {lang["slogan"] + "."}
+        <h5 className={`text-${oppositeTheme} font-${font}-thin text-base`}>
+          {font !== "Fa" ? lang["slogan"] : "⠀"}
         </h5>
       </div>
     </div>

@@ -6,11 +6,13 @@ import RequestStatus from "../common/RequestStatus";
 import { useConvertDateTime } from "../../../../hooks/useConvertDateTime";
 import PendingRequestModal from "../../../modals/PendingRequestModal";
 import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function LastDeposit({ refreshPendingRequests, lastDeposit }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
   const addComma = useAddComma();
   const convertDateTime = useConvertDateTime();
   const setModalData = useModalDataSetState();
@@ -33,16 +35,16 @@ export default function LastDeposit({ refreshPendingRequests, lastDeposit }) {
     return (
       <div className="h-full flex flex-col justify-between">
         <div className="flex flex-row w-full justify-between items-center">
-          <span className={`text-${oppositeTheme} font-mine-bold text-xl`}>
+          <span className={`text-${oppositeTheme} font-${font}-bold text-xl`}>
             {lang["last-deposit"]}
           </span>
-          <span className="text-gray text-sm font-mine-regular">
+          <span className={`text-gray text-sm font-${font}-regular`}>
             {convertDateTime(lastDeposit.datetime)}
           </span>
         </div>
         <div className="flex flex-row w-full justify-between items-end">
           <div className="flex flex-col">
-            <span className={`font-mine-regular text-${oppositeTheme}`}>
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {addComma(+lastDeposit.amount) + " " + lastDeposit.currency_abb}
             </span>
             <div className="-mb-2">
@@ -62,12 +64,14 @@ export default function LastDeposit({ refreshPendingRequests, lastDeposit }) {
     return (
       <div className="h-full flex flex-col justify-between">
         <div className="flex flex-row w-full justify-between items-center">
-          <span className={`text-${oppositeTheme} font-mine-bold text-xl`}>
+          <span className={`text-${oppositeTheme} font-${font}-bold text-xl`}>
             {lang["last-deposit"]}
           </span>
         </div>
         <div className="flex flex-row w-full justify-center items-center">
-          <span className={`font-mine-regular text-xl text-${oppositeTheme}`}>
+          <span
+            className={`font-${font}-regular text-xl text-${oppositeTheme}`}
+          >
             {lang["no-data"]}
           </span>
         </div>

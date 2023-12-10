@@ -16,6 +16,7 @@ import { useStatusesState } from "../../../../../Providers/StatusesProvider";
 import { useExchange } from "../../../../../apis/pages/Home/hooks";
 import { useCurrenciesState } from "../../../../../Providers/CurrenciesProvider";
 import { useNavigate } from "react-router-dom";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function ExchangeForm({
   walletBalance,
@@ -36,6 +37,7 @@ export default function ExchangeForm({
   isDemo,
 }) {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const navigate = useNavigate();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -225,7 +227,7 @@ export default function ExchangeForm({
           <form className="mt-2 h-full">
             <div className="flex items-center gap-1">
               <CustomDropdown
-                className="flex-1 font-mine-regular"
+                className={`flex-1 font-${font}-regular`}
                 label={
                   <div className="flex">
                     {selectedSourceIndex >= 0 && (
@@ -322,7 +324,7 @@ export default function ExchangeForm({
                 />
               </button>
               <CustomDropdown
-                className="flex-1 font-mine-regular"
+                className={`flex-1 font-${font}-regular`}
                 label={
                   <div className="flex">
                     {selectedTargetIndex >= 0 && (
@@ -406,7 +408,7 @@ export default function ExchangeForm({
               </CustomDropdown>
             </div>
             <div
-              className={`flex items-center w-full gap-7 text-${oppositeTheme} font-mine-regular mt-2`}
+              className={`flex items-center w-full gap-7 text-${oppositeTheme} font-${font}-regular mt-2`}
             >
               <input
                 className={`flex-1 hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
@@ -479,7 +481,7 @@ export default function ExchangeForm({
                 <div className="mt-1 flex items-center">
                   {errorMessage && errorMessage !== "" ? (
                     <span
-                      className={`text-red font-mine-regular mt-0.5 text-sm`}
+                      className={`text-red font-${font}-regular mt-0.5 text-sm`}
                     >
                       {errorMessage}
                     </span>
@@ -490,7 +492,7 @@ export default function ExchangeForm({
                         src={require(`../../../../../Images/arrow-right-${oppositeTheme}.png`)}
                       />
                       <span
-                        className={`text-${oppositeTheme} font-mine-regular mt-0.5 text-sm`}
+                        className={`text-${oppositeTheme} font-${font}-regular mt-0.5 text-sm`}
                       >
                         {addComma(
                           computingTargetAmount(

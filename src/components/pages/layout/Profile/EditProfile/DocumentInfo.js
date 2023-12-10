@@ -2,11 +2,13 @@ import React from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import CustomPreviewer from "../../../../common/CustomPreviewer";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function DocumentInfo({ userInfo }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
 
   return (
     <div
@@ -15,15 +17,15 @@ export default function DocumentInfo({ userInfo }) {
       {userInfo && userInfo.document && (
         <>
           <div className="flex flex-col col-span-1">
-            <span className={`font-mine-regular text-gray`}>
+            <span className={`font-${font}-regular text-gray`}>
               {lang["number-of-document"]}
             </span>
-            <span className={`font-mine-regular text-${oppositeTheme}`}>
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {userInfo && userInfo.identity_code ? userInfo.identity_code : ""}
             </span>
           </div>
           <div className="flex flex-col col-span-1">
-            <span className={`font-mine-regular text-gray`}>
+            <span className={`font-${font}-regular text-gray`}>
               {lang["document"]}
             </span>
             <CustomPreviewer imageUrl={userInfo.document} />

@@ -4,6 +4,7 @@ import { useIsPagesModalOpenState } from "../../../Providers/IsPagesModalOpenPro
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import Element from "./NavbarSetting/Element";
 import { useDirectionState } from "../../../Providers/DirectionProvider";
+import { useFontState } from "../../../Providers/FontProvider";
 
 export default function NavbarSetting({ setLinks }) {
   const theme = useThemeState();
@@ -12,6 +13,7 @@ export default function NavbarSetting({ setLinks }) {
   const containerClass = isOpen ? "opcity-100 z-40" : "opacity-0 -z-10";
   const imgClass = isOpen ? " opacity-100 z-40" : "opacity-0 -z-10";
   const lang = useLanguageState();
+  const font = useFontState();
   const { startComplete: direction } = useDirectionState();
   const containerPositionClass = direction === "right" ? "right-2" : "left-24";
   const arrowPositionClass = direction === "right" ? "right-7" : "left-32";
@@ -212,7 +214,7 @@ export default function NavbarSetting({ setLinks }) {
         className={`w-full h-full grid grid-cols-4 gap-4 bg-${theme} rounded-3xl border-2 border-gray z-30 px-5 py-5`}
       >
         <div className="flex flex-col col-span-1">
-          <span className={`text-xl font-mine-bold text-${oppositeTheme}`}>
+          <span className={`text-xl font-${font}-bold text-${oppositeTheme}`}>
             {lang["main-routes-title"]}
           </span>
           <Element data={allLinks[0]} toggle={() => toggleInNavbar(0)} />
@@ -221,7 +223,7 @@ export default function NavbarSetting({ setLinks }) {
           <Element data={allLinks[3]} toggle={() => toggleInNavbar(3)} />
         </div>
         <div className="flex flex-col col-span-1">
-          <span className={`text-xl font-mine-bold text-${oppositeTheme}`}>
+          <span className={`text-xl font-${font}-bold text-${oppositeTheme}`}>
             {lang["submitting-routes-title"]}
           </span>
           <Element data={allLinks[4]} toggle={() => toggleInNavbar(4)} />
@@ -230,7 +232,7 @@ export default function NavbarSetting({ setLinks }) {
           <Element data={allLinks[7]} toggle={() => toggleInNavbar(7)} />
         </div>
         <div className="flex flex-col col-span-1">
-          <span className={`text-xl font-mine-bold text-${oppositeTheme}`}>
+          <span className={`text-xl font-${font}-bold text-${oppositeTheme}`}>
             {lang["user-management-routes-title"]}
           </span>
           <Element data={allLinks[8]} toggle={() => toggleInNavbar(8)} />
@@ -238,14 +240,14 @@ export default function NavbarSetting({ setLinks }) {
           <Element data={allLinks[10]} toggle={() => toggleInNavbar(10)} />
         </div>
         <div className="flex flex-col col-span-1">
-          <span className={`text-xl font-mine-bold text-${oppositeTheme}`}>
+          <span className={`text-xl font-${font}-bold text-${oppositeTheme}`}>
             {lang["currency-routes-title"]}
           </span>
           <Element data={allLinks[11]} toggle={() => toggleInNavbar(11)} />
           <Element data={allLinks[12]} toggle={() => toggleInNavbar(12)} />
         </div>
         <div className="flex flex-col col-span-1">
-          <span className={`text-xl font-mine-bold text-${oppositeTheme}`}>
+          <span className={`text-xl font-${font}-bold text-${oppositeTheme}`}>
             {lang["more-routes-title"]}
           </span>
           <Element data={allLinks[13]} toggle={() => toggleInNavbar(13)} />

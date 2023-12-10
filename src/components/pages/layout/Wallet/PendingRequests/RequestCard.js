@@ -12,11 +12,13 @@ import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoa
 import PendingRequestModal from "../../../../modals/PendingRequestModal";
 import AreYouSureModal from "../../../../modals/AreYouSureModal";
 import { useCancelPendingRequest } from "../../../../../apis/pages/Wallet/hooks";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
   const addComma = useAddComma();
   const convertDate = useConvertDateTime();
   const setModalData = useModalDataSetState();
@@ -71,13 +73,19 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
     >
       <div className="w-full flex flex-row justify-between items-center">
         {pendingOrder && pendingOrder.type === "deposit" && (
-          <span className="font-mine-bold text-green">{lang["deposit"]}</span>
+          <span className={`font-${font}-bold text-green`}>
+            {lang["deposit"]}
+          </span>
         )}
         {pendingOrder && pendingOrder.type === "withdrawal" && (
-          <span className="font-mine-bold text-red">{lang["withdrawal"]}</span>
+          <span className={`font-${font}-bold text-red`}>
+            {lang["withdrawal"]}
+          </span>
         )}
         {pendingOrder && pendingOrder.type === "transfer" && (
-          <span className="font-mine-bold text-blue">{lang["transfer"]}</span>
+          <span className={`font-${font}-bold text-blue`}>
+            {lang["transfer"]}
+          </span>
         )}
         <button onClick={openWalletRequestModal}>
           <img
@@ -87,7 +95,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
         </button>
       </div>
       <div className="flex flex-col">
-        <span className={`font-mine-regular text-${oppositeTheme}`}>
+        <span className={`font-${font}-regular text-${oppositeTheme}`}>
           {addComma(+pendingOrder.amount || 0) +
             " " +
             pendingOrder.currency_abb}
@@ -96,7 +104,9 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
           <RequestStatus status={pendingOrder.status_title} />
         </div>
       </div>
-      <div className="flex flex-row w-full items-end gap-x-2 h-8 font-mine-bold mt-4">
+      <div
+        className={`flex flex-row w-full items-end gap-x-2 h-8 font-${font}-bold mt-4`}
+      >
         {pendingOrder && pendingOrder.status_title === "Admin Assign" && (
           <>
             <button className="flex-1 border-2 rounded-lg pt-1.5 border-blue text-blue">
@@ -112,7 +122,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
         )}
         {pendingOrder && pendingOrder.status_title === "Upload Document" && (
           <span
-            className={`font-mine-thin text-${oppositeTheme} text-lg leading-4`}
+            className={`font-${font}-thin text-${oppositeTheme} text-lg leading-4`}
           >
             {lang["upload-document-message"] + "."}
           </span>
@@ -121,7 +131,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
           pendingOrder.status_title === "Admin Approve" &&
           pendingOrder.type !== "transfer" && (
             <span
-              className={`font-mine-thin text-${oppositeTheme} text-lg leading-4`}
+              className={`font-${font}-thin text-${oppositeTheme} text-lg leading-4`}
             >
               {lang["admin-approve-message"] + "."}
             </span>
@@ -143,13 +153,13 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
           )}
         {pendingOrder && pendingOrder.status_title === "Reject" && (
           <span
-            className={`font-mine-thin text-${oppositeTheme} text-lg leading-4`}
+            className={`font-${font}-thin text-${oppositeTheme} text-lg leading-4`}
           >
             {pendingOrder.rejectReason}
           </span>
         )}
       </div>
-      <span className="text-gray font-mine-regular text-sm mt-4 -mb-2">
+      <span className={`text-gray font-${font}-regular text-sm mt-4 -mb-2`}>
         {convertDate(pendingOrder.datetime)}
       </span>
     </div>

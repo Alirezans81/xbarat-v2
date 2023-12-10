@@ -8,11 +8,13 @@ import {
 } from "../../../apis/common/location/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
+import { useFontState } from "../../../Providers/FontProvider";
 
 export default function Step2({ setFieldValue }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
 
   const [nationalities, setNationalities] = useState([]);
   const [selectedNationalityIndex, setSelectedNationalityIndex] = useState(-1);
@@ -71,7 +73,7 @@ export default function Step2({ setFieldValue }) {
       <div className="flex-1">
         <form className="w-full h-full">
           <div className="flex-1 w-full flex flex-col gap-y-2">
-            <span className={`font-mine-regular text-${oppositeTheme}`}>
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["nationality"]}
             </span>
             <div className="w-full flex">
@@ -136,7 +138,7 @@ export default function Step2({ setFieldValue }) {
             </div>
           </div>
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-            <span className={`font-mine-regular text-${oppositeTheme}`}>
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["country"]}
             </span>
             <div className="w-full flex">
@@ -193,7 +195,7 @@ export default function Step2({ setFieldValue }) {
             </div>
           </div>
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-            <span className={`font-mine-regular text-${oppositeTheme}`}>
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["city"]}
             </span>
             <div className="w-full flex">
@@ -258,11 +260,11 @@ export default function Step2({ setFieldValue }) {
             src={require(`../../../Images/common/info-${oppositeTheme}.png`)}
             alt="info"
           />
-          <span className={`font-mine-bold text-${oppositeTheme} pt-1.5`}>
+          <span className={`font-${font}-bold text-${oppositeTheme} pt-1.5`}>
             {lang["note"]}
           </span>
         </div>
-        <div className="mt-4 flex flex-col gap-y-3 text-gray font-mine-regular w-64">
+        <div className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}>
           <span>{lang["complete-profile-modal-step2-note-1st"] + "."}</span>
           <span>{lang["complete-profile-modal-step2-note-2nd"] + "."}</span>
         </div>

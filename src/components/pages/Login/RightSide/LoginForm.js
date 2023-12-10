@@ -14,11 +14,13 @@ import {
   useWalletSetState,
   useWalletState,
 } from "../../../../Providers/WalletProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function LoginForm({ setIsSplashScreenLoading }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
   const lang = useLanguageState();
+  const font = useFontState();
   const { one: direction } = useDirectionState();
   const wallet = useWalletState();
   const setWallet = useWalletSetState();
@@ -134,7 +136,9 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
             }
           }}
         >
-          <div className="flex justify-between font-mine-bold items-center mb-3">
+          <div
+            className={`flex justify-between font-${font}-bold items-center mb-3`}
+          >
             <span className="text-blue text-3xl">{lang["log-in"]}</span>
             <Link
               to={"/signup"}
@@ -156,7 +160,7 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
             value={values.email}
           />
           {validationErrors.email && (
-            <span className="font-mine-thin text-red">
+            <span className={`font-${font}-thin text-red`}>
               {validationErrors.email}
             </span>
           )}
@@ -173,7 +177,7 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
             value={values.password}
           />
           {validationErrors.password && (
-            <span className="font-mine-thin text-red">
+            <span className={`font-${font}-thin text-red`}>
               {validationErrors.password}
             </span>
           )}
@@ -186,19 +190,19 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
                 />
               </button>
               <span
-                className={`font-mine-regular pt-1 m${direction}-1 text-${oppositeTheme} text-sm`}
+                className={`font-${font}-regular pt-1 m${direction}-1 text-${oppositeTheme} text-sm`}
               >
                 {lang["remember-me"]}
               </span>
             </div>
             <Link to={"/forgot-password"}>
-              <span className="font-mine-regular text-blue text-sm">
+              <span className={`font-${font}-regular text-blue text-sm`}>
                 {lang["forgot-password"] + "?"}
               </span>
             </Link>
           </div>
           {error && (
-            <span className="font-mine-thin text-red">
+            <span className={`font-${font}-thin text-red`}>
               {error.response.data.error}
             </span>
           )}

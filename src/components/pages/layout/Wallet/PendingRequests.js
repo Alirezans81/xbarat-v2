@@ -4,12 +4,14 @@ import FilterButtons from "./PendingRequests/FilterButtons";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import CustomSlider from "../../../common/CustomSlider";
 import RequestCard from "./PendingRequests/RequestCard";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function PendingRequests({
   refreshPendingRequests,
   pendingRequests: allPendingOrders,
 }) {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [showOrdersType, setShowOrdersType] = useState("");
@@ -76,7 +78,7 @@ export default function PendingRequests({
   return (
     <div className="flex flex-col h-full">
       <div className="flex flex-row w-full justify-between items-center">
-        <span className={`font-mine-bold text-${oppositeTheme} text-2xl`}>
+        <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
           {lang["pending-requests"]}
         </span>
         <FilterButtons
@@ -103,7 +105,9 @@ export default function PendingRequests({
           </CustomSlider>
         ) : (
           <div className="absolute left-0 h-full w-full -mt-4 top-0 flex justify-center items-center">
-            <span className={`font-mine-thin text-3xl text-${oppositeTheme}`}>
+            <span
+              className={`font-${font}-thin text-3xl text-${oppositeTheme}`}
+            >
               {lang["no-data"]}
             </span>
           </div>

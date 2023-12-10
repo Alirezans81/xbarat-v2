@@ -6,11 +6,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForgotPassword } from "../../../apis/pages/ForgotPassword/hooks";
 import { useCheckEmail, useSendEmail } from "../../../apis/common/email/hooks";
 import { useGenerateCode } from "../../../hooks/useGenerateCode";
+import { useFontState } from "../../../Providers/FontProvider";
 
 export default function Form({ setIsSplashScreenLoading }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
   const lang = useLanguageState();
+  const font = useFontState();
 
   const [mode, setMode] = useState("");
   const [token, setToken] = useState();
@@ -152,7 +154,7 @@ export default function Form({ setIsSplashScreenLoading }) {
             }
           }}
         >
-          <div className="flex justify-between font-mine-bold items-center mb-3">
+          <div className={`flex justify-between font-${font}-bold items-center mb-3`}>
             <span className="text-blue text-3xl">
               {lang["forgot-password"]}
             </span>
@@ -178,12 +180,12 @@ export default function Form({ setIsSplashScreenLoading }) {
                 value={values.email}
               />
               {validationErrors.email && (
-                <span className="font-mine-thin text-red">
+                <span className={`font-${font}-thin text-red`}>
                   {validationErrors.email}
                 </span>
               )}
               {checkEmailError && (
-                <span className="font-mine-thin text-red">
+                <span className={`font-${font}-thin text-red`}>
                   {lang["email-not-exist-error-message"] + "!"}
                 </span>
               )}
@@ -192,10 +194,10 @@ export default function Form({ setIsSplashScreenLoading }) {
           {mode === "verify" && (
             <>
               <div className="flex flex-col">
-                <span className={`"font-mine-thin text-${oppositeTheme}`}>
+                <span className={`"font-${font}-thin text-${oppositeTheme}`}>
                   {lang["code-sended-to-email-message-1st"] + "."}
                 </span>
-                <span className={`"font-mine-thin text-${oppositeTheme}`}>
+                <span className={`"font-${font}-thin text-${oppositeTheme}`}>
                   {lang["code-sended-to-email-message-2nd"] + ":"}
                 </span>
               </div>
@@ -212,7 +214,7 @@ export default function Form({ setIsSplashScreenLoading }) {
                 value={values.verify_email_code}
               />
               {codeError && (
-                <span className="font-mine-thin text-red">{codeError}</span>
+                <span className={`font-${font}-thin text-red`}>{codeError}</span>
               )}
             </>
           )}
@@ -231,7 +233,7 @@ export default function Form({ setIsSplashScreenLoading }) {
                 value={values.password}
               />
               {validationErrors.password && (
-                <span className="font-mine-thin text-red">
+                <span className={`font-${font}-thin text-red`}>
                   {validationErrors.password}
                 </span>
               )}
@@ -248,12 +250,12 @@ export default function Form({ setIsSplashScreenLoading }) {
                 value={values.confirmPassword}
               />
               {validationErrors.confirmPassword && (
-                <span className="font-mine-thin text-red">
+                <span className={`font-${font}-thin text-red`}>
                   {validationErrors.confirmPassword}
                 </span>
               )}
               {/* {error && (
-                <span className="font-mine-thin text-red">{error.message}</span>
+                <span className={`font-${font}-thin text-red`}>{error.message}</span>
               )} */}
             </>
           )}

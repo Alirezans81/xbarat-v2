@@ -4,9 +4,11 @@ import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useModalDataClose } from "../../Providers/ModalDataProvider";
 import SubmitButton from "../common/SubmitButton";
+import { useFontState } from "../../Providers/FontProvider";
 
 export default function ChangePasswordModal() {
   const theme = useThemeState();
+  const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const closeModal = useModalDataClose();
@@ -28,7 +30,7 @@ export default function ChangePasswordModal() {
       {({ handleChange, handleBlur, values, resetForm, submitForm }) => (
         <div className="flex flex-col w-full mt-4">
           <div className="flex flex-col">
-            <span className="text-gray font-mine-regular">
+            <span className={`text-gray font-${font}-regular`}>
               {lang["current-password"]}
             </span>
             <input
@@ -40,7 +42,7 @@ export default function ChangePasswordModal() {
             />
           </div>
           <div className="flex flex-col mt-3">
-            <span className="text-gray font-mine-regular">
+            <span className={`text-gray font-${font}-regular`}>
               {lang["new-password"]}
             </span>
             <input
@@ -52,7 +54,7 @@ export default function ChangePasswordModal() {
             />
           </div>
           <div className="flex flex-col mt-3">
-            <span className="text-gray font-mine-regular">
+            <span className={`text-gray font-${font}-regular`}>
               {lang["confirm-password"]}
             </span>
             <input

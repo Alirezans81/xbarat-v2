@@ -3,6 +3,7 @@ import CustomSlider from "../../../common/CustomSlider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import PendingExchangeCard from "./PendingExchange/PendingExchangeCard";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function PendingExchange({
   pendingExchanges,
@@ -11,6 +12,7 @@ export default function PendingExchange({
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
 
   return (
     <div className="px-5 py-3 h-full">
@@ -37,7 +39,9 @@ export default function PendingExchange({
           </CustomSlider>
         ) : (
           <div className="absolute left-0 h-full w-full -mt-8 top-0 flex justify-center items-center">
-            <span className={`font-mine-thin text-3xl text-${oppositeTheme}`}>
+            <span
+              className={`font-${font}-thin text-3xl text-${oppositeTheme}`}
+            >
               {lang["no-data"]}
             </span>
           </div>

@@ -6,6 +6,7 @@ import { useModalDataSetState } from "../../Providers/ModalDataProvider";
 import { useDirectionState } from "../../Providers/DirectionProvider";
 import DateTimePickerModal from "../modals/DateTimePickerModal";
 import { useLanguageState } from "../../Providers/LanguageProvider";
+import { useFontState } from "../../Providers/FontProvider";
 
 export default function CustomDateTimeInput({
   selectionRange,
@@ -18,6 +19,7 @@ export default function CustomDateTimeInput({
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: direction } = useDirectionState();
   const lang = useLanguageState();
+  const font = useFontState();
   const setModalData = useModalDataSetState();
 
   const openDateTimePickerModal = () => {
@@ -49,7 +51,7 @@ export default function CustomDateTimeInput({
   return (
     <div
       className={
-        "border border-gray px-3 pt-1 pb-0 rounded-lg flex flex-row justify-between font-mine-regular items-center " +
+        `border border-gray px-3 pt-1 pb-0 rounded-lg flex flex-row justify-between font-${font}-regular items-center ` +
         className
       }
     >

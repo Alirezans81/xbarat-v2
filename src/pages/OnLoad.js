@@ -6,10 +6,12 @@ import { useTokenState } from "../Providers/TokenProvider";
 import { useGetLanguages } from "../apis/common/language/hooks";
 import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
+import { useFontState } from "../Providers/FontProvider";
 
 export default function OnLoad({ children }) {
   const navigate = useNavigate();
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const token = useTokenState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -60,7 +62,7 @@ export default function OnLoad({ children }) {
   } else {
     return (
       <div className="h-full w-full flex justify-center items-center">
-        <span className={`text-${oppositeTheme} font-mine-thin text-3xl`}>
+        <span className={`text-${oppositeTheme} font-${font}-thin text-3xl`}>
           {lang["loading"]}
         </span>
       </div>

@@ -7,6 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
 import CompleteProfileModal from "../../../modals/CompleteProfileModal";
 import LanguageSwitcher from "../../../common/LanguageSwitcher";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function RightSide() {
   const user = useUserState();
@@ -14,6 +15,7 @@ export default function RightSide() {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: direction, endComplete: endDirection } = useDirectionState();
   const lang = useLanguageState();
+  const font = useFontState();
   const setModalData = useModalDataSetState();
   const openCompleteProfileModal = () => {
     setModalData({
@@ -53,13 +55,13 @@ export default function RightSide() {
           alt="avatar"
         />
         <div className={`flex flex-col m${direction}-3`}>
-          <span className={`${nameClass} font-mine-regular -mb-2 text-lg`}>
+          <span className={`${nameClass} font-${font}-regular -mb-2 text-lg`}>
             {(user && user["first_name"] ? user["first_name"] : "") +
               " " +
               (user && user["last_name"] ? user["last_name"] : "")}
           </span>
           {user && user["is_verified"] ? (
-            <span className={`${roleClass} font-mine-regular text-sm`}>
+            <span className={`${roleClass} font-${font}-regular text-sm`}>
               {user.role}
             </span>
           ) : (
@@ -68,7 +70,7 @@ export default function RightSide() {
                 className={`bg-blue rounded-full ${completePrfoileClass} mt-1 flex flex-col justify-center transition-all duration-300 hover:bg-${theme} border-2 border-blue`}
               >
                 <span
-                  className={`text-xs font-mine-bold ${completePrfoileTextClass}`}
+                  className={`text-xs font-${font}-bold ${completePrfoileTextClass}`}
                 >
                   {lang["complete-profile"]}
                 </span>

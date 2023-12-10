@@ -1,6 +1,7 @@
 import React from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function FilterButtons({
   showOrdersType,
@@ -10,6 +11,7 @@ export default function FilterButtons({
 }) {
   const theme = useThemeState();
   const lang = useLanguageState();
+  const font = useFontState();
 
   return (
     <div className="flex gap-2">
@@ -17,8 +19,8 @@ export default function FilterButtons({
         onClick={toggleShowDepositOrders}
         className={
           showOrdersType === "deposit"
-            ? `rounded-full font-mine-regular pt-1.5 pb-0.5 px-4 bg-green text-light`
-            : `rounded-full font-mine-regular pt-1.5 pb-0.5 px-4 bg-${theme}-back text-green`
+            ? `rounded-full font-${font}-regular pt-1.5 pb-0.5 px-4 bg-green text-light`
+            : `rounded-full font-${font}-regular pt-1.5 pb-0.5 px-4 bg-${theme}-back text-green`
         }
       >
         {lang["only-deposits"]}
@@ -27,8 +29,8 @@ export default function FilterButtons({
         onClick={toggleShowWithdrawalOrders}
         className={
           showOrdersType === "withdrawal"
-            ? `rounded-full font-mine-regular pt-1.5 pb-0.5 px-4 bg-red text-light`
-            : `rounded-full font-mine-regular pt-1.5 pb-0.5 px-4 bg-${theme}-back text-red`
+            ? `rounded-full font-${font}-regular pt-1.5 pb-0.5 px-4 bg-red text-light`
+            : `rounded-full font-${font}-regular pt-1.5 pb-0.5 px-4 bg-${theme}-back text-red`
         }
       >
         {lang["only-withdrawals"]}
@@ -37,8 +39,8 @@ export default function FilterButtons({
         onClick={toggleShowTransferOrders}
         className={
           showOrdersType === "transfer"
-            ? `rounded-full font-mine-regular pt-1.5 pb-0.5 px-4 bg-blue text-light`
-            : `rounded-full font-mine-regular pt-1.5 pb-0.5 px-4 bg-${theme}-back text-blue`
+            ? `rounded-full font-${font}-regular pt-1.5 pb-0.5 px-4 bg-blue text-light`
+            : `rounded-full font-${font}-regular pt-1.5 pb-0.5 px-4 bg-${theme}-back text-blue`
         }
       >
         {lang["only-transfers"]}

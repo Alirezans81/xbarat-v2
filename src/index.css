@@ -34,25 +34,48 @@ body {
 
 @font-face {
   font-family: manjari-bold;
-  src: url('./fonts/Manjari-Bold.ttf');
+  src: url('./fonts/En/Manjari-Bold.ttf');
 }
 @font-face {
   font-family: manjari-regular;
-  src: url('./fonts/Manjari-Regular.ttf');
+  src: url('./fonts/En/Manjari-Regular.ttf');
 }
 @font-face {
   font-family: manjari-thin;
-  src: url('./fonts/Manjari-Thin.ttf');
+  src: url('./fonts/En/Manjari-Thin.ttf');
 }
 
-.font-mine-bold {
+.font-En-bold {
   font-family: manjari-bold;
 }
-.font-mine-regular {
+.font-En-regular {
   font-family: manjari-regular;
 }
-.font-mine-thin {
+.font-En-thin {
   font-family: manjari-thin;
+}
+
+@font-face {
+  font-family: ModamFaNum-bold;
+  src: url('./fonts/Fa/ModamFaNum-Bold.ttf');
+}
+@font-face {
+  font-family: ModamFaNum-regular;
+  src: url('./fonts/Fa/ModamFaNum-Regular.ttf');
+}
+@font-face {
+  font-family: ModamFaNum-thin;
+  src: url('./fonts/Fa/ModamFaNum-Thin.ttf');
+}
+
+.font-Fa-bold {
+  font-family: ModamFaNum-bold;
+}
+.font-Fa-regular {
+  font-family: ModamFaNum-regular;
+}
+.font-Fa-thin {
+  font-family: ModamFaNum-thin;
 }
 
 .login-back {

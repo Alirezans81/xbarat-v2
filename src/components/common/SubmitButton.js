@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useFontState } from "../../Providers/FontProvider";
 
 export default function SubmitButton({
   className,
@@ -10,12 +11,13 @@ export default function SubmitButton({
   const [bgGradientClass, setBgGradient] = useState("opacity-100");
   const [bgGradientOppositeClass, setBgGradientOpposite] =
     useState("opacity-0");
+  const font = useFontState();
 
   return (
     <button
       className={
         className +
-        ` flex justify-center items-center font-mine-bold relative rounded-${rounded}`
+        ` flex justify-center items-center font-${font}-bold relative rounded-${rounded}`
       }
       onClick={onClick}
       type={type}

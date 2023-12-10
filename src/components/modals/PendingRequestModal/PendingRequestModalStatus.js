@@ -2,11 +2,13 @@ import React from "react";
 import RequestStatus from "../../pages/layout/common/RequestStatus";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
+import { useFontState } from "../../../Providers/FontProvider";
 
 export default function PendingRequestModalStatus({ status, rejectReason }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
 
   if (status === "Admin Assign") {
     return (
@@ -18,11 +20,11 @@ export default function PendingRequestModalStatus({ status, rejectReason }) {
             className="w-6 h-6"
             src={require("../../../Images/pages/layout/Wallet/statues/adminAssign.png")}
           />
-          <span className="font-mine-bold text-lg text-blue mx-1 pt-2">
+          <span className={`font-${font}-bold text-lg text-blue mx-1 pt-2`}>
             {lang["admin-assign"]}
           </span>
         </div>
-        <span className={`font-mine-thin text-${oppositeTheme} mx-1`}>
+        <span className={`font-${font}-thin text-${oppositeTheme} mx-1`}>
           {lang["admin-assign-message"] + "."}
         </span>
       </div>
@@ -37,11 +39,11 @@ export default function PendingRequestModalStatus({ status, rejectReason }) {
             className="w-6 h-6"
             src={require("../../../Images/pages/layout/Wallet/statues/uploadDocument.png")}
           />
-          <span className="font-mine-bold text-lg text-blue mx-1 pt-2">
+          <span className={`font-${font}-bold text-lg text-blue mx-1 pt-2`}>
             {lang["upload-document"]}
           </span>
         </div>
-        <span className={`font-mine-thin text-${oppositeTheme} mx-1`}>
+        <span className={`font-${font}-thin text-${oppositeTheme} mx-1`}>
           {lang["upload-document-message"] + "."}
         </span>
       </div>
@@ -56,11 +58,11 @@ export default function PendingRequestModalStatus({ status, rejectReason }) {
             className="w-6 h-6"
             src={require("../../../Images/pages/layout/Wallet/statues/adminApprove.png")}
           />
-          <span className="font-mine-bold text-lg text-blue mx-1 pt-2">
+          <span className={`font-${font}-bold text-lg text-blue mx-1 pt-2`}>
             {lang["admin-approve"]}
           </span>
         </div>
-        <span className={`font-mine-thin text-${oppositeTheme} mx-1`}>
+        <span className={`font-${font}-thin text-${oppositeTheme} mx-1`}>
           {lang["admin-approve-message"] + "."}
         </span>
       </div>
@@ -75,11 +77,11 @@ export default function PendingRequestModalStatus({ status, rejectReason }) {
             className="w-6 h-6"
             src={require("../../../Images/pages/layout/Wallet/statues/accept.png")}
           />
-          <span className="font-mine-bold text-lg text-green mx-1 pt-2">
+          <span className={`font-${font}-bold text-lg text-green mx-1 pt-2`}>
             {lang["accept"]}
           </span>
         </div>
-        <span className={`font-mine-thin text-${oppositeTheme} mx-1`}>
+        <span className={`font-${font}-thin text-${oppositeTheme} mx-1`}>
           {lang["accept-transaction-message"] + "."}
         </span>
       </div>
@@ -94,11 +96,11 @@ export default function PendingRequestModalStatus({ status, rejectReason }) {
             className="w-6 h-6"
             src={require("../../../Images/pages/layout/Wallet/statues/reject.png")}
           />
-          <span className="font-mine-bold text-lg text-red mx-1 pt-1">
+          <span className={`font-${font}-bold text-lg text-red mx-1 pt-1`}>
             {lang["reject"]}
           </span>
         </div>
-        <span className={`font-mine-thin text-${oppositeTheme} mx-1`}>
+        <span className={`font-${font}-thin text-${oppositeTheme} mx-1`}>
           {rejectReason}
         </span>
       </div>
