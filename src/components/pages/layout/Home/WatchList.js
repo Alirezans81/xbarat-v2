@@ -72,7 +72,7 @@ export default function WatchList({
 
   return (
     <div className="px-6 py-5 h-full flex flex-col">
-      <h1 className={`font-${font}-regular text-2xl text-${oppositeTheme}`}>
+      <h1 className={`font-${font}-bold text-2xl text-${oppositeTheme}`}>
         {lang["watch-list-label"]}
       </h1>
       <div className={`flex-1 overflow-y-auto mt-2 p${endDirection}-4`}>

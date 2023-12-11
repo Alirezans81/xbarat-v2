@@ -35,8 +35,8 @@ export default function OTPCodeModal() {
     ? `bg-${theme}-back pt-1 px-3 rounded-full font-${font}-regular text-gray text-sm`
     : `bg-${theme}-back pt-1 px-3 rounded-full font-${font}-regular text-blue text-sm`;
   const timerSpanClass = isRunning
-    ? `bg-${theme}-back w-16 text-center font-${font}-regular pt-1 px-3 rounded-full text-${oppositeTheme}`
-    : `bg-${theme}-back w-16 text-center font-${font}-regular pt-1 px-3 rounded-full text-gray`;
+    ? `bg-${theme}-back w-16 text-center-important font-${font}-regular pt-1 px-3 rounded-full text-${oppositeTheme}`
+    : `bg-${theme}-back w-16 text-center-important font-${font}-regular pt-1 px-3 rounded-full text-gray`;
 
   return (
     <div className="w-80">

@@ -17,7 +17,9 @@ export default function PendingExchange({
   return (
     <div className="px-5 py-3 h-full">
       <div className="flex justify-between items-center w-full">
-        <span className={`text-2xl text-${oppositeTheme} mx-0.5`}>
+        <span
+          className={`text-2xl font-${font}-bold text-${oppositeTheme} mx-0.5`}
+        >
           {lang["pending-orders"]}
         </span>
       </div>

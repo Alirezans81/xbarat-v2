@@ -265,7 +265,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
             </div>
             <div className="col-span-1 row-span-1 flex">
               <input
-                className={`flex-1 hide-input-arrows text-center font-${font}-regular text-${oppositeTheme} bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
+                className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
                 placeholder={lang["amount"]}
                 name="amount"
                 onBlur={handleBlur("amount")}

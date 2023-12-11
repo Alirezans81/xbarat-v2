@@ -39,7 +39,7 @@ export default function WaitLink() {
               src={require("../Images/pages/layout/WaitLink/key.png")}
             />
             <span
-              className={`text-center text-2xl font-${font}-bold text-${oppositeTheme}`}
+              className={`text-center-important text-2xl font-${font}-bold text-${oppositeTheme}`}
             >
               {lang["wait-link-message"] + "."}
             </span>

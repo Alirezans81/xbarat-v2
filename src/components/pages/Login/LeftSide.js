@@ -21,7 +21,7 @@ export default function LeftSide() {
         {lang["logo-header"]}
       </h1>
       <span className={`text-4xl font-${font}-thin text-${oppositeTheme}`}>
-        {lang["slogan"] + "."}
+        {font === "Fa" ? "" : lang["slogan"] + "."}
       </span>
     </div>
   );

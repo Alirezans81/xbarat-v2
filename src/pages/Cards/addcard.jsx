@@ -100,7 +100,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                   <input
                     onChange={(e) => setTitle(e.target.value)}
                     required
-                    className={`flex-1 hide-input-arrows text-center font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
+                    className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                     placeholder={lang["add_cards_title"]}
                   />
                 </div>
@@ -116,7 +116,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                 <div className="w-full flex mt-0 px-2">
                   <input
                     onChange={(e) => setCardNumber(e.target.value)}
-                    className={`flex-1 hide-input-arrows text-center font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
+                    className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                     placeholder={lang["cards_card_number_placeholder"]}
                   />
                 </div>
@@ -132,7 +132,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                 <div className="w-full flex mt-0 px-2">
                   <input
                     onChange={(e) => setShabaNumber(e.target.value)}
-                    className={`flex-1 hide-input-arrows text-center font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
+                    className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                     placeholder={lang["cards_shaba_number_placeholder"]}
                   />
                 </div>

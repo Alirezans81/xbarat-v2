@@ -15,7 +15,7 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
         {heads.map((head, index) => (
           <span
             key={index}
-            className={`col-span-1 text-center font-${font}-regular text-gray`}
+            className={`col-span-1 text-center-important font-${font}-regular text-gray`}
           >
             {head}
           </span>
@@ -35,7 +35,7 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
               {Object.values(row).map((value, tdIndex) => (
                 <span
                   key={tdIndex}
-                  className={`flex justify-center col-span-1 text-center font-${font}-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
+                  className={`flex whitespace-nowrap justify-center col-span-1 text-center-important font-${font}-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
                 >
                   {value}
                 </span>
@@ -51,7 +51,7 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
                 Object.values(row).map((value, tdIndex) => (
                   <span
                     key={tdIndex}
-                    className={`flex justify-center col-span-1 text-center font-${font}-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
+                    className={`flex whitespace-nowrap justify-center col-span-1 text-center-important font-${font}-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
                   >
                     {value}
                   </span>

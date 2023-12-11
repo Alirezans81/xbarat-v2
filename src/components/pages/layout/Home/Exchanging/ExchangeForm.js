@@ -411,7 +411,7 @@ export default function ExchangeForm({
               className={`flex items-center w-full gap-7 text-${oppositeTheme} font-${font}-regular mt-2`}
             >
               <input
-                className={`flex-1 hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                className={`flex-1 text-left hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                 placeholder={lang["amount"]}
                 disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
                 name="amount"
@@ -437,7 +437,7 @@ export default function ExchangeForm({
               />
               <input
                 ref={rateInputRef}
-                className={`flex-1 hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                className={`flex-1 text-left hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                 placeholder={lang["rate"]}
                 disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
                 name="rate"

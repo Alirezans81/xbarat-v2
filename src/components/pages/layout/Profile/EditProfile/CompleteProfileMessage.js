@@ -26,7 +26,7 @@ export default function CompleteProfileMessage() {
       className={`bg-${theme}-back w-8/12 rounded-3xl flex justify-center items-center flex-col px-7 py-20`}
     >
       <span
-        className={`font-${font}-bold text-2xl text-center text-${oppositeTheme}`}
+        className={`font-${font}-bold text-2xl text-center-important text-${oppositeTheme}`}
       >
         {lang["complete-profile-message"] + "."}
       </span>

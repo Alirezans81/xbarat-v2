@@ -45,16 +45,6 @@ body {
   src: url('./fonts/En/Manjari-Thin.ttf');
 }
 
-.font-En-bold {
-  font-family: manjari-bold;
-}
-.font-En-regular {
-  font-family: manjari-regular;
-}
-.font-En-thin {
-  font-family: manjari-thin;
-}
-
 @font-face {
   font-family: ModamFaNum-bold;
   src: url('./fonts/Fa/ModamFaNum-Bold.ttf');
@@ -68,14 +58,40 @@ body {
   src: url('./fonts/Fa/ModamFaNum-Thin.ttf');
 }
 
+.font-En-bold {
+  font-family: manjari-bold;
+}
+.font-En-regular {
+  font-family: manjari-regular;
+}
+.font-En-thin {
+  font-family: manjari-thin;
+}
+
 .font-Fa-bold {
   font-family: ModamFaNum-bold;
+  direction: rtl;
+  text-align: left;
 }
 .font-Fa-regular {
   font-family: ModamFaNum-regular;
+  direction: rtl;
+  text-align: left;
 }
 .font-Fa-thin {
   font-family: ModamFaNum-thin;
+  direction: rtl;
+  text-align: left;
+}
+
+.font-De-bold {
+  font-family: manjari-bold;
+}
+.font-De-regular {
+  font-family: manjari-regular;
+}
+.font-De-thin {
+  font-family: manjari-thin;
 }
 
 .login-back {
@@ -231,12 +247,14 @@ body {
   border-top-left-radius: 2rem;
 }
 
-.rounded-tl-5xl {
-  border-top-left-radius: 2.5rem;
-}
-
-.rounded-tr-5xl {
-  border-top-right-radius: 2.5rem;
+@media screen and (min-width: 640px) {
+  .rounded-tl-5xl {
+    border-top-left-radius: 2.5rem;
+  }
+  
+  .rounded-tr-5xl {
+    border-top-right-radius: 2.5rem;
+  }
 }
 
 .tooltip-light {
@@ -325,7 +343,8 @@ body {
 }
 
 .login-width {
-  width: 450px;
+  width: auto;
+  max-width: 450px;
 }
 
 .loading {
@@ -399,4 +418,8 @@ body {
 
 .w-88 {
   width: 22rem;
+}
+
+.text-center-important {
+  text-align: center !important;
 }

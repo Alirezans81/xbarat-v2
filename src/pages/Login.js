@@ -44,21 +44,23 @@ export default function Login() {
   }, []);
 
   return (
-      <div
-        dir={direction}
-        className={`w-screen h-screen bg-${theme} relative transition-all duration-300`}
-      >
-        <div className="absolute w-screen h-screen bg-login flex justify-evenly">
-          <LoadingSplashScreen isLoading={isSplashScreenLoading} />
-          <div className={`absolute top-3 ${themeSwitcherDivClasses}`}>
-            <ThemeSwitcher />
-          </div>
-          <div className={`absolute top-3 ${languageSwitcherDivClasses}`}>
-            <LanguageSwitcher />
-          </div>
-          <LeftSide />
-          <RightSide setIsSplashScreenLoading={setIsSplashScreenLoading} />
+    <div
+      dir={direction}
+      className={`w-screen h-screen bg-${theme} relative transition-all duration-300`}
+    >
+      <div className="absolute w-screen h-screen bg-login flex justify-evenly">
+        <LoadingSplashScreen isLoading={isSplashScreenLoading} />
+        <div className={`absolute top-3 ${themeSwitcherDivClasses}`}>
+          <ThemeSwitcher />
         </div>
+        <div className={`absolute top-3 ${languageSwitcherDivClasses}`}>
+          <LanguageSwitcher />
+        </div>
+        <div className="hidden lg:block my-auto">
+          <LeftSide />
+        </div>
+        <RightSide setIsSplashScreenLoading={setIsSplashScreenLoading} />
       </div>
+    </div>
   );
 }

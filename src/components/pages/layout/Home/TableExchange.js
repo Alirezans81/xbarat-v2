@@ -210,7 +210,7 @@ export default function AllOreders({
               </span>
             </div>
           </div>
-          <div className="w-full flex-1 pt-4 px-10">
+          <div className="w-full flex-1 pt-4 px-5">
             <CustomTable
               heads={source_to_target_head}
               rows={source_to_target_data}
@@ -249,7 +249,7 @@ export default function AllOreders({
               </span>
             </div>
           </div>
-          <div className="w-full flex-1 pt-4 px-10">
+          <div className="w-full flex-1 pt-4 px-5">
             <CustomTable
               heads={target_to_source_head}
               rows={target_to_source_data}
@@ -265,7 +265,9 @@ export default function AllOreders({
   } else {
     return (
       <div className="h-full w-full flex justify-center items-center">
-        <span className={`text-3xl text-${oppositeTheme} font-${font}-thin`}>
+        <span
+          className={`text-3xl text-center-important text-${oppositeTheme} font-${font}-thin`}
+        >
           {lang["select-currency-error"] + "."}
         </span>
       </div>

@@ -58,13 +58,13 @@ export default function Filters({ selectionRange, setSelectionRange }) {
         <div className="mt-2 w-full">
           <div className="w-full flex">
             <input
-              className={`flex-1 hide-input-arrows text-center font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
+              className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
               placeholder={lang["source"]}
             />
           </div>
           <div className="w-full flex mt-2">
             <input
-              className={`flex-1 hide-input-arrows text-center font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
+              className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
               placeholder={lang["target"]}
             />
           </div>
@@ -77,7 +77,7 @@ export default function Filters({ selectionRange, setSelectionRange }) {
         <div className="mt-2 w-full">
           <div className="w-full flex">
             <input
-              className={`flex-1 hide-input-arrows text-center font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
+              className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
               placeholder={lang["rate"]}
             />
           </div>
