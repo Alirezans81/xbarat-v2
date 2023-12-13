@@ -42,7 +42,7 @@ export default function PendingExchange({
         ) : (
           <div className="absolute left-0 h-full w-full -mt-8 top-0 flex justify-center items-center">
             <span
-              className={`font-${font}-thin text-3xl text-${oppositeTheme}`}
+              className={`font-${font}-thin text-2xl md:text-3xl text-${oppositeTheme}`}
             >
               {lang["no-data"]}
             </span>

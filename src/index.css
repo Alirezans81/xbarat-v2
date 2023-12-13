@@ -247,7 +247,7 @@ body {
   border-top-left-radius: 2rem;
 }
 
-@media screen and (min-width: 640px) {
+@media screen and (min-width: 768px) {
   .rounded-tl-5xl {
     border-top-left-radius: 2.5rem;
   }
@@ -422,4 +422,8 @@ body {
 
 .text-center-important {
   text-align: center !important;
+}
+
+.min-h-72 {
+  min-height: 18rem;
 }

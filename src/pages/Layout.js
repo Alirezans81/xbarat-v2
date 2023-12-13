@@ -171,18 +171,18 @@ export default function Layout() {
           onClick={isPagesModalOpen ? togglePagesModal : () => {}}
           className="w-screen h-screen flex flex-col"
         >
-          <div className="hidden sm:block">
+          <div className="hidden md:block">
             <TopBar />
           </div>
-          <div className="block sm:hidden">
+          <div className="block md:hidden">
             <MobileTopBar />
           </div>
           <div className="flex-1 flex h-5/6">
-            <div className="hidden sm:flex">
+            <div className="hidden md:flex">
               <Navbar links={links} />
             </div>
             <div
-              className={`relative flex-1 bg-${theme}-back rounded-tl-5xl sm:p${oneDirection}-8 py-8 z-20`}
+              className={`relative flex-1 bg-${theme}-back rounded-tl-5xl md:pl-8 py-8 z-20`}
             >
               {activeRoute.replace("/", "") === "" || token ? (
                 <Outlet />

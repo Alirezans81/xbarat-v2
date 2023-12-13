@@ -42,65 +42,67 @@ export default function Home({ isDemo }) {
   useEffect(() => refreshPendingExchange(), []);
 
   return (
-    <div className="grid grid-cols-11 grid-rows-6 h-full w-full overflow-y-auto gap-x-10 gap-y-7">
-      <div
-        className={`bg-${theme} rounded-3xl flex justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5`}
-      >
-        <Exchanging
-          selectedCurrecnyPair={selectedCurrecnyPair}
-          setSelectedCurrencnyPair={setSelectedCurrencnyPair}
-          formDefaultRate={formDefaultRate}
-          rateIsReversed={rateIsReversed}
-          setRateIsReversed={setRateIsReversed}
-          refreshPendingExchange={refreshPendingExchange}
-          setFormDefaultRate={setFormDefaultRate}
-          selectedSourceIndex={selectedSourceIndex}
-          setSelectedSourceIndex={setSelectedSourceIndex}
-          availableTargets={availableTargets}
-          selectedTargetIndex={selectedTargetIndex}
-          setAvailableTargets={setAvailableTargets}
-          setSelectedTargetIndex={setSelectedTargetIndex}
-          rateInputRef={rateInputRef}
-          focusOnInput={focusOnInput}
-          isDemo={isDemo}
-        />
-      </div>
-      <div
-        className={`bg-${theme} xl:rounded-3xl lg:rounded-l-3xl row-span-3 xl:col-span-5 lg:col-span-7 md:col-span-6 md:rounded-l-3xl`}
-      >
-        <WatchList
-          setSelectedSourceIndex={setSelectedSourceIndex}
-          availableTargets={availableTargets}
-          setSelectedTargetIndex={setSelectedTargetIndex}
-        />
-      </div>
-      <div
-        className={`bg-${theme} lg:rounded-3xl xl:rounded-l-3xl xl:rounded-r-none row-span-3 xl:col-span-3 lg:col-span-3 lg:hidden xl:block`}
-      >
-        <OtherExcahnges
-          selectedCurrecnyPair={selectedCurrecnyPair}
-          rateIsReversed={rateIsReversed}
-        />
-      </div>
-      <div
-        className={`bg-${theme} lg:rounde xl:rounded-3xl row-span-3 xl:col-span-3 lg:col-span-4 lg:rounded-3xl md:col-span-5 md:rounded-3xl`}
-      >
-        <PendingExchange
-          pendingExchanges={pendingExchanges}
-          refreshPendingExchange={refreshPendingExchange}
-        />
-      </div>
-      <div
-        className={`bg-${theme} rounded-${oneDirection}-3xl row-span-3 xl:col-span-8 lg:col-span-7 md:col-span-6`}
-      >
-        <TableExchange
-          selectedSourceIndex={selectedSourceIndex}
-          availableTargets={availableTargets}
-          selectedTargetIndex={selectedTargetIndex}
-          selectedCurrecnyPair={selectedCurrecnyPair}
-          setFormDefaultRate={setFormDefaultRate}
-          focusOnInput={focusOnInput}
-        />
+    <div className="absolute w-full h-full overflow-y-auto px-8 md:p-0">
+      <div className="grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16">
+        <div
+          className={`order-2 md:order-1 h-72 bg-${theme} rounded-3xl flex justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12`}
+        >
+          <Exchanging
+            selectedCurrecnyPair={selectedCurrecnyPair}
+            setSelectedCurrencnyPair={setSelectedCurrencnyPair}
+            formDefaultRate={formDefaultRate}
+            rateIsReversed={rateIsReversed}
+            setRateIsReversed={setRateIsReversed}
+            refreshPendingExchange={refreshPendingExchange}
+            setFormDefaultRate={setFormDefaultRate}
+            selectedSourceIndex={selectedSourceIndex}
+            setSelectedSourceIndex={setSelectedSourceIndex}
+            availableTargets={availableTargets}
+            selectedTargetIndex={selectedTargetIndex}
+            setAvailableTargets={setAvailableTargets}
+            setSelectedTargetIndex={setSelectedTargetIndex}
+            rateInputRef={rateInputRef}
+            focusOnInput={focusOnInput}
+            isDemo={isDemo}
+          />
+        </div>
+        <div
+          className={`order-1 md:order-2 h-72 bg-${theme} xl:rounded-3xl lg:rounded-l-3xl row-span-3 xl:col-span-5 lg:col-span-7 md:rounded-r-none md:col-span-6 md:rounded-l-3xl col-span-12 rounded-3xl`}
+        >
+          <WatchList
+            setSelectedSourceIndex={setSelectedSourceIndex}
+            availableTargets={availableTargets}
+            setSelectedTargetIndex={setSelectedTargetIndex}
+          />
+        </div>
+        <div
+          className={`order-4 md:order-3 h-72 bg-${theme} lg:rounded-3xl xl:rounded-l-3xl xl:rounded-r-none row-span-3 xl:col-span-3 lg:col-span-5 md:col-span-5 md:rounded-3xl col-span-12 rounded-3xl`}
+        >
+          <OtherExcahnges
+            selectedCurrecnyPair={selectedCurrecnyPair}
+            rateIsReversed={rateIsReversed}
+          />
+        </div>
+        <div
+          className={`order-5 md:order-4 h-72 bg-${theme} lg:rounde xl:rounded-3xl row-span-3 xl:col-span-3 lg:col-span-6 lg:rounded-r-none md:col-span-6 md:rounded-r-none col-span-12 rounded-3xl`}
+        >
+          <PendingExchange
+            pendingExchanges={pendingExchanges}
+            refreshPendingExchange={refreshPendingExchange}
+          />
+        </div>
+        <div
+          className={`order-3 md:order-5 min-h-72 md:h-72 mt-2 pb-2 md:pb-0 md:mt-0 bg-${theme} rounded-${oneDirection}-3xl row-span-3 xl:col-span-8 lg:col-span-11 md:col-span-11 col-span-12 rounded-3xl`}
+        >
+          <TableExchange
+            selectedSourceIndex={selectedSourceIndex}
+            availableTargets={availableTargets}
+            selectedTargetIndex={selectedTargetIndex}
+            selectedCurrecnyPair={selectedCurrecnyPair}
+            setFormDefaultRate={setFormDefaultRate}
+            focusOnInput={focusOnInput}
+          />
+        </div>
       </div>
     </div>
   );

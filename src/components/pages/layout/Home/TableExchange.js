@@ -182,8 +182,8 @@ export default function AllOreders({
     selectedCurrecnyPair.currency_destination
   ) {
     return (
-      <div className="p-3 grid grid-cols-2 gap-y-2 mr-2">
-        <div className="row-col-1 flex flex-col items-center overflow-visible">
+      <div className="p-3 grid grid-cols-2 gap-y-16 mr-2">
+        <div className="col-span-2  md:col-span-1 relative flex flex-col items-center overflow-visible">
           <div
             className={`flex items-center absolute -mt-8 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
           >
@@ -222,7 +222,7 @@ export default function AllOreders({
             />
           </div>
         </div>
-        <div className="row-col-1 flex flex-col items-center">
+        <div className="col-span-2 md:col-span-1 relative flex flex-col items-center">
           <div
             className={`flex items-center absolute -mt-8 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
           >
@@ -264,9 +264,9 @@ export default function AllOreders({
     );
   } else {
     return (
-      <div className="h-full w-full flex justify-center items-center">
+      <div className="h-full w-full flex justify-center items-center px-10">
         <span
-          className={`text-3xl text-center-important text-${oppositeTheme} font-${font}-thin`}
+          className={`text-2xl md:text-3xl text-center-important text-${oppositeTheme} font-${font}-thin`}
         >
           {lang["select-currency-error"] + "."}
         </span>

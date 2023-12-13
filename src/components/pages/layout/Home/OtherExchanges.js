@@ -58,7 +58,9 @@ export default function OtherExchanges({ selectedCurrecnyPair }) {
         </div>
       ) : (
         <div className="flex-1 flex justify-center items-center">
-          <span className={`font-${font}-thin text-3xl text-${oppositeTheme}`}>
+          <span
+            className={`font-${font}-thin -ml-4 md:-ml-0 text-2xl md:text-3xl text-${oppositeTheme}`}
+          >
             {lang["no-data"]}
           </span>
         </div>
