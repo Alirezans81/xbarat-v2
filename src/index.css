@@ -427,3 +427,7 @@ body {
 .min-h-72 {
   min-height: 18rem;
 }
+
+.-mt-13 {
+  margin-top: -3.25rem;
+}

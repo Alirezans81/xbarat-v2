@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLanguageSetState } from "../../Providers/LanguageProvider";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { CustomDropdown, CustomItem } from "./CustomDropdown";
+import { CustomDropdown2, CustomItem2 } from "./CustomDropdown2";
 import {
   useGetLanguageFile,
   useGetLanguages,
@@ -44,14 +45,63 @@ export default function LanguageSwitcher({ with_background }) {
   }, [selectedLanguageIndex]);
 
   if (with_background) {
-    return <div>LanguageSwitcher</div>;
+    return (
+      <div className="flex items-center">
+        <CustomDropdown2
+          label={
+            selectedLanguageIndex >= 0 && languages[selectedLanguageIndex]
+              ? languages[selectedLanguageIndex].symbol
+              : ""
+          }
+        >
+          {languages.map((language, index) => {
+            if (index === 0 && index === languages.length - 1) {
+              return (
+                <CustomItem2
+                  key={index}
+                  className="rounded-xl"
+                  onClick={() => setSelectedLanguageIndex(index)}
+                >
+                  {language && language.symbol ? language.symbol : "error"}
+                </CustomItem2>
+              );
+            } else if (index === 0) {
+              return (
+                <CustomItem2
+                  key={index}
+                  className="rounded-t-xl"
+                  onClick={() => setSelectedLanguageIndex(index)}
+                >
+                  {language && language.symbol ? language.symbol : "error"}
+                </CustomItem2>
+              );
+            } else if (index === languages.length - 1) {
+              return (
+                <CustomItem2
+                  key={index}
+                  className="rounded-b-xl"
+                  onClick={() => setSelectedLanguageIndex(index)}
+                >
+                  {language && language.symbol ? language.symbol : "error"}
+                </CustomItem2>
+              );
+            } else {
+              return (
+                <CustomItem2
+                  key={index}
+                  onClick={() => setSelectedLanguageIndex(index)}
+                >
+                  {language && language.symbol ? language.symbol : "error"}
+                </CustomItem2>
+              );
+            }
+          })}
+        </CustomDropdown2>
+      </div>
+    );
   } else {
     return (
       <div className="flex items-center">
-        <img
-          className="w-7 h-7 mx-2"
-          src={require(`../../Images/common/globe-${oppositeTheme}.png`)}
-        />
         <CustomDropdown
           label={
             selectedLanguageIndex >= 0 && languages[selectedLanguageIndex]
