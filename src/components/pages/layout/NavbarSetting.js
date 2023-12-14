@@ -15,7 +15,7 @@ export default function NavbarSetting({ setLinks }) {
   const lang = useLanguageState();
   const font = useFontState();
   const { startComplete: direction } = useDirectionState();
-  const containerPositionClass = direction === "right" ? "right-2" : "left-24";
+  const containerPositionClass = direction === "right" ? "right-2" : "left-32";
   const arrowPositionClass = direction === "right" ? "right-7" : "left-32";
 
   const [allLinks, setAllLinks] = useState([

@@ -40,7 +40,7 @@ export default function Personalnfo({ userInfo }) {
 
   return (
     <div
-      className={`bg-${theme}-back rounded-3xl w-full relative grid grid-cols-2 grid-rows-2 px-5 py-4`}
+      className={`bg-${theme}-back rounded-3xl w-full relative grid grid-cols-2 grid-rows-2 gap-y-2 lg:gap-y-0 px-5 py-4`}
     >
       <Formik
         innerRef={formikRef}
@@ -59,7 +59,7 @@ export default function Personalnfo({ userInfo }) {
                 updatePhoneMine(values);
               }}
             />
-            <div className="col-span-1 row-span-1 flex flex-col">
+            <div className="col-span-2 lg:col-span-1 row-span-1 flex flex-col">
               <span className={`text-gray font-${font}-regular`}>
                 {lang["email"]}
               </span>
@@ -80,7 +80,7 @@ export default function Personalnfo({ userInfo }) {
                 </span>
               )}
             </div>
-            <div className="col-span-1 row-span-1 flex flex-col">
+            <div className="col-span-2 lg:col-span-1 row-span-1 flex flex-col">
               <span className={`text-gray font-${font}-regular`}>
                 {lang["phone-number"]}
               </span>
@@ -100,7 +100,7 @@ export default function Personalnfo({ userInfo }) {
                 </span>
               )}
             </div>
-            <div className="col-span-2 row-span-1 flex flex-col">
+            <div className="col-span-1 md:col-span-2 row-span-1 flex flex-col">
               <span className={`text-gray font-${font}-regular`}>
                 {lang["referral-code"]}
               </span>

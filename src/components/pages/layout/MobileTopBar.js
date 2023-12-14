@@ -9,7 +9,9 @@ export default function MobileTopBar() {
 
   return (
     <div className="flex justify-between w-full px-4 pt-5">
-      <MyMenu />
+      <div className="relative">
+        <MyMenu />
+      </div>
       <Notch />
       <Link to="/profile" className="pb-5">
         <img

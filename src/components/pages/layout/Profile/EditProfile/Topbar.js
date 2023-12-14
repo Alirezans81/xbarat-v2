@@ -47,8 +47,8 @@ export default function Topbar({ userInfo }) {
 
   return (
     <>
-      <div className="w-full flex justify-between items-start">
-        <div className="flex gap-3 items-center">
+      <div className="w-full flex justify-between items-start relative">
+        <div className="flex gap-3 items-center h-9">
           <Formik
             initialValues={{
               first_name:
@@ -107,15 +107,14 @@ export default function Topbar({ userInfo }) {
 
                     <img
                       ref={previewImageRef}
-                      className="w-16 h-16 rounded-full"
-                      style={{ objectFit: "cover" }}
+                      className="-mb-9 w-10 h-10 md:w-16 md:h-16 rounded-full object-cover"
                       src={require("../../../../../Images/pages/layout/Profile/edit-profile.png")}
                       alt="selected avatar"
                     />
                   </button>
                 ) : (
                   <img
-                    className="w-16 h-16 rounded-full"
+                    className="w-10 h-10 md:w-16 md:h-16 rounded-full"
                     style={{ objectFit: "cover" }}
                     src={
                       userInfo && userInfo.avatar
@@ -128,10 +127,10 @@ export default function Topbar({ userInfo }) {
                 <div className="flex flex-col">
                   <div className="flex gap-2 items-center">
                     {canEditNameAndAvatar ? (
-                      <div className="mb-2 flex gap-2">
+                      <div className="-mb-9 md:mb-2 flex gap-2">
                         <div className="flex flex-row gap-x-2">
                           <input
-                            className={`bg-${theme}-back focus-outline-blue px-2.5 font-mint-regular py-1 w-28 rounded-lg text-${oppositeTheme}`}
+                            className={`bg-${theme}-back focus-outline-blue px-2.5 font-mint-regular py-1 text-xs md:text-base w-20 md:w-28 rounded-lg text-${oppositeTheme}`}
                             type="text"
                             onChange={handleChange("first_name")}
                             onBlur={handleBlur("first_name")}
@@ -139,7 +138,7 @@ export default function Topbar({ userInfo }) {
                             placeholder={lang["first-name"]}
                           />
                           <input
-                            className={`bg-${theme}-back focus-outline-blue px-2.5 font-mint-regular py-1 w-28 rounded-lg text-${oppositeTheme}`}
+                            className={`bg-${theme}-back focus-outline-blue px-2.5 font-mint-regular py-1 text-xs md:text-base w-20 md:w-28 rounded-lg text-${oppositeTheme}`}
                             type="text"
                             onChange={handleChange("last_name")}
                             onBlur={handleBlur("last_name")}
@@ -167,7 +166,7 @@ export default function Topbar({ userInfo }) {
                     ) : (
                       <div className="flex gap-2 items-center -mt-0.5">
                         <span
-                          className={`font-${font}-bold text-xl pt-2.5 text-${oppositeTheme}`}
+                          className={`font-${font}-bold whitespace-nowrap text-sm md:text-xl pt-2.5 text-${oppositeTheme}`}
                         >
                           {userInfo["first_name"] + " " + userInfo["last_name"]}
                         </span>
@@ -193,7 +192,10 @@ export default function Topbar({ userInfo }) {
             )}
           </Formik>
         </div>
-        <button onClick={openChangePasswordModal} className="text-blue">
+        <button
+          onClick={openChangePasswordModal}
+          className="text-blue text-xs md:text-base absolute right-0"
+        >
           {lang["change-password"]}
         </button>
       </div>
