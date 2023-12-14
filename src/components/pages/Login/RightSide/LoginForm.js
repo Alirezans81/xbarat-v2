@@ -181,7 +181,7 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
               {validationErrors.password}
             </span>
           )}
-          <div className="flex justify-between items-center mt-2">
+          <div className="flex flex-col-reverse gap-y-3 sm:flex-row justify-between sm:items-center mt-2">
             <div className="flex items-center">
               <button type="button" onClick={ToggleRememberMeCheck}>
                 <img

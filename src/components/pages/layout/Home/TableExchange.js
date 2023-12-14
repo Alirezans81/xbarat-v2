@@ -182,8 +182,8 @@ export default function AllOreders({
     selectedCurrecnyPair.currency_destination
   ) {
     return (
-      <div className="p-3 grid grid-cols-2 gap-y-2 mr-2">
-        <div className="row-col-1 flex flex-col items-center overflow-visible">
+      <div className="p-3 grid grid-cols-2 gap-y-16 mr-2">
+        <div className="col-span-2  md:col-span-1 relative flex flex-col items-center overflow-visible">
           <div
             className={`flex items-center absolute -mt-8 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
           >
@@ -210,7 +210,7 @@ export default function AllOreders({
               </span>
             </div>
           </div>
-          <div className="w-full flex-1 pt-4 px-10">
+          <div className="w-full flex-1 pt-4 px-5">
             <CustomTable
               heads={source_to_target_head}
               rows={source_to_target_data}
@@ -222,7 +222,7 @@ export default function AllOreders({
             />
           </div>
         </div>
-        <div className="row-col-1 flex flex-col items-center">
+        <div className="col-span-2 md:col-span-1 relative flex flex-col items-center">
           <div
             className={`flex items-center absolute -mt-8 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
           >
@@ -249,7 +249,7 @@ export default function AllOreders({
               </span>
             </div>
           </div>
-          <div className="w-full flex-1 pt-4 px-10">
+          <div className="w-full flex-1 pt-4 px-5">
             <CustomTable
               heads={target_to_source_head}
               rows={target_to_source_data}
@@ -264,8 +264,10 @@ export default function AllOreders({
     );
   } else {
     return (
-      <div className="h-full w-full flex justify-center items-center">
-        <span className={`text-3xl text-${oppositeTheme} font-${font}-thin`}>
+      <div className="h-full w-full flex justify-center items-center px-10">
+        <span
+          className={`text-2xl md:text-3xl text-center-important text-${oppositeTheme} font-${font}-thin`}
+        >
           {lang["select-currency-error"] + "."}
         </span>
       </div>

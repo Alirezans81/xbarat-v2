@@ -8,6 +8,7 @@ import {
 } from "../../../../Providers/IsPagesModalOpenProvider";
 import { useUserState } from "../../../../Providers/UserProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
+import { Link } from "react-router-dom";
 
 export default function LeftSide() {
   const lang = useLanguageState();
@@ -25,18 +26,22 @@ export default function LeftSide() {
 
   return (
     <div dir="ltr" className="flex">
-      <img
-        className="h-16 w-h-16"
-        src={require("../../../../Images/pages/layout/logo.png")}
-        alt="logo"
-      />
+      <Link to="/">
+        <img
+          className="h-16 w-h-16"
+          src={require("../../../../Images/pages/layout/logo.png")}
+          alt="logo"
+        />
+      </Link>
       <div className={`flex flex-col justify-center ml-2 pt-1.5`}>
         <div className="flex justify-start items-start">
-          <h1
-            className={`font-${font}-bold text-5xl text-yellow-gradient pt-1 -mt-1 -mb-3`}
-          >
-            {lang["logo-header"]}
-          </h1>
+          <Link to="/">
+            <h1
+              className={`font-${font}-bold text-5xl text-yellow-gradient pt-1 -mt-1 -mb-3`}
+            >
+              {lang["logo-header"]}
+            </h1>
+          </Link>
           {userInfo && userInfo["is_admin"] && (
             <button
               onClick={togglePagesModalOpen}
@@ -53,9 +58,11 @@ export default function LeftSide() {
             </button>
           )}
         </div>
-        <h5 className={`text-${oppositeTheme} font-${font}-thin text-base`}>
-          {font !== "Fa" ? lang["slogan"] : "⠀"}
-        </h5>
+        <Link to="/">
+          <h5 className={`text-${oppositeTheme} font-${font}-thin text-base`}>
+            {font !== "Fa" ? lang["slogan"] : "⠀"}
+          </h5>
+        </Link>
       </div>
     </div>
   );

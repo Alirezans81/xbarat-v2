@@ -93,7 +93,7 @@ export default function NationalInfo({ userInfo }) {
 
   return (
     <div
-      className={`bg-${theme}-back rounded-3xl w-full flex-1 relative grid grid-cols-2 grid-rows-2 px-5 py-4`}
+      className={`bg-${theme}-back rounded-3xl w-full flex-1 relative grid grid-cols-2 grid-rows-2 px-5 py-4 gap-y-2`}
     >
       <EditButton
         canEdit={canEdit}

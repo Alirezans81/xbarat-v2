@@ -25,6 +25,20 @@ export default function PendingRequests({
     setShowOrdersType(showOrdersType !== "transfer" ? "transfer" : "");
   };
 
+  const getQuantityOfCards = () => {
+    if (window.innerWidth >= 1280) {
+      return 4;
+    } else if (window.innerWidth >= 1024) {
+      return 3;
+    } else if (window.innerWidth >= 768) {
+      return 2;
+    } else if (window.innerWidth >= 640) {
+      return 2;
+    } else {
+      return 1;
+    }
+  };
+
   const resetPending = () => {
     if (
       allPendingOrders &&
@@ -77,20 +91,25 @@ export default function PendingRequests({
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex flex-row w-full justify-between items-center">
+      <div className="flex flex-col md:flex-row w-full gap-y-0.5 justify-between md:items-center">
         <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
           {lang["pending-requests"]}
         </span>
-        <FilterButtons
-          showOrdersType={showOrdersType}
-          toggleShowDepositOrders={toggleShowDepositOrders}
-          toggleShowWithdrawalOrders={toggleShowWithdrawalOrders}
-          toggleShowTransferOrders={toggleShowTransferOrders}
-        />
+        <div className="w-full md:w-auto">
+          <FilterButtons
+            showOrdersType={showOrdersType}
+            toggleShowDepositOrders={toggleShowDepositOrders}
+            toggleShowWithdrawalOrders={toggleShowWithdrawalOrders}
+            toggleShowTransferOrders={toggleShowTransferOrders}
+          />
+        </div>
       </div>
       <div className="flex-1 mt-3 px-7 relative">
         {pendingOrders.length !== 0 ? (
-          <CustomSlider slidesToShow={4} slidesToScroll={4}>
+          <CustomSlider
+            slidesToShow={getQuantityOfCards()}
+            slidesToScroll={getQuantityOfCards()}
+          >
             {pendingOrders.map((pendingOrder, index) => (
               <div
                 key={index}

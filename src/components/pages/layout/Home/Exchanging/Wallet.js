@@ -24,7 +24,7 @@ export default function Wallet({ balance, currency, pending, locked }) {
         {(pending || pending !== 0) && (
           <span
             dir="ltr"
-            className={`w-fit text-sm font-${font}-regular text-green`}
+            className={`w-fit text-sm whitespace-nowrap font-${font}-regular text-green`}
           >
             {"+ " + addComma(pending) + " pending"}
           </span>
@@ -32,7 +32,7 @@ export default function Wallet({ balance, currency, pending, locked }) {
         {(locked || locked !== 0) && (
           <span
             dir="ltr"
-            className={`w-fit text-sm font-${font}-regular text-red -mt-1`}
+            className={`w-fit text-sm whitespace-nowrap font-${font}-regular text-red -mt-1`}
           >
             {"- " + addComma(locked) + " locked"}
           </span>

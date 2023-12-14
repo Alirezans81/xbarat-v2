@@ -32,38 +32,40 @@ export default function Wallet() {
   }, []);
 
   return (
-    <div className="h-full w-full grid grid-cols-12 grid-rows-6 gap-x-10 gap-y-7">
-      <div
-        className={`col-span-3 row-span-3 flex flex-col gap-y-4 bg-${theme} p-5 rounded-3xl`}
-      >
-        <div className={`flex-1`}>
-          <QuickDeposit refreshPendingRequests={refreshPendingRequests} />
+    <div className="absolute w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6">
+      <div className="grid grid-cols-12 grid-rows-6 md:gap-x-10 gap-y-7 pb-16">
+        <div
+          className={`h-72 col-span-3 hidden xl:flex row-span-3 flex-col gap-y-4 bg-${theme} p-5 rounded-3xl`}
+        >
+          <div className={`flex-1`}>
+            <QuickDeposit refreshPendingRequests={refreshPendingRequests} />
+          </div>
+          <div className={`flex-1`}>
+            <LastDeposit
+              refreshPendingRequests={refreshPendingRequests}
+              lastDeposit={
+                pendingRequests &&
+                pendingRequests.deposit &&
+                pendingRequests.deposit[0]
+                  ? pendingRequests.deposit[0]
+                  : null
+              }
+            />
+          </div>
         </div>
-        <div className={`flex-1`}>
-          <LastDeposit
+        <div
+          className={`h-72 col-span-12 xl:col-span-9 row-span-3 bg-${theme} p-5 rounded-3xl md:rounded-r-none`}
+        >
+          <Balance refreshPendingRequests={refreshPendingRequests} />
+        </div>
+        <div
+          className={`-mt-3 md:-mt-0 h-auto md:h-72 col-span-12 row-span-3 bg-${theme} p-5 rounded-3xl md:rounded-r-none pb-10`}
+        >
+          <PendingRequests
             refreshPendingRequests={refreshPendingRequests}
-            lastDeposit={
-              pendingRequests &&
-              pendingRequests.deposit &&
-              pendingRequests.deposit[0]
-                ? pendingRequests.deposit[0]
-                : null
-            }
+            pendingRequests={pendingRequests}
           />
         </div>
-      </div>
-      <div
-        className={`col-span-9 row-span-3 bg-${theme} p-5 rounded-${oneDirection}-3xl`}
-      >
-        <Balance refreshPendingRequests={refreshPendingRequests} />
-      </div>
-      <div
-        className={`col-span-12 row-span-3 bg-${theme} p-5 rounded-${oneDirection}-3xl`}
-      >
-        <PendingRequests
-          refreshPendingRequests={refreshPendingRequests}
-          pendingRequests={pendingRequests}
-        />
       </div>
     </div>
   );

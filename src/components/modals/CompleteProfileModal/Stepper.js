@@ -18,7 +18,9 @@ export default function Stepper({ step }) {
     return (
       <div className="flex flex-row items-center pl-12 pr-14 pt-12">
         <div className={step < 1 ? notActiveCircle : activeCircle}>
-          <div className={`-left-8 absolute -top-14 text-center font-${font}-regular`}>
+          <div
+            className={`-left-8 absolute -top-14 text-center-important font-${font}-regular`}
+          >
             <span className={step < 1 ? notActiveText : activeText}>
               {lang["personal-information"]}
             </span>
@@ -26,7 +28,9 @@ export default function Stepper({ step }) {
         </div>
         <div className={step < 2 ? notActiveLine : activeLine} />
         <div className={step < 2 ? notActiveCircle : activeCircle}>
-          <div className={`-left-8 absolute -top-14 text-center font-${font}-regular`}>
+          <div
+            className={`-left-8 absolute -top-14 text-center-important font-${font}-regular`}
+          >
             <span className={step < 2 ? notActiveText : activeText}>
               {lang["national-information"]}
             </span>
@@ -34,7 +38,9 @@ export default function Stepper({ step }) {
         </div>
         <div className={step < 3 ? notActiveLine : activeLine} />
         <div className={step < 3 ? notActiveCircle : activeCircle}>
-          <div className={`-left-8 absolute -top-14 text-center font-${font}-regular`}>
+          <div
+            className={`-left-8 absolute -top-14 text-center-important font-${font}-regular`}
+          >
             <span className={step < 3 ? notActiveText : activeText}>
               {lang["upload-document"]}
             </span>
@@ -42,7 +48,9 @@ export default function Stepper({ step }) {
         </div>
         <div className={step < 4 ? notActiveLine : activeLine} />
         <div className={step < 4 ? notActiveCircle : activeCircle}>
-          <div className={`-left-8 absolute -top-14 text-center font-${font}-regular`}>
+          <div
+            className={`-left-8 absolute -top-14 text-center-important font-${font}-regular`}
+          >
             <span className={step < 4 ? notActiveText : activeText}>
               {lang["bank-information"]}
             </span>

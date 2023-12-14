@@ -12,11 +12,11 @@ export default function DocumentInfo({ userInfo }) {
 
   return (
     <div
-      className={`bg-${theme}-back grid grid-cols-2 rounded-3xl w-full flex-1 px-5 py-4`}
+      className={`bg-${theme}-back grid grid-cols-2 gap-y-2 lg:gap-y-0 rounded-3xl w-full flex-1 px-5 py-4`}
     >
       {userInfo && userInfo.document && (
         <>
-          <div className="flex flex-col col-span-1">
+          <div className="flex flex-col col-span-2 lg:col-span-1">
             <span className={`font-${font}-regular text-gray`}>
               {lang["number-of-document"]}
             </span>
@@ -24,7 +24,7 @@ export default function DocumentInfo({ userInfo }) {
               {userInfo && userInfo.identity_code ? userInfo.identity_code : ""}
             </span>
           </div>
-          <div className="flex flex-col col-span-1">
+          <div className="flex flex-col col-span-2 lg:col-span-1">
             <span className={`font-${font}-regular text-gray`}>
               {lang["document"]}
             </span>

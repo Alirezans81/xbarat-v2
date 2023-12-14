@@ -34,11 +34,13 @@ export default function OtherExchanges({ selectedCurrecnyPair }) {
   }, [selectedCurrecnyPair]);
 
   return (
-    <div className="px-5 py-3 h-full flex flex-col w-10/12">
-      <span className={`text-2xl text-${oppositeTheme} mx-0.5`}>
+    <div className="pl-5 py-3 h-full flex flex-col w-full">
+      <span
+        className={`text-2xl font-${font}-bold text-${oppositeTheme} mx-0.5 text-left`}
+      >
         {lang["other-exchanges"]}
       </span>
-      {exchanges ? (
+      {exchanges && exchanges.length ? (
         <div className="w-11/12 px-5 flex flex-col justify-center">
           <CustomSlider slidesToShow={1} slidesToScroll={1} infinite>
             {exchanges.map((exchange, index) => (
@@ -56,7 +58,9 @@ export default function OtherExchanges({ selectedCurrecnyPair }) {
         </div>
       ) : (
         <div className="flex-1 flex justify-center items-center">
-          <span className={`font-${font}-thin text-3xl text-${oppositeTheme}`}>
+          <span
+            className={`font-${font}-thin -ml-4 md:-ml-0 text-2xl md:text-3xl text-${oppositeTheme}`}
+          >
             {lang["no-data"]}
           </span>
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import CustomSlider from "../../../common/CustomSlider";
@@ -12,15 +12,31 @@ export default function Balance({ refreshPendingRequests }) {
   const lang = useLanguageState();
   const font = useFontState();
 
+  const getQuantityOfCards = () => {
+    if (window.innerWidth >= 1280) {
+      return 3;
+    } else if (window.innerWidth >= 1024) {
+      return 4;
+    } else if (window.innerWidth >= 768) {
+      return 4;
+    } else if (window.innerWidth >= 640) {
+      return 2;
+    } else {
+      return 1;
+    }
+  };
+
   const wallet = useWalletState();
   const walletAssets = wallet && wallet.walletAssets ? wallet.walletAssets : [];
 
   if (walletAssets.length === 0) {
     return (
       <div className="h-full flex flex-col gap-y-2">
-        <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
-          {lang["your-balance"]}
-        </span>
+        <div className="w-full flex justify-between">
+          <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
+            {lang["your-balance"]}
+          </span>
+        </div>
         <div className="flex-1 px-7 relative">
           <div className="absolute left-0 h-full w-full top-0 flex justify-center items-center">
             <span
@@ -35,9 +51,11 @@ export default function Balance({ refreshPendingRequests }) {
   } else if (walletAssets.length < 3) {
     return (
       <div className="h-full flex flex-col gap-y-2">
-        <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
-          {lang["your-balance"]}
-        </span>
+        <div className="w-full flex justify-between">
+          <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
+            {lang["your-balance"]}
+          </span>
+        </div>
         <div className="flex-1 px-7 relative flex flex-row justify-center items-center w-full">
           {walletAssets.map((walletAsset, index) => (
             <div
@@ -56,12 +74,18 @@ export default function Balance({ refreshPendingRequests }) {
   } else {
     return (
       <div className="h-full flex flex-col gap-y-2">
-        <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
-          {lang["your-balance"]}
-        </span>
+        <div className="w-full flex justify-between">
+          <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
+            {lang["your-balance"]}
+          </span>
+        </div>
         <div className="flex-1 px-7 relative">
           {walletAssets.length !== 0 ? (
-            <CustomSlider slidesToScroll={3} slidesToShow={3} infinite>
+            <CustomSlider
+              slidesToScroll={getQuantityOfCards()}
+              slidesToShow={getQuantityOfCards()}
+              infinite
+            >
               {walletAssets.map((walletAsset, index) => (
                 <div
                   key={index}

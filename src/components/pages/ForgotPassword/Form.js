@@ -155,8 +155,8 @@ export default function Form({ setIsSplashScreenLoading }) {
           }}
         >
           <div className={`flex justify-between font-${font}-bold items-center mb-3`}>
-            <span className="text-blue text-3xl">
-              {lang["forgot-password"]}
+            <span className="text-blue text-xl xs:text-2xl sm:text-3xl">
+              {lang["forgot-password-label"]}
             </span>
             <Link
               to={"/login"}

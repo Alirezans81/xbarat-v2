@@ -32,6 +32,7 @@ import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 import CompleteProfileModal from "../components/modals/CompleteProfileModal";
 import { useModalDataSetState } from "../Providers/ModalDataProvider";
 import { useFontState } from "../Providers/FontProvider";
+import MobileTopBar from "../components/pages/layout/MobileTopBar";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -170,18 +171,25 @@ export default function Layout() {
           onClick={isPagesModalOpen ? togglePagesModal : () => {}}
           className="w-screen h-screen flex flex-col"
         >
-          <TopBar />
+          <div className="hidden md:block">
+            <TopBar />
+          </div>
+          <div className="block md:hidden">
+            <MobileTopBar />
+          </div>
           <div className="flex-1 flex h-5/6">
-            <Navbar links={links} />
+            <div className="hidden md:flex">
+              <Navbar links={links} />
+            </div>
             <div
-              className={`flex-1 max-h-full bg-${theme}-back rounded-t${oneDirection}-5xl p${oneDirection}-8 py-8 z-20`}
+              className={`relative flex-1 bg-${theme}-back rounded-tl-5xl md:pl-8 py-8 z-20`}
             >
               {activeRoute.replace("/", "") === "" || token ? (
                 <Outlet />
               ) : (
                 <div className="w-full h-full flex flex-col justify-center items-center">
                   <span
-                    className={`font-${font}-thin text-3xl text-${oppositeTheme} text-center`}
+                    className={`font-${font}-thin text-3xl text-${oppositeTheme} text-center-important`}
                   >
                     {lang["not-logged-in-error"] + "."}
                   </span>

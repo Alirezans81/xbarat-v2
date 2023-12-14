@@ -59,9 +59,9 @@ export default function RateType({
         <button
           className={
             !rateIsReversed
-              ? `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-light transition-all font-${font}-regular duration-500 rounded-${oneDirection}-full ` +
+              ? `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-center-important text-light transition-all font-${font}-regular duration-500 rounded-${oneDirection}-full ` +
                 activeButtonClass
-              : `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-${oppositeTheme} transition-all font-${font}-regular duration-500 rounded-${oneDirection}-full`
+              : `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-center-important text-${oppositeTheme} transition-all font-${font}-regular duration-500 rounded-${oneDirection}-full`
           }
           onClick={() => setRateIsReversed(false)}
         >
@@ -71,9 +71,9 @@ export default function RateType({
           disabled={!hasReversedRate}
           className={
             rateIsReversed
-              ? `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-light transition-all font-${font}-regular duration-500 rounded-${oppositOneDirection}-full ` +
+              ? `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-center-important text-light transition-all font-${font}-regular duration-500 rounded-${oppositOneDirection}-full ` +
                 activeButtonClass
-              : `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-${oppositeTheme} transition-all font-${font}-regular duration-500 rounded-${oppositOneDirection}-full`
+              : `flex-1 bg-${theme}-back pt-2 pb-1 text-xs text-center-important text-${oppositeTheme} transition-all font-${font}-regular duration-500 rounded-${oppositOneDirection}-full`
           }
           onClick={() => setRateIsReversed(true)}
         >

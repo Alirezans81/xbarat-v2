@@ -59,11 +59,13 @@ export default function Signup() {
             <ThemeSwitcher />
           </div>
           <div className="w-screen h-screen flex justify-evenly items-center">
-            <LeftSide />
-            <div
-              className={`bg-${theme}-glass rounded-3xl flex w-3/12 flex-row p-8 gap-x-10`}
-            >
-              <Form setIsSplashScreenLoading={setIsSplashScreenLoading} />
+            <div className="hidden lg:block my-auto">
+              <LeftSide />
+            </div>
+            <div className="flex justify-center items-center px-10">
+              <div className={`bg-${theme}-glass rounded-3xl login-width p-8`}>
+                <Form setIsSplashScreenLoading={setIsSplashScreenLoading} />
+              </div>
             </div>
           </div>
         </div>

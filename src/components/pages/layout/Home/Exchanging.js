@@ -46,6 +46,10 @@ export default function Exchanging({
       ? setTargetLabel(availableTargets[selectedTargetIndex].abbreviation)
       : setTargetLabel(lang["target"]);
   }, [selectedTargetIndex]);
+  useEffect(() => {
+    setSourceLabel(lang["source"]);
+    setTargetLabel(lang["target"]);
+  }, [lang]);
 
   const findCurrencyBalanceInWallet = () => {
     if (selectedSourceIndex >= 0) {

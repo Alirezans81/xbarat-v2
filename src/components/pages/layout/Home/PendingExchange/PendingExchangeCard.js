@@ -89,13 +89,13 @@ export default function PendingExchangeCard({
           </span>
         </div>
       </div>
-      <div className="flex gap-2 mt-2">
-        <button className="border-2 border-blue rounded-lg w-28 pt-0.5">
+      <div className="flex gap-2 mt-2 w-full px-6">
+        <button className="flex-1 border-2 border-blue rounded-lg pt-0.5">
           <span className={`font-${font}-bold text-blue`}>{lang["edit"]}</span>
         </button>
         <button
           onClick={openAreYouSureModal}
-          className="border-2 border-red rounded-lg w-28 pt-0.5"
+          className="border-2 border-red rounded-lg flex-1 pt-0.5"
         >
           <span className={`font-${font}-bold text-red`}>{lang["cancel"]}</span>
         </button>

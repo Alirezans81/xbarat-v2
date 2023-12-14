@@ -65,7 +65,9 @@ function CustomDropdown2({ children, label, className }) {
       style={buttonStyle}
     >
       <div className="max-h-40 pr-1.5 py-2">
-        <div className="max-h-36 overflow-y-scroll">{children}</div>
+        <div dir="ltr" className="max-h-36 overflow-y-scroll">
+          {children}
+        </div>
       </div>
     </Dropdown>
   );
