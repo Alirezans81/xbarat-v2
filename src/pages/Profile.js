@@ -1,27 +1,34 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useThemeState } from "../Providers/ThemeProvider";
-import { useDirectionState } from "../Providers/DirectionProvider";
 import EditProfile from "../components/pages/layout/Profile/EditProfile";
 import LastTickets from "../components/pages/layout/Profile/LastTickets";
 import { useLanguageState } from "../Providers/LanguageProvider";
 import cardsDark from "../Images/pages/layout/Profile/cardsDark.png";
 import cardsLight from "../Images/pages/layout/Profile/cardsLight.png";
+import { useFontState } from "../Providers/FontProvider";
 
 export default function Profile() {
   const navigate = useNavigate();
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
 
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const { one: oneDirection } = useDirectionState();
   function handleCards() {
     navigate("cards");
   }
 
   return (
     <div className="absolute w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6">
-      <div className="grid grid-cols-12 grid-rows-2 md:gap-x-10 gap-y-7 pb-16">
+      <div
+        className={`w-full bg-blue-gradient rounded-2xl flex justify-center md:hidden pt-5 pb-2.5 px-5`}
+      >
+        <span className={`text-2xl md:hidden text-light font-${font}-bold`}>
+          {lang["profile"]}
+        </span>
+      </div>
+      <div className="mt-5 md:mt-0 grid grid-cols-12 grid-rows-2 md:gap-x-10 gap-y-7 pb-36 md:pb-16">
         <div
           className={`col-span-12 md:col-span-5 row-span-2 bg-${theme} rounded-3xl`}
         >
@@ -43,7 +50,7 @@ export default function Profile() {
               />
             </button>
             <span
-              className={`flex justify-start ml-3 mt-4 text-${oppositeTheme}`}
+              className={`flex justify-center ml-3 mt-4 text-${oppositeTheme} whitespace-nowrap`}
               style={{ gridRow: 2, gridColumn: 1 }}
             >
               {lang["cards-profile"]}

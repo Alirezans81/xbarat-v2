@@ -409,11 +409,21 @@ body {
 }
 
 .w-preview-image-modal {
-  width: 45vw;
+  width: 70vw;
 }
 
 .h-preview-image-modal {
-  height: 70vh;
+  height: 35vh;
+}
+
+@media screen and (min-width: 768px) { 
+  .w-preview-image-modal {
+    width: 45vw;
+  }
+  
+  .h-preview-image-modal {
+    height: 70vh;
+  }
 }
 
 .w-88 {

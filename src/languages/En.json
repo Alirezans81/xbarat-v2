@@ -179,5 +179,6 @@
   "email-varification-message": "Your code is",
   "email-varification-code-error": "The code was not correct",
   "email-not-exist-error-message": "The email does not exist",
-  "forgot-password-label": "Forget Password"
+  "forgot-password-label": "Forget Password",
+  "profile": "Profile"
 }

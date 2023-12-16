@@ -11,7 +11,7 @@ export default function CopyText({ text }) {
   const font = useFontState();
 
   function copy() {
-    navigator.clipboard.writeText(text);
+    navigator && navigator.clipboard && navigator.clipboard.writeText(text);
   }
 
   if (text) {

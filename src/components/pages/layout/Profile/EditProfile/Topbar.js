@@ -47,7 +47,7 @@ export default function Topbar({ userInfo }) {
 
   return (
     <>
-      <div className="w-full flex justify-between items-start relative">
+      <div className="w-full flex justify-between items-center md:py-3">
         <div className="flex gap-3 items-center h-9">
           <Formik
             initialValues={{
@@ -89,7 +89,7 @@ export default function Topbar({ userInfo }) {
                       ref={profilePicRef}
                       type="file"
                       accept="image/*"
-                      className="w-0 h-0 absolute"
+                      className="w-0 h-0 hidden absolute"
                       name="avatar"
                       onChange={(event) => {
                         if (event.currentTarget.files[0]) {
@@ -107,7 +107,7 @@ export default function Topbar({ userInfo }) {
 
                     <img
                       ref={previewImageRef}
-                      className="-mb-9 w-10 h-10 md:w-16 md:h-16 rounded-full object-cover"
+                      className="w-10 h-10 md:w-16 md:h-16 rounded-full object-cover"
                       src={require("../../../../../Images/pages/layout/Profile/edit-profile.png")}
                       alt="selected avatar"
                     />
@@ -127,7 +127,7 @@ export default function Topbar({ userInfo }) {
                 <div className="flex flex-col">
                   <div className="flex gap-2 items-center">
                     {canEditNameAndAvatar ? (
-                      <div className="-mb-9 md:mb-2 flex gap-2">
+                      <div className="md:mb-2 flex gap-2">
                         <div className="flex flex-row gap-x-2">
                           <input
                             className={`bg-${theme}-back focus-outline-blue px-2.5 font-mint-regular py-1 text-xs md:text-base w-20 md:w-28 rounded-lg text-${oppositeTheme}`}
@@ -164,11 +164,11 @@ export default function Topbar({ userInfo }) {
                         </div>
                       </div>
                     ) : (
-                      <div className="flex gap-2 items-center -mt-0.5">
+                      <div className="flex gap-x-2 items-center -mt-0.5">
                         <span
                           className={`font-${font}-bold whitespace-nowrap text-sm md:text-xl pt-2.5 text-${oppositeTheme}`}
                         >
-                          {userInfo["first_name"] + " " + userInfo["last_name"]}
+                          {userInfo["get_full_name"]}
                         </span>
                         {userInfo && userInfo["is_verified"] && (
                           <button onClick={() => setCanEditNameAndAvatar(true)}>
@@ -181,23 +181,26 @@ export default function Topbar({ userInfo }) {
                       </div>
                     )}
                   </div>
-                  <span className={`font-${font}-regular text-gray -mt-1.5`}>
-                    {(userInfo && userInfo.personCode
-                      ? userInfo.personCode + " ("
-                      : "") +
-                      (userInfo && userInfo.role ? userInfo.role + ")" : "")}
-                  </span>
+                  {!canEditNameAndAvatar && (
+                    <span
+                      className={`text-sm md:text-base font-${font}-regular text-gray -mt-0.5 md:-mt-1`}
+                    >
+                      {userInfo && userInfo.code ? userInfo.code : ""}
+                    </span>
+                  )}
                 </div>
               </>
             )}
           </Formik>
         </div>
-        <button
-          onClick={openChangePasswordModal}
-          className="text-blue text-xs md:text-base absolute right-0"
-        >
-          {lang["change-password"]}
-        </button>
+        {!canEditNameAndAvatar && (
+          <button
+            onClick={openChangePasswordModal}
+            className="text-blue text-xs md:text-base"
+          >
+            {lang["change-password"]}
+          </button>
+        )}
       </div>
     </>
   );
