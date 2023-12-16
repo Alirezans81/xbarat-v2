@@ -9,9 +9,14 @@ import { useGetPendingExchanges } from "../apis/pages/Home/hooks";
 import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
 import { useTokenState } from "../Providers/TokenProvider";
 import WatchList from "../components/pages/layout/Home/WatchList";
+import { useLanguageState } from "../Providers/LanguageProvider";
+import { useFontState } from "../Providers/FontProvider";
 
 export default function Home({ isDemo }) {
   const theme = useThemeState();
+  const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const lang = useLanguageState();
+  const font = useFontState();
   const { one: oneDirection } = useDirectionState();
   const setLoading = useIsLoadingSplashScreenSetState();
   const token = useTokenState();
@@ -42,8 +47,15 @@ export default function Home({ isDemo }) {
   useEffect(() => refreshPendingExchange(), []);
 
   return (
-    <div className="absolute w-full h-full overflow-y-auto px-8 md:p-0">
-      <div className="grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16">
+    <div className="absolute flex flex-col it w-full h-full overflow-y-auto px-8 md:p-0">
+      <div
+        className={`w-full bg-blue-gradient rounded-2xl flex justify-center md:hidden pt-5 pb-2.5 px-5`}
+      >
+        <span className={`text-2xl md:hidden text-light font-${font}-bold`}>
+          {lang["home"]}
+        </span>
+      </div>
+      <div className="mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-36 md:pb-16">
         <div
           className={`order-2 md:order-1 h-72 bg-${theme} rounded-3xl flex justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12`}
         >

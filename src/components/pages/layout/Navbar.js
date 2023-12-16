@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Links from "./Navbar/Links";
 import ThemeSwitcher from "../../common/ThemeSwitcher";
 import { Link } from "react-router-dom";
@@ -6,13 +6,16 @@ import { CustomTooltip } from "../../common/CustomTooltip";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useLogout } from "../../../apis/pages/Layout/hooks";
+import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 
 export default function Navbar({ links }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const setLoading = useIsLoadingSplashScreenSetState();
 
   const { logout, error, isLoading } = useLogout();
+  useEffect(() => setLoading(isLoading), [isLoading]);
 
   return (
     <div className="flex flex-col transition-all duration-200 justify-between py-6 items-center">

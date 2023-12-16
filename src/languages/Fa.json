@@ -179,5 +179,6 @@
   "email-varification-message": "کد شما است",
   "email-varification-code-error": "کد نامعتبر است",
   "email-not-exist-error-message": "ایمیل وجود ندارد",
-  "forgot-password-label": "فراموشی گذرواژه"
+  "forgot-password-label": "فراموشی گذرواژه",
+  "profile": "پروفایل"
 }

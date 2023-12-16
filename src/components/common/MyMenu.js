@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { slide as Menu } from "react-burger-menu";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { Link } from "react-router-dom";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useFontState } from "../../Providers/FontProvider";
+import ThemeSwitcher from "./ThemeSwitcher";
+import { CustomTooltip } from "./CustomTooltip";
+import { useLogout } from "../../apis/pages/Layout/hooks";
+import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 
 export default function MyMenu() {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
+  const setLoading = useIsLoadingSplashScreenSetState();
 
-  const showSettings = (event) => {
-    event.preventDefault();
-  };
+  const { logout, error, isLoading } = useLogout();
+  useEffect(() => setLoading(isLoading), [isLoading]);
 
   return (
     <Menu
@@ -43,6 +47,26 @@ export default function MyMenu() {
             {lang["wallet"]}
           </span>
         </Link>
+        <div className="w-full mt-5 flex justify-between items-center">
+          <ThemeSwitcher horizental />
+          <Link
+            onClick={() => logout()}
+            to="/login"
+            data-tooltip-id="logout-tooltip"
+          >
+            <div className="relative top-0 left-0">
+              <img className="w-8 h-8 opacity-0" />
+              <img
+                className="w-8 h-8 transition-all duration-100 hover:opacity-0 absolute top-0 left-0"
+                src={require("../../Images/pages/layout/Navbar/logout-gray.png")}
+              />
+              <img
+                className="w-8 h-8 transition-all duration-100 opacity-0 hover:opacity-100 absolute top-0 left-0"
+                src={require(`../../Images/pages/layout/Navbar/logout-${oppositeTheme}.png`)}
+              />
+            </div>
+          </Link>
+        </div>
       </div>
     </Menu>
   );
