@@ -18,68 +18,41 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   function handleShow() {
     updateShowState(assetData.currency_abb);
   }
+  // border-2 border-solid border-white
   return (
     <>
       <div
-        className={`bg-${theme}-back h-full rounded-3xl mb-0 mt-0 flex flex-col`}
+        className={`bg-${theme}-back h-full rounded-3xl mb-0 mt-0 w-full flex flex-row`}
         style={{ gridRow: assetIndex, gridColumn: 1 }}
       >
-        <div className="w-full h-full bg-transparent grid grid-rows-1 grid-cols-10">
           <div
-            className="h-full w-52 flex flex-col"
-            style={{ gridRow: 1, gridColumn: 1 }}
+            className="h-full lg:w-76 md:w-72 sm:w-64"
           >
             <span
-              className={`flex justify-end px-11 mt-4 text-${oppositeTheme} text-2xl`}
+              className={`flex justify-end mt-4 text-${oppositeTheme} lg:text-2xl md:text-xl sm:ml-3 md:ml-5 sm:text-lg mr-14`}
             >
               {assetData.currency_abb}
             </span>
-            <span className="flex justify-end mt-1 px-3 text-gray">
+            <span className="flex justify-end mt-1 text-gray mr-1 lg:text-lg md:text-sm md:ml-6 sm:text-sm sm:ml-3">
               {walletTanks.length +
                 " " +
                 lang["cards-profile"] +
-                "/" +
+                " /" +
                 numberOfBanks.length +
                 " " +
                 "Banks"}
             </span>
           </div>
-          <div className="h-full w-20" style={{ gridRow: 1, gridColumn: 8 }}>
-            <button
+          <div className="lg:w-24 w-fit">
+              <button 
               onClick={handleShow}
-              className="flex justify-end mt-7 ml-10"
-              style={{ gridRow: 1, gridColumn: 2 }}
-            >
-              <img
-                alt=""
-                className="h-8 w-15"
-                src={theme === "dark" ? arrowRightLight : arrowRightDark}
-              />
-            </button>{" "}
+              className="flex justify-end items-center w-full h-full">
+                <img className="w-12 h-9" src={theme==="light"?arrowRightDark:arrowRightLight}/>
+              </button>
           </div>
-        </div>
-
-        {/* <div className="w-full grid grid-rows-1 grid-cols-2">
-          <span
-            className={`text-gray ml-5 flex items-center`}
-            style={{ gridRow: 1, gridColumn: 1 }}
-          >
-            {walletTanks.length + " " + lang["cards-profile"]}
-          </span>
-
-          <button
-            onClick={handleShow}
-            className="flex justify-end"
-            style={{ gridRow: 1, gridColumn: 2 }}
-          >
-            <img
-              alt=""
-              className="h-10"
-              src={theme === "dark" ? arrowRightLight : arrowRightDark}
-            />
-          </button>
-        </div> */}
-      </div>
+          
+      </div> 
+   
     </>
   );
 };
