@@ -11,6 +11,8 @@ import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplas
 import { useStatusesState } from "../../Providers/StatusesProvider";
 import { useModalDataClose } from "../../Providers/ModalDataProvider";
 import { useFontState } from "../../Providers/FontProvider";
+import { useGetWalletTanks } from "../../apis/common/wallet/hooks";
+import { CustomDropdown, CustomItem } from "../common/CustomDropdown";
 
 export default function PendingRequestModal({ refreshPendingRequests, data }) {
   const lang = useLanguageState();
@@ -30,6 +32,27 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     () => setLoading(uploadRequestDocumentIsLoading),
     [uploadRequestDocumentIsLoading]
   );
+
+  const [receiverTanks, setReceiverTanks] = useState([]);
+  const [selectedWalletTank, setSelectedWalletTank] = useState(-1);
+  const { getWalletTanks, isLoading: getWalletTanksIsLoading } =
+    useGetWalletTanks();
+  useEffect(
+    () => setLoading(getWalletTanksIsLoading),
+    [getWalletTanksIsLoading]
+  );
+
+  useEffect(() => {
+    if (data && data.user_receiver_username && data.currency_slug) {
+      getWalletTanks(
+        {
+          user: data.user_receiver_username,
+          currency: data.currency_slug,
+        },
+        setReceiverTanks
+      );
+    }
+  }, []);
 
   const hasPreviewImage = () => {
     if (
@@ -67,7 +90,78 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
           <CustomPreviewer2 imageUrl={data.document} />
         )}
         {data && data.status_title === "Upload Document" && (
-          <CustomUploader setImage={setDocument} />
+          <div className="flex flex-col gap-y-2 mb-5">
+            <span
+              className={`text-${oppositeTheme} text-xl font-${font}-regular`}
+            >
+              {data && data.user_receiver_full_name
+                ? data.user_receiver_full_name
+                : ""}
+            </span>
+            <div className="w-full flex">
+              <CustomDropdown
+                label={
+                  selectedWalletTank >= 0 &&
+                  receiverTanks[selectedWalletTank] &&
+                  receiverTanks[selectedWalletTank].bank_info
+                    ? receiverTanks[selectedWalletTank].bank_info
+                    : lang["card-number"]
+                }
+              >
+                {receiverTanks.map((receiverTank, index) => {
+                  if (index === 0 && index === receiverTanks.length - 1) {
+                    return (
+                      <CustomItem
+                        key={index}
+                        className="rounded-xl"
+                        onClick={() => setSelectedWalletTank(index)}
+                      >
+                        {receiverTank && receiverTank.bank_info
+                          ? receiverTank.bank_info
+                          : "error"}
+                      </CustomItem>
+                    );
+                  } else if (index === 0) {
+                    return (
+                      <CustomItem
+                        key={index}
+                        className="rounded-t-xl"
+                        onClick={() => setSelectedWalletTank(index)}
+                      >
+                        {receiverTank && receiverTank.bank_info
+                          ? receiverTank.bank_info
+                          : "error"}
+                      </CustomItem>
+                    );
+                  } else if (index === receiverTanks.length - 1) {
+                    return (
+                      <CustomItem
+                        key={index}
+                        className="rounded-b-xl"
+                        onClick={() => setSelectedWalletTank(index)}
+                      >
+                        {receiverTank && receiverTank.bank_info
+                          ? receiverTank.bank_info
+                          : "error"}
+                      </CustomItem>
+                    );
+                  } else {
+                    return (
+                      <CustomItem
+                        key={index}
+                        onClick={() => setSelectedWalletTank(index)}
+                      >
+                        {receiverTank && receiverTank.bank_info
+                          ? receiverTank.bank_info
+                          : "error"}
+                      </CustomItem>
+                    );
+                  }
+                })}
+              </CustomDropdown>
+            </div>
+            <CustomUploader setImage={setDocument} />
+          </div>
         )}
         <div className="my-1.5">
           <PendingRequestModalStatus
@@ -85,6 +179,9 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   data.url,
                   {
                     document,
+                    wallet_tank_receiver: receiverTanks[selectedWalletTank]
+                      ? receiverTanks[selectedWalletTank].url
+                      : "",
                     status: statuses
                       ? statuses.find(
                           (status) => status.title === "Admin Approve"
