@@ -49,9 +49,11 @@ export default function Home({ isDemo }) {
   return (
     <div className="absolute flex flex-col it w-full h-full overflow-y-auto px-8 md:p-0">
       <div
-        className={`w-full bg-blue-gradient rounded-2xl flex justify-center md:hidden pt-5 pb-2.5 px-5`}
+        className={`w-full bg-${theme} shadow-${theme} rounded-2xl flex justify-center md:hidden pt-5 pb-2.5 px-5 mt-2`}
       >
-        <span className={`text-2xl md:hidden text-light font-${font}-bold`}>
+        <span
+          className={`text-2xl md:hidden text-${oppositeTheme} font-${font}-bold`}
+        >
           {lang["home"]}
         </span>
       </div>

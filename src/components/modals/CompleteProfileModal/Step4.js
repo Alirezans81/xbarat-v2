@@ -220,7 +220,7 @@ export default function Step4({
           </form>
         </div>
         <div
-          className={`flex-1 flex flex-col py-5 px-7 bg-${theme}-glass rounded-2xl`}
+          className={`flex-1 hidden md:flex flex-col py-5 px-7 bg-${theme}-glass rounded-2xl`}
         >
           <div className="flex items-center gap-x-2">
             <img

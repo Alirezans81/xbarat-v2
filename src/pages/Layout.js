@@ -157,6 +157,11 @@ export default function Layout() {
 
   const isLoadingSplashScreen = useIsLoadingSplashScreenState();
 
+  const [isBlur, setBlur] = useState(false);
+  const switchBlur = () => {
+    setBlur(!isBlur);
+  };
+
   return (
     <>
       <CustomToast />
@@ -175,14 +180,16 @@ export default function Layout() {
             <TopBar />
           </div>
           <div className="block md:hidden">
-            <MobileTopBar />
+            <MobileTopBar isBlur={isBlur} switchBlur={switchBlur} />
           </div>
           <div className="flex-1 flex h-5/6">
             <div className="hidden md:flex">
               <Navbar links={links} />
             </div>
             <div
-              className={`relative flex-1 bg-${theme}-back rounded-tl-5xl md:pl-8 py-8 z-20`}
+              className={`relative flex-1 bg-${theme}-back rounded-tl-5xl md:pl-8 py-8 z-20 ${
+                !isBlur ? "blur" : ""
+              }`}
             >
               {activeRoute.replace("/", "") === "" || token ? (
                 <Outlet />

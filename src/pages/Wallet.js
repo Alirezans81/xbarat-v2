@@ -37,9 +37,11 @@ export default function Wallet() {
   return (
     <div className="absolute w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6">
       <div
-        className={`w-full bg-blue-gradient rounded-2xl flex justify-center md:hidden pt-5 pb-2.5 px-5`}
+        className={`w-full bg-${theme} shadow-${theme} rounded-2xl flex justify-center md:hidden pt-5 pb-2.5 px-5 mt-2`}
       >
-        <span className={`text-2xl md:hidden text-light font-${font}-bold`}>
+        <span
+          className={`text-2xl md:hidden text-${oppositeTheme} font-${font}-bold`}
+        >
           {lang["wallet"]}
         </span>
       </div>
