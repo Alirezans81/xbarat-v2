@@ -6,7 +6,6 @@ import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoa
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import {
   useAddComma,
-  useIsNumberFloat,
   useRemoveComma,
 } from "../../../../../hooks/useNumberFunctions";
 import { useDirectionState } from "../../../../../Providers/DirectionProvider";
@@ -14,7 +13,6 @@ import SubmitButton from "../../../../common/SubmitButton";
 import { useUserState } from "../../../../../Providers/UserProvider";
 import { useStatusesState } from "../../../../../Providers/StatusesProvider";
 import { useExchange } from "../../../../../apis/pages/Home/hooks";
-import { useCurrenciesState } from "../../../../../Providers/CurrenciesProvider";
 import { useNavigate } from "react-router-dom";
 import { useFontState } from "../../../../../Providers/FontProvider";
 
@@ -48,7 +46,6 @@ export default function ExchangeForm({
   const statuses = useStatusesState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
-  const isNumberFloat = useIsNumberFloat();
 
   const { exchange, isLoading: exchangeIsLoading } = useExchange();
   useEffect(

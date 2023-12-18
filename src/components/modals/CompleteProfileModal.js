@@ -26,7 +26,7 @@ export default function CompleteProfileModal() {
   const userInfo = useUserState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(5);
 
   const { getWallets, isLoading: getWalletsIsLoading } = useGetWallets();
   useEffect(
@@ -68,9 +68,7 @@ export default function CompleteProfileModal() {
   useEffect(() => {
     if (userInfo) {
       userInfo.first_name && userInfo.last_name && userInfo.phone && setStep(2);
-
       userInfo.nationality && userInfo.country && userInfo.city && setStep(3);
-
       userInfo.identity_type &&
         userInfo.identity_code &&
         userInfo.document &&

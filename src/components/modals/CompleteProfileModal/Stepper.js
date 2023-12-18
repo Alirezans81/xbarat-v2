@@ -16,10 +16,10 @@ export default function Stepper({ step }) {
   if (step === 5) {
   } else {
     return (
-      <div className="flex flex-row items-center pl-12 pr-14 pt-12">
+      <div className="w-96 flex flex-row items-center pl-12 pr-14 pt-12">
         <div className={step < 1 ? notActiveCircle : activeCircle}>
           <div
-            className={`-left-8 absolute -top-14 text-center-important font-${font}-regular`}
+            className={`text-base -left-8 absolute -top-14 text-center-important font-${font}-regular`}
           >
             <span className={step < 1 ? notActiveText : activeText}>
               {lang["personal-information"]}
@@ -29,7 +29,7 @@ export default function Stepper({ step }) {
         <div className={step < 2 ? notActiveLine : activeLine} />
         <div className={step < 2 ? notActiveCircle : activeCircle}>
           <div
-            className={`-left-8 absolute -top-14 text-center-important font-${font}-regular`}
+            className={`text-base -left-8 absolute -top-14 text-center-important font-${font}-regular`}
           >
             <span className={step < 2 ? notActiveText : activeText}>
               {lang["national-information"]}
@@ -39,7 +39,7 @@ export default function Stepper({ step }) {
         <div className={step < 3 ? notActiveLine : activeLine} />
         <div className={step < 3 ? notActiveCircle : activeCircle}>
           <div
-            className={`-left-8 absolute -top-14 text-center-important font-${font}-regular`}
+            className={`text-base -left-8 absolute -top-14 text-center-important font-${font}-regular`}
           >
             <span className={step < 3 ? notActiveText : activeText}>
               {lang["upload-document"]}
@@ -49,7 +49,7 @@ export default function Stepper({ step }) {
         <div className={step < 4 ? notActiveLine : activeLine} />
         <div className={step < 4 ? notActiveCircle : activeCircle}>
           <div
-            className={`-left-8 absolute -top-14 text-center-important font-${font}-regular`}
+            className={`text-base -left-8 absolute -top-14 text-center-important font-${font}-regular`}
           >
             <span className={step < 4 ? notActiveText : activeText}>
               {lang["bank-information"]}

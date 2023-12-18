@@ -59,7 +59,7 @@ export default function Step1({ handleBlur, handleChange, values }) {
           </form>
         </div>
         <div
-          className={`flex-1 flex flex-col py-5 px-7 bg-${theme}-glass rounded-2xl`}
+          className={`flex-1 hidden md:flex flex-col py-5 px-7 bg-${theme}-glass rounded-2xl`}
         >
           <div className="flex items-center gap-x-2">
             <img
@@ -71,7 +71,9 @@ export default function Step1({ handleBlur, handleChange, values }) {
               {lang["note"]}
             </span>
           </div>
-          <div className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}>
+          <div
+            className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}
+          >
             <span>{lang["complete-profile-modal-step1-note-1st"] + "."}</span>
             <span>{lang["complete-profile-modal-step1-note-2nd"] + "."}</span>
             <span>{lang["complete-profile-modal-step1-note-3rd"] + "."}</span>
