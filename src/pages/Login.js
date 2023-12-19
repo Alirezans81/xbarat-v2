@@ -9,6 +9,8 @@ import { useTokenSetState } from "../Providers/TokenProvider";
 import LanguageSwitcher from "../components/common/LanguageSwitcher";
 import { useGetLanguages } from "../apis/common/language/hooks";
 import { useLanguageListSetState } from "../Providers/LanguageListProvider";
+import Slogan from "../components/common/Slogan";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const setToken = useTokenSetState();
@@ -20,6 +22,8 @@ export default function Login() {
 
   const [isSplashScreenLoading, setIsSplashScreenLoading] = useState(false);
   const setLanguageList = useLanguageListSetState();
+
+  const navigate = useNavigate();
 
   const { getLanguages, isLoading: getLanguagesIsLoading } = useGetLanguages();
   useEffect(
@@ -59,7 +63,19 @@ export default function Login() {
         <div className="hidden lg:block my-auto">
           <LeftSide />
         </div>
-        <RightSide setIsSplashScreenLoading={setIsSplashScreenLoading} />
+        <div className="hidden md:flex h-full">
+          <RightSide setIsSplashScreenLoading={setIsSplashScreenLoading} />
+        </div>
+        <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center">
+          <button onClick={() => navigate("/")}>
+            <img
+              className="w-24 h-24"
+              src={require("../Images/pages/layout/logo.png")}
+            />
+          </button>
+          <RightSide setIsSplashScreenLoading={setIsSplashScreenLoading} />
+          <Slogan />
+        </div>
       </div>
     </div>
   );

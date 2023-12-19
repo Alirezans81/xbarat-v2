@@ -2,6 +2,10 @@ import axios from "axios";
 
 const api = require("../../api.json");
 
+const getUserInfo = (username, params) => {
+  return axios.get(api["patch-profile"] + username + "/");
+};
+
 const updateNameAndAvatar = (username, params) => {
   const formData = new FormData();
 
@@ -29,4 +33,4 @@ const updateNationalInfo = (username, params) => {
   return axios.patch(api["patch-profile"] + username + "/", formData);
 };
 
-export { updateNameAndAvatar,updatePhone,  updateNationalInfo };
+export { getUserInfo, updateNameAndAvatar, updatePhone, updateNationalInfo };

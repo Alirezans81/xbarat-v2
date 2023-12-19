@@ -4,12 +4,13 @@ import { useThemeState } from "../Providers/ThemeProvider";
 import ThemeSwitcher from "../components/common/ThemeSwitcher";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import LoadingSplashScreen from "../components/common/LoadingSplashScreen";
-import { useTokenSetState, useTokenState } from "../Providers/TokenProvider";
+import { useTokenSetState } from "../Providers/TokenProvider";
 import Form from "../components/pages/Signup/Form";
 import LeftSide from "../components/pages/Login/LeftSide";
 import LanguageSwitcher from "../components/common/LanguageSwitcher";
 import { useGetLanguages } from "../apis/common/language/hooks";
 import { useLanguageListSetState } from "../Providers/LanguageListProvider";
+import Slogan from "../components/common/Slogan";
 
 export default function Signup() {
   const setToken = useTokenSetState();
@@ -21,6 +22,8 @@ export default function Signup() {
 
   const [isSplashScreenLoading, setIsSplashScreenLoading] = useState(false);
   const setLanguageList = useLanguageListSetState();
+
+  const navigate = useNavigate();
 
   const { getLanguages, isLoading: getLanguagesIsLoading } = useGetLanguages();
   useEffect(
@@ -62,10 +65,30 @@ export default function Signup() {
             <div className="hidden lg:block my-auto">
               <LeftSide />
             </div>
-            <div className="flex justify-center items-center px-10">
-              <div className={`bg-${theme}-glass rounded-3xl login-width p-8`}>
-                <Form setIsSplashScreenLoading={setIsSplashScreenLoading} />
+            <div className="hidden md:flex h-full">
+              <div className="flex justify-center items-center px-10">
+                <div
+                  className={`bg-${theme}-glass rounded-3xl login-width p-8`}
+                >
+                  <Form setIsSplashScreenLoading={setIsSplashScreenLoading} />
+                </div>
               </div>
+            </div>
+            <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center">
+              <button onClick={() => navigate("/")}>
+                <img
+                  className="w-24 h-24"
+                  src={require("../Images/pages/layout/logo.png")}
+                />
+              </button>
+              <div className="flex justify-center items-center px-10">
+                <div
+                  className={`bg-${theme}-glass rounded-3xl login-width p-8`}
+                >
+                  <Form setIsSplashScreenLoading={setIsSplashScreenLoading} />
+                </div>
+              </div>
+              <Slogan />
             </div>
           </div>
         </div>

@@ -70,6 +70,9 @@ export default function Form({ setIsSplashScreenLoading }) {
       !Boolean(password.match(/[0-9]/)) ||
       !Boolean(password.match(/[!@#$%*?]/))
     ) {
+      let newValidationErrors = validationErrors;
+      newValidationErrors.password = lang["password-contain-error"] + "!";
+      new setValidationErrors(newValidationErrors);
       return false;
     }
     return true;
@@ -148,13 +151,19 @@ export default function Form({ setIsSplashScreenLoading }) {
             if (
               validateEmail(values.email) &&
               validatePassword(values.password) &&
-              validateConfirmPassword(values.password, values.confirmPassword)
+              validateConfirmPassword(
+                values.password,
+                values.confirmPassword
+              ) &&
+              passwordContainsCheck(values.password)
             ) {
               handleSubmit(e);
             }
           }}
         >
-          <div className={`flex justify-between font-${font}-bold items-center mb-3`}>
+          <div
+            className={`flex justify-between font-${font}-bold items-center mb-3`}
+          >
             <span className="text-blue text-xl xs:text-2xl sm:text-3xl">
               {lang["forgot-password-label"]}
             </span>
@@ -214,7 +223,9 @@ export default function Form({ setIsSplashScreenLoading }) {
                 value={values.verify_email_code}
               />
               {codeError && (
-                <span className={`font-${font}-thin text-red`}>{codeError}</span>
+                <span className={`font-${font}-thin text-red`}>
+                  {codeError}
+                </span>
               )}
             </>
           )}
@@ -228,6 +239,7 @@ export default function Form({ setIsSplashScreenLoading }) {
                 onChange={handleChange("password")}
                 onBlur={(e) => {
                   validatePassword(e.target.value);
+                  passwordContainsCheck(e.target.value);
                   handleBlur(e);
                 }}
                 value={values.password}

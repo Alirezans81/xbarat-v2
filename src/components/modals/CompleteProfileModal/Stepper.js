@@ -16,7 +16,7 @@ export default function Stepper({ step }) {
   if (step === 5) {
   } else {
     return (
-      <div className="w-96 flex flex-row items-center pl-12 pr-14 pt-12">
+      <div className="w-full flex flex-row items-center pl-12 pr-14 pt-12">
         <div className={step < 1 ? notActiveCircle : activeCircle}>
           <div
             className={`text-base -left-8 absolute -top-14 text-center-important font-${font}-regular`}

@@ -213,8 +213,8 @@ export default function Withdrawal({
                 label={
                   selectedWalletTankIndex >= 0 &&
                   walletTanks[selectedWalletTankIndex] &&
-                  walletTanks[selectedWalletTankIndex].title
-                    ? walletTanks[selectedWalletTankIndex].title
+                  walletTanks[selectedWalletTankIndex].account_name
+                    ? walletTanks[selectedWalletTankIndex].account_name
                     : ""
                 }
               >
@@ -226,8 +226,8 @@ export default function Withdrawal({
                         className="rounded-xl"
                         onClick={() => setSelectedWalletTankIndex(index)}
                       >
-                        {walletTank && walletTank.title
-                          ? walletTank.title
+                        {walletTank && walletTank.account_name
+                          ? walletTank.account_name
                           : "error"}
                       </CustomItem>
                     );
@@ -238,8 +238,8 @@ export default function Withdrawal({
                         className="rounded-t-xl"
                         onClick={() => setSelectedWalletTankIndex(index)}
                       >
-                        {walletTank && walletTank.title
-                          ? walletTank.title
+                        {walletTank && walletTank.account_name
+                          ? walletTank.account_name
                           : "error"}
                       </CustomItem>
                     );
@@ -250,8 +250,8 @@ export default function Withdrawal({
                         className="rounded-b-xl"
                         onClick={() => setSelectedWalletTankIndex(index)}
                       >
-                        {walletTank && walletTank.title
-                          ? walletTank.title
+                        {walletTank && walletTank.account_name
+                          ? walletTank.account_name
                           : "error"}
                       </CustomItem>
                     );

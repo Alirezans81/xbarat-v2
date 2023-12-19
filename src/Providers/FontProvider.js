@@ -4,7 +4,7 @@ const FontContext = createContext();
 const FontContextSetState = createContext();
 
 const FontProvider = ({ children }) => {
-  const [Font, setFont] = useState();
+  const [Font, setFont] = useState("En");
 
   return (
     <FontContext.Provider value={Font}>

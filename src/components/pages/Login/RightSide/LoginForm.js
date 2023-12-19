@@ -5,15 +5,6 @@ import { useDirectionState } from "../../../../Providers/DirectionProvider";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../../../apis/pages/Login/hooks";
-import {
-  useGetWalletAssets,
-  useGetWalletTanks,
-  useGetWallets,
-} from "../../../../apis/common/wallet/hooks";
-import {
-  useWalletSetState,
-  useWalletState,
-} from "../../../../Providers/WalletProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function LoginForm({ setIsSplashScreenLoading }) {
@@ -22,27 +13,11 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
   const lang = useLanguageState();
   const font = useFontState();
   const { one: direction } = useDirectionState();
-  const wallet = useWalletState();
-  const setWallet = useWalletSetState();
 
   const { login, isLoading: loginIsLoading, error } = useLogin();
   useEffect(() => {
     setIsSplashScreenLoading(loginIsLoading);
   }, [loginIsLoading]);
-  const { getWallets, isLoading: getWalletsIsLoading } = useGetWallets();
-  useEffect(() => {
-    setIsSplashScreenLoading(getWalletsIsLoading);
-  }, [getWalletsIsLoading]);
-  const { getWalletAssets, isLoading: getWalletAssetsIsLoading } =
-    useGetWalletAssets();
-  useEffect(() => {
-    setIsSplashScreenLoading(getWalletAssetsIsLoading);
-  }, [getWalletAssetsIsLoading]);
-  const { getWalletTanks, isLoading: getWalletTanksIsLoading } =
-    useGetWalletTanks();
-  useEffect(() => {
-    setIsSplashScreenLoading(getWalletTanksIsLoading);
-  }, [getWalletTanksIsLoading]);
 
   const navigate = useNavigate();
   const navigateToHome = () => {
@@ -83,31 +58,6 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
 
     setValidationErrors(newValidationErrors);
     return result;
-  };
-
-  const setWallets = (data) => {
-    if (wallet && data) {
-      let temp = wallet;
-      temp.wallets = data;
-      setWallet(temp);
-      window.localStorage.setItem("wallet", JSON.stringify(temp));
-    }
-  };
-  const setWalletAssets = (data) => {
-    if (wallet && data) {
-      let temp = wallet;
-      temp.walletAssets = data;
-      setWallet(temp);
-      window.localStorage.setItem("wallet", JSON.stringify(temp));
-    }
-  };
-  const setWalletTanks = (data) => {
-    if (wallet && data) {
-      let temp = wallet;
-      temp.walletTanks = data;
-      setWallet(temp);
-      window.localStorage.setItem("wallet", JSON.stringify(temp));
-    }
   };
 
   return (
