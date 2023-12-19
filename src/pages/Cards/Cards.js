@@ -8,7 +8,6 @@ import Addasset from "./addasset";
 import { useState, useEffect } from "react";
 import SingleCardAssets from "./singleCardAssets";
 import SingleCardTank from "./singleCardTank";
-import edit from "../../Images/pages/layout/Profile/editBlue.png";
 const Cards = () => {
   const currencies = useCurrenciesState();
   const wallet = useWalletState();
@@ -43,9 +42,9 @@ const Cards = () => {
         style={{
           position: "absolute",
           right: "0%",
-          top: "17%",
+          top: "5%",
           width: "67%",
-          height: "80%",
+          height: "90%",
           borderTopLeftRadius: "50px",
           borderBottomLeftRadius: "50px",
         }}
@@ -55,14 +54,15 @@ const Cards = () => {
           className={
             show.length === 0 || addCard
               ? "hidden"
-              : "bg-blue text-white mt-3 w-20 rounded-lg mr-5 ml-20 absolute right-0"
-          }
+              :  "bg-blue text-white mt-3 w-20 rounded-lg mr-5 ml-20 absolute right-0"
+            }
+          
         >
           +
         </button>
 
         <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
-        <div className="grid grid-rows-3 grid-cols-2 gap-4 items-center mt-10 pb-0 h-full w-full">
+        <div className="grid grid-rows-3 grid-cols-2 gap-5 items-center mt-20 pb-0 h-5/6 w-full ml-3">
           {Tanks.map((data, index) => (
             <SingleCardTank show={show} index={index} data={data} />
           ))}
@@ -72,10 +72,10 @@ const Cards = () => {
         className={`bg-${theme}`}
         style={{
           position: "absolute",
-          left: "6.4%",
-          top: "17%",
-          width: "23.6%",
-          height: "80%",
+          left: "3%",
+          top: "5%",
+          width: "28%",
+          height: "90%",
           paddingRight: "3%",
           paddingLeft: "3%",
           paddingTop: "1%",
@@ -93,7 +93,7 @@ const Cards = () => {
         </div>
         <div className="w-full">
           <span
-            className={`text-xl text-${oppositeTheme}`}
+            className={`text-3xl text-${oppositeTheme}`}
             style={{ position: "absolute", top: "5%", left: "13%" }}
           >
             {lang["cards-profile"]}
@@ -112,7 +112,7 @@ const Cards = () => {
         </div>
 
         <div
-          className={`grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-16 h-96`}
+          className={`grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-16 h-1/2`}
         >
           {wallet && wallet.walletAssets ? (
             wallet.walletAssets.map((assetData, assetIndex) => (
