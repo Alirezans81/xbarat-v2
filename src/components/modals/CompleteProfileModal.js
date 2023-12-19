@@ -26,7 +26,7 @@ export default function CompleteProfileModal() {
   const userInfo = useUserState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
-  const [step, setStep] = useState(5);
+  const [step, setStep] = useState(1);
 
   const { getWallets, isLoading: getWalletsIsLoading } = useGetWallets();
   useEffect(
@@ -102,6 +102,7 @@ export default function CompleteProfileModal() {
     };
     const createWalletTankParams = {
       title: values.title,
+      account_name: values.title,
       wallet_tank_type: values.wallet_tank_type,
       bank_info: values.bank_info,
     };
@@ -151,7 +152,7 @@ export default function CompleteProfileModal() {
   console.log(userInfo);
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center w-complete-profile">
       <Stepper step={step} />
       <div className="px-4 w-full mt-5">
         <Formik

@@ -7,12 +7,14 @@ import { useSignup } from "../../../apis/pages/Signup/hooks";
 import { useSendEmail } from "../../../apis/common/email/hooks";
 import { useGenerateCode } from "../../../hooks/useGenerateCode";
 import { useFontState } from "../../../Providers/FontProvider";
+import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 
 export default function Form({ setIsSplashScreenLoading }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
   const lang = useLanguageState();
   const font = useFontState();
+  const setToastData = useToastDataSetState();
 
   const [verifyEamilMode, setVerifyEmailMode] = useState(false);
 
@@ -33,6 +35,20 @@ export default function Form({ setIsSplashScreenLoading }) {
   const navigate = useNavigate();
   const navigateToLogin = () => {
     navigate("/login");
+  };
+
+  const showSuccessToast = () => {
+    setToastData({
+      status: "success",
+      message:
+        lang["successful-signup-1st"] +
+        ". " +
+        lang["successful-signup-2nd"] +
+        ".",
+      canClose: true,
+      isOpen: true,
+      showTime: 5000,
+    });
   };
 
   const [validationErrors, setValidationErrors] = useState({});
@@ -60,6 +76,9 @@ export default function Form({ setIsSplashScreenLoading }) {
       !Boolean(password.match(/[0-9]/)) ||
       !Boolean(password.match(/[!@#$%*?]/))
     ) {
+      let newValidationErrors = validationErrors;
+      newValidationErrors.password = lang["password-contain-error"] + "!";
+      new setValidationErrors(newValidationErrors);
       return false;
     }
     return true;
@@ -125,7 +144,10 @@ export default function Form({ setIsSplashScreenLoading }) {
                 password: values.password,
                 referral_code: values.referral_code,
               },
-              navigateToLogin
+              () => {
+                showSuccessToast();
+                navigateToLogin();
+              }
             );
           } else setCodeError(lang["email-varification-code-error"] + ".");
         }
@@ -138,13 +160,19 @@ export default function Form({ setIsSplashScreenLoading }) {
             if (
               validateEmail(values.email) &&
               validatePassword(values.password) &&
-              validateConfirmPassword(values.password, values.confirmPassword)
+              validateConfirmPassword(
+                values.password,
+                values.confirmPassword
+              ) &&
+              passwordContainsCheck(values.password)
             ) {
               handleSubmit(e);
             }
           }}
         >
-          <div className={`flex justify-between font-${font}-bold items-center mb-3`}>
+          <div
+            className={`flex justify-between font-${font}-bold items-center mb-3`}
+          >
             <span className="text-blue text-3xl">{lang["sign-up"]}</span>
             <Link
               to={"/login"}
@@ -176,7 +204,9 @@ export default function Form({ setIsSplashScreenLoading }) {
                 value={values.verify_email_code}
               />
               {codeError && (
-                <span className={`font-${font}-thin text-red`}>{codeError}</span>
+                <span className={`font-${font}-thin text-red`}>
+                  {codeError}
+                </span>
               )}
             </>
           ) : (
@@ -206,6 +236,7 @@ export default function Form({ setIsSplashScreenLoading }) {
                 onChange={handleChange("password")}
                 onBlur={(e) => {
                   validatePassword(e.target.value);
+                  passwordContainsCheck(e.target.value);
                   handleBlur(e);
                 }}
                 value={values.password}

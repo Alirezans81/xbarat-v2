@@ -122,7 +122,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
         )}
         {pendingOrder && pendingOrder.status_title === "Upload Document" && (
           <span
-            className={`font-${font}-thin text-${oppositeTheme} text-lg leading-4`}
+            className={`font-${font}-thin text-${oppositeTheme} text-sm md:text-lg md:whitespace-nowrap`}
           >
             {lang["upload-document-message"] + "."}
           </span>
@@ -131,7 +131,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
           pendingOrder.status_title === "Admin Approve" &&
           pendingOrder.type !== "transfer" && (
             <span
-              className={`font-${font}-thin text-${oppositeTheme} text-lg leading-4`}
+              className={`font-${font}-thin text-${oppositeTheme} text-sm md:text-lg md:whitespace-nowrap`}
             >
               {lang["admin-approve-message"] + "."}
             </span>
@@ -153,7 +153,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
           )}
         {pendingOrder && pendingOrder.status_title === "Reject" && (
           <span
-            className={`font-${font}-thin text-${oppositeTheme} text-lg leading-4`}
+            className={`font-${font}-thin text-${oppositeTheme} text-sm md:text-lg md:whitespace-nowrap`}
           >
             {pendingOrder.rejectReason}
           </span>

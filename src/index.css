@@ -399,10 +399,19 @@ body {
   background-repeat: no-repeat;
   background-position: center;
 }
+@media screen and (min-width: 768px) {
+  .w-complte-profile {
+    width: 45vw !important;
+  }
+}
+
+.w-complte-profile {
+  width: auto;
+}
 
 @media screen and (min-width: 768px) { 
   .w-done-complete-profile {
-    width: 45vw;
+    width: 45vw !important;
   }
 }
 

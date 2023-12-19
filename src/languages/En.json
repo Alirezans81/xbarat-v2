@@ -180,5 +180,8 @@
   "email-varification-code-error": "The code was not correct",
   "email-not-exist-error-message": "The email does not exist",
   "forgot-password-label": "Forget Password",
-  "profile": "Profile"
+  "profile": "Profile",
+
+  "successful-signup-1st": "Your account was successfully signed up",
+  "successful-signup-2nd": "Please try to login now"
 }

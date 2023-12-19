@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useThemeState } from "../Providers/ThemeProvider";
 import EditProfile from "../components/pages/layout/Profile/EditProfile";
@@ -7,17 +7,29 @@ import { useLanguageState } from "../Providers/LanguageProvider";
 import cardsDark from "../Images/pages/layout/Profile/cardsDark.png";
 import cardsLight from "../Images/pages/layout/Profile/cardsLight.png";
 import { useFontState } from "../Providers/FontProvider";
+import { useGetUserInfo } from "../apis/pages/Profile/hooks";
+import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
+import { useUserState } from "../Providers/UserProvider";
 
 export default function Profile() {
   const navigate = useNavigate();
   const lang = useLanguageState();
+  const userInfo = useUserState();
   const font = useFontState();
   const theme = useThemeState();
+  const setLoading = useIsLoadingSplashScreenSetState();
 
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   function handleCards() {
     navigate("cards");
   }
+
+  const { getUserInfo, isLoading: getUserInfoIsLoading } = useGetUserInfo();
+  useEffect(() => setLoading(getUserInfoIsLoading), [getUserInfoIsLoading]);
+
+  useEffect(() => {
+    userInfo && !userInfo.is_verified && getUserInfo();
+  }, []);
 
   return (
     <div className="absolute w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6">
@@ -41,7 +53,9 @@ export default function Profile() {
                 alt=""
               />
             </button>
-            <span className={`text-${oppositeTheme} mt-2 whitespace-nowrap font-${font}-regular`}>
+            <span
+              className={`text-${oppositeTheme} mt-2 whitespace-nowrap font-${font}-regular`}
+            >
               {lang["cards-profile"]}
             </span>
           </div>
