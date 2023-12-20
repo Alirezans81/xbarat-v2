@@ -12,7 +12,7 @@ import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
 import { useWalletState } from "../../Providers/WalletProvider";
 const Addasset = ({ addAsset, setAddAsset, walletAsset }) => {
   const wallet = useWalletState();
-  const currencies = useCurrenciesState();
+  const currencies = useCurrenciesState("");
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
@@ -21,12 +21,12 @@ const Addasset = ({ addAsset, setAddAsset, walletAsset }) => {
     wallet: "",
     currency: "",
   });
-
   let listCurrency = currencies.map((data) => data.abbreviation);
   let listAsset = walletAsset.map((data) => data.currency_abb);
   let AvailableNewAssets = listCurrency.filter(
     (data) => listAsset.includes(data) === false
   );
+
   useEffect(() => {
     const list = currencies.filter((data) => data.abbreviation === currency);
     if (currency) {
@@ -61,17 +61,16 @@ const Addasset = ({ addAsset, setAddAsset, walletAsset }) => {
       >
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-40"></div>
         <div
-          className={`bg-${theme}-back rounded-lg z-50 w-2/12 h-1/3 grid grid-rows-3 grid-cols-1 px-5 py-2`}
+          className={`bg-${theme}-back rounded-lg z-50 w-2/12 h-fit flex flex-col px-5 py-2`}
         >
           <button
             onClick={discard}
-            style={{ gridRow: 1, gridColumn: 1 }}
             className="flex justify-end"
           >
             <img src={cross} />
           </button>
-          <div style={{ gridRow: 2, gridColumn: 1 }}>
-            <form className="flex justify-center w-full col-span-2">
+          <div>
+            <form className="flex justify-center w-full mt-2">
               <CustomDropdown
                 className={"bg-transparent"}
                 label={currency.length === 0 ? lang["currency"] : currency}
@@ -88,9 +87,8 @@ const Addasset = ({ addAsset, setAddAsset, walletAsset }) => {
             </form>
           </div>
           <button
-            style={{ gridRow: 3, gridColumn: 1 }}
-            onClick={discard}
-            className="bg-blue text-white p-2 rounded-lg mt-4"
+            onClick={handleAddAssets}
+            className="bg-blue text-white pt-1 rounded-lg mt-4 lg:text-lg md:text-base sm:text-sm text-xs"
           >
             {lang["submit"]}
           </button>
