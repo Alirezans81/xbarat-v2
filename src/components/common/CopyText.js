@@ -3,6 +3,7 @@ import { useLanguageState } from "../../Providers/LanguageProvider";
 import { CustomTooltip } from "./CustomTooltip";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useFontState } from "../../Providers/FontProvider";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export default function CopyText({ text }) {
   const theme = useThemeState();
@@ -10,30 +11,7 @@ export default function CopyText({ text }) {
   const lang = useLanguageState();
   const font = useFontState();
 
-  function copy(text) {
-    const input = document.createElement("input");
-    input.value = text;
-
-    console.log(input);
-
-    if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-      // handle iOS devices
-      input.contenteditable = true;
-      input.readonly = false;
-
-      var range = document.createRange();
-      range.selectNodeContents(input);
-
-      var selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
-      input.setSelectionRange(0, 999999);
-    } else {
-      // other devices are easy
-      navigator && navigator.clipboard && navigator.clipboard.writeText(text);
-    }
-    document.execCommand("copy");
-  }
+  console.log("text: ", text);
 
   if (text) {
     return (
@@ -44,12 +22,14 @@ export default function CopyText({ text }) {
         content={text + " " + lang["copied"] + "!"}
         className={`font-${font}-bold pt-2.5`}
       >
-        <button onClick={copy} className="flex items-center">
-          <img
-            className="w-5 h-5"
-            src={require("../../Images/pages/layout/Profile/copy.png")}
-          />
-        </button>
+        <CopyToClipboard text={text || ""}>
+          <button className="flex items-center">
+            <img
+              className="w-5 h-5"
+              src={require("../../Images/pages/layout/Profile/copy.png")}
+            />
+          </button>
+        </CopyToClipboard>
       </CustomTooltip>
     );
   }
