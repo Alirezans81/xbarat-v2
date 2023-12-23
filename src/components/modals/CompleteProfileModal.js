@@ -149,7 +149,6 @@ export default function CompleteProfileModal() {
     }
     step <= 4 && setStep(step + 1);
   };
-  console.log(userInfo);
 
   return (
     <div className="flex flex-col justify-center items-center w-complete-profile">

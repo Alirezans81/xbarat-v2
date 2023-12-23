@@ -390,7 +390,7 @@ body {
 }
 
 .z-150 {
-  z-index: 150;
+  z-index: 150 !important;
 }
 
 .complete-profile-back {

@@ -11,6 +11,7 @@ import { useTokenSetState } from "../Providers/TokenProvider";
 import Form from "../components/pages/ForgotPassword/Form";
 import Slogan from "../components/common/Slogan";
 import { useNavigate } from "react-router-dom";
+import CustomToast from "../components/common/CustomToast";
 
 export default function ForgotPassword() {
   const setToken = useTokenSetState();
@@ -48,43 +49,46 @@ export default function ForgotPassword() {
   }, []);
 
   return (
-    <div
-      dir={direction}
-      className={`w-screen h-screen bg-${theme} relative transition-all duration-300`}
-    >
-      <div className="absolute w-screen h-screen bg-login flex justify-evenly items-center">
-        <LoadingSplashScreen isLoading={isSplashScreenLoading} />
-        <div className={`absolute top-3 ${themeSwitcherDivClasses}`}>
-          <ThemeSwitcher />
-        </div>
-        <div className={`absolute top-3 ${languageSwitcherDivClasses}`}>
-          <LanguageSwitcher />
-        </div>
-        <div className="hidden lg:block my-auto">
-          <LeftSide />
-        </div>
-        <div className="hidden md:flex h-full">
-          <div className="flex justify-center items-center px-10">
-            <div className={`bg-${theme}-glass rounded-3xl login-width p-8`}>
-              <Form setIsSplashScreenLoading={setIsSplashScreenLoading} />
+    <>
+      <CustomToast />
+      <div
+        dir={direction}
+        className={`w-screen h-screen bg-${theme} relative transition-all duration-300`}
+      >
+        <div className="absolute w-screen h-screen bg-login flex justify-evenly items-center">
+          <LoadingSplashScreen isLoading={isSplashScreenLoading} />
+          <div className={`absolute top-3 ${themeSwitcherDivClasses}`}>
+            <ThemeSwitcher />
+          </div>
+          <div className={`absolute top-3 ${languageSwitcherDivClasses}`}>
+            <LanguageSwitcher />
+          </div>
+          <div className="hidden lg:block my-auto">
+            <LeftSide />
+          </div>
+          <div className="hidden md:flex h-full">
+            <div className="flex justify-center items-center px-10">
+              <div className={`bg-${theme}-glass rounded-3xl login-width p-8`}>
+                <Form setIsSplashScreenLoading={setIsSplashScreenLoading} />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center">
-          <button onClick={() => navigate("/")}>
-            <img
-              className="w-24 h-24"
-              src={require("../Images/pages/layout/logo.png")}
-            />
-          </button>
-          <div className="flex justify-center items-center px-10">
-            <div className={`bg-${theme}-glass rounded-3xl login-width p-8`}>
-              <Form setIsSplashScreenLoading={setIsSplashScreenLoading} />
+          <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center pb-16">
+            <button onClick={() => navigate("/")}>
+              <img
+                className="w-24 h-24"
+                src={require("../Images/pages/layout/logo.png")}
+              />
+            </button>
+            <div className="flex justify-center items-center px-10">
+              <div className={`bg-${theme}-glass rounded-3xl login-width p-8`}>
+                <Form setIsSplashScreenLoading={setIsSplashScreenLoading} />
+              </div>
             </div>
+            <Slogan />
           </div>
-          <Slogan />
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -3,9 +3,14 @@ import { useState } from "react";
 
 const useCheckEmail = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState("init");
 
-  const fetch = async (email, customFunction, customFunctionWithData) => {
+  const fetch = async (
+    email,
+    customFunction,
+    customFunctionWithData,
+    customFunctionOnError
+  ) => {
     setIsLoading(true);
     await checkEmail(email)
       .then((data) => {
@@ -18,6 +23,7 @@ const useCheckEmail = () => {
       .catch((error) => {
         console.log(error);
         setError(error);
+        customFunctionOnError && customFunctionOnError();
         setIsLoading(false);
       });
   };
