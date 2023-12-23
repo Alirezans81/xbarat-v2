@@ -178,10 +178,11 @@
   "email-varification-subject": "Email Varification",
   "email-varification-message": "Your code is",
   "email-varification-code-error": "The code was not correct",
-  "email-not-exist-error-message": "The email does not exist",
+  "email-not-exist-error-message": "The email does not exists",
   "forgot-password-label": "Forget Password",
   "profile": "Profile",
 
   "successful-signup-1st": "Your account was successfully signed up",
-  "successful-signup-2nd": "Please try to login now"
+  "successful-signup-2nd": "Please try to login now",
+  "email-exsit-error": "The email exists"
 }

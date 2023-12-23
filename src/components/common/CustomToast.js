@@ -18,10 +18,12 @@ export default function CustomToast() {
   const containerClass = toastData.isOpen ? "top-4" : "-top-36";
 
   useEffect(() => {
-    setTimeout(() => {
-      setToastData({ ...toastData, isOpen: false });
-    }, toastData.showTime);
-  }, []);
+    toastData &&
+      toastData.isOpen &&
+      setTimeout(() => {
+        setToastData({ ...toastData, isOpen: false });
+      }, toastData.showTime);
+  }, [toastData]);
 
   return (
     <div

@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 export default function LeftSide() {
   const lang = useLanguageState();
   const font = useFontState();
-  console.log(font);
   const { one: direction } = useDirectionState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";

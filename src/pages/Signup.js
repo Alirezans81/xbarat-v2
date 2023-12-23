@@ -11,6 +11,7 @@ import LanguageSwitcher from "../components/common/LanguageSwitcher";
 import { useGetLanguages } from "../apis/common/language/hooks";
 import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 import Slogan from "../components/common/Slogan";
+import CustomToast from "../components/common/CustomToast";
 
 export default function Signup() {
   const setToken = useTokenSetState();
@@ -49,6 +50,7 @@ export default function Signup() {
 
   return (
     <>
+      <CustomToast />
       <div
         dir={direction}
         className={`w-screen h-screen bg-${theme} relative transition-all duration-300`}
@@ -74,7 +76,7 @@ export default function Signup() {
                 </div>
               </div>
             </div>
-            <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center">
+            <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center pb-16">
               <button onClick={() => navigate("/")}>
                 <img
                   className="w-24 h-24"

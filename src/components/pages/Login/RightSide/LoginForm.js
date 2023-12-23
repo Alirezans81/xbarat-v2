@@ -6,6 +6,7 @@ import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../../../apis/pages/Login/hooks";
 import { useFontState } from "../../../../Providers/FontProvider";
+import { useToastDataSetState } from "../../../../Providers/ToastDataProvider";
 
 export default function LoginForm({ setIsSplashScreenLoading }) {
   const theme = useThemeState();
@@ -13,11 +14,29 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
   const lang = useLanguageState();
   const font = useFontState();
   const { one: direction } = useDirectionState();
+  const setToastData = useToastDataSetState();
 
-  const { login, isLoading: loginIsLoading, error } = useLogin();
+  const showErrorToast = (errorMessage) => {
+    setToastData({
+      status: "failed",
+      message: errorMessage,
+      canClose: true,
+      isOpen: true,
+      showTime: 5000,
+    });
+  };
+
+  const { login, isLoading: loginIsLoading, error: loginError } = useLogin();
   useEffect(() => {
     setIsSplashScreenLoading(loginIsLoading);
   }, [loginIsLoading]);
+  useEffect(
+    () =>
+      loginError &&
+      loginError.response &&
+      showErrorToast(Object.values(loginError.response.data).join(" ")),
+    [loginError]
+  );
 
   const navigate = useNavigate();
   const navigateToHome = () => {
@@ -151,11 +170,6 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
               </span>
             </Link>
           </div>
-          {error && (
-            <span className={`font-${font}-thin text-red`}>
-              {error.response.data.error}
-            </span>
-          )}
           <button type="submit" className="button w-full mt-10">
             {lang["submit"]}
           </button>

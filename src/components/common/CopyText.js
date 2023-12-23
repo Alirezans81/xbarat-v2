@@ -10,9 +10,7 @@ export default function CopyText({ text }) {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
-
-  console.log("text: ", text);
-
+  
   if (text) {
     return (
       <CustomTooltip
