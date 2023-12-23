@@ -142,7 +142,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
               style={{ gridRow: 5, gridColumn: 1 }}
               className="flex justify-end"
             >
-              <button className="bg-blue rounded-xl text-white w-1/4 h-1/3 pt-1 mt-5">
+              <button className="bg-blue-gradient rounded-xl text-white w-1/4 h-1/3 pt-1 mt-5">
                 {lang["submit"]}
               </button>
             </div>

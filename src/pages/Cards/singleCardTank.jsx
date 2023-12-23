@@ -29,7 +29,7 @@ const SingleCardTank = ({ show, index, data }) => {
   return (
     <>
       <div
-        className={`bg-${theme}-back h-full w-11/12 p-5 px-8 rounded-3xl ml-5 mt-1`}
+        className={`bg-${theme}-back h-full w-11/12 rounded-3xl ml-5 mt-1`}
         style={{
           gridRow:
             index % 6 === 0
@@ -46,7 +46,27 @@ const SingleCardTank = ({ show, index, data }) => {
           gridColumn: index % 2 === 0 ? 1 : 2,
         }}
       >
-        <div className="grid grid-cols-10 grid-rows-1 gap-y-4 w-full h-full">
+        <div className="w-full h-full flex flex-row">
+          <div style={{width:"65%",height:"100%"}} className="flex flex-col p-5 px-8">
+                <span className="text-blue text-3xl h-1/3">{data.title}</span>
+                <div className="h-2/3 flex flex-col">
+                  <span className="text-gray text-2xl mt-6">{lang["bank_name_null_cards"]}</span>
+                  <span className={`text-2xl text-${oppositeTheme} mt-3`}>{data.bank_info}</span>
+                </div>
+          </div>
+          <div style={{width:"35%",height:"100%"}}>
+                <div className="w-full h-full flex flex-col p-5">
+                  <button className="w-full h-1/2 flex justify-end"><img className="w-1/4 h-1/4 " src={starChecked}/></button>
+                  <form className="flex justify-end h-1/2 px-1 items-end">
+                    <label className={`text-${oppositeTheme} text-2xl`}>Is Active</label>
+                    <input type="checkbox"
+                     onChange={handleIsActive}
+                     className="bg-transparent border-2 border-solid border-blue rounded-sm focus:border-0 ml-1 mb-3"/>
+                    </form>
+                </div>
+          </div>
+
+        {/* <div className="grid grid-cols-10 grid-rows-1 gap-y-4 w-full h-full">
           <div className="h-full w-52" style={{ gridRow: 1, gridColumn: 1 }}>
             <div className="grid grid-rows-2 grid-cols-1 h-full">
               <span
@@ -95,6 +115,7 @@ const SingleCardTank = ({ show, index, data }) => {
               </form>
             </div>
           </div>
+        </div> */}
         </div>
       </div>
 
