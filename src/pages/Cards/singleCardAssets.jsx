@@ -19,21 +19,22 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
     updateShowState(assetData.currency_abb);
   }
   // border-2 border-solid border-white
+  console.log(lang)
   return (
     <>
       <div
-        className={`bg-${theme}-back h-full rounded-3xl mb-0 mt-0 w-full flex flex-row`}
+        className={`bg-${theme}-back h-full rounded-3xl w-full flex flex-row`}
         style={{ gridRow: assetIndex, gridColumn: 1 }}
       >
           <div
-            className="h-full lg:w-76 md:w-72 sm:w-64"
+            className="h-full lg:w-76 md:w-72 sm:w-64 pt-1"
           >
             <span
-              className={`flex justify-end mt-4 text-${oppositeTheme} lg:text-2xl md:text-xl sm:ml-3 md:ml-5 sm:text-lg mr-14`}
+              className={`min-h-0 overflow-scroll flex justify-end mt-4 text-${oppositeTheme} lg:text-2xl md:text-xl sm:ml-3 md:ml-5 sm:text-lg mr-14 min-h-0`}
             >
               {assetData.currency_abb}
             </span>
-            <span className="flex justify-end mt-1 text-gray mr-1 lg:text-lg md:text-sm md:ml-6 sm:text-sm sm:ml-3">
+            <span className="flex justify-end text-gray mr-1 lg:text-lg md:text-sm md:ml-6 sm:text-sm sm:ml-3 min-h-0">
               {walletTanks.length +
                 " " +
                 lang["cards-profile"] +
