@@ -78,7 +78,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-40"></div>
 
         <div
-          style={{ height: "48%" }}
+          style={{ height: "36%" }}
           className={`bg-${theme} grid grid-cols-1 grid-rows-10 w-1/4 px-5 py-5 rounded-lg z-50`}
         >
           <button

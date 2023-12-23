@@ -10,7 +10,7 @@ export default function CopyText({ text }) {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
-
+  
   if (text) {
     return (
       <CustomTooltip
@@ -20,7 +20,7 @@ export default function CopyText({ text }) {
         content={text + " " + lang["copied"] + "!"}
         className={`font-${font}-bold pt-2.5`}
       >
-        <CopyToClipboard text={text}>
+        <CopyToClipboard text={text || ""}>
           <button className="flex items-center">
             <img
               className="w-5 h-5"
