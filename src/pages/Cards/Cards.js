@@ -54,13 +54,13 @@ const Cards = () => {
       >
         <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
         <div className="w-full h-full flex flex-col">
-        <div className="w-full h-fit flex justify-end mt-5">
+        <div className="w-full h-8 flex justify-end mt-5">
         <button
           onClick={handleAddCard}
           className={
             show.length === 0 || addCard
               ? "hidden"
-              :  "bg-blue-gradient text-white rounded-lg w-20 mr-5 h-full items-center"
+              :  "bg-blue-gradient text-white rounded-2xl w-36 mr-5 h-full items-center font-thin"
             }
           
         >
@@ -111,7 +111,7 @@ const Cards = () => {
             onClick={handleAddAsset}
             className={
               wallet.walletAssets.length !== currencies.length
-                ? `text-base bg-blue-gradient rounded-lg text-white flex justify-center w-1/3 items-center h-2/3`
+                ? `bg-blue-gradient rounded-2xl text-white flex justify-center w-7/12 items-center h-5/6 text-lg font-thin `
                 : "hidden"
             }
           >

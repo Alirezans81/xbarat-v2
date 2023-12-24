@@ -61,7 +61,7 @@ const Addasset = ({ addAsset, setAddAsset, walletAsset }) => {
       >
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-40"></div>
         <div
-          className={`bg-${theme}-back rounded-lg z-50 w-2/12 h-fit flex flex-col px-5 py-2`}
+          className={`bg-${theme}-back rounded-lg z-50 w-fit h-fit flex flex-col px-5 py-2`}
         >
           <button
             onClick={discard}
@@ -94,46 +94,7 @@ const Addasset = ({ addAsset, setAddAsset, walletAsset }) => {
           </button>
         </div>
       </div>
-      {/* <div className="w-full h-full bg-transparent grid grid-rows-5 grid-cols-1 gap-10">
-          <button
-            className={`bg-transparent rounded-lg flex justify-end`}
-            onClick={discard}
-            type="button"
-            style={{ gridRow: 1, gridColumn: 1 }}
-          >
-            <img alt="" src={cross} />
-          </button>
-          <span
-            className={`text-${oppositeTheme}`}
-            style={{ gridRow: 2, gridColumn: 1 }}
-          >
-            {lang["choose_add_currency_cards_add_asset"]}
-          </span>
-          <div style={{ gridRow: 3, gridColumn: 1 }}>
-            <form className="flex justify-center h-80">
-              <CustomDropdown
-                className={"bg-transparent"}
-                label={currency.length === 0 ? lang["currency"] : currency}
-              >
-                {AvailableNewAssets.map((data) => (
-                  <CustomItem
-                    onClick={() => setCurrency(data)}
-                    className={"bg-transparent"}
-                  >
-                    {data}
-                  </CustomItem>
-                ))}
-              </CustomDropdown>
-            </form>
-          </div>
-          <button
-            onClick={handleAddAssets}
-            className={`bg-blue text-${oppositeTheme} h-10 rounded-lg w-full`}
-            style={{ gridRow: 4, gridColumn: 1 }}
-          >
-            {lang["submit"]}
-          </button>
-        </div> */}
+  
     </>
   );
 };

@@ -3,6 +3,7 @@ import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import starChecked from "../../Images/pages/layout/Profile/starChecked.png";
 import starUnChecked from "../../Images/pages/layout/Profile/starUnChecked.png";
+import edit from "../../Images/pages/layout/Profile/editBlue.png"
 import { useState } from "react";
 const SingleCardTank = ({ show, index, data }) => {
   const theme = useThemeState();
@@ -29,8 +30,9 @@ const SingleCardTank = ({ show, index, data }) => {
   return (
     <>
       <div
-        className={`bg-${theme}-back h-full w-11/12 rounded-3xl ml-5 mt-1`}
+        className={`bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-5`}
         style={{
+          height:"93%",
           gridRow:
             index % 6 === 0
               ? 1
@@ -49,8 +51,9 @@ const SingleCardTank = ({ show, index, data }) => {
         
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
-            <span className="text-blue text-3xl w-2/3 h-full flex justify-start min-w-0 overflow-scroll">{data.title}</span>
-            <button className="flex justify-end w-1/3 h-full"><img alt="" src={starChecked} style={{width:"27%",height:"100%"}}/></button>
+            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 overflow-scroll">{data.title}</span>
+            <button className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
+            <button className="flex justify-end w-1/12 h-full"><img alt="" src={starChecked} style={{width:"80%",height:"80%"}}/></button>
           </div>
           <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
                   <span className="text-gray text-2xl w-full h-1/2 min-w-0 overflow-scroll">{lang["bank_name_null_cards"]}</span>
