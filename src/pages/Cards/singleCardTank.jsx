@@ -30,22 +30,57 @@ const SingleCardTank = ({ show, index, data }) => {
   return (
     <>
       <div
-        className={`bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-5`}
+        className={`md:hidden lg:block bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-5`}
         style={{
           height:"93%",
-          gridRow:
-            index % 6 === 0
-              ? 1
-              : index % 6 === 1
-              ? 1
-              : index % 6 === 2
-              ? 2
-              : index % 6 === 3
-              ? 2
-              : index % 6 === 4
-              ? 3
-              : 3,
+          // gridRow:
+          //   index % 6 === 0
+          //     ? 1
+          //     : index % 6 === 1
+          //     ? 1
+          //     : index % 6 === 2
+          //     ? 2
+          //     : index % 6 === 3
+          //     ? 2
+          //     : index % 6 === 4
+          //     ? 3
+          //     : 3,
           gridColumn: index % 2 === 0 ? 1 : 2,
+        }}
+      >
+        <div className="w-full h-full flex flex-col p-6 px-9">
+          <div className="flex flex-row h-1/4 w-full">
+            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 overflow-scroll">{data.title}</span>
+            <button className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
+            <button className="flex justify-end w-1/12 h-full"><img alt="" src={starChecked} style={{width:"80%",height:"80%"}}/></button>
+          </div>
+          <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
+                  <span className="text-gray text-2xl w-full h-1/2 min-w-0 overflow-scroll">{lang["bank_name_null_cards"]}</span>
+                  <span className={`text-${oppositeTheme} text-3xl min-w-0 overflow-scroll`} >{data.bank_info}</span>
+          </div>
+          <div className="flex justify-end w-full h-1/4 items-end">
+            <div className="w-full flex justify-end">
+              <form className="flex flex-row justify-end h-1/2 px-1 items-end">
+                    <label className={`text-${oppositeTheme} text-2xl`}>Is Active</label>
+                    <input type="checkbox"
+                     onChange={handleIsActive}
+                     className="bg-transparent border-2 border-solid border-blue rounded-sm focus:border-0 ml-1 mb-3"/>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className={`md:block lg:hidden bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-5`}
+        style={{
+          height:"93%",
+          // gridRow:
+          //   index%3==0
+          //   ?1
+          //   : index %3==1
+          //   ?2
+          //   :3,
+          gridColumn: 1
         }}
       >
         
