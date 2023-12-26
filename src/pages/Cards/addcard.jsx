@@ -46,7 +46,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
         balance: 0,
         locked: 0,
         pending: 0,
-        bank_info: "test",
+        bank_info: cardNumber?cardNumber:shabaNumber,
       });
     }
   }, [title, cardNumber, shabaNumber]);

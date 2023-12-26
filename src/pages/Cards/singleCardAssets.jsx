@@ -16,24 +16,26 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
     (data) => data.currency_abb === assetData.currency_abb
   );
   function handleShow() {
+    
     updateShowState(assetData.currency_abb);
   }
   // border-2 border-solid border-white
+  console.log(lang)
   return (
     <>
       <div
-        className={`bg-${theme}-back h-full rounded-3xl mb-0 mt-0 w-full flex flex-row`}
+        className={`bg-${theme}-back h-full rounded-3xl w-full flex flex-row`}
         style={{ gridRow: assetIndex, gridColumn: 1 }}
       >
           <div
-            className="h-full lg:w-76 md:w-72 sm:w-64"
+            className="h-full lg:w-76 md:w-72 xs:w-3/4 pt-1 sm:px-5 md:px-3"
           >
             <span
-              className={`flex justify-end mt-4 text-${oppositeTheme} lg:text-2xl md:text-xl sm:ml-3 md:ml-5 sm:text-lg mr-14`}
+              className={`min-h-0 overflow-scroll flex justify-end mt-4 text-${oppositeTheme} lg:text-3xl md:text-3xl sm:ml-3 md:ml-5 xs:text-2xl sm:text-3xl sm:mr-24 md:mr-11 xs:mr-20`}
             >
               {assetData.currency_abb}
             </span>
-            <span className="flex justify-end mt-1 text-gray mr-1 lg:text-lg md:text-sm md:ml-6 sm:text-sm sm:ml-3">
+            <span className="flex justify-end text-gray md:mr-0 lg:text-xl md:text-lg md:ml-6 sm:text-2xl sm:ml-3 min-h-0 sm:mr-5 xs:mr-9">
               {walletTanks.length +
                 " " +
                 lang["cards-profile"] +
@@ -43,7 +45,7 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
                 "Banks"}
             </span>
           </div>
-          <div className="lg:w-24 w-fit">
+          <div className="lg:w-24 w-fit xs:w-1/4">
               <button 
               onClick={handleShow}
               className="flex justify-end items-center w-full h-full">

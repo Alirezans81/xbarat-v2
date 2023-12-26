@@ -18,6 +18,23 @@ module.exports = {
         "linear-gradient(157deg, #619AEF 0%, #0A8DFF  100%)",
       gray: "#8F97A6",
     },
+    screens: {
+      'xs': '0px', // min-width
+      'sm': '640px',
+      // => @media (min-width: 640px) { ... }
+
+      'md': '768px',
+      // => @media (min-width: 768px) { ... }
+
+      'lg': '1024px',
+      // => @media (min-width: 1024px) { ... }
+
+      'xl': '1280px',
+      // => @media (min-width: 1280px) { ... }
+
+      '2xl': '1536px',
+      // => @media (min-width: 1536px) { ... }
+    },
   },
   plugins: [require("flowbite/plugin")],
 };
