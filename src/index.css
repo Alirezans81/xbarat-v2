@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html { 
+  height: 100vh;
+}
+
 body {
+  height: 100%;
   overflow: hidden;
 }
 
@@ -230,6 +235,10 @@ body {
 
 .border-red {
   border-color: #E42F08;
+}
+
+.outline-red {
+  outline: 2px #E42F08 !important;
 }
 
 .text-yellow {

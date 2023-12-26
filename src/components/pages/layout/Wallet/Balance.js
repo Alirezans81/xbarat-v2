@@ -5,12 +5,29 @@ import CustomSlider from "../../../common/CustomSlider";
 import CurrencyCard from "./Balance/CurrencyCard";
 import { useWalletState } from "../../../../Providers/WalletProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
+import TransactionModal from "../../../modals/TransactionModal";
+import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
 
 export default function Balance({ refreshPendingRequests }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
+  const setModalData = useModalDataSetState();
+
+  const openTransactionModal = (defaultType) => {
+    setModalData({
+      title: lang["transaction"],
+      children: (
+        <TransactionModal
+          refreshPendingRequests={refreshPendingRequests}
+          defaultType={defaultType}
+        />
+      ),
+      canClose: true,
+      isOpen: true,
+    });
+  };
 
   const getQuantityOfCards = () => {
     if (window.innerWidth >= 1280) {

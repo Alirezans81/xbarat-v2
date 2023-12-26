@@ -45,26 +45,6 @@ export default function MyMenu({ switchBlur }) {
       },
       shown: true,
     },
-    {
-      title: lang["reports"],
-      route: "/reports",
-      imgs: {
-        dark: require("../../../../Images/pages/layout/Navbar/reports-dark.png"),
-        light: require("../../../../Images/pages/layout/Navbar/reports-light.png"),
-        gray: require("../../../../Images/pages/layout/Navbar/reports-gray.png"),
-      },
-      shown: true,
-    },
-    {
-      title: lang["tickets"],
-      route: "/tickets",
-      imgs: {
-        dark: require("../../../../Images/pages/layout/Navbar/tickets-dark.png"),
-        light: require("../../../../Images/pages/layout/Navbar/tickets-light.png"),
-        gray: require("../../../../Images/pages/layout/Navbar/tickets-gray.png"),
-      },
-      shown: false,
-    },
   ]);
 
   return (
@@ -129,30 +109,11 @@ export default function MyMenu({ switchBlur }) {
           </div>
           <div className="flex-1 overflow-y-auto">
             <div className="w-full grid grid-cols-2 gap-y mt-2">
-              <div className="col-span-2 w-full">
-                <Element
-                  data={allLinks[0]}
-                  onClick={() => setMenuIsOpen(false)}
-                />
-              </div>
-              <div className="col-span-2 w-full">
-                <Element
-                  data={allLinks[1]}
-                  onClick={() => setMenuIsOpen(false)}
-                />
-              </div>
-              <div className="col-span-2 w-full">
-                <Element
-                  data={allLinks[2]}
-                  onClick={() => setMenuIsOpen(false)}
-                />
-              </div>
-              <div className="col-span-2 w-full">
-                <Element
-                  data={allLinks[3]}
-                  onClick={() => setMenuIsOpen(false)}
-                />
-              </div>
+              {allLinks.map((link) => (
+                <div className="col-span-2 w-full">
+                  <Element data={link} onClick={() => setMenuIsOpen(false)} />
+                </div>
+              ))}
             </div>
           </div>
           <div className="w-full flex justify-between items-center">
