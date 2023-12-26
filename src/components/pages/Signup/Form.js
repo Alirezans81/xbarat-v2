@@ -16,11 +16,37 @@ export default function Form({ setIsSplashScreenLoading }) {
   const font = useFontState();
   const setToastData = useToastDataSetState();
 
+  const [showPassword, setShowPasswprd] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPasswprd(!showPassword);
+  };
+
   const [mode, setMode] = useState("check");
 
   const generateCode = useGenerateCode();
   const [code, setCode] = useState("");
   const [codeError, setCodeError] = useState();
+
+  const [resendButtonEnabled, setResendButtonEnabled] = useState(false);
+
+  const sendCode = (email) => {
+    const generatedCode = generateCode(6);
+    setCode(generatedCode);
+
+    // sendEmail(
+    //   {
+    //     to_email: email,
+    //     subject: lang["email-varification-subject"],
+    //     message: lang["email-varification-message"] + ": " + generatedCode,
+    //   },
+    //   () => mode !== "submit" && setMode("submit")
+    // );
+
+    setResendButtonEnabled(false);
+    console.log("generatedCode: ", generatedCode);
+    setTimeout(() => setResendButtonEnabled(true), 1000);
+    mode !== "submit" && setMode("submit");
+  };
 
   const showSuccessToast = (succesMessage) => {
     setToastData({
@@ -164,20 +190,7 @@ export default function Form({ setIsSplashScreenLoading }) {
             values.email,
             () => showErrorToast(lang["email-exists-error"]),
             null,
-            () => setMode("password")
-          );
-        } else if (mode === "password") {
-          const generatedCode = generateCode(6);
-          setCode(generatedCode);
-
-          sendEmail(
-            {
-              to_email: values.email,
-              subject: lang["email-varification-subject"],
-              message:
-                lang["email-varification-message"] + ": " + generatedCode,
-            },
-            () => setMode("submit")
+            () => sendCode(values.email)
           );
         } else if (mode == "submit") {
           if (values.verify_email_code === code) {
@@ -253,23 +266,35 @@ export default function Form({ setIsSplashScreenLoading }) {
                   {validationErrors.email}
                 </span>
               )}
-            </>
-          )}
-          {mode === "password" && (
-            <>
-              <input
-                name="password"
-                type="password"
-                placeholder={lang["password"]}
-                className={`input-${theme} mt-4 focus:outline-none`}
-                onChange={handleChange("password")}
-                onBlur={(e) => {
-                  validatePassword(e.target.value);
-                  passwordContainsCheck(e.target.value);
-                  handleBlur(e);
-                }}
-                value={values.password}
-              />
+              <div className="relative md:w-96">
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder={lang["password"]}
+                  className={`input-${theme} mt-4 focus:outline-none`}
+                  onChange={handleChange("password")}
+                  onBlur={(e) => {
+                    validatePassword(e.target.value);
+                    passwordContainsCheck(e.target.value);
+                    handleBlur(e);
+                  }}
+                  value={values.password}
+                />
+                <button
+                  type="button"
+                  onClick={toggleShowPassword}
+                  className="absolute top-6 right-3"
+                >
+                  <img
+                    className="w-7 h-7"
+                    src={
+                      showPassword
+                        ? require("../../../Images/common/preview.png")
+                        : require("../../../Images/common/preview-disabled.png")
+                    }
+                  />
+                </button>
+              </div>
               {validationErrors.password && (
                 <span className={`font-${font}-thin text-red`}>
                   {validationErrors.password}
@@ -277,7 +302,7 @@ export default function Form({ setIsSplashScreenLoading }) {
               )}
               <input
                 name="confirmPassword"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder={lang["confirm-password"]}
                 className={`input-${theme} mt-4 focus:outline-none`}
                 onChange={handleChange("confirmPassword")}
@@ -306,25 +331,51 @@ export default function Form({ setIsSplashScreenLoading }) {
           {mode === "submit" && (
             <>
               <div className="flex flex-col">
-                <span className={`"font-${font}-thin text-${oppositeTheme}`}>
-                  {lang["code-sended-to-email-message-1st"] + "."}
-                </span>
-                <span className={`"font-${font}-thin text-${oppositeTheme}`}>
+                <div className="flex flex-col md:flex-row md:items-center gap-x-1.5">
+                  <span className={`font-${font}-thin text-${oppositeTheme}`}>
+                    {lang["code-sended-to-email-message-1st"]}
+                  </span>
+                  <span className={`font-${font}-regular text-blue`}>
+                    {values.email}
+                  </span>
+                </div>
+                <span className={`font-${font}-thin text-${oppositeTheme}`}>
                   {lang["code-sended-to-email-message-2nd"] + ":"}
                 </span>
               </div>
-              <input
-                name="verify_email_code"
-                type="verify_email_code"
-                placeholder={lang["code"]}
-                className={`input-${theme} mt-4 focus:outline-none`}
-                onChange={handleChange("verify_email_code")}
-                onBlur={(e) => {
-                  validateEmail(e.target.value);
-                  handleBlur(e);
-                }}
-                value={values.verify_email_code}
-              />
+              <div className="flex flex-col gap-y-1">
+                <div className="relative">
+                  <input
+                    name="verify_email_code"
+                    type="verify_email_code"
+                    placeholder={lang["code"]}
+                    className={`input-${theme} mt-4 focus:outline-none`}
+                    onChange={handleChange("verify_email_code")}
+                    onBlur={(e) => {
+                      validateEmail(e.target.value);
+                      handleBlur(e);
+                    }}
+                    value={values.verify_email_code}
+                  />
+                  <button
+                    type="button"
+                    disabled={!resendButtonEnabled}
+                    onClick={() => sendCode(values.email)}
+                  >
+                    <img
+                      className="absolute right-2.5 top-6 w-7 h-7"
+                      src={
+                        resendButtonEnabled
+                          ? require("../../../Images/pages/Signup/resend.png")
+                          : require("../../../Images/pages/Signup/resend-disabled.png")
+                      }
+                    />
+                  </button>
+                </div>
+                <span className={`font-${font}-regular text-gray`}>
+                  {"You can click on resend after 1 minute."}
+                </span>
+              </div>
               {codeError && (
                 <span className={`font-${font}-thin text-red`}>
                   {codeError}

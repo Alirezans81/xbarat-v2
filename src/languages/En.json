@@ -139,7 +139,7 @@
   "assign": "Assign",
   "type-of-document": "Type of Document",
   "bank-account": "Bank Account",
-  "bank-account-title": "Bank Account Title",
+  "bank-account-title": "Cardholder's Name",
   "bank-account-number": "Bank Account Number",
   "transaction": "Transaction",
   "user-code": "User Code",
@@ -173,7 +173,7 @@
   "referral-code": "Referral Code",
   "copied": "copied",
   "code": "Code",
-  "code-sended-to-email-message-1st": "We've sent a code to your email",
+  "code-sended-to-email-message-1st": "We've sent a code to",
   "code-sended-to-email-message-2nd": "Enter the code here",
   "email-varification-subject": "Email Varification",
   "email-varification-message": "Your code is",
@@ -184,5 +184,6 @@
 
   "successful-signup-1st": "Your account was successfully signed up",
   "successful-signup-2nd": "Please try to login now",
-  "email-exsit-error": "The email exists"
+  "email-exsit-error": "The email exists",
+  "amount-input-max-button-label": "Max"
 }

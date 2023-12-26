@@ -16,6 +16,11 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
   const { one: direction } = useDirectionState();
   const setToastData = useToastDataSetState();
 
+  const [showPassword, setShowPasswprd] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPasswprd(!showPassword);
+  };
+
   const showErrorToast = (errorMessage) => {
     setToastData({
       status: "failed",
@@ -133,18 +138,34 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
               {validationErrors.email}
             </span>
           )}
-          <input
-            name="password"
-            type="password"
-            placeholder={lang["password"]}
-            className={`input-${theme} mt-4 focus:outline-none`}
-            onChange={handleChange("password")}
-            onBlur={(e) => {
-              validatePassword(e.target.value);
-              handleBlur(e);
-            }}
-            value={values.password}
-          />
+          <div className="relative md:w-96">
+            <input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder={lang["password"]}
+              className={`input-${theme} mt-4 focus:outline-none`}
+              onChange={handleChange("password")}
+              onBlur={(e) => {
+                validatePassword(e.target.value);
+                handleBlur(e);
+              }}
+              value={values.password}
+            />
+            <button
+              type="button"
+              onClick={toggleShowPassword}
+              className="absolute top-6 right-3"
+            >
+              <img
+                className="w-7 h-7"
+                src={
+                  showPassword
+                    ? require("../../../../Images/common/preview.png")
+                    : require("../../../../Images/common/preview-disabled.png")
+                }
+              />
+            </button>
+          </div>
           {validationErrors.password && (
             <span className={`font-${font}-thin text-red`}>
               {validationErrors.password}
@@ -154,7 +175,7 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
             <div className="flex items-center">
               <button type="button" onClick={ToggleRememberMeCheck}>
                 <img
-                  className="w-4 h-4"
+                  className="w-4 h-4 md:w-5 md:h-5"
                   src={require(`../../../../Images/pages/Login/check-${rememberMeCheck}.png`)}
                 />
               </button>

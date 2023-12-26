@@ -203,10 +203,17 @@ export default function Form({ setIsSplashScreenLoading }) {
           {mode === "verify" && (
             <>
               <div className="flex flex-col">
-                <span className={`"font-${font}-thin text-${oppositeTheme}`}>
-                  {lang["code-sended-to-email-message-1st"] + "."}
-                </span>
-                <span className={`"font-${font}-thin text-${oppositeTheme}`}>
+                <div className="flex flex-col md:flex-row gap-x-1">
+                  <span className={`"font-${font}-thin text-${oppositeTheme}`}>
+                    {lang["code-sended-to-email-message-1st"]}
+                  </span>
+                  <span className={`"font-${font}-thin text-blue`}>
+                    {values.email}
+                  </span>
+                </div>
+                <span
+                  className={`"font-${font}-thin text-${oppositeTheme} mt-4 md:mt-0`}
+                >
                   {lang["code-sended-to-email-message-2nd"] + ":"}
                 </span>
               </div>

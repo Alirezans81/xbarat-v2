@@ -7,6 +7,7 @@ export default function SubmitButton({
   type,
   children,
   rounded,
+  disabled,
 }) {
   const [bgGradientClass, setBgGradient] = useState("opacity-100");
   const [bgGradientOppositeClass, setBgGradientOpposite] =
@@ -17,7 +18,7 @@ export default function SubmitButton({
     <button
       className={
         className +
-        ` flex justify-center items-center font-${font}-bold relative rounded-${rounded}`
+        ` flex justify-center items-center bg-gray font-${font}-bold relative rounded-${rounded}`
       }
       onClick={onClick}
       type={type}
@@ -29,13 +30,18 @@ export default function SubmitButton({
         setBgGradient("opacity-100");
         setBgGradientOpposite("opacity-0");
       }}
+      disabled={disabled}
     >
-      <div
-        className={`transition-all duration-300 rounded-${rounded} absolute w-full h-full bg-blue-gradient ${bgGradientClass}`}
-      />
-      <div
-        className={`transition-all duration-300 rounded-${rounded} absolute w-full h-full bg-blue-gradient-opposite ${bgGradientOppositeClass}`}
-      />
+      {!disabled && (
+        <>
+          <div
+            className={`transition-all duration-300 rounded-${rounded} absolute w-full h-full bg-blue-gradient ${bgGradientClass}`}
+          />
+          <div
+            className={`transition-all duration-300 rounded-${rounded} absolute w-full h-full bg-blue-gradient-opposite ${bgGradientOppositeClass}`}
+          />
+        </>
+      )}
       <span className="mt-2 text-light z-10">{children}</span>
     </button>
   );

@@ -41,6 +41,8 @@ export default function ExchangeForm({
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: oneDirection } = useDirectionState();
 
+  const [hasError, setHasError] = useState(false);
+
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const user = useUserState();
   const statuses = useStatusesState();
@@ -54,6 +56,10 @@ export default function ExchangeForm({
   );
 
   const [errorMessage, setErrorMessage] = useState("");
+  useEffect(() => {
+    if (errorMessage) setHasError(true);
+    else setHasError(false);
+  }, [errorMessage]);
 
   const [targetSlug, setTargetSlug] = useState();
 
@@ -219,7 +225,7 @@ export default function ExchangeForm({
         }
       }}
     >
-      {({ handleBlur, handleChange, values, handleSubmit }) => {
+      {({ handleBlur, handleChange, values, handleSubmit, setFieldValue }) => {
         return (
           <form className="mt-2 h-full">
             <div className="flex items-center gap-1">
@@ -407,68 +413,98 @@ export default function ExchangeForm({
             <div
               className={`flex items-center w-full gap-7 text-${oppositeTheme} font-${font}-regular mt-2`}
             >
-              <input
-                className={`flex-1 text-left hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
-                placeholder={lang["amount"]}
-                disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
-                name="amount"
-                onBlur={(e) => {
-                  handleBlur(e);
-                  if (!isDemo) {
-                    findError(
-                      removeComma(values.amount),
-                      removeComma(values.rate)
-                    );
+              <div className="flex-1 flex relative">
+                <input
+                  className={`flex-1 text-left hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                  placeholder={lang["amount"]}
+                  disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
+                  name="amount"
+                  onBlur={(e) => {
+                    handleBlur(e);
+                    if (!isDemo) {
+                      findError(
+                        removeComma(values.amount),
+                        removeComma(values.rate)
+                      );
+                    }
+                  }}
+                  onChange={(e) => {
+                    handleChange(e);
+                    if (!isDemo) {
+                      findError(
+                        removeComma(values.amount),
+                        removeComma(values.rate)
+                      );
+                    }
+                  }}
+                  value={addComma(values.amount, false)}
+                />
+                {(values.amount === 0 || values.amount === "") &&
+                  selectedSourceIndex >= 0 &&
+                  selectedTargetIndex >= 0 &&
+                  +walletBalance !== 0 && (
+                    <button
+                      type="button"
+                      className="absolute top-2 right-3"
+                      onClick={() => {
+                        if (+walletBalance !== 0) {
+                          setFieldValue(
+                            "amount",
+                            addComma(+walletBalance, true)
+                          );
+                        } else {
+                          findError();
+                        }
+                      }}
+                    >
+                      <span
+                        className={`text-gray font-${font}-regular text-sm`}
+                      >
+                        {lang["amount-input-max-button-label"]}
+                      </span>
+                    </button>
+                  )}
+              </div>
+
+              <div className="flex-1 flex">
+                <input
+                  ref={rateInputRef}
+                  className={`flex-1 text-left hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                  placeholder={lang["rate"]}
+                  disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
+                  name="rate"
+                  onBlur={(e) => {
+                    handleBlur(e);
+                    if (!isDemo) {
+                      findError(
+                        removeComma(values.amount),
+                        removeComma(values.rate)
+                      );
+                    }
+                  }}
+                  onChange={(e) => {
+                    handleChange(e);
+                    formDefaultRate && setFormDefaultRate(null);
+                    if (!isDemo) {
+                      formDefaultRate
+                        ? findError(removeComma(values.amount), formDefaultRate)
+                        : findError(
+                            removeComma(values.amount),
+                            removeComma(values.rate)
+                          );
+                    }
+                  }}
+                  value={
+                    rateIsReversed && formDefaultRate
+                      ? (
+                          (1 / +formDefaultRate) *
+                          +selectedCurrecnyPair.rate_multiplier
+                        ).toFixed(selectedCurrecnyPair.floating_number) ||
+                        addComma(values.rate, true)
+                      : formDefaultRate || addComma(values.rate, true)
                   }
-                }}
-                onChange={(e) => {
-                  handleChange(e);
-                  if (!isDemo) {
-                    findError(
-                      removeComma(values.amount),
-                      removeComma(values.rate)
-                    );
-                  }
-                }}
-                value={addComma(values.amount, false)}
-              />
-              <input
-                ref={rateInputRef}
-                className={`flex-1 text-left hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
-                placeholder={lang["rate"]}
-                disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
-                name="rate"
-                onBlur={(e) => {
-                  handleBlur(e);
-                  if (!isDemo) {
-                    findError(
-                      removeComma(values.amount),
-                      removeComma(values.rate)
-                    );
-                  }
-                }}
-                onChange={(e) => {
-                  handleChange(e);
-                  formDefaultRate && setFormDefaultRate(null);
-                  if (!isDemo) {
-                    formDefaultRate
-                      ? findError(removeComma(values.amount), formDefaultRate)
-                      : findError(
-                          removeComma(values.amount),
-                          removeComma(values.rate)
-                        );
-                  }
-                }}
-                value={
-                  rateIsReversed && formDefaultRate
-                    ? (
-                        (1 / +formDefaultRate) *
-                        +selectedCurrecnyPair.rate_multiplier
-                      ).toFixed(selectedCurrecnyPair.floating_number) ||
-                      addComma(values.rate, true)
-                    : formDefaultRate || addComma(values.rate, true)
-                }
-              />
+                />
+              </div>
             </div>
             {values.amount &&
               removeComma(values.amount) !== 0 &&
@@ -522,6 +558,7 @@ export default function ExchangeForm({
                   : "flex justify-center mt-7 items-center w-full py-0.5"
               }
               rounded="lg"
+              disabled={hasError}
             >
               {lang["submit"]}
             </SubmitButton>
