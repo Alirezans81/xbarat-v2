@@ -37,18 +37,18 @@ const Addasset = ({ addAsset, setAddAsset, walletAsset }) => {
   const handleAddAssets = (e) => {
     e.preventDefault();
     setAddAsset(false);
-    createWalletAsset(params);
+    // createWalletAsset(params);
   };
   const discard = () => {
     setAddAsset(false);
   };
 
-  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
-  const { createWalletAsset, isLoading: createWalletAssetIsLoading } =
-    useCreateWalletAsset();
-  useEffect(() => {
-    setIsLoadingSplashScreen(createWalletAssetIsLoading);
-  }, [createWalletAssetIsLoading]);
+  // const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  // const { createWalletAsset, isLoading: createWalletAssetIsLoading } =
+  //   useCreateWalletAsset();
+  // useEffect(() => {
+  //   setIsLoadingSplashScreen(createWalletAssetIsLoading);
+  // }, [createWalletAssetIsLoading]);
 
   return (
     <>
@@ -63,10 +63,7 @@ const Addasset = ({ addAsset, setAddAsset, walletAsset }) => {
         <div
           className={`bg-${theme}-back rounded-lg z-50 w-fit h-fit flex flex-col px-5 py-2`}
         >
-          <button
-            onClick={discard}
-            className="flex justify-end"
-          >
+          <button onClick={discard} className="flex justify-end">
             <img src={cross} />
           </button>
           <div>
@@ -94,7 +91,6 @@ const Addasset = ({ addAsset, setAddAsset, walletAsset }) => {
           </button>
         </div>
       </div>
-  
     </>
   );
 };

@@ -41,7 +41,7 @@ export default function ExchangeForm({
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: oneDirection } = useDirectionState();
 
-  const [hasError, setHasError] = useState(false);
+  const [hasError, setHasError] = useState(true);
 
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const user = useUserState();

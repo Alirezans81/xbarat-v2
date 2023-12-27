@@ -71,7 +71,7 @@ export default function Wallet() {
           <Balance refreshPendingRequests={refreshPendingRequests} />
         </div>
         <div
-          className={`-mt-3 md:-mt-0 h-auto md:h-72 col-span-12 row-span-3 bg-${theme} p-5 rounded-3xl md:rounded-r-none pb-10`}
+          className={`-mt-3 md:-mt-0 h-72 col-span-12 row-span-3 bg-${theme} p-5 rounded-3xl md:rounded-r-none pb-10`}
         >
           <PendingRequests
             refreshPendingRequests={refreshPendingRequests}

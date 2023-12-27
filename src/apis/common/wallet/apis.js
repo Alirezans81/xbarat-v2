@@ -42,15 +42,6 @@ const getWalletTankTypes = (filtersObject) => {
   }
 };
 
-const createWalletAsset = (params) => {
-  const formData = new FormData();
-
-  formData.append("wallet", params.wallet);
-  formData.append("currency", params.currency);
-
-  return axios.post(api["wallet-asset"], formData);
-};
-
 const createWalletTank = (params) => {
   return axios.post(api["wallet-tank"], params);
 };
@@ -97,7 +88,6 @@ export {
   getWalletAssets,
   getWalletTanks,
   getWalletTankTypes,
-  createWalletAsset,
   createWalletTank,
   createDeposit,
   createWithdrawal,

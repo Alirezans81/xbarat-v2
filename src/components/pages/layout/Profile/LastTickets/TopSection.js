@@ -12,7 +12,9 @@ export default function TopSection({ direction, oppositeTheme, lang }) {
       >
         {lang["last-tickets"]}
       </span>
-      <Link to="/tickets">
+      <Link
+      // to="/tickets"
+      >
         <img
           className="w-7 h-7"
           src={require(`../../../../../Images/arrow-${direction}-${oppositeTheme}.png`)}
