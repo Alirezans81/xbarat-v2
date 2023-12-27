@@ -185,5 +185,6 @@
   "successful-signup-1st": "Your account was successfully signed up",
   "successful-signup-2nd": "Please try to login now",
   "email-exsit-error": "The email exists",
-  "amount-input-max-button-label": "Max"
+  "amount-input-max-button-label": "Max",
+  "add-card": "Add Card"
 }

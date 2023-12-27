@@ -4,7 +4,11 @@ import { Formik } from "formik";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useGetBranches } from "../../../apis/common/branch/hooks";
-import { useCreateWithdrawal } from "../../../apis/common/wallet/hooks";
+import {
+  useCreateWalletTank,
+  useCreateWithdrawal,
+  useGetWalletTankTypes,
+} from "../../../apis/common/wallet/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import { useAddComma, useRemoveComma } from "../../../hooks/useNumberFunctions";
@@ -12,6 +16,7 @@ import SubmitButton from "../../common/SubmitButton";
 import { useGetWalletTankByCurrency } from "../../../hooks/useWalletFilter";
 import { useStatusesState } from "../../../Providers/StatusesProvider";
 import { useFontState } from "../../../Providers/FontProvider";
+import { useWalletState } from "../../../Providers/WalletProvider";
 
 export default function Withdrawal({
   currencies,
@@ -27,6 +32,22 @@ export default function Withdrawal({
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
+  const walletData = useWalletState();
+
+  const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
+
+  const findWalletAssetByCurrencyUrl = () => {
+    const walletAssets =
+      walletData && walletData.walletAssets ? walletData.walletAssets : [];
+
+    const found = walletAssets.find(
+      (wallet_asset) =>
+        wallet_asset.currency === currencies[selectedCurrencyIndex].url
+    );
+    return found.url;
+  };
+
+  const [newCardMode, setNewCardMode] = useState(false);
 
   const getWalletTankByCurrency = useGetWalletTankByCurrency();
   const userInfo = useUserState();
@@ -37,6 +58,14 @@ export default function Withdrawal({
     () => setIsLoadingSplashScreen(getBranchesIsLoading),
     [getBranchesIsLoading]
   );
+
+  const { createWalletTank, isLoading: createWalletTankIsLoading } =
+    useCreateWalletTank();
+  useEffect(
+    () => setIsLoadingSplashScreen(createWalletTankIsLoading),
+    [createWalletTankIsLoading]
+  );
+
   const { createWithdrawal, isLoading: createWithdrawalIsLoading } =
     useCreateWithdrawal();
   useEffect(
@@ -44,12 +73,26 @@ export default function Withdrawal({
     [createWithdrawalIsLoading]
   );
 
-  const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
   const [walletTanks, setWalletTanks] = useState([]);
   const [selectedWalletTankIndex, setSelectedWalletTankIndex] = useState(-1);
   const [locations, setLocations] = useState([]);
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(-1);
+
   const [locationDivClass, setLocationDivClass] = useState("");
+  const [bankAccountDivClass, setBankAccountDivClass] = useState("");
+
+  const [walletTankTypes, setWalletTankTypes] = useState([]);
+  const [selectedWalletTankType, setSelectedWalletTankType] = useState(-1);
+
+  const { getWalletTankTypes, isLoading: getWalletTankTypesIsLoading } =
+    useGetWalletTankTypes();
+  useEffect(
+    () => setIsLoadingSplashScreen(getWalletTankTypesIsLoading),
+    [getWalletTankTypesIsLoading]
+  );
+  useEffect(() => {
+    newCardMode && getWalletTankTypes({}, setWalletTankTypes);
+  }, [newCardMode]);
 
   useEffect(() => {
     currencies[selectedCurrencyIndex] &&
@@ -67,14 +110,16 @@ export default function Withdrawal({
         setLocations
       );
       setLocationDivClass("flex-1 w-full flex flex-col gap-y-2 mt-5");
+      setBankAccountDivClass("hidden");
     } else {
       setLocationDivClass("hidden");
+      setBankAccountDivClass("flex-1 w-full flex flex-col gap-y-2 mt-5");
     }
   }, [selectedCurrencyIndex]);
 
   return (
     <Formik
-      initialValues={{ amount: "" }}
+      initialValues={{ amount: "", title: "", bank_info: "" }}
       onSubmit={(values) => {
         if (
           currencies[selectedCurrencyIndex] &&
@@ -110,30 +155,69 @@ export default function Withdrawal({
             }
           );
         } else {
-          createWithdrawal(
-            {
-              user_receiver: userInfo && userInfo.url ? userInfo.url : "",
-              currency:
-                currencies[selectedCurrencyIndex] &&
-                currencies[selectedCurrencyIndex].url
-                  ? currencies[selectedCurrencyIndex].url
+          if (newCardMode) {
+            const createWalletTankParams = {
+              wallet_asset: findWalletAssetByCurrencyUrl() || "",
+              title: values.title,
+              account_name: values.title,
+              wallet_tank_type:
+                walletTankTypes[selectedWalletTankType] &&
+                walletTankTypes[selectedWalletTankType].url
+                  ? walletTankTypes[selectedWalletTankType].url
                   : "",
-              wallet_tank_receiver:
-                walletTanks[selectedWalletTankIndex] &&
-                walletTanks[selectedWalletTankIndex].url
-                  ? walletTanks[selectedWalletTankIndex].url
+              bank_info: values.bank_info,
+            };
+            console.log(createWalletTankParams);
+            createWalletTank(createWalletTankParams, null, (data) => {
+              createWithdrawal(
+                {
+                  user_receiver: userInfo && userInfo.url ? userInfo.url : "",
+                  currency:
+                    currencies[selectedCurrencyIndex] &&
+                    currencies[selectedCurrencyIndex].url
+                      ? currencies[selectedCurrencyIndex].url
+                      : "",
+                  wallet_tank_receiver: data && data.url ? data.url : "",
+                  amount: removeComma(values.amount),
+                  status: statuses
+                    ? statuses.find((status) => status.title === "Admin Assign")
+                        .url
+                    : "",
+                },
+                () => {
+                  getWalletData();
+                  refreshPendingRequests();
+                  closeModal();
+                }
+              );
+            });
+          } else {
+            createWithdrawal(
+              {
+                user_receiver: userInfo && userInfo.url ? userInfo.url : "",
+                currency:
+                  currencies[selectedCurrencyIndex] &&
+                  currencies[selectedCurrencyIndex].url
+                    ? currencies[selectedCurrencyIndex].url
+                    : "",
+                wallet_tank_receiver:
+                  walletTanks[selectedWalletTankIndex] &&
+                  walletTanks[selectedWalletTankIndex].url
+                    ? walletTanks[selectedWalletTankIndex].url
+                    : "",
+                amount: removeComma(values.amount),
+                status: statuses
+                  ? statuses.find((status) => status.title === "Admin Assign")
+                      .url
                   : "",
-              amount: removeComma(values.amount),
-              status: statuses
-                ? statuses.find((status) => status.title === "Admin Assign").url
-                : "",
-            },
-            () => {
-              getWalletData();
-              refreshPendingRequests();
-              closeModal();
-            }
-          );
+              },
+              () => {
+                getWalletData();
+                refreshPendingRequests();
+                closeModal();
+              }
+            );
+          }
         }
       }}
     >
@@ -204,73 +288,192 @@ export default function Withdrawal({
               </CustomDropdown>
             </div>
           </div>
+
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
-              {lang["bank-account"]}
+              {lang["amount"]}
             </span>
             <div className="w-full flex">
-              <CustomDropdown
-                label={
-                  selectedWalletTankIndex >= 0 &&
-                  walletTanks[selectedWalletTankIndex] &&
-                  walletTanks[selectedWalletTankIndex].account_name
-                    ? walletTanks[selectedWalletTankIndex].account_name
-                    : ""
-                }
-              >
-                {walletTanks.map((walletTank, index) => {
-                  if (index === 0 && index === walletTanks.length - 1) {
-                    return (
-                      <CustomItem
-                        key={index}
-                        className="rounded-xl"
-                        onClick={() => setSelectedWalletTankIndex(index)}
-                      >
-                        {walletTank && walletTank.account_name
-                          ? walletTank.account_name
-                          : "error"}
-                      </CustomItem>
-                    );
-                  } else if (index === 0) {
-                    return (
-                      <CustomItem
-                        key={index}
-                        className="rounded-t-xl"
-                        onClick={() => setSelectedWalletTankIndex(index)}
-                      >
-                        {walletTank && walletTank.account_name
-                          ? walletTank.account_name
-                          : "error"}
-                      </CustomItem>
-                    );
-                  } else if (index === walletTanks.length - 1) {
-                    return (
-                      <CustomItem
-                        key={index}
-                        className="rounded-b-xl"
-                        onClick={() => setSelectedWalletTankIndex(index)}
-                      >
-                        {walletTank && walletTank.account_name
-                          ? walletTank.account_name
-                          : "error"}
-                      </CustomItem>
-                    );
-                  } else {
-                    return (
-                      <CustomItem
-                        key={index}
-                        onClick={() => setSelectedWalletTankIndex(index)}
-                      >
-                        {walletTank && walletTank.abbreviation
-                          ? walletTank.abbreviation
-                          : "error"}
-                      </CustomItem>
-                    );
-                  }
-                })}
-              </CustomDropdown>
+              <input
+                className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                name="amount"
+                onBlur={handleBlur("amount")}
+                onChange={handleChange("amount")}
+                value={values.amount ? addComma(values.amount) : ""}
+              />
             </div>
           </div>
+          {newCardMode ? (
+            <div className="relative px-6 pb-6 border-2 border-dashed border-gray rounded-2xl mt-5">
+              <button
+                onClick={() => setNewCardMode(false)}
+                type="button"
+                className="absolute top-[1.15rem] right-6"
+              >
+                <span className={`text-blue font-${font}-thin`}>All Cards</span>
+              </button>
+              <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+                <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                  {lang["type-of-document"]}
+                </span>
+                <div className="w-full flex">
+                  <CustomDropdown
+                    label={
+                      selectedWalletTankType >= 0
+                        ? walletTankTypes[selectedWalletTankType].title
+                        : ""
+                    }
+                  >
+                    {walletTankTypes.map((walletTankType, index) => {
+                      if (index === 0 && index === walletTankTypes.length - 1) {
+                        return (
+                          <CustomItem
+                            key={index}
+                            className="rounded-xl"
+                            onClick={() => setSelectedWalletTankType(index)}
+                          >
+                            {walletTankType && walletTankType.title
+                              ? walletTankType.title
+                              : "error"}
+                          </CustomItem>
+                        );
+                      } else if (index === 0) {
+                        return (
+                          <CustomItem
+                            key={index}
+                            className="rounded-t-xl"
+                            onClick={() => setSelectedWalletTankType(index)}
+                          >
+                            {walletTankType && walletTankType.title
+                              ? walletTankType.title
+                              : "error"}
+                          </CustomItem>
+                        );
+                      } else if (index === walletTankTypes.length - 1) {
+                        return (
+                          <CustomItem
+                            key={index}
+                            className="rounded-b-xl"
+                            onClick={() => setSelectedWalletTankType(index)}
+                          >
+                            {walletTankType && walletTankType.title
+                              ? walletTankType.title
+                              : "error"}
+                          </CustomItem>
+                        );
+                      } else {
+                        return (
+                          <CustomItem
+                            key={index}
+                            onClick={() => setSelectedWalletTankType(index)}
+                          >
+                            {walletTankType && walletTankType.title
+                              ? walletTankType.title
+                              : "error"}
+                          </CustomItem>
+                        );
+                      }
+                    })}
+                  </CustomDropdown>
+                </div>
+              </div>
+              <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+                <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                  {lang["bank-account-title"]}
+                </span>
+                <div className="w-full flex">
+                  <input
+                    className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                    name="title"
+                    onBlur={handleBlur("title")}
+                    onChange={handleChange("title")}
+                    value={values.title ? values.title : ""}
+                  />
+                </div>
+              </div>
+              <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+                <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                  {lang["bank-account-number"]}
+                </span>
+                <div className="w-full flex">
+                  <input
+                    className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                    name="bank_info"
+                    onBlur={handleBlur("bank_info")}
+                    onChange={handleChange("bank_info")}
+                    value={values.bank_info ? values.bank_info : ""}
+                  />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className={bankAccountDivClass}>
+              <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                {lang["bank-account"]}
+              </span>
+              <div className="w-full flex">
+                <CustomDropdown
+                  label={
+                    selectedWalletTankIndex >= 0 &&
+                    walletTanks[selectedWalletTankIndex] &&
+                    walletTanks[selectedWalletTankIndex].account_name
+                      ? walletTanks[selectedWalletTankIndex].account_name
+                      : ""
+                  }
+                >
+                  {walletTanks.map((walletTank, index) => {
+                    if (index === 0) {
+                      return (
+                        <CustomItem
+                          key={index}
+                          className="rounded-t-xl"
+                          onClick={() => setSelectedWalletTankIndex(index)}
+                        >
+                          {walletTank && walletTank.account_name
+                            ? walletTank.account_name
+                            : "error"}
+                        </CustomItem>
+                      );
+                    } else {
+                      return (
+                        <CustomItem
+                          key={index}
+                          onClick={() => setSelectedWalletTankIndex(index)}
+                        >
+                          {walletTank && walletTank.abbreviation
+                            ? walletTank.abbreviation
+                            : "error"}
+                        </CustomItem>
+                      );
+                    }
+                  })}
+                  {walletTanks.length === 0 ? (
+                    <CustomItem
+                      key={walletTanks.length}
+                      onClick={() => {
+                        setSelectedWalletTankIndex(-1);
+                        setNewCardMode(true);
+                      }}
+                      className="rounded-xl"
+                    >
+                      {"+ " + lang["add-card"]}
+                    </CustomItem>
+                  ) : (
+                    <CustomItem
+                      key={walletTanks.length}
+                      onClick={() => {
+                        setSelectedWalletTankIndex(-1);
+                        setNewCardMode(true);
+                      }}
+                      className="rounded-b-xl"
+                    >
+                      {"+ " + lang["add-card"]}
+                    </CustomItem>
+                  )}
+                </CustomDropdown>
+              </div>
+            </div>
+          )}
           <div className={locationDivClass}>
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["location"]}
@@ -328,20 +531,6 @@ export default function Withdrawal({
                   }
                 })}
               </CustomDropdown>
-            </div>
-          </div>
-          <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-            <span className={`font-${font}-regular text-${oppositeTheme}`}>
-              {lang["amount"]}
-            </span>
-            <div className="w-full flex">
-              <input
-                className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
-                name="amount"
-                onBlur={handleBlur("amount")}
-                onChange={handleChange("amount")}
-                value={values.amount ? addComma(values.amount) : ""}
-              />
             </div>
           </div>
           <div className="mt-10">

@@ -119,39 +119,17 @@ const useGetWalletTankTypes = () => {
   return { getWalletTankTypes: fetch, error, isLoading };
 };
 
-const useCreateWalletAsset = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
-
-  const fetch = async (params, customFunctionWithData) => {
-    setIsLoading(true);
-    await createWalletAsset(params)
-      .then((data) => {
-        console.log(data);
-        customFunctionWithData && customFunctionWithData(data.data);
-        setIsLoading(false);
-        return data.data;
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error);
-        setIsLoading(false);
-      });
-  };
-
-  return { createWalletAsset: fetch, error, isLoading };
-};
-
 const useCreateWalletTank = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (params, customFunction) => {
+  const fetch = async (params, customFunction, customFunctionWithData) => {
     setIsLoading(true);
     await createWalletTank(params)
       .then((data) => {
         console.log(data);
         customFunction && customFunction();
+        customFunctionWithData && customFunctionWithData(data);
         setIsLoading(false);
         return data.data;
       })
@@ -239,7 +217,6 @@ export {
   useGetWalletAssets,
   useGetWalletTanks,
   useGetWalletTankTypes,
-  useCreateWalletAsset,
   useCreateWalletTank,
   useCreateDeposit,
   useCreateWithdrawal,

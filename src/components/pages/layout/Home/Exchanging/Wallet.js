@@ -11,8 +11,8 @@ export default function Wallet({ balance, currency, pending, locked }) {
   const addComma = useAddComma();
 
   return (
-    <div className="flex flex-col">
-      <div className="">
+    <div className="flex flex-col ov">
+      <div className="w-[17.5rem] md:w-[20rem] overflow-x-auto scroll-horizental">
         <span className={`text-2xl font-${font}-bold text-${oppositeTheme}`}>
           {addComma(balance, true)}
         </span>

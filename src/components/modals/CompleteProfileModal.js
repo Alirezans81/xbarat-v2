@@ -18,7 +18,6 @@ import {
   useGetWalletAssets,
   useGetWalletTanks,
   useGetWallets,
-  useCreateWalletAsset,
   useCreateWalletTank,
 } from "../../apis/common/wallet/hooks";
 
@@ -79,12 +78,6 @@ export default function CompleteProfileModal() {
     walletTanks[0] && setStep(5);
   }, [walletTanks]);
 
-  const { createWalletAsset, isLoading: createWalletAssetIsLoading } =
-    useCreateWalletAsset();
-  useEffect(
-    () => setIsLoadingSplashScreen(createWalletAssetIsLoading),
-    [createWalletAssetIsLoading]
-  );
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
   useEffect(
@@ -96,37 +89,13 @@ export default function CompleteProfileModal() {
   const { fetchStep2, isLoading: fetchStep2IsLoading } = useFetchStep2();
   const { fetchStep3, isLoading: fetchStep3IsLoading } = useFetchStep3();
   const fetchStep4 = (values, customFunction) => {
-    const createWalletAssetParams = {
-      wallet: wallets[0] && wallets[0].url ? wallets[0].url : "",
-      currency: values.wallet_asset_currency,
-    };
     const createWalletTankParams = {
       title: values.title,
       account_name: values.title,
       wallet_tank_type: values.wallet_tank_type,
       bank_info: values.bank_info,
     };
-
-    !walletAssets[0]
-      ? createWalletAsset(createWalletAssetParams, (created_wallet_asset) => {
-          createWalletTank(
-            {
-              wallet_asset:
-                created_wallet_asset && created_wallet_asset.url
-                  ? created_wallet_asset.url
-                  : "",
-              ...createWalletTankParams,
-            },
-            customFunction
-          );
-        })
-      : createWalletTank(
-          {
-            wallet: wallets[0] && wallets[0].url ? wallets[0].url : "",
-            ...createWalletTankParams,
-          },
-          customFunction
-        );
+    createWalletTank(createWalletTankParams, customFunction);
   };
 
   useEffect(

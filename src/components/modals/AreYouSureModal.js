@@ -11,7 +11,7 @@ export default function AreYouSureModal({ onClick, message }) {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
   return (
-    <div className="flex flex-col w-96 -mt-3">
+    <div className="flex flex-col w-80 md:w-96 -mt-3">
       <span className={`font-${font}-regular text-${oppositeTheme}`}>
         {message}
       </span>
