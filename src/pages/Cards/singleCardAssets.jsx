@@ -27,15 +27,21 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
         className={`bg-${theme}-back h-full rounded-3xl w-full flex flex-row`}
         style={{ gridRow: assetIndex, gridColumn: 1 }}
       >
+         <div className="w-1/5 bg-transparent px-3 h-full">
+              <div 
+              onClick={handleShow}
+              className="flex justify-end items-center w-full h-full">
+              </div>
+          </div>
           <div
-            className="h-full lg:w-76 md:w-72 xs:w-3/4 pt-1 sm:px-5 md:px-3"
+            className="flex-1 flex-col items-center flex justify-center h-full w-3/5"
           >
             <span
-              className={`min-h-0 overflow-scroll flex justify-end mt-4 text-${oppositeTheme} lg:text-3xl md:text-3xl sm:ml-3 md:ml-5 xs:text-2xl sm:text-3xl sm:mr-24 md:mr-11 xs:mr-20`}
+              className={`min-h-0 text-${oppositeTheme} lg:text-3xl md:text-3xl xs:text-3xl sm:text-3xl`}
             >
               {assetData.currency_abb}
             </span>
-            <span className="flex justify-end text-gray md:mr-0 lg:text-xl md:text-lg md:ml-6 sm:text-2xl sm:ml-3 min-h-0 sm:mr-5 xs:mr-9">
+            <span className="flex justify-end text-gray lg:text-xl md:text-lg sm:text-2xl xs-2xl min-h-0">
               {walletTanks.length +
                 " " +
                 lang["cards-profile"] +
@@ -45,7 +51,7 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
                 "Banks"}
             </span>
           </div>
-          <div className="lg:w-24 w-fit xs:w-1/4">
+          <div className="w-1/5 bg-transparent px-3">
               <button 
               onClick={handleShow}
               className="flex justify-end items-center w-full h-full">

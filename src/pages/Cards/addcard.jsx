@@ -4,20 +4,27 @@ import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplas
 import { useCreateWalletTank } from "../../apis/common/wallet/hooks";
 import { useWalletState } from "../../Providers/WalletProvider";
 import { useThemeState } from "../../Providers/ThemeProvider";
+import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
 import cross from "../../Images/pages/layout/Profile/crossCardsGray.png";
-import axios from "axios";
 import { useFontState } from "../../Providers/FontProvider";
+import {
+  CustomDropdown,
+  CustomItem,
+} from "../../components/common/CustomDropdown";
 const Addcard = ({ addCard, setAddCard, show }) => {
+  const currencies = useCurrenciesState("");
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
   const wallet = useWalletState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
-
   const [title, setTitle] = useState("");
+  const [asset,setAsset]=useState("");
+  const [type,setType]=useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [shabaNumber, setShabaNumber] = useState("");
+  const [currency, setCurrency] = useState("");
 
   const [params, setParams] = useState({
     wallet_asset: "",
@@ -26,9 +33,14 @@ const Addcard = ({ addCard, setAddCard, show }) => {
     balance: 1,
     locked: 1,
     pending: 1,
-    bank_info: "test",
+    bank_info: "",
   });
-
+  useEffect(()=>{
+    if(show){
+      setAsset(show)
+    }
+  })
+  console.log(asset)
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
   useEffect(() => {
@@ -66,12 +78,20 @@ const Addcard = ({ addCard, setAddCard, show }) => {
     setAddCard(false);
   };
 
+  const walletAsset=wallet.walletAssets
+  console.log(wallet)
+  let listCurrency = currencies.map((data) => data.abbreviation);
+  let listAsset = walletAsset.map((data) => data.currency_abb);
+  let AvailableNewAssets = listCurrency.filter(
+    (data) => listAsset.includes(data) === false
+  );
+
   return (
     <>
       <div
         className={
           addCard
-            ? `fixed top-0 left-0 w-full h-full flex items-center justify-center z-50`
+            ? `fixed top-0 left-0 w-full h-full flex items-center justify-center z-20 `
             : "hidden"
         }
       >
@@ -79,7 +99,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
 
         <div
           style={{ height: "36%" }}
-          className={`bg-${theme} grid grid-cols-1 grid-rows-10 w-1/4 px-5 py-5 rounded-lg z-50`}
+          className={`bg-${theme} flex flex-col w-1/4 h-fit px-5 py-5 rounded-lg z-50`}
         >
           <button
             className="flex justify-end h-fit"
@@ -88,7 +108,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
           >
             <img className="w-6" src={cross} alt="" />
           </button>
-          <form onSubmit={handleAddCards}>
+          <form onSubmit={handleAddCards} className="w-full h-full">
             <div className="flex flex-col">
               <span
                 className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
@@ -106,45 +126,76 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col">
-              <span
-                className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
+            <div className={asset.length!==0?"hidden":"flex justify-center w-full px-2"}>
+            <CustomDropdown
+                className={"bg-transparent"}
+                label={currency.length === 0 ? lang["currency"] : currency}
               >
-                {lang["cards_card_number"]}
-              </span>
-              <div className=" w-full">
-                <div className="w-full flex mt-0 px-2">
-                  <input
-                    onChange={(e) => setCardNumber(e.target.value)}
-                    className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
-                    placeholder={lang["cards_card_number_placeholder"]}
-                  />
-                </div>
-              </div>
+                {AvailableNewAssets.map((data) => (
+                  <CustomItem
+                    onClick={() => setAsset(data)}
+                    className={"bg-transparent"}
+                  >
+                    {data}
+                  </CustomItem>
+                ))}
+              </CustomDropdown>
             </div>
-            <div className="flex flex-col">
-              <span
-                className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
+            <div className={type.length!==0?"hidden":"flex justify-center w-full px-2"}>
+            <CustomDropdown
+                className={"bg-transparent"}
+                label={type.length===0?"Please Select One of the following":type}
               >
-                {lang["cards_shaba_number"]}
-              </span>
-              <div className=" w-full">
-                <div className="w-full flex mt-0 px-2">
-                  <input
-                    onChange={(e) => setShabaNumber(e.target.value)}
-                    className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
-                    placeholder={lang["cards_shaba_number_placeholder"]}
-                  />
-                </div>
-              </div>
+                <CustomItem onClick={()=>setType("Card")}>
+                      Card Number                  
+                </CustomItem>
+                <CustomItem onClick={()=>setType("Shaba")}>
+                      Shaba Number
+                </CustomItem>
+              </CustomDropdown>
             </div>
-            <div
-              style={{ gridRow: 5, gridColumn: 1 }}
-              className="flex justify-end"
-            >
-              <button className="bg-blue-gradient rounded-xl text-white w-1/4 h-1/3 pt-1 mt-5">
-                {lang["submit"]}
-              </button>
+
+            <div className={type?"block":"hidden"}>
+                <div className={type==="Card"?"flex flex-col":"hidden"}>
+                  <span
+                    className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
+                  >
+                    {lang["cards_card_number"]}
+                  </span>
+                  <div className=" w-full">
+                    <div className="w-full flex mt-0 px-2">
+                      <input
+                        onChange={(e) => setCardNumber(e.target.value)}
+                        className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
+                        placeholder={lang["cards_card_number_placeholder"]}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className={type!=="Card"?"flex flex-col":"hidden"}>
+                  <span
+                    className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
+                  >
+                    {lang["cards_shaba_number"]}
+                  </span>
+                  <div className=" w-full">
+                    <div className="w-full flex mt-0 px-2">
+                      <input
+                        onChange={(e) => setShabaNumber(e.target.value)}
+                        className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
+                        placeholder={lang["cards_shaba_number_placeholder"]}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style={{ gridRow: 5, gridColumn: 1 }}
+                  className="flex justify-end"
+                >
+                  <button className="bg-blue-gradient rounded-xl text-white w-1/4 h-1/3 pt-1 mt-5">
+                    {lang["submit"]}
+                  </button>
+                </div>
             </div>
           </form>
         </div>

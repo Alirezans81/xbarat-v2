@@ -4,11 +4,9 @@ import { useWalletState } from "../../Providers/WalletProvider";
 import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
 import { useUserState } from "../../Providers/UserProvider";
 import Addcard from "./addcard";
-import Addasset from "./addasset";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import SingleCardAssets from "./singleCardAssets";
 import SingleCardTank from "./singleCardTank";
-// border-2 border-solid border-white
 const Cards = () => {
   const currencies = useCurrenciesState();
   const wallet = useWalletState();
@@ -30,7 +28,6 @@ const Cards = () => {
     setAddAsset(true);
   }
   const Tanks = wallet.walletTanks.filter((data) => data.currency_abb === show);
-  const walletAssetNumber = wallet.walletAssets.length;
   return (
     <div
       className="bg-transparent  font-bold flex flex-row"
@@ -40,6 +37,7 @@ const Cards = () => {
         fontFamily: "manjari-bold",
       }}
     >
+      {/* This is the Right div that exists on the right side of the screen when lg */}
       <div
         className={`bg-transparent md:w-5/12 lg:w-8/12`}
         style={{
@@ -62,9 +60,8 @@ const Cards = () => {
             <button
               onClick={handleAddCard}
               className={
-                show.length === 0 || addCard
-                  ? "hidden"
-                  :  "bg-blue-gradient text-white rounded-2xl w-36 mr-5 h-full items-center font-thin"
+                
+                   "bg-blue-gradient text-white rounded-2xl w-36 mr-5 h-full items-center font-thin"
                 }
               
             >
@@ -94,16 +91,9 @@ const Cards = () => {
           borderRadius: "50px",
         }}
       >
-      <div className="">
-      <Addasset
-        addAsset={addAsset}
-        setAddAsset={setAddAsset}
-        show={show}
-        walletAsset={wallet.walletAssets}
-      />
-    </div>
+      
         <div className="w-full h-full flex flex-col">
-        <div className="w-full flex flex-row sm:p-3">
+        <div className="w-full flex flex-row xs:p-3">
           <div className="w-1/2 flex justify-start pt-2">
           <div
             className={`text-3xl text-${oppositeTheme} w-1/3`}
@@ -111,25 +101,10 @@ const Cards = () => {
             {lang["cards-profile"]}
           </div>
           </div>
-          <div className="w-1/2 flex justify-end items-center pb-1">
-          <button
-            onClick={handleAddAsset}
-            className={
-              wallet.walletAssets.length !== currencies.length
-                ? `bg-blue-gradient rounded-2xl text-white flex justify-center w-7/12 items-center h-5/6 text-lg font-thin `
-                : "hidden"
-            }
-          >
-            <span className="pt-1">Add</span>   
-            <span className="ml-1">+</span>              
-           
-
-          </button>
-          </div>
         </div>
         <div
-          className={`grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-5 h-2/3`}
-        // style={{height:"60%"}}
+          className={`grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-5`}
+        style={{height:"60%"}}
         >
           {wallet && wallet.walletAssets ? (
             wallet.walletAssets.map((assetData, assetIndex) => (
