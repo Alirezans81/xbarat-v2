@@ -129,7 +129,7 @@ const useCreateWalletTank = () => {
       .then((data) => {
         console.log(data);
         customFunction && customFunction();
-        customFunctionWithData && customFunctionWithData(data);
+        customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
         return data.data;
       })

@@ -6,8 +6,8 @@ import {
   CustomDropdown,
   CustomItem,
 } from "../../components/common/CustomDropdown";
-import { useCreateWalletAsset } from "../../apis/common/wallet/hooks";
-import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
+// import { useCreateWalletAsset } from "../../apis/common/wallet/hooks";
+// import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
 import { useWalletState } from "../../Providers/WalletProvider";
 const Addasset = ({ addAsset, setAddAsset, walletAsset }) => {

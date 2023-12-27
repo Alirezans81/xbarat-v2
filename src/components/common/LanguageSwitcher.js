@@ -1,19 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLanguageSetState } from "../../Providers/LanguageProvider";
-import { useThemeState } from "../../Providers/ThemeProvider";
 import { CustomDropdown, CustomItem } from "./CustomDropdown";
 import { CustomDropdown2, CustomItem2 } from "./CustomDropdown2";
-import {
-  useGetLanguageFile,
-  useGetLanguages,
-} from "../../apis/common/language/hooks";
+import { useGetLanguageFile } from "../../apis/common/language/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useLanguageListState } from "../../Providers/LanguageListProvider";
 import { useFontSetState } from "../../Providers/FontProvider";
 
 export default function LanguageSwitcher({ with_background }) {
-  const theme = useThemeState();
-  const oppositeTheme = theme === "dark" ? "light" : "dark";
   const setLoading = useIsLoadingSplashScreenSetState();
 
   const languages = useLanguageListState();

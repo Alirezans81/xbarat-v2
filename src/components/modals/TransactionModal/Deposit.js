@@ -43,6 +43,13 @@ export default function Deposit({
   );
 
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
+  useEffect(() => {
+    const currencyUrl = data && data.currency ? data.currency : "";
+    const foundIndex = currencies.findIndex(
+      (currency) => currency.url === currencyUrl
+    );
+    setSelectedCurrencyIndex(foundIndex);
+  }, []);
   const [locations, setLocations] = useState([]);
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(-1);
   const [locationDivClass, setLocationDivClass] = useState("");
