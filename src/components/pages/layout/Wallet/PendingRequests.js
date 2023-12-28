@@ -95,14 +95,16 @@ export default function PendingRequests({
         <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
           {lang["pending-requests"]}
         </span>
-        <div className="w-full md:w-auto">
-          <FilterButtons
-            showOrdersType={showOrdersType}
-            toggleShowDepositOrders={toggleShowDepositOrders}
-            toggleShowWithdrawalOrders={toggleShowWithdrawalOrders}
-            toggleShowTransferOrders={toggleShowTransferOrders}
-          />
-        </div>
+        {allPendingOrders && allPendingOrders.length !== 0 && (
+          <div className="w-full md:w-auto">
+            <FilterButtons
+              showOrdersType={showOrdersType}
+              toggleShowDepositOrders={toggleShowDepositOrders}
+              toggleShowWithdrawalOrders={toggleShowWithdrawalOrders}
+              toggleShowTransferOrders={toggleShowTransferOrders}
+            />
+          </div>
+        )}
       </div>
       <div className="flex-1 mt-3 px-7 relative">
         {pendingOrders.length !== 0 ? (
@@ -123,7 +125,7 @@ export default function PendingRequests({
             ))}
           </CustomSlider>
         ) : (
-          <div className="absolute left-0 h-full w-full -mt-4 top-0 flex justify-center items-center">
+          <div className="absolute left-0 h-full w-full mt-5 md:-mt-4 top-0 flex justify-center items-center">
             <span
               className={`font-${font}-thin text-3xl text-${oppositeTheme}`}
             >

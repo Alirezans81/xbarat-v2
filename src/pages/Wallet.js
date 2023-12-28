@@ -47,7 +47,7 @@ export default function Wallet() {
       </div>
       <div className="mt-5 md:mt-0 grid grid-cols-12 grid-rows-6 md:gap-x-10 gap-y-7 pb-36 md:pb-16">
         <div
-          className={`h-72 col-span-3 hidden xl:flex row-span-3 flex-col gap-y-4 bg-${theme} p-5 rounded-3xl`}
+          className={`h-72 col-span-12 md:col-span-3 flex md:hidden xl:flex row-span-3 flex-col gap-y-4 bg-${theme} p-5 rounded-3xl`}
         >
           <div className={`flex-1`}>
             <QuickDeposit refreshPendingRequests={refreshPendingRequests} />
@@ -71,7 +71,7 @@ export default function Wallet() {
           <Balance refreshPendingRequests={refreshPendingRequests} />
         </div>
         <div
-          className={`-mt-3 md:-mt-0 h-auto md:h-72 col-span-12 row-span-3 bg-${theme} p-5 rounded-3xl md:rounded-r-none pb-10`}
+          className={`-mt-3 md:-mt-0 h-72 col-span-12 row-span-3 bg-${theme} p-5 rounded-3xl md:rounded-r-none pb-10`}
         >
           <PendingRequests
             refreshPendingRequests={refreshPendingRequests}

@@ -45,7 +45,9 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
       <div
         className={`w-full flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-4 pb-4 px-5`}
       >
-        <div className={`flex flex-row font-${font}-bold text-xl`}>
+        <div
+          className={`flex flex-row font-${font}-bold text-xl max-w-[10rem] md:max-w-none overflow-x-auto scroll-horizental`}
+        >
           {currency[`sym_pic_${oppositeTheme}`] ? (
             <img
               className="w-7 h-7 -mt-1"
@@ -62,17 +64,17 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
           <span className="text-gray mx-1">{walletAsset.title}</span>
         </div>
         <div
-          className={`-mt-1.5  flex flex-col font-${font}-regular items-center`}
+          className={` md:mb-4 flex flex-col gap-y-2 md:gap-y-0 font-${font}-regular items-center`}
         >
-          <span className="text-green">
+          <span className="text-green text-center leading-none md:leading-snug">
             {"+ " + addComma(+walletAsset.pending) + " " + lang["pending"]}
           </span>
-          <span className="text-red -mt-1">
+          <span className="text-red text-center leading-none md:leading-snug -mt-1">
             {"+ " + addComma(+walletAsset.locked) + " " + lang["locked"]}
           </span>
         </div>
         <div
-          className={`flex flex-col gap-y-2 font-${font}-bold w-full text-sm items-center mt-1`}
+          className={`flex flex-col gap-y-2 font-${font}-bold w-full text-sm items-center mt-3 md:mt-1`}
         >
           <button
             onClick={() => openTransactionModal("transfer")}

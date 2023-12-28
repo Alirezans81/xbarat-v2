@@ -70,6 +70,13 @@ export default function WatchList({
     }
   }, [availableTargets, targetSlug]);
 
+  useEffect(() => {
+    if (data && data.watch_list && data.watch_list[0]) {
+      findSource(data.watch_list[0].source);
+      setTargetSlug(data.watch_list[0].target);
+    }
+  }, [data, currencies]);
+
   return (
     <div className="px-6 py-5 h-full flex flex-col">
       <h1 className={`font-${font}-bold text-2xl text-${oppositeTheme}`}>

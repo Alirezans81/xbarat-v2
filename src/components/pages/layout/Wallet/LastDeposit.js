@@ -70,7 +70,7 @@ export default function LastDeposit({ refreshPendingRequests, lastDeposit }) {
         </div>
         <div className="flex flex-row w-full justify-center items-center">
           <span
-            className={`font-${font}-regular text-xl text-${oppositeTheme}`}
+            className={`font-${font}-regular text-xl text-${oppositeTheme} -mt-20`}
           >
             {lang["no-data"]}
           </span>

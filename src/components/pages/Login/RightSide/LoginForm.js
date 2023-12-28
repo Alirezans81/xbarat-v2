@@ -6,6 +6,7 @@ import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../../../apis/pages/Login/hooks";
 import { useFontState } from "../../../../Providers/FontProvider";
+import { useToastDataSetState } from "../../../../Providers/ToastDataProvider";
 
 export default function LoginForm({ setIsSplashScreenLoading }) {
   const theme = useThemeState();
@@ -13,11 +14,34 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
   const lang = useLanguageState();
   const font = useFontState();
   const { one: direction } = useDirectionState();
+  const setToastData = useToastDataSetState();
 
-  const { login, isLoading: loginIsLoading, error } = useLogin();
+  const [showPassword, setShowPasswprd] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPasswprd(!showPassword);
+  };
+
+  const showErrorToast = (errorMessage) => {
+    setToastData({
+      status: "failed",
+      message: errorMessage,
+      canClose: true,
+      isOpen: true,
+      showTime: 5000,
+    });
+  };
+
+  const { login, isLoading: loginIsLoading, error: loginError } = useLogin();
   useEffect(() => {
     setIsSplashScreenLoading(loginIsLoading);
   }, [loginIsLoading]);
+  useEffect(
+    () =>
+      loginError &&
+      loginError.response &&
+      showErrorToast(Object.values(loginError.response.data).join(" ")),
+    [loginError]
+  );
 
   const navigate = useNavigate();
   const navigateToHome = () => {
@@ -114,18 +138,34 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
               {validationErrors.email}
             </span>
           )}
-          <input
-            name="password"
-            type="password"
-            placeholder={lang["password"]}
-            className={`input-${theme} mt-4 focus:outline-none`}
-            onChange={handleChange("password")}
-            onBlur={(e) => {
-              validatePassword(e.target.value);
-              handleBlur(e);
-            }}
-            value={values.password}
-          />
+          <div className="relative md:w-96">
+            <input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder={lang["password"]}
+              className={`input-${theme} mt-4 focus:outline-none`}
+              onChange={handleChange("password")}
+              onBlur={(e) => {
+                validatePassword(e.target.value);
+                handleBlur(e);
+              }}
+              value={values.password}
+            />
+            <button
+              type="button"
+              onClick={toggleShowPassword}
+              className="absolute top-6 right-3"
+            >
+              <img
+                className="w-7 h-7"
+                src={
+                  showPassword
+                    ? require("../../../../Images/common/preview.png")
+                    : require("../../../../Images/common/preview-disabled.png")
+                }
+              />
+            </button>
+          </div>
           {validationErrors.password && (
             <span className={`font-${font}-thin text-red`}>
               {validationErrors.password}
@@ -135,7 +175,7 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
             <div className="flex items-center">
               <button type="button" onClick={ToggleRememberMeCheck}>
                 <img
-                  className="w-4 h-4"
+                  className="w-4 h-4 md:w-5 md:h-5"
                   src={require(`../../../../Images/pages/Login/check-${rememberMeCheck}.png`)}
                 />
               </button>
@@ -151,11 +191,6 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
               </span>
             </Link>
           </div>
-          {error && (
-            <span className={`font-${font}-thin text-red`}>
-              {error.response.data.error}
-            </span>
-          )}
           <button type="submit" className="button w-full mt-10">
             {lang["submit"]}
           </button>

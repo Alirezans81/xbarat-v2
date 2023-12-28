@@ -47,7 +47,7 @@ export default function NavbarSetting({ setLinks }) {
         light: require("../../../Images/pages/layout/Navbar/reports-light.png"),
         gray: require("../../../Images/pages/layout/Navbar/reports-gray.png"),
       },
-      shown: true,
+      shown: false,
     },
     {
       title: lang["tickets"],

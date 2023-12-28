@@ -2,6 +2,7 @@ import React from "react";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useFontState } from "../../../Providers/FontProvider";
+import { Link } from "react-router-dom";
 
 export default function LeftSide() {
   const theme = useThemeState();
@@ -10,7 +11,7 @@ export default function LeftSide() {
   const font = useFontState();
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <Link to="/" className="flex flex-col justify-center items-center">
       <img
         className="w-56 h-w-56"
         src={require("../../../Images/pages/layout/logo.png")}
@@ -23,6 +24,6 @@ export default function LeftSide() {
       <span className={`text-4xl font-${font}-thin text-${oppositeTheme}`}>
         {font === "Fa" ? "" : lang["slogan"] + "."}
       </span>
-    </div>
+    </Link>
   );
 }

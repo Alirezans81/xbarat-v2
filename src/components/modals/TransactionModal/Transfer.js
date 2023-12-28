@@ -37,6 +37,13 @@ export default function Transfer({
   );
 
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
+  useEffect(() => {
+    const currencyUrl = data && data.currency ? data.currency : "";
+    const foundIndex = currencies.findIndex(
+      (currency) => currency.url === currencyUrl
+    );
+    setSelectedCurrencyIndex(foundIndex);
+  }, []);
 
   return (
     <Formik

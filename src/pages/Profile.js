@@ -61,7 +61,7 @@ export default function Profile() {
           </div>
         </div>
         <div
-          className={`h-72 col-span-12 md:col-span-7 row-span-1 bg-${theme} rounded-3xl md:rounded-r-none`}
+          className={`h-72 hidden md:block col-span-12 md:col-span-7 row-span-1 bg-${theme} rounded-3xl md:rounded-r-none`}
         >
           <LastTickets />
         </div>

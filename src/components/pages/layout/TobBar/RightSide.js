@@ -44,33 +44,47 @@ export default function RightSide() {
       <div
         className={`flex items-center transition-all duration-200 rounded-${direction}-full p${direction}-3 py-3 ${backgroundClass}`}
       >
-        <img
-          className="w-12 h-12 rounded-full"
-          src={
-            user && user.avatar
-              ? user.avatar
-              : require("../../../../Images/pages/layout/Profile/no-profile.png")
-          }
-          style={{ objectFit: "cover" }}
-          alt="avatar"
-        />
+        {user && (
+          <img
+            className="w-12 h-12 rounded-full"
+            src={
+              user && user.avatar
+                ? user.avatar
+                : require("../../../../Images/pages/layout/Profile/no-profile.png")
+            }
+            style={{ objectFit: "cover" }}
+            alt="avatar"
+          />
+        )}
         <div className={`flex flex-col m${direction}-3`}>
           <span className={`${nameClass} font-${font}-regular -mb-2 text-lg`}>
             {(user && user["first_name"] ? user["first_name"] : "") +
               " " +
               (user && user["last_name"] ? user["last_name"] : "")}
           </span>
-          {user && user["is_verified"] ? (
+          {!user ? (
+            <Link to="/login" className="flex -ml-2.5 mr-4">
+              <div
+                className={`bg-blue w-fit rounded-full ${completePrfoileClass} mt-2 flex flex-col justify-center transition-all duration-300 hover:bg-${theme} border-2 border-blue`}
+              >
+                <span
+                  className={`text text-sm font-${font}-bold ${completePrfoileTextClass}`}
+                >
+                  {lang["log-in"] + " / " + lang["sign-up"]}
+                </span>
+              </div>
+            </Link>
+          ) : user["is_verified"] ? (
             <span className={`${roleClass} font-${font}-regular text-sm`}>
               {user.role}
             </span>
           ) : (
             <Link to="/profile">
               <div
-                className={`bg-blue rounded-full ${completePrfoileClass} mt-1 flex flex-col justify-center transition-all duration-300 hover:bg-${theme} border-2 border-blue`}
+                className={`bg-blue w-fit rounded-full ${completePrfoileClass} mt-1 flex flex-col justify-center transition-all duration-300 hover:bg-${theme} border-2 border-blue`}
               >
                 <span
-                  className={`text-xs font-${font}-bold ${completePrfoileTextClass}`}
+                  className={`text-xs  font-${font}-bold ${completePrfoileTextClass}`}
                 >
                   {lang["complete-profile"]}
                 </span>
@@ -78,13 +92,15 @@ export default function RightSide() {
             </Link>
           )}
         </div>
-        <Link to="/profile">
-          <img
-            className="w-5 h-5 mx-4"
-            src={require(`../../../../Images/arrow-${endDirection}-${oppositeTheme}.png`)}
-            alt="arrow-right"
-          />
-        </Link>
+        {user && (
+          <Link to="/profile">
+            <img
+              className="w-5 h-5 mx-4"
+              src={require(`../../../../Images/arrow-${endDirection}-${oppositeTheme}.png`)}
+              alt="arrow-right"
+            />
+          </Link>
+        )}
       </div>
     </div>
   );

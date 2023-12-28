@@ -113,16 +113,30 @@ export default function Topbar({ userInfo }) {
                     />
                   </button>
                 ) : (
-                  <img
-                    className="w-10 h-10 md:w-16 md:h-16 rounded-full"
-                    style={{ objectFit: "cover" }}
-                    src={
-                      userInfo && userInfo.avatar
-                        ? userInfo.avatar
-                        : require("../../../../../Images/pages/layout/Profile/no-profile.png")
-                    }
-                    alt="current avatar"
-                  />
+                  <div className="relative">
+                    <img
+                      className="w-10 h-10 md:w-16 md:h-16 rounded-full"
+                      style={{ objectFit: "cover" }}
+                      src={
+                        userInfo && userInfo.avatar
+                          ? userInfo.avatar
+                          : require("../../../../../Images/pages/layout/Profile/no-profile.png")
+                      }
+                      alt="current avatar"
+                    />
+                    <div
+                      className={`absolute md:hidden top-0 w-10 h-10 md:w-16 md:h-16 rounded-full bg-dark-glass flex justify-center items-center`}
+                    >
+                      {userInfo && userInfo["is_verified"] && (
+                        <button onClick={() => setCanEditNameAndAvatar(true)}>
+                          <img
+                            className="w-5 h-5"
+                            src={require("../../../../../Images/pages/layout/Profile/edit-light.png")}
+                          />
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 )}
                 <div className="flex flex-col">
                   <div className="flex gap-2 items-center">
@@ -173,7 +187,7 @@ export default function Topbar({ userInfo }) {
                         {userInfo && userInfo["is_verified"] && (
                           <button onClick={() => setCanEditNameAndAvatar(true)}>
                             <img
-                              className="w-4 h-4"
+                              className="hidden w-5 h-5 md:block"
                               src={require("../../../../../Images/pages/layout/Profile/edit.png")}
                             />
                           </button>
@@ -196,7 +210,7 @@ export default function Topbar({ userInfo }) {
         {!canEditNameAndAvatar && (
           <button
             onClick={openChangePasswordModal}
-            className="text-blue text-xs md:text-base"
+            className="text-blue text-xs md:text-base w-12 text-center-important md:w-auto"
           >
             {lang["change-password"]}
           </button>

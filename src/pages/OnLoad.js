@@ -27,8 +27,6 @@ export default function OnLoad({ children }) {
   useEffect(() => {
     const saveStringToken = window.localStorage.getItem("authToken");
     const saveStringUserInfo = window.localStorage.getItem("userInfo");
-    console.log("saveStringToken: ", saveStringToken);
-    console.log("saveStringUserInfo: ", saveStringUserInfo);
 
     const stringLanguages = window.localStorage.getItem("languageList");
     if (
