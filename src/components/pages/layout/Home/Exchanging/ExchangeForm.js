@@ -15,6 +15,7 @@ import { useStatusesState } from "../../../../../Providers/StatusesProvider";
 import { useExchange } from "../../../../../apis/pages/Home/hooks";
 import { useNavigate } from "react-router-dom";
 import { useFontState } from "../../../../../Providers/FontProvider";
+import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
 
 export default function ExchangeForm({
   walletBalance,
@@ -40,6 +41,7 @@ export default function ExchangeForm({
   const navigate = useNavigate();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: oneDirection } = useDirectionState();
+  const refreshWallet = useRefreshWallet();
 
   const [hasError, setHasError] = useState(true);
 
@@ -221,7 +223,10 @@ export default function ExchangeForm({
               statuses.find((status) => status.title === "Pending").url || "",
           };
 
-          exchange(params, refreshPendingExchange);
+          exchange(params, () => {
+            refreshWallet();
+            refreshPendingExchange();
+          });
         }
       }}
     >
