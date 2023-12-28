@@ -47,7 +47,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
       getWalletTanks(
         {
           user: data.user_receiver_username,
-          currency: data.currency_slug,
+          currency_slug: data.currency_slug,
         },
         setReceiverTanks
       );

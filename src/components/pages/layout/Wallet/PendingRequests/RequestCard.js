@@ -13,6 +13,7 @@ import PendingRequestModal from "../../../../modals/PendingRequestModal";
 import AreYouSureModal from "../../../../modals/AreYouSureModal";
 import { useCancelPendingRequest } from "../../../../../apis/pages/Wallet/hooks";
 import { useFontState } from "../../../../../Providers/FontProvider";
+import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
 
 export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
   const theme = useThemeState();
@@ -24,6 +25,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
   const setModalData = useModalDataSetState();
   const closeModal = useModalDataClose();
   const setLoading = useIsLoadingSplashScreenSetState();
+  const refreshWallet = useRefreshWallet();
 
   const { cancelPendingRequest, isLoading: cancelPendingRequestIsLoading } =
     useCancelPendingRequest();
@@ -56,6 +58,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
               pendingOrder.url &&
               cancelPendingRequest(pendingOrder.url, () => {
                 refreshPendingRequests();
+                refreshWallet();
                 closeModal();
               });
           }}
@@ -122,7 +125,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
         )}
         {pendingOrder && pendingOrder.status_title === "Upload Document" && (
           <span
-            className={`font-${font}-thin text-${oppositeTheme} text-sm md:text-lg md:whitespace-nowrap`}
+            className={`font-${font}-thin text-${oppositeTheme} text-sm md:text-lg md:leading-none`}
           >
             {lang["upload-document-message"] + "."}
           </span>
@@ -131,7 +134,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
           pendingOrder.status_title === "Admin Approve" &&
           pendingOrder.type !== "transfer" && (
             <span
-              className={`font-${font}-thin text-${oppositeTheme} text-sm md:text-lg md:whitespace-nowrap`}
+              className={`font-${font}-thin text-${oppositeTheme} text-sm md:text-lg md:leading-none`}
             >
               {lang["admin-approve-message"] + "."}
             </span>
@@ -153,7 +156,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
           )}
         {pendingOrder && pendingOrder.status_title === "Reject" && (
           <span
-            className={`font-${font}-thin text-${oppositeTheme} text-sm md:text-lg md:whitespace-nowrap`}
+            className={`font-${font}-thin text-${oppositeTheme} text-sm md:text-lg md:leading-none`}
           >
             {pendingOrder.rejectReason}
           </span>

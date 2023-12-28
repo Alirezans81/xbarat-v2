@@ -93,7 +93,7 @@ export default function RightSide() {
           )}
         </div>
         {user && (
-          <Link to="/login">
+          <Link to="/profile">
             <img
               className="w-5 h-5 mx-4"
               src={require(`../../../../Images/arrow-${endDirection}-${oppositeTheme}.png`)}

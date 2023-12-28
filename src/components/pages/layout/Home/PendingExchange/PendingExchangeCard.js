@@ -10,6 +10,7 @@ import { useConvertDateTime } from "../../../../../hooks/useConvertDateTime";
 import { useCancelPendingExchange } from "../../../../../apis/pages/Home/hooks";
 import AreYouSureModal from "../../../../../components/modals/AreYouSureModal";
 import { useFontState } from "../../../../../Providers/FontProvider";
+import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
 
 export default function PendingExchangeCard({
   lang,
@@ -24,6 +25,7 @@ export default function PendingExchangeCard({
   const setLoading = useIsLoadingSplashScreenSetState();
   const setModalData = useModalDataSetState();
   const closeModal = useModalDataClose();
+  const refreshWallet = useRefreshWallet();
 
   const { cancelPendingExchange, isLoading: cancelPendingExchangeIsLoading } =
     useCancelPendingExchange();
@@ -42,6 +44,7 @@ export default function PendingExchangeCard({
               data.url &&
               cancelPendingExchange(data.url, () => {
                 refreshPendingExchange();
+                refreshWallet();
                 closeModal();
               });
           }}
@@ -85,7 +88,7 @@ export default function PendingExchangeCard({
             {addComma(+data.rate)}
           </span>
           <span className={`font-${font}-regular text-blue-gradient`}>
-            {"IRR/AFN"}
+            {data.default_rate_type_title}
           </span>
         </div>
       </div>
