@@ -7,12 +7,14 @@ import { useThemeState } from "../../Providers/ThemeProvider";
 import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
 import cross from "../../Images/pages/layout/Profile/crossCardsGray.png";
 import { useFontState } from "../../Providers/FontProvider";
+import { useUserState } from "../../Providers/UserProvider";
 import {
   CustomDropdown,
   CustomItem,
 } from "../../components/common/CustomDropdown";
 const Addcard = ({ addCard, setAddCard, show }) => {
-  const currencies = useCurrenciesState("");
+  const currencies = useCurrenciesState();
+  const user=useUserState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
@@ -25,6 +27,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
   const [cardNumber, setCardNumber] = useState("");
   const [shabaNumber, setShabaNumber] = useState("");
   const [currency, setCurrency] = useState("");
+
   const [params, setParams] = useState({
     wallet_asset: "",
     wallet_tank_type: "",
@@ -34,26 +37,27 @@ const Addcard = ({ addCard, setAddCard, show }) => {
     pending: 1,
     bank_info: "",
   });
+
+  
   useEffect(()=>{
     if(show.length!==0){
-      setAsset(show)
+      let AlreadyPickedAsset=currencies.filter((data)=>data.abbreviation===show)
+      setAsset((AlreadyPickedAsset[0]).url)
     }
-  
-  })
-  console.log(asset)
+  },)
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
   useEffect(() => {
     setIsLoadingSplashScreen(createWalletTankIsLoading);
   }, [createWalletTankIsLoading]);
-
   useEffect(() => {
     if (title && type && asset &&(cardNumber || shabaNumber)) {
       setParams({
-        wallet_asset: LinkedWalletAsset[0].url,
+        user:user.url,
+        currency:asset,
         wallet_tank_type: type==="Card"
-          ? "https://smicln.ir/api/wallet/tank/type/card-number/"
-          : "https://smicln.ir/api/wallet/tank/type/shaba-number/",
+          ? "https://xbarat-back.pro/api/wallet/tank/type/card-number/"
+          : "https://xbarat-back.pro/api/wallet/tank/type/shaba-number/",
         title: title,
         balance: 0,
         locked: 0,
@@ -61,11 +65,8 @@ const Addcard = ({ addCard, setAddCard, show }) => {
         bank_info: type==="Card"?cardNumber:shabaNumber,
       });
     }
-  }, [title, cardNumber, shabaNumber]);
+  }, [title,type,asset,cardNumber,shabaNumber]);
 
-  const LinkedWalletAsset = wallet.walletAssets.filter(
-    (data) => data.currency_abb === show
-  );
 
   const handleAddCards = (e) => {
     e.preventDefault();
@@ -75,17 +76,19 @@ const Addcard = ({ addCard, setAddCard, show }) => {
   };
 
   const discard = () => {
+    setAsset("")
+    setType("")
     setAddCard(false);
   };
 
   const walletAsset=wallet.walletAssets
-  console.log(wallet)
-  let listCurrency = currencies.map((data) => data.abbreviation);
+
+  let listCurrency = currencies.map((data) => [data.abbreviation,data.url]);
   let listAsset = walletAsset.map((data) => data.currency_abb);
   let AvailableNewAssets = listCurrency.filter(
-    (data) => listAsset.includes(data) === false
+    (data) => listAsset.includes(data[0]) === false
   );
-    
+
   return (
     <>
       <div
@@ -107,7 +110,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
           >
             <img className="w-6" src={cross} alt="" />
           </button>
-          <form onSubmit={handleAddCards} className="w-full h-full">
+          <form onSubmit={handleAddCards} className="w-full h-full flex justify-center flex-col">
                 <div className="flex flex-col">
                     <span
                       className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
@@ -119,7 +122,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                         <input
                           onChange={(e) => setTitle(e.target.value)}
                           required
-                          className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
+                          className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
                           placeholder={lang["add_cards_title"]}
                         />
                       </div>
@@ -127,24 +130,32 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                 </div>
 
                 
-                <div className={asset.length!==0?"hidden":"flex justify-center w-full px-2 py-5"}>
+                <div className={asset.length!==0?"hidden":"flex-col w-11/12 px-2 py-5"}>
+                  <span                       
+                    className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
+                      {currency.length === 0 ? lang["currency"] : currency}
+                    </span>
                   <CustomDropdown
-                      className={"bg-transparent"}
+                      className={"bg-transparent w-fit flex justify-center"}
                       label={currency.length === 0 ? lang["currency"] : currency}
                     >
                       {AvailableNewAssets.map((data) => (
                         <CustomItem
-                          onClick={() => setAsset(data)}
+                          onClick={() => setAsset(data[1])}
                           className={"bg-transparent"}
                         >
-                          {data}
+                          {data[0]}
                         </CustomItem>
                       ))}
                     </CustomDropdown>
                 </div>
-                <div className={type.length!==0?"hidden":"flex justify-center w-full px-2"}>
+                <div className={type.length!==0?"hidden":"flex flex-col justify-center w-full px-2"}>
+                  <span                       
+                    className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
+                      {type.length === 0 ? lang["wallet_tank_type_title_null_cards"] : type}
+                    </span>
                       <CustomDropdown
-                        className={"bg-transparent"}
+                        className={"bg-transparent w-fit"}
                         label={type.length===0?"Card/Shaba":type}
                       >
                           <CustomItem onClick={()=>setType("Card")}>

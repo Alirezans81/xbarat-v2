@@ -69,7 +69,7 @@ const Cards = () => {
                 <span className="ml-1">+</span>  
             </button>
             </div>
-            <div className="lg:grid md:grid lg:grid-cols-2 md:grid-cols-1 gap-5 items-center pb-0 h-5/6 w-full ml-3 overflow-scroll">
+            <div className="lg:grid md:grid lg:grid-cols-2 md:grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll">
               {Tanks.map((data, index) => (
                 <SingleCardTank show={show} index={index} data={data} />
               ))}

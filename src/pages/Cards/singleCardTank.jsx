@@ -32,7 +32,7 @@ const SingleCardTank = ({ show, index, data }) => {
       <div
         className={`md:hidden lg:block bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-5`}
         style={{
-          height:"93%",
+          height:"fit-content",
           // gridRow:
           //   index % 6 === 0
           //     ? 1
@@ -74,7 +74,7 @@ const SingleCardTank = ({ show, index, data }) => {
       <div
         className={`md:block lg:hidden bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-5`}
         style={{
-          height:"93%",
+          height:"fit-content",
           // gridRow:
           //   index%3==0
           //   ?1
