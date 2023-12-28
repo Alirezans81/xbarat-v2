@@ -16,7 +16,7 @@ import SubmitButton from "../../common/SubmitButton";
 import { useGetWalletTankByCurrency } from "../../../hooks/useWalletFilter";
 import { useStatusesState } from "../../../Providers/StatusesProvider";
 import { useFontState } from "../../../Providers/FontProvider";
-import { useWalletState } from "../../../Providers/WalletProvider";
+import { useModalDataClose } from "../../../Providers/ModalDataProvider";
 
 export default function Withdrawal({
   currencies,
@@ -29,23 +29,19 @@ export default function Withdrawal({
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const user = useUserState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
-  const walletData = useWalletState();
 
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
-
-  const findWalletAssetByCurrencyUrl = () => {
-    const walletAssets =
-      walletData && walletData.walletAssets ? walletData.walletAssets : [];
-
-    const found = walletAssets.find(
-      (wallet_asset) =>
-        wallet_asset.currency === currencies[selectedCurrencyIndex].url
+  useEffect(() => {
+    const currencyUrl = data && data.currency ? data.currency : "";
+    const foundIndex = currencies.findIndex(
+      (currency) => currency.url === currencyUrl
     );
-    return found.url;
-  };
+    setSelectedCurrencyIndex(foundIndex);
+  }, []);
 
   const [newCardMode, setNewCardMode] = useState(false);
 
@@ -157,7 +153,12 @@ export default function Withdrawal({
         } else {
           if (newCardMode) {
             const createWalletTankParams = {
-              wallet_asset: findWalletAssetByCurrencyUrl() || "",
+              user: user && user.url ? user.url : "",
+              currency:
+                currencies[selectedCurrencyIndex] &&
+                currencies[selectedCurrencyIndex].url
+                  ? currencies[selectedCurrencyIndex].url
+                  : "",
               title: values.title,
               account_name: values.title,
               wallet_tank_type:
@@ -167,7 +168,6 @@ export default function Withdrawal({
                   : "",
               bank_info: values.bank_info,
             };
-            console.log(createWalletTankParams);
             createWalletTank(createWalletTankParams, null, (data) => {
               createWithdrawal(
                 {

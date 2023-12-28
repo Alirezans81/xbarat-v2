@@ -64,16 +64,13 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
           <span className="text-gray mx-1">{walletAsset.title}</span>
         </div>
         <div
-          className={` md:-mt-1.5 flex flex-col gap-y-2 md:gap-y-0 font-${font}-regular items-center`}
+          className={` md:mb-4 flex flex-col gap-y-2 md:gap-y-0 font-${font}-regular items-center`}
         >
           <span className="text-green text-center leading-none md:leading-snug">
             {"+ " + addComma(+walletAsset.pending) + " " + lang["pending"]}
           </span>
           <span className="text-red text-center leading-none md:leading-snug -mt-1">
-            {"+ " +
-              addComma(Math.abs(+walletAsset.locked)) +
-              " " +
-              lang["locked"]}
+            {"+ " + addComma(+walletAsset.locked) + " " + lang["locked"]}
           </span>
         </div>
         <div

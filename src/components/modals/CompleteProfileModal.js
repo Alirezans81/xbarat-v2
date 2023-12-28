@@ -20,6 +20,7 @@ import {
   useGetWallets,
   useCreateWalletTank,
 } from "../../apis/common/wallet/hooks";
+import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
 
 export default function CompleteProfileModal() {
   const userInfo = useUserState();
@@ -44,6 +45,9 @@ export default function CompleteProfileModal() {
     () => setIsLoadingSplashScreen(getWalletTanksIsLoading),
     [getWalletTanksIsLoading]
   );
+
+  const currencies = useCurrenciesState();
+  const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
 
   const [wallets, setWallets] = useState([]);
   useEffect(() => {
@@ -90,6 +94,12 @@ export default function CompleteProfileModal() {
   const { fetchStep3, isLoading: fetchStep3IsLoading } = useFetchStep3();
   const fetchStep4 = (values, customFunction) => {
     const createWalletTankParams = {
+      user: userInfo && userInfo.url ? userInfo.url : "",
+      currency:
+        currencies[selectedCurrencyIndex] &&
+        currencies[selectedCurrencyIndex].url
+          ? currencies[selectedCurrencyIndex].url
+          : "",
       title: values.title,
       account_name: values.title,
       wallet_tank_type: values.wallet_tank_type,
@@ -224,6 +234,9 @@ export default function CompleteProfileModal() {
               return (
                 <>
                   <Step4
+                    currencies={currencies}
+                    selectedCurrencyIndex={selectedCurrencyIndex}
+                    setSelectedCurrencyIndex={setSelectedCurrencyIndex}
                     handleBlur={handleBlur}
                     handleChange={handleChange}
                     values={values}

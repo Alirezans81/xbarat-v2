@@ -236,7 +236,11 @@ export default function ExchangeForm({
                     {selectedSourceIndex >= 0 && (
                       <img
                         className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
-                        src={currencies[selectedSourceIndex].sym_pic_gray}
+                        src={
+                          currencies[selectedSourceIndex]
+                            ? currencies[selectedSourceIndex].sym_pic_gray
+                            : ""
+                        }
                       />
                     )}
                     <span className={`-m${oneDirection}-0.5`}>
@@ -333,7 +337,11 @@ export default function ExchangeForm({
                     {selectedTargetIndex >= 0 && (
                       <img
                         className="w-7 h-7 -mt-1.5 mx-0.5"
-                        src={availableTargets[selectedTargetIndex].sym_pic_gray}
+                        src={
+                          availableTargets[selectedTargetIndex]
+                            ? availableTargets[selectedTargetIndex].sym_pic_gray
+                            : ""
+                        }
                       />
                     )}
                     <span>{targetLabel}</span>

@@ -8,6 +8,9 @@ import { useCurrenciesState } from "../../../Providers/CurrenciesProvider";
 import { useFontState } from "../../../Providers/FontProvider";
 
 export default function Step4({
+  currencies,
+  selectedCurrencyIndex,
+  setSelectedCurrencyIndex,
   handleBlur,
   handleChange,
   values,
@@ -17,7 +20,6 @@ export default function Step4({
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
-  const currencies = useCurrenciesState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
   const { getWalletTankTypes, isLoading: getWalletTankTypesIsLoading } =
@@ -27,7 +29,6 @@ export default function Step4({
     [getWalletTankTypesIsLoading]
   );
 
-  const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
   const [walletTankTypes, setWalletTankTypes] = useState([]);
   const [selectedWalletTankType, setSelectedWalletTankType] = useState(-1);
 
