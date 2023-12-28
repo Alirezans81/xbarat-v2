@@ -50,22 +50,13 @@ const SingleCardTank = ({ show, index, data }) => {
       >
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
-<<<<<<< HEAD
             <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{data.title}</span>
-=======
-            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0">{data.title}</span>
->>>>>>> 419cd2df4124b16044b95eaa8c5fc60aad808b7e
             <button className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
             <button className="flex justify-end w-1/12 h-full"><img alt="" src={starChecked} style={{width:"80%",height:"80%"}}/></button>
           </div>
           <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
-<<<<<<< HEAD
                   <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">{lang["bank_name_null_cards"]}</span>
                   <span className={`text-${oppositeTheme} text-2xl min-w-0 `} >{data.bank_info}</span>
-=======
-                  <span className="text-gray text-2xl w-full h-1/2 min-w-0">{lang["bank_name_null_cards"]}</span>
-                  <span className={`text-${oppositeTheme} text-3xl min-w-0`} >{data.bank_info}</span>
->>>>>>> 419cd2df4124b16044b95eaa8c5fc60aad808b7e
           </div>
           <div className="flex justify-end w-full h-1/4 items-end">
             <div className="w-full flex justify-end">
@@ -96,23 +87,13 @@ const SingleCardTank = ({ show, index, data }) => {
         
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
-<<<<<<< HEAD
             <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{data.title}</span>
-=======
-            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0">{data.title}</span>
->>>>>>> 419cd2df4124b16044b95eaa8c5fc60aad808b7e
             <button className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
             <button className="flex justify-end w-1/12 h-full"><img alt="" src={starChecked} style={{width:"80%",height:"80%"}}/></button>
           </div>
           <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
-<<<<<<< HEAD
                   <span className="text-gray text-lg w-full h-1/2 min-w-0">{lang["bank_name_null_cards"]}</span>
                   <span className={`text-${oppositeTheme} text-xl min-w-0 `} >{data.bank_info}</span>
-=======
-                  <span className="text-gray text-2xl w-full h-1/2 min-w-0">{lang["bank_name_null_cards"]}</span>
-                  <span className={`text-${oppositeTheme} text-3xl min-w-0`} >{data.bank_info}</span>
-            
->>>>>>> 419cd2df4124b16044b95eaa8c5fc60aad808b7e
           </div>
           <div className="flex justify-end w-full h-1/4 items-end">
             <div className="w-full flex justify-end">
