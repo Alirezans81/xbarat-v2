@@ -11,6 +11,7 @@ import { useTokenState } from "../Providers/TokenProvider";
 import WatchList from "../components/pages/layout/Home/WatchList";
 import { useLanguageState } from "../Providers/LanguageProvider";
 import { useFontState } from "../Providers/FontProvider";
+import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 
 export default function Home({ isDemo }) {
   const theme = useThemeState();

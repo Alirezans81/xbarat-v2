@@ -44,7 +44,7 @@ export default function Form({ setIsSplashScreenLoading }) {
 
     setResendButtonEnabled(false);
     console.log("generatedCode: ", generatedCode);
-    setTimeout(() => setResendButtonEnabled(true), 1000);
+    setTimeout(() => setResendButtonEnabled(true), 60000);
     mode !== "submit" && setMode("submit");
   };
 
