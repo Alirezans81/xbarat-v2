@@ -27,6 +27,9 @@ const Cards = () => {
   function handleAddAsset() {
     setAddAsset(true);
   }
+  function discard(){
+    setShow("")
+  }
   const Tanks = wallet.walletTanks.filter((data) => data.currency_abb === show);
   return (
     <div
@@ -49,6 +52,17 @@ const Cards = () => {
           borderBottomLeftRadius: "50px",
         }}
       >
+        {/* <div className={show.length!==0?"w-screen h-full px-5":"hidden"}>
+          <div className={`w-full h-full bg-${theme} flex flex-col justify-center`} style={{borderRadius:"50px"}}>
+              <button className="" onClick={discard}>Back</button>
+
+              <div className="grid grid-cols-1 w-full h-full overflow-scroll">
+              {Tanks.map((data, index) => (
+                <SingleCardTank show={show} index={index} data={data} />
+              ))}
+              </div>
+          </div>
+        </div> */}
         <div className={`hidden md:block w-full h-full bg-${theme}`}
           style={{   
             borderTopLeftRadius: "50px",
@@ -60,7 +74,6 @@ const Cards = () => {
             <button
               onClick={handleAddCard}
               className={
-                
                    "bg-blue-gradient text-white rounded-2xl w-36 mr-5 h-full items-center font-thin"
                 }
               
@@ -77,6 +90,7 @@ const Cards = () => {
             </div>
         </div>
       </div>
+      {/* This is the Assets */}
       <div
         className={`bg-${theme} xs:w-11/12 sm:w-11/12 sm:ml-1 md:w-1/2 lg:w-1/4`}
         style={{

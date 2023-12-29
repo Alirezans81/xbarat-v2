@@ -24,7 +24,7 @@ const SingleCardTank = ({ show, index, data }) => {
   function handleIsActive() {
     console.log("s");
   }
-
+  console.log(show)
   const temp = walletTanks.map((data, index) => index);
   console.log(temp);
   return (
@@ -33,18 +33,7 @@ const SingleCardTank = ({ show, index, data }) => {
         className={`md:hidden lg:block bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-5`}
         style={{
           height:"fit-content",
-          // gridRow:
-          //   index % 6 === 0
-          //     ? 1
-          //     : index % 6 === 1
-          //     ? 1
-          //     : index % 6 === 2
-          //     ? 2
-          //     : index % 6 === 3
-          //     ? 2
-          //     : index % 6 === 4
-          //     ? 3
-          //     : 3,
+        
           gridColumn: index % 2 === 0 ? 1 : 2,
         }}
       >
@@ -75,16 +64,10 @@ const SingleCardTank = ({ show, index, data }) => {
         className={`md:block lg:hidden bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-5`}
         style={{
           height:"fit-content",
-          // gridRow:
-          //   index%3==0
-          //   ?1
-          //   : index %3==1
-          //   ?2
-          //   :3,
+       
           gridColumn: 1
         }}
-      >
-        
+      > 
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
             <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{data.title}</span>
@@ -105,11 +88,9 @@ const SingleCardTank = ({ show, index, data }) => {
               </form>
             </div>
           </div>
-
         </div>
- 
       </div>
-
+    
     
     </>
   );
