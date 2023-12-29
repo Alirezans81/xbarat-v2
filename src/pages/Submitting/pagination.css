@@ -1,0 +1,73 @@
+.Page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 1.1vw;
+    margin-top: 51.4%;
+}
+
+.paginationBttnsDark {
+    width: fit-content;
+    height: fit-content;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.paginationBttnsDark a {
+    padding: 10px;
+    margin: 8px;
+    border-radius: 5px;
+    color: rgba(113, 97, 239, 1);
+    cursor: pointer;
+}
+
+.paginationBttnsDark a:hover {
+    color: #2A2B2E;
+    background-color: rgba(113, 97, 239, 1);
+}
+
+.paginationBttnsLight {
+    width: fit-content;
+    height: fit-content;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.paginationBttnsLight a {
+    padding: 10px;
+    margin: 8px;
+    border-radius: 5px;
+    color: rgba(113, 97, 239, 1);
+    cursor: pointer;
+}
+
+.paginationBttnsLight a:hover {
+    color: #ffffff;
+    background-color: rgba(113, 97, 239, 1);
+}
+
+.paginationActiveLight a {
+    color: #ffffff;
+    background-color: rgba(113, 97, 239, 1);
+}
+.paginationActiveDark a {
+    color: #2A2B2E;
+    background-color: rgba(113, 97, 239, 1);
+}
+
+.previousBttn {
+    color: rgba(113, 97, 239, 1);
+    background-color: transparent;
+}
+
+
+.nextBttn {
+    color: rgba(113, 97, 239, 1);
+    background-color: transparent;
+}
