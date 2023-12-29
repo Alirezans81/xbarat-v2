@@ -7,25 +7,20 @@ import Addcard from "./addcard";
 import { useState} from "react";
 import SingleCardAssets from "./singleCardAssets";
 import SingleCardTank from "./singleCardTank";
+import cross from "../../Images/pages/layout/Profile/crossCardsGray.png";
+
 const Cards = () => {
-  const currencies = useCurrenciesState();
   const wallet = useWalletState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const [show, setShow] = useState([]);
   const [addCard, setAddCard] = useState(false);
-  const [addAsset, setAddAsset] = useState(false);
-  const user=useUserState();
-  console.log(user);
   const updateShowState = (newState) => {
     setShow(newState);
   };
   function handleAddCard() {
     setAddCard(true);
-  }
-  function handleAddAsset() {
-    setAddAsset(true);
   }
   function discard(){
     setShow("")
@@ -33,7 +28,7 @@ const Cards = () => {
   const Tanks = wallet.walletTanks.filter((data) => data.currency_abb === show);
   return (
     <div
-      className="bg-transparent  font-bold flex flex-row"
+      className="bg-transparent  font-bold"
       style={{
         width: "100%",
         height: "100%",
@@ -52,17 +47,7 @@ const Cards = () => {
           borderBottomLeftRadius: "50px",
         }}
       >
-        {/* <div className={show.length!==0?"w-screen h-full px-5":"hidden"}>
-          <div className={`w-full h-full bg-${theme} flex flex-col justify-center`} style={{borderRadius:"50px"}}>
-              <button className="" onClick={discard}>Back</button>
-
-              <div className="grid grid-cols-1 w-full h-full overflow-scroll">
-              {Tanks.map((data, index) => (
-                <SingleCardTank show={show} index={index} data={data} />
-              ))}
-              </div>
-          </div>
-        </div> */}
+      
         <div className={`hidden md:block w-full h-full bg-${theme}`}
           style={{   
             borderTopLeftRadius: "50px",
@@ -76,13 +61,12 @@ const Cards = () => {
               className={
                    "bg-blue-gradient text-white rounded-2xl w-36 mr-5 h-full items-center font-thin"
                 }
-              
             >
               <span className="mt-1 pb-0">Add</span>   
                 <span className="ml-1">+</span>  
             </button>
             </div>
-            <div className="lg:grid md:grid lg:grid-cols-2 md:grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll">
+            <div className="xs:grid sm:grid md:grid lg:grid lg:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll">
               {Tanks.map((data, index) => (
                 <SingleCardTank show={show} index={index} data={data} />
               ))}
@@ -90,9 +74,42 @@ const Cards = () => {
             </div>
         </div>
       </div>
-      {/* This is the Assets */}
       <div
-        className={`bg-${theme} xs:w-11/12 sm:w-11/12 sm:ml-1 md:w-1/2 lg:w-1/4`}
+        className={show.length===0?"hidden":`bg-transparent md:hidden xs:absolute`}
+        style={{
+          top: "5%",
+          height: "90%",
+          width:"100%",
+        }}
+      >
+        <div className={`md:hidden xs:block w-11/12 ml-5 flex justify-center h-full bg-${theme} rounded-3xl`}
+          
+        >
+            <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
+            <div className="w-full h-full flex flex-col">
+            <div className="w-full h-8 mt-5 flex flex-row">
+            <button className="flex-1 justify-start w-1/2 h-fit" onClick={discard}><img className="ml-6 h-10" src={cross}/></button>
+            <button
+              onClick={handleAddCard}
+              className={
+                   "bg-blue-gradient text-white rounded-2xl w-36 mr-5 h-full items-center font-thin mt-1"
+                }
+            >
+              <span className="mt-1 pb-0">Add</span>   
+                <span className="ml-1">+</span>  
+            </button>
+            </div>
+            <div className="grid grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll">
+              {Tanks.map((data, index) => (
+                <SingleCardTank show={show} index={index} data={data} />
+              ))}
+            </div>
+            </div>
+        </div>
+      </div>
+      {/* This is the Assets md and lg*/}
+      <div
+        className={`bg-${theme} xs:hidden md:block sm:ml-1 md:w-1/2 lg:w-1/4`}
         style={{
           position: "absolute",
           left: "3%",
@@ -132,6 +149,40 @@ const Cards = () => {
             <div className="text-white">Loading...</div>
           )}
         </div>
+      </div>
+      </div>
+      {/* This is the Assets sm and xs*/}
+      <div className={show.length!==0?"hidden":"h-full w-full flex justify-center"}>
+      <div
+        className={`bg-${theme} xs:block rounded-3xl md:hidden sm:ml-1 xs:w-11/12 sm:w-11/12 h-full`}
+      >
+        <div className="w-full h-full flex flex-col">
+        <div className="w-full flex flex-row xs:p-3">
+          <div className="w-1/2 flex justify-start pt-2">
+          <div
+            className={`text-3xl text-${oppositeTheme} w-1/3`}
+          >
+            {lang["cards-profile"]}
+          </div>
+          </div>
+        </div>
+        <div
+          className={`grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-5 ml-5 w-11/12`}
+        style={{height:"55%"}}
+        >
+          {wallet && wallet.walletAssets ? (
+            wallet.walletAssets.map((assetData, assetIndex) => (
+              <SingleCardAssets
+                assetIndex={assetIndex}
+                assetData={assetData}
+                updateShowState={updateShowState}
+              />
+            ))
+          ) : (
+            <div className="text-white">Loading...</div>
+          )}
+        </div>
+      </div>
       </div>
       </div>
       
