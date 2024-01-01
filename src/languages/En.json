@@ -11,7 +11,7 @@
   "submit": "Submit",
   "exchange": "Exchange",
   "remember-me": "Remember Me",
-  "forgot-password": "Forgot Password",
+  "forgot-password": "Forgot Password?",
   "not-logged-in-error": "You should be logged in to access this page",
   "email-empty-error": "Enter your email address",
   "email-invalid-error": "Enter a valid email address",

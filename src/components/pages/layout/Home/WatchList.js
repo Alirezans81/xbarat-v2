@@ -10,6 +10,7 @@ import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function WatchList({
+  selectedSourceIndex,
   setSelectedSourceIndex,
   availableTargets,
   setSelectedTargetIndex,
@@ -71,11 +72,20 @@ export default function WatchList({
   }, [availableTargets, targetSlug]);
 
   useEffect(() => {
-    if (data && data.watch_list && data.watch_list[0]) {
+    if (
+      data &&
+      data.watch_list &&
+      data.watch_list[0] &&
+      currencies.length > 0
+    ) {
       findSource(data.watch_list[0].source);
-      setTargetSlug(data.watch_list[0].target);
     }
   }, [data, currencies]);
+  useEffect(() => {
+    if (data && data.watch_list && data.watch_list[0]) {
+      setTargetSlug(data.watch_list[0].target);
+    }
+  }, [selectedSourceIndex]);
 
   return (
     <div className="px-6 py-5 h-full flex flex-col">

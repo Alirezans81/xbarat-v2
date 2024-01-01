@@ -38,7 +38,7 @@ export default function RateType({
       <div className="flex">
         <button
           onClick={() => {
-            setFormDefaultRate(rate);
+            setFormDefaultRate(addComma(+rate));
             focusOnInput();
           }}
         >

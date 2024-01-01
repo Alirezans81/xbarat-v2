@@ -201,7 +201,9 @@ export default function ExchangeForm({
             : +removeComma(values.amount) *
               ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
 
-        const selectedRate = formDefaultRate || +removeComma(values.rate);
+        const selectedRate = formDefaultRate
+          ? +removeComma(formDefaultRate)
+          : +removeComma(values.rate);
         if (findError(+newAmount, +selectedRate)) {
           const params = {
             user: user && user.url ? user.url : "",
@@ -210,7 +212,7 @@ export default function ExchangeForm({
                 ? selectedCurrecnyPair.url
                 : "",
             amount_source: +removeComma(values.amount),
-            rate: +formDefaultRate || +removeComma(values.rate),
+            rate: +selectedRate,
             amount_destination:
               selectedCurrecnyPair && selectedCurrecnyPair.rate_multiplier
                 ? computingTargetAmount(

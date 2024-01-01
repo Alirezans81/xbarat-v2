@@ -22,15 +22,8 @@ export default function Login() {
   const languageSwitcherDivClasses = direction === "rtl" ? "right-4" : "left-4";
 
   const [isSplashScreenLoading, setIsSplashScreenLoading] = useState(false);
-  const setLanguageList = useLanguageListSetState();
 
   const navigate = useNavigate();
-
-  const { getLanguages, isLoading: getLanguagesIsLoading } = useGetLanguages();
-  useEffect(
-    () => setIsSplashScreenLoading(getLanguagesIsLoading),
-    [getLanguagesIsLoading]
-  );
 
   const resetApp = () => {
     setToken(null);
@@ -42,10 +35,6 @@ export default function Login() {
 
   useEffect(() => {
     resetApp();
-
-    getLanguages(setLanguageList, null, (languageList) =>
-      localStorage.setItem("languageList", JSON.stringify(languageList))
-    );
   }, []);
 
   return (

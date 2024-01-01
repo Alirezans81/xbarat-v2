@@ -14,7 +14,7 @@
   "forgot-password": "Passwort vergessen?",
   "not-logged-in-error": "Sie sollten angemeldet sein, um auf diese Seite zugreifen zu können",
   "email-empty-error": "Geben sie ihre E-Mailadresse ein",
-  "email-invalid-error": "Geben sie eine gültige E-Mail-Adresse an",
+  "email-invalid-error" : "Geben sie eine gültige E-Mail-Adresse an",
   "password-empty-error": "Geben Sie Ihr Passwort ein",
   "password-short-error": "Das Passwort sollte mindestens 8 Zeichen lang sein",
   "password-contain-error": "Das Passwort sollte eines der folgenden Zeichen enthalten: [a-z], [A-Z], [0-9], [!@#$%*?]",
@@ -180,5 +180,10 @@
   "email-varification-code-error": "Der Code war nicht korrekt",
   "email-not-exist-error-message": "Die E-Mail existiert nicht",
   "forgot-password-label": "Passwort vergessen",
-  "profile": "Profil"
+  "profile": "Profil",
+  "successful-signup-1st": "Ihr Konto wurde erfolgreich angemeldet",
+  "successful-signup-2nd": "Bitte versuchen Sie jetzt, sich anzumelden",
+  "email-exsit-error": "Die E-Mail existiert",
+  "amount-input-max-button-label": "Max",
+  "add-card": "Karte hinzufügen"
 }

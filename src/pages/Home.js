@@ -85,6 +85,7 @@ export default function Home({ isDemo }) {
           className={`order-1 md:order-2 h-72 bg-${theme} xl:rounded-3xl lg:rounded-l-3xl row-span-3 xl:col-span-5 lg:col-span-7 md:rounded-r-none md:col-span-6 md:rounded-l-3xl col-span-12 rounded-3xl`}
         >
           <WatchList
+            selectedSourceIndex={selectedSourceIndex}
             setSelectedSourceIndex={setSelectedSourceIndex}
             availableTargets={availableTargets}
             setSelectedTargetIndex={setSelectedTargetIndex}
