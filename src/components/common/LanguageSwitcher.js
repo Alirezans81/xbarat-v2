@@ -23,17 +23,26 @@ export default function LanguageSwitcher({ with_background }) {
   );
 
   useEffect(() => {
-    setSelectedLanguageIndex(0);
+    const savedLanguageIndex = +window.localStorage.getItem(
+      "selectedLanguageIndex"
+    );
+
+    setSelectedLanguageIndex(savedLanguageIndex);
   }, []);
+
   useEffect(() => {
     if (selectedLanguageIndex >= 0 && languages[selectedLanguageIndex]) {
       setFont(languages[selectedLanguageIndex].symbol);
+      window.localStorage.setItem(
+        "selectedLanguageIndex",
+        selectedLanguageIndex + ""
+      );
 
       getLanguageFile(
         languages[selectedLanguageIndex].file,
         null,
         null,
-        (data) => setLang(data)
+        setLang
       );
     }
   }, [selectedLanguageIndex]);
@@ -43,9 +52,14 @@ export default function LanguageSwitcher({ with_background }) {
       <div className="flex items-center">
         <CustomDropdown2
           label={
-            selectedLanguageIndex >= 0 && languages[selectedLanguageIndex]
-              ? languages[selectedLanguageIndex].symbol
-              : ""
+            <img
+              className="w-6 h-6 bg-cover -mt-1"
+              src={
+                languages[selectedLanguageIndex]
+                  ? languages[selectedLanguageIndex].icon_url
+                  : ""
+              }
+            />
           }
         >
           {languages.map((language, index) => {
@@ -56,7 +70,7 @@ export default function LanguageSwitcher({ with_background }) {
                   className="rounded-xl"
                   onClick={() => setSelectedLanguageIndex(index)}
                 >
-                  {language && language.symbol ? language.symbol : "error"}
+                  <img className="w-6 h-6 bg-cover" src={language.icon_url} />
                 </CustomItem2>
               );
             } else if (index === 0) {
@@ -66,7 +80,7 @@ export default function LanguageSwitcher({ with_background }) {
                   className="rounded-t-xl"
                   onClick={() => setSelectedLanguageIndex(index)}
                 >
-                  {language && language.symbol ? language.symbol : "error"}
+                  <img className="w-6 h-6 bg-cover" src={language.icon_url} />
                 </CustomItem2>
               );
             } else if (index === languages.length - 1) {
@@ -76,7 +90,7 @@ export default function LanguageSwitcher({ with_background }) {
                   className="rounded-b-xl"
                   onClick={() => setSelectedLanguageIndex(index)}
                 >
-                  {language && language.symbol ? language.symbol : "error"}
+                  <img className="w-6 h-6 bg-cover" src={language.icon_url} />
                 </CustomItem2>
               );
             } else {
@@ -85,7 +99,7 @@ export default function LanguageSwitcher({ with_background }) {
                   key={index}
                   onClick={() => setSelectedLanguageIndex(index)}
                 >
-                  {language && language.symbol ? language.symbol : "error"}
+                  <img className="w-6 h-6 bg-cover" src={language.icon_url} />
                 </CustomItem2>
               );
             }
@@ -98,9 +112,14 @@ export default function LanguageSwitcher({ with_background }) {
       <div className="flex items-center">
         <CustomDropdown
           label={
-            selectedLanguageIndex >= 0 && languages[selectedLanguageIndex]
-              ? languages[selectedLanguageIndex].symbol
-              : ""
+            <img
+              className="w-6 h-6 bg-cover -mt-1"
+              src={
+                languages[selectedLanguageIndex]
+                  ? languages[selectedLanguageIndex].icon_url
+                  : ""
+              }
+            />
           }
         >
           {languages.map((language, index) => {
@@ -111,7 +130,7 @@ export default function LanguageSwitcher({ with_background }) {
                   className="rounded-xl"
                   onClick={() => setSelectedLanguageIndex(index)}
                 >
-                  {language && language.symbol ? language.symbol : "error"}
+                  <img className="w-6 h-6 bg-cover" src={language.icon_url} />
                 </CustomItem>
               );
             } else if (index === 0) {
@@ -121,7 +140,7 @@ export default function LanguageSwitcher({ with_background }) {
                   className="rounded-t-xl"
                   onClick={() => setSelectedLanguageIndex(index)}
                 >
-                  {language && language.symbol ? language.symbol : "error"}
+                  <img className="w-6 h-6 bg-cover" src={language.icon_url} />
                 </CustomItem>
               );
             } else if (index === languages.length - 1) {
@@ -131,7 +150,7 @@ export default function LanguageSwitcher({ with_background }) {
                   className="rounded-b-xl"
                   onClick={() => setSelectedLanguageIndex(index)}
                 >
-                  {language && language.symbol ? language.symbol : "error"}
+                  <img className="w-6 h-6 bg-cover" src={language.icon_url} />
                 </CustomItem>
               );
             } else {
@@ -140,7 +159,7 @@ export default function LanguageSwitcher({ with_background }) {
                   key={index}
                   onClick={() => setSelectedLanguageIndex(index)}
                 >
-                  {language && language.symbol ? language.symbol : "error"}
+                  <img className="w-6 h-6 bg-cover" src={language.icon_url} />
                 </CustomItem>
               );
             }
