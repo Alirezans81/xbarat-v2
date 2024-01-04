@@ -45,6 +45,19 @@ const getWalletTankTypes = (filtersObject) => {
 const createWalletTank = (params) => {
   return axios.post(api["wallet-tank"], params);
 };
+const editWalletTank=(walletTankUrl,params)=>{
+  const formData=new FormData();
+  formData.append("user",params.user);
+  formData.append("currency",params.currency);
+  formData.append("wallet_tank_type",params.wallet_tank_type);
+  formData.append("title",params.title);
+  formData.append("balance",params.balance);
+  formData.append("locked",params.locked);
+  formData.append("pending",params.pending);
+  formData.append("bank_info",params.bank_info);
+  
+  return axios.patch(walletTankUrl,formData)
+}
 
 const createDeposit = (params) => {
   const formData = new FormData();
@@ -92,4 +105,5 @@ export {
   createDeposit,
   createWithdrawal,
   createTransfer,
+  editWalletTank,
 };

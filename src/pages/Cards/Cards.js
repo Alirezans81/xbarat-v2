@@ -1,8 +1,6 @@
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useWalletState } from "../../Providers/WalletProvider";
-import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
-import { useUserState } from "../../Providers/UserProvider";
 import Addcard from "./addcard";
 import { useState} from "react";
 import SingleCardAssets from "./singleCardAssets";
@@ -86,6 +84,7 @@ const Cards = () => {
           
         >
             <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
+
             <div className="w-full h-full flex flex-col">
             <div className="w-full h-8 mt-5 flex flex-row">
             <button className="flex-1 justify-start w-1/2 h-fit" onClick={discard}><img className="ml-6 h-10" src={cross}/></button>
