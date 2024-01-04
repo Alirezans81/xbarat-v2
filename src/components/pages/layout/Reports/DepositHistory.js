@@ -3,9 +3,9 @@ import TopSection from "./common/TopSection";
 import CustomSlider from "../../../common/CustomSlider";
 import DepositCard from "./DepositHistory/DepositCard";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
-
 export default function DepositHistory() {
   const lang = useLanguageState();
+
 
   const [datas, setDatas] = useState([
     {

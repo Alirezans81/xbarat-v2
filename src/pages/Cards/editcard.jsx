@@ -17,7 +17,7 @@ const EditCards=({editCards,setEditCards,data})=>{
   const font = useFontState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const tempCurrency=currencies.filter((data)=>
-  data.currency_abb===data.abbreviation
+        data.currency_abb===data.abbreviation
   )
   const [title, setTitle] = useState(data.title);
   const [asset,setAsset]=useState(tempCurrency.url);
@@ -32,11 +32,7 @@ const EditCards=({editCards,setEditCards,data})=>{
     pending: 1,
     bank_info: "",
   });
-  console.log(user.url);
-  console.log(asset);
-  console.log(type);
-  console.log(title);
-  console.log(bankInfo);
+ 
   
   const { editWalletTank, isLoading: editWalletTankIsLoading } =
       useEditWalletTanks();
