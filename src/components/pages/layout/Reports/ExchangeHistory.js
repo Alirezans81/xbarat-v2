@@ -5,7 +5,6 @@ import ExchangeCard from "./ExchangeHistory/ExchangeCard";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 export default function ExchangeHistory() {
   const lang = useLanguageState();
-  
   const [datas, setDatas] = useState([
     {
       currencyPair: {

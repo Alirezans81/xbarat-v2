@@ -4,7 +4,7 @@ import { useDirectionState } from "../Providers/DirectionProvider";
 import Exchanging from "../components/pages/layout/Home/Exchanging";
 import TableExchange from "../components/pages/layout/Home/TableExchange";
 import PendingExchange from "../components/pages/layout/Home/PendingExchange";
-import OtherExcahnges from "../components/pages/layout/Home/OtherExchanges";
+import OtherExchanges from "../components/pages/layout/Home/OtherExchanges";
 import { useGetPendingExchanges } from "../apis/pages/Home/hooks";
 import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
 import { useTokenState } from "../Providers/TokenProvider";
@@ -93,7 +93,7 @@ export default function Home({ isDemo }) {
         <div
           className={`order-4 md:order-3 h-72 bg-${theme} lg:rounded-3xl xl:rounded-l-3xl xl:rounded-r-none row-span-3 xl:col-span-3 lg:col-span-5 md:col-span-5 md:rounded-3xl col-span-12 rounded-3xl`}
         >
-          <OtherExcahnges
+          <OtherExchanges
             selectedCurrecnyPair={selectedCurrecnyPair}
             rateIsReversed={rateIsReversed}
           />
