@@ -55,13 +55,31 @@ export default function TransferHistory() {
     },
   ]);
 
+  const getQuantityOfCards = () => {
+    if (window.innerWidth >= 1280) {
+      return 1;
+    } else if (window.innerWidth >= 1024) {
+      return 3;
+    } else if (window.innerWidth >= 768) {
+      return 2;
+    } else if (window.innerWidth >= 640) {
+      return 1;
+    } else {
+      return 1;
+    }
+  };
+
   return (
     <div className="flex flex-col">
       <TopSection route={"transfer"} />
-      <div className="flex-1 px-7 pt-5">
-        <CustomSlider infinite slidesToShow={1} slidesToScroll={1}>
+      <div className="flex-1 px-4 pt-5">
+        <CustomSlider
+          infinite
+          slidesToShow={getQuantityOfCards()}
+          slidesToScroll={getQuantityOfCards()}
+        >
           {datas.map((data, index) => (
-            <div className="px-7" key={index}>
+            <div className="px-3" key={index}>
               <TransferCard lang={lang} data={data} />
             </div>
           ))}

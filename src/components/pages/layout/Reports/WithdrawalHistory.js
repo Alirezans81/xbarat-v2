@@ -55,11 +55,29 @@ export default function WithdrawalHistory() {
     },
   ]);
 
+  const getQuantityOfCards = () => {
+    if (window.innerWidth >= 1280) {
+      return 3;
+    } else if (window.innerWidth >= 1024) {
+      return 3;
+    } else if (window.innerWidth >= 768) {
+      return 2;
+    } else if (window.innerWidth >= 640) {
+      return 1;
+    } else {
+      return 1;
+    }
+  };
+
   return (
     <div className="flex flex-col">
       <TopSection route={"withdrawal"} />
       <div className="flex-1 px-5 pt-5">
-        <CustomSlider infinite slidesToShow={3} slidesToScroll={3}>
+        <CustomSlider
+          infinite
+          slidesToShow={getQuantityOfCards()}
+          slidesToScroll={getQuantityOfCards()}
+        >
           {datas.map((data, index) => (
             <div className="px-3" key={index}>
               <WithdrawalCard lang={lang} data={data} />
