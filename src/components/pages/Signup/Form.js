@@ -32,18 +32,17 @@ export default function Form({ setIsSplashScreenLoading }) {
   const sendCode = (email) => {
     const generatedCode = generateCode(6);
     setCode(generatedCode);
-
-    // sendEmail(
-    //   {
-    //     to_email: email,
-    //     subject: lang["email-varification-subject"],
-    //     message: lang["email-varification-message"] + ": " + generatedCode,
-    //   },
-    //   () => mode !== "submit" && setMode("submit")
-    // );
-
+    process.env.REACT_APP_MODE === "DEPLOYMENT"
+      ? sendEmail(
+          {
+            to_email: email,
+            subject: lang["email-varification-subject"],
+            message: lang["email-varification-message"] + ": " + generatedCode,
+          },
+          () => mode !== "submit" && setMode("submit")
+        )
+      : console.log("generatedCode: ", generatedCode);
     setResendButtonEnabled(false);
-    console.log("generatedCode: ", generatedCode);
     setTimeout(() => setResendButtonEnabled(true), 60000);
     mode !== "submit" && setMode("submit");
   };

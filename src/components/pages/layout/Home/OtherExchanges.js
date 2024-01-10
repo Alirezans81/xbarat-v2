@@ -28,7 +28,21 @@ export default function OtherExchanges({ selectedCurrecnyPair }) {
                 ? selectedCurrecnyPair.slug
                 : "",
           },
-          setExchanges
+          null,
+          (data) => {
+            data && data.length !== 0
+              ? setExchanges(data)
+              : getOtherExchangesRate(
+                  {
+                    currency_pair:
+                      selectedCurrecnyPair &&
+                      selectedCurrecnyPair.currency_pair_reverse_slug
+                        ? selectedCurrecnyPair.currency_pair_reverse_slug
+                        : "",
+                  },
+                  setExchanges
+                );
+          }
         )
       : setExchanges(null);
   }, [selectedCurrecnyPair]);

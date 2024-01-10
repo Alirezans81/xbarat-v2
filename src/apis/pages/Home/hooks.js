@@ -65,7 +65,7 @@ const useGetOtherExchangesRate = () => {
     await getOtherExchangesRate(filtersObject)
       .then((data) => {
         console.log(data);
-        setState(data.data);
+        setState && setState(data.data);
         customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
         return data.data;

@@ -123,12 +123,14 @@ export default function Form({ setIsSplashScreenLoading }) {
             const generatedCode = generateCode(6);
             data && data.token && setToken(data.token);
             setCode(generatedCode);
-            sendEmail({
-              to_email: values.email,
-              subject: lang["email-varification-subject"],
-              message:
-                lang["email-varification-message"] + ": " + generatedCode,
-            });
+            process.env.REACT_APP_MODE === "DEPLOYMENT"
+              ? sendEmail({
+                  to_email: values.email,
+                  subject: lang["email-varification-subject"],
+                  message:
+                    lang["email-varification-message"] + ": " + generatedCode,
+                })
+              : console.log(generatedCode);
             setMode("verify");
           });
         } else if (mode === "verify") {

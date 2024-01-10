@@ -8,6 +8,7 @@ import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useLogout } from "../../../apis/pages/Layout/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { useUserState } from "../../../Providers/UserProvider";
+import { useFontState } from "../../../Providers/FontProvider";
 
 export default function Navbar({ links }) {
   const theme = useThemeState();
@@ -15,6 +16,7 @@ export default function Navbar({ links }) {
   const lang = useLanguageState();
   const setLoading = useIsLoadingSplashScreenSetState();
   const user = useUserState();
+  const font = useFontState();
 
   const { logout, error, isLoading } = useLogout();
   useEffect(() => setLoading(isLoading), [isLoading]);
@@ -29,7 +31,7 @@ export default function Navbar({ links }) {
         <CustomTooltip
           placement="right"
           content={lang["log-out"]}
-          className={`tooltip-${oppositeTheme}`}
+          className={`tooltip-${oppositeTheme} font-${font}-regular`}
           style={oppositeTheme}
         >
           {user ? (

@@ -4,7 +4,7 @@ const LanguageContext = createContext();
 const LanguageContextSetState = createContext();
 
 const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState(require("../languages/En.json"));
+  const [language, setLanguage] = useState();
 
   return (
     <LanguageContext.Provider value={language}>

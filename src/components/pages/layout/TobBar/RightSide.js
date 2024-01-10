@@ -38,7 +38,7 @@ export default function RightSide() {
 
   return (
     <div className="flex items-center">
-      <div className="mx-3 z-100">
+      <div className="mx-3 z-50">
         <LanguageSwitcher />
       </div>
       <div

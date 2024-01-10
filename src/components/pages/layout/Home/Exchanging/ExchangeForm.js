@@ -16,6 +16,9 @@ import { useExchange } from "../../../../../apis/pages/Home/hooks";
 import { useNavigate } from "react-router-dom";
 import { useFontState } from "../../../../../Providers/FontProvider";
 import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
+import CompleteProfileModal from "../../../../modals/CompleteProfileModal";
+import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
+import { useToastDataSetState } from "../../../../../Providers/ToastDataProvider";
 
 export default function ExchangeForm({
   walletBalance,
@@ -35,6 +38,7 @@ export default function ExchangeForm({
   rateInputRef,
   isDemo,
 }) {
+  const userInfo = useUserState();
   const lang = useLanguageState();
   const font = useFontState();
   const theme = useThemeState();
@@ -188,6 +192,27 @@ export default function ExchangeForm({
 
   const navigateToLogin = () => navigate("login");
 
+  const setToastData = useToastDataSetState();
+  const openCompleteProfileMessageToast = () => {
+    setToastData({
+      status: "failed",
+      message: lang["complete-profile-toast-message"] + ".",
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
+
+  const setModalData = useModalDataSetState();
+  const openCompleteProfileModal = () => {
+    setModalData({
+      title: "",
+      children: <CompleteProfileModal />,
+      canClose: false,
+      isOpen: true,
+    });
+  };
+
   return (
     <Formik
       initialValues={{
@@ -195,38 +220,45 @@ export default function ExchangeForm({
         rate: "",
       }}
       onSubmit={(values) => {
-        const newAmount =
-          +selectedCurrecnyPair.fee_percentage === 0
-            ? +removeComma(values.amount)
-            : +removeComma(values.amount) *
-              ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
+        if (userInfo && userInfo.is_verified) {
+          const newAmount =
+            +selectedCurrecnyPair.fee_percentage === 0
+              ? +removeComma(values.amount)
+              : +removeComma(values.amount) *
+                ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
 
-        const selectedRate = formDefaultRate || +removeComma(values.rate);
-        if (findError(+newAmount, +selectedRate)) {
-          const params = {
-            user: user && user.url ? user.url : "",
-            currency_pair:
-              selectedCurrecnyPair && selectedCurrecnyPair.url
-                ? selectedCurrecnyPair.url
-                : "",
-            amount_source: +removeComma(values.amount),
-            rate: +formDefaultRate || +removeComma(values.rate),
-            amount_destination:
-              selectedCurrecnyPair && selectedCurrecnyPair.rate_multiplier
-                ? computingTargetAmount(
-                    removeComma(values.amount),
-                    selectedRate,
-                    selectedCurrecnyPair.rate_multiplier
-                  ).toFixed(6)
-                : 0,
-            status:
-              statuses.find((status) => status.title === "Pending").url || "",
-          };
+          const selectedRate = formDefaultRate
+            ? +removeComma(formDefaultRate)
+            : +removeComma(values.rate);
+          if (findError(+newAmount, +selectedRate)) {
+            const params = {
+              user: user && user.url ? user.url : "",
+              currency_pair:
+                selectedCurrecnyPair && selectedCurrecnyPair.url
+                  ? selectedCurrecnyPair.url
+                  : "",
+              amount_source: +removeComma(values.amount),
+              rate: +selectedRate,
+              amount_destination:
+                selectedCurrecnyPair && selectedCurrecnyPair.rate_multiplier
+                  ? computingTargetAmount(
+                      removeComma(values.amount),
+                      selectedRate,
+                      selectedCurrecnyPair.rate_multiplier
+                    ).toFixed(6)
+                  : 0,
+              status:
+                statuses.find((status) => status.title === "Pending").url || "",
+            };
 
-          exchange(params, () => {
-            refreshWallet();
-            refreshPendingExchange();
-          });
+            exchange(params, () => {
+              refreshWallet();
+              refreshPendingExchange();
+            });
+          }
+        } else {
+          openCompleteProfileMessageToast();
+          openCompleteProfileModal();
         }
       }}
     >
@@ -424,11 +456,13 @@ export default function ExchangeForm({
               </CustomDropdown>
             </div>
             <div
-              className={`flex items-center w-full gap-7 text-${oppositeTheme} font-${font}-regular mt-2`}
+              className={`flex flex-row${
+                font === "Fa" && "-reverse"
+              } items-center w-full gap-7 text-${oppositeTheme} font-${font}-regular mt-2`}
             >
               <div className="flex-1 flex relative">
                 <input
-                  className={`flex-1 text-left hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                  className={`flex-1 text-center hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                   placeholder={lang["amount"]}
                   disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
                   name="amount"
@@ -482,7 +516,7 @@ export default function ExchangeForm({
               <div className="flex-1 flex">
                 <input
                   ref={rateInputRef}
-                  className={`flex-1 text-left hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                  className={`flex-1 text-center hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                   placeholder={lang["rate"]}
                   disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
                   name="rate"

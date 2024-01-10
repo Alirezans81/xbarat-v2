@@ -14,7 +14,7 @@
   "forgot-password": "گذرواژه را فراموش کرده اید؟",
   "not-logged-in-error": "برای دسترسی به این صفحه باید وارد سیستم شوید",
   "email-empty-error": "آدرس ایمیل خود را وارد کنید",
-  "email-invalid-error": "یک آدرس ایمیل معتبر وارد کنید",
+  "email-invalid-error" : "یک آدرس ایمیل معتبر وارد کنید",
   "password-empty-error": "گذرواژه خود را وارد کنید",
   "password-short-error": "گذرواژه باید حداقل 8 کاراکتر باشد",
   "password-contain-error": "گذرواژه باید دارای یکی از کاراکترهای زیر باشد: [a-z], [A-Z], [0-9], [!@#$%*?]",
@@ -179,6 +179,11 @@
   "email-varification-message": "کد شما است",
   "email-varification-code-error": "کد نامعتبر است",
   "email-not-exist-error-message": "ایمیل وجود ندارد",
-  "forgot-password-label": "فراموشی گذرواژه",
-  "profile": "پروفایل"
+  "forgot-password-label": "فراموشی رمز",
+  "profile": "پروفایل",
+  "successful-signup-1st": "حساب شما با موفقیت ایجاد شد",
+  "successful-signup-2nd": "لطفاًاکنون سعی کنید وارد شوید",
+  "email-exsit-error": "ایمیل وجود دارد",
+  "amount-input-max-button-label": "حداکثر",
+  "add-card": "اضافه کردن کارت"
 }

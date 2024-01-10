@@ -11,7 +11,7 @@
   "submit": "Submit",
   "exchange": "Exchange",
   "remember-me": "Remember Me",
-  "forgot-password": "Forgot Password",
+  "forgot-password": "Forgot Password?",
   "not-logged-in-error": "You should be logged in to access this page",
   "email-empty-error": "Enter your email address",
   "email-invalid-error": "Enter a valid email address",
@@ -185,5 +185,7 @@
   "successful-signup-2nd": "Please try to login now",
   "email-exsit-error": "The email exists",
   "amount-input-max-button-label": "Max",
-  "add-card": "Add Card"
+  "add-card": "Add Card",
+  
+  "complete-profile-toast-message": "Please complete your profile information to work with the platform properly"
 }

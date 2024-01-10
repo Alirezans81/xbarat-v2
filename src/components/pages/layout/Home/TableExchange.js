@@ -114,7 +114,9 @@ export default function AllOreders({
               </span>
             </CustomTooltip>
           );
-          temp.rate = addComma(row.rate);
+          temp.rate = addComma(
+            +row.rate.toFixed(selectedCurrecnyPair.floating_number)
+          );
 
           return temp;
         })
@@ -125,7 +127,9 @@ export default function AllOreders({
     selectedCurrecnyPair
       ? tableExchangeData.target_to_source.map((row) => {
           let temp = {};
-          temp.rate = addComma(row.rate);
+          temp.rate = addComma(
+            +row.rate.toFixed(selectedCurrecnyPair.floating_number)
+          );
           temp.total_amount = (
             <CustomTooltip
               placement="top"
