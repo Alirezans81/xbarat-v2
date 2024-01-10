@@ -16,6 +16,9 @@ import { useStatusesState } from "../../../../Providers/StatusesProvider";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useRefreshWallet } from "../../../../hooks/useRefreshWallet";
 import { useFontState } from "../../../../Providers/FontProvider";
+import { useToastDataSetState } from "../../../../Providers/ToastDataProvider";
+import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
+import CompleteProfileModal from "../../../modals/CompleteProfileModal";
 
 export default function QuickDeposit({ refreshPendingRequests }) {
   const theme = useThemeState();
@@ -68,6 +71,27 @@ export default function QuickDeposit({ refreshPendingRequests }) {
     [createDepositIsLoading]
   );
 
+  const setToastData = useToastDataSetState();
+  const openCompleteProfileMessageToast = () => {
+    setToastData({
+      status: "failed",
+      message: lang["complete-profile-toast-message"] + ".",
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
+
+  const setModalData = useModalDataSetState();
+  const openCompleteProfileModal = () => {
+    setModalData({
+      title: "",
+      children: <CompleteProfileModal />,
+      canClose: false,
+      isOpen: true,
+    });
+  };
+
   return (
     <div className="flex flex-col h-full justify-between">
       <div className="flex flex-row mb-2">
@@ -82,54 +106,59 @@ export default function QuickDeposit({ refreshPendingRequests }) {
       <Formik
         initialValues={{ amount: "" }}
         onSubmit={(values) => {
-          if (
-            currencies[selectedCurrencyIndex] &&
-            currencies[selectedCurrencyIndex].has_branches
-          ) {
-            createDeposit(
-              {
-                user_sender: userInfo && userInfo.url ? userInfo.url : "",
-                currency:
-                  currencies[selectedCurrencyIndex] &&
-                  currencies[selectedCurrencyIndex].url
-                    ? currencies[selectedCurrencyIndex].url
+          if (userInfo && userInfo.is_verified) {
+            if (
+              currencies[selectedCurrencyIndex] &&
+              currencies[selectedCurrencyIndex].has_branches
+            ) {
+              createDeposit(
+                {
+                  user_sender: userInfo && userInfo.url ? userInfo.url : "",
+                  currency:
+                    currencies[selectedCurrencyIndex] &&
+                    currencies[selectedCurrencyIndex].url
+                      ? currencies[selectedCurrencyIndex].url
+                      : "",
+                  amount: removeComma(values.amount),
+                  status: statuses
+                    ? statuses.find((status) => status.title === "Admin Assign")
+                        .url
                     : "",
-                amount: removeComma(values.amount),
-                status: statuses
-                  ? statuses.find((status) => status.title === "Admin Assign")
-                      .url
-                  : "",
-                branch:
-                  locations[selectedLocationIndex] &&
-                  locations[selectedLocationIndex].url
-                    ? locations[selectedLocationIndex].url
+                  branch:
+                    locations[selectedLocationIndex] &&
+                    locations[selectedLocationIndex].url
+                      ? locations[selectedLocationIndex].url
+                      : "",
+                },
+                () => {
+                  refreshWallet();
+                  refreshPendingRequests();
+                }
+              );
+            } else {
+              createDeposit(
+                {
+                  user_sender: userInfo && userInfo.url ? userInfo.url : "",
+                  currency:
+                    currencies[selectedCurrencyIndex] &&
+                    currencies[selectedCurrencyIndex].url
+                      ? currencies[selectedCurrencyIndex].url
+                      : "",
+                  amount: removeComma(values.amount),
+                  status: statuses
+                    ? statuses.find((status) => status.title === "Admin Assign")
+                        .url
                     : "",
-              },
-              () => {
-                refreshWallet();
-                refreshPendingRequests();
-              }
-            );
+                },
+                () => {
+                  refreshWallet();
+                  refreshPendingRequests();
+                }
+              );
+            }
           } else {
-            createDeposit(
-              {
-                user_sender: userInfo && userInfo.url ? userInfo.url : "",
-                currency:
-                  currencies[selectedCurrencyIndex] &&
-                  currencies[selectedCurrencyIndex].url
-                    ? currencies[selectedCurrencyIndex].url
-                    : "",
-                amount: removeComma(values.amount),
-                status: statuses
-                  ? statuses.find((status) => status.title === "Admin Assign")
-                      .url
-                  : "",
-              },
-              () => {
-                refreshWallet();
-                refreshPendingRequests();
-              }
-            );
+            openCompleteProfileMessageToast();
+            openCompleteProfileModal();
           }
         }}
       >

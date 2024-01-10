@@ -29,8 +29,6 @@ export default function Form({ setIsSplashScreenLoading }) {
 
   const [resendButtonEnabled, setResendButtonEnabled] = useState(false);
 
-  console.log(process.env.REACT_APP_MODE);
-
   const sendCode = (email) => {
     const generatedCode = generateCode(6);
     setCode(generatedCode);

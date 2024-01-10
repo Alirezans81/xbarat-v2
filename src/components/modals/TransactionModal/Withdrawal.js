@@ -145,9 +145,9 @@ export default function Withdrawal({
                   : "",
             },
             () => {
-              getWalletData();
-              refreshPendingRequests();
               closeModal();
+              refreshPendingRequests();
+              getWalletData();
             }
           );
         } else {
@@ -185,9 +185,9 @@ export default function Withdrawal({
                     : "",
                 },
                 () => {
-                  getWalletData();
-                  refreshPendingRequests();
                   closeModal();
+                  refreshPendingRequests();
+                  getWalletData();
                 }
               );
             });
@@ -212,9 +212,9 @@ export default function Withdrawal({
                   : "",
               },
               () => {
-                getWalletData();
-                refreshPendingRequests();
                 closeModal();
+                refreshPendingRequests();
+                getWalletData();
               }
             );
           }
