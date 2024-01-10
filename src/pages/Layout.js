@@ -33,6 +33,7 @@ import CompleteProfileModal from "../components/modals/CompleteProfileModal";
 import { useModalDataSetState } from "../Providers/ModalDataProvider";
 import { useFontState } from "../Providers/FontProvider";
 import MobileTopBar from "../components/pages/layout/MobileTopBar";
+import { useToastDataSetState } from "../Providers/ToastDataProvider";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -55,6 +56,18 @@ export default function Layout() {
 
   const { pathname: currentRoute } = useLocation();
   const userInfo = useUserState();
+
+  const setToastData = useToastDataSetState();
+  const openCompleteProfileMessageToast = () => {
+    setToastData({
+      status: "warning",
+      message: lang["complete-profile-toast-message"] + ".",
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
+
   const setModalData = useModalDataSetState();
   const openCompleteProfileModal = () => {
     setModalData({
@@ -66,6 +79,7 @@ export default function Layout() {
   };
   useEffect(() => {
     if (userInfo && !userInfo.is_verified && !(currentRoute === "/")) {
+      openCompleteProfileMessageToast();
       openCompleteProfileModal();
     }
   }, []);

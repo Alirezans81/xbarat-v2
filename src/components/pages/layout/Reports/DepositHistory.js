@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import TopSection from "./common/TopSection";
 import CustomSlider from "../../../common/CustomSlider";
 import DepositCard from "./DepositHistory/DepositCard";
@@ -10,18 +10,18 @@ import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadin
 export default function DepositHistory() {
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const lang = useLanguageState();
-  // const user=useUserState();
+  const user=useUserState();
 
-  // const { getDepositHistory, isLoading: getDepositHistoryIsLoading } = useGetDepositHistory();
-  // useEffect(
-  //   () => setIsLoadingSplashScreen(getDepositHistoryIsLoading),
-  //   [getDepositHistoryIsLoading]
-  // );
+  const { getDepositHistory, isLoading: getDepositHistoryIsLoading } = useGetDepositHistory();
+  useEffect(
+    () => setIsLoadingSplashScreen(getDepositHistoryIsLoading),
+    [getDepositHistoryIsLoading]
+  );
 
-  // const [deposit, setDeposit] = useState([]);
-  // useEffect(() => {
-  //     getDepositHistory(setDeposit);
-  // }, []);
+  const [deposit, setDeposit] = useState([]);
+  useEffect(() => {
+     getDepositHistory(setDeposit);
+  }, []);
 
   const [datas, setDatas] = useState([
     {
