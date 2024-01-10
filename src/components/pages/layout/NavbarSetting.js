@@ -161,6 +161,151 @@ export default function NavbarSetting({ setLinks }) {
     },
   ]);
 
+  useEffect(() => {
+    setAllLinks([
+      {
+        title: lang["home"],
+        route: "/home",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/home-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/home-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/home-gray.png"),
+        },
+        shown: true,
+      },
+      {
+        title: lang["wallet"],
+        route: "/wallet",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/wallet-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/wallet-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/wallet-gray.png"),
+        },
+        shown: true,
+      },
+      {
+        title: lang["reports"],
+        route: "/reports",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/reports-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/reports-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/reports-gray.png"),
+        },
+        shown: false,
+      },
+      {
+        title: lang["tickets"],
+        route: "/tickets",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/tickets-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/tickets-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/tickets-gray.png"),
+        },
+        shown: false,
+      },
+      {
+        title: lang["assignment"],
+        route: "/submitting/assignment",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/submitting/assignment-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/submitting/assignment-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/submitting/assignment-gray.png"),
+        },
+        shown: false,
+      },
+      {
+        title: lang["exchanges"],
+        route: "/submitting/exchanges",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/submitting/exchanges-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/submitting/exchanges-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/submitting/exchanges-gray.png"),
+        },
+        shown: false,
+      },
+      {
+        title: lang["transfers"],
+        route: "/submitting/transfers",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/submitting/transfers-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/submitting/transfers-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/submitting/transfers-gray.png"),
+        },
+        shown: false,
+      },
+      {
+        title: lang["accounting"],
+        route: "/submitting/accounting",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/submitting/accounting-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/submitting/accounting-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/submitting/accounting-gray.png"),
+        },
+        shown: false,
+      },
+      {
+        title: lang["users"],
+        route: "/user-management/users",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/user-management/users-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/user-management/users-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/user-management/users-gray.png"),
+        },
+        shown: false,
+      },
+      {
+        title: lang["admins"],
+        route: "/user-management/admins",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/user-management/admins-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/user-management/admins-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/user-management/admins-gray.png"),
+        },
+        shown: false,
+      },
+      {
+        title: lang["branches"],
+        route: "/user-management/branches",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/user-management/branches-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/user-management/branches-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/user-management/branches-gray.png"),
+        },
+        shown: false,
+      },
+      {
+        title: lang["singular"],
+        route: "/currency/singular",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/currency/singular-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/currency/singular-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/currency/singular-gray.png"),
+        },
+        shown: false,
+      },
+      {
+        title: lang["pair"],
+        route: "/currency/pair",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/currency/pair-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/currency/pair-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/currency/pair-gray.png"),
+        },
+        shown: false,
+      },
+      {
+        title: lang["robots"],
+        route: "/more/robots",
+        imgs: {
+          dark: require("../../../Images/pages/layout/Navbar/more/robots-dark.png"),
+          light: require("../../../Images/pages/layout/Navbar/more/robots-light.png"),
+          gray: require("../../../Images/pages/layout/Navbar/more/robots-gray.png"),
+        },
+        shown: false,
+      },
+    ]);
+  }, [lang]);
+
   const maxShownLinksQuantity = 5;
   const checkShownLinksQuantity = () => {
     let quantity = 0;

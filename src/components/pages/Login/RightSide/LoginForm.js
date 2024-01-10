@@ -187,7 +187,7 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
             </div>
             <Link to={"/forgot-password"}>
               <span className={`font-${font}-regular text-blue text-sm`}>
-                {lang["forgot-password"] + "?"}
+                {lang["forgot-password"]}
               </span>
             </Link>
           </div>

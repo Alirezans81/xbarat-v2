@@ -47,6 +47,31 @@ export default function MyMenu({ switchBlur }) {
     },
   ]);
 
+  useEffect(() => {
+    setAllLinks([
+      {
+        title: lang["home"],
+        route: "/home",
+        imgs: {
+          dark: require("../../../../Images/pages/layout/Navbar/home-dark.png"),
+          light: require("../../../../Images/pages/layout/Navbar/home-light.png"),
+          gray: require("../../../../Images/pages/layout/Navbar/home-gray.png"),
+        },
+        shown: true,
+      },
+      {
+        title: lang["wallet"],
+        route: "/wallet",
+        imgs: {
+          dark: require("../../../../Images/pages/layout/Navbar/wallet-dark.png"),
+          light: require("../../../../Images/pages/layout/Navbar/wallet-light.png"),
+          gray: require("../../../../Images/pages/layout/Navbar/wallet-gray.png"),
+        },
+        shown: true,
+      },
+    ]);
+  }, [lang]);
+
   return (
     <Menu
       customBurgerIcon={
