@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
 import ThemeSwitcher from "../../../common/ThemeSwitcher";
-import LeftSide from "../TobBar/LeftSide";
 import { useLogout } from "../../../../apis/pages/Layout/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
 import { useUserState } from "../../../../Providers/UserProvider";
@@ -72,6 +71,28 @@ export default function MyMenu({ switchBlur }) {
     ]);
   }, [lang]);
 
+  function useOutsideAlerter(ref) {
+    useEffect(() => {
+      /**
+       * Alert if clicked on outside of element
+       */
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setMenuIsOpen(false);
+        }
+      }
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  }
+
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef);
+
   return (
     <Menu
       customBurgerIcon={
@@ -88,7 +109,7 @@ export default function MyMenu({ switchBlur }) {
       crossButtonClassName="mr-0.5 mt-3"
       className={`bg-${theme} -ml-4 -mt-13`}
       styles={{
-        bmMenuWrap: { width: 270, height: "100vh", overflow: "hidden" },
+        bmMenuWrap: { width: 270, height: "100dvh", overflow: "hidden" },
         bmCrossButton: { width: 28, height: 28 },
       }}
       noOverlay
@@ -97,8 +118,8 @@ export default function MyMenu({ switchBlur }) {
       onOpen={() => setMenuIsOpen(true)}
       onClose={() => setMenuIsOpen(false)}
     >
-      <div className="w-ful h-full px-5 mt-4">
-        <div className="h-full flex flex-col pb-28">
+      <div className="w-ful h-full px-5 py-5" ref={wrapperRef}>
+        <div className="h-full flex flex-col">
           <div dir="ltr" className="flex w-full items-center">
             <img
               className="h-10 w-h-10"

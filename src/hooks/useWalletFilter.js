@@ -35,4 +35,21 @@ const useGetWalletTankByCurrency = () => {
   return getWalletTankByCurrency;
 };
 
-export { useGetWalletTankByCurrency };
+const useGetWalletAssetByCurrency = () => {
+  const wallet = useWalletState();
+
+  const getWalletAssetByCurrency = (currencyUrl) => {
+    if (currencyUrl) {
+      const { walletAssets } = wallet;
+      const walletAsset = walletAssets.find(
+        (walletAsset) => walletAsset.currency === currencyUrl
+      );
+
+      return walletAsset;
+    } else return null;
+  };
+
+  return getWalletAssetByCurrency;
+};
+
+export { useGetWalletTankByCurrency, useGetWalletAssetByCurrency };

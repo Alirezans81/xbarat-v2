@@ -72,7 +72,7 @@ const EditCards = ({ editCards, setEditCards, data }) => {
       <div
         className={
           editCards
-            ? `fixed top-0 left-0 w-screen h-screen flex items-center justify-center z-20 `
+            ? `fixed top-0 left-0 w-browser h-browser flex items-center justify-center z-20 `
             : "hidden"
         }
       >

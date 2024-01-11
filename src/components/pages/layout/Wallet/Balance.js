@@ -101,7 +101,6 @@ export default function Balance({ refreshPendingRequests }) {
             <CustomSlider
               slidesToScroll={getQuantityOfCards()}
               slidesToShow={getQuantityOfCards()}
-              infinite
             >
               {walletAssets.map((walletAsset, index) => (
                 <div

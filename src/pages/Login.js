@@ -42,9 +42,9 @@ export default function Login() {
       <CustomToast />
       <div
         dir={direction}
-        className={`w-screen h-screen bg-${theme} relative transition-all duration-300`}
+        className={`w-browser h-browser bg-${theme} relative transition-all duration-300`}
       >
-        <div className="absolute w-screen h-screen bg-login flex justify-evenly">
+        <div className="absolute w-browser h-browser bg-login flex justify-evenly">
           <LoadingSplashScreen isLoading={isSplashScreenLoading} />
           <div className={`absolute top-3 ${themeSwitcherDivClasses}`}>
             <ThemeSwitcher />
@@ -58,7 +58,7 @@ export default function Login() {
           <div className="hidden md:flex h-full">
             <RightSide setIsSplashScreenLoading={setIsSplashScreenLoading} />
           </div>
-          <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center pb-16">
+          <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center">
             <button onClick={() => navigate("/")}>
               <img
                 className="w-24 h-24"

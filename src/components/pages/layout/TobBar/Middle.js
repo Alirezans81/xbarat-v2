@@ -32,12 +32,10 @@ export default function Middle() {
             />
           </div>
           <div className="flex flex-col">
-            <span
-              className={`text-${oppositeTheme} font-${font}-regular text`}
-            >
+            <span className={`text-${oppositeTheme} font-${font}-regular text`}>
               {addComma(+walletAsset.balance) + " " + walletAsset.currency_abb}
             </span>
-            <div className="flex flex-row gap-x-2">
+            <div className="flex flex-row gap-x-2 -mt-1">
               <span className={`text-green text-sm font-${font}-regular`}>
                 {"+ " + addComma(+walletAsset.pending) + " " + lang["pending"]}
               </span>
