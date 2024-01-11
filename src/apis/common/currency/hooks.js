@@ -9,7 +9,7 @@ const useGetCurrencies = () => {
     setIsLoading(true);
     await getCurrencies()
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setState(data.data);
         customFunction && customFunction();
         setIsLoading(false);
@@ -33,7 +33,7 @@ const useGetCurrency = () => {
     setIsLoading(true);
     await getCurrency(currencyUrl)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setState(data.data);
         customFunction && customFunction();
         setIsLoading(false);
@@ -57,7 +57,7 @@ const useGetCurrencyPairs = () => {
     setIsLoading(true);
     await getCurrencyPairs(filtersObject)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setState(data.data);
         customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
