@@ -24,13 +24,13 @@ export default function WaitLink() {
   return (
     <div
       dir={direction}
-      className={`w-screen h-screen bg-${theme} relative transition-all duration-300`}
+      className={`w-browser h-browser bg-${theme} relative transition-all duration-300`}
     >
-      <div className="absolute w-screen h-screen bg-login flex justify-center items-center">
+      <div className="absolute w-browser h-browser bg-login flex justify-center items-center">
         <div className={`absolute top-3 ${themeSwitcherDivClasses}`}>
           <ThemeSwitcher />
         </div>
-        <div className="w-screen h-screen flex justify-evenly items-center">
+        <div className="w-browser h-browser flex justify-evenly items-center">
           <div
             className={`bg-${theme}-glass rounded-3xl flex w-4/12 flex-col items-center p-8 gap-y-6`}
           >

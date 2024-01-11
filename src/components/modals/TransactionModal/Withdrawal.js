@@ -13,10 +13,14 @@ import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSp
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import { useAddComma, useRemoveComma } from "../../../hooks/useNumberFunctions";
 import SubmitButton from "../../common/SubmitButton";
-import { useGetWalletTankByCurrency } from "../../../hooks/useWalletFilter";
+import {
+  useGetWalletAssetByCurrency,
+  useGetWalletTankByCurrency,
+} from "../../../hooks/useWalletFilter";
 import { useStatusesState } from "../../../Providers/StatusesProvider";
 import { useFontState } from "../../../Providers/FontProvider";
 import { useModalDataClose } from "../../../Providers/ModalDataProvider";
+import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 
 export default function Withdrawal({
   currencies,
@@ -34,6 +38,25 @@ export default function Withdrawal({
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
 
+  const setToastData = useToastDataSetState();
+  const openNotEnoughBalanceToast = () => {
+    setToastData({
+      status: "failed",
+      message:
+        lang["not-enough-balance-toast-message-1st"] +
+        ". " +
+        lang["not-enough-balance-toast-message-2nd"] +
+        " " +
+        addComma(+walletAsset.balance),
+      canClose: true,
+      isOpen: true,
+      showTime: 3000,
+    });
+  };
+
+  const [walletAsset, setWalletAsset] = useState();
+  const getWalletAssetByCurrency = useGetWalletAssetByCurrency();
+
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
   useEffect(() => {
     const currencyUrl = data && data.currency ? data.currency : "";
@@ -42,6 +65,14 @@ export default function Withdrawal({
     );
     setSelectedCurrencyIndex(foundIndex);
   }, []);
+
+  useEffect(() => {
+    selectedCurrencyIndex >= 0 &&
+      currencies[selectedCurrencyIndex] &&
+      setWalletAsset(
+        getWalletAssetByCurrency(currencies[selectedCurrencyIndex].url)
+      );
+  }, [selectedCurrencyIndex]);
 
   const [newCardMode, setNewCardMode] = useState(false);
 
@@ -117,81 +148,11 @@ export default function Withdrawal({
     <Formik
       initialValues={{ amount: "", title: "", bank_info: "" }}
       onSubmit={(values) => {
-        if (
-          currencies[selectedCurrencyIndex] &&
-          currencies[selectedCurrencyIndex].has_branches
-        ) {
-          createWithdrawal(
-            {
-              user_receiver: userInfo && userInfo.url ? userInfo.url : "",
-              currency:
-                currencies[selectedCurrencyIndex] &&
-                currencies[selectedCurrencyIndex].url
-                  ? currencies[selectedCurrencyIndex].url
-                  : "",
-              wallet_tank_receiver:
-                walletTanks[selectedWalletTankIndex] &&
-                walletTanks[selectedWalletTankIndex].url
-                  ? walletTanks[selectedWalletTankIndex].url
-                  : "",
-              amount: removeComma(values.amount),
-              status: statuses
-                ? statuses.find((status) => status.title === "Admin Assign").url
-                : "",
-              branch:
-                locations[selectedLocationIndex] &&
-                locations[selectedLocationIndex].url
-                  ? locations[selectedLocationIndex].url
-                  : "",
-            },
-            () => {
-              closeModal();
-              refreshPendingRequests();
-              getWalletData();
-            }
-          );
-        } else {
-          if (newCardMode) {
-            const createWalletTankParams = {
-              user: user && user.url ? user.url : "",
-              currency:
-                currencies[selectedCurrencyIndex] &&
-                currencies[selectedCurrencyIndex].url
-                  ? currencies[selectedCurrencyIndex].url
-                  : "",
-              title: values.title,
-              account_name: values.title,
-              wallet_tank_type:
-                walletTankTypes[selectedWalletTankType] &&
-                walletTankTypes[selectedWalletTankType].url
-                  ? walletTankTypes[selectedWalletTankType].url
-                  : "",
-              bank_info: values.bank_info,
-            };
-            createWalletTank(createWalletTankParams, null, (data) => {
-              createWithdrawal(
-                {
-                  user_receiver: userInfo && userInfo.url ? userInfo.url : "",
-                  currency:
-                    currencies[selectedCurrencyIndex] &&
-                    currencies[selectedCurrencyIndex].url
-                      ? currencies[selectedCurrencyIndex].url
-                      : "",
-                  wallet_tank_receiver: data && data.url ? data.url : "",
-                  amount: removeComma(values.amount),
-                  status: statuses
-                    ? statuses.find((status) => status.title === "Admin Assign")
-                        .url
-                    : "",
-                },
-                () => {
-                  closeModal();
-                  refreshPendingRequests();
-                  getWalletData();
-                }
-              );
-            });
-          } else {
+        if (+removeComma(values.amount) <= +walletAsset.balance) {
+          if (
+            currencies[selectedCurrencyIndex] &&
+            currencies[selectedCurrencyIndex].has_branches
+          ) {
             createWithdrawal(
               {
                 user_receiver: userInfo && userInfo.url ? userInfo.url : "",
@@ -210,6 +171,11 @@ export default function Withdrawal({
                   ? statuses.find((status) => status.title === "Admin Assign")
                       .url
                   : "",
+                branch:
+                  locations[selectedLocationIndex] &&
+                  locations[selectedLocationIndex].url
+                    ? locations[selectedLocationIndex].url
+                    : "",
               },
               () => {
                 closeModal();
@@ -217,8 +183,77 @@ export default function Withdrawal({
                 getWalletData();
               }
             );
+          } else {
+            if (newCardMode) {
+              const createWalletTankParams = {
+                user: user && user.url ? user.url : "",
+                currency:
+                  currencies[selectedCurrencyIndex] &&
+                  currencies[selectedCurrencyIndex].url
+                    ? currencies[selectedCurrencyIndex].url
+                    : "",
+                title: values.title,
+                account_name: values.title,
+                wallet_tank_type:
+                  walletTankTypes[selectedWalletTankType] &&
+                  walletTankTypes[selectedWalletTankType].url
+                    ? walletTankTypes[selectedWalletTankType].url
+                    : "",
+                bank_info: values.bank_info,
+              };
+              createWalletTank(createWalletTankParams, null, (data) => {
+                createWithdrawal(
+                  {
+                    user_receiver: userInfo && userInfo.url ? userInfo.url : "",
+                    currency:
+                      currencies[selectedCurrencyIndex] &&
+                      currencies[selectedCurrencyIndex].url
+                        ? currencies[selectedCurrencyIndex].url
+                        : "",
+                    wallet_tank_receiver: data && data.url ? data.url : "",
+                    amount: removeComma(values.amount),
+                    status: statuses
+                      ? statuses.find(
+                          (status) => status.title === "Admin Assign"
+                        ).url
+                      : "",
+                  },
+                  () => {
+                    closeModal();
+                    refreshPendingRequests();
+                    getWalletData();
+                  }
+                );
+              });
+            } else {
+              createWithdrawal(
+                {
+                  user_receiver: userInfo && userInfo.url ? userInfo.url : "",
+                  currency:
+                    currencies[selectedCurrencyIndex] &&
+                    currencies[selectedCurrencyIndex].url
+                      ? currencies[selectedCurrencyIndex].url
+                      : "",
+                  wallet_tank_receiver:
+                    walletTanks[selectedWalletTankIndex] &&
+                    walletTanks[selectedWalletTankIndex].url
+                      ? walletTanks[selectedWalletTankIndex].url
+                      : "",
+                  amount: removeComma(values.amount),
+                  status: statuses
+                    ? statuses.find((status) => status.title === "Admin Assign")
+                        .url
+                    : "",
+                },
+                () => {
+                  closeModal();
+                  refreshPendingRequests();
+                  getWalletData();
+                }
+              );
+            }
           }
-        }
+        } else openNotEnoughBalanceToast();
       }}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (

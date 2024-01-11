@@ -58,7 +58,7 @@ export default function Home({ isDemo }) {
           {lang["home"]}
         </span>
       </div>
-      <div className="mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-36 md:pb-16">
+      <div className="mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16">
         <div
           className={`order-2 md:order-1 h-72 bg-${theme} rounded-3xl flex justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12`}
         >

@@ -187,5 +187,8 @@
   "amount-input-max-button-label": "Max",
   "add-card": "Add Card",
   
-  "complete-profile-toast-message": "Please complete your profile information to work with the platform properly"
+  "complete-profile-toast-message": "Please complete your profile information to work with the platform properly",
+  "file-too-big-toast-message": "The image is too big (Must be less than 4 MB)",
+  "not-enough-balance-toast-message-1st": "You have not enough balance",
+  "not-enough-balance-toast-message-2nd": "It must be less than"
 }

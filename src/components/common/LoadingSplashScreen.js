@@ -8,7 +8,7 @@ export default function LoadingSplashScreen({ isLoading }) {
     return (
       <div
         className={
-          "absolute w-screen h-screen bg-dark-glass flex justify-center items-center transition-all duration-300 " +
+          "absolute w-browser h-browser bg-dark-glass flex justify-center items-center transition-all duration-300 " +
           containerClass
         }
       >
