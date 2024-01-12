@@ -21,55 +21,55 @@ export default function DepositHistory() {
   const [deposit, setDeposit] = useState([]);
   useEffect(() => {
      getDepositHistory(setDeposit);
-  }, []);
+  }, []);                                           
 
-  const [datas, setDatas] = useState([
-    {
-      type: "Deposit",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "accept",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "Deposit",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "reject",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "Deposit",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "accept",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "Deposit",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "accept",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "Deposit",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "reject",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-  ]);
+  // const [datas, setDatas] = useState([
+  //   {
+  //     type: "Deposit",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     location: "Iran",
+  //     status: "accept",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  //   {
+  //     type: "Deposit",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     location: "Iran",
+  //     status: "reject",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  //   {
+  //     type: "Deposit",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     location: "Iran",
+  //     status: "accept",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  //   {
+  //     type: "Deposit",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     location: "Iran",
+  //     status: "accept",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  //   {
+  //     type: "Deposit",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     location: "Iran",
+  //     status: "reject",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  // ]);
 
   const getQuantityOfCards = () => {
     if (window.innerWidth >= 1280) {
@@ -94,7 +94,7 @@ export default function DepositHistory() {
           slidesToShow={getQuantityOfCards()}
           slidesToScroll={getQuantityOfCards()}
         >
-          {datas.map((data, index) => (
+          {deposit.map((data, index) => (
             <div className="px-3" key={index}>
               <DepositCard data={data} lang={lang} />
             </div>
