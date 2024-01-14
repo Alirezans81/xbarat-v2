@@ -45,6 +45,7 @@ import {
   useIsLoadingSplashScreenState,
 } from "./Providers/IsLoadingSplashScreenProvider";
 import { useFontSetState } from "./Providers/FontProvider";
+import Updating from "./pages/Updating";
 
 export default function App() {
   const lang = useLanguageState();
@@ -149,5 +150,7 @@ export default function App() {
         </BrowserRouter>
       </>
     );
+  } else {
+    return <Updating />;
   }
 }
