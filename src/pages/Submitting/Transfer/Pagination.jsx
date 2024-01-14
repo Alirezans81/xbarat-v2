@@ -49,7 +49,7 @@ const Pagination = ({ transfers }) => {
   return (
     <>
       {displayUsers}
-      <div className="Page">
+      <div className="PageTransfer">
         <ReactPaginate
           previousLabel={"<"}
           nextLabel={">"}

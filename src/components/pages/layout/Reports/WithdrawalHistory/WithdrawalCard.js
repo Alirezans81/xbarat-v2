@@ -7,6 +7,7 @@ import { useFontState } from "../../../../../Providers/FontProvider";
 export default function WithdrawalCard({ lang, data }) {
   const theme = useThemeState();
   const font = useFontState();
+  console.log(data)
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const addComma = useAddComma();
 
