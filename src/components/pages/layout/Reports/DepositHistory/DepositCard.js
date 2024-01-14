@@ -23,7 +23,7 @@ export default function DepositCard({ lang,  data}) {
     }
     return (
     <div
-      className={`flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-4 pb-1 overflow-scroll`}
+      className={`flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-4 pb-1 overflow-hidden`}
     >
       <div className="flex flex-col items-center">
         <div

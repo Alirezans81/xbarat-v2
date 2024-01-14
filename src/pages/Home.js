@@ -27,6 +27,8 @@ export default function Home({ isDemo }) {
     rateInputRef.current.focus();
   };
 
+  const [pageMode, setPageMode] = useState("card");
+
   const [selectedCurrecnyPair, setSelectedCurrencnyPair] = useState();
   const [formDefaultRate, setFormDefaultRate] = useState();
   const [rateIsReversed, setRateIsReversed] = useState(true);
@@ -48,7 +50,18 @@ export default function Home({ isDemo }) {
   useEffect(() => refreshPendingExchange(), []);
 
   return (
-    <div className="absolute flex flex-col it w-full h-full overflow-y-auto px-8 md:p-0">
+    <div className="absolute flex flex-col w-full h-full overflow-y-auto px-8 md:p-0">
+      <div className="w-full flex justify-center">
+        <button className="flex gap-x-2 items-center bg-blue rounded-full px-4 pt-2 pb-1">
+          <img
+            className="w-5 h-5"
+            src={require(`../Images/pages/layout/Home/${pageMode}-mode.png`)}
+          />
+          <span className={`text-white text-lg`}>
+            {lang["switch-page-mode"]}
+          </span>
+        </button>
+      </div>
       <div
         className={`w-full bg-${theme} shadow-${theme} rounded-2xl flex justify-center md:hidden pt-5 pb-2.5 px-5 mt-2`}
       >
