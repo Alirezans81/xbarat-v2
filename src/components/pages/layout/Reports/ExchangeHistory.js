@@ -1,84 +1,97 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import TopSection from "./common/TopSection";
 import CustomSlider from "../../../common/CustomSlider";
 import ExchangeCard from "./ExchangeHistory/ExchangeCard";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
+import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
+import { useGetExchangeHistory } from "../../../../apis/pages/Reports/hooks";
 export default function ExchangeHistory() {
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const lang = useLanguageState();
-  const [datas, setDatas] = useState([
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "IRR" },
-        defaultRateType: "USD/IRR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "open",
-    },
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "IRR" },
-        defaultRateType: "USD/IRR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "open",
-    },
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "EUR" },
-        defaultRateType: "USD/EUR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "done",
-    },
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "EUR" },
-        defaultRateType: "USD/EUR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "done",
-    },
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "EUR" },
-        defaultRateType: "USD/EUR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "done",
-    },
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "EUR" },
-        defaultRateType: "USD/EUR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "done",
-    },
-  ]);
+
+  const { getExchangeHistory, isLoading: getExchangeHistoryIsLoading } = useGetExchangeHistory();
+  useEffect(
+    () => setIsLoadingSplashScreen(getExchangeHistoryIsLoading),
+    [getExchangeHistoryIsLoading]
+  );
+
+  const [exchange, getExchange] = useState([]);
+  useEffect(() => {
+     getExchangeHistory(getExchange);
+  }, []);             // const [datas, setDatas] = useState([
+  //   {
+  //     currencyPair: {
+  //       source: { title: "USD" },
+  //       target: { title: "IRR" },
+  //       defaultRateType: "USD/IRR",
+  //     },
+  //     amount: 1000,
+  //     targetAmount: 15000000,
+  //     rate: 497500,
+  //     date: new Date(),
+  //     status: "open",
+  //   },
+  //   {
+  //     currencyPair: {
+  //       source: { title: "USD" },
+  //       target: { title: "IRR" },
+  //       defaultRateType: "USD/IRR",
+  //     },
+  //     amount: 1000,
+  //     targetAmount: 15000000,
+  //     rate: 497500,
+  //     date: new Date(),
+  //     status: "open",
+  //   },
+  //   {
+  //     currencyPair: {
+  //       source: { title: "USD" },
+  //       target: { title: "EUR" },
+  //       defaultRateType: "USD/EUR",
+  //     },
+  //     amount: 1000,
+  //     targetAmount: 15000000,
+  //     rate: 497500,
+  //     date: new Date(),
+  //     status: "done",
+  //   },
+  //   {
+  //     currencyPair: {
+  //       source: { title: "USD" },
+  //       target: { title: "EUR" },
+  //       defaultRateType: "USD/EUR",
+  //     },
+  //     amount: 1000,
+  //     targetAmount: 15000000,
+  //     rate: 497500,
+  //     date: new Date(),
+  //     status: "done",
+  //   },
+  //   {
+  //     currencyPair: {
+  //       source: { title: "USD" },
+  //       target: { title: "EUR" },
+  //       defaultRateType: "USD/EUR",
+  //     },
+  //     amount: 1000,
+  //     targetAmount: 15000000,
+  //     rate: 497500,
+  //     date: new Date(),
+  //     status: "done",
+  //   },
+  //   {
+  //     currencyPair: {
+  //       source: { title: "USD" },
+  //       target: { title: "EUR" },
+  //       defaultRateType: "USD/EUR",
+  //     },
+  //     amount: 1000,
+  //     targetAmount: 15000000,
+  //     rate: 497500,
+  //     date: new Date(),
+  //     status: "done",
+  //   },
+  // ]);
 
   const getQuantityOfCards = () => {
     if (window.innerWidth >= 1280) {
@@ -103,7 +116,7 @@ export default function ExchangeHistory() {
           slidesToShow={getQuantityOfCards()}
           slidesToScroll={getQuantityOfCards()}
         >
-          {datas.map((data, index) => (
+          {exchange.map((data, index) => (
             <div className="px-1 xl:px-5" key={index}>
               <ExchangeCard data={data} lang={lang} />
             </div>

@@ -7,5 +7,10 @@ const getDepositHistory = () => {
 const getWithdrawHistory = () => {
   return axios.get(api["withdraw"]);
 };
-  
-  export { getDepositHistory,getWithdrawHistory };
+const getTransferHistory = () => {
+  return axios.get(api["trasnfer"]);
+};
+const getExchangeHistory = () => {
+  return axios.get(api["exchange"]);
+};
+  export { getDepositHistory,getWithdrawHistory,getTransferHistory,getExchangeHistory };

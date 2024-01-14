@@ -1,59 +1,72 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import TopSection from "./common/TopSection";
 import TransferCard from "./TransferHistory/TransferCard";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import CustomSlider from "../../../common/CustomSlider";
-
+import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
+import { useGetTransferHistory } from "../../../../apis/pages/Reports/hooks";
 export default function TransferHistory() {
   const lang = useLanguageState();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
-  const [datas, setDatas] = useState([
-    {
-      type: "Transfer",
-      amount: 1250000000,
-      currency: "IRR",
-      userReceiver: "C101527432",
-      status: "accept",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "Transfer",
-      amount: 1250000000,
-      currency: "IRR",
-      userReceiver: "C101527432",
-      status: "reject",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "Transfer",
-      amount: 1250000000,
-      currency: "IRR",
-      userReceiver: "C101527432",
-      status: "accept",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "Transfer",
-      amount: 1250000000,
-      currency: "IRR",
-      userReceiver: "C101527432",
-      status: "accept",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "Transfer",
-      amount: 1250000000,
-      currency: "IRR",
-      userReceiver: "C101527432",
-      status: "reject",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-  ]);
+  const { getTransferHistory, isLoading: getTransferHistoryIsLoading } = useGetTransferHistory();
+  useEffect(
+    () => setIsLoadingSplashScreen(getTransferHistoryIsLoading),
+    [getTransferHistoryIsLoading]
+  );
+
+  const [transfer, setTransfer] = useState([]);
+  useEffect(() => {
+     getTransferHistory(setTransfer);
+  }, []);                                           
+
+  // const [datas, setDatas] = useState([
+  //   {
+  //     type: "Transfer",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     userReceiver: "C101527432",
+  //     status: "accept",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  //   {
+  //     type: "Transfer",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     userReceiver: "C101527432",
+  //     status: "reject",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  //   {
+  //     type: "Transfer",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     userReceiver: "C101527432",
+  //     status: "accept",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  //   {
+  //     type: "Transfer",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     userReceiver: "C101527432",
+  //     status: "accept",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  //   {
+  //     type: "Transfer",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     userReceiver: "C101527432",
+  //     status: "reject",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  // ]);
 
   const getQuantityOfCards = () => {
     if (window.innerWidth >= 1280) {
@@ -78,7 +91,7 @@ export default function TransferHistory() {
           slidesToShow={getQuantityOfCards()}
           slidesToScroll={getQuantityOfCards()}
         >
-          {datas.map((data, index) => (
+          {transfer.map((data, index) => (
             <div className="px-3" key={index}>
               <TransferCard lang={lang} data={data} />
             </div>
