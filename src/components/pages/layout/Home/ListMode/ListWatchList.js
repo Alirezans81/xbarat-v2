@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useGetWatchList } from "../../../../apis/pages/Home/hooks";
-import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
-import CustomTable from "../../../common/CustomTable";
-import { useLanguageState } from "../../../../Providers/LanguageProvider";
-import { useThemeState } from "../../../../Providers/ThemeProvider";
-import { useAddComma } from "../../../../hooks/useNumberFunctions";
-import { useDirectionState } from "../../../../Providers/DirectionProvider";
-import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
-import { useFontState } from "../../../../Providers/FontProvider";
+import { useGetWatchList } from "../../../../../apis/pages/Home/hooks";
+import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
+import CustomTable from "../../../../common/CustomTable";
+import { useLanguageState } from "../../../../../Providers/LanguageProvider";
+import { useThemeState } from "../../../../../Providers/ThemeProvider";
+import { useAddComma } from "../../../../../hooks/useNumberFunctions";
+import { useDirectionState } from "../../../../../Providers/DirectionProvider";
+import { useCurrenciesState } from "../../../../../Providers/CurrenciesProvider";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
-export default function WatchList({
+export default function ListWatchList({
   selectedSourceIndex,
   setSelectedSourceIndex,
   availableTargets,
@@ -25,7 +25,15 @@ export default function WatchList({
 
   const currencies = useCurrenciesState();
 
-  const head = [lang["currency-pair"], lang["rate"], lang["low"], lang["high"]];
+  const head = [
+    lang["currency-pair"],
+    lang["rate"],
+    lang["low"],
+    lang["high"],
+    lang["yesterday-avg"],
+    lang["yesterday-low"],
+    lang["yesterday-high"],
+  ];
   const [data, setData] = useState([]);
 
   const { getWatchList, isLoading: getWatchListIsLoading } = useGetWatchList();
@@ -45,6 +53,9 @@ export default function WatchList({
           temp.rate = addComma(row.rate);
           temp.min_rate = addComma(row.min_rate);
           temp.max_rate = addComma(row.max_rate);
+          temp.yesterday_rate_average = addComma(row.yesterday_rate_average);
+          temp.yesterday_rate_low = addComma(row.yesterday_rate_low);
+          temp.yesterday_rate_high = addComma(row.yesterday_rate_high);
 
           return temp;
         })

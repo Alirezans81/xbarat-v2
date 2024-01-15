@@ -5,7 +5,12 @@ const useGetLanguages = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState, customFunction, customFunctionWithData) => {
+  const fetch = async (
+    setState,
+    customFunction,
+    customFunctionWithData,
+    setStateOnError
+  ) => {
     setIsLoading(true);
     await getLanguages()
       .then((data) => {
@@ -18,6 +23,7 @@ const useGetLanguages = () => {
       })
       .catch((error) => {
         console.log(error);
+        setStateOnError && setStateOnError();
         setError(error);
         setIsLoading(false);
       });

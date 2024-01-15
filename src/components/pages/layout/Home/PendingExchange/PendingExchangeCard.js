@@ -104,7 +104,7 @@ export default function PendingExchangeCard({
         </button>
       </div>
       <span className={`font-${font}-regular text-sm text-gray mt-3`}>
-        {convertDateTime(data.datetime)}
+        {convertDateTime(data.datetime_create)}
       </span>
     </div>
   );
