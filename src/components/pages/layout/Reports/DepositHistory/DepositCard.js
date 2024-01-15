@@ -9,7 +9,6 @@ export default function DepositCard({ lang,  data}) {
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const addComma = useAddComma();
-  console.log(data.country_title)
   let DateVar=""
   for(let i=0;i<19;i++){
     if(data.datetime[i]==="-"){

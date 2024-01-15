@@ -39,9 +39,9 @@ const Exchanges = () => {
         style={{
           position: "absolute",
           right: "0%",
-          top: "17%",
-          width: "67%",
-          height: "80%",
+          top: "6%",
+          width: "70%",
+          height: "90%",
           borderTopLeftRadius: "50px",
           borderBottomLeftRadius: "50px",
         }}
@@ -89,10 +89,10 @@ const Exchanges = () => {
         className={`bg-${theme} overflow-y-scroll`}
         style={{
           position: "absolute",
-          left: "6.4%",
-          top: "17%",
+          left: "4%",
+          top: "6%",
           width: "23.6%",
-          height: "80%",
+          height: "90%",
           paddingRight: "3%",
           paddingLeft: "3%",
           paddingTop: "1%",

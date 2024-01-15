@@ -1,9 +1,16 @@
-.Page {
+.PageExchange {
     display: flex;
     justify-content: center;
     align-items: flex-end;
     font-size: 1.1vw;
-    margin-top: 51.4%;
+    margin-top: 59%;
+}
+.PageTransfer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 1.1vw;
+    margin-top: 59%;
 }
 
 .paginationBttnsDark {

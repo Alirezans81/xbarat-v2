@@ -1,59 +1,71 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import TopSection from "./common/TopSection";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import CustomSlider from "../../../common/CustomSlider";
 import WithdrawalCard from "./WithdrawalHistory/WithdrawalCard";
-
+import { useGetWithdrawHistory } from "../../../../apis/pages/Reports/hooks";
+import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
 export default function WithdrawalHistory() {
   const lang = useLanguageState();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
-  const [datas, setDatas] = useState([
-    {
-      type: "Withdrawal",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "accept",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "Withdrawal",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "reject",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "Withdrawal",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "accept",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "Withdrawal",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "accept",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-    {
-      type: "Withdrawal",
-      amount: 1250000000,
-      currency: "IRR",
-      location: "Iran",
-      status: "reject",
-      date: new Date(),
-      rejectReason: "Your uploaded document is not as clear as it must be.",
-    },
-  ]);
+  const { getWithdrawHistory, isLoading: getWithdrawHistoryIsLoading } = useGetWithdrawHistory();
+  useEffect(
+    () => setIsLoadingSplashScreen(getWithdrawHistoryIsLoading),
+    [getWithdrawHistoryIsLoading]
+  );
+
+  const [withdraw, setWithdraw] = useState([]);
+  useEffect(() => {
+     getWithdrawHistory(setWithdraw);
+  }, []);                                           
+  // const [datas, setDatas] = useState([
+  //   {
+  //     type: "Withdrawal",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     location: "Iran",
+  //     status: "accept",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  //   {
+  //     type: "Withdrawal",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     location: "Iran",
+  //     status: "reject",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  //   {
+  //     type: "Withdrawal",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     location: "Iran",
+  //     status: "accept",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  //   {
+  //     type: "Withdrawal",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     location: "Iran",
+  //     status: "accept",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  //   {
+  //     type: "Withdrawal",
+  //     amount: 1250000000,
+  //     currency: "IRR",
+  //     location: "Iran",
+  //     status: "reject",
+  //     date: new Date(),
+  //     rejectReason: "Your uploaded document is not as clear as it must be.",
+  //   },
+  // ]);
 
   const getQuantityOfCards = () => {
     if (window.innerWidth >= 1280) {
@@ -78,7 +90,7 @@ export default function WithdrawalHistory() {
           slidesToShow={getQuantityOfCards()}
           slidesToScroll={getQuantityOfCards()}
         >
-          {datas.map((data, index) => (
+          {withdraw.map((data, index) => (
             <div className="px-3" key={index}>
               <WithdrawalCard lang={lang} data={data} />
             </div>

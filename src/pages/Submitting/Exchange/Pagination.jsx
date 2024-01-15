@@ -56,7 +56,7 @@ const Pagination = ({ exchanges }) => {
   return (
     <>
       {displayUsers}
-      <div className="Page">
+      <div className="PageExchange">
         <ReactPaginate
           previousLabel={"<"}
           nextLabel={">"}
