@@ -191,5 +191,12 @@
   "file-too-big-toast-message": "The image is too big (Must be less than 4 MB)",
   "not-enough-balance-toast-message-1st": "You have not enough balance",
   "not-enough-balance-toast-message-2nd": "It must be less than",
-  "switch-page-mode": "Switch Page Mode"
+  "switch-page-mode": "Switch Page Mode",
+  "yesterday-low": "Yesterday Low",
+  "yesterday-avg": "Yesterday Average",
+  "yesterday-high": "Yesterday High",
+  "source-amount": "Source Amount",
+  "target-amount": "Target Amount",
+  "status": "Status",
+  "action": "Action"
 }

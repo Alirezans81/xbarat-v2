@@ -46,6 +46,7 @@ import {
 } from "./Providers/IsLoadingSplashScreenProvider";
 import { useFontSetState } from "./Providers/FontProvider";
 import Updating from "./pages/Updating";
+import Startup from "./pages/Startup";
 
 export default function App() {
   const lang = useLanguageState();
@@ -60,8 +61,12 @@ export default function App() {
   useEffect(() => setLoading(getLanguagesIsLoading), [getLanguagesIsLoading]);
 
   useEffect(() => {
-    getLanguages(setLanguageList, null, (languageList) =>
-      localStorage.setItem("languageList", JSON.stringify(languageList))
+    getLanguages(
+      setLanguageList,
+      null,
+      (languageList) =>
+        localStorage.setItem("languageList", JSON.stringify(languageList)),
+      () => setLang("")
     );
   }, []);
 
@@ -85,7 +90,9 @@ export default function App() {
     }
   }, [languageList]);
 
-  if (lang) {
+  if (lang === "") {
+    return <Updating />;
+  } else if (lang) {
     return (
       <>
         <LoadingSplashScreen isLoading={isLoading} />
@@ -150,7 +157,5 @@ export default function App() {
         </BrowserRouter>
       </>
     );
-  } else {
-    return <Updating />;
-  }
+  } else return <Startup />;
 }
