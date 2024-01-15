@@ -3,22 +3,9 @@ import TopSection from "./common/TopSection";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import CustomSlider from "../../../common/CustomSlider";
 import WithdrawalCard from "./WithdrawalHistory/WithdrawalCard";
-import { useGetWithdrawHistory } from "../../../../apis/pages/Reports/hooks";
-import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
-export default function WithdrawalHistory() {
+export default function WithdrawalHistory({data}) {
   const lang = useLanguageState();
-  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
-
-  const { getWithdrawHistory, isLoading: getWithdrawHistoryIsLoading } = useGetWithdrawHistory();
-  useEffect(
-    () => setIsLoadingSplashScreen(getWithdrawHistoryIsLoading),
-    [getWithdrawHistoryIsLoading]
-  );
-
-  const [withdraw, setWithdraw] = useState([]);
-  useEffect(() => {
-     getWithdrawHistory(setWithdraw);
-  }, []);                                           
+                                   
   // const [datas, setDatas] = useState([
   //   {
   //     type: "Withdrawal",
@@ -90,11 +77,11 @@ export default function WithdrawalHistory() {
           slidesToShow={getQuantityOfCards()}
           slidesToScroll={getQuantityOfCards()}
         >
-          {withdraw.map((data, index) => (
+          {data.length!==0? data.map((data, index) => (
             <div className="px-3" key={index}>
               <WithdrawalCard lang={lang} data={data} />
             </div>
-          ))}
+          )):<span>Np data</span>}
         </CustomSlider>
       </div>
     </div>
