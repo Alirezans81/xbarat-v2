@@ -3,8 +3,10 @@ import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLimitSize } from "../../hooks/useImageUploaderFunctions";
 import { useToastDataSetState } from "../../Providers/ToastDataProvider";
 import { useFontState } from "../../Providers/FontProvider";
+import { useLanguageState } from "../../Providers/LanguageProvider";
 
 export default function CustomUploader({ setImage }) {
+  const lang = useLanguageState();
   const theme = useThemeState();
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -34,7 +36,7 @@ export default function CustomUploader({ setImage }) {
           } else {
             setToastData({
               status: "failed",
-              message: "The image is too big (Must be less than 4 MB).",
+              message: lang["file-too-big-toast-message"],
               canClose: true,
               isOpen: true,
               showTime: 3000,

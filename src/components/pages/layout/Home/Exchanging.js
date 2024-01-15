@@ -136,11 +136,7 @@ export default function Exchanging({
           {selectedCurrecnyPair && (
             <RateType
               rate={selectedCurrecnyPair.rate}
-              defaultRateType={
-                currencies[selectedSourceIndex].abbreviation +
-                "/" +
-                availableTargets[selectedTargetIndex].abbreviation
-              }
+              defaultRateType={selectedCurrecnyPair.defaultRateType}
               hasReversedRate={selectedCurrecnyPair.has_reverse_rate}
               rateIsReversed={rateIsReversed}
               setRateIsReversed={setRateIsReversed}

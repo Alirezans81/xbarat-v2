@@ -183,12 +183,12 @@ export default function Layout() {
       <LoadingSplashScreen isLoading={isLoadingSplashScreen} />
       <div
         dir={direction}
-        className={`w-screen h-screen flex flex-col bg-${theme} transition- duration-300`}
+        className={`w-browser h-browser flex flex-col bg-${theme} transition- duration-300`}
       >
         <NavbarSetting setLinks={setLinks} />
         <div
           onClick={isPagesModalOpen ? togglePagesModal : () => {}}
-          className="w-screen h-screen flex flex-col"
+          className="w-browser h-browser flex flex-col"
         >
           <div className="hidden md:block">
             <TopBar />

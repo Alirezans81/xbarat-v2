@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CustomDropdown, CustomItem } from "../../../../common/CustomDropdown";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
@@ -213,8 +213,17 @@ export default function ExchangeForm({
     });
   };
 
+  const formikRef = useRef();
+  useEffect(() => {
+    !selectedCurrecnyPair && formikRef.current.resetForm();
+  }, [selectedCurrecnyPair]);
+  useEffect(() => {
+    formDefaultRate && formikRef.current.setFieldValue("rate", formDefaultRate);
+  }, [formDefaultRate]);
+
   return (
     <Formik
+      innerRef={formikRef}
       initialValues={{
         amount: "",
         rate: "",
@@ -462,7 +471,11 @@ export default function ExchangeForm({
             >
               <div className="flex-1 flex relative">
                 <input
-                  className={`flex-1 text-center hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                  className={`flex-1 ${
+                    values.amount || +walletBalance === 0
+                      ? "text-center"
+                      : "text-left"
+                  } hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                   placeholder={lang["amount"]}
                   disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
                   name="amount"
@@ -541,15 +554,7 @@ export default function ExchangeForm({
                           );
                     }
                   }}
-                  value={
-                    rateIsReversed && formDefaultRate
-                      ? (
-                          (1 / +formDefaultRate) *
-                          +selectedCurrecnyPair.rate_multiplier
-                        ).toFixed(selectedCurrecnyPair.floating_number) ||
-                        addComma(values.rate, true)
-                      : formDefaultRate || addComma(values.rate, true)
-                  }
+                  value={addComma(values.rate, true)}
                 />
               </div>
             </div>

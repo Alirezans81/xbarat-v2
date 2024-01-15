@@ -55,7 +55,7 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
             />
           ) : (
             <span className={`text-${oppositeTheme} font-${font}-regular`}>
-              {currency.abbreviation}
+              {currency && currency.abbreviation ? currency.abbreviation : ""}
             </span>
           )}
           <span className={`text-${oppositeTheme}`}>

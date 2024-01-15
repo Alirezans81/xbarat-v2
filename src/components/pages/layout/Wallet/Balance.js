@@ -49,10 +49,22 @@ export default function Balance({ refreshPendingRequests }) {
   if (walletAssets.length === 0) {
     return (
       <div className="h-full flex flex-col gap-y-2">
-        <div className="w-full flex justify-between">
+        <div className="w-full flex justify-between items-center">
           <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
             {lang["your-balance"]}
           </span>
+          <button
+            onClick={() => openTransactionModal("deposit")}
+            className="hidden md:flex xl:hidden gap-x-2 items-center border border-green rounded-full px-4 pt-2 pb-1"
+          >
+            <img
+              className="w-5 h-5 -mt-1"
+              src={require("../../../../Images/pages/layout/Wallet/deposit.png")}
+            />
+            <span className={`text-green font-${font}-regular`}>
+              {lang["deposit"]}
+            </span>
+          </button>
         </div>
         <div className="flex-1 px-7 relative">
           <div className="absolute left-0 h-full w-full top-0 flex justify-center items-center">
@@ -101,7 +113,6 @@ export default function Balance({ refreshPendingRequests }) {
             <CustomSlider
               slidesToScroll={getQuantityOfCards()}
               slidesToShow={getQuantityOfCards()}
-              infinite
             >
               {walletAssets.map((walletAsset, index) => (
                 <div

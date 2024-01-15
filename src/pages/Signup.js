@@ -53,9 +53,9 @@ export default function Signup() {
       <CustomToast />
       <div
         dir={direction}
-        className={`w-screen h-screen bg-${theme} relative transition-all duration-300`}
+        className={`w-browser h-browser bg-${theme} relative transition-all duration-300`}
       >
-        <div className="absolute w-screen h-screen bg-login flex justify-center items-center">
+        <div className="absolute w-browser h-browser bg-login flex justify-center items-center">
           <LoadingSplashScreen isLoading={isSplashScreenLoading} />
           <div className={`absolute top-3 ${languageSwitcherDivClasses}`}>
             <LanguageSwitcher />
@@ -63,7 +63,7 @@ export default function Signup() {
           <div className={`absolute top-3 ${themeSwitcherDivClasses}`}>
             <ThemeSwitcher />
           </div>
-          <div className="w-screen h-screen flex justify-evenly items-center">
+          <div className="w-browser h-browser flex justify-evenly items-center">
             <div className="hidden lg:block my-auto">
               <LeftSide />
             </div>
@@ -76,7 +76,7 @@ export default function Signup() {
                 </div>
               </div>
             </div>
-            <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center pb-16">
+            <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center">
               <button onClick={() => navigate("/")}>
                 <img
                   className="w-24 h-24"

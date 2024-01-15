@@ -37,8 +37,8 @@ export default function NoPage() {
   }, []);
 
   return (
-    <div className={`w-screen h-screen bg-${theme}`}>
-      <div className="absolute w-screen h-screen bg-login flex justify-center items-center">
+    <div className={`w-browser h-browser bg-${theme}`}>
+      <div className="absolute w-browser h-browser bg-login flex justify-center items-center">
         <div
           className={`bg-${theme}-glass rounded-3xl p-7 flex flex-col justify-center items-center`}
         >

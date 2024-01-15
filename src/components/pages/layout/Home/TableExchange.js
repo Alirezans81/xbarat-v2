@@ -10,7 +10,7 @@ import { CustomTooltip } from "../../../common/CustomTooltip";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
 
-export default function AllOreders({
+export default function TableExchange({
   selectedSourceIndex,
   availableTargets,
   selectedTargetIndex,
@@ -47,7 +47,7 @@ export default function AllOreders({
       } else {
         return (newAmount * rate) / multi;
       }
-    }
+    } else return 0;
   };
 
   const computeTargetToSourceReversedAmount = (amount, rate, multi) => {
@@ -68,7 +68,7 @@ export default function AllOreders({
       } else {
         return (newAmount * multi) / rate;
       }
-    }
+    } else return 0;
   };
 
   const source_to_target_head = [
@@ -86,39 +86,41 @@ export default function AllOreders({
     tableExchangeData.source_to_target &&
     selectedCurrecnyPair
       ? tableExchangeData.source_to_target.map((row) => {
-          let temp = {};
-          temp.quantity = addComma(row.quantity);
-          temp.total_amount = (
-            <CustomTooltip
-              placement="top"
-              content={
-                addComma(
-                  computeSourceToTargetReversedAmount(
-                    row.total_amount,
-                    row.rate,
-                    +selectedCurrecnyPair.rate_multiplier
-                  ).toFixed(
-                    availableTargets[selectedTargetIndex].floating_number
-                  )
-                ) +
-                " " +
-                selectedCurrecnyPair.currency_destination_abb
-              }
-              className={`tooltip-${oppositeTheme}`}
-              style={oppositeTheme}
-            >
-              <span>
-                {addComma(row.total_amount) +
+          if (row.rate) {
+            let temp = {};
+            temp.quantity = addComma(row.quantity);
+            temp.total_amount = (
+              <CustomTooltip
+                placement="top"
+                content={
+                  addComma(
+                    computeSourceToTargetReversedAmount(
+                      row.total_amount,
+                      row.rate,
+                      +selectedCurrecnyPair.rate_multiplier
+                    ).toFixed(
+                      availableTargets[selectedTargetIndex].floating_number
+                    )
+                  ) +
                   " " +
-                  selectedCurrecnyPair.currency_source_abb}
-              </span>
-            </CustomTooltip>
-          );
-          temp.rate = addComma(
-            +row.rate.toFixed(selectedCurrecnyPair.floating_number)
-          );
+                  selectedCurrecnyPair.currency_destination_abb
+                }
+                className={`tooltip-${oppositeTheme}`}
+                style={oppositeTheme}
+              >
+                <span>
+                  {addComma(row.total_amount) +
+                    " " +
+                    selectedCurrecnyPair.currency_source_abb}
+                </span>
+              </CustomTooltip>
+            );
+            temp.rate = addComma(
+              +row.rate.toFixed(selectedCurrecnyPair.floating_number)
+            );
 
-          return temp;
+            return temp;
+          }
         })
       : [];
   const target_to_source_data =
@@ -126,37 +128,39 @@ export default function AllOreders({
     tableExchangeData.target_to_source &&
     selectedCurrecnyPair
       ? tableExchangeData.target_to_source.map((row) => {
-          let temp = {};
-          temp.rate = addComma(
-            +row.rate.toFixed(selectedCurrecnyPair.floating_number)
-          );
-          temp.total_amount = (
-            <CustomTooltip
-              placement="top"
-              content={
-                addComma(
-                  computeTargetToSourceReversedAmount(
-                    row.total_amount,
-                    row.rate,
-                    +selectedCurrecnyPair.rate_multiplier
-                  ).toFixed(currencies[selectedSourceIndex].floating_number)
-                ) +
-                " " +
-                selectedCurrecnyPair.currency_source_abb
-              }
-              className={`tooltip-${oppositeTheme}`}
-              style={oppositeTheme}
-            >
-              <span>
-                {addComma(row.total_amount) +
+          if (row.rate) {
+            let temp = {};
+            temp.rate = addComma(
+              +row.rate.toFixed(selectedCurrecnyPair.floating_number)
+            );
+            temp.total_amount = (
+              <CustomTooltip
+                placement="top"
+                content={
+                  addComma(
+                    computeTargetToSourceReversedAmount(
+                      row.total_amount,
+                      row.rate,
+                      +selectedCurrecnyPair.rate_multiplier
+                    ).toFixed(currencies[selectedSourceIndex].floating_number)
+                  ) +
                   " " +
-                  selectedCurrecnyPair.currency_destination_abb}
-              </span>
-            </CustomTooltip>
-          );
-          temp.quantity = addComma(row.quantity);
+                  selectedCurrecnyPair.currency_source_abb
+                }
+                className={`tooltip-${oppositeTheme}`}
+                style={oppositeTheme}
+              >
+                <span>
+                  {addComma(row.total_amount) +
+                    " " +
+                    selectedCurrecnyPair.currency_destination_abb}
+                </span>
+              </CustomTooltip>
+            );
+            temp.quantity = addComma(row.quantity);
 
-          return temp;
+            return temp;
+          }
         })
       : [];
 

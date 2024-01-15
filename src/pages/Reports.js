@@ -39,7 +39,7 @@ export default function Reports() {
   console.log(depositData);
   return (
     <div className="absolute w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6">
-      <div className="md:mt-0 grid grid-cols-12 grid-rows-2 md:gap-x-10 gap-y-7 pb-36 md:pb-16">
+      <div className="md:mt-0 grid grid-cols-12 grid-rows-2 md:gap-x-10 gap-y-7 pb-16">
         <div
           className={`col-span-12 xl:col-span-4 row-span-1 bg-${theme} rounded-3xl md:rounded-r-none xl:rounded-3xl py-5 px-7`}
         >

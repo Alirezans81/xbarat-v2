@@ -21,7 +21,7 @@ export default function CustomModal() {
   return (
     <div
       className={
-        "absolute w-screen h-screen bg-modal-glass flex justify-center items-center transition-all duration-300 " +
+        "absolute w-browser h-browser bg-modal-glass flex justify-center items-center transition-all duration-300 " +
         containerClass
       }
     >

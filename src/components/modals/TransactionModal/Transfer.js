@@ -3,7 +3,6 @@ import { useUserState } from "../../../Providers/UserProvider";
 import { Formik } from "formik";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../Providers/ThemeProvider";
-import { useGetCurrencies } from "../../../apis/common/currency/hooks";
 import { useCreateTransfer } from "../../../apis/common/wallet/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
@@ -11,6 +10,8 @@ import { useAddComma, useRemoveComma } from "../../../hooks/useNumberFunctions";
 import SubmitButton from "../../common/SubmitButton";
 import { useStatusesState } from "../../../Providers/StatusesProvider";
 import { useFontState } from "../../../Providers/FontProvider";
+import { useGetWalletAssetByCurrency } from "../../../hooks/useWalletFilter";
+import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 
 export default function Transfer({
   currencies,
@@ -25,6 +26,25 @@ export default function Transfer({
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
+
+  const setToastData = useToastDataSetState();
+  const openNotEnoughBalanceToast = () => {
+    setToastData({
+      status: "failed",
+      message:
+        lang["not-enough-balance-toast-message-1st"] +
+        ". " +
+        lang["not-enough-balance-toast-message-2nd"] +
+        " " +
+        addComma(+walletAsset.balance),
+      canClose: true,
+      isOpen: true,
+      showTime: 3000,
+    });
+  };
+
+  const [walletAsset, setWalletAsset] = useState();
+  const getWalletAssetByCurrency = useGetWalletAssetByCurrency();
 
   const userInfo = useUserState();
   const statuses = useStatusesState();
@@ -45,29 +65,40 @@ export default function Transfer({
     setSelectedCurrencyIndex(foundIndex);
   }, []);
 
+  useEffect(() => {
+    selectedCurrencyIndex >= 0 &&
+      currencies[selectedCurrencyIndex] &&
+      setWalletAsset(
+        getWalletAssetByCurrency(currencies[selectedCurrencyIndex].url)
+      );
+  }, [selectedCurrencyIndex]);
+
   return (
     <Formik
       initialValues={{ user_receiver: "", amount: "" }}
       onSubmit={(values) => {
-        createTransfer(
-          {
-            user_sender: userInfo && userInfo.url ? userInfo.url : "",
-            currency:
-              currencies[selectedCurrencyIndex] &&
-              currencies[selectedCurrencyIndex].url
-                ? currencies[selectedCurrencyIndex].url
+        if (+removeComma(values.amount) <= +walletAsset.balance) {
+          createTransfer(
+            {
+              user_sender: userInfo && userInfo.url ? userInfo.url : "",
+              currency:
+                currencies[selectedCurrencyIndex] &&
+                currencies[selectedCurrencyIndex].url
+                  ? currencies[selectedCurrencyIndex].url
+                  : "",
+              user_receiver: values.user_receiver,
+              amount: removeComma(values.amount),
+              status: statuses
+                ? statuses.find((status) => status.title === "Admin Approve")
+                    .url
                 : "",
-            user_receiver: values.user_receiver,
-            amount: removeComma(values.amount),
-            status: statuses
-              ? statuses.find((status) => status.title === "Admin Approve").url
-              : "",
-          },
-          () => {
-            refreshPendingRequests();
-            closeModal();
-          }
-        );
+            },
+            () => {
+              closeModal();
+              refreshPendingRequests();
+            }
+          );
+        } else openNotEnoughBalanceToast();
       }}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
