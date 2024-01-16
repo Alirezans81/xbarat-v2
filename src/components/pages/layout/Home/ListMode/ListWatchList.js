@@ -50,12 +50,22 @@ export default function ListWatchList({
       ? data.watch_list.map((row) => {
           let temp = {};
           temp.title = row.title;
-          temp.rate = addComma(row.rate);
-          temp.min_rate = addComma(row.min_rate);
-          temp.max_rate = addComma(row.max_rate);
-          temp.yesterday_rate_average = addComma(row.yesterday_rate_average);
-          temp.yesterday_rate_low = addComma(row.yesterday_rate_low);
-          temp.yesterday_rate_high = addComma(row.yesterday_rate_high);
+          temp.rate = addComma((+row.rate).toFixed(row.floating_number));
+          temp.min_rate = addComma(
+            (+row.min_rate).toFixed(row.floating_number)
+          );
+          temp.max_rate = addComma(
+            (+row.max_rate).toFixed(row.floating_number)
+          );
+          temp.yesterday_rate_average = addComma(
+            (+row.yesterday_rate_average).toFixed(row.floating_number)
+          );
+          temp.yesterday_rate_low = addComma(
+            (+row.yesterday_rate_low).toFixed(row.floating_number)
+          );
+          temp.yesterday_rate_high = addComma(
+            (+row.yesterday_rate_high).toFixed(row.floating_number)
+          );
 
           return temp;
         })

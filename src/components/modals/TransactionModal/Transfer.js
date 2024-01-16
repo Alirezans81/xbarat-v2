@@ -18,6 +18,7 @@ export default function Transfer({
   data,
   closeModal,
   refreshPendingRequests,
+  getWalletData,
 }) {
   const lang = useLanguageState();
   const font = useFontState();
@@ -96,6 +97,7 @@ export default function Transfer({
             () => {
               closeModal();
               refreshPendingRequests();
+              getWalletData();
             }
           );
         } else openNotEnoughBalanceToast();
@@ -170,20 +172,6 @@ export default function Transfer({
           </div>
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
-              {lang["user-code"]}
-            </span>
-            <div className="w-full flex">
-              <input
-                className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
-                name="user_receiver"
-                onBlur={handleBlur("user_receiver")}
-                onChange={handleChange("user_receiver")}
-                value={values.user_receiver ? values.user_receiver : ""}
-              />
-            </div>
-          </div>
-          <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["amount"]}
             </span>
             <div className="w-full flex">
@@ -193,6 +181,20 @@ export default function Transfer({
                 onBlur={handleBlur("amount")}
                 onChange={handleChange("amount")}
                 value={values.amount ? addComma(values.amount) : ""}
+              />
+            </div>
+          </div>
+          <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
+              {lang["user-code"]}
+            </span>
+            <div className="w-full flex">
+              <input
+                className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                name="user_receiver"
+                onBlur={handleBlur("user_receiver")}
+                onChange={handleChange("user_receiver")}
+                value={values.user_receiver ? values.user_receiver : ""}
               />
             </div>
           </div>

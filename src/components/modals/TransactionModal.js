@@ -3,19 +3,45 @@ import SelectType from "./TransactionModal/SelectType";
 import Deposit from "./TransactionModal/Deposit";
 import Withdrawal from "./TransactionModal/Withdrawal";
 import Transfer from "./TransactionModal/Transfer";
-import { useModalDataClose } from "../../Providers/ModalDataProvider";
+import {
+  useModalDataClose,
+  useModalDataState,
+} from "../../Providers/ModalDataProvider";
 import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
 import { useGetWalletData } from "../../Providers/WalletProvider";
 import { useRefreshWallet } from "../../hooks/useRefreshWallet";
 
-export default function TransactionModal({
-  data,
-  defaultType,
-  refreshPendingRequests,
-}) {
+export default function TransactionModal() {
   const currencies = useCurrenciesState();
   const closeModal = useModalDataClose();
   const refreshWallet = useRefreshWallet();
+  const modalData = useModalDataState();
+
+  const data =
+    modalData && modalData.props && modalData.props.data
+      ? modalData.props.data
+      : null;
+  const defaultType =
+    modalData && modalData.props && modalData.props.defaultType
+      ? modalData.props.defaultType
+      : null;
+  const refreshPendingRequests =
+    modalData && modalData.props && modalData.props.refreshPendingRequests
+      ? modalData.props.refreshPendingRequests
+      : null;
+
+  modalData &&
+    modalData.props &&
+    modalData.props.data &&
+    console.log(modalData.props.data);
+  modalData &&
+    modalData.props &&
+    modalData.props.defaultType &&
+    console.log(modalData.props.defaultType);
+  modalData &&
+    modalData.props &&
+    modalData.props.refreshPendingRequests &&
+    console.log(modalData.props.refreshPendingRequests);
 
   const [type, selectType] = useState(defaultType || "deposit");
 

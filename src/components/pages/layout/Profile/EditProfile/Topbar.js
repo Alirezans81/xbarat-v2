@@ -9,6 +9,7 @@ import { useUpdateNameAndAvatar } from "../../../../../apis/pages/Profile/hooks"
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { useLimitSize } from "../../../../../hooks/useImageUploaderFunctions";
 import { useFontState } from "../../../../../Providers/FontProvider";
+import CopyText from "../../../../common/CopyText";
 
 export default function Topbar({ userInfo }) {
   const lang = useLanguageState();
@@ -196,11 +197,19 @@ export default function Topbar({ userInfo }) {
                     )}
                   </div>
                   {!canEditNameAndAvatar && (
-                    <span
-                      className={`text-sm md:text-base font-${font}-regular text-gray -mt-0.5 md:-mt-1`}
-                    >
-                      {userInfo && userInfo.code ? userInfo.code : ""}
-                    </span>
+                    <div className="flex items-center gap-x-0.5 -mt-0.5">
+                      <span
+                        className={`text-sm md:text-base font-${font}-regular text-gray`}
+                      >
+                        {userInfo && userInfo.code ? userInfo.code : ""}
+                      </span>
+                      <div className="-mt-1">
+                        <CopyText
+                          text={userInfo && userInfo.code ? userInfo.code : ""}
+                          small
+                        />
+                      </div>
+                    </div>
                   )}
                 </div>
               </>

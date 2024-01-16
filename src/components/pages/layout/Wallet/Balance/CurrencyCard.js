@@ -20,13 +20,11 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
   const openTransactionModal = (defaultType) => {
     setModalData({
       title: lang["transaction"],
-      children: (
-        <TransactionModal
-          refreshPendingRequests={refreshPendingRequests}
-          data={walletAsset}
-          defaultType={defaultType}
-        />
-      ),
+      children: <TransactionModal />,
+      props: {
+        defaultType,
+        refreshPendingRequests,
+      },
       canClose: true,
       isOpen: true,
     });
