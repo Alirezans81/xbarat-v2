@@ -70,7 +70,10 @@ export default function PendingRequests({
   };
 
   const [pendingOrders, setPendingOrders] = useState([]);
-  useEffect(() => resetPending(), [allPendingOrders]);
+  useEffect(() => {
+    setShowOrdersType("");
+    resetPending();
+  }, [allPendingOrders]);
 
   useEffect(() => {
     if (

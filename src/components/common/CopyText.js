@@ -5,12 +5,12 @@ import { useThemeState } from "../../Providers/ThemeProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-export default function CopyText({ text }) {
+export default function CopyText({ text, small }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
-  
+
   if (text) {
     return (
       <CustomTooltip
@@ -23,7 +23,7 @@ export default function CopyText({ text }) {
         <CopyToClipboard text={text || ""}>
           <button className="flex items-center">
             <img
-              className="w-5 h-5"
+              className={small ? "w-4 h-4 md:w-5 md:h-5" : "w-5 h-5"}
               src={require("../../Images/pages/layout/Profile/copy.png")}
             />
           </button>
