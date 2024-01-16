@@ -3,13 +3,13 @@ import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useAddComma } from "../../../../../hooks/useNumberFunctions";
 import RequestStatus from "../../common/RequestStatus";
 import { useFontState } from "../../../../../Providers/FontProvider";
-
 export default function DepositCard({ lang,  data}) {
   const theme = useThemeState();
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const addComma = useAddComma();
   let DateVar=""
+  console.log("Data",data);
   for(let i=0;i<19;i++){
     if(data.datetime[i]==="-"){
       DateVar+="/"

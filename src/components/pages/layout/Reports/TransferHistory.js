@@ -3,22 +3,22 @@ import TopSection from "./common/TopSection";
 import TransferCard from "./TransferHistory/TransferCard";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import CustomSlider from "../../../common/CustomSlider";
-import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
-import { useGetTransferHistory } from "../../../../apis/pages/Reports/hooks";
+// import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
+// import { useGetTransferHistory } from "../../../../apis/pages/Reports/hooks";
 export default function TransferHistory() {
   const lang = useLanguageState();
-  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  // const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
-  const { getTransferHistory, isLoading: getTransferHistoryIsLoading } = useGetTransferHistory();
-  useEffect(
-    () => setIsLoadingSplashScreen(getTransferHistoryIsLoading),
-    [getTransferHistoryIsLoading]
-  );
+  // const { getTransferHistory, isLoading: getTransferHistoryIsLoading } = useGetTransferHistory();
+  // useEffect(
+  //   () => setIsLoadingSplashScreen(getTransferHistoryIsLoading),
+  //   [getTransferHistoryIsLoading]
+  // );
 
   const [transfer, setTransfer] = useState([]);
-  useEffect(() => {
-     getTransferHistory(setTransfer);
-  }, []);                                           
+  // useEffect(() => {
+  //    getTransferHistory(setTransfer);
+  // }, []);                                           
 
   // const [datas, setDatas] = useState([
   //   {

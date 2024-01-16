@@ -2,26 +2,10 @@ import React, { useState, useEffect } from "react";
 import TopSection from "./common/TopSection";
 import CustomSlider from "../../../common/CustomSlider";
 import DepositCard from "./DepositHistory/DepositCard";
-import { useUserState } from "../../../../Providers/UserProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
-import { useGetDepositHistory } from "../../../../apis/pages/Reports/hooks";
-import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
 
-export default function DepositHistory() {
-  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+export default function DepositHistory({data}) {
   const lang = useLanguageState();
-  const user=useUserState();
-
-  const { getDepositHistory, isLoading: getDepositHistoryIsLoading } = useGetDepositHistory();
-  useEffect(
-    () => setIsLoadingSplashScreen(getDepositHistoryIsLoading),
-    [getDepositHistoryIsLoading]
-  );
-
-  const [deposit, setDeposit] = useState([]);
-  useEffect(() => {
-     getDepositHistory(setDeposit);
-  }, []);                                           
 
   // const [datas, setDatas] = useState([
   //   {
@@ -94,7 +78,7 @@ export default function DepositHistory() {
           slidesToShow={getQuantityOfCards()}
           slidesToScroll={getQuantityOfCards()}
         >
-          {deposit.map((data, index) => (
+          {data.map((data, index) => (
             <div className="px-3" key={index}>
               <DepositCard data={data} lang={lang} />
             </div>
