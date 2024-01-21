@@ -58,7 +58,6 @@ const EditCards = ({ editCards, setEditCards, data }) => {
   }, [title, type, asset, bankInfo]);
   const handleEditCards = (e) => {
     e.preventDefault();
-    console.log("SSSS");
     console.log(params);
     setEditCards(false);
     editWalletTank(data.url, params);

@@ -14,6 +14,7 @@ import {
 } from "../../components/common/CustomDropdown";
 const Addcard = ({ addCard, setAddCard, show }) => {
   const currencies = useCurrenciesState();
+  console.log(currencies)
   const user=useUserState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
