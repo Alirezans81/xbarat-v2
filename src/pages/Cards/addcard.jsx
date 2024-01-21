@@ -19,9 +19,11 @@ const Addcard = ({ addCard, setAddCard, show }) => {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
-  // const wallet = useWalletState();
+  const wallet = useWalletState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const [title, setTitle] = useState("");
+  const [bankName,setBankName]=useState("");
+  const[accountName,setAccountName]=useState("")
   const [asset,setAsset]=useState("");
   const [type,setType]=useState("");
   const [cardNumber, setCardNumber] = useState("");
@@ -37,6 +39,8 @@ const Addcard = ({ addCard, setAddCard, show }) => {
     pending: 1,
     bank_info: "",
   });
+  console.clear()
+  console.log(bankName)
 
   
   // useEffect(()=>{
@@ -54,7 +58,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
     if (title && type && asset &&(cardNumber || shabaNumber)) {
       setParams({
         user:user.url,
-        currency:asset,
+        currency:asset[1],
         wallet_tank_type: type==="Card"
           ? "https://xbarat-back.pro/api/wallet/tank/type/card-number/"
           : "https://xbarat-back.pro/api/wallet/tank/type/shaba-number/",
@@ -81,13 +85,13 @@ const Addcard = ({ addCard, setAddCard, show }) => {
     setAddCard(false);
   };
 
-  // const walletAsset=wallet.walletAssets
+  const walletAsset=wallet.walletAssets
 
   let listCurrency = currencies.map((data) => [data.abbreviation,data.url]);
-  // let listAsset = walletAsset.map((data) => data.currency_abb);
-  // let AvailableNewAssets = listCurrency.filter(
-  //   (data) => listAsset.includes(data[0]) === false
-  // );
+  let listAsset = walletAsset.map((data) => data.currency_abb);
+  let AvailableNewAssets = listCurrency.filter(
+    (data) => listAsset.includes(data[0]) === false
+  );
 
   return (
     <>
@@ -127,13 +131,43 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                         />
                       </div>
                     </div>
+                    <span                      
+                      className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
+                        Bank Name
+                    </span>
+                    <div className="w-full">
+                      <div className="w-full flex mt-0 px-2">
+                        <input
+                            onChange={(e)=>setBankName(e.target.value)}
+                            required
+                            className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
+                            placeholder="Bank Name"
+                        />
+                      </div>
+
+                    </div>
+                    <span                      
+                      className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
+                        Account Name
+                    </span>
+                    <div className="w-full">
+                      <div className="w-full flex mt-0 px-2">
+                        <input
+                            onChange={(e)=>setAccountName(e.target.value)}
+                            required
+                            className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
+                            placeholder="Account Name"
+                        />
+                      </div>
+
+                    </div>
                 </div>
 
                 
-                <div className={asset.length!==0?"hidden":"flex-col w-11/12 px-2 py-5"}>
+                <div className={"flex-col w-11/12 px-2 py-5"}>
                   <span                       
                     className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
-                      {currency.length === 0 ? lang["currency"] : currency}
+                      {asset.length===0?lang["currency"]:asset[0]}
                     </span>
                   <CustomDropdown
                       className={"bg-transparent w-fit flex justify-center"}
@@ -141,13 +175,14 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                     >
                       {listCurrency.map((data) => (
                         <CustomItem
-                          onClick={() => setAsset(data[1])}
+                          onClick={() => setAsset(data)}
                           className={"bg-transparent"}
                         >
                           {data[0]}
                         </CustomItem>
                       ))}
                     </CustomDropdown>
+                 
                 </div>
                 <div className={type.length!==0?"hidden":"flex flex-col justify-center w-full px-2"}>
                   <span                       

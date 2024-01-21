@@ -13,21 +13,29 @@ const SingleCardTank = ({ show, index, data }) => {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
-
+  console.log(data)
   const { editWalletTank, isLoading: editWalletTankIsLoading } =
       useEditWalletTanks();
   useEffect(() => {
     setIsLoadingSplashScreen(editWalletTankIsLoading);
   }, [editWalletTankIsLoading]);
-
-  const [title,setTitle]=useState(data.title)  
-  const [bankInfo,setBankInfo]=useState(data.bank_info);
-  const [walletTankType,setWalletTankType]=useState(data.wallet_tank_type);
-  const [user,setUser]=useState(data.user);
-  const [isChecked, setIsChecked] = useState(data.is_favorite);
-  const [isActive,setIsActive]=useState(!data.is_deleted);
+  const [title,setTitle]=useState("")  
+  const [bankInfo,setBankInfo]=useState("");
+  const [walletTankType,setWalletTankType]=useState("");
+  const [user,setUser]=useState("");
+  const [isChecked, setIsChecked] = useState("");
+  const [isActive,setIsActive]=useState("");
   const [editCards,setEditCards]=useState(false)
-
+  useEffect(()=>{
+    if(data){
+      setTitle(data.title)
+      setBankInfo(data.bank_info)
+      setWalletTankType(data.wallet_tank_type)
+      setUser(data.user)
+      setIsChecked(data.is_favorite)
+      setIsActive(!data.is_deleted) 
+    }
+  },[data])
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };

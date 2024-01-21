@@ -15,7 +15,7 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   const walletTanks = wallet.walletTanks.filter(
     (data) => data.currency_abb === assetData.currency_abb
   );
-  function handleShow() {
+  const handleShow=()=>{
     updateShowState(assetData.currency_abb);
   }
   // border-2 border-solid border-white
@@ -28,7 +28,6 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
       >
         <div className="w-1/5 bg-transparent px-3 h-full">
           <div
-            onClick={handleShow}
             className="flex justify-end items-center w-full h-full"
           ></div>
         </div>
