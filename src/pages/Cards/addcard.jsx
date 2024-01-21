@@ -19,7 +19,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
-  const wallet = useWalletState();
+  // const wallet = useWalletState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const [title, setTitle] = useState("");
   const [asset,setAsset]=useState("");
@@ -39,12 +39,12 @@ const Addcard = ({ addCard, setAddCard, show }) => {
   });
 
   
-  useEffect(()=>{
-    if(show.length!==0){
-      let AlreadyPickedAsset=currencies.filter((data)=>data.abbreviation===show)
-      setAsset((AlreadyPickedAsset[0]).url)
-    }
-  },)
+  // useEffect(()=>{
+  //   if(show.length!==0){
+  //     let AlreadyPickedAsset=currencies.filter((data)=>data.abbreviation===show)
+  //     setAsset((AlreadyPickedAsset[0]).url)
+  //   }
+  // },)
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
   useEffect(() => {
@@ -81,13 +81,13 @@ const Addcard = ({ addCard, setAddCard, show }) => {
     setAddCard(false);
   };
 
-  const walletAsset=wallet.walletAssets
+  // const walletAsset=wallet.walletAssets
 
   let listCurrency = currencies.map((data) => [data.abbreviation,data.url]);
-  let listAsset = walletAsset.map((data) => data.currency_abb);
-  let AvailableNewAssets = listCurrency.filter(
-    (data) => listAsset.includes(data[0]) === false
-  );
+  // let listAsset = walletAsset.map((data) => data.currency_abb);
+  // let AvailableNewAssets = listCurrency.filter(
+  //   (data) => listAsset.includes(data[0]) === false
+  // );
 
   return (
     <>
@@ -139,7 +139,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                       className={"bg-transparent w-fit flex justify-center"}
                       label={currency.length === 0 ? lang["currency"] : currency}
                     >
-                      {AvailableNewAssets.map((data) => (
+                      {listCurrency.map((data) => (
                         <CustomItem
                           onClick={() => setAsset(data[1])}
                           className={"bg-transparent"}

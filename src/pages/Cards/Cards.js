@@ -1,6 +1,7 @@
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useWalletState } from "../../Providers/WalletProvider";
+
 import Addcard from "./addcard";
 import { useState} from "react";
 import SingleCardAssets from "./singleCardAssets";
@@ -35,7 +36,7 @@ const Cards = () => {
     >
       {/* This is the Right div that exists on the right side of the screen when lg */}
       <div
-        className={`bg-transparent md:w-5/12 lg:w-8/12`}
+        className={`bg-transparent md:w-6/12 lg:w-8/12`}
         style={{
           position:"absolute",
           right: "0%",
@@ -108,7 +109,7 @@ const Cards = () => {
       </div>
       {/* This is the Assets md and lg*/}
       <div
-        className={`bg-${theme} xs:hidden md:block sm:ml-1 md:w-1/2 lg:w-1/4`}
+        className={`bg-${theme} xs:hidden md:block sm:ml-1 md:w-5/12 lg:w-1/4`}
         style={{
           position: "absolute",
           left: "3%",
