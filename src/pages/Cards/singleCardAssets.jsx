@@ -19,7 +19,7 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
     updateShowState(assetData.currency_abb);
   }
   // border-2 border-solid border-white
-  console.log(lang);
+  
   return (
     <>
       <div

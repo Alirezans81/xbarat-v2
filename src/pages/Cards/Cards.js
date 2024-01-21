@@ -25,6 +25,7 @@ const Cards = () => {
     setShow("")
   }
   const Tanks = wallet.walletTanks.filter((data) => data.currency_abb === show);
+  console.log(Tanks)
   return (
     <div
       className="bg-transparent  font-bold"
@@ -52,6 +53,7 @@ const Cards = () => {
             borderTopLeftRadius: "50px",
             borderBottomLeftRadius: "50px"}}
         >
+
             <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
             <div className="w-full h-full flex flex-col">
             <div className="w-full h-8 flex justify-end mt-5">

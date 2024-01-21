@@ -28,6 +28,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
   const [type,setType]=useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [shabaNumber, setShabaNumber] = useState("");
+  const[email,setEmail]=useState("");
   const [currency, setCurrency] = useState("");
 
   const [params, setParams] = useState({
@@ -39,8 +40,6 @@ const Addcard = ({ addCard, setAddCard, show }) => {
     pending: 1,
     bank_info: "",
   });
-  console.clear()
-  console.log(bankName)
 
   
   // useEffect(()=>{
@@ -55,21 +54,23 @@ const Addcard = ({ addCard, setAddCard, show }) => {
     setIsLoadingSplashScreen(createWalletTankIsLoading);
   }, [createWalletTankIsLoading]);
   useEffect(() => {
-    if (title && type && asset &&(cardNumber || shabaNumber)) {
+    if (accountName && bankName && type && asset &&(cardNumber || shabaNumber || email)) {
       setParams({
+        title:"title",
+        bank_name:bankName,
+        account_name:accountName,
         user:user.url,
         currency:asset[1],
         wallet_tank_type: type==="Card"
           ? "https://xbarat-back.pro/api/wallet/tank/type/card-number/"
           : "https://xbarat-back.pro/api/wallet/tank/type/shaba-number/",
-        title: title,
         balance: 0,
         locked: 0,
         pending: 0,
-        bank_info: type==="Card"?cardNumber:shabaNumber,
+        bank_info: type==="Card"?cardNumber:type==="Shaba"?shabaNumber:email,
       });
     }
-  }, [title,type,asset,cardNumber,shabaNumber]);
+  }, [bankName,accountName,type,asset,cardNumber,shabaNumber]);
 
 
   const handleAddCards = (e) => {
@@ -115,24 +116,31 @@ const Addcard = ({ addCard, setAddCard, show }) => {
             <img className="w-6" src={cross} alt="" />
           </button>
           <form onSubmit={handleAddCards} className="w-full h-full flex justify-center flex-col">
-                <div className="flex flex-col">
-                    <span
-                      className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
-                    >
-                      {lang["add_cards_title"]}
+          <div className={"flex-col w-11/12 px-2 py-5"}>
+                  <span                       
+                    className={`text-${oppositeTheme} text-xl font-${font}-bold mt-0`}>
+                      {asset.length===0?lang["currency"]:asset[0]}
                     </span>
-                    <div className=" w-full">
-                      <div className="w-full flex mt-0 px-2">
-                        <input
-                          onChange={(e) => setTitle(e.target.value)}
-                          required
-                          className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
-                          placeholder={lang["add_cards_title"]}
-                        />
-                      </div>
-                    </div>
+                  <CustomDropdown
+                      className={"bg-transparent w-fit flex justify-center"}
+                      label={currency.length === 0 ? lang["currency"] : currency}
+                    >
+                      {listCurrency.map((data) => (
+                        <CustomItem
+                          onClick={() => setAsset(data)}
+                          className={"bg-transparent"}
+                        >
+                          {data[0]}
+                        </CustomItem>
+                      ))}
+                    </CustomDropdown>
+                 
+                </div>
+                <div className="flex flex-col">
+                    
+                    
                     <span                      
-                      className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
+                      className={`text-${oppositeTheme} text-xl font-${font}-bold mt-0`}>
                         Bank Name
                     </span>
                     <div className="w-full">
@@ -164,26 +172,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                 </div>
 
                 
-                <div className={"flex-col w-11/12 px-2 py-5"}>
-                  <span                       
-                    className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
-                      {asset.length===0?lang["currency"]:asset[0]}
-                    </span>
-                  <CustomDropdown
-                      className={"bg-transparent w-fit flex justify-center"}
-                      label={currency.length === 0 ? lang["currency"] : currency}
-                    >
-                      {listCurrency.map((data) => (
-                        <CustomItem
-                          onClick={() => setAsset(data)}
-                          className={"bg-transparent"}
-                        >
-                          {data[0]}
-                        </CustomItem>
-                      ))}
-                    </CustomDropdown>
-                 
-                </div>
+              
                 <div className={type.length!==0?"hidden":"flex flex-col justify-center w-full px-2"}>
                   <span                       
                     className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
@@ -207,7 +196,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                       <span
                         className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
                       >
-                        {lang["cards_card_number"]}
+                        Bank Information
                       </span>
                       <div className=" w-full">
                         <div className="w-full flex mt-0 px-2">

@@ -21,6 +21,7 @@ const SingleCardTank = ({ show, index, data }) => {
   }, [editWalletTankIsLoading]);
   const [title,setTitle]=useState("")  
   const [bankInfo,setBankInfo]=useState("");
+  const [bankName,setBankName]=useState("")
   const [walletTankType,setWalletTankType]=useState("");
   const [user,setUser]=useState("");
   const [isChecked, setIsChecked] = useState("");
@@ -28,6 +29,7 @@ const SingleCardTank = ({ show, index, data }) => {
   const [editCards,setEditCards]=useState(false)
   useEffect(()=>{
     if(data){
+      setBankName(data.bank_name)
       setTitle(data.title)
       setBankInfo(data.bank_info)
       setWalletTankType(data.wallet_tank_type)
@@ -64,7 +66,7 @@ const SingleCardTank = ({ show, index, data }) => {
       >
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
-            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{title}</span>
+            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{bankName}</span>
             <button onClick={handleEditCard}className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
             <button onClick={handleCheckboxChange} className="flex justify-end w-1/12 h-full"><img alt="" src={isChecked?starChecked:starUnChecked} style={{width:"80%",height:"80%"}}/></button>
           </div>
@@ -96,7 +98,7 @@ const SingleCardTank = ({ show, index, data }) => {
       > 
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
-            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{title}</span>
+            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{bankName}</span>
             <button onClick={handleEditCard} className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
             <button onClick={handleCheckboxChange} className="flex justify-end w-1/12 h-full"><img alt="" src={isChecked?starChecked:starUnChecked} style={{width:"80%",height:"80%"}}/></button>
           </div>
@@ -128,7 +130,7 @@ const SingleCardTank = ({ show, index, data }) => {
       > 
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
-            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{title}</span>
+            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{bankName}</span>
             <button onClick={handleEditCard} className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
             <button onClick={handleCheckboxChange} className="flex justify-end w-1/12 h-full"><img alt="" src={isChecked?starChecked:starUnChecked} style={{width:"80%",height:"80%"}}/></button>
           </div>
