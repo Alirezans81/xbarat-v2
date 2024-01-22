@@ -22,11 +22,11 @@ const useGetUserInfo = () => {
       ? await getUserInfo(userInfo.username)
           .then((data) => {
             console.log(data);
-            setUser(data.data);
-            saveUser(data.data);
+            setUser(data.data.results);
+            saveUser(data.data.results);
             customFunction && customFunction();
             setIsLoading(false);
-            return data.data;
+            return data.data.results;
           })
           .catch((error) => {
             console.log(error);
@@ -54,11 +54,11 @@ const useUpdateNameAndAvatar = () => {
       ? await updateNameAndAvatar(userInfo.username, params)
           .then((data) => {
             console.log(data);
-            setUser(data.data);
-            saveUser(data.data);
+            setUser(data.data.results);
+            saveUser(data.data.results);
             customFunction();
             setIsLoading(false);
-            return data.data;
+            return data.data.results;
           })
           .catch((error) => {
             console.log(error);
@@ -86,11 +86,11 @@ const useUpdatePhone = () => {
       ? await updatePhone(userInfo.username, params)
           .then((data) => {
             console.log(data);
-            setUser(data.data);
-            saveUser(data.data);
+            setUser(data.data.results);
+            saveUser(data.data.results);
             customFunction && customFunction();
             setIsLoading(false);
-            return data.data;
+            return data.data.results;
           })
           .catch((error) => {
             console.log(error);
@@ -118,11 +118,11 @@ const useUpdateNationalInfo = () => {
       ? await updateNationalInfo(userInfo.username, params)
           .then((data) => {
             console.log(data);
-            setUser(data.data);
-            saveUser(data.data);
-            customFunctionWithData && customFunctionWithData(data.data);
+            setUser(data.data.results);
+            saveUser(data.data.results);
+            customFunctionWithData && customFunctionWithData(data.data.results);
             setIsLoading(false);
-            return data.data;
+            return data.data.results;
           })
           .catch((error) => {
             console.log(error);

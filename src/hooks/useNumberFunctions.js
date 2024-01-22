@@ -69,4 +69,26 @@ const useRemoveComma = () => {
   return removeComma;
 };
 
-export { useAddComma, useIsNumberFloat, useReverseRate, useRemoveComma };
+const sortByBalance = (a, b) => {
+  if (a && a.balance && b && b.balance) {
+    if (a.balance < b.balance) {
+      return 1;
+    }
+    if (a.balance > b.balance) {
+      return -1;
+    }
+  }
+  return 1;
+};
+
+const useSortByBalance = () => {
+  return sortByBalance;
+};
+
+export {
+  useAddComma,
+  useIsNumberFloat,
+  useReverseRate,
+  useRemoveComma,
+  useSortByBalance,
+};

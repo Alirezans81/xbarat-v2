@@ -17,10 +17,10 @@ const useGetWatchList = () => {
     await getWatchList()
       .then((data) => {
         console.log(data);
-        setState(data.data);
-        customFunctionWithData && customFunctionWithData(data.data);
+        setState(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -41,10 +41,10 @@ const useGetTableExchange = () => {
     await getTableExchange(params)
       .then((data) => {
         console.log(data);
-        setState(data.data);
-        customFunctionWithData && customFunctionWithData(data.data);
+        setState(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -65,10 +65,10 @@ const useGetOtherExchangesRate = () => {
     await getOtherExchangesRate(filtersObject)
       .then((data) => {
         console.log(data);
-        setState && setState(data.data);
-        customFunctionWithData && customFunctionWithData(data.data);
+        setState && setState(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -89,9 +89,9 @@ const useExchange = () => {
     await exchange(params)
       .then((data) => {
         console.log(data);
-        customFunctionWithData && customFunctionWithData(data.data);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -112,10 +112,10 @@ const useGetPendingExchanges = () => {
     await getPendingExchanges(token)
       .then((data) => {
         console.log(data);
-        setState(data.data);
-        customFunctionWithData && customFunctionWithData(data.data);
+        setState(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -138,7 +138,7 @@ const useCancelPendingExchange = () => {
         console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);

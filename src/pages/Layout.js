@@ -155,14 +155,16 @@ export default function Layout() {
         const savedUser = JSON.parse(savedStringUser);
         setToken(savedToken);
         setUser(savedUser);
-        savedUser && savedUser.username && getWalletData(savedUser.username);
+        savedUser &&
+          savedUser.username &&
+          getWalletData(savedUser.username, savedToken);
       } else {
         setToken(null);
         setUser(null);
         setWallet({ wallets: [], walletAssets: [], walletTanks: [] });
       }
     } else {
-      user && user.username && getWalletData(user.username);
+      user && user.username && getWalletData(user.username, token);
     }
   }, []);
 

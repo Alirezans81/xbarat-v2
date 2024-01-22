@@ -12,7 +12,7 @@ const useSignup = () => {
         console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);

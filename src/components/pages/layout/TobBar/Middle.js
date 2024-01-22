@@ -2,7 +2,10 @@ import React from "react";
 import { useWalletState } from "../../../../Providers/WalletProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
-import { useAddComma } from "../../../../hooks/useNumberFunctions";
+import {
+  useAddComma,
+  useSortByBalance,
+} from "../../../../hooks/useNumberFunctions";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 
 export default function Middle() {
@@ -13,7 +16,8 @@ export default function Middle() {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
   const { walletAssets } = useWalletState();
-  const data = walletAssets.slice(0, 3);
+  const sortByBalance = useSortByBalance();
+  const data = walletAssets.slice(0, 3).sort(sortByBalance);
 
   if (data && data.length && window.innerWidth > 1280) {
     return (

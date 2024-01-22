@@ -58,14 +58,14 @@ const WalletProvider = ({ children }) => {
     [getWalletTanksIsLoading]
   );
 
-  const getWalletData = (username) => {
+  const getWalletData = (username, token) => {
     if (username) {
       const userFilter = {
         user: username,
       };
 
       getWallets(userFilter, setWallets);
-      getWalletAssets(userFilter, setWalletAssets);
+      getWalletAssets(token, userFilter, setWalletAssets);
       getWalletTanks(userFilter, setWalletTanks);
     } else if (user && user.username) {
       const userFilter = {

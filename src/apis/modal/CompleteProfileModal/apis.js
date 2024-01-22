@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const api = require("../../api.json");
+const api =
+  process.env.REACT_APP_MODE === "PRODUCTION"
+    ? require("../../api-dev.json")
+    : require("../../api.json");
 
 const fetchStep1 = (username, params) => {
   const formData = new FormData();

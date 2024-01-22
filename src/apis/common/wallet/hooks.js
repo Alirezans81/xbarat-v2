@@ -25,11 +25,11 @@ const useGetWallets = () => {
     await getWallets(filtersObject)
       .then((data) => {
         console.log(data);
-        setState(data.data);
+        setState(data.data.results);
         customFunction && customFunction();
-        customFunctionWithData && customFunctionWithData(data.data);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -46,20 +46,21 @@ const useGetWalletAssets = () => {
   const [error, setError] = useState();
 
   const fetch = async (
+    token,
     filtersObject,
     setState,
     customFunction,
     customFunctionWithData
   ) => {
     setIsLoading(true);
-    await getWalletAssets(filtersObject)
+    await getWalletAssets(filtersObject, token)
       .then((data) => {
         console.log(data);
-        setState(data.data);
+        setState(data.data.results);
         customFunction && customFunction();
-        customFunctionWithData && customFunctionWithData(data.data);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -80,10 +81,10 @@ const useGetWalletTanks = () => {
     await getWalletTanks(filtersObject)
       .then((data) => {
         console.log(data);
-        setState(data.data);
+        setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -104,10 +105,10 @@ const useGetWalletTankTypes = () => {
     await getWalletTankTypes(filtersObject)
       .then((data) => {
         console.log(data);
-        setState(data.data);
+        setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -129,9 +130,9 @@ const useCreateWalletTank = () => {
       .then((data) => {
         console.log(data);
         customFunction && customFunction();
-        customFunctionWithData && customFunctionWithData(data.data);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -142,6 +143,7 @@ const useCreateWalletTank = () => {
 
   return { createWalletTank: fetch, error, isLoading };
 };
+
 const useEditWalletTanks = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -157,9 +159,9 @@ const useEditWalletTanks = () => {
       .then((data) => {
         console.log(data);
         customFunction && customFunction();
-        customFunctionWithData && customFunctionWithData(data.data);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -181,7 +183,7 @@ const useCreateDeposit = () => {
         console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -204,7 +206,7 @@ const useCreateWithdrawal = () => {
         console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -227,7 +229,7 @@ const useCreateTransfer = () => {
         console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);

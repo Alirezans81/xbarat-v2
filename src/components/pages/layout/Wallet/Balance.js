@@ -7,6 +7,7 @@ import { useWalletState } from "../../../../Providers/WalletProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
 import TransactionModal from "../../../modals/TransactionModal";
 import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
+import { useSortByBalance } from "../../../../hooks/useNumberFunctions";
 
 export default function Balance({ refreshPendingRequests }) {
   const theme = useThemeState();
@@ -43,7 +44,13 @@ export default function Balance({ refreshPendingRequests }) {
   };
 
   const wallet = useWalletState();
-  const walletAssets = wallet && wallet.walletAssets ? wallet.walletAssets : [];
+  const sortByBalance = useSortByBalance();
+  const walletAssets =
+    wallet && wallet.walletAssets
+      ? wallet.walletAssets.sort(sortByBalance)
+      : [];
+
+  console.log("walletAssets: ", walletAssets);
 
   if (walletAssets.length === 0) {
     return (
