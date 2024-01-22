@@ -47,15 +47,17 @@ const createWalletTank = (params) => {
 };
 const editWalletTank=(walletTankUrl,params)=>{
   const formData=new FormData();
-  formData.append("user",params.user);
-  formData.append("currency",params.currency);
-  formData.append("wallet_tank_type",params.wallet_tank_type);
-  formData.append("title",params.title);
-  formData.append("balance",params.balance);
-  formData.append("locked",params.locked);
-  formData.append("pending",params.pending);
-  formData.append("bank_info",params.bank_info);
-  
+  params.url && formData.append("url",params.url);
+  params.currency_abb && formData.append("currency_abb",params.currency_abb);
+  params.wallet_tank_type && formData.append("wallet_tank_type",params.wallet_tank_type);
+  params.title && formData.append("title",params.title);
+  params.balance && formData.append("balance",params.balance);
+  params.locked && formData.append("locked",params.locked);
+  params.pending && formData.append("pending",params.pending);
+  params.bank_info && formData.append("bank_info",params.bank_info);
+  params.bank_name && formData.append("bank_name",params.bank_name);
+  params.is_deleted && formData.append("is_deleted",params.is_deleted);
+  params.account_name && formData.append("account_name",params.account_name);
   return axios.patch(walletTankUrl,formData)
 }
 

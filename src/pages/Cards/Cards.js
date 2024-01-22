@@ -24,7 +24,7 @@ const Cards = () => {
   function discard(){
     setShow("")
   }
-  const Tanks = wallet.walletTanks.filter((data) => data.currency_abb === show);
+  const Tanks = wallet.walletTanks.filter((data) => data.currency_abb === show && data.is_deleted===false);
   console.log(Tanks)
   return (
     <div

@@ -8,12 +8,13 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   const theme = useThemeState();
   const lang = useLanguageState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const numberOfBanks = wallet.walletTanks.filter(
+  
+  const walletTanks = wallet.walletTanks.filter(
+    (data) => data.currency_abb === assetData.currency_abb && data.is_deleted===false
+  );
+  const numberOfBanks = walletTanks.filter(
     (data) =>
       data.bank_name !== null && data.currency_abb === assetData.currency_abb
-  );
-  const walletTanks = wallet.walletTanks.filter(
-    (data) => data.currency_abb === assetData.currency_abb
   );
   const handleShow=()=>{
     updateShowState(assetData.currency_abb);

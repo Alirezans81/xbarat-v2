@@ -13,7 +13,6 @@ const SingleCardTank = ({ show, index, data }) => {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
-  console.log(data)
   const { editWalletTank, isLoading: editWalletTankIsLoading } =
       useEditWalletTanks();
   useEffect(() => {
@@ -38,6 +37,8 @@ const SingleCardTank = ({ show, index, data }) => {
       setIsActive(!data.is_deleted) 
     }
   },[data])
+
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
@@ -50,6 +51,7 @@ const SingleCardTank = ({ show, index, data }) => {
     console.log(editCards)
 
   }
+ 
 
   
     return (
@@ -76,13 +78,6 @@ const SingleCardTank = ({ show, index, data }) => {
           </div>
           <div className="flex justify-end w-full h-1/4 items-end">
             <div className="w-full flex justify-end">
-              <form className="flex flex-row justify-end h-1/2 px-1 items-end">
-                    <label className={`text-${oppositeTheme} text-2xl`}>Is Active</label>
-                    <input type="checkbox"
-                     onChange={handleIsActive}
-                     value={isActive}
-                     className="bg-transparent border-2 border-solid border-blue rounded-sm focus:border-0 ml-1 mb-3"/>
-              </form>
             </div>
           </div>
         </div>
