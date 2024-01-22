@@ -42,9 +42,13 @@ export default function WatchList({
       ? data.watch_list.map((row) => {
           let temp = {};
           temp.title = row.title;
-          temp.rate = addComma(row.rate);
-          temp.min_rate = addComma(row.min_rate);
-          temp.max_rate = addComma(row.max_rate);
+          temp.rate = addComma((+row.rate).toFixed(row.floating_number));
+          temp.min_rate = addComma(
+            (+row.min_rate).toFixed(row.floating_number)
+          );
+          temp.max_rate = addComma(
+            (+row.max_rate).toFixed(row.floating_number)
+          );
 
           return temp;
         })

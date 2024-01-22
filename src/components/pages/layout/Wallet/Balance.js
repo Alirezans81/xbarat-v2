@@ -15,15 +15,14 @@ export default function Balance({ refreshPendingRequests }) {
   const font = useFontState();
   const setModalData = useModalDataSetState();
 
-  const openTransactionModal = (defaultType) => {
+  const openTransactionModal = (defaultType, refreshPendingRequests) => {
     setModalData({
       title: lang["transaction"],
-      children: (
-        <TransactionModal
-          refreshPendingRequests={refreshPendingRequests}
-          defaultType={defaultType}
-        />
-      ),
+      children: <TransactionModal />,
+      props: {
+        defaultType,
+        refreshPendingRequests,
+      },
       canClose: true,
       isOpen: true,
     });
@@ -119,7 +118,10 @@ export default function Balance({ refreshPendingRequests }) {
                   key={index}
                   className="flex justify-center items-center h-full px-4"
                 >
-                  <CurrencyCard walletAsset={walletAsset} />
+                  <CurrencyCard
+                    refreshPendingRequests={refreshPendingRequests}
+                    walletAsset={walletAsset}
+                  />
                 </div>
               ))}
             </CustomSlider>

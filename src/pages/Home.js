@@ -11,7 +11,6 @@ import { useTokenState } from "../Providers/TokenProvider";
 import WatchList from "../components/pages/layout/Home/WatchList";
 import { useLanguageState } from "../Providers/LanguageProvider";
 import { useFontState } from "../Providers/FontProvider";
-import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 import ListWatchList from "../components/pages/layout/Home/ListMode/ListWatchList";
 import ListOtherExchanges from "../components/pages/layout/Home/ListMode/ListOtherExchanges";
 import ListPendingExchange from "../components/pages/layout/Home/ListMode/ListPendingExchange";
@@ -35,7 +34,14 @@ export default function Home({ isDemo }) {
   useEffect(() => {
     const result = window.localStorage.getItem("homePageMode");
     if (result) setPageMode(result);
-  });
+  }, []);
+  useEffect(() => {
+    setSelectedSourceIndex(-1);
+    setSelectedTargetIndex(-1);
+    setSelectedCurrencnyPair(null);
+    setPendingExchanges([]);
+    refreshPendingExchange();
+  }, [pageMode]);
 
   const [selectedCurrecnyPair, setSelectedCurrencnyPair] = useState();
   const [formDefaultRate, setFormDefaultRate] = useState();
@@ -61,7 +67,7 @@ export default function Home({ isDemo }) {
     return (
       <>
         {window.innerWidth >= canSwitchPageModeWidth && (
-          <div className={`fixed left-4 ${isDemo ? 'bottom-32' : 'bottom-60'}`}>
+          <div className={`fixed left-4 ${isDemo ? "bottom-32" : "bottom-60"}`}>
             <button
               onClick={() => {
                 window.localStorage.setItem("homePageMode", "list");
@@ -155,7 +161,7 @@ export default function Home({ isDemo }) {
     return (
       <>
         {window.innerWidth >= canSwitchPageModeWidth && (
-          <div className={`fixed left-4 ${isDemo ? 'bottom-32' : 'bottom-60'}`}>
+          <div className={`fixed left-4 ${isDemo ? "bottom-32" : "bottom-60"}`}>
             <button
               onClick={() => {
                 window.localStorage.setItem("homePageMode", "card");
