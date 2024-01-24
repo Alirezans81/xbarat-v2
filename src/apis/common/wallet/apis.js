@@ -70,6 +70,7 @@ const editWalletTank=(walletTankUrl,params)=>{
   params.bank_name && formData.append("bank_name",params.bank_name);
   params.is_deleted && formData.append("is_deleted",params.is_deleted);
   params.account_name && formData.append("account_name",params.account_name);
+
   return axios.patch(walletTankUrl,formData)
 }
 

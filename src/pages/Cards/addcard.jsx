@@ -12,9 +12,15 @@ import {
   CustomDropdown,
   CustomItem,
 } from "../../components/common/CustomDropdown";
+import { useDirectionState } from "../../Providers/DirectionProvider";
+
 const Addcard = ({ addCard, setAddCard, show }) => {
+  const api =
+  process.env.REACT_APP_MODE === "PRODUCTION"
+    ? require("../../apis/api-dev.json")
+    : require("../../apis/api.json");
+  const { one: oneDirection } = useDirectionState();
   const currencies = useCurrenciesState();
-  console.log(currencies)
   const user=useUserState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -22,6 +28,8 @@ const Addcard = ({ addCard, setAddCard, show }) => {
   const font = useFontState();
   const wallet = useWalletState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+
+
   const [title, setTitle] = useState("");
   const [bankName,setBankName]=useState("");
   const[accountName,setAccountName]=useState("")
@@ -40,15 +48,10 @@ const Addcard = ({ addCard, setAddCard, show }) => {
     locked: 1,
     pending: 1,
     bank_info: "",
+    is_deleted:false
   });
 
   
-  // useEffect(()=>{
-  //   if(show.length!==0){
-  //     let AlreadyPickedAsset=currencies.filter((data)=>data.abbreviation===show)
-  //     setAsset((AlreadyPickedAsset[0]).url)
-  //   }
-  // },)
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
   useEffect(() => {
@@ -57,28 +60,29 @@ const Addcard = ({ addCard, setAddCard, show }) => {
   useEffect(() => {
     if (accountName && bankName && type && asset &&(cardNumber || shabaNumber || email)) {
       setParams({
+        user:user.url,
         title:"title",
         bank_name:bankName,
         account_name:accountName,
-        user:user.url,
         currency:asset[1],
+        currency_abb:asset[0],
         wallet_tank_type: type==="Card"
-          ? "https://xbarat-back.pro/api/wallet/tank/type/card-number/"
-          : "https://xbarat-back.pro/api/wallet/tank/type/shaba-number/",
+          ? api["wallet-tank-type"]+"card-number/"
+          : api["wallet-tank-type"]+"shaba-number/",
         balance: 0,
         locked: 0,
         pending: 0,
         bank_info: type==="Card"?cardNumber:type==="Shaba"?shabaNumber:email,
+        is_deleted:false
       });
     }
   }, [bankName,accountName,type,asset,cardNumber,shabaNumber]);
-
-
   const handleAddCards = (e) => {
     e.preventDefault();
     setAddCard(false);
     createWalletTank(params);
-    console.log(params);
+    console.log(params.user)
+
   };
 
   const discard = () => {
@@ -86,14 +90,15 @@ const Addcard = ({ addCard, setAddCard, show }) => {
     setType("")
     setAddCard(false);
   };
-
+  console.log(currencies)
   const walletAsset=wallet.walletAssets
 
-  let listCurrency = currencies.map((data) => [data.abbreviation,data.url]);
+  let listCurrency = currencies.map((data) => [data.abbreviation,data.url,data.sym_pic_gray]);
   let listAsset = walletAsset.map((data) => data.currency_abb);
   let AvailableNewAssets = listCurrency.filter(
     (data) => listAsset.includes(data[0]) === false
   );
+  console.log()
 
   return (
     <>
@@ -117,14 +122,22 @@ const Addcard = ({ addCard, setAddCard, show }) => {
             <img className="w-6" src={cross} alt="" />
           </button>
           <form onSubmit={handleAddCards} className="w-full h-full flex justify-center flex-col">
-          <div className={"flex-col w-11/12 px-2 py-5"}>
-                  <span                       
-                    className={`text-${oppositeTheme} text-xl font-${font}-bold mt-0`}>
-                      {asset.length===0?lang["currency"]:asset[0]}
-                    </span>
+                <div 
+                  className={"w-full px-2 py-5 flex justify-end"}>    
                   <CustomDropdown
-                      className={"bg-transparent w-fit flex justify-center"}
-                      label={currency.length === 0 ? lang["currency"] : currency}
+                      className={"bg-transparent w-fit"}
+                      label={
+                        <div>
+                          <div className={asset?"flex flex-row":"hidden"}>
+                              <img      className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
+                              src={asset[2]} alt=""/>
+                              <span>{asset[0]}</span>
+                          </div>
+                          <div className={asset?"hidden":"flex flex-row"}>
+                              <span>{lang["currency"]}</span>
+                          </div>
+                      </div>
+                      }
                     >
                       {listCurrency.map((data) => (
                         <CustomItem
@@ -137,11 +150,31 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                     </CustomDropdown>
                  
                 </div>
+                <div className={type.length!==0?"hidden":"flex flex-col justify-center w-full px-2"}>
+                  
+                      <span                       
+                          className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
+                          {type.length === 0 ? lang["wallet_tank_type_title_null_cards"] : type}
+                      </span>
+                    <div className="flex w-full justify-end">
+                      <CustomDropdown
+                        className={"bg-transparent w-fit"}
+                        label={type.length===0?"Card/Shaba":type}
+                      >
+                          <CustomItem onClick={()=>setType("Card")}>
+                                Card Number                  
+                          </CustomItem>
+                          <CustomItem onClick={()=>setType("Shaba")}>
+                                Shaba Number
+                          </CustomItem>
+                      </CustomDropdown>
+                      </div>
+                </div>
                 <div className="flex flex-col">
                     
                     
                     <span                      
-                      className={`text-${oppositeTheme} text-xl font-${font}-bold mt-0`}>
+                      className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
                         Bank Name
                     </span>
                     <div className="w-full">
@@ -174,23 +207,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
 
                 
               
-                <div className={type.length!==0?"hidden":"flex flex-col justify-center w-full px-2"}>
-                  <span                       
-                    className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
-                      {type.length === 0 ? lang["wallet_tank_type_title_null_cards"] : type}
-                    </span>
-                      <CustomDropdown
-                        className={"bg-transparent w-fit"}
-                        label={type.length===0?"Card/Shaba":type}
-                      >
-                          <CustomItem onClick={()=>setType("Card")}>
-                                Card Number                  
-                          </CustomItem>
-                          <CustomItem onClick={()=>setType("Shaba")}>
-                                Shaba Number
-                          </CustomItem>
-                      </CustomDropdown>
-                </div>
+       
 
                 <div className={type?"block":"hidden"}>
                     <div className={type==="Card"?"flex flex-col":"hidden"}>
