@@ -1,7 +1,10 @@
 import axios from "axios";
 import queryString from "query-string";
 
-const api = require("../../api.json");
+const api =
+  process.env.REACT_APP_MODE === "PRODUCTION"
+    ? require("../../api-dev.json")
+    : require("../../api.json");
 
 const getWallets = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
@@ -12,12 +15,20 @@ const getWallets = (filtersObject) => {
   return axios.get(urlWithQueries);
 };
 
-const getWalletAssets = (filtersObject) => {
+const getWalletAssets = (filtersObject, token) => {
+  const formData = new FormData();
+
+  formData.append("token", token);
+
   const urlWithQueries = queryString.stringifyUrl({
     url: api["wallet-asset"],
     query: filtersObject,
   });
-
+  const config = {
+    headers: {
+      token,
+    },
+  };
   return axios.get(urlWithQueries);
 };
 
@@ -45,6 +56,7 @@ const getWalletTankTypes = (filtersObject) => {
 const createWalletTank = (params) => {
   return axios.post(api["wallet-tank"], params);
 };
+
 const editWalletTank=(walletTankUrl,params)=>{
   const formData=new FormData();
   params.url && formData.append("url",params.url);

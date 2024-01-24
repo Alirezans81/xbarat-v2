@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useWalletState } from "../../../../Providers/WalletProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
-import { useAddComma } from "../../../../hooks/useNumberFunctions";
+import {
+  useAddComma,
+  useSortByBalance,
+} from "../../../../hooks/useNumberFunctions";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 
 export default function Middle() {
@@ -13,9 +16,25 @@ export default function Middle() {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
   const { walletAssets } = useWalletState();
-  const data = walletAssets.slice(0, 3);
+  const sortByBalance = useSortByBalance();
+  const data = walletAssets.sort(sortByBalance).slice(0, 3);
 
-  if (data && data.length && window.innerWidth > 1280) {
+  const [allAreZero, setAllAreZero] = useState(true);
+  useEffect(() => {
+    data &&
+      data.length &&
+      data.map((walletAsset) => {
+        if (
+          +walletAsset.balance !== 0 ||
+          +walletAsset.pending !== 0 ||
+          +walletAsset.locked !== 0
+        ) {
+          setAllAreZero(false);
+        }
+      });
+  }, [data]);
+
+  if (window.innerWidth > 1280 && !allAreZero) {
     return (
       <div
         className={`bg-${theme}-back flex gap-x-4 pl-2 py-2 rounded-full pr-5`}

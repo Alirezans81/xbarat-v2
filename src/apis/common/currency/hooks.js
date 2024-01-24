@@ -10,10 +10,10 @@ const useGetCurrencies = () => {
     await getCurrencies()
       .then((data) => {
         console.log(data);
-        setState(data.data);
+        setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -58,10 +58,10 @@ const useGetCurrencyPairs = () => {
     await getCurrencyPairs(filtersObject)
       .then((data) => {
         console.log(data);
-        setState(data.data);
-        customFunctionWithData && customFunctionWithData(data.data);
+        setState(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);

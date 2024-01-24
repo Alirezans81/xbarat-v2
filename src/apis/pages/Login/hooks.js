@@ -15,21 +15,21 @@ const useLogin = () => {
     login(params)
       .then((data) => {
         console.log(data);
-        setUser(data.data.user);
+        setUser(data.data.results.user);
         rememberMe &&
           window.localStorage.setItem(
             "userInfo",
-            JSON.stringify(data.data.user)
+            JSON.stringify(data.data.results.user)
           );
 
-        setToken(data.data.token);
+        setToken(data.data.results.token);
         rememberMe &&
           window.localStorage.setItem(
             "authToken",
-            JSON.stringify(data.data.token)
+            JSON.stringify(data.data.results.token)
           );
 
-        customFunctionWithData && customFunctionWithData(data.data);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
       })
       .catch((error) => {

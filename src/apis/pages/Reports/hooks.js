@@ -1,4 +1,9 @@
-import { getDepositHistory,getWithdrawHistory,getTransferHistory,getExchangeHistory } from "./apis";
+import {
+  getDepositHistory,
+  getWithdrawHistory,
+  getTransferHistory,
+  getExchangeHistory,
+} from "./apis";
 import { useState } from "react";
 
 const useGetDepositHistory = () => {
@@ -10,9 +15,9 @@ const useGetDepositHistory = () => {
     await getDepositHistory()
       .then((data) => {
         console.log(data);
-        setState(data.data)
+        setState(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -32,9 +37,9 @@ const useGetTransferHistory = () => {
     await getTransferHistory()
       .then((data) => {
         console.log(data);
-        setState(data.data)
+        setState(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -54,9 +59,9 @@ const useGetExchangeHistory = () => {
     await getExchangeHistory()
       .then((data) => {
         console.log(data);
-        setState(data.data)
+        setState(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -76,9 +81,9 @@ const useGetWithdrawHistory = () => {
     await getWithdrawHistory()
       .then((data) => {
         console.log(data);
-        setState(data.data)
+        setState(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -89,4 +94,9 @@ const useGetWithdrawHistory = () => {
 
   return { getWithdrawHistory: fetch, error, isLoading };
 };
-export { useGetDepositHistory,useGetWithdrawHistory,useGetTransferHistory,useGetExchangeHistory };
+export {
+  useGetDepositHistory,
+  useGetWithdrawHistory,
+  useGetTransferHistory,
+  useGetExchangeHistory,
+};

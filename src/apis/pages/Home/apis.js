@@ -1,7 +1,10 @@
 import axios from "axios";
 import queryString from "query-string";
 
-const api = require("../../api.json");
+const api =
+  process.env.REACT_APP_MODE === "PRODUCTION"
+    ? require("../../api-dev.json")
+    : require("../../api.json");
 
 const getWatchList = () => {
   return axios.get(api["watch-list"]);

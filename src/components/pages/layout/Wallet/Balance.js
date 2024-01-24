@@ -7,6 +7,7 @@ import { useWalletState } from "../../../../Providers/WalletProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
 import TransactionModal from "../../../modals/TransactionModal";
 import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
+import { useSortByBalance } from "../../../../hooks/useNumberFunctions";
 
 export default function Balance({ refreshPendingRequests }) {
   const theme = useThemeState();
@@ -43,7 +44,11 @@ export default function Balance({ refreshPendingRequests }) {
   };
 
   const wallet = useWalletState();
-  const walletAssets = wallet && wallet.walletAssets ? wallet.walletAssets : [];
+  const sortByBalance = useSortByBalance();
+  const walletAssets =
+    wallet && wallet.walletAssets
+      ? wallet.walletAssets.sort(sortByBalance)
+      : [];
 
   if (walletAssets.length === 0) {
     return (
@@ -78,7 +83,7 @@ export default function Balance({ refreshPendingRequests }) {
     );
   } else if (walletAssets.length < 3) {
     return (
-      <div className="h-full flex flex-col gap-y-2">
+      <div className="h-full flex flex-col gap-y-2 ">
         <div className="w-full flex justify-between">
           <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
             {lang["your-balance"]}
