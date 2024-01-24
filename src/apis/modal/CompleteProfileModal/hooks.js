@@ -17,11 +17,11 @@ const useFetchStep1 = () => {
       ? await fetchStep1(userInfo.username, params)
           .then((data) => {
             console.log(data);
-            setUser(data.data.results);
-            saveUser(data.data.results);
+            setUser(data.data);
+            saveUser(data.data);
             customFunction();
             setIsLoading(false);
-            return data.data.results;
+            return data.data;
           })
           .catch((error) => {
             console.log(error);
@@ -49,11 +49,11 @@ const useFetchStep2 = () => {
       ? await fetchStep2(userInfo.username, params)
           .then((data) => {
             console.log(data);
-            setUser(data.data.results);
-            saveUser(data.data.results);
+            setUser(data.data);
+            saveUser(data.data);
             customFunction();
             setIsLoading(false);
-            return data.data.results;
+            return data.data;
           })
           .catch((error) => {
             console.log(error);
@@ -81,11 +81,11 @@ const useFetchStep3 = () => {
       ? await fetchStep3(userInfo.username, params)
           .then((data) => {
             console.log(data);
-            setUser(data.data.results);
-            saveUser(data.data.results);
+            setUser(data.data);
+            saveUser(data.data);
             customFunction();
             setIsLoading(false);
-            return data.data.results;
+            return data.data;
           })
           .catch((error) => {
             console.log(error);

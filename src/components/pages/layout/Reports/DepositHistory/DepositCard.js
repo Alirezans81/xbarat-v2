@@ -3,24 +3,24 @@ import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useAddComma } from "../../../../../hooks/useNumberFunctions";
 import RequestStatus from "../../common/RequestStatus";
 import { useFontState } from "../../../../../Providers/FontProvider";
-export default function DepositCard({ lang,  data}) {
+export default function DepositCard({ lang, data }) {
   const theme = useThemeState();
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const addComma = useAddComma();
-  let DateVar=""
-  console.log("Data",data);
-  for(let i=0;i<19;i++){
-    if(data.datetime[i]==="-"){
-      DateVar+="/"
+  let DateVar = "";
+  for (let i = 0; i < 19; i++) {
+    if (data.datetime[i] === "-") {
+      DateVar += "/";
     }
-    if(data.datetime[i]==="T"){
-      DateVar+=" , "
-    }if(data.datetime[i]!=="T" && data.datetime[i]!=="-"){
-      DateVar+=data.datetime[i]
+    if (data.datetime[i] === "T") {
+      DateVar += " , ";
     }
+    if (data.datetime[i] !== "T" && data.datetime[i] !== "-") {
+      DateVar += data.datetime[i];
     }
-    return (
+  }
+  return (
     <div
       className={`flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-4 pb-1 overflow-hidden`}
     >

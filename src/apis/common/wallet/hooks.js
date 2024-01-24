@@ -130,9 +130,9 @@ const useCreateWalletTank = () => {
       .then((data) => {
         console.log(data);
         customFunction && customFunction();
-        customFunctionWithData && customFunctionWithData(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);
@@ -183,7 +183,7 @@ const useCreateDeposit = () => {
         console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);
@@ -206,7 +206,7 @@ const useCreateWithdrawal = () => {
         console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);
@@ -229,7 +229,7 @@ const useCreateTransfer = () => {
         console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);

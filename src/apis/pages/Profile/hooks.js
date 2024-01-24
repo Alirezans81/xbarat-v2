@@ -22,11 +22,11 @@ const useGetUserInfo = () => {
       ? await getUserInfo(userInfo.username)
           .then((data) => {
             console.log(data);
-            setUser(data.data.results);
-            saveUser(data.data.results);
+            setUser(data.data);
+            saveUser(data.data);
             customFunction && customFunction();
             setIsLoading(false);
-            return data.data.results;
+            return data.data;
           })
           .catch((error) => {
             console.log(error);

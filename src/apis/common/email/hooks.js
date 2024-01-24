@@ -41,9 +41,9 @@ const useSendEmail = () => {
       .then((data) => {
         console.log(data);
         customFunction && customFunction();
-        customFunctionWithData && customFunctionWithData(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);

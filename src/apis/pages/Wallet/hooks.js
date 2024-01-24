@@ -40,7 +40,7 @@ const useCancelPendingRequest = () => {
         console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);
@@ -63,7 +63,7 @@ const useUploadRequestDocument = () => {
         console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);

@@ -90,10 +90,10 @@ const useGetNationality = () => {
     await getNationality(nationalityUrl)
       .then((data) => {
         console.log(data);
-        setState(data.data.results);
+        setState(data.data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);
@@ -114,10 +114,10 @@ const useGetCountry = () => {
     await getCountry(countryUrl)
       .then((data) => {
         console.log(data);
-        setState(data.data.results);
+        setState(data.data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);
@@ -138,10 +138,10 @@ const useGetCity = () => {
     await getCity(cityUrl)
       .then((data) => {
         console.log(data);
-        setState(data.data.results);
+        setState(data.data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);
@@ -169,11 +169,11 @@ const useGetRequiredFeild = () => {
         .then((data) => {
           console.log(data);
           let temp = currentState;
-          temp.push(data.data.results);
+          temp.push(data.data);
           setState(temp);
           customFunction && customFunction();
           setIsLoading(false);
-          return data.data.results;
+          return data.data;
         })
         .catch((error) => {
           console.log(error);

@@ -34,10 +34,10 @@ const useGetBranch = () => {
     await getBranch(branchUrl)
       .then((data) => {
         console.log(data);
-        setState(data.data.results);
+        setState(data.data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);

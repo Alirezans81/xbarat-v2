@@ -30,19 +30,6 @@ export default function TransactionModal() {
       ? modalData.props.refreshPendingRequests
       : null;
 
-  modalData &&
-    modalData.props &&
-    modalData.props.data &&
-    console.log(modalData.props.data);
-  modalData &&
-    modalData.props &&
-    modalData.props.defaultType &&
-    console.log(modalData.props.defaultType);
-  modalData &&
-    modalData.props &&
-    modalData.props.refreshPendingRequests &&
-    console.log(modalData.props.refreshPendingRequests);
-
   const [type, selectType] = useState(defaultType || "deposit");
 
   return (

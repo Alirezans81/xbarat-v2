@@ -48,7 +48,7 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
     navigate("/home");
   };
 
-  const [rememberMeCheck, setRememberMeCheck] = useState(false);
+  const [rememberMeCheck, setRememberMeCheck] = useState(true);
   const ToggleRememberMeCheck = () => setRememberMeCheck(!rememberMeCheck);
 
   const [validationErrors, setValidationErrors] = useState({});

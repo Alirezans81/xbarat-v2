@@ -89,9 +89,9 @@ const useExchange = () => {
     await exchange(params)
       .then((data) => {
         console.log(data);
-        customFunctionWithData && customFunctionWithData(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);
@@ -138,7 +138,7 @@ const useCancelPendingExchange = () => {
         console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return data.data;
       })
       .catch((error) => {
         console.log(error);
