@@ -155,8 +155,8 @@ export default function MyMenu({ switchBlur }) {
           </div>
           <div className="flex-1 overflow-y-auto">
             <div className="w-full grid grid-cols-2 gap-y mt-2">
-              {allLinks.map((link) => (
-                <div className="col-span-2 w-full">
+              {allLinks.map((link, index) => (
+                <div key={index} className="col-span-2 w-full">
                   <Element data={link} onClick={() => setMenuIsOpen(false)} />
                 </div>
               ))}

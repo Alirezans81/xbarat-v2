@@ -18,10 +18,10 @@ const useGetNationalities = () => {
     await getNationalities()
       .then((data) => {
         console.log(data);
-        setState(data.data);
+        setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -42,10 +42,10 @@ const useGetCountries = () => {
     await getCounties()
       .then((data) => {
         console.log(data);
-        setState(data.data);
+        setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -66,10 +66,10 @@ const useGetCities = () => {
     await getCities(filtersObject)
       .then((data) => {
         console.log(data);
-        setState(data.data);
+        setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);

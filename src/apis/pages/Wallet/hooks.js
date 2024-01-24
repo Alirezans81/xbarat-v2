@@ -14,10 +14,10 @@ const useGetPendingRequests = () => {
     await getPendingRequests(token)
       .then((data) => {
         console.log(data);
-        setState(data.data);
+        setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);

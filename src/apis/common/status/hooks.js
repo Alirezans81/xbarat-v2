@@ -10,11 +10,11 @@ const useGetStatuses = () => {
     await getStatuses()
       .then((data) => {
         console.log(data);
-        setState(data.data);
+        setState(data.data.results);
         customFunction && customFunction();
-        customFunctionWithData && customFunctionWithData(data.data);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);

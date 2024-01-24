@@ -41,7 +41,7 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
   if (currency) {
     return (
       <div
-        className={`w-full flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-4 pb-4 px-5`}
+        className={`w-full flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-4 pb-4 px-5 `}
       >
         <div
           className={`flex flex-row font-${font}-bold text-xl max-w-[10rem] md:max-w-none overflow-x-auto scroll-horizental`}

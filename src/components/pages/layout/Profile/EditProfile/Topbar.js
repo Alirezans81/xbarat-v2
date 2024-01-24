@@ -183,7 +183,9 @@ export default function Topbar({ userInfo }) {
                         <span
                           className={`font-${font}-bold whitespace-nowrap text-sm md:text-xl pt-2.5 text-${oppositeTheme}`}
                         >
-                          {userInfo["get_full_name"]}
+                          {userInfo && userInfo["get_full_name"]
+                            ? userInfo["get_full_name"]
+                            : ""}
                         </span>
                         {userInfo && userInfo["is_verified"] && (
                           <button onClick={() => setCanEditNameAndAvatar(true)}>

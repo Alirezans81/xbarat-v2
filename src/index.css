@@ -3,12 +3,13 @@
 @tailwind utilities;
 
 html { 
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
 }
 
 body {
-  height: 100%;
+  height: 100dvh;
+  width: 100dvw;
   overflow: hidden;
   padding: 0px;
 }
