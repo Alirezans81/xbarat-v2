@@ -24,30 +24,44 @@ const SingleCardTank = ({ show, index, data }) => {
   const [bankName,setBankName]=useState("")
   const [walletTankType,setWalletTankType]=useState("");
   const [user,setUser]=useState("");
-  const [isChecked, setIsChecked] = useState("");
-  const [isActive,setIsActive]=useState("");
+  const [isChecked, setIsFavorite] = useState("");
   const [editCards,setEditCards]=useState(false)
+  const [params, setParams] = useState({
+    url:"",
+    wallet_asset: "",
+    wallet_tank_type_title: "",
+    currency_abb:"",
+    title: "",
+    balance: 1,
+    locked: 1,
+    account_name:"",
+    pending: 1,
+    bank_name:"",
+    is_deleted:false,
+    bank_info: "",
+    is_favorite:false,
+  });
   useEffect(()=>{
     if(data){
       setAccountName(data.account_name);
-      setBankName(data.bank_name)
-      setTitle(data.title)
-      setBankInfo(data.bank_info)
-      setWalletTankType(data.wallet_tank_type)
-      setUser(data.user)
-      setIsChecked(data.is_favorite)
-      setIsActive(!data.is_deleted) 
+      setBankName(data.bank_name);
+      setTitle(data.title);
+      setBankInfo(data.bank_info);
+      setWalletTankType(data.wallet_tank_type);
+      setUser(data.user);
+      setIsFavorite(data.is_favorite);
     }
   },[data])
 
 
+
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+    setIsFavorite(!isChecked);
+    editWalletTank(data.url,params);
+
   };
 
-  function handleIsActive() {
-    setIsActive(!isActive)
-  }
+ 
   const handleEditCard=()=>{
     setEditCards(true);
     console.log(editCards)
