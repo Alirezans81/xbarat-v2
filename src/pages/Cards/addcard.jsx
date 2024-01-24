@@ -90,7 +90,6 @@ const Addcard = ({ addCard, setAddCard, show }) => {
     setType("")
     setAddCard(false);
   };
-  console.log(currencies)
   const walletAsset=wallet.walletAssets
 
   let listCurrency = currencies.map((data) => [data.abbreviation,data.url,data.sym_pic_gray]);
@@ -98,7 +97,6 @@ const Addcard = ({ addCard, setAddCard, show }) => {
   let AvailableNewAssets = listCurrency.filter(
     (data) => listAsset.includes(data[0]) === false
   );
-  console.log()
 
   return (
     <>

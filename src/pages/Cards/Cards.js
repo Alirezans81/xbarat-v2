@@ -21,7 +21,7 @@ const Cards = () => {
   function handleAddCard() {
     setAddCard(true);
   }
-  
+
   function discard(){
     setShow("")
   }

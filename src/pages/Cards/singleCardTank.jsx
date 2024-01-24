@@ -24,7 +24,7 @@ const SingleCardTank = ({ show, index, data }) => {
   const [bankName,setBankName]=useState("")
   const [walletTankType,setWalletTankType]=useState("");
   const [user,setUser]=useState("");
-  const [isChecked, setIsFavorite] = useState("");
+  const [isFavorite, setIsFavorite] = useState("");
   const [editCards,setEditCards]=useState(false)
   const [params, setParams] = useState({
     url:"",
@@ -52,22 +52,24 @@ const SingleCardTank = ({ show, index, data }) => {
       setIsFavorite(data.is_favorite);
     }
   },[data])
+  useEffect(()=>{
+    editWalletTank(data.url,params);
+  },[params])
 
 
 
   const handleCheckboxChange = () => {
-    setIsFavorite(!isChecked);
-    editWalletTank(data.url,params);
-
+    setParams({
+      is_favorite:!isFavorite
+    });
+    setIsFavorite(!isFavorite)
   };
 
  
   const handleEditCard=()=>{
     setEditCards(true);
-    console.log(editCards)
 
   }
-  console.log(lang)
  
 
   
@@ -86,8 +88,8 @@ const SingleCardTank = ({ show, index, data }) => {
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
             <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{bankName}</span>
-            <button onClick={handleEditCard}className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
-            <button onClick={handleCheckboxChange} className="flex justify-end w-1/12 h-full"><img alt="" src={isChecked?starChecked:starUnChecked} style={{width:"80%",height:"80%"}}/></button>
+            <button onClick={handleEditCard}className="flex justify-end w-1/12 h-fit w-fit mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
+            <button onClick={handleCheckboxChange} className="flex justify-end h-fit w-fit"><img alt="" src={isFavorite?starChecked:starUnChecked} style={{width:"70%",height:"70%"}}/></button>
           </div>
           <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
                   <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">Account Name</span>
@@ -112,8 +114,8 @@ const SingleCardTank = ({ show, index, data }) => {
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
             <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{bankName}</span>
-            <button onClick={handleEditCard} className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
-            <button onClick={handleCheckboxChange} className="flex justify-end w-1/12 h-full"><img alt="" src={isChecked?starChecked:starUnChecked} style={{width:"80%",height:"80%"}}/></button>
+            <button onClick={handleEditCard} className="flex justify-end  h-fit w-fit mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
+            <button onClick={handleCheckboxChange} className="flex justify-end w-fit h-fit"><img alt="" src={isFavorite?starChecked:starUnChecked} style={{width:"70%",height:"70%"}}/></button>
           </div>
           <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
                   <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">Account Name</span>
@@ -138,8 +140,8 @@ const SingleCardTank = ({ show, index, data }) => {
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
             <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{bankName}</span>
-            <button onClick={handleEditCard} className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
-            <button onClick={handleCheckboxChange} className="flex justify-end w-1/12 h-full"><img alt="" src={isChecked?starChecked:starUnChecked} style={{width:"80%",height:"80%"}}/></button>
+            <button onClick={handleEditCard} className="flex justify-end h-fit w-fit mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
+            <button onClick={handleCheckboxChange} className="flex justify-end w-fit h-fit"><img alt="" src={isFavorite?starChecked:starUnChecked} style={{width:"70%",height:"70%"}}/></button>
           </div>
           <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
                   <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">Account Name</span>
