@@ -8,18 +8,19 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   const theme = useThemeState();
   const lang = useLanguageState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const numberOfBanks = wallet.walletTanks.filter(
+  
+  const walletTanks = wallet.walletTanks.filter(
+    (data) => data.currency_abb === assetData.currency_abb && data.is_deleted===false
+  );
+  const numberOfBanks = walletTanks.filter(
     (data) =>
       data.bank_name !== null && data.currency_abb === assetData.currency_abb
   );
-  const walletTanks = wallet.walletTanks.filter(
-    (data) => data.currency_abb === assetData.currency_abb
-  );
-  function handleShow() {
+  const handleShow=()=>{
     updateShowState(assetData.currency_abb);
   }
   // border-2 border-solid border-white
-  console.log(lang);
+  
   return (
     <>
       <div
@@ -28,7 +29,6 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
       >
         <div className="w-1/5 bg-transparent px-3 h-full">
           <div
-            onClick={handleShow}
             className="flex justify-end items-center w-full h-full"
           ></div>
         </div>
