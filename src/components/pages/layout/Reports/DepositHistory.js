@@ -3,57 +3,14 @@ import TopSection from "./common/TopSection";
 import CustomSlider from "../../../common/CustomSlider";
 import DepositCard from "./DepositHistory/DepositCard";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
+import { useThemeState } from "../../../../Providers/ThemeProvider";
 
-export default function DepositHistory({data}) {
+export default function DepositHistory({ data }) {
   const lang = useLanguageState();
-
-  // const [datas, setDatas] = useState([
-  //   {
-  //     type: "Deposit",
-  //     amount: 1250000000,
-  //     currency: "IRR",
-  //     location: "Iran",
-  //     status: "accept",
-  //     date: new Date(),
-  //     rejectReason: "Your uploaded document is not as clear as it must be.",
-  //   },
-  //   {
-  //     type: "Deposit",
-  //     amount: 1250000000,
-  //     currency: "IRR",
-  //     location: "Iran",
-  //     status: "reject",
-  //     date: new Date(),
-  //     rejectReason: "Your uploaded document is not as clear as it must be.",
-  //   },
-  //   {
-  //     type: "Deposit",
-  //     amount: 1250000000,
-  //     currency: "IRR",
-  //     location: "Iran",
-  //     status: "accept",
-  //     date: new Date(),
-  //     rejectReason: "Your uploaded document is not as clear as it must be.",
-  //   },
-  //   {
-  //     type: "Deposit",
-  //     amount: 1250000000,
-  //     currency: "IRR",
-  //     location: "Iran",
-  //     status: "accept",
-  //     date: new Date(),
-  //     rejectReason: "Your uploaded document is not as clear as it must be.",
-  //   },
-  //   {
-  //     type: "Deposit",
-  //     amount: 1250000000,
-  //     currency: "IRR",
-  //     location: "Iran",
-  //     status: "reject",
-  //     date: new Date(),
-  //     rejectReason: "Your uploaded document is not as clear as it must be.",
-  //   },
-  // ]);
+  const font = useFontState();
+  const theme = useThemeState();
+  const oppositeTheme = theme === "dark" ? "light" : "dark";
 
   const getQuantityOfCards = () => {
     if (window.innerWidth >= 1280) {
@@ -70,20 +27,29 @@ export default function DepositHistory({data}) {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="h-full flex flex-col">
       <TopSection route={"deposit"} />
-      <div className="flex-1 px-5 pt-5">
-        <CustomSlider
-          infinite
-          slidesToShow={getQuantityOfCards()}
-          slidesToScroll={getQuantityOfCards()}
-        >
-          {data.map((data, index) => (
-            <div className="px-3" key={index}>
-              <DepositCard data={data} lang={lang} />
-            </div>
-          ))}
-        </CustomSlider>
+      <div className="flex-1 px-2 xl:px-8 pt-5">
+        {data && data.length ? (
+          <CustomSlider
+            slidesToShow={getQuantityOfCards()}
+            slidesToScroll={getQuantityOfCards()}
+          >
+            {data.map((data, index) => (
+              <div className="px-3" key={index}>
+                <DepositCard data={data} lang={lang} />
+              </div>
+            ))}
+          </CustomSlider>
+        ) : (
+          <div className="w-full h-full flex justify-center items-center">
+            <span
+              className={`font-${font}-thin text-${oppositeTheme} text-3xl`}
+            >
+              {lang["no-data"]}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

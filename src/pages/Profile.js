@@ -28,7 +28,7 @@ export default function Profile() {
   useEffect(() => setLoading(getUserInfoIsLoading), [getUserInfoIsLoading]);
 
   useEffect(() => {
-    userInfo && !userInfo.is_verified && getUserInfo();
+    userInfo && userInfo.username && !userInfo.is_verified && getUserInfo();
   }, []);
 
   return (

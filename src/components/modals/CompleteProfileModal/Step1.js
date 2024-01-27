@@ -3,7 +3,13 @@ import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useFontState } from "../../../Providers/FontProvider";
 
-export default function Step1({ handleBlur, handleChange, values }) {
+export default function Step1({
+  handleBlur,
+  handleChange,
+  values,
+  phoneError,
+  setPhoneError,
+}) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
@@ -51,11 +57,19 @@ export default function Step1({ handleBlur, handleChange, values }) {
                   className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                   name="phone"
                   onBlur={handleBlur("phone")}
-                  onChange={handleChange("phone")}
+                  onChange={(e) => {
+                    phoneError && setPhoneError(null);
+                    handleChange(e);
+                  }}
                   value={values.phone ? values.phone : ""}
                 />
               </div>
             </div>
+            {phoneError && (
+              <span className={`text-red font-${font}-thin ml-0.5`}>
+                {phoneError}
+              </span>
+            )}
           </form>
         </div>
         <div
