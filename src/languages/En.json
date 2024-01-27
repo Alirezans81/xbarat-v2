@@ -198,5 +198,6 @@
   "source-amount": "Source Amount",
   "target-amount": "Target Amount",
   "status": "Status",
-  "action": "Action"
+  "action": "Action",
+  "wrong-phone-error": "Invalid phone"
 }

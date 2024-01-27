@@ -17,23 +17,23 @@ const useGetUserInfo = () => {
     window.localStorage.setItem("userInfo", JSON.stringify(value));
 
   const fetch = async (customFunction) => {
-    setIsLoading(true);
-    userInfo && userInfo.username
-      ? await getUserInfo(userInfo.username)
-          .then((data) => {
-            console.log(data);
-            setUser(data.data);
-            saveUser(data.data);
-            customFunction && customFunction();
-            setIsLoading(false);
-            return data.data;
-          })
-          .catch((error) => {
-            console.log(error);
-            setError(error);
-            setIsLoading(false);
-          })
-      : setError("Somthing Wrong!");
+    if (userInfo && userInfo.username) {
+      setIsLoading(true);
+      await getUserInfo(userInfo.username)
+        .then((data) => {
+          console.log(data);
+          setUser(data.data);
+          saveUser(data.data);
+          customFunction && customFunction();
+          setIsLoading(false);
+          return data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
+    }
   };
 
   return { getUserInfo: fetch, error, isLoading };

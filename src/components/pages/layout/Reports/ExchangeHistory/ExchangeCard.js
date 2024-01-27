@@ -45,7 +45,7 @@ export default function ExchangeCard({ lang, data }) {
       </div>
 
       <span className={`font-${font}-regular text-sm text-gray mt-8 mb-2`}>
-        {data.date.toLocaleString()}
+        {data.date}
       </span>
     </div>
   );

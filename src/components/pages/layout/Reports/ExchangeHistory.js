@@ -1,90 +1,16 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import TopSection from "./common/TopSection";
 import CustomSlider from "../../../common/CustomSlider";
 import ExchangeCard from "./ExchangeHistory/ExchangeCard";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
-export default function ExchangeHistory() {
+import { useFontState } from "../../../../Providers/FontProvider";
+import { useThemeState } from "../../../../Providers/ThemeProvider";
+
+export default function ExchangeHistory({ data }) {
   const lang = useLanguageState();
-
-
-  // const [exchange, setExchange] = useState(data);
-  // useEffect(() => {
-  //    getExchangeHistory(getExchange);
-  // }, []);             
-  // const [datas, setDatas] = useState([
-  //   {
-  //     currencyPair: {
-  //       source: { title: "USD" },
-  //       target: { title: "IRR" },
-  //       defaultRateType: "USD/IRR",
-  //     },
-  //     amount: 1000,
-  //     targetAmount: 15000000,
-  //     rate: 497500,
-  //     date: new Date(),
-  //     status: "open",
-  //   },
-  //   {
-  //     currencyPair: {
-  //       source: { title: "USD" },
-  //       target: { title: "IRR" },
-  //       defaultRateType: "USD/IRR",
-  //     },
-  //     amount: 1000,
-  //     targetAmount: 15000000,
-  //     rate: 497500,
-  //     date: new Date(),
-  //     status: "open",
-  //   },
-  //   {
-  //     currencyPair: {
-  //       source: { title: "USD" },
-  //       target: { title: "EUR" },
-  //       defaultRateType: "USD/EUR",
-  //     },
-  //     amount: 1000,
-  //     targetAmount: 15000000,
-  //     rate: 497500,
-  //     date: new Date(),
-  //     status: "done",
-  //   },
-  //   {
-  //     currencyPair: {
-  //       source: { title: "USD" },
-  //       target: { title: "EUR" },
-  //       defaultRateType: "USD/EUR",
-  //     },
-  //     amount: 1000,
-  //     targetAmount: 15000000,
-  //     rate: 497500,
-  //     date: new Date(),
-  //     status: "done",
-  //   },
-  //   {
-  //     currencyPair: {
-  //       source: { title: "USD" },
-  //       target: { title: "EUR" },
-  //       defaultRateType: "USD/EUR",
-  //     },
-  //     amount: 1000,
-  //     targetAmount: 15000000,
-  //     rate: 497500,
-  //     date: new Date(),
-  //     status: "done",
-  //   },
-  //   {
-  //     currencyPair: {
-  //       source: { title: "USD" },
-  //       target: { title: "EUR" },
-  //       defaultRateType: "USD/EUR",
-  //     },
-  //     amount: 1000,
-  //     targetAmount: 15000000,
-  //     rate: 497500,
-  //     date: new Date(),
-  //     status: "done",
-  //   },
-  // ]);
+  const theme = useThemeState();
+  const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const font = useFontState();
 
   const getQuantityOfCards = () => {
     if (window.innerWidth >= 1280) {
@@ -101,20 +27,29 @@ export default function ExchangeHistory() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex h-full flex-col">
       <TopSection route={"exchange"} />
       <div className="flex-1 px-2 xl:px-8 pt-5">
-        <CustomSlider
-          infinite
-          slidesToShow={getQuantityOfCards()}
-          slidesToScroll={getQuantityOfCards()}
-        >
-          {/* {data.map((data, index) => (
-            <div className="px-1 xl:px-5" key={index}>
-              <ExchangeCard data={data} lang={lang} />
-            </div>
-          ))} */}
-        </CustomSlider>
+        {data && data.length ? (
+          <CustomSlider
+            slidesToShow={getQuantityOfCards()}
+            slidesToScroll={getQuantityOfCards()}
+          >
+            {data.map((data, index) => (
+              <div className="px-1 xl:px-5" key={index}>
+                <ExchangeCard data={data} lang={lang} />
+              </div>
+            ))}
+          </CustomSlider>
+        ) : (
+          <div className="w-full h-full flex justify-center items-center">
+            <span
+              className={`font-${font}-thin text-${oppositeTheme} text-3xl`}
+            >
+              {lang["no-data"]}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

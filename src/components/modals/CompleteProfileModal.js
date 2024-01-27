@@ -21,10 +21,12 @@ import {
   useCreateWalletTank,
 } from "../../apis/common/wallet/hooks";
 import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
+import { useLanguageState } from "../../Providers/LanguageProvider";
 
 export default function CompleteProfileModal() {
   const userInfo = useUserState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const lang = useLanguageState();
 
   const [step, setStep] = useState(1);
 
@@ -88,6 +90,52 @@ export default function CompleteProfileModal() {
     () => setIsLoadingSplashScreen(createWalletTankIsLoading),
     [createWalletTankIsLoading]
   );
+
+  const [phoneError, setPhoneError] = useState();
+  const validateFetchStep1 = (values) => {
+    // return true;
+
+    if (values.first_name && values.last_name && values.phone) {
+      const phoneRegex =
+        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+      if (phoneRegex.test(values.phone)) {
+        return true;
+      }
+
+      setPhoneError(lang["wrong-phone-error"] || "Invalid phone");
+      return false;
+    }
+    return false;
+  };
+  const validateFetchStep2 = (values) => {
+    // return true;
+
+    if (values.nationality && values.country && values.city) {
+      return true;
+    }
+    return false;
+  };
+  const validateFetchStep3 = (values) => {
+    // return true;
+
+    if (values.identity_type && values.identity_code && values.document) {
+      return true;
+    }
+    return false;
+  };
+  const validateFetchStep4 = (values) => {
+    // return true;
+
+    if (
+      values.wallet_asset_currency &&
+      values.title &&
+      values.wallet_tank_type &&
+      values.bank_info
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   const { fetchStep1, isLoading: fetchStep1IsLoading } = useFetchStep1();
   const { fetchStep2, isLoading: fetchStep2IsLoading } = useFetchStep2();
@@ -187,10 +235,18 @@ export default function CompleteProfileModal() {
             bank_info: "",
           }}
           onSubmit={(values) => {
-            step === 1 && fetchStep1(values, nextStep);
-            step === 2 && fetchStep2(values, nextStep);
-            step === 3 && fetchStep3(values, nextStep);
-            step === 4 && fetchStep4(values, nextStep);
+            step === 1 &&
+              validateFetchStep1(values) &&
+              fetchStep1(values, nextStep);
+            step === 2 &&
+              validateFetchStep2(values) &&
+              fetchStep2(values, nextStep);
+            step === 3 &&
+              validateFetchStep3(values) &&
+              fetchStep3(values, nextStep);
+            step === 4 &&
+              validateFetchStep4(values) &&
+              fetchStep4(values, nextStep);
           }}
         >
           {({
@@ -207,6 +263,8 @@ export default function CompleteProfileModal() {
                     handleBlur={handleBlur}
                     handleChange={handleChange}
                     values={values}
+                    phoneError={phoneError}
+                    setPhoneError={setPhoneError}
                   />
                   <Buttons step={step} nextFunction={handleSubmit} />
                 </>

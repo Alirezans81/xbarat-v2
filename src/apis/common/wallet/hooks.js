@@ -56,7 +56,7 @@ const useGetWalletAssets = () => {
     await getWalletAssets(filtersObject, token)
       .then((data) => {
         console.log(data);
-        setState(data.data.results);
+        setState && setState(data.data.results);
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
