@@ -18,37 +18,56 @@ const SingleCardTank = ({ show, index, data }) => {
   useEffect(() => {
     setIsLoadingSplashScreen(editWalletTankIsLoading);
   }, [editWalletTankIsLoading]);
-  const [title,setTitle]=useState("")  
+  const [title,setTitle]=useState("");
+  const [accountName,setAccountName]=useState("");
   const [bankInfo,setBankInfo]=useState("");
   const [bankName,setBankName]=useState("")
   const [walletTankType,setWalletTankType]=useState("");
   const [user,setUser]=useState("");
-  const [isChecked, setIsChecked] = useState("");
-  const [isActive,setIsActive]=useState("");
+  const [isFavorite, setIsFavorite] = useState("");
   const [editCards,setEditCards]=useState(false)
+  const [params, setParams] = useState({
+    url:"",
+    wallet_asset: "",
+    wallet_tank_type_title: "",
+    currency_abb:"",
+    title: "",
+    balance: 1,
+    locked: 1,
+    account_name:"",
+    pending: 1,
+    bank_name:"",
+    is_deleted:false,
+    bank_info: "",
+    is_favorite:false,
+  });
   useEffect(()=>{
     if(data){
-      setBankName(data.bank_name)
-      setTitle(data.title)
-      setBankInfo(data.bank_info)
-      setWalletTankType(data.wallet_tank_type)
-      setUser(data.user)
-      setIsChecked(data.is_favorite)
-      setIsActive(!data.is_deleted) 
+      setAccountName(data.account_name);
+      setBankName(data.bank_name);
+      setTitle(data.title);
+      setBankInfo(data.bank_info);
+      setWalletTankType(data.wallet_tank_type);
+      setUser(data.user);
+      setIsFavorite(data.is_favorite);
     }
   },[data])
+  useEffect(()=>{
+    editWalletTank(data.url,params);
+  },[params])
+
 
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+    setParams({
+      is_favorite:!isFavorite
+    });
+    setIsFavorite(!isFavorite)
   };
 
-  function handleIsActive() {
-    setIsActive(!isActive)
-  }
+ 
   const handleEditCard=()=>{
     setEditCards(true);
-    console.log(editCards)
 
   }
  
@@ -69,17 +88,18 @@ const SingleCardTank = ({ show, index, data }) => {
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
             <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{bankName}</span>
-            <button onClick={handleEditCard}className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
-            <button onClick={handleCheckboxChange} className="flex justify-end w-1/12 h-full"><img alt="" src={isChecked?starChecked:starUnChecked} style={{width:"80%",height:"80%"}}/></button>
+            <button onClick={handleEditCard}className="flex justify-end w-1/12 h-fit w-fit mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
+            <button onClick={handleCheckboxChange} className="flex justify-end h-fit w-fit"><img alt="" src={isFavorite?starChecked:starUnChecked} style={{width:"70%",height:"70%"}}/></button>
           </div>
           <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
+                  <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">Account Name</span>
+                  <span className={`text-${oppositeTheme} text-2xl min-w-0 `} >{accountName}</span>
+          </div>
+          <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"1%"}}>
                   <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">{lang["bank_name_null_cards"]}</span>
                   <span className={`text-${oppositeTheme} text-2xl min-w-0 `} >{bankInfo}</span>
           </div>
-          <div className="flex justify-end w-full h-1/4 items-end">
-            <div className="w-full flex justify-end">
-            </div>
-          </div>
+         
         </div>
       </div>
       {/* This is for md screen */}
@@ -94,25 +114,19 @@ const SingleCardTank = ({ show, index, data }) => {
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
             <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{bankName}</span>
-            <button onClick={handleEditCard} className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
-            <button onClick={handleCheckboxChange} className="flex justify-end w-1/12 h-full"><img alt="" src={isChecked?starChecked:starUnChecked} style={{width:"80%",height:"80%"}}/></button>
+            <button onClick={handleEditCard} className="flex justify-end  h-fit w-fit mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
+            <button onClick={handleCheckboxChange} className="flex justify-end w-fit h-fit"><img alt="" src={isFavorite?starChecked:starUnChecked} style={{width:"70%",height:"70%"}}/></button>
+          </div>
+          <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
+                  <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">Account Name</span>
+                  <span className={`text-${oppositeTheme} text-2xl min-w-0 `} >{accountName}</span>
           </div>
           <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
                   <span className="text-gray text-lg w-full h-1/2 min-w-0">{lang["bank_name_null_cards"]}</span>
                   <span className={`text-${oppositeTheme} text-xl min-w-0 `} >{bankInfo}</span>
           </div>
-          <div className="flex justify-end w-full h-1/4 items-end">
-            <div className="w-full flex justify-end">
-              <form className="flex flex-row justify-end h-1/2 px-1 items-end">
-                    <label className={`text-${oppositeTheme} text-2xl`}>Is Active</label>
-                    <input type="checkbox"
-                     onChange={handleIsActive}
-                     value={isActive}
-
-                     className="bg-transparent border-2 border-solid border-blue rounded-sm focus:border-0 ml-1 mb-3"/>
-              </form>
-            </div>
-          </div>
+          
+     
         </div>
       </div>
       {/* This is for xs and sm */}
@@ -126,24 +140,18 @@ const SingleCardTank = ({ show, index, data }) => {
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
             <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{bankName}</span>
-            <button onClick={handleEditCard} className="flex justify-end w-1/12 h-full mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
-            <button onClick={handleCheckboxChange} className="flex justify-end w-1/12 h-full"><img alt="" src={isChecked?starChecked:starUnChecked} style={{width:"80%",height:"80%"}}/></button>
+            <button onClick={handleEditCard} className="flex justify-end h-fit w-fit mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
+            <button onClick={handleCheckboxChange} className="flex justify-end w-fit h-fit"><img alt="" src={isFavorite?starChecked:starUnChecked} style={{width:"70%",height:"70%"}}/></button>
+          </div>
+          <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
+                  <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">Account Name</span>
+                  <span className={`text-${oppositeTheme} text-2xl min-w-0 `} >{accountName}</span>
           </div>
           <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
                   <span className="text-gray text-lg w-full h-1/2 min-w-0">{lang["bank_name_null_cards"]}</span>
                   <span className={`text-${oppositeTheme} text-xl min-w-0 `} >{bankInfo}</span>
           </div>
-          <div className="flex justify-end w-full h-1/4 items-end">
-            <div className="w-full flex justify-end">
-              <form className="flex flex-row justify-end h-1/2 px-1 items-end">
-                    <label className={`text-${oppositeTheme} text-2xl`}>Is Active</label>
-                    <input type="checkbox"
-                     onChange={handleIsActive}
-                     value={isActive}
-                     className="bg-transparent border-2 border-solid border-blue rounded-sm focus:border-0 ml-1 mb-3"/>
-              </form>
-            </div>
-          </div>
+     
         </div>
       </div>
     

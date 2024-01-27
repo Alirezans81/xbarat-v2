@@ -21,11 +21,11 @@ const Cards = () => {
   function handleAddCard() {
     setAddCard(true);
   }
+
   function discard(){
     setShow("")
   }
   const Tanks = wallet.walletTanks.filter((data) => data.currency_abb === show && data.is_deleted===false);
-  console.log(Tanks)
   return (
     <div
       className="bg-transparent  font-bold"
@@ -111,7 +111,7 @@ const Cards = () => {
       </div>
       {/* This is the Assets md and lg*/}
       <div
-        className={`bg-${theme} xs:hidden md:block sm:ml-1 md:w-5/12 lg:w-1/4`}
+        className={`bg-${theme} xs:hidden md:block sm:ml-1 md:w-5/12 lg:w-1/4 overflow-scroll`}
         style={{
           position: "absolute",
           left: "3%",
@@ -126,18 +126,15 @@ const Cards = () => {
       >
       
         <div className="w-full h-full flex flex-col">
-        <div className="w-full flex flex-row xs:p-3">
-          <div className="w-1/2 flex justify-start pt-2">
+          <div className="w-full flex justify-start pt-2">
           <div
             className={`text-3xl text-${oppositeTheme} w-1/3`}
           >
             {lang["cards-profile"]}
           </div>
           </div>
-        </div>
         <div
-          className={`grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-5`}
-        style={{height:"60%"}}
+          className={`grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-5 h-fit`}
         >
           {wallet && wallet.walletAssets ? (
             wallet.walletAssets.map((assetData, assetIndex) => (

@@ -119,22 +119,7 @@ const EditCards = ({ editCards, setEditCards, data }) => {
             onSubmit={handleEditCards}
             className="w-full h-full flex justify-center flex-col"
           >
-            <span
-              className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
-            >
-              {lang["add_cards_title"]}
-            </span>
-            <div className=" w-full">
-              <div className="w-full flex mt-0 px-2">
-                <input
-                  onChange={(e) => setTitle(e.target.value)}
-                  
-                  value={title}
-                  className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
-                  placeholder={lang["add_cards_title"]}
-                />
-              </div>
-            </div>
+      
             <span
               className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
             >
