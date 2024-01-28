@@ -151,7 +151,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                   
                       <span                       
                           className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
-                          {type.length === 0 ? lang["wallet_tank_type_title_null_cards"] : type}
+                          {type.length === 0 ?"Card or Shaba number or Email" : type}
                       </span>
                     <div className="flex w-full justify-end">
                       <CustomDropdown

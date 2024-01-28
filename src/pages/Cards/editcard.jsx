@@ -113,7 +113,7 @@ const EditCards = ({ editCards, setEditCards, data }) => {
       <div
         className={
           editCards
-            ? `fixed top-0 left-0 w-browser h-browser flex items-center justify-center z-20 min-w-fit `
+            ? `fixed top-0 left-0 w-browser h-browser flex items-center justify-center z-20 min-w-fit`
             : "hidden"
         }
       >
