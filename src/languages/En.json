@@ -199,5 +199,6 @@
   "target-amount": "Target Amount",
   "status": "Status",
   "action": "Action",
-  "wrong-phone-error": "Invalid phone"
+  "wrong-phone-error": "Invalid phone",
+  "from": "from"
 }
