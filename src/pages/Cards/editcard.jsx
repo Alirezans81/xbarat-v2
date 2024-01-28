@@ -83,26 +83,37 @@ const EditCards = ({ editCards, setEditCards, data }) => {
     editWalletTank(data.url,params);
   };
   const discard = () => {
-    const a ={
-        is_deleted: true
-    }
-    editWalletTank(data.url,a);
+   
     setEditCards(false);
-    editWalletTank(data.url,a);
 
 
 
   };
   const deleteCard=()=>{
-    setIsDeleted(true);
-    editWalletTank(data.url,params);
+      setParams({
+        url: data.url,
+        account_name:accountName,
+        currency_abb: asset,
+        wallet_tank_type: type,
+        title: title,
+        balance: 0,
+        locked: 0,
+        pending: 0,
+        bank_name: bankName,
+        bank_info: bankInfo,
+        is_deleted:true
+      }); 
+      if(params.is_deleted){ 
+        editWalletTank(data.url,params);
+      }
+      setEditCards(false)
   }
   return (
     <>
       <div
         className={
           editCards
-            ? `fixed top-0 left-0 w-browser h-browser flex items-center justify-center z-20 `
+            ? `fixed top-0 left-0 w-browser h-browser flex items-center justify-center z-20 min-w-fit `
             : "hidden"
         }
       >
@@ -168,12 +179,12 @@ const EditCards = ({ editCards, setEditCards, data }) => {
                 />
               </div>
             </div>
-            <div className="flex flex-row h-full w-full">
-            <div className="w-1/2 flex justify-start">
+            <div className={"xs:hidden md:flex flex-row h-full w-full"}>
+              <div className="w-1/2 flex justify-start">
                 <button
                   onClick={deleteCard}
                   className={
-                    "bg-red rounded-xl text-white w-1/2 h-1/2 pt-1 mt-5"
+                    "bg-red rounded-xl text-white w-fit h-1/2 mt-5 p-2"
                   }
                 >
                   Delete
@@ -182,7 +193,28 @@ const EditCards = ({ editCards, setEditCards, data }) => {
               <div className="w-1/2 flex justify-end">
                 <button
                   className={
-                    "bg-blue-gradient rounded-xl text-white w-1/2 h-1/2 pt-1 mt-5"
+                    "bg-blue-gradient rounded-xl text-white w-fit h-1/2 mt-5 p-2"
+                  }
+                >
+                  {lang["submit"]}
+                </button>
+              </div>
+            </div>
+            <div className={"xs:flex md:hidden flex-col h-full w-full"}>
+              <div className="w-fit flex justify-center">
+                <button
+                  onClick={deleteCard}
+                  className={
+                    "bg-red rounded-xl text-white w-fit h-1/2 mt-5"
+                  }
+                >
+                  Delete
+                </button>
+              </div>
+              <div className="w-fit flex justify-center">
+                <button
+                  className={
+                    "bg-blue-gradient rounded-xl text-white w-fit h-1/2 mt-5"
                   }
                 >
                   {lang["submit"]}

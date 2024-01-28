@@ -3,7 +3,7 @@ import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useWalletState } from "../../Providers/WalletProvider";
 
 import Addcard from "./addcard";
-import { useState} from "react";
+import { useEffect, useState} from "react";
 import SingleCardAssets from "./singleCardAssets";
 import SingleCardTank from "./singleCardTank";
 import cross from "../../Images/pages/layout/Profile/crossCardsGray.png";
@@ -26,6 +26,7 @@ const Cards = () => {
     setShow("")
   }
   const Tanks = wallet.walletTanks.filter((data) => data.currency_abb === show && data.is_deleted===false);
+
   return (
     <div
       className="bg-transparent  font-bold"
@@ -69,7 +70,7 @@ const Cards = () => {
             </div>
             <div className="xs:grid sm:grid md:grid lg:grid lg:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll">
               {Tanks.map((data, index) => (
-                <SingleCardTank show={show} index={index} data={data} />
+                <SingleCardTank show={show} index={index} data={data}  />
               ))}
             </div>
             </div>
@@ -103,7 +104,7 @@ const Cards = () => {
             </div>
             <div className="grid grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll">
               {Tanks.map((data, index) => (
-                <SingleCardTank show={show} index={index} data={data} />
+                <SingleCardTank show={show} index={index} data={data}  />
               ))}
             </div>
             </div>
