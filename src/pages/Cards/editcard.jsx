@@ -83,7 +83,7 @@ const EditCards = ({ editCards, setEditCards, data }) => {
     editWalletTank(data.url,params);
   };
   const discard = () => {
-   
+
     setEditCards(false);
 
 
