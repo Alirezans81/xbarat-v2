@@ -7,32 +7,31 @@ import TransferHistory from "../components/pages/layout/Reports/TransferHistory"
 import { useTokenState } from "../Providers/TokenProvider";
 import { useGetPendingRequests } from "../apis/pages/Wallet/hooks";
 import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
+import { useGetTop5Report } from "../apis/pages/Reports/hooks";
 
 export default function Reports() {
   const theme = useThemeState();
   const token = useTokenState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
-  const { getPendingRequests, isLoading: getPendingRequestsIsLoading } =
-    useGetPendingRequests();
+  const { getTop5Report, isLoading: getTop5ReportIsLoading } =
+    useGetTop5Report();
   useEffect(
-    () => setIsLoadingSplashScreen(getPendingRequestsIsLoading),
-    [getPendingRequestsIsLoading]
+    () => setIsLoadingSplashScreen(getTop5ReportIsLoading),
+    [getTop5ReportIsLoading]
   );
 
-  const [pendingRequests, setPendingRequests] = useState([]);
-  const refreshPendingRequests = () => {
-    getPendingRequests(token, setPendingRequests);
-  };
-
+  const [report, setReport] = useState([]);
   useEffect(() => {
-    refreshPendingRequests();
+    getTop5Report(token, {}, setReport);
   }, []);
 
-  const depositData = pendingRequests.deposit || [];
-  const transferData = pendingRequests.transfer || [];
-  const withdrawalData = pendingRequests.withdrawal || [];
-  const exchangeData = pendingRequests.exchange || [];
+  const depositData = report.deposit || [];
+  const transferData = report.transfer || [];
+  const withdrawalData = report.withdrawal || [];
+  const exchangeData = report.exchange || [];
+
+  console.log(report);
 
   return (
     <div className="absolute w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6">

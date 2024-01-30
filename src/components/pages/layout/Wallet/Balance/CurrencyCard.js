@@ -57,7 +57,11 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
             </span>
           )}
           <span className={`text-${oppositeTheme}`}>
-            {addComma(+walletAsset.balance)}
+            {addComma(
+              (+walletAsset.balance).toFixed(
+                walletAsset.currency_floating_number || 0
+              )
+            )}
           </span>
           <span className="text-gray mx-1">{walletAsset.title}</span>
         </div>
@@ -65,10 +69,24 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
           className={` md:mb-4 flex flex-col gap-y-2 md:gap-y-0 font-${font}-regular items-center`}
         >
           <span className="text-green text-center leading-none md:leading-snug">
-            {"+ " + addComma(+walletAsset.pending) + " " + lang["pending"]}
+            {"+ " +
+              addComma(
+                (+walletAsset.pending).toFixed(
+                  walletAsset.currency_floating_number || 0
+                )
+              ) +
+              " " +
+              lang["pending"]}
           </span>
           <span className="text-red text-center leading-none md:leading-snug -mt-1">
-            {"+ " + addComma(+walletAsset.locked) + " " + lang["locked"]}
+            {"+ " +
+              addComma(
+                (+walletAsset.locked).toFixed(
+                  walletAsset.currency_floating_number || 0
+                )
+              ) +
+              " " +
+              lang["locked"]}
           </span>
         </div>
         <div

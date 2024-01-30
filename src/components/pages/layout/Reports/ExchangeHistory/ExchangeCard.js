@@ -2,12 +2,14 @@ import React from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useAddComma } from "../../../../../hooks/useNumberFunctions";
 import { useFontState } from "../../../../../Providers/FontProvider";
+import { useConvertDateTime } from "../../../../../hooks/useConvertDateTime";
 
 export default function ExchangeCard({ lang, data }) {
   const theme = useThemeState();
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const addComma = useAddComma();
+  const convertDateTime = useConvertDateTime();
 
   return (
     <div
@@ -43,9 +45,8 @@ export default function ExchangeCard({ lang, data }) {
           </span>
         </div>
       </div>
-
       <span className={`font-${font}-regular text-sm text-gray mt-8 mb-2`}>
-        {data.date}
+        {convertDateTime(data.datetime_done)}
       </span>
     </div>
   );

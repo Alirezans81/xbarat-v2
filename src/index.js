@@ -38,11 +38,11 @@ root.render(
                         <CurrenciesProvider>
                           <CurrencyPairsProvider>
                             <TokenProvider>
-                              <UserProvider>
-                                <WalletProvider>
+                              <WalletProvider>
+                                <UserProvider>
                                   <App />
-                                </WalletProvider>
-                              </UserProvider>
+                                </UserProvider>
+                              </WalletProvider>
                             </TokenProvider>
                           </CurrencyPairsProvider>
                         </CurrenciesProvider>

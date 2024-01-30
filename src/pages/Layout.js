@@ -34,6 +34,7 @@ import { useModalDataSetState } from "../Providers/ModalDataProvider";
 import { useFontState } from "../Providers/FontProvider";
 import MobileTopBar from "../components/pages/layout/MobileTopBar";
 import { useToastDataSetState } from "../Providers/ToastDataProvider";
+import { useCheckCompletedProfile } from "../hooks/useCheckCompletedProfile";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -43,6 +44,7 @@ export default function Layout() {
   const setToken = useTokenSetState();
   const setUser = useUserSetState();
   const user = useUserState();
+  const checkCompletedProfile = useCheckCompletedProfile();
   const setWallet = useWalletSetState();
   const setCurrencies = useCurrenciesSetState();
   const setCurrencyPairs = useCurrencyPairsSetState();
@@ -52,10 +54,10 @@ export default function Layout() {
   const setLanguageList = useLanguageListSetState();
   const setStatuses = useStatusesSetState();
   const { pathname: activeRoute } = useLocation();
-  const [links, setLinks] = useState([]);
-
   const { pathname: currentRoute } = useLocation();
   const userInfo = useUserState();
+
+  const [links, setLinks] = useState([]);
 
   const setToastData = useToastDataSetState();
   const openCompleteProfileMessageToast = () => {
@@ -78,7 +80,12 @@ export default function Layout() {
     });
   };
   useEffect(() => {
-    if (userInfo && !userInfo.is_verified && !(currentRoute === "/")) {
+    if (
+      userInfo &&
+      !userInfo.is_verified &&
+      !(currentRoute === "/") &&
+      !checkCompletedProfile()
+    ) {
       openCompleteProfileMessageToast();
       openCompleteProfileModal();
     }

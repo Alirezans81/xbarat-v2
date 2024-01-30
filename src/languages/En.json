@@ -200,5 +200,6 @@
   "status": "Status",
   "action": "Action",
   "wrong-phone-error": "Invalid phone",
-  "from": "from"
+  "from": "from",
+  "back": "Back"
 }

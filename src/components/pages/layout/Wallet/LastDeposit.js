@@ -39,7 +39,7 @@ export default function LastDeposit({ refreshPendingRequests, lastDeposit }) {
             {lang["last-deposit"]}
           </span>
           <span className={`text-gray text-sm font-${font}-regular`}>
-            {convertDateTime(lastDeposit.datetime)}
+            {convertDateTime(lastDeposit.datetime_create)}
           </span>
         </div>
         <div className="flex flex-row w-full justify-between items-end">

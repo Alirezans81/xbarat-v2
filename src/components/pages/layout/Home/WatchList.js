@@ -97,7 +97,7 @@ export default function WatchList({
       <h1 className={`font-${font}-bold text-2xl text-${oppositeTheme}`}>
         {lang["watch-list-label"]}
       </h1>
-      <div className={`flex-1 overflow-y-auto mt-2 p${endDirection}-4`}>
+      <div className={`flex-1 overflow-y-auto mt-2 pr-0 md:pr-4`}>
         <CustomTable
           heads={head}
           rows={watch_list_data}
