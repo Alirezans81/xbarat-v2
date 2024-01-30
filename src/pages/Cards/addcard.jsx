@@ -68,7 +68,8 @@ const Addcard = ({ addCard, setAddCard, show }) => {
         currency_abb:asset[0],
         wallet_tank_type: type==="Card"
           ? api["wallet-tank-type"]+"card-number/"
-          : api["wallet-tank-type"]+"shaba-number/",
+          :type==="Email"? api["wallet-tank-type"]+"shaba-number/"
+          :api["wallet-tank-type"]+"email/" ,
         balance: 0,
         locked: 0,
         pending: 0,
@@ -94,9 +95,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
 
   let listCurrency = currencies.map((data) => [data.abbreviation,data.url,data.sym_pic_gray]);
   let listAsset = walletAsset.map((data) => data.currency_abb);
-  let AvailableNewAssets = listCurrency.filter(
-    (data) => listAsset.includes(data[0]) === false
-  );
+  
 
   return (
     <>
@@ -152,18 +151,21 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                   
                       <span                       
                           className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}>
-                          {type.length === 0 ? lang["wallet_tank_type_title_null_cards"] : type}
+                          {type.length === 0 ?"Card or Shaba number or Email" : type}
                       </span>
                     <div className="flex w-full justify-end">
                       <CustomDropdown
                         className={"bg-transparent w-fit"}
-                        label={type.length===0?"Card/Shaba":type}
+                        label={type.length===0?"Card/Shaba/Email":type}
                       >
                           <CustomItem onClick={()=>setType("Card")}>
                                 Card Number                  
                           </CustomItem>
                           <CustomItem onClick={()=>setType("Shaba")}>
                                 Shaba Number
+                          </CustomItem>
+                          <CustomItem onClick={()=>setType("Email")}>
+                                Email
                           </CustomItem>
                       </CustomDropdown>
                       </div>
@@ -224,7 +226,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                         </div>
                       </div>
                     </div>
-                    <div className={type!=="Card"?"flex flex-col":"hidden"}>
+                    <div className={type==="Shaba"?"flex flex-col":"hidden"}>
                       <span
                         className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
                       >
@@ -236,6 +238,22 @@ const Addcard = ({ addCard, setAddCard, show }) => {
                             onChange={(e) => setShabaNumber(e.target.value)}
                             className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                             placeholder={lang["cards_shaba_number_placeholder"]}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className={type==="Email"?"flex flex-col":"hidden"}>
+                      <span
+                        className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
+                      >
+                        Email
+                      </span>
+                      <div className=" w-full">
+                        <div className="w-full flex mt-0 px-2">
+                          <input
+                            onChange={(e) => setEmail(e.target.value)}
+                            className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
+                            placeholder="example@domain.com"
                           />
                         </div>
                       </div>

@@ -96,7 +96,7 @@ const SingleCardTank = ({ show, index, data }) => {
                   <span className={`text-${oppositeTheme} text-2xl min-w-0 `} >{accountName}</span>
           </div>
           <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"1%"}}>
-                  <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">{lang["bank_name_null_cards"]}</span>
+                  <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">Bank Info</span>
                   <span className={`text-${oppositeTheme} text-2xl min-w-0 `} >{bankInfo}</span>
           </div>
          
@@ -122,7 +122,7 @@ const SingleCardTank = ({ show, index, data }) => {
                   <span className={`text-${oppositeTheme} text-2xl min-w-0 `} >{accountName}</span>
           </div>
           <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
-                  <span className="text-gray text-lg w-full h-1/2 min-w-0">{lang["bank_name_null_cards"]}</span>
+                  <span className="text-gray text-lg w-full h-1/2 min-w-0">Bank Info</span>
                   <span className={`text-${oppositeTheme} text-xl min-w-0 `} >{bankInfo}</span>
           </div>
           
@@ -148,7 +148,7 @@ const SingleCardTank = ({ show, index, data }) => {
                   <span className={`text-${oppositeTheme} text-2xl min-w-0 `} >{accountName}</span>
           </div>
           <div className="w-full h-1/2 flex justify-start flex-col" style={{marginTop:"5%"}}>
-                  <span className="text-gray text-lg w-full h-1/2 min-w-0">{lang["bank_name_null_cards"]}</span>
+                  <span className="text-gray text-lg w-full h-1/2 min-w-0">Bank Info</span>
                   <span className={`text-${oppositeTheme} text-xl min-w-0 `} >{bankInfo}</span>
           </div>
      
