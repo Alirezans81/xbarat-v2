@@ -168,6 +168,7 @@ export default function CompleteProfileModal() {
     () => setIsLoadingSplashScreen(fetchStep3IsLoading),
     [fetchStep3IsLoading]
   );
+
   const nextStep = () => {
     if (step === 3) {
       userInfo &&
@@ -175,6 +176,9 @@ export default function CompleteProfileModal() {
         getWallets({ user: userInfo.username }, setWallets);
     }
     step <= 4 && setStep(step + 1);
+  };
+  const previousStep = () => {
+    step > 0 && setStep(step - 1);
   };
 
   return (
@@ -266,14 +270,22 @@ export default function CompleteProfileModal() {
                     phoneError={phoneError}
                     setPhoneError={setPhoneError}
                   />
-                  <Buttons step={step} nextFunction={handleSubmit} />
+                  <Buttons
+                    step={step}
+                    previousStep={previousStep}
+                    nextFunction={handleSubmit}
+                  />
                 </>
               );
             } else if (step === 2) {
               return (
                 <>
                   <Step2 setFieldValue={setFieldValue} />
-                  <Buttons step={step} nextFunction={handleSubmit} />
+                  <Buttons
+                    step={step}
+                    previousStep={previousStep}
+                    nextFunction={handleSubmit}
+                  />
                 </>
               );
             } else if (step === 3) {
@@ -285,7 +297,11 @@ export default function CompleteProfileModal() {
                     values={values}
                     setFieldValue={setFieldValue}
                   />
-                  <Buttons step={step} nextFunction={handleSubmit} />
+                  <Buttons
+                    step={step}
+                    previousStep={previousStep}
+                    nextFunction={handleSubmit}
+                  />
                 </>
               );
             } else if (step === 4) {
@@ -302,7 +318,11 @@ export default function CompleteProfileModal() {
                     walletAsset={walletAssets[0]}
                     walletTank={walletTanks[0]}
                   />
-                  <Buttons step={step} nextFunction={handleSubmit} />
+                  <Buttons
+                    step={step}
+                    previousStep={previousStep}
+                    nextFunction={handleSubmit}
+                  />
                 </>
               );
             } else if (step === 5) {

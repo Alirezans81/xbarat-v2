@@ -61,7 +61,11 @@ export default function Middle() {
                   <span
                     className={`text-${oppositeTheme} font-${font}-regular text`}
                   >
-                    {addComma(+walletAsset.balance) +
+                    {addComma(
+                      (+walletAsset.balance).toFixed(
+                        walletAsset.currency_floating_number || 0
+                      )
+                    ) +
                       " " +
                       walletAsset.currency_abb}
                   </span>
@@ -71,7 +75,11 @@ export default function Middle() {
                         className={`text-green text-sm font-${font}-regular`}
                       >
                         {"+ " +
-                          addComma(+walletAsset.pending) +
+                          addComma(
+                            (+walletAsset.pending).toFixed(
+                              walletAsset.currency_floating_number || 0
+                            )
+                          ) +
                           " " +
                           lang["pending"]}
                       </span>
@@ -79,7 +87,11 @@ export default function Middle() {
                     {+walletAsset.locked !== 0 && (
                       <span className={`text-red text-sm font-${font}-regular`}>
                         {"+ " +
-                          addComma(+walletAsset.locked) +
+                          addComma(
+                            (+walletAsset.locked).toFixed(
+                              walletAsset.currency_floating_number || 0
+                            )
+                          ) +
                           " " +
                           lang["locked"]}
                       </span>

@@ -11,11 +11,13 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
 
   return (
     <div className="flex-1 w-full flex flex-col overflow-y-visible">
-      <div className={`grid grid-cols-${colsQuantity} gap-x-4 w-full`}>
+      <div
+        className={`grid grid-cols-${colsQuantity} gap-x-4 w-full items-center px-4 md:px-0`}
+      >
         {heads.map((head, index) => (
           <span
             key={index}
-            className={`col-span-1 text-center-important whitespace-nowrap text-sm md:text-base font-${font}-regular text-gray`}
+            className={`col-span-1 text-center-important text-sm md:text-base font-${font}-regular text-gray`}
           >
             {head}
           </span>
@@ -27,8 +29,8 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
               key={trIndex}
               className={
                 haverable
-                  ? `grid grid-cols-${colsQuantity} gap-x-4 w-full bg-${theme}-back items-center hover:bg-blue my-1 py-1 rounded-full hover-text-blue`
-                  : `grid grid-cols-${colsQuantity} gap-x-4 w-full bg-${theme}-back items-center my-1 py-1 rounded-full hover-text-blue`
+                  ? `grid grid-cols-${colsQuantity} gap-x-4 w-full bg-${theme}-back items-center hover:bg-blue my-1 py-1 rounded-full hover-text-blue px-4 md:px-0`
+                  : `grid grid-cols-${colsQuantity} gap-x-4 w-full bg-${theme}-back items-center my-1 py-1 rounded-full hover-text-blue px-4 md:px-0`
               }
               onClick={() => selectRow(row, trIndex)}
             >
@@ -45,7 +47,7 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
         : rows.map((row, trIndex) => (
             <div
               key={trIndex}
-              className={`grid grid-cols-${colsQuantity} gap-x-4 w-full bg-${theme}-back items-center my-1 py-1 rounded-full`}
+              className={`grid grid-cols-${colsQuantity} gap-x-4 w-full bg-${theme}-back items-center my-1 py-1 rounded-full px-4 md:px-0`}
             >
               {row &&
                 Object.values(row).map((value, tdIndex) => (

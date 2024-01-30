@@ -4,7 +4,7 @@ import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useModalDataClose } from "../../../Providers/ModalDataProvider";
 import { useFontState } from "../../../Providers/FontProvider";
 
-export default function Buttons({ step, nextFunction }) {
+export default function Buttons({ step, previousStep, nextFunction }) {
   const lang = useLanguageState();
   const font = useFontState();
   const theme = useThemeState();
@@ -13,6 +13,15 @@ export default function Buttons({ step, nextFunction }) {
 
   return (
     <div className="w-full flex justify-end gap-x-4 mt-1 mb-3">
+      {step !== 1 && (
+        <button
+          type="button"
+          onClick={previousStep ? previousStep : () => {}}
+          className={`bg-${theme}-glass rounded-full px-10 pt-2.5 pb-1 font-${font}-bold text-${oppositeTheme}`}
+        >
+          {lang["back"]}
+        </button>
+      )}
       <button
         onClick={closeModal}
         className={`bg-${theme}-glass rounded-full px-10 pt-2.5 pb-1 font-${font}-bold text-${oppositeTheme}`}

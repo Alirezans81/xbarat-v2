@@ -163,7 +163,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
         )}
       </div>
       <span className={`text-gray font-${font}-regular text-sm mt-4 -mb-2`}>
-        {convertDate(pendingOrder.datetime)}
+        {convertDate(pendingOrder.datetime_create)}
       </span>
     </div>
   );
