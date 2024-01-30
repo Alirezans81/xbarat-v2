@@ -53,7 +53,7 @@ export default function Navbar({ links }) {
               </div>
             </Link>
           ) : (
-            <div className="w-8" />
+            <div className="w-8"/>
           )}
         </CustomTooltip>
       </div>
