@@ -154,9 +154,13 @@ const useEditWalletTanks = () => {
     customFunction,
     customFunctionWithData
   ) => {
+    console.log(params)
+
     setIsLoading(true);
     await editWalletTank(walletTankUrl, params)
       .then((data) => {
+        console.log(params)
+
         console.log(data);
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);
