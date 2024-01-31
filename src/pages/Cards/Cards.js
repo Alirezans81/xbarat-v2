@@ -1,16 +1,20 @@
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
-import { useWalletState } from "../../Providers/WalletProvider";
+import { useGetWalletData, useWalletState } from "../../Providers/WalletProvider";
 
 import Addcard from "./addcard";
 import { useEffect, useState} from "react";
 import SingleCardAssets from "./singleCardAssets";
 import SingleCardTank from "./singleCardTank";
 import cross from "../../Images/pages/layout/Profile/crossCardsGray.png";
+import { useUserState } from "../../Providers/UserProvider";
 
 const Cards = () => {
   const wallet = useWalletState();
+  const refresh=useGetWalletData();
   const theme = useThemeState();
+  const user=useUserState();
+  console.log(user)
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const [show, setShow] = useState([]);
@@ -18,6 +22,7 @@ const Cards = () => {
   const updateShowState = (newState) => {
     setShow(newState);
   };
+
   function handleAddCard() {
     setAddCard(true);
   }

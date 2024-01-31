@@ -131,7 +131,7 @@ const SingleCardTank = ({ show, index, data }) => {
       </div>
       {/* This is for xs and sm */}
       <div
-        className={`xs:block md:hidden bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-7`}
+        className={`xs:block md:hidden bg-${theme}-back w-11/12 rounded-3xl mt-7`}
         style={{
           height:"fit-content",
           gridColumn: 1
@@ -139,7 +139,7 @@ const SingleCardTank = ({ show, index, data }) => {
       > 
         <div className="w-full h-full flex flex-col p-6 px-9">
           <div className="flex flex-row h-1/4 w-full">
-            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">{bankName}</span>
+            <span className="text-blue text-3xl w-5/6 h-full flex justify-start ">{bankName}</span>
             <button onClick={handleEditCard} className="flex justify-end h-fit w-fit mt-1"><img alt="" src={edit} style={{width:"62%",height:"62%"}}/></button>
             <button onClick={handleCheckboxChange} className="flex justify-end w-fit h-fit"><img alt="" src={isFavorite?starChecked:starUnChecked} style={{width:"70%",height:"70%"}}/></button>
           </div>
