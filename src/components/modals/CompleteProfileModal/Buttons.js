@@ -17,21 +17,21 @@ export default function Buttons({ step, previousStep, nextFunction }) {
         <button
           type="button"
           onClick={previousStep ? previousStep : () => {}}
-          className={`bg-${theme}-glass rounded-full px-10 pt-2.5 pb-1 font-${font}-bold text-${oppositeTheme}`}
+          className={`bg-${theme}-glass rounded-full text-base px-6 pt-1.5 md:px-10 md:text-base md:pt-2.5 md:pb-1 font-${font}-bold text-${oppositeTheme}`}
         >
           {lang["back"]}
         </button>
       )}
       <button
         onClick={closeModal}
-        className={`bg-${theme}-glass rounded-full px-10 pt-2.5 pb-1 font-${font}-bold text-${oppositeTheme}`}
+        className={`bg-${theme}-glass rounded-full text-base px-6 pt-1.5 md:px-10 md:text-base md:pt-2.5 md:pb-1 font-${font}-bold text-${oppositeTheme}`}
       >
         {lang["skip"]}
       </button>
       <button
         type="submit"
         onClick={nextFunction ? nextFunction : () => {}}
-        className={`bg-blue rounded-full px-10 pt-2.5 pb-1 font-${font}-bold text-${oppositeTheme}`}
+        className={`bg-blue rounded-full text-base px-6 pt-1.5 md:px-10 md:text-base md:pt-2.5 md:pb-1 font-${font}-bold text-${oppositeTheme}`}
       >
         {step === 4 ? lang["done"] : lang["next"]}
       </button>

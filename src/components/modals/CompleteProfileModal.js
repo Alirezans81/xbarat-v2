@@ -22,11 +22,16 @@ import {
 } from "../../apis/common/wallet/hooks";
 import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
+import { useThemeState } from "../../Providers/ThemeProvider";
+import { useFontState } from "../../Providers/FontProvider";
 
 export default function CompleteProfileModal() {
   const userInfo = useUserState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const lang = useLanguageState();
+  const theme = useThemeState();
+  const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const font = useFontState();
 
   const [step, setStep] = useState(1);
 
@@ -182,155 +187,180 @@ export default function CompleteProfileModal() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-complete-profile">
-      <Stepper step={step} />
-      <div className="px-4 w-full mt-5">
-        <Formik
-          initialValues={{
-            first_name:
-              userInfo &&
-              userInfo.first_name &&
-              userInfo.first_name !== "undefined"
-                ? userInfo.first_name
-                : "",
-            last_name:
-              userInfo &&
-              userInfo.last_name &&
-              userInfo.last_name !== "undefined"
-                ? userInfo.last_name
-                : "",
-            phone:
-              userInfo && userInfo.phone && userInfo.phone !== "undefined"
-                ? userInfo.phone
-                : "",
-            nationality:
-              userInfo &&
-              userInfo.nationality &&
-              userInfo.nationality !== "undefined"
-                ? userInfo.nationality
-                : "",
-            country:
-              userInfo && userInfo.country && userInfo.country !== "undefined"
-                ? userInfo.country
-                : "",
-            city:
-              userInfo && userInfo.city && userInfo.city !== "undefined"
-                ? userInfo.city
-                : "",
-            identity_type:
-              userInfo &&
-              userInfo.identity_type &&
-              userInfo.identity_type !== "undefined"
-                ? userInfo.identity_type
-                : "",
-            identity_code:
-              userInfo &&
-              userInfo.identity_code &&
-              userInfo.identity_code !== "undefined"
-                ? userInfo.identity_code
-                : "",
-            document:
-              userInfo && userInfo.document && userInfo.document !== "undefined"
-                ? userInfo.document
-                : "",
-            wallet_asset_currency: "",
-            title: "",
-            wallet_tank_type: "",
-            bank_info: "",
-          }}
-          onSubmit={(values) => {
-            step === 1 &&
-              validateFetchStep1(values) &&
-              fetchStep1(values, nextStep);
-            step === 2 &&
-              validateFetchStep2(values) &&
-              fetchStep2(values, nextStep);
-            step === 3 &&
-              validateFetchStep3(values) &&
-              fetchStep3(values, nextStep);
-            step === 4 &&
-              validateFetchStep4(values) &&
-              fetchStep4(values, nextStep);
-          }}
-        >
-          {({
-            handleBlur,
-            handleChange,
-            values,
-            handleSubmit,
-            setFieldValue,
-          }) => {
-            if (step === 1) {
-              return (
-                <>
-                  <Step1
-                    handleBlur={handleBlur}
-                    handleChange={handleChange}
-                    values={values}
-                    phoneError={phoneError}
-                    setPhoneError={setPhoneError}
-                  />
-                  <Buttons
-                    step={step}
-                    previousStep={previousStep}
-                    nextFunction={handleSubmit}
-                  />
-                </>
-              );
-            } else if (step === 2) {
-              return (
-                <>
-                  <Step2 setFieldValue={setFieldValue} />
-                  <Buttons
-                    step={step}
-                    previousStep={previousStep}
-                    nextFunction={handleSubmit}
-                  />
-                </>
-              );
-            } else if (step === 3) {
-              return (
-                <>
-                  <Step3
-                    handleBlur={handleBlur}
-                    handleChange={handleChange}
-                    values={values}
-                    setFieldValue={setFieldValue}
-                  />
-                  <Buttons
-                    step={step}
-                    previousStep={previousStep}
-                    nextFunction={handleSubmit}
-                  />
-                </>
-              );
-            } else if (step === 4) {
-              return (
-                <>
-                  <Step4
-                    currencies={currencies}
-                    selectedCurrencyIndex={selectedCurrencyIndex}
-                    setSelectedCurrencyIndex={setSelectedCurrencyIndex}
-                    handleBlur={handleBlur}
-                    handleChange={handleChange}
-                    values={values}
-                    setFieldValue={setFieldValue}
-                    walletAsset={walletAssets[0]}
-                    walletTank={walletTanks[0]}
-                  />
-                  <Buttons
-                    step={step}
-                    previousStep={previousStep}
-                    nextFunction={handleSubmit}
-                  />
-                </>
-              );
-            } else if (step === 5) {
-              return <Step5 />;
-            }
-          }}
-        </Formik>
+    <div className="flex flex-col px-4 justify-center items-center md:flex-row w-complete-profile">
+      <div className="w-full flex flex-col justify-center items-center">
+        <Stepper step={step} />
+        <div className="w-full mt-5">
+          <Formik
+            initialValues={{
+              first_name:
+                userInfo &&
+                userInfo.first_name &&
+                userInfo.first_name !== "undefined"
+                  ? userInfo.first_name
+                  : "",
+              last_name:
+                userInfo &&
+                userInfo.last_name &&
+                userInfo.last_name !== "undefined"
+                  ? userInfo.last_name
+                  : "",
+              phone:
+                userInfo && userInfo.phone && userInfo.phone !== "undefined"
+                  ? userInfo.phone
+                  : "",
+              nationality:
+                userInfo &&
+                userInfo.nationality &&
+                userInfo.nationality !== "undefined"
+                  ? userInfo.nationality
+                  : "",
+              country:
+                userInfo && userInfo.country && userInfo.country !== "undefined"
+                  ? userInfo.country
+                  : "",
+              city:
+                userInfo && userInfo.city && userInfo.city !== "undefined"
+                  ? userInfo.city
+                  : "",
+              identity_type:
+                userInfo &&
+                userInfo.identity_type &&
+                userInfo.identity_type !== "undefined"
+                  ? userInfo.identity_type
+                  : "",
+              identity_code:
+                userInfo &&
+                userInfo.identity_code &&
+                userInfo.identity_code !== "undefined"
+                  ? userInfo.identity_code
+                  : "",
+              document:
+                userInfo &&
+                userInfo.document &&
+                userInfo.document !== "undefined"
+                  ? userInfo.document
+                  : "",
+              wallet_asset_currency: "",
+              title: "",
+              wallet_tank_type: "",
+              bank_info: "",
+            }}
+            onSubmit={(values) => {
+              step === 1 &&
+                validateFetchStep1(values) &&
+                fetchStep1(values, nextStep);
+              step === 2 &&
+                validateFetchStep2(values) &&
+                fetchStep2(values, nextStep);
+              step === 3 &&
+                validateFetchStep3(values) &&
+                fetchStep3(values, nextStep);
+              step === 4 &&
+                validateFetchStep4(values) &&
+                fetchStep4(values, nextStep);
+            }}
+          >
+            {({
+              handleBlur,
+              handleChange,
+              values,
+              handleSubmit,
+              setFieldValue,
+            }) => {
+              if (step === 1) {
+                return (
+                  <>
+                    <Step1
+                      handleBlur={handleBlur}
+                      handleChange={handleChange}
+                      values={values}
+                      phoneError={phoneError}
+                      setPhoneError={setPhoneError}
+                    />
+                    <Buttons
+                      step={step}
+                      previousStep={previousStep}
+                      nextFunction={handleSubmit}
+                    />
+                  </>
+                );
+              } else if (step === 2) {
+                return (
+                  <>
+                    <Step2 setFieldValue={setFieldValue} />
+                    <Buttons
+                      step={step}
+                      previousStep={previousStep}
+                      nextFunction={handleSubmit}
+                    />
+                  </>
+                );
+              } else if (step === 3) {
+                return (
+                  <>
+                    <Step3
+                      handleBlur={handleBlur}
+                      handleChange={handleChange}
+                      values={values}
+                      setFieldValue={setFieldValue}
+                    />
+                    <Buttons
+                      step={step}
+                      previousStep={previousStep}
+                      nextFunction={handleSubmit}
+                    />
+                  </>
+                );
+              } else if (step === 4) {
+                return (
+                  <>
+                    <Step4
+                      currencies={currencies}
+                      selectedCurrencyIndex={selectedCurrencyIndex}
+                      setSelectedCurrencyIndex={setSelectedCurrencyIndex}
+                      handleBlur={handleBlur}
+                      handleChange={handleChange}
+                      values={values}
+                      setFieldValue={setFieldValue}
+                      walletAsset={walletAssets[0]}
+                      walletTank={walletTanks[0]}
+                    />
+                    <Buttons
+                      step={step}
+                      previousStep={previousStep}
+                      nextFunction={handleSubmit}
+                    />
+                  </>
+                );
+              } else if (step === 5) {
+                return <Step5 />;
+              }
+            }}
+          </Formik>
+        </div>
       </div>
+      {step === 3 && (
+        <div className="h-full md:max-w-[14rem] md:ml-5 mb-2 w-complete-profile">
+          <div className="flex flex-row gap-x-4 md:gap-x-0 md:flex-col items-center">
+            <div className={`p-3 md:p-5 bg-${theme}-glass rounded-2xl`}>
+              <img
+                className="w-20 h-20 md:w-48 md:h-48"
+                src={require("../../Images/common/upload-document.png")}
+              />
+            </div>
+            <div className={`flex-1 flex-col`}>
+              <div
+                className={`md:mt-4 md:w-full flex flex-col gap-y-3 text-gray font-${font}-regular`}
+              >
+                <span>
+                  {lang["complete-profile-modal-step3-note-1st"] + "."}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
