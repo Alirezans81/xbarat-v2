@@ -6,12 +6,17 @@ import starUnChecked from "../../Images/pages/layout/Profile/starUnChecked.png";
 import edit from "../../Images/pages/layout/Profile/editBlue.png"
 import { useState,useEffect } from "react";
 import { useEditWalletTanks } from "../../apis/common/wallet/hooks";
+import { useTokenState } from "../../Providers/TokenProvider";
+
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import EditCards from "./editcard";
-const SingleCardTank = ({ show, index, data }) => {
+import { useUserState } from "../../Providers/UserProvider";
+const SingleCardTank = ({ show, index, data,refresh }) => {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const token=useTokenState();
   const lang = useLanguageState();
+  const userP=useUserState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { editWalletTank, isLoading: editWalletTankIsLoading } =
       useEditWalletTanks();
@@ -40,6 +45,8 @@ const SingleCardTank = ({ show, index, data }) => {
     is_deleted:false,
     bank_info: "",
     is_favorite:false,
+    token:token,
+    username:userP.username
   });
   useEffect(()=>{
     if(data){
@@ -50,10 +57,11 @@ const SingleCardTank = ({ show, index, data }) => {
       setWalletTankType(data.wallet_tank_type);
       setUser(data.user);
       setIsFavorite(data.is_favorite);
+      
     }
   },[data])
   useEffect(()=>{
-    editWalletTank(data.url,params);
+    editWalletTank(data.url,params,refresh);
   },[params])
 
 
