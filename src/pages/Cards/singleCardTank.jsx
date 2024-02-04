@@ -11,7 +11,7 @@ import { useTokenState } from "../../Providers/TokenProvider";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import EditCards from "./editcard";
 import { useUserState } from "../../Providers/UserProvider";
-const SingleCardTank = ({ show, index, data,refresh }) => {
+const SingleCardTank = ({ show, index, data,refresh,editCards,setEditCards }) => {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const token=useTokenState();
@@ -30,7 +30,6 @@ const SingleCardTank = ({ show, index, data,refresh }) => {
   const [walletTankType,setWalletTankType]=useState("");
   const [user,setUser]=useState("");
   const [isFavorite, setIsFavorite] = useState("");
-  const [editCards,setEditCards]=useState(false)
   const [params, setParams] = useState({
     url:"",
     wallet_asset: "",
@@ -45,8 +44,7 @@ const SingleCardTank = ({ show, index, data,refresh }) => {
     is_deleted:false,
     bank_info: "",
     is_favorite:false,
-    token:token,
-    username:userP.username
+
   });
   useEffect(()=>{
     if(data){

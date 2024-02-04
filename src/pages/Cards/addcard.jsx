@@ -80,6 +80,7 @@ const Addcard = ({ addCard, setAddCard, show }) => {
   }, [bankName,accountName,type,asset,cardNumber,shabaNumber]);
   const handleAddCards = (e) => {
     e.preventDefault();
+
     setAddCard(false);
     createWalletTank(params);
     console.log(params.user)
