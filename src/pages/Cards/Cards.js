@@ -22,6 +22,7 @@ const Cards = () => {
   const [addCard, setAddCard] = useState(false);
   const [Tanks,setTanks]=useState([]);
   const [editCards,setEditCards]=useState(false)
+  const [toggle,setToggle]=useState(false)
 
   const updateShowState = (newState) => {
     setShow(newState);
@@ -34,8 +35,9 @@ const Cards = () => {
     setShow("")
   }
   useEffect(()=>{
+    console.log(toggle);
     refresh(usering.username, token);
-  },[editCards,addCard])
+  },[editCards,addCard,toggle])
   useEffect(()=>{
     if(wallet){
       setTanks(wallet.walletTanks.filter((data) => data.currency_abb === show && data.is_deleted===false))
@@ -70,7 +72,7 @@ const Cards = () => {
             borderBottomLeftRadius: "50px"}}
         >
 
-            <Addcard addCard={addCard} setAddCard={setAddCard} show={show} refresh={refresh} />
+            <Addcard addCard={addCard} setAddCard={setAddCard} show={show}   />
             <div className="w-full h-full flex flex-col">
             <div className="w-full h-8 flex justify-end mt-5">
             <button
@@ -85,7 +87,7 @@ const Cards = () => {
             </div>
             <div className="xs:grid sm:grid md:grid lg:grid lg:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll">
               {Tanks.map((data, index) => (
-                <SingleCardTank show={show} index={index} data={data}  refresh={refresh} editCards={editCards} setEditCards={setEditCards}/>
+                <SingleCardTank show={show} index={index} data={data} editCards={editCards} setEditCards={setEditCards} toggle={toggle} setToggle={setToggle}/>
               ))}
             </div>
             </div>
@@ -120,7 +122,7 @@ const Cards = () => {
             </div>
             <div className="grid grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll">
               {Tanks.map((data, index) => (
-                <SingleCardTank show={show} index={index} data={data}  refresh={refresh} editCards={editCards} setEditCards={setEditCards}/>
+                <SingleCardTank show={show} index={index} data={data} editCards={editCards} setEditCards={setEditCards} toggle={toggle} setToggle={setToggle}/>
               ))}
             </div>
             </div>
@@ -200,7 +202,7 @@ const Cards = () => {
         </div>
         <div className={show.length===0?"hidden":"grid grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll"}>
               {Tanks.map((data, index) => (
-                <SingleCardTank show={show} index={index} data={data}  refresh={refresh} editCards={editCards} setEditCards={setEditCards}/>
+                <SingleCardTank show={show} index={index} data={data} editCards={editCards} setEditCards={setEditCards} toggle={toggle} setToggle={setToggle}/>
               ))}
             </div>
       </div>

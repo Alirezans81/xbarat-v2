@@ -11,7 +11,7 @@ import { useTokenState } from "../../Providers/TokenProvider";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import EditCards from "./editcard";
 import { useUserState } from "../../Providers/UserProvider";
-const SingleCardTank = ({ show, index, data,refresh,editCards,setEditCards }) => {
+const SingleCardTank = ({ show, index, data,refresh,editCards,setEditCards,toggle,setToggle }) => {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const token=useTokenState();
@@ -59,7 +59,8 @@ const SingleCardTank = ({ show, index, data,refresh,editCards,setEditCards }) =>
     }
   },[data])
   useEffect(()=>{
-    editWalletTank(data.url,params,refresh);
+    console.log(params.is_favorite)
+    editWalletTank(data.url,params);
   },[params])
 
 

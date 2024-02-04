@@ -161,9 +161,6 @@ const useEditWalletTanks = () => {
       .then((data) => {
         console.log(params)
         console.log(data);
-        if(customFunction){
-          console.log(customFunction)
-        }
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
