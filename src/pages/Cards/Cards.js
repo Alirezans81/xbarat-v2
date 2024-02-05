@@ -1,7 +1,8 @@
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
-import { useWalletState } from "../../Providers/WalletProvider";
-
+import { useGetWalletData, useWalletState } from "../../Providers/WalletProvider";
+import { useUserState } from "../../Providers/UserProvider";
+import { useTokenState } from "../../Providers/TokenProvider";
 import Addcard from "./addcard";
 import { useEffect, useState} from "react";
 import SingleCardAssets from "./singleCardAssets";
@@ -10,11 +11,18 @@ import cross from "../../Images/pages/layout/Profile/crossCardsGray.png";
 
 const Cards = () => {
   const wallet = useWalletState();
+  const usering=useUserState();
+  const token=useTokenState();
+  const refresh=useGetWalletData();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const [show, setShow] = useState([]);
+  
   const [addCard, setAddCard] = useState(false);
+  const [Tanks,setTanks]=useState([]);
+  const [editCards,setEditCards]=useState(false)
+
   const updateShowState = (newState) => {
     setShow(newState);
   };
@@ -25,7 +33,14 @@ const Cards = () => {
   function discard(){
     setShow("")
   }
-  const Tanks = wallet.walletTanks.filter((data) => data.currency_abb === show && data.is_deleted===false);
+  useEffect(()=>{
+    refresh(usering.username, token);
+  },[editCards,addCard])
+  useEffect(()=>{
+    if(wallet){
+      setTanks(wallet.walletTanks.filter((data) => data.currency_abb === show && data.is_deleted===false))
+    }
+  },[show,wallet])
 
   return (
     <div
@@ -55,7 +70,7 @@ const Cards = () => {
             borderBottomLeftRadius: "50px"}}
         >
 
-            <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
+            <Addcard addCard={addCard} setAddCard={setAddCard} show={show} refresh={refresh} />
             <div className="w-full h-full flex flex-col">
             <div className="w-full h-8 flex justify-end mt-5">
             <button
@@ -70,7 +85,7 @@ const Cards = () => {
             </div>
             <div className="xs:grid sm:grid md:grid lg:grid lg:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll">
               {Tanks.map((data, index) => (
-                <SingleCardTank show={show} index={index} data={data}  />
+                <SingleCardTank show={show} index={index} data={data}  refresh={refresh} editCards={editCards} setEditCards={setEditCards}/>
               ))}
             </div>
             </div>
@@ -84,10 +99,11 @@ const Cards = () => {
           width:"100%",
         }}
       >
+        {/* This is for xs screen */}
         <div className={`md:hidden xs:block w-11/12 ml-5 flex justify-center h-full bg-${theme} rounded-3xl`}
           
         >
-            <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
+            <Addcard addCard={addCard} setAddCard={setAddCard} show={show} refresh={refresh}/>
 
             <div className="w-full h-full flex flex-col">
             <div className="w-full h-8 mt-5 flex flex-row">
@@ -104,7 +120,7 @@ const Cards = () => {
             </div>
             <div className="grid grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll">
               {Tanks.map((data, index) => (
-                <SingleCardTank show={show} index={index} data={data}  />
+                <SingleCardTank show={show} index={index} data={data}  refresh={refresh} editCards={editCards} setEditCards={setEditCards}/>
               ))}
             </div>
             </div>
@@ -168,7 +184,7 @@ const Cards = () => {
         </div>
         <div
           className={`grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-5 ml-5 w-11/12`}
-        style={{height:"55%"}}
+        style={{height:"fit-content"}}
         >
           {wallet && wallet.walletAssets ? (
             wallet.walletAssets.map((assetData, assetIndex) => (
@@ -182,10 +198,14 @@ const Cards = () => {
             <div className="text-white">Loading...</div>
           )}
         </div>
+        <div className={show.length===0?"hidden":"grid grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll"}>
+              {Tanks.map((data, index) => (
+                <SingleCardTank show={show} index={index} data={data}  refresh={refresh} editCards={editCards} setEditCards={setEditCards}/>
+              ))}
+            </div>
       </div>
       </div>
       </div>
-      
     </div>
   );
 };

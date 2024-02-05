@@ -157,10 +157,8 @@ const useEditWalletTanks = () => {
     console.log(params);
 
     setIsLoading(true);
-    await editWalletTank(walletTankUrl, params)
+    await editWalletTank(walletTankUrl, params,customFunctionWithData)
       .then((data) => {
-        console.log(params);
-
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);

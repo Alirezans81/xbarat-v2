@@ -121,7 +121,7 @@ const EditCards = ({ editCards, setEditCards, data }) => {
 
         <div
           style={{ height: "fit-content" }}
-          className={`bg-${theme} flex flex-col w-1/4 px-5 py-5 rounded-lg z-50`}
+          className={`bg-${theme} flex flex-col xs:w-1/2 md:w-1/4 p-5 rounded-lg z-50`}
         >
           <button className="flex justify-end h-fit" onClick={discard}>
             <img className="w-6" src={cross} alt="" />
@@ -179,7 +179,18 @@ const EditCards = ({ editCards, setEditCards, data }) => {
                 />
               </div>
             </div>
-            <div className={"xs:hidden md:flex flex-row h-full w-full"}>
+            <div className={"xs:hidden md:flex flex-row-reverse h-full w-full"}>
+            <div className="w-1/2 flex justify-end">
+                <button
+                    type="submit"
+
+                  className={
+                    "bg-blue-gradient rounded-xl text-white w-fit h-1/2 mt-5 p-2"
+                  }
+                >
+                  {lang["submit"]}
+                </button>
+              </div>
               <div className="w-1/2 flex justify-start">
                 <button
                   onClick={deleteCard}
@@ -190,31 +201,24 @@ const EditCards = ({ editCards, setEditCards, data }) => {
                   Delete
                 </button>
               </div>
-              <div className="w-1/2 flex justify-end">
-                <button
-                  className={
-                    "bg-blue-gradient rounded-xl text-white w-fit h-1/2 mt-5 p-2"
-                  }
-                >
-                  {lang["submit"]}
-                </button>
-              </div>
+              
             </div>
-            <div className={"xs:flex md:hidden flex-col h-full w-full"}>
-              <div className="w-fit flex justify-center">
+            <div className={"xs:flex md:hidden flex-col h-full w-full "}>
+              <div className="w-full flex justify-center">
                 <button
                   onClick={deleteCard}
                   className={
-                    "bg-red rounded-xl text-white w-fit h-1/2 mt-5"
+                    "bg-red rounded-xl text-white w-fit p-2 h-1/2 mt-5"
                   }
                 >
                   Delete
                 </button>
               </div>
-              <div className="w-fit flex justify-center">
+              <div className="w-full flex justify-center">
                 <button
+                  type="submit"
                   className={
-                    "bg-blue-gradient rounded-xl text-white w-fit h-1/2 mt-5"
+                    "bg-blue-gradient rounded-xl text-white w-fit h-1/2 mt-5 p-2"
                   }
                 >
                   {lang["submit"]}
