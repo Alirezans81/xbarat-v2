@@ -9,6 +9,7 @@ import {
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import { useFontState } from "../../../Providers/FontProvider";
+import CustomSearchableDropdown from "../../common/CustomSearchableDropdown";
 
 export default function Step2({ setFieldValue }) {
   const theme = useThemeState();
@@ -264,7 +265,9 @@ export default function Step2({ setFieldValue }) {
             {lang["note"]}
           </span>
         </div>
-        <div className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}>
+        <div
+          className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}
+        >
           <span>{lang["complete-profile-modal-step2-note-1st"] + "."}</span>
           <span>{lang["complete-profile-modal-step2-note-2nd"] + "."}</span>
         </div>

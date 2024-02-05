@@ -201,5 +201,10 @@
   "action": "Action",
   "wrong-phone-error": "Invalid phone",
   "from": "from",
-  "back": "Back"
+  "back": "Back",
+  "upload-document-profile-note-1st": "You have to send your photo and ID directly and online as a selfie",
+  "upload-document-profile-note-2nd": "Your photo and ID must be in the same box",
+  "upload-document-profile-note-3rd": "Cover the unique code of your identification document",
+  "upload-document-profile-note-4th": "The size of the photo should be less than 1 MB",
+  "search": "Search"
 }

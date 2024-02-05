@@ -15,7 +15,7 @@ const useGetDepositHistory = () => {
     setIsLoading(true);
     await getDepositHistory()
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         setIsLoading(false);
         return data.data.results;
@@ -38,7 +38,7 @@ const useGetTransferHistory = () => {
     setIsLoading(true);
     await getTransferHistory()
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         setIsLoading(false);
         return data.data.results;
@@ -61,7 +61,7 @@ const useGetExchangeHistory = () => {
     setIsLoading(true);
     await getExchangeHistory()
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         setIsLoading(false);
         return data.data.results;
@@ -84,7 +84,7 @@ const useGetWithdrawHistory = () => {
     setIsLoading(true);
     await getWithdrawHistory()
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         setIsLoading(false);
         return data.data.results;
@@ -107,7 +107,7 @@ const useGetTop5Report = () => {
     setIsLoading(true);
     await getTop5Report(token, params)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         setIsLoading(false);
         return data.data.results;

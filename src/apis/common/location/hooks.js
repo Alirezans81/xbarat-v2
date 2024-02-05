@@ -17,7 +17,7 @@ const useGetNationalities = () => {
     setIsLoading(true);
     await getNationalities()
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
@@ -41,7 +41,7 @@ const useGetCountries = () => {
     setIsLoading(true);
     await getCounties()
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
@@ -65,7 +65,7 @@ const useGetCities = () => {
     setIsLoading(true);
     await getCities(filtersObject)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
@@ -89,7 +89,7 @@ const useGetNationality = () => {
     setIsLoading(true);
     await getNationality(nationalityUrl)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data);
         customFunction && customFunction();
         setIsLoading(false);
@@ -113,7 +113,7 @@ const useGetCountry = () => {
     setIsLoading(true);
     await getCountry(countryUrl)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data);
         customFunction && customFunction();
         setIsLoading(false);
@@ -137,7 +137,7 @@ const useGetCity = () => {
     setIsLoading(true);
     await getCity(cityUrl)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data);
         customFunction && customFunction();
         setIsLoading(false);
@@ -167,7 +167,7 @@ const useGetRequiredFeild = () => {
     currentState &&
       (await getRequiredFeild(requiredFeildUrl)
         .then((data) => {
-          console.log(data);
+          process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
           let temp = currentState;
           temp.push(data.data);
           setState(temp);

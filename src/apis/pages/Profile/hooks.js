@@ -21,7 +21,7 @@ const useGetUserInfo = () => {
       setIsLoading(true);
       await getUserInfo(userInfo.username)
         .then((data) => {
-          console.log(data);
+          process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
           setUser(data.data);
           saveUser(data.data);
           customFunction && customFunction();
@@ -53,7 +53,7 @@ const useUpdateNameAndAvatar = () => {
     userInfo && userInfo.username
       ? await updateNameAndAvatar(userInfo.username, params)
           .then((data) => {
-            console.log(data);
+            process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
             setUser(data.data.results);
             saveUser(data.data.results);
             customFunction();
@@ -85,7 +85,7 @@ const useUpdatePhone = () => {
     userInfo && userInfo.username
       ? await updatePhone(userInfo.username, params)
           .then((data) => {
-            console.log(data);
+            process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
             setUser(data.data.results);
             saveUser(data.data.results);
             customFunction && customFunction();
@@ -117,7 +117,7 @@ const useUpdateNationalInfo = () => {
     userInfo && userInfo.username
       ? await updateNationalInfo(userInfo.username, params)
           .then((data) => {
-            console.log(data);
+            process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
             setUser(data.data.results);
             saveUser(data.data.results);
             customFunctionWithData && customFunctionWithData(data.data.results);
