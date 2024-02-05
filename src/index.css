@@ -518,3 +518,7 @@ body {
   outline-color: #171D20 !important;
   outline-width: 0.5px !important;
 }
+
+.height-full{
+  height: 100% !important;
+}

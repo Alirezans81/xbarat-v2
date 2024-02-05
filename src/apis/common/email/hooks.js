@@ -14,7 +14,7 @@ const useCheckEmail = () => {
     setIsLoading(true);
     await checkEmail(email)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
@@ -39,7 +39,7 @@ const useSendEmail = () => {
     setIsLoading(true);
     await sendEmail({ from_name: "Xbarat Team", ...params })
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);

@@ -16,7 +16,7 @@ const useGetWatchList = () => {
     setIsLoading(true);
     await getWatchList()
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
@@ -40,7 +40,7 @@ const useGetTableExchange = () => {
     setIsLoading(true);
     await getTableExchange(params)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
@@ -64,7 +64,7 @@ const useGetOtherExchangesRate = () => {
     setIsLoading(true);
     await getOtherExchangesRate(filtersObject)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState && setState(data.data.results);
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
@@ -88,7 +88,7 @@ const useExchange = () => {
     setIsLoading(true);
     await exchange(params)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
         return data.data;
@@ -111,7 +111,7 @@ const useGetPendingExchanges = () => {
     setIsLoading(true);
     await getPendingExchanges(token)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
@@ -135,7 +135,7 @@ const useCancelPendingExchange = () => {
     setIsLoading(true);
     await cancelPendingExchange(pendingExchangeUrl)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
         return data.data;

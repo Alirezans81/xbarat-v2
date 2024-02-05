@@ -19,12 +19,16 @@ export default function NoPage() {
   useEffect(() => {
     const savedStringToken = window.localStorage.getItem("authToken");
     const savedStringUser = window.localStorage.getItem("userInfo");
+    const savedExpireTime = window.localStorage.getItem("expireTime");
 
     if (
       savedStringToken !== "undefined" &&
       savedStringToken !== "null" &&
       savedStringUser !== "undefined" &&
-      savedStringUser !== "null"
+      savedStringUser !== "null" &&
+      (savedExpireTime === "undefined" ||
+        !savedExpireTime ||
+        new Date(savedExpireTime) >= new Date())
     ) {
       const savedToken = JSON.parse(savedStringToken);
       const savedUser = JSON.parse(savedStringUser);

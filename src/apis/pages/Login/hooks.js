@@ -14,20 +14,33 @@ const useLogin = () => {
     setIsLoading(true);
     login(params)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setUser(data.data.results.user);
-        rememberMe &&
+        setToken(data.data.results.token);
+
+        if (rememberMe) {
           window.localStorage.setItem(
             "userInfo",
             JSON.stringify(data.data.results.user)
           );
-
-        setToken(data.data.results.token);
-        rememberMe &&
           window.localStorage.setItem(
             "authToken",
             JSON.stringify(data.data.results.token)
           );
+        } else {
+          const expireTime = new Date();
+          expireTime.setDate(expireTime.getDate() + 1);
+          window.localStorage.setItem("expireTime", expireTime.toISOString());
+
+          window.localStorage.setItem(
+            "userInfo",
+            JSON.stringify(data.data.results.user)
+          );
+          window.localStorage.setItem(
+            "authToken",
+            JSON.stringify(data.data.results.token)
+          );
+        }
 
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
