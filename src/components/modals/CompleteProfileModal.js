@@ -23,15 +23,13 @@ import {
 import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useThemeState } from "../../Providers/ThemeProvider";
-import { useFontState } from "../../Providers/FontProvider";
+import UploadDocumentHint from "./CompleteProfileModal/UploadDocumentHint";
 
 export default function CompleteProfileModal() {
   const userInfo = useUserState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const lang = useLanguageState();
   const theme = useThemeState();
-  const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const font = useFontState();
 
   const [step, setStep] = useState(1);
 
@@ -98,8 +96,6 @@ export default function CompleteProfileModal() {
 
   const [phoneError, setPhoneError] = useState();
   const validateFetchStep1 = (values) => {
-    // return true;
-
     if (values.first_name && values.last_name && values.phone) {
       const phoneRegex =
         /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
@@ -190,7 +186,7 @@ export default function CompleteProfileModal() {
     <div className="flex flex-col px-4 justify-center items-center md:flex-row w-complete-profile">
       <div className="w-full flex flex-col justify-center items-center">
         <Stepper step={step} />
-        <div className="w-full mt-5">
+        <div className="w-full mt-5 h-full flex flex-col justify-between">
           <Formik
             initialValues={{
               first_name:
@@ -340,27 +336,7 @@ export default function CompleteProfileModal() {
           </Formik>
         </div>
       </div>
-      {step === 3 && (
-        <div className="h-full md:max-w-[14rem] md:ml-5 mb-2 w-complete-profile">
-          <div className="flex flex-row gap-x-4 md:gap-x-0 md:flex-col items-center">
-            <div className={`p-3 md:p-5 bg-${theme}-glass rounded-2xl`}>
-              <img
-                className="w-20 h-20 md:w-48 md:h-48"
-                src={require("../../Images/common/upload-document.png")}
-              />
-            </div>
-            <div className={`flex-1 flex-col`}>
-              <div
-                className={`md:mt-4 md:w-full flex flex-col gap-y-3 text-gray font-${font}-regular`}
-              >
-                <span>
-                  {lang["complete-profile-modal-step3-note-1st"] + "."}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {step === 3 && <UploadDocumentHint />}
     </div>
   );
 }

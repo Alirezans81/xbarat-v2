@@ -27,6 +27,7 @@ export default function OnLoad({ children }) {
   useEffect(() => {
     const saveStringToken = window.localStorage.getItem("authToken");
     const saveStringUserInfo = window.localStorage.getItem("userInfo");
+    const savedExpireTime = window.localStorage.getItem("expireTime");
 
     const stringLanguages = window.localStorage.getItem("languageList");
     if (
@@ -45,14 +46,14 @@ export default function OnLoad({ children }) {
       (saveStringToken !== "undefined" &&
         saveStringToken !== null &&
         saveStringUserInfo !== "undefined" &&
-        saveStringUserInfo !== null) ||
+        saveStringUserInfo !== null &&
+        (savedExpireTime === "undefined" ||
+          !savedExpireTime ||
+          new Date(savedExpireTime) >= new Date())) ||
       token
     ) {
       navigate("/home");
-    } else {
-      window.localStorage.removeItem("linksShown");
-      // navigate("/login");
-    }
+    } else window.localStorage.removeItem("linksShown");
   }, []);
 
   if (children) {

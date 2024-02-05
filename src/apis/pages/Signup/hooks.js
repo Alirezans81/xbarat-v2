@@ -9,7 +9,7 @@ const useSignup = () => {
     setIsLoading(true);
     await signup(params)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
         return data.data;
