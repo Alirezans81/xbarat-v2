@@ -13,7 +13,7 @@ const useGetPendingRequests = () => {
     setIsLoading(true);
     await getPendingRequests(token)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
@@ -37,7 +37,7 @@ const useCancelPendingRequest = () => {
     setIsLoading(true);
     await cancelPendingRequest(requestUrl)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
         return data.data;
@@ -60,7 +60,7 @@ const useUploadRequestDocument = () => {
     setIsLoading(true);
     await uploadRequestDocument(requestUrl, params)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
         return data.data;

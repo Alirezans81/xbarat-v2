@@ -24,7 +24,7 @@ const useGetWallets = () => {
     setIsLoading(true);
     await getWallets(filtersObject)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);
@@ -55,7 +55,7 @@ const useGetWalletAssets = () => {
     setIsLoading(true);
     await getWalletAssets(filtersObject, token)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState && setState(data.data.results);
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);
@@ -80,7 +80,7 @@ const useGetWalletTanks = () => {
     setIsLoading(true);
     await getWalletTanks(filtersObject)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
@@ -104,7 +104,7 @@ const useGetWalletTankTypes = () => {
     setIsLoading(true);
     await getWalletTankTypes(filtersObject)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
@@ -128,7 +128,7 @@ const useCreateWalletTank = () => {
     setIsLoading(true);
     await createWalletTank(params)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
@@ -154,13 +154,12 @@ const useEditWalletTanks = () => {
     customFunction,
     customFunctionWithData
   ) => {
-    console.log(params)
+    console.log(params);
 
     setIsLoading(true);
     await editWalletTank(walletTankUrl, params,customFunctionWithData)
       .then((data) => {
-        console.log(params)
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(params.username,params.token);
         setIsLoading(false);
@@ -183,7 +182,7 @@ const useCreateDeposit = () => {
     setIsLoading(true);
     await createDeposit(params)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
         return data.data;
@@ -206,7 +205,7 @@ const useCreateWithdrawal = () => {
     setIsLoading(true);
     await createWithdrawal(params)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
         return data.data;
@@ -229,7 +228,7 @@ const useCreateTransfer = () => {
     setIsLoading(true);
     await createTransfer(params)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
         return data.data;
