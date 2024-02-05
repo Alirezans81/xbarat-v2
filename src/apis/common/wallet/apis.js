@@ -70,9 +70,10 @@ const editWalletTank=(walletTankUrl,params)=>{
   params.bank_name && formData.append("bank_name",params.bank_name);
   params.is_deleted && formData.append("is_deleted",params.is_deleted);
   params.account_name && formData.append("account_name",params.account_name);
-  params.is_favorite && formData.append("is_favorite",params.is_favorite);
-  console.log(params)
-  console.log(formData)
+  if((params.is_favorite.toString()).length>0){
+    formData.append("is_favorite",params.is_favorite);
+  }
+
   return axios.patch(walletTankUrl,formData)
 }
 

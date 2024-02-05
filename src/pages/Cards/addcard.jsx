@@ -83,7 +83,6 @@ const Addcard = ({ addCard, setAddCard, show }) => {
 
     setAddCard(false);
     createWalletTank(params);
-    console.log(params.user)
 
   };
 

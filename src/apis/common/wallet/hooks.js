@@ -162,7 +162,7 @@ const useEditWalletTanks = () => {
         console.log(params)
         console.log(data);
         customFunction && customFunction();
-        customFunctionWithData && customFunctionWithData(data.data.results);
+        customFunctionWithData && customFunctionWithData(params.username,params.token);
         setIsLoading(false);
         return data.data.results;
       })
