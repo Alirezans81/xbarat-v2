@@ -92,10 +92,12 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
         {data && data.status_title === "Upload Document" && (
           <div className="flex flex-col gap-y-2 mb-5">
             <span
-              className={`text-${oppositeTheme} text-xl font-${font}-regular`}
+              className={`text-yellow text-xl font-${font}-regular text-center`}
             >
-              {data && data.user_receiver_full_name
-                ? data.user_receiver_full_name
+              {receiverTanks &&
+              receiverTanks[selectedWalletTank] &&
+              receiverTanks[selectedWalletTank].account_name
+                ? receiverTanks[selectedWalletTank].account_name
                 : ""}
             </span>
             <div className="w-full flex">

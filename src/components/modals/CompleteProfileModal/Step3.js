@@ -67,118 +67,139 @@ export default function Step3({
 
   if (handleBlur && handleChange && values) {
     return (
-      <div className="w-full flex gap-x-10 my-5">
-        <div className="flex-1">
-          <form className="w-full h-full">
-            <div className="flex-1 w-full flex flex-col gap-y-2">
-              <span className={`font-${font}-regular text-${oppositeTheme}`}>
-                {lang["type-of-identity-document"]}
-              </span>
-              <div className="w-full flex">
-                <CustomDropdown
-                  label={
-                    selectedRequiredFeildIndex >= 0
-                      ? requiredFeilds[selectedRequiredFeildIndex].title
-                      : ""
-                  }
-                >
-                  {requiredFeilds.map((requiredFeild, index) => {
-                    if (index === 0 && index === requiredFeilds.length - 1) {
-                      return (
-                        <CustomItem
-                          key={index}
-                          className="rounded-xl"
-                          onClick={() => setSelectedRequiredFeildIndex(index)}
-                        >
-                          {requiredFeild && requiredFeild.title
-                            ? requiredFeild.title
-                            : "error"}
-                        </CustomItem>
-                      );
-                    } else if (index === 0) {
-                      return (
-                        <CustomItem
-                          key={index}
-                          className="rounded-t-xl"
-                          onClick={() => setSelectedRequiredFeildIndex(index)}
-                        >
-                          {requiredFeild && requiredFeild.title
-                            ? requiredFeild.title
-                            : "error"}
-                        </CustomItem>
-                      );
-                    } else if (index === requiredFeilds.length - 1) {
-                      return (
-                        <CustomItem
-                          key={index}
-                          className="rounded-b-xl"
-                          onClick={() => setSelectedRequiredFeildIndex(index)}
-                        >
-                          {requiredFeild && requiredFeild.title
-                            ? requiredFeild.title
-                            : "error"}
-                        </CustomItem>
-                      );
-                    } else {
-                      return (
-                        <CustomItem
-                          key={index}
-                          onClick={() => setSelectedRequiredFeildIndex(index)}
-                        >
-                          {requiredFeild && requiredFeild.title
-                            ? requiredFeild.title
-                            : "error"}
-                        </CustomItem>
-                      );
-                    }
-                  })}
-                </CustomDropdown>
-              </div>
-            </div>
-            <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-              <span className={`font-${font}-regular text-${oppositeTheme}`}>
-                {lang["number-of-document"]}
-              </span>
-              <div className="w-full flex">
-                <input
-                  className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
-                  name="identity_code"
-                  onBlur={handleBlur("identity_code")}
-                  onChange={handleChange("identity_code")}
-                  value={values.identity_code ? values.identity_code : ""}
-                />
-              </div>
-            </div>
-            <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-              <span className={`font-${font}-regular text-${oppositeTheme}`}>
-                {lang["upload-document"]}
-              </span>
-              <div className="w-full flex">
-                <CustomUploader
-                  setImage={(image) => setFieldValue("document", image)}
-                />
-              </div>
-            </div>
-          </form>
-        </div>
+      <div className="flex flex-col">
         <div
-          className={`flex-1 hidden md:flex flex-col py-5 px-7 bg-${theme}-glass rounded-2xl`}
+          className={`w-full bg-${theme}-glass px-0.5 py-3 md:py-1 rounded-xl flex items-center`}
         >
-          <div className="flex items-center gap-x-2">
-            <img
-              className="w-6 h-6"
-              src={require(`../../../Images/common/info-${oppositeTheme}.png`)}
-              alt="info"
-            />
-            <span className={`font-${font}-bold text-${oppositeTheme} pt-1.5`}>
-              {lang["note"]}
-            </span>
+          <img
+            className="w-10 h-10"
+            src={require(`../../../Images/exclamation.png`)}
+            alt="info"
+          />
+          <span
+            className={`text-yellow text-sm md:text-base font-${font}-regular -mb-1`}
+          >
+            {lang["complete-profile-step-3-not-required-message-1st"] +
+              ". " +
+              lang["complete-profile-step-3-not-required-message-2nd"] +
+              "."}
+          </span>
+        </div>
+        <div className="w-full flex gap-x-10 my-5">
+          <div className="flex-1">
+            <form className="w-full h-full">
+              <div className="flex-1 w-full flex flex-col gap-y-2">
+                <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                  {lang["type-of-identity-document"]}
+                </span>
+                <div className="w-full flex">
+                  <CustomDropdown
+                    label={
+                      selectedRequiredFeildIndex >= 0
+                        ? requiredFeilds[selectedRequiredFeildIndex].title
+                        : ""
+                    }
+                  >
+                    {requiredFeilds.map((requiredFeild, index) => {
+                      if (index === 0 && index === requiredFeilds.length - 1) {
+                        return (
+                          <CustomItem
+                            key={index}
+                            className="rounded-xl"
+                            onClick={() => setSelectedRequiredFeildIndex(index)}
+                          >
+                            {requiredFeild && requiredFeild.title
+                              ? requiredFeild.title
+                              : "error"}
+                          </CustomItem>
+                        );
+                      } else if (index === 0) {
+                        return (
+                          <CustomItem
+                            key={index}
+                            className="rounded-t-xl"
+                            onClick={() => setSelectedRequiredFeildIndex(index)}
+                          >
+                            {requiredFeild && requiredFeild.title
+                              ? requiredFeild.title
+                              : "error"}
+                          </CustomItem>
+                        );
+                      } else if (index === requiredFeilds.length - 1) {
+                        return (
+                          <CustomItem
+                            key={index}
+                            className="rounded-b-xl"
+                            onClick={() => setSelectedRequiredFeildIndex(index)}
+                          >
+                            {requiredFeild && requiredFeild.title
+                              ? requiredFeild.title
+                              : "error"}
+                          </CustomItem>
+                        );
+                      } else {
+                        return (
+                          <CustomItem
+                            key={index}
+                            onClick={() => setSelectedRequiredFeildIndex(index)}
+                          >
+                            {requiredFeild && requiredFeild.title
+                              ? requiredFeild.title
+                              : "error"}
+                          </CustomItem>
+                        );
+                      }
+                    })}
+                  </CustomDropdown>
+                </div>
+              </div>
+              <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+                <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                  {lang["number-of-document"]}
+                </span>
+                <div className="w-full flex">
+                  <input
+                    className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                    name="identity_code"
+                    onBlur={handleBlur("identity_code")}
+                    onChange={handleChange("identity_code")}
+                    value={values.identity_code ? values.identity_code : ""}
+                  />
+                </div>
+              </div>
+              <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+                <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                  {lang["upload-document"]}
+                </span>
+                <div className="w-full flex">
+                  <CustomUploader
+                    setImage={(image) => setFieldValue("document", image)}
+                  />
+                </div>
+              </div>
+            </form>
           </div>
           <div
-            className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}
+            className={`flex-1 hidden md:flex flex-col py-5 px-7 bg-${theme}-glass rounded-2xl`}
           >
-            <span>{lang["complete-profile-modal-step3-note-1st"] + "."}</span>
-            <span>{lang["complete-profile-modal-step3-note-2nd"] + "."}</span>
+            <div className="flex items-center gap-x-2">
+              <img
+                className="w-6 h-6"
+                src={require(`../../../Images/common/info-${oppositeTheme}.png`)}
+                alt="info"
+              />
+              <span
+                className={`font-${font}-bold text-${oppositeTheme} pt-1.5`}
+              >
+                {lang["note"]}
+              </span>
+            </div>
+            <div
+              className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}
+            >
+              <span>{lang["complete-profile-modal-step3-note-1st"] + "."}</span>
+              <span>{lang["complete-profile-modal-step3-note-2nd"] + "."}</span>
+            </div>
           </div>
         </div>
       </div>

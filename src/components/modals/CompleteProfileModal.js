@@ -109,24 +109,18 @@ export default function CompleteProfileModal() {
     return false;
   };
   const validateFetchStep2 = (values) => {
-    // return true;
-
     if (values.nationality && values.country && values.city) {
       return true;
     }
     return false;
   };
-  const validateFetchStep3 = (values) => {
-    // return true;
-
-    if (values.identity_type && values.identity_code && values.document) {
-      return true;
-    }
-    return false;
-  };
+  // const validateFetchStep3 = (values) => {
+  //   if (values.identity_type && values.identity_code && values.document) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
   const validateFetchStep4 = (values) => {
-    // return true;
-
     if (
       values.wallet_asset_currency &&
       values.title &&
@@ -249,9 +243,10 @@ export default function CompleteProfileModal() {
               step === 2 &&
                 validateFetchStep2(values) &&
                 fetchStep2(values, nextStep);
-              step === 3 &&
-                validateFetchStep3(values) &&
-                fetchStep3(values, nextStep);
+              // step === 3 &&
+              //   validateFetchStep3(values) &&
+              //   fetchStep3(values, nextStep);
+              step === 3 && fetchStep3(values, nextStep);
               step === 4 &&
                 validateFetchStep4(values) &&
                 fetchStep4(values, nextStep);

@@ -29,6 +29,7 @@ export default function Login() {
     setToken(null);
     window.localStorage.removeItem("authToken");
     window.localStorage.removeItem("userInfo");
+    window.localStorage.removeItem("expireTime");
     window.localStorage.removeItem("statuses");
     window.localStorage.removeItem("linksShown");
   };
