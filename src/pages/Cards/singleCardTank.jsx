@@ -59,7 +59,8 @@ const SingleCardTank = ({ show, index, data,refresh,editCards,setEditCards }) =>
     }
   },[data])
   useEffect(()=>{
-    editWalletTank(data.url,params,refresh);
+
+    editWalletTank(data.url,params);
   },[params])
 
 
@@ -69,6 +70,7 @@ const SingleCardTank = ({ show, index, data,refresh,editCards,setEditCards }) =>
       is_favorite:!isFavorite
     });
     setIsFavorite(!isFavorite)
+
   };
 
  

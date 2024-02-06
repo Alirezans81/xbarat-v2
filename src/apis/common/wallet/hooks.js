@@ -161,7 +161,7 @@ const useEditWalletTanks = () => {
       .then((data) => {
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
-        customFunctionWithData && customFunctionWithData(data.data.results);
+        customFunctionWithData && customFunctionWithData(params.username,params.token);
         setIsLoading(false);
         return data.data.results;
       })
