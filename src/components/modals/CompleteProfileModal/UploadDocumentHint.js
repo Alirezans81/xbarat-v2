@@ -9,7 +9,7 @@ export default function UploadDocumentHint() {
   const font = useFontState();
 
   return (
-    <div className="h-full md:max-w-[14rem] md:ml-5 mb-2 w-complete-profile -mt-2">
+    <div className="h-full md:max-w-[14rem] md:ml-5 mb-2 w-complete-profile -mt-5 md:-mt-2">
       <div className="hidden md:flex flex-row gap-x-4 md:gap-x-0 md:flex-col items-center">
         <div className={`p-3 md:p-5 bg-${theme}-glass rounded-2xl`}>
           <img
