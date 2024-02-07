@@ -208,5 +208,7 @@
   "upload-document-profile-note-4th": "The size of the photo should be less than 1 MB",
   "search": "Search",
   "complete-profile-step-3-not-required-message-1st": "This step is not necessary",
-  "complete-profile-step-3-not-required-message-2nd": "You can upload your document or go to next step"
+  "complete-profile-step-3-not-required-message-2nd": "You can upload your document or go to next step",
+  "complete-profile-step-4-not-required-message-1st": "This step is not necessary",
+  "complete-profile-step-4-not-required-message-2nd": "You can enter your info or go to next step"
 }
