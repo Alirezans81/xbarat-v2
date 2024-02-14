@@ -7,13 +7,13 @@ const ModalDataContextClose = createContext();
 const ModalDataProvider = ({ children }) => {
   const [modalData, setModalData] = useState({
     title: "Are you sure?",
-    children: <span className="text-white">hello</span>,
+    children: <></>,
     canClose: true,
     isOpen: false,
   });
 
   const closeModal = () => {
-    setModalData({ ...modalData, isOpen: false });
+    setModalData({ ...modalData, children: <></>, isOpen: false });
   };
 
   return (

@@ -114,12 +114,12 @@ export default function CompleteProfileModal() {
     }
     return false;
   };
-  // const validateFetchStep3 = (values) => {
-  //   if (values.identity_type && values.identity_code && values.document) {
-  //     return true;
-  //   }
-  //   return false;
-  // };
+  const validateFetchStep3 = (values) => {
+    if (values.identity_type && values.identity_code && values.document) {
+      return true;
+    }
+    return false;
+  };
   const validateFetchStep4 = (values) => {
     if (
       values.wallet_asset_currency &&
@@ -243,13 +243,17 @@ export default function CompleteProfileModal() {
               step === 2 &&
                 validateFetchStep2(values) &&
                 fetchStep2(values, nextStep);
-              // step === 3 &&
-              //   validateFetchStep3(values) &&
-              //   fetchStep3(values, nextStep);
+              if (step === 3) {
+                validateFetchStep3(values)
+                  ? fetchStep3(values, nextStep)
+                  : nextStep();
+              }
               step === 3 && fetchStep3(values, nextStep);
-              step === 4 &&
-                validateFetchStep4(values) &&
-                fetchStep4(values, nextStep);
+              if (step === 4) {
+                validateFetchStep4(values)
+                  ? fetchStep4(values, nextStep)
+                  : nextStep();
+              }
             }}
           >
             {({

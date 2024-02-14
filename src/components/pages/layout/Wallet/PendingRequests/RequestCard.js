@@ -48,6 +48,17 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
     });
   };
 
+  const onCardClickHandler = () => {
+    if (
+      pendingOrder &&
+      (pendingOrder.type === "deposit" || pendingOrder.type === "withdrawal")
+    ) {
+      if (pendingOrder.status_title !== "Admin Assign")
+        openWalletRequestModal();
+    } else if (pendingOrder && pendingOrder.type === "transfer")
+      openWalletRequestModal();
+  };
+
   const opneAreYouSureModal = () => {
     setModalData({
       title: lang["are-you-sure-modal-title"] + "?",
@@ -71,8 +82,10 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
   };
 
   return (
-    <div
-      className={`flex flex-col justify-center bg-${theme}-back rounded-3xl h-full pt-4 pb-4 px-4`}
+    <button
+      type="button"
+      onClick={onCardClickHandler}
+      className={`w-full text-left flex flex-col justify-center bg-${theme}-back rounded-3xl h-full pt-4 pb-4 px-4`}
     >
       <div className="w-full flex flex-row justify-between items-center">
         {pendingOrder && pendingOrder.type === "deposit" && (
@@ -165,6 +178,6 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
       <span className={`text-gray font-${font}-regular text-sm mt-4 -mb-2`}>
         {convertDate(pendingOrder.datetime_create)}
       </span>
-    </div>
+    </button>
   );
 }
