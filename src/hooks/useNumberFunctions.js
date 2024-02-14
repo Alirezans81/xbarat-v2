@@ -71,14 +71,14 @@ const useRemoveComma = () => {
 
 const sortByBalance = (a, b) => {
   if (a && a.balance && b && b.balance) {
-    if (a.balance < b.balance) {
+    if (+a.balance < +b.balance) {
       return 1;
     }
-    if (a.balance > b.balance) {
+    if (+a.balance > +b.balance) {
       return -1;
     }
   }
-  return 1;
+  return 0;
 };
 
 const useSortByBalance = () => {

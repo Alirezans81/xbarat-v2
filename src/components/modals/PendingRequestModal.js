@@ -162,6 +162,12 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 })}
               </CustomDropdown>
             </div>
+            {receiverTanks[selectedWalletTank] &&
+              receiverTanks[selectedWalletTank].description && (
+                <span class="bg-dark-back rounded-md px-3 pt-2.5 pb-1.5 text-center text-gray font-En-regular">
+                  {receiverTanks[selectedWalletTank].description}
+                </span>
+              )}
             <CustomUploader setImage={setDocument} />
           </div>
         )}

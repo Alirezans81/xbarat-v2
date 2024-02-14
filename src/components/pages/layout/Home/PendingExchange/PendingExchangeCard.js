@@ -11,6 +11,7 @@ import { useCancelPendingExchange } from "../../../../../apis/pages/Home/hooks";
 import AreYouSureModal from "../../../../../components/modals/AreYouSureModal";
 import { useFontState } from "../../../../../Providers/FontProvider";
 import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
+import EditExchangeModal from "../../../../modals/EditExchangeModal";
 
 export default function PendingExchangeCard({
   lang,
@@ -33,6 +34,15 @@ export default function PendingExchangeCard({
     () => setLoading(cancelPendingExchangeIsLoading),
     [cancelPendingExchangeIsLoading]
   );
+
+  const openEditExchangeModal = () => {
+    setModalData({
+      title: "",
+      children: <EditExchangeModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
 
   const openAreYouSureModal = () => {
     setModalData({
@@ -93,10 +103,15 @@ export default function PendingExchangeCard({
         </div>
       </div>
       <div className="flex gap-2 mt-2 w-full px-6">
-        <button className="flex-1 border-2 border-blue rounded-lg pt-0.5">
+        <button
+          type="button"
+          onClick={openEditExchangeModal}
+          className="flex-1 border-2 border-blue rounded-lg pt-0.5"
+        >
           <span className={`font-${font}-bold text-blue`}>{lang["edit"]}</span>
         </button>
         <button
+          type="button"
           onClick={openAreYouSureModal}
           className="border-2 border-red rounded-lg flex-1 pt-0.5"
         >
