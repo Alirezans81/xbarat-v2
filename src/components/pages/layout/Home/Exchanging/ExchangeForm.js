@@ -32,9 +32,12 @@ export default function ExchangeForm({
   setSelectedTargetIndex,
   rateIsReversed,
   targetLabel,
+  formDefaultAmount,
+  setFormDefaultAmount,
   formDefaultRate,
   setFormDefaultRate,
   refreshPendingExchange,
+  amountInputRef,
   rateInputRef,
   isDemo,
 }) {
@@ -217,6 +220,11 @@ export default function ExchangeForm({
   useEffect(() => {
     !selectedCurrecnyPair && formikRef.current.resetForm();
   }, [selectedCurrecnyPair]);
+
+  useEffect(() => {
+    formDefaultAmount &&
+      formikRef.current.setFieldValue("amount", formDefaultAmount);
+  }, [formDefaultRate]);
   useEffect(() => {
     formDefaultRate && formikRef.current.setFieldValue("rate", formDefaultRate);
   }, [formDefaultRate]);
@@ -471,6 +479,7 @@ export default function ExchangeForm({
             >
               <div className="flex-1 flex relative">
                 <input
+                  amountInputRef={amountInputRef}
                   className={`flex-1 ${
                     values.amount || +walletBalance === 0
                       ? "text-center"
@@ -490,6 +499,7 @@ export default function ExchangeForm({
                   }}
                   onChange={(e) => {
                     handleChange(e);
+                    formDefaultAmount && setFormDefaultAmount(null);
                     if (!isDemo) {
                       findError(
                         removeComma(values.amount),

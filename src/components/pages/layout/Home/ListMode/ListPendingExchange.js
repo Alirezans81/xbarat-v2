@@ -33,7 +33,29 @@ export default function ListPendingExchange({
     () => setLoading(cancelPendingExchangeIsLoading),
     [cancelPendingExchangeIsLoading]
   );
-  const openAreYouSureModal = (url) => {
+
+  const openEditAreYouSureModal = (url) => {
+    setModalData({
+      title: lang["are-you-sure-modal-title"] + "?",
+      children: (
+        <AreYouSureModal
+          onClick={() => {
+            url &&
+              cancelPendingExchange(url, () => {
+                refreshPendingExchange();
+                refreshWallet();
+                closeModal();
+              });
+          }}
+          message={lang["edit-exchange-modal-message"] + "?"}
+        />
+      ),
+      canClose: true,
+      isOpen: true,
+    });
+  };
+
+  const openCancelAreYouSureModal = (url) => {
     setModalData({
       title: lang["are-you-sure-modal-title"] + "?",
       children: (
@@ -76,14 +98,21 @@ export default function ListPendingExchange({
         temp.status_title = row.status_title;
         temp.action = (
           <div className="flex items-center gap-x-2 py-2 -mt-1">
-            <button type="button">
+            <button
+              onClick={() => {
+                row && row.url && openEditAreYouSureModal(row.url);
+              }}
+              type="button"
+            >
               <img
                 className="w-5 h-5"
                 src={require("../../../../../Images/edit.png")}
               />
             </button>
             <button
-              onClick={() => row && row.url && openAreYouSureModal(row.url)}
+              onClick={() =>
+                row && row.url && openCancelAreYouSureModal(row.url)
+              }
               type="button"
             >
               <img

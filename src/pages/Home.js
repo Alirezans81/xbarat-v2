@@ -24,8 +24,12 @@ export default function Home({ isDemo }) {
   const setLoading = useIsLoadingSplashScreenSetState();
   const token = useTokenState();
 
+  const amountInputRef = useRef();
+  const focusOnAmountInput = () => {
+    amountInputRef.current.focus();
+  };
   const rateInputRef = useRef();
-  const focusOnInput = () => {
+  const focusOnRateInput = () => {
     rateInputRef.current.focus();
   };
 
@@ -44,6 +48,7 @@ export default function Home({ isDemo }) {
   }, [pageMode]);
 
   const [selectedCurrecnyPair, setSelectedCurrencnyPair] = useState();
+  const [formDefaultAmount, setFormDefaultAmount] = useState();
   const [formDefaultRate, setFormDefaultRate] = useState();
   const [rateIsReversed, setRateIsReversed] = useState(true);
 
@@ -99,19 +104,22 @@ export default function Home({ isDemo }) {
               <Exchanging
                 selectedCurrecnyPair={selectedCurrecnyPair}
                 setSelectedCurrencnyPair={setSelectedCurrencnyPair}
+                formDefaultAmount={formDefaultAmount}
+                setFormDefaultAmount={setFormDefaultAmount}
                 formDefaultRate={formDefaultRate}
+                setFormDefaultRate={setFormDefaultRate}
                 rateIsReversed={rateIsReversed}
                 setRateIsReversed={setRateIsReversed}
                 refreshPendingExchange={refreshPendingExchange}
-                setFormDefaultRate={setFormDefaultRate}
                 selectedSourceIndex={selectedSourceIndex}
                 setSelectedSourceIndex={setSelectedSourceIndex}
                 availableTargets={availableTargets}
                 selectedTargetIndex={selectedTargetIndex}
                 setAvailableTargets={setAvailableTargets}
                 setSelectedTargetIndex={setSelectedTargetIndex}
+                amountInputRef={amountInputRef}
                 rateInputRef={rateInputRef}
-                focusOnInput={focusOnInput}
+                focusOnInput={focusOnRateInput}
                 isDemo={isDemo}
               />
             </div>
@@ -137,6 +145,8 @@ export default function Home({ isDemo }) {
               className={`order-5 md:order-4 h-72 bg-${theme} lg:rounde xl:rounded-3xl row-span-3 xl:col-span-3 lg:col-span-6 lg:rounded-r-none md:col-span-6 md:rounded-r-none col-span-12 rounded-3xl`}
             >
               <PendingExchange
+                setFormDefaultAmount={setFormDefaultAmount}
+                setFormDefaultRate={setFormDefaultRate}
                 pendingExchanges={pendingExchanges}
                 refreshPendingExchange={refreshPendingExchange}
               />
@@ -150,7 +160,7 @@ export default function Home({ isDemo }) {
                 selectedTargetIndex={selectedTargetIndex}
                 selectedCurrecnyPair={selectedCurrecnyPair}
                 setFormDefaultRate={setFormDefaultRate}
-                focusOnInput={focusOnInput}
+                focusOnInput={focusOnRateInput}
               />
             </div>
           </div>
@@ -205,8 +215,9 @@ export default function Home({ isDemo }) {
                 selectedTargetIndex={selectedTargetIndex}
                 setAvailableTargets={setAvailableTargets}
                 setSelectedTargetIndex={setSelectedTargetIndex}
+                amountInputRef={amountInputRef}
                 rateInputRef={rateInputRef}
-                focusOnInput={focusOnInput}
+                focusOnInput={focusOnRateInput}
                 isDemo={isDemo}
               />
             </div>
@@ -219,7 +230,7 @@ export default function Home({ isDemo }) {
                 selectedTargetIndex={selectedTargetIndex}
                 selectedCurrecnyPair={selectedCurrecnyPair}
                 setFormDefaultRate={setFormDefaultRate}
-                focusOnInput={focusOnInput}
+                focusOnInput={focusOnRateInput}
               />
             </div>
             <div className={`h-72 bg-${theme} rounded-l-3xl col-span-11`}>

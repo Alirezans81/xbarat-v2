@@ -31,7 +31,7 @@ export default function TransferCard({ lang, data }) {
         </div>
         <RequestStatus status={data.status} />
       </div>
-      <span className={`font-${font}-regular text-sm text-gray mt-14 mb-2`}>
+      <span className={`font-${font}-regular text-sm text-gray mt-20 mb-2`}>
         {convertDateTime(data.datetime_done)}
       </span>
     </div>

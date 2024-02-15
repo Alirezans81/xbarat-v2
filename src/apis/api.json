@@ -11,7 +11,7 @@
   "wallet": "https://xbarat-back.pro/api/wallet/",
   "wallet-asset": "https://xbarat-back.pro/api/wallet/asset/",
   "wallet-tank": "https://xbarat-back.pro/api/wallet/tank/",
-  "wallet-tank-type": "https://xbarat-back.pro/api/wallet/tank/type/",
+  "wallet-tank-type": "https://xbarat-back.pro/api/wallet/tank-type/",
   "branch": "https://xbarat-back.pro/api/branch/",
   "deposit": "https://xbarat-back.pro/api/order/deposit/",
   "withdrawal": "https://xbarat-back.pro/api/order/withdrawal/",
