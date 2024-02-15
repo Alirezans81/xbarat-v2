@@ -13,6 +13,8 @@ export default function Exchanging({
   rateIsReversed,
   setRateIsReversed,
   refreshPendingExchange,
+  formDefaultAmount,
+  setFormDefaultAmount,
   formDefaultRate,
   setFormDefaultRate,
   selectedSourceIndex,
@@ -21,6 +23,7 @@ export default function Exchanging({
   selectedTargetIndex,
   setAvailableTargets,
   setSelectedTargetIndex,
+  amountInputRef,
   rateInputRef,
   focusOnInput,
   isDemo,
@@ -168,6 +171,8 @@ export default function Exchanging({
           targetLabel={targetLabel}
           setSelectedTargetIndex={setSelectedTargetIndex}
           currencyPairs={currencyPairs}
+          formDefaultAmount={formDefaultAmount}
+          setFormDefaultAmount={setFormDefaultAmount}
           formDefaultRate={formDefaultRate}
           setFormDefaultRate={setFormDefaultRate}
           rateIsReversed={rateIsReversed}
@@ -176,6 +181,7 @@ export default function Exchanging({
             selectedCurrecnyPair ? selectedCurrecnyPair.defaultRateType : ""
           }
           refreshPendingExchange={refreshPendingExchange}
+          amountInputRef={amountInputRef}
           rateInputRef={rateInputRef}
           isDemo={isDemo}
         />

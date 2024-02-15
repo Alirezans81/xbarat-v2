@@ -11,9 +11,10 @@ import { useCancelPendingExchange } from "../../../../../apis/pages/Home/hooks";
 import AreYouSureModal from "../../../../../components/modals/AreYouSureModal";
 import { useFontState } from "../../../../../Providers/FontProvider";
 import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
-import EditExchangeModal from "../../../../modals/EditExchangeModal";
 
 export default function PendingExchangeCard({
+  setFormDefaultAmount,
+  setFormDefaultRate,
   lang,
   data,
   refreshPendingExchange,
@@ -35,16 +36,31 @@ export default function PendingExchangeCard({
     [cancelPendingExchangeIsLoading]
   );
 
-  const openEditExchangeModal = () => {
+  const openEditAreYouSureModal = () => {
     setModalData({
-      title: "",
-      children: <EditExchangeModal />,
+      title: lang["are-you-sure-modal-title"] + "?",
+      children: (
+        <AreYouSureModal
+          onClick={() => {
+            data &&
+              data.url &&
+              cancelPendingExchange(data.url, () => {
+                refreshPendingExchange();
+                refreshWallet();
+                closeModal();
+                setFormDefaultAmount(addComma(+data.amount_source));
+                setFormDefaultRate(addComma(+data.rate));
+              });
+          }}
+          message={lang["edit-exchange-modal-message"] + "?"}
+        />
+      ),
       canClose: true,
       isOpen: true,
     });
   };
 
-  const openAreYouSureModal = () => {
+  const openCancelAreYouSureModal = () => {
     setModalData({
       title: lang["are-you-sure-modal-title"] + "?",
       children: (
@@ -105,14 +121,14 @@ export default function PendingExchangeCard({
       <div className="flex gap-2 mt-2 w-full px-6">
         <button
           type="button"
-          onClick={openEditExchangeModal}
+          onClick={openEditAreYouSureModal}
           className="flex-1 border-2 border-blue rounded-lg pt-0.5"
         >
           <span className={`font-${font}-bold text-blue`}>{lang["edit"]}</span>
         </button>
         <button
           type="button"
-          onClick={openAreYouSureModal}
+          onClick={openCancelAreYouSureModal}
           className="border-2 border-red rounded-lg flex-1 pt-0.5"
         >
           <span className={`font-${font}-bold text-red`}>{lang["cancel"]}</span>
