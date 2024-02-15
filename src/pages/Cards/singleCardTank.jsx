@@ -7,8 +7,9 @@ import edit from "../../Images/pages/layout/Profile/editBlue.png";
 import { useState, useEffect } from "react";
 import { useEditWalletTanks } from "../../apis/common/wallet/hooks";
 import { useTokenState } from "../../Providers/TokenProvider";
-
+import EditCardModal from "../../components/modals/CardModals/EditCardModal";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
+import { useModalDataSetState } from "../../Providers/ModalDataProvider";
 import EditCards from "./editcard";
 import { useUserState } from "../../Providers/UserProvider";
 const SingleCardTank = ({
@@ -18,6 +19,16 @@ const SingleCardTank = ({
   editCards,
   setEditCards,
 }) => {
+  const setModalData = useModalDataSetState();
+  const openEditCardModal = (data) => {
+    console.log(data);
+    setModalData({
+      data: data,
+      children: <EditCardModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const token = useTokenState();
@@ -100,7 +111,9 @@ const SingleCardTank = ({
               {bankName}
             </span>
             <button
-              onClick={handleEditCard}
+              onClick={() => {
+                openEditCardModal(data);
+              }}
               className="flex justify-end h-fit w-fit mt-1"
             >
               <img alt="" src={edit} style={{ width: "62%", height: "62%" }} />
@@ -155,7 +168,9 @@ const SingleCardTank = ({
               {bankName}
             </span>
             <button
-              onClick={handleEditCard}
+              onClick={() => {
+                openEditCardModal(data);
+              }}
               className="flex justify-end  h-fit w-fit mt-1"
             >
               <img alt="" src={edit} style={{ width: "62%", height: "62%" }} />
@@ -209,7 +224,9 @@ const SingleCardTank = ({
               {bankName}
             </span>
             <button
-              onClick={handleEditCard}
+              onClick={() => {
+                openEditCardModal(data);
+              }}
               className="flex justify-end h-fit w-fit mt-1"
             >
               <img alt="" src={edit} style={{ width: "62%", height: "62%" }} />
