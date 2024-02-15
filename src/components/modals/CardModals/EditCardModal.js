@@ -1,35 +1,50 @@
 import { Formik } from "formik";
-import React from "react";
+import { React, useEffect, useState } from "react";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useModalDataClose } from "../../../Providers/ModalDataProvider";
 import SubmitButton from "../../common/SubmitButton";
+import { useEditWalletTanks } from "../../../apis/common/wallet/hooks";
+import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import cross from "../../../Images/pages/layout/Profile/crossCardsGray.png";
 import { useModalDataState } from "../../../Providers/ModalDataProvider";
 import { useFontState } from "../../../Providers/FontProvider";
 export default function EditCardModal() {
   const modalData = useModalDataState();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const theme = useThemeState();
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const [isDeleted, setIsDeleted] = useState(false);
+  const { editWalletTank, isLoading: editWalletTankIsLoading } =
+    useEditWalletTanks();
+
+  useEffect(() => {
+    setIsLoadingSplashScreen(editWalletTankIsLoading);
+  }, [editWalletTankIsLoading]);
+
   const closeModal = useModalDataClose();
+
   const discard = () => {
     closeModal();
   };
   const updateCardInfo = (values) => {
-    console.log(values);
+    editWalletTank(values.url, values);
     closeModal();
   };
 
+  const params = { is_deleted: true, is_favorite: modalData.data.is_favorite };
   return (
     <>
       <Formik
         initialValues={{
+          url: modalData.data.url,
           bank_name: modalData.data.bank_name,
           account_name: modalData.data.account_name,
           bank_info: modalData.data.bank_info,
-          is_deleted: modalData.data.is_deleted,
+          is_deleted: isDeleted,
+          is_favorite: modalData.data.is_favorite,
         }}
         onSubmit={(values) => updateCardInfo(values)}
       >
@@ -107,7 +122,7 @@ export default function EditCardModal() {
                   <div className="w-1/2 flex justify-start">
                     <button
                       onClick={() => {
-                        values.is_deleted = true;
+                        editWalletTank(values.url, params) && closeModal();
                       }}
                       className={
                         "bg-red rounded-xl text-white w-fit h-10 mt-3 p-2"
@@ -121,11 +136,8 @@ export default function EditCardModal() {
                   <div className="w-full flex justify-center">
                     <button
                       onClick={() => {
-                        values.is_deleted = true;
+                        editWalletTank(values.url, params) && closeModal();
                       }}
-                      className={
-                        "bg-red rounded-xl text-white w-fit p-2 h-1/2 mt-5"
-                      }
                     >
                       Delete
                     </button>
