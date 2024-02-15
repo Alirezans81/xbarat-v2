@@ -12,7 +12,11 @@ export default function Wallet({ balance, currency, pending, locked }) {
 
   return (
     <div className="flex flex-col ov">
-      <div className="w-[17.5rem] md:w-[20rem] overflow-x-auto scroll-horizental">
+      <div
+        className={`w-[17.5rem] md:w-[20rem] ${
+          balance >= 5555555555551 ? "overflow-x-auto scroll-horizental" : ""
+        }`}
+      >
         <span className={`text-2xl font-${font}-bold text-${oppositeTheme}`}>
           {addComma(balance, true)}
         </span>

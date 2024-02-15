@@ -10,6 +10,7 @@ import {
 } from "../../../../../Providers/ModalDataProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import PendingRequestModal from "../../../../modals/PendingRequestModal";
+import EditRequestModal from "../../../../modals/EditRequestModal";
 import AreYouSureModal from "../../../../modals/AreYouSureModal";
 import { useCancelPendingRequest } from "../../../../../apis/pages/Wallet/hooks";
 import { useFontState } from "../../../../../Providers/FontProvider";
@@ -48,15 +49,32 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
     });
   };
 
+  const checkHoverOn = () => {
+    if (
+      pendingOrder &&
+      (pendingOrder.type === "deposit" || pendingOrder.type === "withdrawal")
+    ) {
+      if (pendingOrder.status_title !== "Admin Assign") {
+        return true;
+      }
+      return false;
+    } else if (pendingOrder && pendingOrder.type === "transfer") {
+      return true;
+    }
+    return false;
+  };
+
   const onCardClickHandler = () => {
     if (
       pendingOrder &&
       (pendingOrder.type === "deposit" || pendingOrder.type === "withdrawal")
     ) {
-      if (pendingOrder.status_title !== "Admin Assign")
+      if (pendingOrder.status_title !== "Admin Assign") {
         openWalletRequestModal();
-    } else if (pendingOrder && pendingOrder.type === "transfer")
+      }
+    } else if (pendingOrder && pendingOrder.type === "transfer") {
       openWalletRequestModal();
+    }
   };
 
   const opneAreYouSureModal = () => {
@@ -81,11 +99,27 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
     });
   };
 
+  const openEditRequestModal = () => {
+    setModalData({
+      title: lang["edit-pending-request"],
+      children: (
+        <EditRequestModal
+          refreshPendingRequests={refreshPendingRequests}
+          data={pendingOrder}
+        />
+      ),
+      canClose: true,
+      isOpen: true,
+    });
+  };
+
   return (
     <button
       type="button"
       onClick={onCardClickHandler}
-      className={`w-full text-left flex flex-col justify-center bg-${theme}-back rounded-3xl h-full pt-4 pb-4 px-4`}
+      className={`w-full text-left ${
+        !checkHoverOn() ? "cursor-default" : ""
+      } flex flex-col justify-center bg-${theme}-back rounded-3xl h-full pt-4 pb-4 px-4`}
     >
       <div className="w-full flex flex-row justify-between items-center">
         {pendingOrder && pendingOrder.type === "deposit" && (
@@ -125,10 +159,15 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
       >
         {pendingOrder && pendingOrder.status_title === "Admin Assign" && (
           <>
-            <button className="flex-1 border-2 rounded-lg pt-1.5 border-blue text-blue">
+            <button
+              type="button"
+              onClick={openEditRequestModal}
+              className="flex-1 border-2 rounded-lg pt-1.5 border-blue text-blue"
+            >
               {lang["edit"]}
             </button>
             <button
+              type="button"
               onClick={opneAreYouSureModal}
               className="flex-1 border-2 rounded-lg pt-1.5 border-red text-red"
             >

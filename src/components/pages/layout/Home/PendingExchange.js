@@ -6,6 +6,8 @@ import PendingExchangeCard from "./PendingExchange/PendingExchangeCard";
 import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function PendingExchange({
+  setFormDefaultAmount,
+  setFormDefaultRate,
   pendingExchanges,
   refreshPendingExchange,
 }) {
@@ -35,6 +37,8 @@ export default function PendingExchange({
                   lang={lang}
                   data={pendingExchange}
                   refreshPendingExchange={refreshPendingExchange}
+                  setFormDefaultAmount={setFormDefaultAmount}
+                  setFormDefaultRate={setFormDefaultRate}
                 />
               </div>
             ))}
