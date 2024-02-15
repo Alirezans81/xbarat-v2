@@ -19,95 +19,97 @@ const EditCards = ({ editCards, setEditCards, data }) => {
   const tempCurrency = currencies.filter(
     (dat) => dat.abbreviation === data.currency_abb
   );
-  const [asset, setAsset] = useState((tempCurrency[0]).url);
+  const [asset, setAsset] = useState(tempCurrency[0].url);
 
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
   const [bankInfo, setBankInfo] = useState("");
-  const [bankName,setBankName]=useState("");
-  const [accountName,setAccountName]=useState("");
-  const [isChecked, setIsChecked] = useState("");
-  const [isDeleted,setIsDeleted]=useState("");
+  const [bankName, setBankName] = useState("");
+  const [accountName, setAccountName] = useState("");
+  const [isFavorite, setIsFavorite] = useState("");
+  const [isDeleted, setIsDeleted] = useState("");
 
-  useEffect(()=>{
-    if(data){
+  useEffect(() => {
+    if (data) {
       setAccountName(data.account_name);
       setType(data.wallet_tank_type);
       setBankName(data.bank_name);
       setTitle(data.title);
       setBankInfo(data.bank_info);
-      setIsChecked(data.is_favorite);
+      setIsFavorite(data.is_favorite);
       setIsDeleted(data.is_deleted);
     }
-  },[data])
+  }, [data]);
 
   const [params, setParams] = useState({
-    url:"",
+    url: "",
     wallet_asset: "",
     wallet_tank_type_title: "",
-    currency_abb:"",
+    currency_abb: "",
     title: "",
     balance: 1,
     locked: 1,
-    account_name:"",
+    account_name: "",
     pending: 1,
-    bank_name:"",
-    is_deleted:false,
+    bank_name: "",
+    is_deleted: false,
+    isFavorite: data.is_favorite,
     bank_info: "",
   });
 
   const { editWalletTank, isLoading: editWalletTankIsLoading } =
     useEditWalletTanks();
+
   useEffect(() => {
     setIsLoadingSplashScreen(editWalletTankIsLoading);
   }, [editWalletTankIsLoading]);
+
   useEffect(() => {
-      setParams({
-        url: data.url,
-        account_name:accountName,
-        currency_abb: asset,
-        wallet_tank_type: type,
-        title: title,
-        balance: 0,
-        locked: 0,
-        pending: 0,
-        bank_name: bankName,
-        bank_info: bankInfo,
-        is_deleted:isDeleted
-      });
-    
-  }, [type,asset,bankInfo,bankName,type,isDeleted,accountName]);
+    setParams({
+      url: data.url,
+      account_name: accountName,
+      currency_abb: asset,
+      wallet_tank_type: type,
+      title: title,
+      balance: 0,
+      locked: 0,
+      pending: 0,
+      bank_name: bankName,
+      bank_info: bankInfo,
+      is_deleted: isDeleted,
+      is_favorite: isFavorite,
+    });
+  }, [type, asset, bankInfo, bankName, type, isDeleted, accountName]);
+
   const handleEditCards = (e) => {
     e.preventDefault();
     setEditCards(false);
-    editWalletTank(data.url,params);
+    editWalletTank(data.url, params);
   };
+
   const discard = () => {
-
     setEditCards(false);
-
-
-
   };
-  const deleteCard=()=>{
-      setParams({
-        url: data.url,
-        account_name:accountName,
-        currency_abb: asset,
-        wallet_tank_type: type,
-        title: title,
-        balance: 0,
-        locked: 0,
-        pending: 0,
-        bank_name: bankName,
-        bank_info: bankInfo,
-        is_deleted:true
-      }); 
-      if(params.is_deleted){ 
-        editWalletTank(data.url,params);
-      }
-      setEditCards(false)
-  }
+  const deleteCard = () => {
+    setParams({
+      url: data.url,
+      account_name: accountName,
+      currency_abb: asset,
+      wallet_tank_type: type,
+      title: title,
+      balance: 0,
+      locked: 0,
+      pending: 0,
+      bank_name: bankName,
+      bank_info: bankInfo,
+      is_favorite: isFavorite,
+      is_deleted: true,
+    });
+    if (params.is_deleted) {
+      editWalletTank(data.url, params);
+    }
+    setEditCards(false);
+  };
   return (
     <>
       <div
@@ -130,7 +132,6 @@ const EditCards = ({ editCards, setEditCards, data }) => {
             onSubmit={handleEditCards}
             className="w-full h-full flex justify-center flex-col"
           >
-      
             <span
               className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
             >
@@ -140,7 +141,6 @@ const EditCards = ({ editCards, setEditCards, data }) => {
               <div className="w-full flex mt-0 px-2">
                 <input
                   onChange={(e) => setBankName(e.target.value)}
-                  
                   value={bankName}
                   className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
                   placeholder="Bank Name"
@@ -156,7 +156,6 @@ const EditCards = ({ editCards, setEditCards, data }) => {
               <div className="w-full flex mt-0 px-2">
                 <input
                   onChange={(e) => setAccountName(e.target.value)}
-                  
                   value={accountName}
                   className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
                   placeholder="Bank Name"
@@ -172,7 +171,6 @@ const EditCards = ({ editCards, setEditCards, data }) => {
               <div className="w-full flex mt-0 px-2">
                 <input
                   onChange={(e) => setBankInfo(e.target.value)}
-                  
                   value={bankInfo}
                   className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
                   placeholder={lang["add_cards_title"]}
@@ -180,10 +178,9 @@ const EditCards = ({ editCards, setEditCards, data }) => {
               </div>
             </div>
             <div className={"xs:hidden md:flex flex-row-reverse h-full w-full"}>
-            <div className="w-1/2 flex justify-end">
+              <div className="w-1/2 flex justify-end">
                 <button
-                    type="submit"
-
+                  type="submit"
                   className={
                     "bg-blue-gradient rounded-xl text-white w-fit h-1/2 mt-5 p-2"
                   }
@@ -201,7 +198,6 @@ const EditCards = ({ editCards, setEditCards, data }) => {
                   Delete
                 </button>
               </div>
-              
             </div>
             <div className={"xs:flex md:hidden flex-col h-full w-full "}>
               <div className="w-full flex justify-center">
