@@ -34,6 +34,13 @@ export default function EditCardModal() {
     closeModal();
   };
 
+  const addSpacefour = (value) => {
+    const sanitizedValue = value.replace(/\D/g, "");
+    const chunks = sanitizedValue.match(/.{1,4}/g);
+    const result = chunks ? chunks.join(" ") : "";
+    return result;
+  };
+
   const params = { is_deleted: true, is_favorite: modalData.data.is_favorite };
   return (
     <>
@@ -101,7 +108,7 @@ export default function EditCardModal() {
                   <div className="w-full flex mt-0 px-2">
                     <input
                       onChange={handleChange("bank_info")}
-                      value={values.bank_info}
+                      value={addSpacefour(values.bank_info)}
                       className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
                       placeholder={lang["add_cards_title"]}
                     />

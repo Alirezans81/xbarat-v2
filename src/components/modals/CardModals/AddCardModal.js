@@ -46,14 +46,12 @@ export default function AddCardModal() {
   function discard() {
     closeModal();
   }
-  function addSpace(num) {
-    var result = "";
-    var gap_size = 4; //Desired distance between spaces
-    while (num.length > 0) {
-      result = result + " " + num.substring(0, gap_size); // Insert space character
-      num = num.substring(gap_size); // Trim String
-    }
-  }
+  const addSpacefour = (value) => {
+    const sanitizedValue = value.replace(/\D/g, "");
+    const chunks = sanitizedValue.match(/.{1,4}/g);
+    const result = chunks ? chunks.join(" ") : "";
+    return result;
+  };
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
   useEffect(() => {
@@ -220,7 +218,7 @@ export default function AddCardModal() {
                           onChange={handleChange("bank_info")}
                           className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                           placeholder={lang["cards_card_number_placeholder"]}
-                          value={addSpace(values.bank_info)}
+                          value={addSpacefour(values.bank_info)}
                         />
                       </div>
                     </div>
@@ -239,7 +237,7 @@ export default function AddCardModal() {
                           onChange={handleChange("bank_info")}
                           className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                           placeholder={lang["cards_shaba_number_placeholder"]}
-                          value={addSpace(values.bank_info)}
+                          value={values.bank_info}
                         />
                       </div>
                     </div>
@@ -258,7 +256,7 @@ export default function AddCardModal() {
                           onChange={handleChange("bank_info")}
                           className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                           placeholder="example@domain.com"
-                          value={addSpace(values.bank_info)}
+                          value={values.bank_info}
                         />
                       </div>
                     </div>

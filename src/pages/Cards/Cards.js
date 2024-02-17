@@ -32,11 +32,6 @@ const Cards = () => {
     setShow("");
   }
 
-  function addSpace(str) {
-    const chunks = str.match(/.{1,4}/g);
-    const result = chunks.join(" ");
-    return result;
-  }
   useEffect(() => {
     refresh(user.username, token);
   }, [toggle]);
@@ -57,6 +52,7 @@ const Cards = () => {
       isOpen: true,
     });
   };
+
   return (
     <div
       className="bg-transparent  font-bold"

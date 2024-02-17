@@ -84,15 +84,18 @@ const SingleCardTank = ({
     });
     setIsFavorite(!isFavorite);
   };
-
+  function addSpace(str) {
+    let temp = "";
+    for (let i = 0; i < str.length; i++) {
+      if (i % 4 === 0 && i !== 0) {
+        temp += " ";
+      }
+      temp += str[i];
+    }
+    return temp;
+  }
   return (
     <>
-      <EditCards
-        editCards={editCards}
-        setEditCards={setEditCards}
-        data={data}
-      />
-
       {/* This is for lg screen */}
       <div
         className={`xs:hidden lg:block bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-5`}
@@ -102,7 +105,7 @@ const SingleCardTank = ({
         }}
       >
         <div className="w-full h-full flex flex-col p-6 px-9">
-          <div className="flex flex-row h-1/4 w-full">
+          <div className="flex flex-row h-1/4 w-full ">
             <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">
               {bankName}
             </span>
@@ -110,18 +113,18 @@ const SingleCardTank = ({
               onClick={() => {
                 openEditCardModal(data);
               }}
-              className="flex justify-end h-fit w-fit mt-1"
+              className="flex justify-end h-fit w-1/6 mt-1"
             >
-              <img alt="" src={edit} style={{ width: "62%", height: "62%" }} />
+              <img alt="" src={edit} style={{ width: "43%", height: "43%" }} />
             </button>
             <button
               onClick={handleCheckboxChange}
-              className="flex justify-end h-fit w-fit"
+              className="flex justify-end h-fit w-1/6"
             >
               <img
                 alt=""
                 src={isFavorite ? starChecked : starUnChecked}
-                style={{ width: "70%", height: "70%" }}
+                style={{ width: "61%", height: "61%" }}
               />
             </button>
           </div>
@@ -144,7 +147,7 @@ const SingleCardTank = ({
               Bank Info
             </span>
             <span className={`text-${oppositeTheme} text-2xl min-w-0 `}>
-              {bankInfo}
+              {addSpace(bankInfo)}
             </span>
           </div>
         </div>
@@ -201,7 +204,7 @@ const SingleCardTank = ({
               Bank Info
             </span>
             <span className={`text-${oppositeTheme} text-xl min-w-0 `}>
-              {bankInfo}
+              {addSpace(bankInfo)}
             </span>
           </div>
         </div>
@@ -257,7 +260,7 @@ const SingleCardTank = ({
               Bank Info
             </span>
             <span className={`text-${oppositeTheme} text-xl min-w-0 `}>
-              {bankInfo}
+              {addSpace(bankInfo)}
             </span>
           </div>
         </div>
