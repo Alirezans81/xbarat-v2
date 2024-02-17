@@ -1,7 +1,6 @@
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useWalletState } from "../../Providers/WalletProvider";
-// import Addcard from "./addcard";
 import { useEffect, useState } from "react";
 import SingleCardAssets from "./singleCardAssets";
 import SingleCardTank from "./singleCardTank";
@@ -13,7 +12,7 @@ import AddCardModal from "../../components/modals/CardModals/AddCardModal";
 import { useModalDataSetState } from "../../Providers/ModalDataProvider";
 const Cards = () => {
   const wallet = useWalletState();
-  const usering = useUserState();
+  const user = useUserState();
   const token = useTokenState();
   const setModalData = useModalDataSetState();
   const refresh = useGetWalletData();
@@ -22,9 +21,7 @@ const Cards = () => {
   const lang = useLanguageState();
   const [show, setShow] = useState([]);
 
-  const [addCard, setAddCard] = useState(false);
   const [Tanks, setTanks] = useState([]);
-  const [editCards, setEditCards] = useState(false);
   const [toggle, setToggle] = useState(false);
 
   const updateShowState = (newState) => {
@@ -34,9 +31,16 @@ const Cards = () => {
   function discard() {
     setShow("");
   }
+
+  function addSpace(str) {
+    const chunks = str.match(/.{1,4}/g);
+    const result = chunks.join(" ");
+    return result;
+  }
   useEffect(() => {
-    refresh(usering.username, token);
-  }, [editCards, addCard, toggle]);
+    refresh(user.username, token);
+  }, [toggle]);
+
   useEffect(() => {
     if (wallet) {
       setTanks(
@@ -81,7 +85,6 @@ const Cards = () => {
             borderBottomLeftRadius: "50px",
           }}
         >
-          {/* <Addcard addCard={addCard} setAddCard={setAddCard} show={show} /> */}
           <div className="w-full h-full flex flex-col">
             <div className="w-full h-8 flex justify-end mt-5">
               <button
@@ -99,8 +102,6 @@ const Cards = () => {
                 <SingleCardTank
                   index={index}
                   data={data}
-                  editCards={editCards}
-                  setEditCards={setEditCards}
                   setToggle={setToggle}
                 />
               ))}
@@ -147,8 +148,6 @@ const Cards = () => {
                 <SingleCardTank
                   index={index}
                   data={data}
-                  editCards={editCards}
-                  setEditCards={setEditCards}
                   setToggle={setToggle}
                 />
               ))}
@@ -241,8 +240,6 @@ const Cards = () => {
                   <SingleCardTank
                     index={index}
                     data={data}
-                    editCards={editCards}
-                    setEditCards={setEditCards}
                     setToggle={setToggle}
                   />
                 ))}

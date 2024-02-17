@@ -135,6 +135,9 @@ export default function EditCardModal() {
                 <div className={"xs:flex md:hidden flex-col h-full w-full "}>
                   <div className="w-full flex justify-center">
                     <button
+                      className={
+                        "bg-red rounded-xl text-white w-fit h-10 mt-3 p-2"
+                      }
                       onClick={() => {
                         editWalletTank(values.url, params) && closeModal();
                       }}

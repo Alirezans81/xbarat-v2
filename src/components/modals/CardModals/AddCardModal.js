@@ -3,10 +3,7 @@ import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useFontState } from "../../../Providers/FontProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { useCreateWalletTank } from "../../../apis/common/wallet/hooks";
-import {
-  useModalDataSetState,
-  useModalDataState,
-} from "../../../Providers/ModalDataProvider";
+import { useModalDataState } from "../../../Providers/ModalDataProvider";
 import {
   CustomDropdown,
   CustomItem,
@@ -24,7 +21,6 @@ export default function AddCardModal() {
   const user = useUserState();
   const oneDirection = useDirectionState();
   const modalData = useModalDataState();
-  const setModalData = useModalDataSetState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const theme = useThemeState();
   const currencies = useCurrenciesState();
@@ -33,7 +29,9 @@ export default function AddCardModal() {
   const closeModal = useModalDataClose();
   const [asset, setAsset] = useState("");
   const [type, setType] = useState("");
+
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+
   const api =
     process.env.REACT_APP_MODE === "PRODUCTION"
       ? require("../../../apis/api-dev.json")
@@ -44,14 +42,24 @@ export default function AddCardModal() {
     data.url,
     data.sym_pic_gray,
   ]);
+
   function discard() {
     closeModal();
+  }
+  function addSpace(num) {
+    var result = "";
+    var gap_size = 4; //Desired distance between spaces
+    while (num.length > 0) {
+      result = result + " " + num.substring(0, gap_size); // Insert space character
+      num = num.substring(gap_size); // Trim String
+    }
   }
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
   useEffect(() => {
     setIsLoadingSplashScreen(createWalletTankIsLoading);
   }, [createWalletTankIsLoading]);
+
   const AddCard = (values) => {
     const params = {
       user: user.url,
@@ -74,6 +82,7 @@ export default function AddCardModal() {
           : api["wallet-tank-type"] + "email/",
     };
     createWalletTank(params);
+    closeModal();
   };
   return (
     <>
@@ -211,6 +220,7 @@ export default function AddCardModal() {
                           onChange={handleChange("bank_info")}
                           className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                           placeholder={lang["cards_card_number_placeholder"]}
+                          value={addSpace(values.bank_info)}
                         />
                       </div>
                     </div>
@@ -229,6 +239,7 @@ export default function AddCardModal() {
                           onChange={handleChange("bank_info")}
                           className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                           placeholder={lang["cards_shaba_number_placeholder"]}
+                          value={addSpace(values.bank_info)}
                         />
                       </div>
                     </div>
@@ -247,21 +258,15 @@ export default function AddCardModal() {
                           onChange={handleChange("bank_info")}
                           className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                           placeholder="example@domain.com"
+                          value={addSpace(values.bank_info)}
                         />
                       </div>
                     </div>
                   </div>
                   <div className="flex justify-end">
-                    {/* <button
-                      className={
-                        "bg-blue-gradient rounded-xl text-white w-1/4 h-1/3 pt-1 mt-5"
-                      }
-                    >
-                      {lang["submit"]}
-                    </button> */}
                     <SubmitButton
                       rounded="lg"
-                      className="mt-5 h-1/3 pt-1 w-1/4"
+                      className="mt-5 h-1/3 w-1/4"
                       onClick={submitForm}
                     >
                       {lang["submit"]}
