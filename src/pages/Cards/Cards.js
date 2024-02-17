@@ -1,7 +1,7 @@
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useWalletState } from "../../Providers/WalletProvider";
-import Addcard from "./addcard";
+// import Addcard from "./addcard";
 import { useEffect, useState } from "react";
 import SingleCardAssets from "./singleCardAssets";
 import SingleCardTank from "./singleCardTank";
@@ -9,11 +9,13 @@ import cross from "../../Images/pages/layout/Profile/crossCardsGray.png";
 import { useUserState } from "../../Providers/UserProvider";
 import { useTokenState } from "../../Providers/TokenProvider";
 import { useGetWalletData } from "../../Providers/WalletProvider";
-
+import AddCardModal from "../../components/modals/CardModals/AddCardModal";
+import { useModalDataSetState } from "../../Providers/ModalDataProvider";
 const Cards = () => {
   const wallet = useWalletState();
   const usering = useUserState();
   const token = useTokenState();
+  const setModalData = useModalDataSetState();
   const refresh = useGetWalletData();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -28,9 +30,6 @@ const Cards = () => {
   const updateShowState = (newState) => {
     setShow(newState);
   };
-  function handleAddCard() {
-    setAddCard(true);
-  }
 
   function discard() {
     setShow("");
@@ -47,7 +46,13 @@ const Cards = () => {
       );
     }
   }, [show]);
-
+  const openAddCardModal = () => {
+    setModalData({
+      children: <AddCardModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
   return (
     <div
       className="bg-transparent  font-bold"
@@ -76,11 +81,11 @@ const Cards = () => {
             borderBottomLeftRadius: "50px",
           }}
         >
-          <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
+          {/* <Addcard addCard={addCard} setAddCard={setAddCard} show={show} /> */}
           <div className="w-full h-full flex flex-col">
             <div className="w-full h-8 flex justify-end mt-5">
               <button
-                onClick={handleAddCard}
+                onClick={openAddCardModal}
                 className={
                   "bg-blue-gradient text-white rounded-2xl w-36 md:mr-2 lg:mr-5 h-full items-center font-thin"
                 }
@@ -117,7 +122,7 @@ const Cards = () => {
         <div
           className={`md:hidden xs:block w-11/12 ml-5 flex justify-center h-full bg-${theme} rounded-3xl`}
         >
-          <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
+          {/* <Addcard addCard={addCard} setAddCard={setAddCard} show={show} /> */}
 
           <div className="w-full h-full flex flex-col">
             <div className="w-full h-8 mt-5 flex flex-row">
@@ -128,7 +133,7 @@ const Cards = () => {
                 <img className="ml-6 h-10" src={cross} />
               </button>
               <button
-                onClick={handleAddCard}
+                onClick={openAddCardModal}
                 className={
                   "bg-blue-gradient text-white rounded-2xl w-36 mr-5 h-full items-center font-thin mt-1"
                 }

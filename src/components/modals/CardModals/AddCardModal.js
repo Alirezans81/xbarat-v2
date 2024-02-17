@@ -3,41 +3,90 @@ import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useFontState } from "../../../Providers/FontProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { useCreateWalletTank } from "../../../apis/common/wallet/hooks";
-import { useModalDataState } from "../../../Providers/ModalDataProvider";
+import {
+  useModalDataSetState,
+  useModalDataState,
+} from "../../../Providers/ModalDataProvider";
+import {
+  CustomDropdown,
+  CustomItem,
+} from "../../../components/common/CustomDropdown";
 import { useModalDataClose } from "../../../Providers/ModalDataProvider";
 import { useCurrenciesState } from "../../../Providers/CurrenciesProvider";
+import { Formik } from "formik";
 import SubmitButton from "../../common/SubmitButton";
-export default function AddCard() {
+import cross from "../../../Images/pages/layout/Profile/crossCardsGray.png";
+import { useDirectionState } from "../../../Providers/DirectionProvider";
+import { useState, useEffect } from "react";
+import { useUserState } from "../../../Providers/UserProvider";
+
+export default function AddCardModal() {
+  const user = useUserState();
+  const oneDirection = useDirectionState();
   const modalData = useModalDataState();
+  const setModalData = useModalDataSetState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const theme = useThemeState();
   const currencies = useCurrenciesState();
   const lang = useLanguageState();
   const font = useFontState();
+  const closeModal = useModalDataClose();
+  const [asset, setAsset] = useState("");
+  const [type, setType] = useState("");
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const api =
     process.env.REACT_APP_MODE === "PRODUCTION"
-      ? require("../../apis/api-dev.json")
-      : require("../../apis/api.json");
+      ? require("../../../apis/api-dev.json")
+      : require("../../../apis/api.json");
 
   let listCurrency = currencies.map((data) => [
     data.abbreviation,
     data.url,
     data.sym_pic_gray,
   ]);
+  function discard() {
+    closeModal();
+  }
+  const { createWalletTank, isLoading: createWalletTankIsLoading } =
+    useCreateWalletTank();
+  useEffect(() => {
+    setIsLoadingSplashScreen(createWalletTankIsLoading);
+  }, [createWalletTankIsLoading]);
+  const AddCard = (values) => {
+    const params = {
+      user: user.url,
+      title: "title",
+      bank_name: values.bank_name,
+      account_name: values.account_name,
+      bank_info: values.bank_info,
+      is_deleted: false,
+      is_favorite: false,
+      balance: 0,
+      locked: 0,
+      pending: 0,
+      currency: asset[1],
 
-  const AddCard = (values) => {};
+      wallet_tank_type:
+        type === "Card"
+          ? api["wallet-tank-type"] + "card-number/"
+          : type === "Email"
+          ? api["wallet-tank-type"] + "shaba-number/"
+          : api["wallet-tank-type"] + "email/",
+    };
+    createWalletTank(params);
+  };
   return (
     <>
       <Formik
         initialValues={{
-          user: modal,
+          user: modalData,
           title: "title",
           bank_name: "",
           account_name: "",
           bank_info: "",
           is_deleted: false,
           is_favorite: false,
+          wallet_tank_type: "",
           balance: 0,
           locked: 0,
           pending: 0,
@@ -57,10 +106,7 @@ export default function AddCard() {
               <button className="flex justify-end h-fit" onClick={discard}>
                 <img className="w-6" src={cross} alt="" />
               </button>
-              <form
-                onSubmit={handleAddCards}
-                className="w-full h-full flex justify-center flex-col"
-              >
+              <div className="w-full h-full flex justify-center flex-col">
                 <div className={"w-full px-2 py-5 flex justify-end"}>
                   <CustomDropdown
                     className={"bg-transparent w-fit"}
@@ -128,7 +174,7 @@ export default function AddCard() {
                   <div className="w-full">
                     <div className="w-full flex mt-0 px-2">
                       <input
-                        onChange={(e) => setBankName(e.target.value)}
+                        onChange={handleChange("bank_name")}
                         required
                         className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
                         placeholder="Bank Name"
@@ -143,7 +189,7 @@ export default function AddCard() {
                   <div className="w-full">
                     <div className="w-full flex mt-0 px-2">
                       <input
-                        onChange={(e) => setAccountName(e.target.value)}
+                        onChange={handleChange("account_name")}
                         required
                         className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
                         placeholder="Account Name"
@@ -162,7 +208,7 @@ export default function AddCard() {
                     <div className=" w-full">
                       <div className="w-full flex mt-0 px-2">
                         <input
-                          onChange={(e) => setCardNumber(e.target.value)}
+                          onChange={handleChange("bank_info")}
                           className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                           placeholder={lang["cards_card_number_placeholder"]}
                         />
@@ -180,7 +226,7 @@ export default function AddCard() {
                     <div className=" w-full">
                       <div className="w-full flex mt-0 px-2">
                         <input
-                          onChange={(e) => setShabaNumber(e.target.value)}
+                          onChange={handleChange("bank_info")}
                           className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                           placeholder={lang["cards_shaba_number_placeholder"]}
                         />
@@ -198,7 +244,7 @@ export default function AddCard() {
                     <div className=" w-full">
                       <div className="w-full flex mt-0 px-2">
                         <input
-                          onChange={(e) => setEmail(e.target.value)}
+                          onChange={handleChange("bank_info")}
                           className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1 mb-3`}
                           placeholder="example@domain.com"
                         />
@@ -206,18 +252,23 @@ export default function AddCard() {
                     </div>
                   </div>
                   <div className="flex justify-end">
-                    <button
+                    {/* <button
                       className={
-                        type.length !== 0
-                          ? "bg-blue-gradient rounded-xl text-white w-1/4 h-1/3 pt-1 mt-5"
-                          : "hidden"
+                        "bg-blue-gradient rounded-xl text-white w-1/4 h-1/3 pt-1 mt-5"
                       }
                     >
                       {lang["submit"]}
-                    </button>
+                    </button> */}
+                    <SubmitButton
+                      rounded="lg"
+                      className="mt-5 h-1/3 pt-1 w-1/4"
+                      onClick={submitForm}
+                    >
+                      {lang["submit"]}
+                    </SubmitButton>
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         )}

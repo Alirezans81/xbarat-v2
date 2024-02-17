@@ -85,10 +85,6 @@ const SingleCardTank = ({
     setIsFavorite(!isFavorite);
   };
 
-  const handleEditCard = () => {
-    setEditCards(true);
-  };
-
   return (
     <>
       <EditCards
