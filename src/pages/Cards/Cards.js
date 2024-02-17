@@ -201,7 +201,7 @@ const Cards = () => {
         }
       >
         <div
-          className={`bg-${theme} xs:block rounded-3xl md:hidden sm:ml-1 xs:w-11/12 sm:w-11/12 h-full`}
+          className={`bg-${theme} xs:flex rounded-3xl md:hidden w-11/12 h-full`}
         >
           <div className="w-full h-full flex flex-col">
             <div className="w-full flex flex-row xs:p-3">
@@ -211,38 +211,42 @@ const Cards = () => {
                 </div>
               </div>
             </div>
-            <div
-              className={`grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-5 ml-5 w-11/12`}
-              style={{ height: "fit-content" }}
-            >
-              {wallet && wallet.walletAssets ? (
-                wallet.walletAssets.map((assetData, assetIndex) => (
-                  <SingleCardAssets
-                    assetIndex={assetIndex}
-                    assetData={assetData}
-                    updateShowState={updateShowState}
-                  />
-                ))
-              ) : (
-                <div className="text-white">Loading...</div>
-              )}
+            <div className="w-full h-full flex justify-center">
+              <div
+                className={`grid grid-cols-1 grid-rows-4 gap-4 items-center mt-5 w-11/12`}
+                style={{ height: "fit-content" }}
+              >
+                {wallet && wallet.walletAssets ? (
+                  wallet.walletAssets.map((assetData, assetIndex) => (
+                    <SingleCardAssets
+                      assetIndex={assetIndex}
+                      assetData={assetData}
+                      updateShowState={updateShowState}
+                    />
+                  ))
+                ) : (
+                  <div className="text-white">Loading...</div>
+                )}
+              </div>
             </div>
-            <div
-              className={
-                show.length === 0
-                  ? "hidden"
-                  : "grid grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll"
-              }
-            >
-              {Tanks.map((data, index) => (
-                <SingleCardTank
-                  index={index}
-                  data={data}
-                  editCards={editCards}
-                  setEditCards={setEditCards}
-                  setToggle={setToggle}
-                />
-              ))}
+            <div className="w-full h-full flex justify-center">
+              <div
+                className={
+                  show.length === 0
+                    ? "hidden"
+                    : "grid grid-cols-1 gap-5 pb-0 h-full w-full overflow-scroll"
+                }
+              >
+                {Tanks.map((data, index) => (
+                  <SingleCardTank
+                    index={index}
+                    data={data}
+                    editCards={editCards}
+                    setEditCards={setEditCards}
+                    setToggle={setToggle}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>

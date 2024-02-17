@@ -208,7 +208,7 @@ const SingleCardTank = ({
       </div>
       {/* This is for xs and sm */}
       <div
-        className={`xs:block md:hidden bg-${theme}-back w-11/12 rounded-3xl mt-7`}
+        className={`xs:flex md:hidden bg-${theme}-back w-11/12 ml-1 rounded-3xl mt-7 `}
         style={{
           height: "fit-content",
           gridColumn: 1,
