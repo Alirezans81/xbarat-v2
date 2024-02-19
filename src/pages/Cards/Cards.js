@@ -51,7 +51,6 @@ const Cards = () => {
       isOpen: true,
     });
   };
-  console.log(Tanks);
 
   return (
     <div

@@ -1,27 +1,16 @@
-import { useWalletState } from "../../Providers/WalletProvider";
 import { useThemeState } from "../../Providers/ThemeProvider";
-import { useLanguageState } from "../../Providers/LanguageProvider";
 import starChecked from "../../Images/pages/layout/Profile/starChecked.png";
 import starUnChecked from "../../Images/pages/layout/Profile/starUnChecked.png";
 import edit from "../../Images/pages/layout/Profile/editBlue.png";
 import { useState, useEffect } from "react";
 import { useEditWalletTanks } from "../../apis/common/wallet/hooks";
-import { useTokenState } from "../../Providers/TokenProvider";
 import EditCardModal from "../../components/modals/CardModals/EditCardModal";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useModalDataSetState } from "../../Providers/ModalDataProvider";
-import EditCards from "./editcard";
-import { useUserState } from "../../Providers/UserProvider";
-const SingleCardTank = ({
-  index,
-  data,
-  setToggle,
-  editCards,
-  setEditCards,
-}) => {
+
+const SingleCardTank = ({ index, data, setToggle }) => {
   const setModalData = useModalDataSetState();
   const openEditCardModal = (data) => {
-    console.log(data);
     setModalData({
       data: data,
       children: <EditCardModal />,
@@ -31,9 +20,7 @@ const SingleCardTank = ({
   };
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const token = useTokenState();
-  const lang = useLanguageState();
-  const userP = useUserState();
+
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { editWalletTank, isLoading: editWalletTankIsLoading } =
     useEditWalletTanks();
@@ -77,6 +64,7 @@ const SingleCardTank = ({
     setToggle(true);
     editWalletTank(data.url, params);
   }, [params]);
+
   const handleCheckboxChange = () => {
     setParams({
       is_favorite: !isFavorite,

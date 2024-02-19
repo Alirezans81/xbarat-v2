@@ -78,9 +78,10 @@ export default function AddCardModal() {
     ) {
       return false;
     }
+    const sanitizedValue = params.bank_info.replace(/\D/g, "");
     if (
       params.wallet_tank_type.includes("shaba") &&
-      (!params.bank_info.includes("IR-") || params.bank_info.length !== 26)
+      (!params.bank_info.includes("IR") || sanitizedValue.length !== 24)
     ) {
       return false;
     }
@@ -120,6 +121,7 @@ export default function AddCardModal() {
     }
     closeModal();
   };
+  console.log(listCurrency);
   return (
     <>
       <Formik
@@ -174,9 +176,14 @@ export default function AddCardModal() {
                     {listCurrency.map((data) => (
                       <CustomItem
                         onClick={() => setAsset(data)}
-                        className={"bg-transparent"}
+                        className={"bg-transparent h-fit"}
                       >
-                        {data[0]}
+                        <div className="flex flex-row  w-10 h-10 justify-center">
+                          <img className="w-fit h-fit" alt="" src={data[2]} />
+                          <span className=" w-fit h-fit mt-3 ml-2">
+                            {data[0]}
+                          </span>
+                        </div>
                       </CustomItem>
                     ))}
                   </CustomDropdown>
