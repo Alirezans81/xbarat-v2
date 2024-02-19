@@ -31,7 +31,6 @@ const Cards = () => {
   function discard() {
     setShow("");
   }
-
   useEffect(() => {
     refresh(user.username, token);
   }, [toggle]);
@@ -52,6 +51,7 @@ const Cards = () => {
       isOpen: true,
     });
   };
+  console.log(Tanks);
 
   return (
     <div

@@ -16,6 +16,7 @@ import cross from "../../../Images/pages/layout/Profile/crossCardsGray.png";
 import { useDirectionState } from "../../../Providers/DirectionProvider";
 import { useState, useEffect } from "react";
 import { useUserState } from "../../../Providers/UserProvider";
+import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 
 export default function AddCardModal() {
   const user = useUserState();
@@ -24,6 +25,7 @@ export default function AddCardModal() {
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const theme = useThemeState();
   const currencies = useCurrenciesState();
+  const setToastData = useToastDataSetState();
   const lang = useLanguageState();
   const font = useFontState();
   const closeModal = useModalDataClose();
@@ -56,11 +58,34 @@ export default function AddCardModal() {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
   };
+
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
   useEffect(() => {
     setIsLoadingSplashScreen(createWalletTankIsLoading);
   }, [createWalletTankIsLoading]);
+
+  const validation = (params) => {
+    if (
+      params.wallet_tank_type.includes("email") &&
+      !isValidEmail(params.bank_info)
+    ) {
+      return false;
+    }
+    if (
+      params.wallet_tank_type.includes("card") &&
+      params.bank_info.length !== 16
+    ) {
+      return false;
+    }
+    if (
+      params.wallet_tank_type.includes("shaba") &&
+      (!params.bank_info.includes("IR-") || params.bank_info.length !== 26)
+    ) {
+      return false;
+    }
+    return true;
+  };
 
   const AddCard = (values) => {
     const params = {
@@ -75,15 +100,24 @@ export default function AddCardModal() {
       locked: 0,
       pending: 0,
       currency: asset[1],
-
       wallet_tank_type:
         type === "Card"
           ? api["wallet-tank-type"] + "card-number/"
           : type === "Email"
-          ? api["wallet-tank-type"] + "shaba-number/"
-          : api["wallet-tank-type"] + "email/",
+          ? api["wallet-tank-type"] + "paypal-email/"
+          : api["wallet-tank-type"] + "shaba-number/",
     };
-    createWalletTank(params);
+    if (validation(params)) {
+      createWalletTank(params);
+    } else {
+      setToastData({
+        status: "failed",
+        message: "Please enter valid data",
+        canClose: true,
+        isOpen: true,
+        showTime: 3000,
+      });
+    }
     closeModal();
   };
   return (

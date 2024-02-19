@@ -77,23 +77,25 @@ const SingleCardTank = ({
     setToggle(true);
     editWalletTank(data.url, params);
   }, [params]);
-
   const handleCheckboxChange = () => {
     setParams({
       is_favorite: !isFavorite,
     });
     setIsFavorite(!isFavorite);
   };
-  const isValidEmail = (email) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
-  };
 
-  const addSpacefour = (value) => {
-    const sanitizedValue = value.replace(/\D/g, "");
-    const chunks = sanitizedValue.match(/.{1,4}/g);
-    const result = chunks ? chunks.join(" ") : "";
-    return result;
+  const showBankInfoCorrect = (value) => {
+    if (walletTankType.includes("card")) {
+      const sanitizedValue = value.replace(/\D/g, "");
+      const chunks = sanitizedValue.match(/.{1,4}/g);
+      const result = chunks ? chunks.join(" ") : "";
+      return result;
+    }
+    if (walletTankType.includes("card")) {
+      return value;
+    } else {
+      return value;
+    }
   };
   return (
     <>
@@ -148,7 +150,7 @@ const SingleCardTank = ({
               Bank Info
             </span>
             <span className={`text-${oppositeTheme} text-2xl min-w-0 `}>
-              {addSpacefour(bankInfo)}
+              {showBankInfoCorrect(bankInfo)}
             </span>
           </div>
         </div>
@@ -205,7 +207,7 @@ const SingleCardTank = ({
               Bank Info
             </span>
             <span className={`text-${oppositeTheme} text-xl min-w-0 `}>
-              {addSpacefour(bankInfo)}
+              {showBankInfoCorrect(bankInfo)}
             </span>
           </div>
         </div>
@@ -261,7 +263,7 @@ const SingleCardTank = ({
               Bank Info
             </span>
             <span className={`text-${oppositeTheme} text-xl min-w-0 `}>
-              {addSpacefour(bankInfo)}
+              {showBankInfoCorrect(bankInfo)}
             </span>
           </div>
         </div>
