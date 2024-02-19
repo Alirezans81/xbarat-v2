@@ -52,6 +52,10 @@ export default function AddCardModal() {
     const result = chunks ? chunks.join(" ") : "";
     return result;
   };
+  const isValidEmail = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
   useEffect(() => {

@@ -84,16 +84,17 @@ const SingleCardTank = ({
     });
     setIsFavorite(!isFavorite);
   };
-  function addSpace(str) {
-    let temp = "";
-    for (let i = 0; i < str.length; i++) {
-      if (i % 4 === 0 && i !== 0) {
-        temp += " ";
-      }
-      temp += str[i];
-    }
-    return temp;
-  }
+  const isValidEmail = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+
+  const addSpacefour = (value) => {
+    const sanitizedValue = value.replace(/\D/g, "");
+    const chunks = sanitizedValue.match(/.{1,4}/g);
+    const result = chunks ? chunks.join(" ") : "";
+    return result;
+  };
   return (
     <>
       {/* This is for lg screen */}
@@ -147,7 +148,7 @@ const SingleCardTank = ({
               Bank Info
             </span>
             <span className={`text-${oppositeTheme} text-2xl min-w-0 `}>
-              {addSpace(bankInfo)}
+              {addSpacefour(bankInfo)}
             </span>
           </div>
         </div>
@@ -204,7 +205,7 @@ const SingleCardTank = ({
               Bank Info
             </span>
             <span className={`text-${oppositeTheme} text-xl min-w-0 `}>
-              {addSpace(bankInfo)}
+              {addSpacefour(bankInfo)}
             </span>
           </div>
         </div>
@@ -260,7 +261,7 @@ const SingleCardTank = ({
               Bank Info
             </span>
             <span className={`text-${oppositeTheme} text-xl min-w-0 `}>
-              {addSpace(bankInfo)}
+              {addSpacefour(bankInfo)}
             </span>
           </div>
         </div>
