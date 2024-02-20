@@ -8,6 +8,7 @@ import {
   CustomDropdown,
   CustomItem,
 } from "../../../components/common/CustomDropdown";
+import { useNavigate } from "react-router-dom";
 import { useModalDataClose } from "../../../Providers/ModalDataProvider";
 import { useCurrenciesState } from "../../../Providers/CurrenciesProvider";
 import { Formik } from "formik";
@@ -20,6 +21,7 @@ import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 
 export default function AddCardModal() {
   const user = useUserState();
+  const navigate = useNavigate();
   const oneDirection = useDirectionState();
   const modalData = useModalDataState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
@@ -76,9 +78,11 @@ export default function AddCardModal() {
       params.wallet_tank_type.includes("card") &&
       params.bank_info.length !== 16
     ) {
+      console.log(params.bank_info.length);
       return false;
     }
     const sanitizedValue = params.bank_info.replace(/\D/g, "");
+
     if (
       params.wallet_tank_type.includes("shaba") &&
       (!params.bank_info.includes("IR") || sanitizedValue.length !== 24)
@@ -87,14 +91,16 @@ export default function AddCardModal() {
     }
     return true;
   };
-
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
   const AddCard = (values) => {
     const params = {
       user: user.url,
       title: "title",
       bank_name: values.bank_name,
       account_name: values.account_name,
-      bank_info: values.bank_info,
+      bank_info: values.bank_info.replace(/\s/g, ""),
       is_deleted: false,
       is_favorite: false,
       balance: 0,
@@ -120,6 +126,10 @@ export default function AddCardModal() {
       });
     }
     closeModal();
+    navigate("/profile/");
+    sleep(1000).then(() => {
+      window.location.reload();
+    });
   };
   console.log(listCurrency);
   return (

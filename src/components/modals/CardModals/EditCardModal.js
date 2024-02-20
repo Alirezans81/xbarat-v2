@@ -9,10 +9,13 @@ import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSp
 import cross from "../../../Images/pages/layout/Profile/crossCardsGray.png";
 import { useModalDataState } from "../../../Providers/ModalDataProvider";
 import { useFontState } from "../../../Providers/FontProvider";
+import { useNavigate } from "react-router-dom";
+
 export default function EditCardModal() {
   const modalData = useModalDataState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const theme = useThemeState();
+  const navigate = useNavigate();
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
@@ -25,13 +28,19 @@ export default function EditCardModal() {
   }, [editWalletTankIsLoading]);
 
   const closeModal = useModalDataClose();
-
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
   const discard = () => {
     closeModal();
   };
   const updateCardInfo = (values) => {
     editWalletTank(values.url, values);
     closeModal();
+    navigate("/profile/");
+    sleep(1000).then(() => {
+      window.location.reload();
+    });
   };
 
   const addSpacefour = (value) => {
@@ -129,7 +138,12 @@ export default function EditCardModal() {
                   <div className="w-1/2 flex justify-start">
                     <button
                       onClick={() => {
-                        editWalletTank(values.url, params) && closeModal();
+                        editWalletTank(values.url, params) &&
+                          closeModal() &&
+                          navigate("/profile/") &&
+                          sleep(1000).then(() => {
+                            window.location.reload();
+                          });
                       }}
                       className={
                         "bg-red rounded-xl text-white w-fit h-10 mt-3 p-2"
@@ -146,7 +160,12 @@ export default function EditCardModal() {
                         "bg-red rounded-xl text-white w-fit h-10 mt-3 p-2"
                       }
                       onClick={() => {
-                        editWalletTank(values.url, params) && closeModal();
+                        editWalletTank(values.url, params) &&
+                          closeModal() &&
+                          navigate("/profile/") &&
+                          sleep(1000).then(() => {
+                            window.location.reload();
+                          });
                       }}
                     >
                       Delete
