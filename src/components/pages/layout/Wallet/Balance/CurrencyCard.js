@@ -22,6 +22,7 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
       title: lang["transaction"],
       children: <TransactionModal />,
       props: {
+        walletAsset,
         defaultType,
         refreshPendingRequests,
       },

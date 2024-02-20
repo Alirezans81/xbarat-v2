@@ -18,6 +18,7 @@ export default function Deposit({
   closeModal,
   refreshPendingRequests,
   getWalletData,
+  amount,
 }) {
   const lang = useLanguageState();
   const font = useFontState();
@@ -71,7 +72,7 @@ export default function Deposit({
 
   return (
     <Formik
-      initialValues={{ amount: "" }}
+      initialValues={{ amount: amount || "" }}
       onSubmit={(values) => {
         if (
           currencies[selectedCurrencyIndex] &&

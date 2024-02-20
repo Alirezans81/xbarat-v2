@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CustomSlider from "../../../common/CustomSlider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
@@ -6,10 +6,13 @@ import PendingExchangeCard from "./PendingExchange/PendingExchangeCard";
 import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function PendingExchange({
-  setFormDefaultAmount,
-  setFormDefaultRate,
   pendingExchanges,
   refreshPendingExchange,
+  resetHome,
+  setSource,
+  setTarget,
+  setAmount,
+  setRate,
 }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -37,8 +40,11 @@ export default function PendingExchange({
                   lang={lang}
                   data={pendingExchange}
                   refreshPendingExchange={refreshPendingExchange}
-                  setFormDefaultAmount={setFormDefaultAmount}
-                  setFormDefaultRate={setFormDefaultRate}
+                  resetHome={resetHome}
+                  setSource={setSource}
+                  setTarget={setTarget}
+                  setAmount={setAmount}
+                  setRate={setRate}
                 />
               </div>
             ))}

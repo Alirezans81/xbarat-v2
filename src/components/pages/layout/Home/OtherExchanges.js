@@ -56,7 +56,7 @@ export default function OtherExchanges({ selectedCurrecnyPair }) {
       </span>
       {exchanges && exchanges.length ? (
         <div className="w-11/12 px-5 flex flex-col justify-center">
-          <CustomSlider slidesToShow={1} slidesToScroll={1} infinite>
+          <CustomSlider slidesToShow={1} slidesToScroll={1}>
             {exchanges.map((exchange, index) => (
               <div
                 key={index}
