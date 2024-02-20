@@ -2,10 +2,12 @@ import React from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useAddComma } from "../../../../../hooks/useNumberFunctions";
 import { useFontState } from "../../../../../Providers/FontProvider";
+import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 
 export default function Wallet({ balance, currency, pending, locked }) {
   const theme = useThemeState();
   const font = useFontState();
+  const lang = useLanguageState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
   const addComma = useAddComma();
@@ -30,7 +32,7 @@ export default function Wallet({ balance, currency, pending, locked }) {
             dir="ltr"
             className={`w-fit text-sm whitespace-nowrap font-${font}-regular text-green`}
           >
-            {"+ " + addComma(pending) + " pending"}
+            {"+ " + addComma(pending) + " " + lang["pending"]}
           </span>
         )}
         {(locked || locked !== 0) && (
@@ -38,7 +40,7 @@ export default function Wallet({ balance, currency, pending, locked }) {
             dir="ltr"
             className={`w-fit text-sm whitespace-nowrap font-${font}-regular text-red -mt-1`}
           >
-            {"- " + addComma(locked) + " locked"}
+            {"- " + addComma(locked) + " " + lang["locked"]}
           </span>
         )}
       </div>

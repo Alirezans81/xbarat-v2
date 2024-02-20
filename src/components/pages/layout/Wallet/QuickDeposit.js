@@ -105,7 +105,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
       </div>
       <Formik
         initialValues={{ amount: "" }}
-        onSubmit={(values) => {
+        onSubmit={(values, { resetForm }) => {
           if (userInfo && userInfo.is_verified) {
             if (
               currencies[selectedCurrencyIndex] &&
@@ -131,6 +131,11 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                       : "",
                 },
                 () => {
+                  resetForm({
+                    values: {
+                      amount: "",
+                    },
+                  });
                   refreshWallet();
                   refreshPendingRequests();
                 }

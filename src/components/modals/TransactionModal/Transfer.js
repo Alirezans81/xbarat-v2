@@ -19,6 +19,7 @@ export default function Transfer({
   closeModal,
   refreshPendingRequests,
   getWalletData,
+  amount,
 }) {
   const lang = useLanguageState();
   const font = useFontState();
@@ -76,7 +77,7 @@ export default function Transfer({
 
   return (
     <Formik
-      initialValues={{ user_receiver: "", amount: "" }}
+      initialValues={{ user_receiver: "", amount: amount || "" }}
       onSubmit={(values) => {
         if (+removeComma(values.amount) <= +walletAsset.balance) {
           createTransfer(
@@ -103,9 +104,22 @@ export default function Transfer({
         } else openNotEnoughBalanceToast();
       }}
     >
-      {({ handleChange, handleBlur, handleSubmit, values }) => (
+      {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
         <div className="flex flex-col">
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
+              {lang["balance"]}
+            </span>
+            <div className="w-full flex -mt-1">
+              <span
+                className={`text-${oppositeTheme} font-${font}-bold text-2xl`}
+              >
+                {addComma(+data.balance) + " " + data.currency_abb}
+              </span>
+            </div>
+          </div>
+
+          {/* <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["currency"]}
             </span>
@@ -116,6 +130,7 @@ export default function Transfer({
                     ? currencies[selectedCurrencyIndex].abbreviation
                     : ""
                 }
+                disabled
               >
                 {currencies.map((currency, index) => {
                   if (index === 0 && index === currencies.length - 1) {
@@ -169,12 +184,13 @@ export default function Transfer({
                 })}
               </CustomDropdown>
             </div>
-          </div>
+          </div> */}
+
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["amount"]}
             </span>
-            <div className="w-full flex">
+            <div className="w-full flex relative">
               <input
                 className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                 name="amount"
@@ -182,6 +198,20 @@ export default function Transfer({
                 onChange={handleChange("amount")}
                 value={values.amount ? addComma(values.amount) : ""}
               />
+              {+data.balance !== 0 &&
+                +removeComma(values.amount) < +data.balance && (
+                  <button
+                    type="button"
+                    className="absolute right-4 top-1"
+                    onClick={() =>
+                      setFieldValue("amount", addComma(+data.balance))
+                    }
+                  >
+                    <span className={`text-gray font-${font}-regular`}>
+                      {lang["amount-input-max-button-label"]}
+                    </span>
+                  </button>
+                )}
             </div>
           </div>
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
