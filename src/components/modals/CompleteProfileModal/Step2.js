@@ -9,7 +9,18 @@ import {
 import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import { useFontState } from "../../../Providers/FontProvider";
-import CustomSearchableDropdown from "../../common/CustomSearchableDropdown";
+import { CustomTooltip } from "../../common/CustomTooltip";
+
+const Note = ({ lang, font }) => {
+  return (
+    <div
+      className={`flex flex-col gap-y-5 text-gray font-${font}-regular w-72 px-2 pt-1.5 pb-0.5`}
+    >
+      <span>{"•	" + lang["complete-profile-modal-step2-note-1st"] + "."}</span>
+      <span>{"•	" + lang["complete-profile-modal-step2-note-2nd"] + "."}</span>
+    </div>
+  );
+};
 
 export default function Step2({ setFieldValue }) {
   const theme = useThemeState();
@@ -70,7 +81,7 @@ export default function Step2({ setFieldValue }) {
   }, [selectedCountryIndex]);
 
   return (
-    <div className="w-full flex gap-x-10 my-5">
+    <div className="w-full flex gap-x-10 my-5 relative">
       <div className="flex-1">
         <form className="w-full h-full">
           <div className="flex-1 w-full flex flex-col gap-y-2">
@@ -252,6 +263,7 @@ export default function Step2({ setFieldValue }) {
           </div>
         </form>
       </div>
+
       <div
         className={`flex-1 hidden md:flex flex-col py-5 px-7 bg-${theme}-glass rounded-2xl`}
       >
@@ -271,6 +283,24 @@ export default function Step2({ setFieldValue }) {
           <span>{lang["complete-profile-modal-step2-note-1st"] + "."}</span>
           <span>{lang["complete-profile-modal-step2-note-2nd"] + "."}</span>
         </div>
+      </div>
+
+      <div className="absolute md:hidden right-0 top-0">
+        <CustomTooltip
+          style={oppositeTheme}
+          content={<Note lang={lang} font={font} theme={theme} />}
+          placement="bottom"
+        >
+          <div className="flex items-center gap-x-1.5">
+            <img
+              className="w-6 h-6"
+              src={require(`../../../Images/common/info-${oppositeTheme}.png`)}
+            />
+            <span className={`font-${font}-bold text-${oppositeTheme} -mb-1.5`}>
+              {lang["note"]}
+            </span>
+          </div>
+        </CustomTooltip>
       </div>
     </div>
   );
