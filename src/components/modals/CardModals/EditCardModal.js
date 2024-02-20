@@ -43,10 +43,14 @@ export default function EditCardModal() {
     });
   };
 
-  const addSpacefour = (value) => {
-    const sanitizedValue = value.replace(/\D/g, "");
-    const chunks = sanitizedValue.match(/.{1,4}/g);
-    const result = chunks ? chunks.join(" ") : "";
+  const addSpacefour = (values) => {
+    const value = values.bank_info;
+    let result = values.bank_info;
+    if (values.wallet_tank_type.includes("card")) {
+      const sanitizedValue = value.replace(/\D/g, "");
+      const chunks = sanitizedValue.match(/.{1,4}/g);
+      result = chunks ? chunks.join(" ") : "";
+    }
     return result;
   };
 
@@ -61,6 +65,7 @@ export default function EditCardModal() {
           bank_info: modalData.data.bank_info,
           is_deleted: isDeleted,
           is_favorite: modalData.data.is_favorite,
+          wallet_tank_type: modalData.data.wallet_tank_type,
         }}
         onSubmit={(values) => updateCardInfo(values)}
       >
@@ -117,7 +122,7 @@ export default function EditCardModal() {
                   <div className="w-full flex mt-0 px-2">
                     <input
                       onChange={handleChange("bank_info")}
-                      value={addSpacefour(values.bank_info)}
+                      value={addSpacefour(values)}
                       className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
                       placeholder={lang["add_cards_title"]}
                     />
