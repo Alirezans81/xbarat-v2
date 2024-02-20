@@ -15,6 +15,8 @@ import AreYouSureModal from "../../../../modals/AreYouSureModal";
 import { useCancelPendingRequest } from "../../../../../apis/pages/Wallet/hooks";
 import { useFontState } from "../../../../../Providers/FontProvider";
 import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
+import TransactionModal from "../../../../modals/TransactionModal";
+import { useGetWalletAssetByCurrency } from "../../../../../hooks/useWalletFilter";
 
 export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
   const theme = useThemeState();
@@ -77,7 +79,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
     }
   };
 
-  const opneAreYouSureModal = () => {
+  const opneCancelAreYouSureModal = () => {
     setModalData({
       title: lang["are-you-sure-modal-title"] + "?",
       children: (
@@ -99,13 +101,47 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
     });
   };
 
-  const openEditRequestModal = () => {
+  const getWalletAssetByCurrency = useGetWalletAssetByCurrency();
+  const openTransactionModal = (
+    currencyUrl,
+    defaultType,
+    refreshPendingRequests,
+    amount
+  ) => {
     setModalData({
-      title: lang["edit-pending-request"],
+      title: lang["transaction"],
+      children: <TransactionModal />,
+      props: {
+        walletAsset: getWalletAssetByCurrency(currencyUrl),
+        defaultType,
+        refreshPendingRequests,
+        amount,
+      },
+      canClose: true,
+      isOpen: true,
+    });
+  };
+
+  const openEditAreYouSureModal = () => {
+    setModalData({
+      title: lang["are-you-sure-modal-title"] + "?",
       children: (
-        <EditRequestModal
-          refreshPendingRequests={refreshPendingRequests}
-          data={pendingOrder}
+        <AreYouSureModal
+          onClick={() => {
+            pendingOrder &&
+              pendingOrder.url &&
+              cancelPendingRequest(pendingOrder.url, () => {
+                refreshPendingRequests();
+                refreshWallet();
+                openTransactionModal(
+                  pendingOrder.currency,
+                  pendingOrder.type,
+                  refreshPendingRequests,
+                  addComma(+pendingOrder.amount)
+                );
+              });
+          }}
+          message={lang["edit-request-modal-message"] + "?"}
         />
       ),
       canClose: true,
@@ -161,14 +197,14 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
           <>
             <button
               type="button"
-              onClick={openEditRequestModal}
+              onClick={openEditAreYouSureModal}
               className="flex-1 border-2 rounded-lg pt-1.5 border-blue text-blue"
             >
               {lang["edit"]}
             </button>
             <button
               type="button"
-              onClick={opneAreYouSureModal}
+              onClick={opneCancelAreYouSureModal}
               className="flex-1 border-2 rounded-lg pt-1.5 border-red text-red"
             >
               {lang["cancel"]}
@@ -199,7 +235,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
                 {lang["edit"]}
               </button>
               <button
-                onClick={opneAreYouSureModal}
+                onClick={opneCancelAreYouSureModal}
                 className="flex-1 border-2 rounded-lg pt-1.5 border-red text-red"
               >
                 {lang["cancel"]}

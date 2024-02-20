@@ -19,7 +19,6 @@ import {
 } from "../../../hooks/useWalletFilter";
 import { useStatusesState } from "../../../Providers/StatusesProvider";
 import { useFontState } from "../../../Providers/FontProvider";
-import { useModalDataClose } from "../../../Providers/ModalDataProvider";
 import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 
 export default function Withdrawal({
@@ -28,6 +27,7 @@ export default function Withdrawal({
   closeModal,
   refreshPendingRequests,
   getWalletData,
+  amount,
 }) {
   const lang = useLanguageState();
   const font = useFontState();
@@ -146,7 +146,7 @@ export default function Withdrawal({
 
   return (
     <Formik
-      initialValues={{ amount: "", title: "", bank_info: "" }}
+      initialValues={{ amount: amount || "", title: "", bank_info: "" }}
       onSubmit={(values) => {
         if (+removeComma(values.amount) <= +walletAsset.balance) {
           if (
@@ -256,9 +256,22 @@ export default function Withdrawal({
         } else openNotEnoughBalanceToast();
       }}
     >
-      {({ handleChange, handleBlur, handleSubmit, values }) => (
+      {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
         <div className="flex flex-col">
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
+              {lang["balance"]}
+            </span>
+            <div className="w-full flex -mt-1">
+              <span
+                className={`text-${oppositeTheme} font-${font}-bold text-2xl`}
+              >
+                {addComma(+data.balance) + " " + data.currency_abb}
+              </span>
+            </div>
+          </div>
+
+          {/* <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["currency"]}
             </span>
@@ -269,6 +282,7 @@ export default function Withdrawal({
                     ? currencies[selectedCurrencyIndex].abbreviation
                     : ""
                 }
+                disabled
               >
                 {currencies.map((currency, index) => {
                   if (index === 0 && index === currencies.length - 1) {
@@ -322,13 +336,13 @@ export default function Withdrawal({
                 })}
               </CustomDropdown>
             </div>
-          </div>
+          </div> */}
 
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["amount"]}
             </span>
-            <div className="w-full flex">
+            <div className="w-full flex relative">
               <input
                 className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                 name="amount"
@@ -336,6 +350,20 @@ export default function Withdrawal({
                 onChange={handleChange("amount")}
                 value={values.amount ? addComma(values.amount) : ""}
               />
+              {+data.balance !== 0 &&
+                +removeComma(values.amount) < +data.balance && (
+                  <button
+                    type="button"
+                    className="absolute right-4 top-1"
+                    onClick={() =>
+                      setFieldValue("amount", addComma(+data.balance))
+                    }
+                  >
+                    <span className={`text-gray font-${font}-regular`}>
+                      {lang["amount-input-max-button-label"]}
+                    </span>
+                  </button>
+                )}
             </div>
           </div>
           {newCardMode ? (

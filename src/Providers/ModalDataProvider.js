@@ -13,7 +13,12 @@ const ModalDataProvider = ({ children }) => {
   });
 
   const closeModal = () => {
-    setModalData({ ...modalData, children: <></>, isOpen: false });
+    setModalData({
+      title: "",
+      children: <></>,
+      canClose: false,
+      isOpen: false,
+    });
   };
 
   return (

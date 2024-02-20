@@ -186,7 +186,6 @@
   "email-exsit-error": "The email exists",
   "amount-input-max-button-label": "Max",
   "add-card": "Add Card",
-  
   "complete-profile-toast-message": "Please complete your profile information to work with the platform properly",
   "file-too-big-toast-message": "The image is too big (Must be less than 4 MB)",
   "not-enough-balance-toast-message-1st": "You have not enough balance",
@@ -210,5 +209,9 @@
   "complete-profile-step-3-not-required-message-1st": "This step is not necessary",
   "complete-profile-step-3-not-required-message-2nd": "You can upload your document or go to next step",
   "complete-profile-step-4-not-required-message-1st": "This step is not necessary",
-  "complete-profile-step-4-not-required-message-2nd": "You can enter your info or go to next step"
+  "complete-profile-step-4-not-required-message-2nd": "You can enter your info or go to next step",
+  
+  "balance" : "Balance",
+  "edit-request-modal-message": "Are you sure you want to edit the request",
+  "edit-exchange-modal-message": "Are you sure you want to edit the exchange"
 }

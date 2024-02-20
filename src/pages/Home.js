@@ -14,6 +14,7 @@ import { useFontState } from "../Providers/FontProvider";
 import ListWatchList from "../components/pages/layout/Home/ListMode/ListWatchList";
 import ListOtherExchanges from "../components/pages/layout/Home/ListMode/ListOtherExchanges";
 import ListPendingExchange from "../components/pages/layout/Home/ListMode/ListPendingExchange";
+import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 
 export default function Home({ isDemo }) {
   const theme = useThemeState();
@@ -23,6 +24,7 @@ export default function Home({ isDemo }) {
   const { one: oneDirection } = useDirectionState();
   const setLoading = useIsLoadingSplashScreenSetState();
   const token = useTokenState();
+  const currencies = useCurrenciesState();
 
   const amountInputRef = useRef();
   const focusOnAmountInput = () => {
@@ -39,12 +41,16 @@ export default function Home({ isDemo }) {
     const result = window.localStorage.getItem("homePageMode");
     if (result) setPageMode(result);
   }, []);
-  useEffect(() => {
+
+  const resetHome = () => {
     setSelectedSourceIndex(-1);
     setSelectedTargetIndex(-1);
     setSelectedCurrencnyPair(null);
     setPendingExchanges([]);
     refreshPendingExchange();
+  };
+  useEffect(() => {
+    resetHome();
   }, [pageMode]);
 
   const [selectedCurrecnyPair, setSelectedCurrencnyPair] = useState();
@@ -67,6 +73,46 @@ export default function Home({ isDemo }) {
     getPendingExchanges(token, setPendingExchanges);
   };
   useEffect(() => refreshPendingExchange(), []);
+
+  const [source, setSource] = useState();
+  const findSource = (currency_slug) => {
+    let result = -1;
+    result = currencies.findIndex(
+      (currency) => currency.slug === currency_slug
+    );
+    result >= 0 && setSelectedSourceIndex(result);
+  };
+  const [target, setTarget] = useState();
+  const findTarget = (currency_slug) => {
+    let result = -1;
+    result = availableTargets.findIndex(
+      (currency) => currency.slug === currency_slug
+    );
+    result >= 0 && setSelectedTargetIndex(result);
+  };
+
+  useEffect(() => {
+    console.log("selectedSourceIndex: ", selectedSourceIndex);
+    console.log("source: ", source);
+    selectedSourceIndex !== -1 && source && findSource(source);
+  }, [source, selectedSourceIndex]);
+  useEffect(() => {
+    target && availableTargets.length > 0 && findTarget(target);
+  }, [target, availableTargets]);
+
+  const [amount, setAmount] = useState();
+  const [rate, setRate] = useState();
+  useEffect(() => {
+    if (
+      amount &&
+      rate &&
+      selectedSourceIndex !== -1 &&
+      selectedTargetIndex !== -1
+    ) {
+      setFormDefaultAmount(amount);
+      setFormDefaultRate(rate);
+    }
+  }, [amount, rate, selectedSourceIndex, selectedTargetIndex]);
 
   if (pageMode === "card" || window.innerWidth <= canSwitchPageModeWidth) {
     return (
@@ -128,9 +174,9 @@ export default function Home({ isDemo }) {
             >
               <WatchList
                 selectedSourceIndex={selectedSourceIndex}
-                setSelectedSourceIndex={setSelectedSourceIndex}
                 availableTargets={availableTargets}
-                setSelectedTargetIndex={setSelectedTargetIndex}
+                findSource={findSource}
+                findTarget={findTarget}
               />
             </div>
             <div
@@ -145,10 +191,13 @@ export default function Home({ isDemo }) {
               className={`order-5 md:order-4 h-72 bg-${theme} lg:rounde xl:rounded-3xl row-span-3 xl:col-span-3 lg:col-span-6 lg:rounded-r-none md:col-span-6 md:rounded-r-none col-span-12 rounded-3xl`}
             >
               <PendingExchange
-                setFormDefaultAmount={setFormDefaultAmount}
-                setFormDefaultRate={setFormDefaultRate}
                 pendingExchanges={pendingExchanges}
                 refreshPendingExchange={refreshPendingExchange}
+                resetHome={resetHome}
+                setSource={setSource}
+                setTarget={setTarget}
+                setAmount={setAmount}
+                setRate={setRate}
               />
             </div>
             <div

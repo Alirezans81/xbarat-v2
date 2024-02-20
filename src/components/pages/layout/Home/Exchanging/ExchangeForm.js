@@ -236,7 +236,7 @@ export default function ExchangeForm({
         amount: "",
         rate: "",
       }}
-      onSubmit={(values) => {
+      onSubmit={(values, { resetForm }) => {
         if (userInfo && userInfo.is_verified) {
           const newAmount =
             +selectedCurrecnyPair.fee_percentage === 0
@@ -269,6 +269,12 @@ export default function ExchangeForm({
             };
 
             exchange(params, () => {
+              resetForm({
+                values: {
+                  amount: "",
+                  rate: "",
+                },
+              });
               refreshWallet();
               refreshPendingExchange();
             });

@@ -5,6 +5,7 @@ import { useThemeState } from "../../../../Providers/ThemeProvider";
 import CustomSlider from "../../../common/CustomSlider";
 import RequestCard from "./PendingRequests/RequestCard";
 import { useFontState } from "../../../../Providers/FontProvider";
+import { useSortByCreateDate } from "../../../../hooks/useConvertDateTime";
 
 export default function PendingRequests({
   refreshPendingRequests,
@@ -39,6 +40,7 @@ export default function PendingRequests({
     }
   };
 
+  const sortByCreateDate = useSortByCreateDate();
   const resetPending = () => {
     if (
       allPendingOrders &&
@@ -61,11 +63,15 @@ export default function PendingRequests({
         return transfer;
       });
 
-      setPendingOrders([
+      const temp = [
         ...convertedDeposits,
         ...convertedWithdrawals,
         ...convertedTransfers,
-      ]);
+      ];
+      console.log("temp: ", temp);
+      console.log("temp.sort:", temp.sort(sortByCreateDate));
+
+      setPendingOrders(temp.sort(sortByCreateDate));
     }
   };
 
