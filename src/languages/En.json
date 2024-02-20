@@ -147,6 +147,7 @@
   "banks":"Banks",
   "Account_Name":"Account Name",
   "Bank_Info":"Bank Info",
+  "Bank_Name":"Bank Name",
   "cards_card_number": "Card Number",
   "cards_shaba_number": "Shaba Number",
   "cards_card_number_placeholder": "0000 0000 0000 0000",
