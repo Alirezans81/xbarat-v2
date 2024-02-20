@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SelectType from "./TransactionModal/SelectType";
 import Deposit from "./TransactionModal/Deposit";
 import Withdrawal from "./TransactionModal/Withdrawal";
@@ -8,7 +8,6 @@ import {
   useModalDataState,
 } from "../../Providers/ModalDataProvider";
 import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
-import { useGetWalletData } from "../../Providers/WalletProvider";
 import { useRefreshWallet } from "../../hooks/useRefreshWallet";
 
 export default function TransactionModal() {
@@ -17,9 +16,9 @@ export default function TransactionModal() {
   const refreshWallet = useRefreshWallet();
   const modalData = useModalDataState();
 
-  const data =
-    modalData && modalData.props && modalData.props.data
-      ? modalData.props.data
+  const walletAsset =
+    modalData && modalData.props && modalData.props.walletAsset
+      ? modalData.props.walletAsset
       : null;
   const defaultType =
     modalData && modalData.props && modalData.props.defaultType
@@ -28,6 +27,10 @@ export default function TransactionModal() {
   const refreshPendingRequests =
     modalData && modalData.props && modalData.props.refreshPendingRequests
       ? modalData.props.refreshPendingRequests
+      : null;
+  const amount =
+    modalData && modalData.props && modalData.props.amount
+      ? modalData.props.amount
       : null;
 
   const [type, selectType] = useState(defaultType || "deposit");
@@ -39,27 +42,30 @@ export default function TransactionModal() {
         <Deposit
           refreshPendingRequests={refreshPendingRequests}
           currencies={currencies}
-          data={data}
+          data={walletAsset}
           closeModal={closeModal}
           getWalletData={refreshWallet}
+          amount={amount}
         />
       )}
       {type === "withdrawal" && (
         <Withdrawal
           refreshPendingRequests={refreshPendingRequests}
           currencies={currencies}
-          data={data}
+          data={walletAsset}
           closeModal={closeModal}
           getWalletData={refreshWallet}
+          amount={amount}
         />
       )}
       {type === "transfer" && (
         <Transfer
           refreshPendingRequests={refreshPendingRequests}
           currencies={currencies}
-          data={data}
+          data={walletAsset}
           closeModal={closeModal}
           getWalletData={refreshWallet}
+          amount={amount}
         />
       )}
     </div>

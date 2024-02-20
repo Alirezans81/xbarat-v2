@@ -13,11 +13,14 @@ import { useFontState } from "../../../../../Providers/FontProvider";
 import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
 
 export default function PendingExchangeCard({
-  setFormDefaultAmount,
-  setFormDefaultRate,
   lang,
   data,
   refreshPendingExchange,
+  resetHome,
+  setSource,
+  setTarget,
+  setAmount,
+  setRate,
 }) {
   const theme = useThemeState();
   const font = useFontState();
@@ -48,8 +51,13 @@ export default function PendingExchangeCard({
                 refreshPendingExchange();
                 refreshWallet();
                 closeModal();
-                setFormDefaultAmount(addComma(+data.amount_source));
-                setFormDefaultRate(addComma(+data.rate));
+
+                resetHome();
+
+                setSource(data.currency_source_url);
+                setTarget(data.currency_destination_url);
+                setAmount(addComma(+data.amount_source));
+                setRate(addComma(+data.rate));
               });
           }}
           message={lang["edit-exchange-modal-message"] + "?"}
@@ -108,7 +116,7 @@ export default function PendingExchangeCard({
         </div>
       </div>
       <div className="flex flex-col items-center mt-1">
-        <span className={`text-gray font-${font}-regular`}>Rate</span>
+        <span className={`text-gray font-${font}-regular`}>{lang["rate"]}</span>
         <div className="flex gap-1">
           <span className={`font-${font}-regular text-${oppositeTheme}`}>
             {addComma(+data.rate)}
@@ -121,7 +129,7 @@ export default function PendingExchangeCard({
       <div className="flex gap-2 mt-2 w-full px-6">
         <button
           type="button"
-          onClick={openEditAreYouSureModal}
+          // onClick={openEditAreYouSureModal}
           className="flex-1 border-2 border-blue rounded-lg pt-0.5"
         >
           <span className={`font-${font}-bold text-blue`}>{lang["edit"]}</span>

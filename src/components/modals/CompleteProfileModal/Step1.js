@@ -2,6 +2,19 @@ import React from "react";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useFontState } from "../../../Providers/FontProvider";
+import { CustomTooltip } from "../../common/CustomTooltip";
+
+const Note = ({ lang, font }) => {
+  return (
+    <div
+      className={`flex flex-col gap-y-5 text-gray font-${font}-regular w-72 px-2 pt-1.5 pb-0.5`}
+    >
+      <span>{"•	" + lang["complete-profile-modal-step1-note-1st"] + "."}</span>
+      <span>{"•	" + lang["complete-profile-modal-step1-note-2nd"] + "."}</span>
+      <span>{"•	" + lang["complete-profile-modal-step1-note-3rd"] + "."}</span>
+    </div>
+  );
+};
 
 export default function Step1({
   handleBlur,
@@ -17,7 +30,7 @@ export default function Step1({
 
   if (handleBlur && handleChange && values) {
     return (
-      <div className="w-full flex gap-x-10 my-5">
+      <div className="w-full flex gap-x-10 my-5 relative">
         <div className="flex-1">
           <form className="w-full h-full">
             <div className="flex-1 w-full flex flex-col gap-y-2">
@@ -72,6 +85,7 @@ export default function Step1({
             )}
           </form>
         </div>
+
         <div
           className={`flex-1 hidden md:flex flex-col py-5 px-7 bg-${theme}-glass rounded-2xl`}
         >
@@ -92,6 +106,26 @@ export default function Step1({
             <span>{lang["complete-profile-modal-step1-note-2nd"] + "."}</span>
             <span>{lang["complete-profile-modal-step1-note-3rd"] + "."}</span>
           </div>
+        </div>
+
+        <div className="absolute md:hidden right-0 top-0">
+          <CustomTooltip
+            style={oppositeTheme}
+            content={<Note lang={lang} font={font} theme={theme} />}
+            placement="bottom"
+          >
+            <div className="flex items-center gap-x-1.5">
+              <img
+                className="w-6 h-6"
+                src={require(`../../../Images/common/info-${oppositeTheme}.png`)}
+              />
+              <span
+                className={`font-${font}-bold text-${oppositeTheme} -mb-1.5`}
+              >
+                {lang["note"]}
+              </span>
+            </div>
+          </CustomTooltip>
         </div>
       </div>
     );

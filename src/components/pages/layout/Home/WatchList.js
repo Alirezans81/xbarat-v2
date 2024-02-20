@@ -5,21 +5,19 @@ import CustomTable from "../../../common/CustomTable";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useAddComma } from "../../../../hooks/useNumberFunctions";
-import { useDirectionState } from "../../../../Providers/DirectionProvider";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function WatchList({
   selectedSourceIndex,
-  setSelectedSourceIndex,
   availableTargets,
-  setSelectedTargetIndex,
+  findSource,
+  findTarget,
 }) {
   const lang = useLanguageState();
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const { oneEnd: endDirection } = useDirectionState();
   const setLoading = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
 
@@ -53,22 +51,6 @@ export default function WatchList({
           return temp;
         })
       : [];
-
-  const findSource = (currency_slug) => {
-    let result = -1;
-    result = currencies.findIndex(
-      (currency) => currency.slug === currency_slug
-    );
-    result >= 0 && setSelectedSourceIndex(result);
-  };
-
-  const findTarget = (currency_slug) => {
-    let result = -1;
-    result = availableTargets.findIndex(
-      (currency) => currency.slug === currency_slug
-    );
-    result >= 0 && setSelectedTargetIndex(result);
-  };
 
   useEffect(() => {
     if (availableTargets.length > 0 && targetSlug) {

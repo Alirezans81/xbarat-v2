@@ -37,7 +37,7 @@ const customTheme = {
   inlineWrapper: "flex items-center",
 };
 
-function CustomDropdown2({ children, label, className }) {
+function CustomDropdown2({ children, label, className, disabled }) {
   const theme = useThemeState();
   const buttonStyle =
     theme === "dark"
@@ -63,6 +63,7 @@ function CustomDropdown2({ children, label, className }) {
       label={<span className={className + " -mb-6"}>{label}</span>}
       className={className + ` bg-${theme} rounded-xl hover:bg-${theme}`}
       style={buttonStyle}
+      disabled={disabled}
     >
       <div className="max-h-40 pr-1.5 py-2">
         <div dir="ltr" className="max-h-36 overflow-y-scroll">

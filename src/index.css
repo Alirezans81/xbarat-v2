@@ -112,18 +112,21 @@ body {
 
 .font-Fa-bold {
   font-family: ModamFaNum-bold;
-  direction: rtl;
+  direction: ltr;
   text-align: left;
+  padding-bottom: 3px;
 }
 .font-Fa-regular {
   font-family: ModamFaNum-regular;
-  direction: rtl;
+  direction: ltr;
   text-align: left;
+  padding-bottom: 3px;
 }
 .font-Fa-thin {
   font-family: ModamFaNum-thin;
-  direction: rtl;
+  direction: ltr;
   text-align: left;
+  padding-bottom: 3px;
 }
 
 .font-De-bold {
