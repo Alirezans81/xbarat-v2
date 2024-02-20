@@ -1,28 +1,26 @@
-import { useWalletState } from "../../Providers/WalletProvider";
 import { useThemeState } from "../../Providers/ThemeProvider";
-import { useLanguageState } from "../../Providers/LanguageProvider";
 import starChecked from "../../Images/pages/layout/Profile/starChecked.png";
 import starUnChecked from "../../Images/pages/layout/Profile/starUnChecked.png";
 import edit from "../../Images/pages/layout/Profile/editBlue.png";
 import { useState, useEffect } from "react";
 import { useEditWalletTanks } from "../../apis/common/wallet/hooks";
-import { useTokenState } from "../../Providers/TokenProvider";
-
+import EditCardModal from "../../components/modals/CardModals/EditCardModal";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
-import EditCards from "./editcard";
-import { useUserState } from "../../Providers/UserProvider";
-const SingleCardTank = ({
-  index,
-  data,
-  setToggle,
-  editCards,
-  setEditCards,
-}) => {
+import { useModalDataSetState } from "../../Providers/ModalDataProvider";
+
+const SingleCardTank = ({ index, data, setToggle }) => {
+  const setModalData = useModalDataSetState();
+  const openEditCardModal = (data) => {
+    setModalData({
+      data: data,
+      children: <EditCardModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const token = useTokenState();
-  const lang = useLanguageState();
-  const userP = useUserState();
+
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { editWalletTank, isLoading: editWalletTankIsLoading } =
     useEditWalletTanks();
@@ -74,18 +72,21 @@ const SingleCardTank = ({
     setIsFavorite(!isFavorite);
   };
 
-  const handleEditCard = () => {
-    setEditCards(true);
+  const showBankInfoCorrect = (value) => {
+    if (walletTankType.includes("card")) {
+      const sanitizedValue = value.replace(/\D/g, "");
+      const chunks = sanitizedValue.match(/.{1,4}/g);
+      const result = chunks ? chunks.join(" ") : "";
+      return result;
+    }
+    if (walletTankType.includes("card")) {
+      return value;
+    } else {
+      return value;
+    }
   };
-
   return (
     <>
-      <EditCards
-        editCards={editCards}
-        setEditCards={setEditCards}
-        data={data}
-      />
-
       {/* This is for lg screen */}
       <div
         className={`xs:hidden lg:block bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-5`}
@@ -95,24 +96,26 @@ const SingleCardTank = ({
         }}
       >
         <div className="w-full h-full flex flex-col p-6 px-9">
-          <div className="flex flex-row h-1/4 w-full">
+          <div className="flex flex-row h-1/4 w-full ">
             <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">
               {bankName}
             </span>
             <button
-              onClick={handleEditCard}
-              className="flex justify-end h-fit w-fit mt-1"
+              onClick={() => {
+                openEditCardModal(data);
+              }}
+              className="flex justify-end h-fit w-1/6 mt-1"
             >
-              <img alt="" src={edit} style={{ width: "62%", height: "62%" }} />
+              <img alt="" src={edit} style={{ width: "43%", height: "43%" }} />
             </button>
             <button
               onClick={handleCheckboxChange}
-              className="flex justify-end h-fit w-fit"
+              className="flex justify-end h-fit w-1/6"
             >
               <img
                 alt=""
                 src={isFavorite ? starChecked : starUnChecked}
-                style={{ width: "70%", height: "70%" }}
+                style={{ width: "61%", height: "61%" }}
               />
             </button>
           </div>
@@ -135,7 +138,7 @@ const SingleCardTank = ({
               Bank Info
             </span>
             <span className={`text-${oppositeTheme} text-2xl min-w-0 `}>
-              {bankInfo}
+              {showBankInfoCorrect(bankInfo)}
             </span>
           </div>
         </div>
@@ -155,7 +158,9 @@ const SingleCardTank = ({
               {bankName}
             </span>
             <button
-              onClick={handleEditCard}
+              onClick={() => {
+                openEditCardModal(data);
+              }}
               className="flex justify-end  h-fit w-fit mt-1"
             >
               <img alt="" src={edit} style={{ width: "62%", height: "62%" }} />
@@ -190,14 +195,14 @@ const SingleCardTank = ({
               Bank Info
             </span>
             <span className={`text-${oppositeTheme} text-xl min-w-0 `}>
-              {bankInfo}
+              {showBankInfoCorrect(bankInfo)}
             </span>
           </div>
         </div>
       </div>
       {/* This is for xs and sm */}
       <div
-        className={`xs:block md:hidden bg-${theme}-back w-11/12 rounded-3xl mt-7`}
+        className={`xs:flex md:hidden bg-${theme}-back w-11/12 ml-1 rounded-3xl mt-7 `}
         style={{
           height: "fit-content",
           gridColumn: 1,
@@ -209,7 +214,9 @@ const SingleCardTank = ({
               {bankName}
             </span>
             <button
-              onClick={handleEditCard}
+              onClick={() => {
+                openEditCardModal(data);
+              }}
               className="flex justify-end h-fit w-fit mt-1"
             >
               <img alt="" src={edit} style={{ width: "62%", height: "62%" }} />
@@ -244,7 +251,7 @@ const SingleCardTank = ({
               Bank Info
             </span>
             <span className={`text-${oppositeTheme} text-xl min-w-0 `}>
-              {bankInfo}
+              {showBankInfoCorrect(bankInfo)}
             </span>
           </div>
         </div>

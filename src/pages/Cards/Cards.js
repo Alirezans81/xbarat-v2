@@ -1,7 +1,6 @@
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useWalletState } from "../../Providers/WalletProvider";
-import Addcard from "./addcard";
 import { useEffect, useState } from "react";
 import SingleCardAssets from "./singleCardAssets";
 import SingleCardTank from "./singleCardTank";
@@ -9,35 +8,33 @@ import cross from "../../Images/pages/layout/Profile/crossCardsGray.png";
 import { useUserState } from "../../Providers/UserProvider";
 import { useTokenState } from "../../Providers/TokenProvider";
 import { useGetWalletData } from "../../Providers/WalletProvider";
-
+import AddCardModal from "../../components/modals/CardModals/AddCardModal";
+import { useModalDataSetState } from "../../Providers/ModalDataProvider";
 const Cards = () => {
   const wallet = useWalletState();
-  const usering = useUserState();
+  const user = useUserState();
   const token = useTokenState();
+  const setModalData = useModalDataSetState();
   const refresh = useGetWalletData();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const [show, setShow] = useState([]);
 
-  const [addCard, setAddCard] = useState(false);
   const [Tanks, setTanks] = useState([]);
-  const [editCards, setEditCards] = useState(false);
   const [toggle, setToggle] = useState(false);
 
   const updateShowState = (newState) => {
     setShow(newState);
   };
-  function handleAddCard() {
-    setAddCard(true);
-  }
 
   function discard() {
     setShow("");
   }
   useEffect(() => {
-    refresh(usering.username, token);
-  }, [editCards, addCard, toggle]);
+    refresh(user.username, token);
+  }, [toggle]);
+
   useEffect(() => {
     if (wallet) {
       setTanks(
@@ -47,6 +44,13 @@ const Cards = () => {
       );
     }
   }, [show]);
+  const openAddCardModal = () => {
+    setModalData({
+      children: <AddCardModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
 
   return (
     <div
@@ -76,11 +80,10 @@ const Cards = () => {
             borderBottomLeftRadius: "50px",
           }}
         >
-          <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
           <div className="w-full h-full flex flex-col">
             <div className="w-full h-8 flex justify-end mt-5">
               <button
-                onClick={handleAddCard}
+                onClick={openAddCardModal}
                 className={
                   "bg-blue-gradient text-white rounded-2xl w-36 md:mr-2 lg:mr-5 h-full items-center font-thin"
                 }
@@ -94,8 +97,6 @@ const Cards = () => {
                 <SingleCardTank
                   index={index}
                   data={data}
-                  editCards={editCards}
-                  setEditCards={setEditCards}
                   setToggle={setToggle}
                 />
               ))}
@@ -117,7 +118,7 @@ const Cards = () => {
         <div
           className={`md:hidden xs:block w-11/12 ml-5 flex justify-center h-full bg-${theme} rounded-3xl`}
         >
-          <Addcard addCard={addCard} setAddCard={setAddCard} show={show} />
+          {/* <Addcard addCard={addCard} setAddCard={setAddCard} show={show} /> */}
 
           <div className="w-full h-full flex flex-col">
             <div className="w-full h-8 mt-5 flex flex-row">
@@ -128,7 +129,7 @@ const Cards = () => {
                 <img className="ml-6 h-10" src={cross} />
               </button>
               <button
-                onClick={handleAddCard}
+                onClick={openAddCardModal}
                 className={
                   "bg-blue-gradient text-white rounded-2xl w-36 mr-5 h-full items-center font-thin mt-1"
                 }
@@ -142,8 +143,6 @@ const Cards = () => {
                 <SingleCardTank
                   index={index}
                   data={data}
-                  editCards={editCards}
-                  setEditCards={setEditCards}
                   setToggle={setToggle}
                 />
               ))}
@@ -196,7 +195,7 @@ const Cards = () => {
         }
       >
         <div
-          className={`bg-${theme} xs:block rounded-3xl md:hidden sm:ml-1 xs:w-11/12 sm:w-11/12 h-full`}
+          className={`bg-${theme} xs:flex rounded-3xl md:hidden w-11/12 h-full`}
         >
           <div className="w-full h-full flex flex-col">
             <div className="w-full flex flex-row xs:p-3">
@@ -206,38 +205,40 @@ const Cards = () => {
                 </div>
               </div>
             </div>
-            <div
-              className={`grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-5 ml-5 w-11/12`}
-              style={{ height: "fit-content" }}
-            >
-              {wallet && wallet.walletAssets ? (
-                wallet.walletAssets.map((assetData, assetIndex) => (
-                  <SingleCardAssets
-                    assetIndex={assetIndex}
-                    assetData={assetData}
-                    updateShowState={updateShowState}
-                  />
-                ))
-              ) : (
-                <div className="text-white">Loading...</div>
-              )}
+            <div className="w-full h-full flex justify-center">
+              <div
+                className={`grid grid-cols-1 grid-rows-4 gap-4 items-center mt-5 w-11/12`}
+                style={{ height: "fit-content" }}
+              >
+                {wallet && wallet.walletAssets ? (
+                  wallet.walletAssets.map((assetData, assetIndex) => (
+                    <SingleCardAssets
+                      assetIndex={assetIndex}
+                      assetData={assetData}
+                      updateShowState={updateShowState}
+                    />
+                  ))
+                ) : (
+                  <div className="text-white">Loading...</div>
+                )}
+              </div>
             </div>
-            <div
-              className={
-                show.length === 0
-                  ? "hidden"
-                  : "grid grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll"
-              }
-            >
-              {Tanks.map((data, index) => (
-                <SingleCardTank
-                  index={index}
-                  data={data}
-                  editCards={editCards}
-                  setEditCards={setEditCards}
-                  setToggle={setToggle}
-                />
-              ))}
+            <div className="w-full h-full flex justify-center">
+              <div
+                className={
+                  show.length === 0
+                    ? "hidden"
+                    : "grid grid-cols-1 gap-5 pb-0 h-full w-full overflow-scroll"
+                }
+              >
+                {Tanks.map((data, index) => (
+                  <SingleCardTank
+                    index={index}
+                    data={data}
+                    setToggle={setToggle}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
