@@ -9,18 +9,19 @@ import { useUserState } from "../../Providers/UserProvider";
 import { useTokenState } from "../../Providers/TokenProvider";
 import { useGetWalletData } from "../../Providers/WalletProvider";
 import AddCardModal from "../../components/modals/CardModals/AddCardModal";
+import { useNavigate } from "react-router-dom";
 import { useModalDataSetState } from "../../Providers/ModalDataProvider";
 const Cards = () => {
-  const wallet = useWalletState();
+  const getWalletData = useGetWalletData();
+  const navigate = useNavigate();
   const user = useUserState();
   const token = useTokenState();
+  const wallet = useWalletState();
   const setModalData = useModalDataSetState();
-  const refresh = useGetWalletData();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const [show, setShow] = useState([]);
-
   const [Tanks, setTanks] = useState([]);
   const [toggle, setToggle] = useState(false);
 
@@ -31,9 +32,6 @@ const Cards = () => {
   function discard() {
     setShow("");
   }
-  useEffect(() => {
-    refresh(user.username, token);
-  }, [toggle]);
 
   useEffect(() => {
     if (wallet) {

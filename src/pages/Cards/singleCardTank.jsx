@@ -7,9 +7,10 @@ import { useEditWalletTanks } from "../../apis/common/wallet/hooks";
 import EditCardModal from "../../components/modals/CardModals/EditCardModal";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useModalDataSetState } from "../../Providers/ModalDataProvider";
-
+import { useNavigate } from "react-router-dom";
 const SingleCardTank = ({ index, data, setToggle }) => {
   const setModalData = useModalDataSetState();
+  const navigate = useNavigate();
   const openEditCardModal = (data) => {
     setModalData({
       data: data,
@@ -49,6 +50,9 @@ const SingleCardTank = ({ index, data, setToggle }) => {
     bank_info: "",
     is_favorite: false,
   });
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
   useEffect(() => {
     if (data) {
       setAccountName(data.account_name);
@@ -60,16 +64,27 @@ const SingleCardTank = ({ index, data, setToggle }) => {
       setIsFavorite(data.is_favorite);
     }
   }, [data]);
-  useEffect(() => {
-    setToggle(true);
-    editWalletTank(data.url, params);
-  }, [params]);
 
   const handleCheckboxChange = () => {
-    setParams({
-      is_favorite: !isFavorite,
-    });
+    if (isFavorite) {
+      const params = {
+        is_favorite: false,
+      };
+      editWalletTank(data.url, params);
+    } else {
+      const params = {
+        is_favorite: true,
+      };
+      editWalletTank(data.url, params);
+    }
     setIsFavorite(!isFavorite);
+
+    sleep(1000).then(() => {
+      navigate("/profile/");
+    });
+    sleep(1000).then(() => {
+      window.location.reload();
+    });
   };
 
   const showBankInfoCorrect = (value) => {
@@ -79,7 +94,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
       const result = chunks ? chunks.join(" ") : "";
       return result;
     }
-    if (walletTankType.includes("card")) {
+    if (walletTankType.includes("shaba")) {
       return value;
     } else {
       return value;
