@@ -124,7 +124,7 @@
   "number-of-document": "Number of document",
   "upload-your-document": "Upload your document",
   "complete-profile-modal-step3-note-1st": "To authenticate and secure your account you need to specify your identity document type",
-  "complete-profile-modal-step3-note-2nd": "And after that, enter the number of your document so that our admins can approve your account as soon as possible",
+  "complete-profile-modal-step3-note-2nd": "And after that, enter the number of your documenemailt so that our admins can approve your account as soon as possible",
   "card-number": "Card number",
   "shaba-number": "Shaba number",
   "paypal-email": "Paypal email",
@@ -195,5 +195,9 @@
   "complete-profile-step-4-not-required-message-2nd": "You can enter your info or go to next step",
   "balance" : "Balance",
   "edit-request-modal-message": "Are you sure you want to edit the request",
-  "edit-exchange-modal-message": "Are you sure you want to edit the exchange"
+  "edit-exchange-modal-message": "Are you sure you want to edit the exchange",
+  "cards":"Cards",
+  "card_shaba_paypalemail_placeholder":"Card or Shaba number or Paypal Email",
+  "delete":"Delete"
+  
 }

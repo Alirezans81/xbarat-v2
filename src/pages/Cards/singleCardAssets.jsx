@@ -8,19 +8,20 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   const theme = useThemeState();
   const lang = useLanguageState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  
+
   const walletTanks = wallet.walletTanks.filter(
-    (data) => data.currency_abb === assetData.currency_abb && data.is_deleted===false
+    (data) =>
+      data.currency_abb === assetData.currency_abb && data.is_deleted === false
   );
   const numberOfBanks = walletTanks.filter(
     (data) =>
       data.bank_name !== null && data.currency_abb === assetData.currency_abb
   );
-  const handleShow=()=>{
+  const handleShow = () => {
     updateShowState(assetData.currency_abb);
-  }
+  };
   // border-2 border-solid border-white
-  
+
   return (
     <>
       <div
@@ -28,9 +29,7 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
         style={{ gridRow: assetIndex, gridColumn: 1 }}
       >
         <div className="w-1/5 bg-transparent px-3 h-full">
-          <div
-            className="flex justify-end items-center w-full h-full"
-          ></div>
+          <div className="flex justify-end items-center w-full h-full"></div>
         </div>
         <div className="flex-1 flex-col items-center flex justify-center h-full w-3/5">
           <span
@@ -41,11 +40,11 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
           <span className="flex justify-end text-gray lg:text-xl md:text-lg sm:text-2xl xs-2xl min-h-0">
             {walletTanks.length +
               " " +
-              lang["cards-profile"] +
+              lang["cards"] +
               " /" +
               numberOfBanks.length +
               " " +
-              "Banks"}
+              lang["banks"]}
           </span>
         </div>
         <div className="w-1/5 bg-transparent px-3">

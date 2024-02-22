@@ -208,7 +208,9 @@ export default function AddCardModal() {
                   <span
                     className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
                   >
-                    {type.length === 0 ? "Card or Shaba number or Email" : type}
+                    {type.length === 0
+                      ? lang["card_shaba_paypalemail_placeholder"]
+                      : type}
                   </span>
                   <div className="flex w-full justify-end">
                     <CustomDropdown
@@ -216,13 +218,13 @@ export default function AddCardModal() {
                       label={type.length === 0 ? "Card/Shaba/Email" : type}
                     >
                       <CustomItem onClick={() => setType("Card")}>
-                        Card Number
+                        {lang["card-number"]}
                       </CustomItem>
                       <CustomItem onClick={() => setType("Shaba")}>
-                        Shaba Number
+                        {lang["shaba-number"]}
                       </CustomItem>
                       <CustomItem onClick={() => setType("Email")}>
-                        Email
+                        {lang["paypal-email"]}
                       </CustomItem>
                     </CustomDropdown>
                   </div>
@@ -231,7 +233,7 @@ export default function AddCardModal() {
                   <span
                     className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
                   >
-                    Bank Name
+                    {lang["Bank_Name"]}
                   </span>
                   <div className="w-full">
                     <div className="w-full flex mt-0 px-2">
@@ -239,14 +241,14 @@ export default function AddCardModal() {
                         onChange={handleChange("bank_name")}
                         required
                         className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
-                        placeholder="Bank Name"
+                        placeholder={lang["Bank_Name"]}
                       />
                     </div>
                   </div>
                   <span
                     className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
                   >
-                    Account Name
+                    {lang["Account_Name"]}
                   </span>
                   <div className="w-full">
                     <div className="w-full flex mt-0 px-2">
@@ -254,7 +256,7 @@ export default function AddCardModal() {
                         onChange={handleChange("account_name")}
                         required
                         className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
-                        placeholder="Account Name"
+                        placeholder={lang["Account_Name"]}
                       />
                     </div>
                   </div>
@@ -265,7 +267,7 @@ export default function AddCardModal() {
                     <span
                       className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
                     >
-                      Bank Information
+                      {lang["Bank_Info"]}
                     </span>
                     <div className=" w-full">
                       <div className="w-full flex mt-0 px-2">
@@ -303,7 +305,7 @@ export default function AddCardModal() {
                     <span
                       className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
                     >
-                      Email
+                      {lang["paypal-email"]}
                     </span>
                     <div className=" w-full">
                       <div className="w-full flex mt-0 px-2">

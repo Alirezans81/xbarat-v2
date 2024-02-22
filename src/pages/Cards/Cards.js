@@ -10,10 +10,13 @@ import { useTokenState } from "../../Providers/TokenProvider";
 import { useGetWalletData } from "../../Providers/WalletProvider";
 import AddCardModal from "../../components/modals/CardModals/AddCardModal";
 import { useNavigate } from "react-router-dom";
+import { useLanguageListState } from "../../Providers/LanguageListProvider";
 import { useModalDataSetState } from "../../Providers/ModalDataProvider";
 const Cards = () => {
   const getWalletData = useGetWalletData();
   const navigate = useNavigate();
+  const langList = useLanguageListState();
+  console.log(langList);
   const user = useUserState();
   const token = useTokenState();
   const wallet = useWalletState();

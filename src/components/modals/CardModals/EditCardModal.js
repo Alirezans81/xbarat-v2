@@ -86,7 +86,7 @@ export default function EditCardModal() {
                 <span
                   className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
                 >
-                  Bank Name
+                  {lang["Bank_Name"]}
                 </span>
                 <div className=" w-full">
                   <div className="w-full flex mt-0 px-2">
@@ -94,14 +94,14 @@ export default function EditCardModal() {
                       onChange={handleChange("bank_name")}
                       value={values.bank_name}
                       className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
-                      placeholder="Bank Name"
+                      placeholder={lang["Bank_Name"]}
                     />
                   </div>
                 </div>
                 <span
                   className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
                 >
-                  Account Name
+                  {lang["Account_Name"]}
                 </span>
                 <div className=" w-full">
                   <div className="w-full flex mt-0 px-2">
@@ -109,14 +109,14 @@ export default function EditCardModal() {
                       onChange={handleChange("account_name")}
                       value={values.account_name}
                       className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
-                      placeholder="Bank Name"
+                      placeholder={lang["Account_Name"]}
                     />
                   </div>
                 </div>
                 <span
                   className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
                 >
-                  Bank Info
+                  {lang["Bank_Info"]}
                 </span>
                 <div className=" w-full">
                   <div className="w-full flex mt-0 px-2">
@@ -154,7 +154,7 @@ export default function EditCardModal() {
                         "bg-red rounded-xl text-white w-fit h-10 mt-3 p-2"
                       }
                     >
-                      Delete
+                      {lang["delete"]}
                     </button>
                   </div>
                 </div>
@@ -173,7 +173,7 @@ export default function EditCardModal() {
                           });
                       }}
                     >
-                      Delete
+                      {lang["delete"]}
                     </button>
                   </div>
                   <div className="w-full flex justify-center">

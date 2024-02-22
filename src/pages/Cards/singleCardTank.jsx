@@ -1,5 +1,6 @@
 import { useThemeState } from "../../Providers/ThemeProvider";
 import starChecked from "../../Images/pages/layout/Profile/starChecked.png";
+import { useLanguageState } from "../../Providers/LanguageProvider";
 import starUnChecked from "../../Images/pages/layout/Profile/starUnChecked.png";
 import edit from "../../Images/pages/layout/Profile/editBlue.png";
 import { useState, useEffect } from "react";
@@ -10,6 +11,7 @@ import { useModalDataSetState } from "../../Providers/ModalDataProvider";
 import { useNavigate } from "react-router-dom";
 const SingleCardTank = ({ index, data, setToggle }) => {
   const setModalData = useModalDataSetState();
+  const lang = useLanguageState();
   const navigate = useNavigate();
   const openEditCardModal = (data) => {
     setModalData({
@@ -35,21 +37,21 @@ const SingleCardTank = ({ index, data, setToggle }) => {
   const [walletTankType, setWalletTankType] = useState("");
   const [user, setUser] = useState("");
   const [isFavorite, setIsFavorite] = useState("");
-  const [params, setParams] = useState({
-    url: "",
-    wallet_asset: "",
-    wallet_tank_type_title: "",
-    currency_abb: "",
-    title: "",
-    balance: 1,
-    locked: 1,
-    account_name: "",
-    pending: 1,
-    bank_name: "",
-    is_deleted: false,
-    bank_info: "",
-    is_favorite: false,
-  });
+  // const [params, setParams] = useState({
+  //   url: "",
+  //   wallet_asset: "",
+  //   wallet_tank_type_title: "",
+  //   currency_abb: "",
+  //   title: "",
+  //   balance: 1,
+  //   locked: 1,
+  //   account_name: "",
+  //   pending: 1,
+  //   bank_name: "",
+  //   is_deleted: false,
+  //   bank_info: "",
+  //   is_favorite: false,
+  // });
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -139,7 +141,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             style={{ marginTop: "5%" }}
           >
             <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
-              Account Name
+              {lang["Account_Name"]}
             </span>
             <span className={`text-${oppositeTheme} text-2xl min-w-0 `}>
               {accountName}
@@ -150,7 +152,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             style={{ marginTop: "1%" }}
           >
             <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
-              Bank Info
+              {lang["Bank_Info"]}
             </span>
             <span className={`text-${oppositeTheme} text-2xl min-w-0 `}>
               {showBankInfoCorrect(bankInfo)}
@@ -196,7 +198,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             style={{ marginTop: "5%" }}
           >
             <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
-              Account Name
+              {lang["Account_Name"]}
             </span>
             <span className={`text-${oppositeTheme} text-2xl min-w-0 `}>
               {accountName}
@@ -207,7 +209,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             style={{ marginTop: "5%" }}
           >
             <span className="text-gray text-lg w-full h-1/2 min-w-0">
-              Bank Info
+              {lang["Bank_Info"]}
             </span>
             <span className={`text-${oppositeTheme} text-xl min-w-0 `}>
               {showBankInfoCorrect(bankInfo)}
@@ -252,7 +254,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             style={{ marginTop: "5%" }}
           >
             <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
-              Account Name
+              {lang["Account_Name"]}
             </span>
             <span className={`text-${oppositeTheme} text-2xl min-w-0 `}>
               {accountName}
@@ -263,7 +265,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             style={{ marginTop: "5%" }}
           >
             <span className="text-gray text-lg w-full h-1/2 min-w-0">
-              Bank Info
+              {lang["Bank_Info"]}
             </span>
             <span className={`text-${oppositeTheme} text-xl min-w-0 `}>
               {showBankInfoCorrect(bankInfo)}
