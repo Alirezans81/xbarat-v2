@@ -163,6 +163,7 @@ export default function AddCardModal() {
               <button className="flex justify-end h-fit" onClick={discard}>
                 <img className="w-6" src={cross} alt="" />
               </button>
+
               <div className="w-full h-full flex justify-center flex-col">
                 <div className={"w-full px-2 py-5 flex justify-end"}>
                   <CustomDropdown
@@ -215,7 +216,11 @@ export default function AddCardModal() {
                   <div className="flex w-full justify-end">
                     <CustomDropdown
                       className={"bg-transparent w-fit"}
-                      label={type.length === 0 ? "Card/Shaba/Email" : type}
+                      label={
+                        type.length === 0
+                          ? lang["card_or_shaba_or_paypalemail"]
+                          : type
+                      }
                     >
                       <CustomItem onClick={() => setType("Card")}>
                         {lang["card-number"]}
