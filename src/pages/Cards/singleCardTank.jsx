@@ -97,7 +97,8 @@ const SingleCardTank = ({ index, data, setToggle }) => {
       return result;
     }
     if (walletTankType.includes("shaba")) {
-      return value;
+      const sanitizedValue = value.replace("-", " ");
+      return sanitizedValue;
     } else {
       return value;
     }
@@ -112,7 +113,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
           gridColumn: index % 2 === 0 ? 1 : 2,
         }}
       >
-        <div className="w-full h-full flex flex-col p-6 px-9">
+        <div className="w-full h-full flex flex-col p-6 px-9 ">
           <div className="flex flex-row h-1/4 w-full ">
             <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">
               {bankName}
@@ -148,13 +149,13 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             </span>
           </div>
           <div
-            className="w-full h-1/2 flex justify-start flex-col"
+            className="w-full h-1/2 flex justify-start flex-col "
             style={{ marginTop: "1%" }}
           >
             <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
               {lang["Bank_Info"]}
             </span>
-            <span className={`text-${oppositeTheme} text-2xl min-w-0 `}>
+            <span className={`text-${oppositeTheme} text-2xl min-w-0`}>
               {showBankInfoCorrect(bankInfo)}
             </span>
           </div>
@@ -256,7 +257,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
               {lang["Account_Name"]}
             </span>
-            <span className={`text-${oppositeTheme} text-2xl min-w-0 `}>
+            <span className={`text-${oppositeTheme} text-lg min-w-0 `}>
               {accountName}
             </span>
           </div>
@@ -264,10 +265,10 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             className="w-full h-1/2 flex justify-start flex-col"
             style={{ marginTop: "5%" }}
           >
-            <span className="text-gray text-lg w-full h-1/2 min-w-0">
+            <span className="text-gray text-2xl w-full h-1/2 min-w-0">
               {lang["Bank_Info"]}
             </span>
-            <span className={`text-${oppositeTheme} text-xl min-w-0 `}>
+            <span className={`text-${oppositeTheme} text-lg min-w-0 `}>
               {showBankInfoCorrect(bankInfo)}
             </span>
           </div>

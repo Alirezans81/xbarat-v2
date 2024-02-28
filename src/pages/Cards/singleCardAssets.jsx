@@ -3,10 +3,12 @@ import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import arrowRightLight from "../../Images/arrow-right-light-thin.png";
 import arrowRightDark from "../../Images/arrow-right-dark-thin.png";
+import { useFontState } from "../../Providers/FontProvider";
 const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   const wallet = useWalletState();
   const theme = useThemeState();
   const lang = useLanguageState();
+  const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
   const walletTanks = wallet.walletTanks.filter(
@@ -20,24 +22,19 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   const handleShow = () => {
     updateShowState(assetData.currency_abb);
   };
-  // border-2 border-solid border-white
 
   return (
     <>
       <div
-        className={`bg-${theme}-back h-full rounded-3xl w-full flex flex-row  p-3`}
+        className={`bg-${theme}-back  rounded-3xl w-full h-28 flex flex-row pb-3 pt-3 m-3 font-${font}`}
         style={{ gridRow: assetIndex, gridColumn: 1 }}
       >
-        <div className="w-1/5 bg-transparent px-3 h-full">
-          <div className="flex justify-end items-center w-full h-full"></div>
-        </div>
-        <div className="flex-1 flex-col items-center flex justify-center h-full w-3/5">
-          <span
-            className={`min-h-0 text-${oppositeTheme} lg:text-3xl md:text-3xl xs:text-3xl sm:text-3xl`}
-          >
+        <div className="w-1/5"></div>
+        <div className="flex flex-col items-center justify-center h-full w-3/5">
+          <span className={`text-${oppositeTheme}  text-3xl`}>
             {assetData.currency_abb}
           </span>
-          <span className="flex justify-end text-gray lg:text-xl md:text-lg sm:text-2xl xs-2xl min-h-0">
+          <span className="flex justify-end text-gray text-xl min-h-0">
             {walletTanks.length +
               " " +
               lang["cards"] +
@@ -47,13 +44,13 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
               lang["banks"]}
           </span>
         </div>
-        <div className="w-1/5 bg-transparent px-3">
+        <div className="w-1/5 h-full bg-transparent">
           <button
             onClick={handleShow}
             className="flex justify-end items-center w-full h-full"
           >
             <img
-              className="w-12 h-9"
+              className="w-8 h-6 mr-3"
               src={theme === "light" ? arrowRightDark : arrowRightLight}
             />
           </button>
