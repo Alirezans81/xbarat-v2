@@ -1,405 +1,220 @@
 {
-
   "loading": "Loading...",
-
   "logo-header": "Xbarat",
-
   "slogan": "When you are enough",
-
   "complete-profile": "Complete Profile",
-
   "log-out": "Log Out",
-
   "email": "Email",
-
   "password": "Password",
-
   "log-in": "Log In",
-
   "sign-up": "Sign Up",
-
   "submit": "Submit",
-
   "exchange": "Exchange",
-
   "remember-me": "Remember Me",
-
   "forgot-password": "Forgot Password?",
-
   "not-logged-in-error": "You should be logged in to access this page",
-
   "email-empty-error": "Enter your email address",
-
   "email-invalid-error": "Enter a valid email address",
-
   "password-empty-error": "Enter your password",
-
   "password-short-error": "Password should be at least 8 characters long",
-
   "password-contain-error": "Password should contain one of the following characters: [a-z], [A-Z], [0-9], [!@#$%*?]",
-
   "password-match-error": "Password does not match",
-
   "home": "Home",
-
   "wallet": "Wallet",
-
   "reports": "Reports",
-
   "tickets": "Tickets",
-
   "main-routes-title": "Main",
-
   "submitting-routes-title": "Submitting",
-
   "user-management-routes-title": "User Management",
-
   "currency-routes-title": "Currency",
-
   "more-routes-title": "More",
-
   "assignment": "Assignment",
-
   "exchanges": "Exchanges",
-
   "transfers": "Transfers",
-
   "accounting": "Accounting",
-
   "users": "Users",
-
   "admins": "Admins",
-
   "branches": "Branches",
-
   "singular": "Singular",
-
   "pair": "Pair",
-
   "robots": "Robots",
-
   "pending": "Pending",
-
   "locked": "Locked",
-
   "source": "Source",
-
   "target": "Target",
-
   "amount": "Amount",
-
   "rate": "Rate",
-
   "empty-fields-error": "Please fill in all the fields",
-
   "select-currency-error": "Select your source and target currency",
-
   "currency-pair": "Currency Pair",
-
   "pending-orders": "Pending Orders",
-
   "edit": "Edit",
-
   "cancel": "Cancel",
-
   "no-data": "No Data!",
-
   "open-orders": "open orders",
-
   "done-orders": "done orders",
-
   "today-orders": "today orders",
-
   "other-exchanges": "Other Exchanges",
-
   "first-name": "First Name",
-
   "last-name": "Last Name",
-
   "phone": "Phone",
-
   "change-password": "Change Password",
-
   "phone-number": "Phone Number",
-
   "nationality": "Nationality",
-
   "country": "Country",
-
   "city": "City",
-
   "national-code": "National Code",
-
   "document": "Document",
-
   "current-password": "Current Password",
-
   "new-password": "New Password",
-
   "confirm-password": "Confirm Password",
-
   "referral-code-placeholder": "Referral Code (Optional)",
-
   "last-tickets": "Last Tickets",
-
   "ticket-new-message": "You have a new message",
-
   "ticket-ended": "Ended",
-
   "ticket-sended-message": "You’ve sent a message",
-
   "complete-profile-message": "Please click here to complete your profile",
-
   "deposit": "Deposit",
-
   "currency": "Currency",
-
   "location": "Location",
-
   "last-deposit": "Last deposit",
-
   "in": "in",
-
   "new": "New",
-
   "admin-approve": "Admin Approve",
-
   "reject": "Reject",
-
   "accept": "Accept",
-
   "your-balance": "Your Balance",
-
   "admin-assign": "Admin Assign",
-
   "upload-document": "Upload Document",
-
   "transfer": "Transfer",
-
   "withdrawal": "Withdrawal",
-
   "pending-requests": "Pending Requests",
-
   "only-deposits": "Only Deposits",
-
   "only-withdrawals": "Only Withdrawals",
-
   "only-transfers": "Only Transfers",
-
   "admin-approve-message": "Please wait for admin to approve",
-
   "upload-document-message": "Please go to details and upload your document",
-
   "admin-assign-message": "Please wait for admin to assign",
-
   "history": "History",
-
   "to": "to",
-
   "404-page-title": "UH OH! You’re Lost",
-
   "404-page-description-1st": "The page you’re looking for dose not exist. How you got here is a mystery",
-
   "404-page-description-2nd": "But you can click the button below to get back on track",
-
   "date-&-time": "Date & Time",
-
   "pick": "Pick",
-
   "verifying-phone-number": "Verifying The Phone Number",
-
   "sended-otp-code-message-1st": "We've sent a code to your phone number",
-
   "sended-otp-code-message-2nd": "Please enter the code below",
-
   "otp-code": "OTP Code",
-
   "resend": "Resend",
-
   "wait-link-message": "Please go to your email and click on the link we’ve sent you",
-
   "personal-information": "Personal Information",
-
   "national-information": "National Information",
-
   "bank-information": "Bank Information",
-
   "note": "Note",
-
   "skip": "Skip",
-
   "next": "Next",
-
   "done": "Done",
-
   "complete-profile-modal-step1-note-1st": "To create a user account, your contact number needs to be registered in the system",
-
   "complete-profile-modal-step1-note-2nd": "And the security of your account and the notifications of your account operations will depend on this contact number",
-
   "complete-profile-modal-step1-note-3rd": "If you ever forgot your password, your only way recover your password is your number",
-
   "complete-profile-modal-step2-note-1st": "We need to know your nationality to receive a proper identity document",
-
   "complete-profile-modal-step2-note-2nd": "And also we need your location to find out how we are going to cooperate together",
-
   "type-of-identity-document": "Type of identity document",
-
   "number-of-document": "Number of document",
-
   "upload-your-document": "Upload your document",
-
   "complete-profile-modal-step3-note-1st": "To authenticate and secure your account you need to specify your identity document type",
-
   "complete-profile-modal-step3-note-2nd": "And after that, enter the number of your document so that our admins can approve your account as soon as possible",
-
   "card-number": "Card number",
-
   "shaba-number": "Shaba number",
-
   "paypal-email": "Paypal email",
-
-  "card_or_shaba_or_paypalemail":"Card/Shaba/Email",
-
   "complete-profile-modal-step4-note-1st": "To send your money to your real account we need to have some information about it",
-
   "complete-profile-modal-step4-note-2nd": "Card number is for times that the money is not much",
-
   "complete-profile-modal-step4-note-3rd": "And Shaba number is for time we want to send you a big amount of money",
-
   "complete-profile-modal-step5-note-1st": "Thank you for completing your profile",
-
   "complete-profile-modal-step5-note-2nd": "Please wait for admin approve",
-
   "person-code": "Person Code",
-
   "from-date": "From Date",
-
   "until-date": "Until Date",
-
   "assign": "Assign",
-
   "type-of-document": "Type of Document",
-
   "bank-account": "Bank Account",
-
   "bank-account-title": "Cardholder's Name",
-
   "bank-account-number": "Bank Account Number",
-
   "transaction": "Transaction",
-
   "user-code": "User Code",
-
+  "pending-request": "Pending Request",
+  "are-you-sure-modal-title": "Are you sure",
+  "yes": "Yes",
+  "cancel-request-modal-message": "Are you sure to cancel the request",
+  "cancel-exchange-modal-message": "Are you sure to cancel the exchange",
+  "accept-transaction-message": "Your transaction was successfully accepted",
+  "not-enough-balance-error": "You have not enough balance",
+  "low-amount-error": "Your balance must be more than",
+  "high-amount-error": "Your balance must be less than",
+  "not-in-range-rate-error-1st": "Your rate must be between",
+  "not-in-range-rate-error-&": "&",
+  "not-in-range-rate-error-2nd": "",
+  "watch-list-label": "Watchlist",
+  "quantity": "quantity",
+  "low": "Low",
+  "high": "High",
+  "cards-profile": "Cards",
+  "account_name_null_cards": "title",
+  "bank_name_null_cards": "Bank Name",
+  "bank_info_null_cards": "0000 0000 0000 0000",
+  "wallet_tank_type_title_null_cards": "Card/Shaba Number",
+  "add_cards_title": "title",
   "add":"Add",
-  
-  "delete":"Delete",
-
   "banks":"Banks",
-
   "Account_Name":"Account Name",
-
-  "Bank_Name":"Bank Name",
-
   "Bank_Info":"Bank Info",
-
   "cards_card_number": "Card Number",
-
   "cards_shaba_number": "Shaba Number",
-
   "cards_card_number_placeholder": "0000 0000 0000 0000",
-
   "cards_shaba_number_placeholder": "IR-000000000000000000000000",
-
-  "card_shaba_paypalemail_placeholder":"Card or Shaba number or Paypal Email",
-  
+  "choose_add_currency_cards_add_asset": "Please Select The Currency You want to Have",
   "referral-code": "Referral Code",
-
   "copied": "copied",
-
   "code": "Code",
-
   "code-sended-to-email-message-1st": "We've sent a code to",
-
   "code-sended-to-email-message-2nd": "Enter the code here",
-
   "email-varification-subject": "Email Varification",
-
   "email-varification-message": "Your code is",
-
   "email-varification-code-error": "The code was not correct",
-
   "email-not-exist-error-message": "The email does not exists",
-
   "forgot-password-label": "Forget Password",
-
   "profile": "Profile",
-
   "successful-signup-1st": "Your account was successfully signed up",
-
   "successful-signup-2nd": "Please try to login now",
-
   "email-exsit-error": "The email exists",
-
   "amount-input-max-button-label": "Max",
-
   "add-card": "Add Card",
-
-  "cards":"Cards",
-
-
   "complete-profile-toast-message": "Please complete your profile information to work with the platform properly",
-
   "file-too-big-toast-message": "The image is too big (Must be less than 4 MB)",
-
   "not-enough-balance-toast-message-1st": "You have not enough balance",
-
   "not-enough-balance-toast-message-2nd": "It must be less than",
-
   "switch-page-mode": "Switch Page Mode",
-
   "yesterday-low": "Yesterday Low",
-
   "yesterday-avg": "Yesterday Average",
-
   "yesterday-high": "Yesterday High",
-
   "source-amount": "Source Amount",
-
   "target-amount": "Target Amount",
-
   "status": "Status",
-
   "action": "Action",
-
   "wrong-phone-error": "Invalid phone",
-
   "from": "from",
-
   "back": "Back",
-
   "upload-document-profile-note-1st": "You have to send your photo and ID directly and online as a selfie",
-
   "upload-document-profile-note-2nd": "Your photo and ID must be in the same box",
-
   "upload-document-profile-note-3rd": "Cover the unique code of your identification document",
-
   "upload-document-profile-note-4th": "The size of the photo should be less than 1 MB",
-
   "search": "Search",
-
   "complete-profile-step-3-not-required-message-1st": "This step is not necessary",
-
   "complete-profile-step-3-not-required-message-2nd": "You can upload your document or go to next step",
-
   "complete-profile-step-4-not-required-message-1st": "This step is not necessary",
-
   "complete-profile-step-4-not-required-message-2nd": "You can enter your info or go to next step",
-
   "balance" : "Balance",
-
   "edit-request-modal-message": "Are you sure you want to edit the request",
-
   "edit-exchange-modal-message": "Are you sure you want to edit the exchange"
-
-
 }

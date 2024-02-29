@@ -85,10 +85,28 @@ const useSortByBalance = () => {
   return sortByBalance;
 };
 
+const calculateReverseRate = (rate, rate_multiplier, floating_number) => {
+  return +((1 / +rate) * +rate_multiplier).toFixed(floating_number);
+};
+
+const useCalculateReverseRate = () => {
+  return calculateReverseRate;
+};
+
+const calculateNotReversedRate = (rate, rate_multiplier, floating_number) => {
+  return +(1 / (+rate / +rate_multiplier)).toFixed(floating_number);
+};
+
+const useCalculateNotReverseRate = () => {
+  return calculateNotReversedRate;
+};
+
 export {
   useAddComma,
   useIsNumberFloat,
   useReverseRate,
   useRemoveComma,
   useSortByBalance,
+  useCalculateReverseRate,
+  useCalculateNotReverseRate,
 };

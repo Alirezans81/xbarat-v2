@@ -13,6 +13,7 @@ import { useModalDataClose } from "../../Providers/ModalDataProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useGetWalletTanks } from "../../apis/common/wallet/hooks";
 import { CustomDropdown, CustomItem } from "../common/CustomDropdown";
+import Stepper from "./PendingRequestModal/Stepper";
 
 export default function PendingRequestModal({ refreshPendingRequests, data }) {
   const lang = useLanguageState();
@@ -65,8 +66,28 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     return false;
   };
 
+  const findStep = () => {
+    const type = data && data.type ? data.type : "";
+    const status = data && data.status_title ? data.status_title : "";
+
+    if (data) {
+      if (type === "deposit" || type === "withdrawal") {
+        if (status === "Admin Assign") return 1;
+        if (status === "Upload Document") return 2;
+        if (status === "Admin Approve") return 3;
+        if (status === "Accept" || status === "Reject") return 4;
+      } else if (type === "transfer") {
+        if (status === "Admin Approve") return 1;
+        if (status === "Accept" || status === "Reject") return 2;
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col">
+      <div className="w-full">
+        <Stepper type={data && data.type ? data.type : ""} step={findStep()} />
+      </div>
       {data && data.type === "deposit" && (
         <span className={`font-${font}-regular text-green`}>
           {lang["deposit"]}

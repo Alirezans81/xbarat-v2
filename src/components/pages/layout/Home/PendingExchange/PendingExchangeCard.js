@@ -5,7 +5,10 @@ import {
   useModalDataClose,
   useModalDataSetState,
 } from "../../../../../Providers/ModalDataProvider";
-import { useAddComma } from "../../../../../hooks/useNumberFunctions";
+import {
+  useAddComma,
+  useCalculateReverseRate,
+} from "../../../../../hooks/useNumberFunctions";
 import { useConvertDateTime } from "../../../../../hooks/useConvertDateTime";
 import { useCancelPendingExchange } from "../../../../../apis/pages/Home/hooks";
 import AreYouSureModal from "../../../../../components/modals/AreYouSureModal";
@@ -21,6 +24,8 @@ export default function PendingExchangeCard({
   setTarget,
   setAmount,
   setRate,
+  selectedCurrecnyPair,
+  rateIsReversed,
 }) {
   const theme = useThemeState();
   const font = useFontState();
@@ -31,6 +36,7 @@ export default function PendingExchangeCard({
   const setModalData = useModalDataSetState();
   const closeModal = useModalDataClose();
   const refreshWallet = useRefreshWallet();
+  const calculateReverseRate = useCalculateReverseRate();
 
   const { cancelPendingExchange, isLoading: cancelPendingExchangeIsLoading } =
     useCancelPendingExchange();
@@ -119,7 +125,19 @@ export default function PendingExchangeCard({
         <span className={`text-gray font-${font}-regular`}>{lang["rate"]}</span>
         <div className="flex gap-1">
           <span className={`font-${font}-regular text-${oppositeTheme}`}>
-            {addComma(+data.rate)}
+            {data &&
+              (selectedCurrecnyPair &&
+              (data.currency_pair === selectedCurrecnyPair.url ||
+                data.currency_pair_reverse === selectedCurrecnyPair.url) &&
+              rateIsReversed
+                ? addComma(
+                    calculateReverseRate(
+                      +data.rate,
+                      +selectedCurrecnyPair.rate_multiplier,
+                      +selectedCurrecnyPair.floating_number
+                    )
+                  )
+                : addComma(+data.rate))}
           </span>
           <span className={`font-${font}-regular text-blue-gradient`}>
             {data.default_rate_type_title}
@@ -129,7 +147,7 @@ export default function PendingExchangeCard({
       <div className="flex gap-2 mt-2 w-full px-6">
         <button
           type="button"
-          // onClick={openEditAreYouSureModal}
+          onClick={openEditAreYouSureModal}
           className="flex-1 border-2 border-blue rounded-lg pt-0.5"
         >
           <span className={`font-${font}-bold text-blue`}>{lang["edit"]}</span>

@@ -68,8 +68,6 @@ export default function PendingRequests({
         ...convertedWithdrawals,
         ...convertedTransfers,
       ];
-      console.log("temp: ", temp);
-      console.log("temp.sort:", temp.sort(sortByCreateDate));
 
       setPendingOrders(temp.sort(sortByCreateDate));
     }
