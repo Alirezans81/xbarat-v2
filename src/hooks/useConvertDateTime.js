@@ -3,7 +3,7 @@ const convertDateTime = (dateTime) => {
   return (
     newFormat.getFullYear() +
     "/" +
-    newFormat.getMonth() +
+    (newFormat.getMonth() + 1) +
     "/" +
     newFormat.getDate() +
     " " +

@@ -13,6 +13,8 @@ export default function PendingExchange({
   setTarget,
   setAmount,
   setRate,
+  selectedCurrecnyPair,
+  rateIsReversed,
 }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -45,6 +47,8 @@ export default function PendingExchange({
                   setTarget={setTarget}
                   setAmount={setAmount}
                   setRate={setRate}
+                  selectedCurrecnyPair={selectedCurrecnyPair}
+                  rateIsReversed={rateIsReversed}
                 />
               </div>
             ))}

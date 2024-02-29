@@ -92,8 +92,6 @@ export default function Home({ isDemo }) {
   };
 
   useEffect(() => {
-    console.log("selectedSourceIndex: ", selectedSourceIndex);
-    console.log("source: ", source);
     selectedSourceIndex !== -1 && source && findSource(source);
   }, [source, selectedSourceIndex]);
   useEffect(() => {
@@ -177,6 +175,8 @@ export default function Home({ isDemo }) {
                 availableTargets={availableTargets}
                 findSource={findSource}
                 findTarget={findTarget}
+                rateIsReversed={rateIsReversed}
+                selectedCurrecnyPair={selectedCurrecnyPair}
               />
             </div>
             <div
@@ -198,6 +198,8 @@ export default function Home({ isDemo }) {
                 setTarget={setTarget}
                 setAmount={setAmount}
                 setRate={setRate}
+                selectedCurrecnyPair={selectedCurrecnyPair}
+                rateIsReversed={rateIsReversed}
               />
             </div>
             <div
@@ -210,6 +212,7 @@ export default function Home({ isDemo }) {
                 selectedCurrecnyPair={selectedCurrecnyPair}
                 setFormDefaultRate={setFormDefaultRate}
                 focusOnInput={focusOnRateInput}
+                rateIsReversed={rateIsReversed}
               />
             </div>
           </div>

@@ -1,7 +1,10 @@
 import React from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useDirectionState } from "../../../../../Providers/DirectionProvider";
-import { useAddComma } from "../../../../../hooks/useNumberFunctions";
+import {
+  useAddComma,
+  useCalculateReverseRate,
+} from "../../../../../hooks/useNumberFunctions";
 import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function RateType({
@@ -26,6 +29,7 @@ export default function RateType({
     ? `text-${oppositeTheme}`
     : "text-gray";
 
+  const calculateReverseRate = useCalculateReverseRate();
   const reversedRateType = default_rate_type_title
     .split("/")
     .reverse()
@@ -38,15 +42,30 @@ export default function RateType({
       <div className="flex">
         <button
           onClick={() => {
-            setFormDefaultRate(addComma(+rate));
+            const formDefaultRate =
+              selectedCurrecnyPair &&
+              (rateIsReversed
+                ? addComma(
+                    calculateReverseRate(
+                      +rate,
+                      +selectedCurrecnyPair.rate_multiplier,
+                      +selectedCurrecnyPair.floating_number
+                    )
+                  )
+                : addComma(+rate));
+            setFormDefaultRate(formDefaultRate);
             focusOnInput();
           }}
         >
           <span className={`font-${font}-thin text-${oppositeTheme} `}>
             {rateIsReversed
               ? rate &&
-                ((1 / +rate) * +selectedCurrecnyPair.rate_multiplier).toFixed(
-                  selectedCurrecnyPair.floating_number
+                addComma(
+                  calculateReverseRate(
+                    rate,
+                    +selectedCurrecnyPair.rate_multiplier,
+                    +selectedCurrecnyPair.floating_number
+                  )
                 )
               : rate && (rate < 1000 ? rate : addComma(rate))}
           </span>

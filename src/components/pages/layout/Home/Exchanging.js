@@ -86,12 +86,15 @@ export default function Exchanging({
   };
 
   useEffect(() => {
-    findCurrencyBalanceInWallet();
     findAvailableTargets();
     setRateIsReversed(false);
     setSelectedTargetIndex(-1);
     setSelectedCurrencnyPair(null);
   }, [selectedSourceIndex]);
+
+  useEffect(() => {
+    findCurrencyBalanceInWallet();
+  }, [selectedSourceIndex, wallet]);
 
   useEffect(() => {
     if (selectedSourceIndex >= 0 && selectedTargetIndex >= 0) {

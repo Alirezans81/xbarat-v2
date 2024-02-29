@@ -5,7 +5,10 @@ import { useDirectionState } from "../../../../Providers/DirectionProvider";
 import CustomTable from "../../../common/CustomTable";
 import { useGetTableExchange } from "../../../../apis/pages/Home/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
-import { useAddComma } from "../../../../hooks/useNumberFunctions";
+import {
+  useAddComma,
+  useCalculateReverseRate,
+} from "../../../../hooks/useNumberFunctions";
 import { CustomTooltip } from "../../../common/CustomTooltip";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
@@ -17,6 +20,7 @@ export default function TableExchange({
   selectedCurrecnyPair,
   setFormDefaultRate,
   focusOnInput,
+  rateIsReversed,
 }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -26,6 +30,7 @@ export default function TableExchange({
   const setLoading = useIsLoadingSplashScreenSetState();
   const { endComplete: direction } = useDirectionState();
   const currencies = useCurrenciesState();
+  const calculateReverseRate = useCalculateReverseRate();
 
   const [tableExchangeData, setTableExchangeData] = useState();
 
@@ -81,11 +86,18 @@ export default function TableExchange({
     lang["amount"],
     lang["quantity"],
   ];
-  const source_to_target_data =
-    tableExchangeData &&
-    tableExchangeData.source_to_target &&
-    selectedCurrecnyPair
-      ? tableExchangeData.source_to_target.map((row) => {
+
+  const [source_to_target_data, set_source_to_target_data] = useState([]);
+  const [target_to_source_data, set_target_to_source_data] = useState([]);
+
+  useEffect(() => {
+    if (
+      tableExchangeData &&
+      tableExchangeData.source_to_target &&
+      selectedCurrecnyPair
+    ) {
+      set_source_to_target_data(
+        tableExchangeData.source_to_target.map((row) => {
           if (row.rate) {
             let temp = {};
             temp.quantity = addComma(row.quantity);
@@ -115,24 +127,37 @@ export default function TableExchange({
                 </span>
               </CustomTooltip>
             );
-            temp.rate = addComma(
-              +row.rate.toFixed(selectedCurrecnyPair.floating_number)
-            );
+            temp.rate = rateIsReversed
+              ? addComma(
+                  calculateReverseRate(
+                    +row.rate,
+                    +selectedCurrecnyPair.rate_multiplier,
+                    +selectedCurrecnyPair.floating_number
+                  )
+                )
+              : addComma(
+                  +row.rate.toFixed(selectedCurrecnyPair.floating_number)
+                );
 
             return temp;
           }
         })
-      : [];
-  const target_to_source_data =
-    tableExchangeData &&
-    tableExchangeData.target_to_source &&
-    selectedCurrecnyPair
-      ? tableExchangeData.target_to_source.map((row) => {
+      );
+      set_target_to_source_data(
+        tableExchangeData.target_to_source.map((row) => {
           if (row.rate) {
             let temp = {};
-            temp.rate = addComma(
-              +row.rate.toFixed(selectedCurrecnyPair.floating_number)
-            );
+            temp.rate = rateIsReversed
+              ? addComma(
+                  calculateReverseRate(
+                    +row.rate,
+                    +selectedCurrecnyPair.rate_multiplier,
+                    +selectedCurrecnyPair.floating_number
+                  )
+                )
+              : addComma(
+                  +row.rate.toFixed(selectedCurrecnyPair.floating_number)
+                );
             temp.total_amount = (
               <CustomTooltip
                 placement="top"
@@ -162,7 +187,105 @@ export default function TableExchange({
             return temp;
           }
         })
-      : [];
+      );
+    } else {
+      set_source_to_target_data([]);
+      set_target_to_source_data([]);
+    }
+  }, [tableExchangeData, rateIsReversed]);
+
+  // const source_to_target_data =
+  //   tableExchangeData &&
+  //   tableExchangeData.source_to_target &&
+  //   selectedCurrecnyPair
+  //     ? tableExchangeData.source_to_target.map((row) => {
+  //         if (row.rate) {
+  //           let temp = {};
+  //           temp.quantity = addComma(row.quantity);
+  //           temp.total_amount = (
+  //             <CustomTooltip
+  //               placement="top"
+  //               content={
+  //                 addComma(
+  //                   computeSourceToTargetReversedAmount(
+  //                     row.total_amount,
+  //                     row.rate,
+  //                     +selectedCurrecnyPair.rate_multiplier
+  //                   ).toFixed(
+  //                     availableTargets[selectedTargetIndex].floating_number
+  //                   )
+  //                 ) +
+  //                 " " +
+  //                 selectedCurrecnyPair.currency_destination_abb
+  //               }
+  //               className={`tooltip-${oppositeTheme}`}
+  //               style={oppositeTheme}
+  //             >
+  //               <span>
+  //                 {addComma(row.total_amount) +
+  //                   " " +
+  //                   selectedCurrecnyPair.currency_source_abb}
+  //               </span>
+  //             </CustomTooltip>
+  //           );
+  //           temp.rate = rateIsReversed
+  //             ? addComma(
+  //                 calculateReverseRate(
+  //                   +row.rate,
+  //                   1,
+  //                   +selectedCurrecnyPair.rate_multiplier,
+  //                   +selectedCurrecnyPair.floating_number
+  //                 )
+  //               )
+  //             : addComma(
+  //                 +row.rate.toFixed(selectedCurrecnyPair.floating_number)
+  //               );
+
+  //           return temp;
+  //         }
+  //       })
+  //     : [];
+
+  // const target_to_source_data =
+  //   tableExchangeData &&
+  //   tableExchangeData.target_to_source &&
+  //   selectedCurrecnyPair
+  //     ? tableExchangeData.target_to_source.map((row) => {
+  //         if (row.rate) {
+  //           let temp = {};
+  //           temp.rate = addComma(
+  //             +row.rate.toFixed(selectedCurrecnyPair.floating_number)
+  //           );
+  //           temp.total_amount = (
+  //             <CustomTooltip
+  //               placement="top"
+  //               content={
+  //                 addComma(
+  //                   computeTargetToSourceReversedAmount(
+  //                     row.total_amount,
+  //                     row.rate,
+  //                     +selectedCurrecnyPair.rate_multiplier
+  //                   ).toFixed(currencies[selectedSourceIndex].floating_number)
+  //                 ) +
+  //                 " " +
+  //                 selectedCurrecnyPair.currency_source_abb
+  //               }
+  //               className={`tooltip-${oppositeTheme}`}
+  //               style={oppositeTheme}
+  //             >
+  //               <span>
+  //                 {addComma(row.total_amount) +
+  //                   " " +
+  //                   selectedCurrecnyPair.currency_destination_abb}
+  //               </span>
+  //             </CustomTooltip>
+  //           );
+  //           temp.quantity = addComma(row.quantity);
+
+  //           return temp;
+  //         }
+  //       })
+  //     : [];
 
   const { getTableExchange, isLoading: getTableExchangeIsLoading } =
     useGetTableExchange();
@@ -222,7 +345,7 @@ export default function TableExchange({
             <CustomTable
               heads={source_to_target_head}
               rows={source_to_target_data}
-              haverable={true}
+              haverable
               selectRow={(row) => {
                 setFormDefaultRate(row.rate);
                 focusOnInput();
