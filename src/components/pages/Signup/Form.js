@@ -180,7 +180,7 @@ export default function Form({ setIsSplashScreenLoading }) {
         email: "",
         password: "",
         confirmPassword: "",
-        referral_code: "",
+        referral: "",
         verify_email_code: "",
       }}
       onSubmit={(values) => {
@@ -197,7 +197,7 @@ export default function Form({ setIsSplashScreenLoading }) {
               {
                 email: values.email,
                 password: values.password,
-                referral_code: values.referral_code,
+                referral: values.referral,
               },
               () => {
                 showSuccessToast(
@@ -317,13 +317,13 @@ export default function Form({ setIsSplashScreenLoading }) {
                 </span>
               )}
               <input
-                name="referral_code"
+                name="referral"
                 type="text"
                 placeholder={lang["referral-code-placeholder"]}
                 className={`input-${theme} mt-4 focus:outline-none`}
-                onChange={handleChange("referral_code")}
-                onBlur={handleBlur("referral_code")}
-                value={values.referral_code}
+                onChange={handleChange("referral")}
+                onBlur={handleBlur("referral")}
+                value={values.referral}
               />
             </>
           )}

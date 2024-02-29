@@ -6,6 +6,8 @@ import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoa
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import {
   useAddComma,
+  useCalculateNotReverseRate,
+  useCalculateReverseRate,
   useRemoveComma,
 } from "../../../../../hooks/useNumberFunctions";
 import { useDirectionState } from "../../../../../Providers/DirectionProvider";
@@ -57,6 +59,8 @@ export default function ExchangeForm({
   const statuses = useStatusesState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
+  const calculateReverseRate = useCalculateReverseRate();
+  const calculateNotReverseRate = useCalculateNotReverseRate();
 
   const { exchange, isLoading: exchangeIsLoading } = useExchange();
   useEffect(
@@ -117,13 +121,28 @@ export default function ExchangeForm({
         if (!rateIsReversed) {
           return (newAmount * rate) / multi;
         } else {
-          return newAmount / rate / multi;
+          return (
+            (newAmount *
+              +calculateReverseRate(
+                +rate,
+                +selectedCurrecnyPair.rate_multiplier,
+                +selectedCurrecnyPair.floating_number
+              )) /
+            multi
+          );
         }
       } else {
         if (!rateIsReversed) {
           return (newAmount * multi) / rate;
         } else {
-          return newAmount * multi * rate;
+          return (
+            (newAmount * multi) /
+            +calculateReverseRate(
+              +rate,
+              +selectedCurrecnyPair.rate_multiplier,
+              +selectedCurrecnyPair.floating_number
+            )
+          );
         }
       }
     }
@@ -222,6 +241,20 @@ export default function ExchangeForm({
   }, [selectedCurrecnyPair]);
 
   useEffect(() => {
+    if (selectedCurrecnyPair) {
+      const currentRate = formikRef.current.values.rate;
+      const reversedRate = calculateReverseRate(
+        removeComma(currentRate),
+        +selectedCurrecnyPair.rate_multiplier,
+        +selectedCurrecnyPair.floating_number
+      );
+      currentRate &&
+        reversedRate &&
+        formikRef.current.setFieldValue("rate", reversedRate);
+    }
+  }, [rateIsReversed]);
+
+  useEffect(() => {
     formDefaultAmount &&
       formikRef.current.setFieldValue("amount", formDefaultAmount);
   }, [formDefaultRate]);
@@ -244,10 +277,15 @@ export default function ExchangeForm({
               : +removeComma(values.amount) *
                 ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
 
-          const selectedRate = formDefaultRate
-            ? +removeComma(formDefaultRate)
+          const selectedRate = rateIsReversed
+            ? calculateNotReverseRate(
+                +removeComma(values.rate),
+                +selectedCurrecnyPair.rate_multiplier,
+                +selectedCurrecnyPair.floating_number
+              )
             : +removeComma(values.rate);
-          if (findError(+newAmount, +selectedRate)) {
+          console.log("selected rate: ", selectedRate);
+          if (findError(newAmount, +removeComma(values.rate))) {
             const params = {
               user: user && user.url ? user.url : "",
               currency_pair:
@@ -258,11 +296,13 @@ export default function ExchangeForm({
               rate: +selectedRate,
               amount_destination:
                 selectedCurrecnyPair && selectedCurrecnyPair.rate_multiplier
-                  ? computingTargetAmount(
-                      removeComma(values.amount),
-                      selectedRate,
+                  ? +computingTargetAmount(
+                      +removeComma(values.amount),
+                      +removeComma(values.rate),
                       selectedCurrecnyPair.rate_multiplier
-                    ).toFixed(6)
+                    ).toFixed(
+                      availableTargets[selectedTargetIndex].floating_number
+                    )
                   : 0,
               status:
                 statuses.find((status) => status.title === "Pending").url || "",
