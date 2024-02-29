@@ -17,7 +17,6 @@ export default function OnLoad({ children }) {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const setLanguageList = useLanguageListSetState();
-
   const { getLanguages, isLoading: getLanguagesIsLoading } = useGetLanguages();
   useEffect(
     () => setIsLoadingSplashScreen(getLanguagesIsLoading),

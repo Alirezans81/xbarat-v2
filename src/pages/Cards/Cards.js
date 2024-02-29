@@ -10,10 +10,15 @@ import { useTokenState } from "../../Providers/TokenProvider";
 import { useGetWalletData } from "../../Providers/WalletProvider";
 import AddCardModal from "../../components/modals/CardModals/AddCardModal";
 import { useNavigate } from "react-router-dom";
+import { useLanguageListState } from "../../Providers/LanguageListProvider";
 import { useModalDataSetState } from "../../Providers/ModalDataProvider";
+import { useFontState } from "../../Providers/FontProvider";
 const Cards = () => {
   const getWalletData = useGetWalletData();
+  const font = useFontState();
   const navigate = useNavigate();
+  const langList = useLanguageListState();
+  console.log(langList);
   const user = useUserState();
   const token = useTokenState();
   const wallet = useWalletState();
@@ -52,126 +57,19 @@ const Cards = () => {
 
   return (
     <div
-      className="bg-transparent  font-bold"
-      style={{
-        width: "100%",
-        height: "100%",
-        fontFamily: "manjari-bold",
-      }}
+      style={{ fontFamily: "manjari-bold" }}
+      className="absolute  w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6"
     >
-      {/* This is the Right div that exists on the right side of the screen when lg */}
-      <div
-        className={`bg-transparent md:w-6/12 lg:w-8/12`}
-        style={{
-          position: "absolute",
-          right: "0%",
-          top: "5%",
-          height: "90%",
-          borderTopLeftRadius: "50px",
-          borderBottomLeftRadius: "50px",
-        }}
-      >
+      <div className="xs:hidden md:mt-0 md:grid grid-cols-12 md:gap-x-10 gap-y-7 pb-16 h-full">
         <div
-          className={`hidden md:block w-full h-full bg-${theme}`}
-          style={{
-            borderTopLeftRadius: "50px",
-            borderBottomLeftRadius: "50px",
-          }}
+          className={`col-span-12 md:col-span-3 bg-${theme} rounded-3xl flex  flex-col p-8`}
         >
-          <div className="w-full h-full flex flex-col">
-            <div className="w-full h-8 flex justify-end mt-5">
-              <button
-                onClick={openAddCardModal}
-                className={
-                  "bg-blue-gradient text-white rounded-2xl w-36 md:mr-2 lg:mr-5 h-full items-center font-thin"
-                }
-              >
-                <span className="mt-1 pb-0">Add</span>
-                <span className="ml-1">+</span>
-              </button>
-            </div>
-            <div className="xs:grid sm:grid md:grid lg:grid lg:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll">
-              {Tanks.map((data, index) => (
-                <SingleCardTank
-                  index={index}
-                  data={data}
-                  setToggle={setToggle}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className={
-          show.length === 0 ? "hidden" : `bg-transparent md:hidden xs:absolute`
-        }
-        style={{
-          top: "5%",
-          height: "90%",
-          width: "100%",
-        }}
-      >
-        {/* This is for xs screen */}
-        <div
-          className={`md:hidden xs:block w-11/12 ml-5 flex justify-center h-full bg-${theme} rounded-3xl`}
-        >
-          {/* <Addcard addCard={addCard} setAddCard={setAddCard} show={show} /> */}
-
-          <div className="w-full h-full flex flex-col">
-            <div className="w-full h-8 mt-5 flex flex-row">
-              <button
-                className="flex-1 justify-start w-1/2 h-fit"
-                onClick={discard}
-              >
-                <img className="ml-6 h-10" src={cross} />
-              </button>
-              <button
-                onClick={openAddCardModal}
-                className={
-                  "bg-blue-gradient text-white rounded-2xl w-36 mr-5 h-full items-center font-thin mt-1"
-                }
-              >
-                <span className="mt-1 pb-0">Add</span>
-                <span className="ml-1">+</span>
-              </button>
-            </div>
-            <div className="grid grid-cols-1 gap-5 pb-0 h-5/6 w-full ml-3 overflow-scroll">
-              {Tanks.map((data, index) => (
-                <SingleCardTank
-                  index={index}
-                  data={data}
-                  setToggle={setToggle}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* This is the Assets md and lg*/}
-      <div
-        className={`bg-${theme} xs:hidden md:block sm:ml-1 md:w-5/12 lg:w-1/4 overflow-scroll`}
-        style={{
-          position: "absolute",
-          left: "3%",
-          top: "5%",
-          height: "90%",
-          paddingRight: "3%",
-          paddingLeft: "3%",
-          paddingTop: "1%",
-          paddingBottom: "1%",
-          borderRadius: "50px",
-        }}
-      >
-        <div className="w-full h-full flex flex-col">
-          <div className="w-full flex justify-start pt-2">
-            <div className={`text-3xl text-${oppositeTheme} w-1/3`}>
-              {lang["cards-profile"]}
-            </div>
-          </div>
-          <div
-            className={`grid grid-cols-1 grid-rows-4 gap-4 items-center justify-center mt-5 h-fit`}
+          <span
+            className={`w-full flex justify-start text-2xl text-${oppositeTheme}`}
           >
+            {lang["cards"]}
+          </span>
+          <div className="w-full h-full flex flex-col items-center">
             {wallet && wallet.walletAssets ? (
               wallet.walletAssets.map((assetData, assetIndex) => (
                 <SingleCardAssets
@@ -185,59 +83,78 @@ const Cards = () => {
             )}
           </div>
         </div>
-      </div>
-      {/* This is the Assets sm and xs*/}
-      <div
-        className={
-          show.length !== 0 ? "hidden" : "h-full w-full flex justify-center"
-        }
-      >
         <div
-          className={`bg-${theme} xs:flex rounded-3xl md:hidden w-11/12 h-full`}
+          className={`col-span-12 md:col-span-9 bg-${theme} rounded-3xl md:rounded-r-none flex flex-col p-5 overflow-y-scroll`}
         >
-          <div className="w-full h-full flex flex-col">
-            <div className="w-full flex flex-row xs:p-3">
-              <div className="w-1/2 flex justify-start pt-2">
-                <div className={`text-3xl text-${oppositeTheme} w-1/3`}>
-                  {lang["cards-profile"]}
-                </div>
-              </div>
-            </div>
-            <div className="w-full h-full flex justify-center">
-              <div
-                className={`grid grid-cols-1 grid-rows-4 gap-4 items-center mt-5 w-11/12`}
-                style={{ height: "fit-content" }}
+          <div className="w-full h-8 flex justify-end">
+            <button
+              onClick={openAddCardModal}
+              className={
+                "bg-blue-gradient text-white rounded-2xl w-36 mr-5 h-full items-center font-thin mt-1"
+              }
+            >
+              <span className="mt-1 pb-0">Add</span>
+              <span className="ml-1">+</span>
+            </button>
+          </div>
+          <div className="w-full h-full grid xs:grid-cols-1 lg:grid-cols-2">
+            {Tanks.map((data, index) => (
+              <SingleCardTank index={index} data={data} setToggle={setToggle} />
+            ))}
+          </div>
+        </div>
+      </div>
+      {/* xs and sm */}
+      <div
+        style={{ width: "100%", height: "92%" }}
+        className={`md:hidden xs:flex p-5 bg-${theme} rounded-3xl`}
+      >
+        <div className={show ? "hidden" : "w-full h-full flex flex-col"}>
+          <span
+            className={`w-full flex justify-start text-2xl text-${oppositeTheme}`}
+          >
+            {lang["cards"]}
+          </span>
+          <div className="w-full h-fit flex flex-col items-center">
+            {wallet && wallet.walletAssets ? (
+              wallet.walletAssets.map((assetData, assetIndex) => (
+                <SingleCardAssets
+                  assetIndex={assetIndex}
+                  assetData={assetData}
+                  updateShowState={updateShowState}
+                />
+              ))
+            ) : (
+              <div className="text-white">Loading...</div>
+            )}
+          </div>
+        </div>
+        <div className={show ? "w-full h-full p-5" : "hidden"}>
+          <div className="w-full flex flex-row h-8">
+            <div className="w-1/2 h-full flex justify-start">
+              <button
+                className="flex justify-start w-fit h-full"
+                onClick={discard}
               >
-                {wallet && wallet.walletAssets ? (
-                  wallet.walletAssets.map((assetData, assetIndex) => (
-                    <SingleCardAssets
-                      assetIndex={assetIndex}
-                      assetData={assetData}
-                      updateShowState={updateShowState}
-                    />
-                  ))
-                ) : (
-                  <div className="text-white">Loading...</div>
-                )}
-              </div>
+                <img className="h-full w-fit flex justify-end" src={cross} />
+              </button>
             </div>
-            <div className="w-full h-full flex justify-center">
-              <div
+            <div className="w-1/2 h-full flex justify-end">
+              <button
+                onClick={openAddCardModal}
                 className={
-                  show.length === 0
-                    ? "hidden"
-                    : "grid grid-cols-1 gap-5 pb-0 h-full w-full overflow-scroll"
+                  "bg-blue-gradient text-white rounded-2xl w-36 h-full items-center font-thin"
                 }
               >
-                {Tanks.map((data, index) => (
-                  <SingleCardTank
-                    index={index}
-                    data={data}
-                    setToggle={setToggle}
-                  />
-                ))}
-              </div>
+                <span className="mt-1 pb-0">Add</span>
+                <span className="ml-1">+</span>
+              </button>
             </div>
+          </div>
+          <div className="w-full h-full flex-col overflow-y-scroll flex items-center mt-5">
+            {Tanks.map((data, index) => (
+              <SingleCardTank index={index} data={data} setToggle={setToggle} />
+            ))}
           </div>
         </div>
       </div>

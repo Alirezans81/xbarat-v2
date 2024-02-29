@@ -43,10 +43,14 @@ export default function EditCardModal() {
     });
   };
 
-  const addSpacefour = (value) => {
-    const sanitizedValue = value.replace(/\D/g, "");
-    const chunks = sanitizedValue.match(/.{1,4}/g);
-    const result = chunks ? chunks.join(" ") : "";
+  const addSpacefour = (values) => {
+    const value = values.bank_info;
+    let result = values.bank_info;
+    if (values.wallet_tank_type.includes("card")) {
+      const sanitizedValue = value.replace(/\D/g, "");
+      const chunks = sanitizedValue.match(/.{1,4}/g);
+      result = chunks ? chunks.join(" ") : "";
+    }
     return result;
   };
 
@@ -61,6 +65,7 @@ export default function EditCardModal() {
           bank_info: modalData.data.bank_info,
           is_deleted: isDeleted,
           is_favorite: modalData.data.is_favorite,
+          wallet_tank_type: modalData.data.wallet_tank_type,
         }}
         onSubmit={(values) => updateCardInfo(values)}
       >
@@ -81,7 +86,7 @@ export default function EditCardModal() {
                 <span
                   className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
                 >
-                  Bank Name
+                  {lang["Bank_Name"]}
                 </span>
                 <div className=" w-full">
                   <div className="w-full flex mt-0 px-2">
@@ -89,14 +94,14 @@ export default function EditCardModal() {
                       onChange={handleChange("bank_name")}
                       value={values.bank_name}
                       className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
-                      placeholder="Bank Name"
+                      placeholder={lang["Bank_Name"]}
                     />
                   </div>
                 </div>
                 <span
                   className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
                 >
-                  Account Name
+                  {lang["Account_Name"]}
                 </span>
                 <div className=" w-full">
                   <div className="w-full flex mt-0 px-2">
@@ -104,20 +109,20 @@ export default function EditCardModal() {
                       onChange={handleChange("account_name")}
                       value={values.account_name}
                       className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
-                      placeholder="Bank Name"
+                      placeholder={lang["Account_Name"]}
                     />
                   </div>
                 </div>
                 <span
                   className={`text-${oppositeTheme} text-xl font-${font}-bold mt-3`}
                 >
-                  Bank Info
+                  {lang["Bank_Info"]}
                 </span>
                 <div className=" w-full">
                   <div className="w-full flex mt-0 px-2">
                     <input
                       onChange={handleChange("bank_info")}
-                      value={addSpacefour(values.bank_info)}
+                      value={addSpacefour(values)}
                       className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full`}
                       placeholder={lang["add_cards_title"]}
                     />
@@ -149,7 +154,7 @@ export default function EditCardModal() {
                         "bg-red rounded-xl text-white w-fit h-10 mt-3 p-2"
                       }
                     >
-                      Delete
+                      {lang["delete"]}
                     </button>
                   </div>
                 </div>
@@ -168,7 +173,7 @@ export default function EditCardModal() {
                           });
                       }}
                     >
-                      Delete
+                      {lang["delete"]}
                     </button>
                   </div>
                   <div className="w-full flex justify-center">
