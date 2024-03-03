@@ -92,8 +92,8 @@ export default function Home({ isDemo }) {
   };
 
   useEffect(() => {
-    selectedSourceIndex !== -1 && source && findSource(source);
-  }, [source, selectedSourceIndex]);
+    source && findSource(source);
+  }, [source]);
   useEffect(() => {
     target && availableTargets.length > 0 && findTarget(target);
   }, [target, availableTargets]);

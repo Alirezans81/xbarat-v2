@@ -14,6 +14,7 @@ import { useFontState } from "../../Providers/FontProvider";
 import { useGetWalletTanks } from "../../apis/common/wallet/hooks";
 import { CustomDropdown, CustomItem } from "../common/CustomDropdown";
 import Stepper from "./PendingRequestModal/Stepper";
+import CopyText from "../common/CopyText";
 
 export default function PendingRequestModal({ refreshPendingRequests, data }) {
   const lang = useLanguageState();
@@ -121,7 +122,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 ? receiverTanks[selectedWalletTank].account_name
                 : ""}
             </span>
-            <div className="w-full flex">
+            <div className="w-full flex relative">
               <CustomDropdown
                 label={
                   selectedWalletTank >= 0 &&
@@ -182,6 +183,15 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   }
                 })}
               </CustomDropdown>
+              {receiverTanks &&
+                receiverTanks[selectedWalletTank] &&
+                receiverTanks[selectedWalletTank].bank_info && (
+                  <div className="absolute right-2.5 top-2.5 z-10">
+                    <CopyText
+                      text={receiverTanks[selectedWalletTank].bank_info}
+                    />
+                  </div>
+                )}
             </div>
             {receiverTanks[selectedWalletTank] &&
               receiverTanks[selectedWalletTank].description && (

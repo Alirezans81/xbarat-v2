@@ -95,6 +95,7 @@ export default function Step2({ setFieldValue }) {
                     ? nationalities[selectedNationalityIndex].title
                     : ""
                 }
+                searchable
               >
                 {nationalities.map((nationality, index) => {
                   if (index === 0 && index === nationalities.length - 1) {
@@ -160,6 +161,7 @@ export default function Step2({ setFieldValue }) {
                     ? countries[selectedCountryIndex].title
                     : ""
                 }
+                searchable
               >
                 {countries.map((country, index) => {
                   if (index === 0 && index === countries.length - 1) {
@@ -215,6 +217,7 @@ export default function Step2({ setFieldValue }) {
                 label={
                   selectedCityIndex >= 0 ? cities[selectedCityIndex].title : ""
                 }
+                searchable
               >
                 {cities.map((city, index) => {
                   if (index === 0 && index === cities.length - 1) {

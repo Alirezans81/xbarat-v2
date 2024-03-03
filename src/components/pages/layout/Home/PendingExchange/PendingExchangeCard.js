@@ -147,7 +147,7 @@ export default function PendingExchangeCard({
       <div className="flex gap-2 mt-2 w-full px-6">
         <button
           type="button"
-          onClick={openEditAreYouSureModal}
+          // onClick={openEditAreYouSureModal}
           className="flex-1 border-2 border-blue rounded-lg pt-0.5"
         >
           <span className={`font-${font}-bold text-blue`}>{lang["edit"]}</span>
