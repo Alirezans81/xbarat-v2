@@ -519,7 +519,7 @@ export default function ExchangeForm({
               </CustomDropdown>
             </div>
             <div
-              className={`flex flex-row${
+              className={`flex flex-row ${
                 font === "Fa" && "-reverse"
               } items-center w-full gap-7 text-${oppositeTheme} font-${font}-regular mt-2`}
             >
@@ -538,7 +538,7 @@ export default function ExchangeForm({
                     handleBlur(e);
                     if (!isDemo) {
                       findError(
-                        removeComma(values.amount),
+                        removeComma(e.target.value),
                         removeComma(values.rate)
                       );
                     }
@@ -548,7 +548,7 @@ export default function ExchangeForm({
                     formDefaultAmount && setFormDefaultAmount(null);
                     if (!isDemo) {
                       findError(
-                        removeComma(values.amount),
+                        removeComma(e.target.value),
                         removeComma(values.rate)
                       );
                     }
@@ -594,7 +594,7 @@ export default function ExchangeForm({
                     if (!isDemo) {
                       findError(
                         removeComma(values.amount),
-                        removeComma(values.rate)
+                        removeComma(e.target.value)
                       );
                     }
                   }}
@@ -606,7 +606,7 @@ export default function ExchangeForm({
                         ? findError(removeComma(values.amount), formDefaultRate)
                         : findError(
                             removeComma(values.amount),
-                            removeComma(values.rate)
+                            removeComma(e.target.value)
                           );
                     }
                   }}

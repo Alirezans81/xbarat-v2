@@ -95,29 +95,6 @@ export default function WatchList({
       : set_watch_list_data([]);
   }, [data, rateIsReversed]);
 
-  // const watch_list_data =
-  //   data && data.watch_list
-  //     ? data.watch_list.map((row) => {
-  //         let temp = {};
-  //         temp.title = row.title;
-  //         temp.rate = rateIsReversed
-  //           ? addComma(calculateReverseRate(+row.rate, 1, +row.floating_number))
-  //           : addComma((+row.rate).toFixed(row.floating_number));
-  //         temp.min_rate = rateIsReversed
-  //           ? addComma(
-  //               calculateReverseRate(+row.min_rate, 1, +row.floating_number)
-  //             )
-  //           : addComma((+row.min_rate).toFixed(row.floating_number));
-  //         temp.max_rate = rateIsReversed
-  //           ? addComma(
-  //               calculateReverseRate(+row.max_rate, 1, +row.floating_number)
-  //             )
-  //           : addComma((+row.max_rate).toFixed(row.floating_number));
-
-  //         return temp;
-  //       })
-  //     : [];
-
   useEffect(() => {
     if (availableTargets.length > 0 && targetSlug) {
       findTarget(targetSlug);
@@ -135,7 +112,7 @@ export default function WatchList({
     }
   }, [data, currencies]);
   useEffect(() => {
-    if (data && data.watch_list && data.watch_list[0]) {
+    if (data && data.watch_list && data.watch_list[0] && selectedSourceIndex >= 0) {
       setTargetSlug(data.watch_list[0].target);
     }
   }, [selectedSourceIndex]);

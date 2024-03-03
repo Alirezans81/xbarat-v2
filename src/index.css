@@ -152,6 +152,10 @@ body {
   background-color: #EEEEEE !important;
 }
 
+.bg-light-focus:focus {
+  background-color: #EEEEEE !important;
+}
+
 .bg-light-back {
   background-color: #EEEEEE;
 }
@@ -175,6 +179,10 @@ body {
 }
 
 .bg-dark-hover:hover {
+  background-color: #152831 !important;
+}
+
+.bg-dark-focus:focus {
   background-color: #152831 !important;
 }
 
