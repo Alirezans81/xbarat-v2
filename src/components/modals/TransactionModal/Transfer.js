@@ -41,7 +41,7 @@ export default function Transfer({
         addComma(+walletAsset.balance),
       canClose: true,
       isOpen: true,
-      showTime: 3000,
+      showTime: 10000,
     });
   };
 
@@ -75,33 +75,72 @@ export default function Transfer({
       );
   }, [selectedCurrencyIndex]);
 
+  const openNotRightAmountToast = (min, max) => {
+    setToastData({
+      status: "failed",
+      message:
+        lang["transfer-amount-error-message-1st"] +
+        " " +
+        addComma(min) +
+        " " +
+        lang["transfer-amount-error-message-2nd"] +
+        " " +
+        addComma(max) +
+        " " +
+        lang["transfer-amount-error-message-3rd"] +
+        ".",
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
+  const checkAmount = (amount) => {
+    if (currencies[selectedCurrencyIndex]) {
+      const min =
+        +currencies[selectedCurrencyIndex].min_transfer_lot *
+        +currencies[selectedCurrencyIndex].lot;
+      const max =
+        +currencies[selectedCurrencyIndex].max_transfer_lot *
+        +currencies[selectedCurrencyIndex].lot;
+
+      if (min <= amount && max >= amount) {
+        return true;
+      } else {
+        openNotRightAmountToast(min, max);
+        return false;
+      }
+    }
+  };
+
   return (
     <Formik
       initialValues={{ user_receiver: "", amount: amount || "" }}
       onSubmit={(values) => {
-        if (+removeComma(values.amount) <= +walletAsset.balance) {
-          createTransfer(
-            {
-              user_sender: userInfo && userInfo.url ? userInfo.url : "",
-              currency:
-                currencies[selectedCurrencyIndex] &&
-                currencies[selectedCurrencyIndex].url
-                  ? currencies[selectedCurrencyIndex].url
+        if (checkAmount(+removeComma(values.amount))) {
+          if (+removeComma(values.amount) <= +walletAsset.balance) {
+            createTransfer(
+              {
+                user_sender: userInfo && userInfo.url ? userInfo.url : "",
+                currency:
+                  currencies[selectedCurrencyIndex] &&
+                  currencies[selectedCurrencyIndex].url
+                    ? currencies[selectedCurrencyIndex].url
+                    : "",
+                user_receiver: values.user_receiver,
+                amount: removeComma(values.amount),
+                status: statuses
+                  ? statuses.find((status) => status.title === "Admin Approve")
+                      .url
                   : "",
-              user_receiver: values.user_receiver,
-              amount: removeComma(values.amount),
-              status: statuses
-                ? statuses.find((status) => status.title === "Admin Approve")
-                    .url
-                : "",
-            },
-            () => {
-              closeModal();
-              refreshPendingRequests();
-              getWalletData();
-            }
-          );
-        } else openNotEnoughBalanceToast();
+              },
+              () => {
+                closeModal();
+                refreshPendingRequests();
+                getWalletData();
+              }
+            );
+          } else openNotEnoughBalanceToast();
+        }
       }}
     >
       {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (

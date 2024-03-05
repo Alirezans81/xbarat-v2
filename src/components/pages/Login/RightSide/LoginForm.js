@@ -27,7 +27,7 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
       message: errorMessage,
       canClose: true,
       isOpen: true,
-      showTime: 5000,
+      showTime: 10000,
     });
   };
 

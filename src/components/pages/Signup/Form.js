@@ -53,7 +53,7 @@ export default function Form({ setIsSplashScreenLoading }) {
       message: succesMessage,
       canClose: true,
       isOpen: true,
-      showTime: 5000,
+      showTime: 10000,
     });
   };
   const showErrorToast = (errorMessage) => {
@@ -62,7 +62,7 @@ export default function Form({ setIsSplashScreenLoading }) {
       message: errorMessage,
       canClose: true,
       isOpen: true,
-      showTime: 5000,
+      showTime: 10000,
     });
   };
 

@@ -1,6 +1,7 @@
 import { useUserSetState, useUserState } from "../../../Providers/UserProvider";
 import {
   getUserInfo,
+  updateDefaultLocale,
   updateNameAndAvatar,
   updateNationalInfo,
   updatePhone,
@@ -135,9 +136,42 @@ const useUpdateNationalInfo = () => {
   return { updateNationalInfo: fetch, error, isLoading };
 };
 
+const useUpdateDefaultLocale = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const userInfo = useUserState();
+  const setUser = useUserSetState();
+  const saveUser = (value) =>
+    window.localStorage.setItem("userInfo", JSON.stringify(value));
+
+  const fetch = async (params, customFunctionWithData) => {
+    setIsLoading(true);
+    userInfo && userInfo.username
+      ? await updateDefaultLocale(userInfo.username, params)
+          .then((data) => {
+            process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+            setUser(data.data.results);
+            saveUser(data.data.results);
+            customFunctionWithData && customFunctionWithData(data.data.results);
+            setIsLoading(false);
+            return data.data.results;
+          })
+          .catch((error) => {
+            console.log(error);
+            setError(error);
+            setIsLoading(false);
+          })
+      : setError("Somthing Wrong!");
+  };
+
+  return { updateDefaultLocale: fetch, error, isLoading };
+};
+
 export {
   useGetUserInfo,
   useUpdateNameAndAvatar,
   useUpdatePhone,
   useUpdateNationalInfo,
+  useUpdateDefaultLocale,
 };

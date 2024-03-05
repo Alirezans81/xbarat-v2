@@ -216,5 +216,14 @@
   "complete-profile-step-4-not-required-message-2nd": "You can enter your info or go to next step",
   "balance" : "Balance",
   "edit-request-modal-message": "Are you sure you want to edit the request",
-  "edit-exchange-modal-message": "Are you sure you want to edit the exchange"
+  "edit-exchange-modal-message": "Are you sure you want to edit the exchange",
+  "deposit-amount-error-message-1st": "Your deposit amount must be between",
+  "deposit-amount-error-message-2nd": "&",
+  "deposit-amount-error-message-3rd": "",
+  "withdrawal-amount-error-message-1st": "Your withdrawal amount must be between",
+  "withdrawal-amount-error-message-2nd": "&",
+  "withdrawal-amount-error-message-3rd": "",
+  "transfer-amount-error-message-1st": "Your transfer amount must be between",
+  "transfer-amount-error-message-2nd": "&",
+  "transfer-amount-error-message-3rd": ""
 }
