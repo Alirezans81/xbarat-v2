@@ -56,7 +56,9 @@ export default function CustomToast() {
           />
         </div>
       )}
-      <span className={`text-${oppositeTheme} mt-0.5`}>
+      <span
+        className={`text-${oppositeTheme} ${font === "Fa" ? "rtl" : ""} mt-0.5`}
+      >
         {toastData.message}
       </span>
       {toastData.canClose && (

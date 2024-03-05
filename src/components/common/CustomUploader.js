@@ -39,7 +39,7 @@ export default function CustomUploader({ setImage }) {
               message: lang["file-too-big-toast-message"],
               canClose: true,
               isOpen: true,
-              showTime: 3000,
+              showTime: 10000,
             });
           }
         }}

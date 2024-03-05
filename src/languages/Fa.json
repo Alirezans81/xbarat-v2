@@ -216,5 +216,14 @@
   "complete-profile-step-3-not-required-message-1st": "این مرحله ضروری نیست",
   "complete-profile-step-3-not-required-message-2nd": "می توانید مدرک خود را بارگزاری کنید و یا به مرحله بعدی بروید",
   "complete-profile-step-4-not-required-message-1st": "این مرحله ضروری نیست",
-  "complete-profile-step-4-not-required-message-2nd": "می توانید اطلاعات خود را وارد کنید یا به مرحله بعدی بروید"
+  "complete-profile-step-4-not-required-message-2nd": "می توانید اطلاعات خود را وارد کنید یا به مرحله بعدی بروید",
+  "deposit-amount-error-message-1st": "مقدار واریز شما باید بین",
+  "deposit-amount-error-message-2nd": "و",
+  "deposit-amount-error-message-3rd": "باشد",
+  "withdrawal-amount-error-message-1st": "مقدار برداشت شما باید بین",
+  "withdrawal-amount-error-message-2nd": "و",
+  "withdrawal-amount-error-message-3rd": "باشد",
+  "transfer-amount-error-message-1st": "مقدار انتفال شما باید بین",
+  "transfer-amount-error-message-2nd": "و",
+  "transfer-amount-error-message-3rd": "باشد"
 }

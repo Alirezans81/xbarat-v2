@@ -602,12 +602,10 @@ export default function ExchangeForm({
                     handleChange(e);
                     formDefaultRate && setFormDefaultRate(null);
                     if (!isDemo) {
-                      formDefaultRate
-                        ? findError(removeComma(values.amount), formDefaultRate)
-                        : findError(
-                            removeComma(values.amount),
-                            removeComma(e.target.value)
-                          );
+                      findError(
+                        removeComma(values.amount),
+                        removeComma(e.target.value)
+                      );
                     }
                   }}
                   value={addComma(values.rate, true)}

@@ -92,6 +92,43 @@ export default function QuickDeposit({ refreshPendingRequests }) {
     });
   };
 
+  const openNotRightAmountToast = (min, max) => {
+    setToastData({
+      status: "failed",
+      message:
+        lang["deposit-amount-error-message-1st"] +
+        " " +
+        addComma(min) +
+        " " +
+        lang["deposit-amount-error-message-2nd"] +
+        " " +
+        addComma(max) +
+        " " +
+        lang["deposit-amount-error-message-3rd"] +
+        ".",
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
+  const checkAmount = (amount) => {
+    if (currencies[selectedCurrencyIndex]) {
+      const min =
+        +currencies[selectedCurrencyIndex].min_deposit_lot *
+        +currencies[selectedCurrencyIndex].lot;
+      const max =
+        +currencies[selectedCurrencyIndex].max_deposit_lot *
+        +currencies[selectedCurrencyIndex].lot;
+
+      if (min <= amount && max >= amount) {
+        return true;
+      } else {
+        openNotRightAmountToast(min, max);
+        return false;
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col h-full justify-between">
       <div className="flex flex-row mb-2">
@@ -107,59 +144,63 @@ export default function QuickDeposit({ refreshPendingRequests }) {
         initialValues={{ amount: "" }}
         onSubmit={(values, { resetForm }) => {
           if (userInfo && userInfo.is_verified) {
-            if (
-              currencies[selectedCurrencyIndex] &&
-              currencies[selectedCurrencyIndex].has_branches
-            ) {
-              createDeposit(
-                {
-                  user_sender: userInfo && userInfo.url ? userInfo.url : "",
-                  currency:
-                    currencies[selectedCurrencyIndex] &&
-                    currencies[selectedCurrencyIndex].url
-                      ? currencies[selectedCurrencyIndex].url
+            if (checkAmount(+removeComma(values.amount))) {
+              if (
+                currencies[selectedCurrencyIndex] &&
+                currencies[selectedCurrencyIndex].has_branches
+              ) {
+                createDeposit(
+                  {
+                    user_sender: userInfo && userInfo.url ? userInfo.url : "",
+                    currency:
+                      currencies[selectedCurrencyIndex] &&
+                      currencies[selectedCurrencyIndex].url
+                        ? currencies[selectedCurrencyIndex].url
+                        : "",
+                    amount: removeComma(values.amount),
+                    status: statuses
+                      ? statuses.find(
+                          (status) => status.title === "Admin Assign"
+                        ).url
                       : "",
-                  amount: removeComma(values.amount),
-                  status: statuses
-                    ? statuses.find((status) => status.title === "Admin Assign")
-                        .url
-                    : "",
-                  branch:
-                    locations[selectedLocationIndex] &&
-                    locations[selectedLocationIndex].url
-                      ? locations[selectedLocationIndex].url
+                    branch:
+                      locations[selectedLocationIndex] &&
+                      locations[selectedLocationIndex].url
+                        ? locations[selectedLocationIndex].url
+                        : "",
+                  },
+                  () => {
+                    resetForm({
+                      values: {
+                        amount: "",
+                      },
+                    });
+                    refreshWallet();
+                    refreshPendingRequests();
+                  }
+                );
+              } else {
+                createDeposit(
+                  {
+                    user_sender: userInfo && userInfo.url ? userInfo.url : "",
+                    currency:
+                      currencies[selectedCurrencyIndex] &&
+                      currencies[selectedCurrencyIndex].url
+                        ? currencies[selectedCurrencyIndex].url
+                        : "",
+                    amount: removeComma(values.amount),
+                    status: statuses
+                      ? statuses.find(
+                          (status) => status.title === "Admin Assign"
+                        ).url
                       : "",
-                },
-                () => {
-                  resetForm({
-                    values: {
-                      amount: "",
-                    },
-                  });
-                  refreshWallet();
-                  refreshPendingRequests();
-                }
-              );
-            } else {
-              createDeposit(
-                {
-                  user_sender: userInfo && userInfo.url ? userInfo.url : "",
-                  currency:
-                    currencies[selectedCurrencyIndex] &&
-                    currencies[selectedCurrencyIndex].url
-                      ? currencies[selectedCurrencyIndex].url
-                      : "",
-                  amount: removeComma(values.amount),
-                  status: statuses
-                    ? statuses.find((status) => status.title === "Admin Assign")
-                        .url
-                    : "",
-                },
-                () => {
-                  refreshWallet();
-                  refreshPendingRequests();
-                }
-              );
+                  },
+                  () => {
+                    refreshWallet();
+                    refreshPendingRequests();
+                  }
+                );
+              }
             }
           } else {
             openCompleteProfileMessageToast();

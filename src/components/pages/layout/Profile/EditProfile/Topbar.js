@@ -71,7 +71,7 @@ export default function Topbar({ userInfo }) {
                   message: "The image is too big (Must be less than 4 MB).",
                   canClose: true,
                   isOpen: true,
-                  showTime: 3000,
+                  showTime: 10000,
                 });
               }
             }}

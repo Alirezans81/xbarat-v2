@@ -122,7 +122,7 @@ export default function AddCardModal() {
         message: "Please enter valid data",
         canClose: true,
         isOpen: true,
-        showTime: 3000,
+        showTime: 10000,
       });
     }
     closeModal();

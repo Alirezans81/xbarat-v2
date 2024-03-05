@@ -6,6 +6,7 @@ import { useGetLanguageFile } from "../../apis/common/language/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useLanguageListState } from "../../Providers/LanguageListProvider";
 import { useFontSetState } from "../../Providers/FontProvider";
+import { useUpdateDefaultLocale } from "../../apis/pages/Profile/hooks";
 
 export default function LanguageSwitcher({ with_background }) {
   const setLoading = useIsLoadingSplashScreenSetState();
@@ -13,6 +14,13 @@ export default function LanguageSwitcher({ with_background }) {
   const languages = useLanguageListState();
   const setLang = useLanguageSetState();
   const setFont = useFontSetState();
+
+  const { updateDefaultLocale, isLoading: updateDefaultLocaleIsLoading } =
+    useUpdateDefaultLocale();
+  useEffect(
+    () => setLoading(updateDefaultLocaleIsLoading),
+    [updateDefaultLocaleIsLoading]
+  );
 
   const [selectedLanguageIndex, setSelectedLanguageIndex] = useState(-1);
   const { getLanguageFile, isLoading: getLanguageFileIsLoading } =
@@ -44,6 +52,10 @@ export default function LanguageSwitcher({ with_background }) {
         null,
         setLang
       );
+
+      updateDefaultLocale({
+        default_locale: languages[selectedLanguageIndex].url,
+      });
     }
   }, [selectedLanguageIndex]);
 

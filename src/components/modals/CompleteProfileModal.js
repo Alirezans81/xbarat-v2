@@ -22,16 +22,37 @@ import {
 } from "../../apis/common/wallet/hooks";
 import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
-import { useThemeState } from "../../Providers/ThemeProvider";
 import UploadDocumentHint from "./CompleteProfileModal/UploadDocumentHint";
+import { useGetUserInfo } from "../../apis/pages/Profile/hooks";
+import { useToastDataSetState } from "../../Providers/ToastDataProvider";
 
 export default function CompleteProfileModal() {
   const userInfo = useUserState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const lang = useLanguageState();
-  const theme = useThemeState();
+  const setToastData = useToastDataSetState();
+
+  const openRejectionErrorToast = (message) => {
+    setToastData({
+      status: "failed",
+      message,
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
 
   const [step, setStep] = useState(1);
+
+  const { getUserInfo, isLoading: getUserInfoIsLoading } = useGetUserInfo();
+  useEffect(
+    () => setIsLoadingSplashScreen(getUserInfoIsLoading),
+    [getUserInfoIsLoading]
+  );
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   const { getWallets, isLoading: getWalletsIsLoading } = useGetWallets();
   useEffect(
@@ -81,8 +102,11 @@ export default function CompleteProfileModal() {
         userInfo.identity_code &&
         userInfo.document &&
         setStep(4);
+
+      userInfo.rejection_reason &&
+        openRejectionErrorToast(userInfo.rejection_reason);
     }
-  }, []);
+  }, [userInfo]);
   useEffect(() => {
     walletTanks[0] && setStep(5);
   }, [walletTanks]);

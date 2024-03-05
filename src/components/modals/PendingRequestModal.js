@@ -51,7 +51,10 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
           user: data.user_receiver_username,
           currency_slug: data.currency_slug,
         },
-        setReceiverTanks
+        (data) => {
+          const temp = data.filter((d) => d.show_order);
+          setReceiverTanks(temp);
+        }
       );
     }
   }, []);

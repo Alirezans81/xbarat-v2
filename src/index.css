@@ -533,3 +533,11 @@ body {
 .height-full{
   height: 100% !important;
 }
+
+.ltr {
+  direction: ltr;
+}
+
+.rtl {
+  direction: rtl;
+}
