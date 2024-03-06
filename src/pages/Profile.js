@@ -56,7 +56,7 @@ export default function Profile() {
             <span
               className={`text-${oppositeTheme} mt-2 whitespace-nowrap font-${font}-regular`}
             >
-              {lang["cards"]}
+              {lang["cards-profile"]}
             </span>
           </div>
         </div>

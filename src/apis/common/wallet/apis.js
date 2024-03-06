@@ -57,24 +57,24 @@ const createWalletTank = (params) => {
   return axios.post(api["wallet-tank"], params);
 };
 
-const editWalletTank=(walletTankUrl,params)=>{
-  const formData=new FormData();
-  params.url && formData.append("url",params.url);
-  params.currency_abb && formData.append("currency_abb",params.currency_abb);
-  params.wallet_tank_type && formData.append("wallet_tank_type",params.wallet_tank_type);
-  params.title && formData.append("title",params.title);
-  params.balance && formData.append("balance",params.balance);
-  params.locked && formData.append("locked",params.locked);
-  params.pending && formData.append("pending",params.pending);
-  params.bank_info && formData.append("bank_info",params.bank_info);
-  params.bank_name && formData.append("bank_name",params.bank_name);
-  params.is_deleted && formData.append("is_deleted",params.is_deleted);
-  params.account_name && formData.append("account_name",params.account_name);
-  formData.append("is_favorite",params.is_favorite);
-  
+const editWalletTank = (walletTankUrl, params) => {
+  const formData = new FormData();
+  params.url && formData.append("url", params.url);
+  params.currency_abb && formData.append("currency_abb", params.currency_abb);
+  params.wallet_tank_type &&
+    formData.append("wallet_tank_type", params.wallet_tank_type);
+  params.title && formData.append("title", params.title);
+  params.balance && formData.append("balance", params.balance);
+  params.locked && formData.append("locked", params.locked);
+  params.pending && formData.append("pending", params.pending);
+  params.bank_info && formData.append("bank_info", params.bank_info);
+  params.bank_name && formData.append("bank_name", params.bank_name);
+  params.is_deleted && formData.append("is_deleted", params.is_deleted);
+  params.account_name && formData.append("account_name", params.account_name);
+  formData.append("is_favorite", params.is_favorite);
 
-  return axios.patch(walletTankUrl,formData)
-}
+  return axios.patch(walletTankUrl, formData);
+};
 
 const createDeposit = (params) => {
   const formData = new FormData();

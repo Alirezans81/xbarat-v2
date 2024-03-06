@@ -22,7 +22,7 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   const handleShow = () => {
     updateShowState(assetData.currency_abb);
   };
-
+  console.log(lang);
   return (
     <>
       <div
@@ -37,7 +37,7 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
           <span className="flex justify-end text-gray text-xl min-h-0">
             {walletTanks.length +
               " " +
-              lang["cards"] +
+              lang["cards-profile"] +
               " /" +
               numberOfBanks.length +
               " " +
