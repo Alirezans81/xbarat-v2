@@ -5,6 +5,7 @@ import starUnChecked from "../../Images/pages/layout/Profile/starUnChecked.png";
 import edit from "../../Images/pages/layout/Profile/editBlue.png";
 import { useState, useEffect } from "react";
 import { useEditWalletTanks } from "../../apis/common/wallet/hooks";
+import { useDirectionState } from "../../Providers/DirectionProvider";
 import EditCardModal from "../../components/modals/CardModals/EditCardModal";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useModalDataSetState } from "../../Providers/ModalDataProvider";
@@ -12,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 const SingleCardTank = ({ index, data, setToggle }) => {
   const setModalData = useModalDataSetState();
   const lang = useLanguageState();
+  const { one: direction } = useDirectionState();
   const navigate = useNavigate();
   const openEditCardModal = (data) => {
     setModalData({
@@ -37,21 +39,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
   const [walletTankType, setWalletTankType] = useState("");
   const [user, setUser] = useState("");
   const [isFavorite, setIsFavorite] = useState("");
-  // const [params, setParams] = useState({
-  //   url: "",
-  //   wallet_asset: "",
-  //   wallet_tank_type_title: "",
-  //   currency_abb: "",
-  //   title: "",
-  //   balance: 1,
-  //   locked: 1,
-  //   account_name: "",
-  //   pending: 1,
-  //   bank_name: "",
-  //   is_deleted: false,
-  //   bank_info: "",
-  //   is_favorite: false,
-  // });
+
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -90,13 +78,13 @@ const SingleCardTank = ({ index, data, setToggle }) => {
   };
 
   const showBankInfoCorrect = (value) => {
-    if (walletTankType.includes("card")) {
+    if (walletTankType && walletTankType.includes("card")) {
       const sanitizedValue = value.replace(/\D/g, "");
       const chunks = sanitizedValue.match(/.{1,4}/g);
       const result = chunks ? chunks.join(" ") : "";
       return result;
     }
-    if (walletTankType.includes("shaba")) {
+    if (walletTankType && walletTankType.includes("shaba")) {
       const sanitizedValue = value.replace("-", " ");
       return sanitizedValue;
     } else {
@@ -149,7 +137,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             </span>
           </div>
           <div
-            className="w-full h-1/2 flex justify-start flex-col "
+            className="w-full h-1/2 flex justify-start flex-col overflow-x-scroll"
             style={{ marginTop: "1%" }}
           >
             <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
@@ -206,7 +194,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             </span>
           </div>
           <div
-            className="w-full h-1/2 flex justify-start flex-col"
+            className="w-full h-1/2 flex justify-start flex-col overflow-x-scroll"
             style={{ marginTop: "5%" }}
           >
             <span className="text-gray text-lg w-full h-1/2 min-w-0">
@@ -257,15 +245,15 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
               {lang["Account_Name"]}
             </span>
-            <span className={`text-${oppositeTheme} text-lg min-w-0 `}>
+            <span className={`text-${oppositeTheme} text-lg min-w-0 mt-1`}>
               {accountName}
             </span>
           </div>
           <div
-            className="w-full h-1/2 flex justify-start flex-col"
+            className="w-full h-1/2 flex justify-start flex-col overflow-x-scroll"
             style={{ marginTop: "5%" }}
           >
-            <span className="text-gray text-2xl w-full h-1/2 min-w-0">
+            <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
               {lang["Bank_Info"]}
             </span>
             <span className={`text-${oppositeTheme} text-lg min-w-0 `}>

@@ -14,13 +14,6 @@ import { useLanguageListState } from "../../Providers/LanguageListProvider";
 import { useModalDataSetState } from "../../Providers/ModalDataProvider";
 import { useFontState } from "../../Providers/FontProvider";
 const Cards = () => {
-  const getWalletData = useGetWalletData();
-  const font = useFontState();
-  const navigate = useNavigate();
-  const langList = useLanguageListState();
-  console.log(langList);
-  const user = useUserState();
-  const token = useTokenState();
   const wallet = useWalletState();
   const setModalData = useModalDataSetState();
   const theme = useThemeState();
@@ -67,7 +60,7 @@ const Cards = () => {
           <span
             className={`w-full flex justify-start text-2xl text-${oppositeTheme}`}
           >
-            {lang["cards"]}
+            {lang["cards-profile"]}
           </span>
           <div className="w-full h-full flex flex-col items-center">
             {wallet && wallet.walletAssets ? (
@@ -93,7 +86,7 @@ const Cards = () => {
                 "bg-blue-gradient text-white rounded-2xl w-36 mr-5 h-full items-center font-thin mt-1"
               }
             >
-              <span className="mt-1 pb-0">Add</span>
+              <span className="mt-1 pb-0">{lang["add"]}</span>
               <span className="ml-1">+</span>
             </button>
           </div>
