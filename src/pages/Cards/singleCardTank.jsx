@@ -95,15 +95,22 @@ const SingleCardTank = ({ index, data, setToggle }) => {
     <>
       {/* This is for lg screen */}
       <div
-        className={`xs:hidden lg:block bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-5`}
+        className={`block bg-${theme}-back xs:w-full md:w-11/12 rounded-3xl ml-5 mt-5 lg:grid-cols-${
+          index % 2 === 0 ? 1 : 2
+        } xs:grid-cols-1`}
         style={{
-          height: "fit-content",
-          gridColumn: index % 2 === 0 ? 1 : 2,
+          height: "93%",
         }}
       >
-        <div className="w-full h-full flex flex-col p-6 px-9 ">
-          <div className="flex flex-row h-1/4 w-full ">
-            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">
+        <div
+          className={
+            bankName
+              ? `w-full h-full flex flex-col px-9 p-6`
+              : `w-full h-full flex flex-col px-9 p-3`
+          }
+        >
+          <div className={bankName ? "flex flex-row h-fit w-full " : "hidden"}>
+            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0">
               {bankName}
             </span>
             <button
@@ -112,102 +119,94 @@ const SingleCardTank = ({ index, data, setToggle }) => {
               }}
               className="flex justify-end h-fit w-1/6 mt-1"
             >
-              <img alt="" src={edit} style={{ width: "43%", height: "43%" }} />
+              <img
+                alt=""
+                src={edit}
+                className="xs:h-1/2 xs:w-1/2 sm:w-1/3 sm:h-1/3 md:w-1/2 md:h-2/3"
+              />
             </button>
             <button
               onClick={handleCheckboxChange}
               className="flex justify-end h-fit w-1/6"
             >
               <img
+                className="xs:h-2/3 xs:w-2/3 sm:w-1/2 sm:h-1/2 md:w-2/3 md:h-2/3"
                 alt=""
                 src={isFavorite ? starChecked : starUnChecked}
-                style={{ width: "61%", height: "61%" }}
               />
             </button>
           </div>
           <div
-            className="w-full h-1/2 flex justify-start flex-col"
+            className={
+              bankName
+                ? "w-full h-fit flex justify-start flex-col"
+                : "w-full h-1/2 flex justify-start flex-col"
+            }
             style={{ marginTop: "5%" }}
           >
-            <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
-              {lang["Account_Name"]}
-            </span>
-            <span className={`text-${oppositeTheme} text-2xl min-w-0 `}>
+            <div className="text-gray text-2xl w-full h-1/2 min-w-0 flex flex-row">
+              <span className={"text-gray text-2xl w-1/2 h-full"}>
+                {lang["Account_Name"]}
+              </span>
+              <div
+                className={
+                  bankName
+                    ? "hidden"
+                    : "w-1/2 h-full flex flex-row justify-end "
+                }
+              >
+                <button
+                  onClick={() => {
+                    openEditCardModal(data);
+                  }}
+                  className="flex justify-end h-fit w-1/6 mt-1 mr-5"
+                >
+                  <img
+                    className="w-fit h-fit"
+                    alt=""
+                    src={edit}
+                    // style={{ width: "100%", height: "100%" }}
+                  />
+                </button>
+                <button
+                  onClick={handleCheckboxChange}
+                  className="flex justify-end h-fit w-1/6"
+                >
+                  <img
+                    className="w-fit h-fit"
+                    alt=""
+                    src={isFavorite ? starChecked : starUnChecked}
+                    // style={{ width: "100%", height: "100%" }}
+                  />
+                </button>
+              </div>
+            </div>
+            <span
+              className={`text-${oppositeTheme} text-2xl min-w-0 h-1/2 w-full py-1`}
+            >
               {accountName}
             </span>
           </div>
           <div
-            className="w-full h-1/2 flex justify-start flex-col overflow-x-scroll"
+            className={
+              bankName
+                ? "w-full h-fit flex justify-start flex-col overflow-x-scroll"
+                : "w-full h-1/2 flex justify-start flex-col overflow-x-scroll"
+            }
             style={{ marginTop: "1%" }}
           >
             <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
               {lang["Bank_Info"]}
             </span>
-            <span className={`text-${oppositeTheme} text-2xl min-w-0`}>
+            <span className={`text-${oppositeTheme} text-2xl min-w-0 py-1`}>
               {showBankInfoCorrect(bankInfo)}
             </span>
           </div>
         </div>
       </div>
-      {/* This is for md screen */}
-      <div
-        className={`xs:hidden md:block lg:hidden bg-${theme}-back w-11/12 rounded-3xl ml-5 mt-5`}
-        style={{
-          height: "fit-content",
 
-          gridColumn: 1,
-        }}
-      >
-        <div className="w-full h-full flex flex-col p-6 px-9">
-          <div className="flex flex-row h-1/4 w-full">
-            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0 ">
-              {bankName}
-            </span>
-            <button
-              onClick={() => {
-                openEditCardModal(data);
-              }}
-              className="flex justify-end  h-fit w-fit mt-1"
-            >
-              <img alt="" src={edit} style={{ width: "62%", height: "62%" }} />
-            </button>
-            <button
-              onClick={handleCheckboxChange}
-              className="flex justify-end w-fit h-fit"
-            >
-              <img
-                alt=""
-                src={isFavorite ? starChecked : starUnChecked}
-                style={{ width: "70%", height: "70%" }}
-              />
-            </button>
-          </div>
-          <div
-            className="w-full h-1/2 flex justify-start flex-col"
-            style={{ marginTop: "5%" }}
-          >
-            <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
-              {lang["Account_Name"]}
-            </span>
-            <span className={`text-${oppositeTheme} text-2xl min-w-0 `}>
-              {accountName}
-            </span>
-          </div>
-          <div
-            className="w-full h-1/2 flex justify-start flex-col overflow-x-scroll"
-            style={{ marginTop: "5%" }}
-          >
-            <span className="text-gray text-lg w-full h-1/2 min-w-0">
-              {lang["Bank_Info"]}
-            </span>
-            <span className={`text-${oppositeTheme} text-xl min-w-0 `}>
-              {showBankInfoCorrect(bankInfo)}
-            </span>
-          </div>
-        </div>
-      </div>
       {/* This is for xs and sm */}
-      <div
+      {/* <div
         className={`xs:flex md:hidden bg-${theme}-back w-11/12 ml-1 rounded-3xl mt-7 `}
         style={{
           height: "fit-content",
@@ -261,7 +260,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
             </span>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

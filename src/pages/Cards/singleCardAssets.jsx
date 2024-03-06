@@ -26,7 +26,7 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   return (
     <>
       <div
-        className={`bg-${theme}-back  rounded-3xl w-full h-28 flex flex-row pb-3 pt-3 m-3 font-${font}`}
+        className={`bg-${theme}-back  rounded-3xl w-full h-fit flex flex-row pb-3 pt-3 m-3 font-${font} overflow-scroll`}
         style={{ gridRow: assetIndex, gridColumn: 1 }}
       >
         <div className="w-1/5"></div>

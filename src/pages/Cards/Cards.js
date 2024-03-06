@@ -51,7 +51,7 @@ const Cards = () => {
   return (
     <div
       style={{ fontFamily: "manjari-bold" }}
-      className="absolute  w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6"
+      className="absolute  w-full h-full overflow-y-auto"
     >
       <div className="xs:hidden md:mt-0 md:grid grid-cols-12 md:gap-x-10 gap-y-7 pb-16 h-full">
         <div
