@@ -5,15 +5,13 @@ import starUnChecked from "../../Images/pages/layout/Profile/starUnChecked.png";
 import edit from "../../Images/pages/layout/Profile/editBlue.png";
 import { useState, useEffect } from "react";
 import { useEditWalletTanks } from "../../apis/common/wallet/hooks";
-import { useDirectionState } from "../../Providers/DirectionProvider";
 import EditCardModal from "../../components/modals/CardModals/EditCardModal";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useModalDataSetState } from "../../Providers/ModalDataProvider";
 import { useNavigate } from "react-router-dom";
-const SingleCardTank = ({ index, data, setToggle }) => {
+const SingleCardTank = ({ index, data }) => {
   const setModalData = useModalDataSetState();
   const lang = useLanguageState();
-  const { one: direction } = useDirectionState();
   const navigate = useNavigate();
   const openEditCardModal = (data) => {
     setModalData({
@@ -32,7 +30,6 @@ const SingleCardTank = ({ index, data, setToggle }) => {
   useEffect(() => {
     setIsLoadingSplashScreen(editWalletTankIsLoading);
   }, [editWalletTankIsLoading]);
-  const [title, setTitle] = useState("");
   const [accountName, setAccountName] = useState("");
   const [bankInfo, setBankInfo] = useState("");
   const [bankName, setBankName] = useState("");
@@ -47,7 +44,6 @@ const SingleCardTank = ({ index, data, setToggle }) => {
     if (data) {
       setAccountName(data.account_name);
       setBankName(data.bank_name);
-      setTitle(data.title);
       setBankInfo(data.bank_info);
       setWalletTankType(data.wallet_tank_type);
       setUser(data.user);
@@ -99,7 +95,7 @@ const SingleCardTank = ({ index, data, setToggle }) => {
           index % 2 === 0 ? 1 : 2
         } xs:grid-cols-1`}
         style={{
-          height: "93%",
+          height: "fit-content",
         }}
       >
         <div
@@ -110,31 +106,31 @@ const SingleCardTank = ({ index, data, setToggle }) => {
           }
         >
           <div className={bankName ? "flex flex-row h-fit w-full " : "hidden"}>
-            <span className="text-blue text-3xl w-5/6 h-full flex justify-start min-w-0">
-              {bankName}
-            </span>
-            <button
-              onClick={() => {
-                openEditCardModal(data);
-              }}
-              className="flex justify-end h-fit w-1/6 mt-1"
-            >
-              <img
-                alt=""
-                src={edit}
-                className="xs:h-1/2 xs:w-1/2 sm:w-1/3 sm:h-1/3 md:w-1/2 md:h-2/3"
-              />
-            </button>
-            <button
-              onClick={handleCheckboxChange}
-              className="flex justify-end h-fit w-1/6"
-            >
-              <img
-                className="xs:h-2/3 xs:w-2/3 sm:w-1/2 sm:h-1/2 md:w-2/3 md:h-2/3"
-                alt=""
-                src={isFavorite ? starChecked : starUnChecked}
-              />
-            </button>
+            <div className="w-1/2 h-full">
+              <span className="text-blue text-3xl w-full h-full flex justify-start min-w-0">
+                {bankName}
+              </span>
+            </div>
+            <div className="w-1/2 h-full flex flex-row justify-end ">
+              <button
+                onClick={() => {
+                  openEditCardModal(data);
+                }}
+                className="flex justify-end h-full w-1/3"
+              >
+                <img alt="" src={edit} className="w-1/3 h-full" />
+              </button>
+              <button
+                onClick={handleCheckboxChange}
+                className="flex justify-end h-full w-1/3"
+              >
+                <img
+                  className="w-1/2 h-full"
+                  alt=""
+                  src={isFavorite ? starChecked : starUnChecked}
+                />
+              </button>
+            </div>
           </div>
           <div
             className={
@@ -159,24 +155,18 @@ const SingleCardTank = ({ index, data, setToggle }) => {
                   onClick={() => {
                     openEditCardModal(data);
                   }}
-                  className="flex justify-end h-fit w-1/6 mt-1 mr-5"
+                  className="flex justify-end h-full  w-1/6 mr-1"
                 >
-                  <img
-                    className="w-fit h-fit"
-                    alt=""
-                    src={edit}
-                    // style={{ width: "100%", height: "100%" }}
-                  />
+                  <img className="w-2/3 h-2/3" alt="" src={edit} />
                 </button>
                 <button
                   onClick={handleCheckboxChange}
-                  className="flex justify-end h-fit w-1/6"
+                  className="flex justify-end h-full w-1/6"
                 >
                   <img
-                    className="w-fit h-fit"
+                    className="w-full h-3/4"
                     alt=""
                     src={isFavorite ? starChecked : starUnChecked}
-                    // style={{ width: "100%", height: "100%" }}
                   />
                 </button>
               </div>

@@ -5,23 +5,16 @@ import { useEffect, useState } from "react";
 import SingleCardAssets from "./singleCardAssets";
 import SingleCardTank from "./singleCardTank";
 import cross from "../../Images/pages/layout/Profile/crossCardsGray.png";
-import { useUserState } from "../../Providers/UserProvider";
-import { useTokenState } from "../../Providers/TokenProvider";
-import { useGetWalletData } from "../../Providers/WalletProvider";
 import AddCardModal from "../../components/modals/CardModals/AddCardModal";
-import { useNavigate } from "react-router-dom";
-import { useLanguageListState } from "../../Providers/LanguageListProvider";
 import { useModalDataSetState } from "../../Providers/ModalDataProvider";
-import { useFontState } from "../../Providers/FontProvider";
 const Cards = () => {
   const wallet = useWalletState();
   const setModalData = useModalDataSetState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
-  const [show, setShow] = useState([]);
+  const [show, setShow] = useState("");
   const [Tanks, setTanks] = useState([]);
-  const [toggle, setToggle] = useState(false);
 
   const updateShowState = (newState) => {
     setShow(newState);
@@ -92,7 +85,7 @@ const Cards = () => {
           </div>
           <div className="w-full h-full grid xs:grid-cols-1 lg:grid-cols-2">
             {Tanks.map((data, index) => (
-              <SingleCardTank index={index} data={data} setToggle={setToggle} />
+              <SingleCardTank index={index} data={data} />
             ))}
           </div>
         </div>
@@ -129,7 +122,11 @@ const Cards = () => {
                 className="flex justify-start w-fit h-full"
                 onClick={discard}
               >
-                <img className="h-full w-fit flex justify-end" src={cross} />
+                <img
+                  className="h-full w-fit flex justify-end"
+                  src={cross}
+                  alt=""
+                />
               </button>
             </div>
             <div className="w-1/2 h-full flex justify-end">
@@ -146,7 +143,7 @@ const Cards = () => {
           </div>
           <div className="w-full h-full flex-col overflow-y-scroll flex items-center mt-5">
             {Tanks.map((data, index) => (
-              <SingleCardTank index={index} data={data} setToggle={setToggle} />
+              <SingleCardTank index={index} data={data} />
             ))}
           </div>
         </div>
