@@ -89,7 +89,6 @@ const SingleCardTank = ({ index, data }) => {
   };
   return (
     <>
-      {/* This is for lg screen */}
       <div
         className={`block bg-${theme}-back xs:w-full md:w-11/12 rounded-3xl ml-5 mt-5 lg:grid-cols-${
           index % 2 === 0 ? 1 : 2
@@ -107,18 +106,18 @@ const SingleCardTank = ({ index, data }) => {
         >
           <div className={bankName ? "flex flex-row h-fit w-full " : "hidden"}>
             <div className="w-1/2 h-full">
-              <span className="text-blue text-3xl w-full h-full flex justify-start min-w-0">
+              <span className="text-blue text-3xl w-full h-full flex justify-start ">
                 {bankName}
               </span>
             </div>
-            <div className="w-1/2 h-full flex flex-row justify-end ">
+            <div className="w-1/2 h-full flex flex-row justify-end  ">
               <button
                 onClick={() => {
                   openEditCardModal(data);
                 }}
-                className="flex justify-end h-full w-1/3"
+                className="flex justify-end w-1/3 items-center"
               >
-                <img alt="" src={edit} className="w-1/3 h-full" />
+                <img alt="" src={edit} className="xs:w-1/2 md:w-1/3 h-5/6" />
               </button>
               <button
                 onClick={handleCheckboxChange}
@@ -194,63 +193,6 @@ const SingleCardTank = ({ index, data }) => {
           </div>
         </div>
       </div>
-
-      {/* This is for xs and sm */}
-      {/* <div
-        className={`xs:flex md:hidden bg-${theme}-back w-11/12 ml-1 rounded-3xl mt-7 `}
-        style={{
-          height: "fit-content",
-          gridColumn: 1,
-        }}
-      >
-        <div className="w-full h-full flex flex-col p-6 px-9">
-          <div className="flex flex-row h-1/4 w-full">
-            <span className="text-blue text-3xl w-5/6 h-full flex justify-start ">
-              {bankName}
-            </span>
-            <button
-              onClick={() => {
-                openEditCardModal(data);
-              }}
-              className="flex justify-end h-fit w-fit mt-1"
-            >
-              <img alt="" src={edit} style={{ width: "62%", height: "62%" }} />
-            </button>
-            <button
-              onClick={handleCheckboxChange}
-              className="flex justify-end w-fit h-fit"
-            >
-              <img
-                alt=""
-                src={isFavorite ? starChecked : starUnChecked}
-                style={{ width: "70%", height: "70%" }}
-              />
-            </button>
-          </div>
-          <div
-            className="w-full h-1/2 flex justify-start flex-col"
-            style={{ marginTop: "5%" }}
-          >
-            <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
-              {lang["Account_Name"]}
-            </span>
-            <span className={`text-${oppositeTheme} text-lg min-w-0 mt-1`}>
-              {accountName}
-            </span>
-          </div>
-          <div
-            className="w-full h-1/2 flex justify-start flex-col overflow-x-scroll"
-            style={{ marginTop: "5%" }}
-          >
-            <span className="text-gray text-2xl w-full h-1/2 min-w-0 ">
-              {lang["Bank_Info"]}
-            </span>
-            <span className={`text-${oppositeTheme} text-lg min-w-0 `}>
-              {showBankInfoCorrect(bankInfo)}
-            </span>
-          </div>
-        </div>
-      </div> */}
     </>
   );
 };

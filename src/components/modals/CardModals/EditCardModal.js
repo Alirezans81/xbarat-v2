@@ -9,6 +9,7 @@ import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSp
 import cross from "../../../Images/pages/layout/Profile/crossCardsGray.png";
 import { useModalDataState } from "../../../Providers/ModalDataProvider";
 import { useFontState } from "../../../Providers/FontProvider";
+import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 import { useNavigate } from "react-router-dom";
 
 export default function EditCardModal() {
@@ -17,8 +18,10 @@ export default function EditCardModal() {
   const theme = useThemeState();
   const navigate = useNavigate();
   const font = useFontState();
+  const setToastData = useToastDataSetState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const closeModal = useModalDataClose();
   const [isDeleted, setIsDeleted] = useState(false);
   const { editWalletTank, isLoading: editWalletTankIsLoading } =
     useEditWalletTanks();
@@ -27,20 +30,57 @@ export default function EditCardModal() {
     setIsLoadingSplashScreen(editWalletTankIsLoading);
   }, [editWalletTankIsLoading]);
 
-  const closeModal = useModalDataClose();
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
   const discard = () => {
     closeModal();
   };
+  const isValidEmail = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+  const validation = (values) => {
+    if (
+      !values.account_name ||
+      !values.bank_info ||
+      !values.bank_name ||
+      !values.wallet_tank_type
+    ) {
+      return false;
+    }
+    if (
+      params.wallet_tank_type.includes("shaba") &&
+      !params.bank_info.includes("IR")
+    ) {
+      return false;
+    }
+    if (values.wallet_tank_type.includes("email")) {
+      if (!isValidEmail(values.bank_info)) {
+        return false;
+      }
+    }
+    return true;
+  };
   const updateCardInfo = (values) => {
-    editWalletTank(values.url, values);
-    closeModal();
-    navigate("/profile/");
-    sleep(1000).then(() => {
-      window.location.reload();
-    });
+    values.bank_info = values.bank_info.replace(/\s/g, "");
+    if (validation(values)) {
+      editWalletTank(values.url, values);
+      closeModal();
+      navigate("/profile/");
+      sleep(2800).then(() => {
+        window.location.reload();
+      });
+    } else {
+      setToastData({
+        status: "failed",
+        message: "Please Enter Valid Data",
+        canClose: true,
+        isOpen: true,
+        showTime: 10000,
+      });
+      closeModal();
+    }
   };
 
   const addSpacefour = (values) => {
