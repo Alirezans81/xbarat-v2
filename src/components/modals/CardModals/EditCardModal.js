@@ -22,7 +22,6 @@ export default function EditCardModal() {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const closeModal = useModalDataClose();
-  const [isDeleted, setIsDeleted] = useState(false);
   const { editWalletTank, isLoading: editWalletTankIsLoading } =
     useEditWalletTanks();
 
@@ -82,6 +81,16 @@ export default function EditCardModal() {
       closeModal();
     }
   };
+  const params = { is_deleted: true, is_favorite: modalData.data.is_favorite };
+
+  function handleDeleteCard() {
+    editWalletTank(modalData.data.url, params);
+    closeModal();
+    navigate("/profile/");
+    sleep(2800).then(() => {
+      window.location.reload();
+    });
+  }
 
   const addSpacefour = (values) => {
     const value = values.bank_info;
@@ -94,7 +103,6 @@ export default function EditCardModal() {
     return result;
   };
 
-  const params = { is_deleted: true, is_favorite: modalData.data.is_favorite };
   return (
     <>
       <Formik
@@ -103,7 +111,7 @@ export default function EditCardModal() {
           bank_name: modalData.data.bank_name,
           account_name: modalData.data.account_name,
           bank_info: modalData.data.bank_info,
-          is_deleted: isDeleted,
+          is_deleted: false,
           is_favorite: modalData.data.is_favorite,
           wallet_tank_type: modalData.data.wallet_tank_type,
         }}
@@ -182,14 +190,7 @@ export default function EditCardModal() {
                   </div>
                   <div className="w-1/2 flex justify-start">
                     <button
-                      onClick={() => {
-                        editWalletTank(values.url, params) &&
-                          closeModal() &&
-                          navigate("/profile/") &&
-                          sleep(1000).then(() => {
-                            window.location.reload();
-                          });
-                      }}
+                      onClick={handleDeleteCard}
                       className={
                         "bg-red rounded-xl text-white w-fit h-10 mt-3 p-2"
                       }
@@ -204,14 +205,7 @@ export default function EditCardModal() {
                       className={
                         "bg-red rounded-xl text-white w-fit h-10 mt-3 p-2"
                       }
-                      onClick={() => {
-                        editWalletTank(values.url, params) &&
-                          closeModal() &&
-                          navigate("/profile/") &&
-                          sleep(1000).then(() => {
-                            window.location.reload();
-                          });
-                      }}
+                      onClick={handleDeleteCard}
                     >
                       {lang["delete"]}
                     </button>

@@ -22,7 +22,6 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   const handleShow = () => {
     updateShowState(assetData.currency_abb);
   };
-  console.log(lang);
   return (
     <>
       <div
@@ -50,6 +49,7 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
             className="flex justify-end items-center w-full h-full"
           >
             <img
+              alt=""
               className="w-8 h-6 mr-3"
               src={theme === "light" ? arrowRightDark : arrowRightLight}
             />

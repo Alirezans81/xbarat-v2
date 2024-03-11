@@ -15,7 +15,6 @@ const Cards = () => {
   const lang = useLanguageState();
   const [show, setShow] = useState("");
   const [Tanks, setTanks] = useState([]);
-  console.log(wallet);
   const updateShowState = (newState) => {
     setShow(newState);
   };
