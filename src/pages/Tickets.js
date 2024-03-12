@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Tickets() {
-  return <div>Ticketss</div>;
+  return <div>Tickets</div>;
 }
