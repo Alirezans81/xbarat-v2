@@ -16,7 +16,6 @@ const Pagination = ({ exchanges }) => {
   const [pageNumber, setPageNumber] = useState(0);
   const usersPerPage = 11;
   const pagesVisited = pageNumber * usersPerPage;
-  console.log(exchanges);
   const displayUsers = exchanges
     .slice(pagesVisited, pagesVisited + usersPerPage)
     .map((data, index) => {
