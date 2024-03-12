@@ -7,49 +7,82 @@ const api =
     : require("../../api.json");
 
 const getWallets = (filtersObject) => {
-  const urlWithQueries = queryString.stringifyUrl({
-    url: api["wallet"],
-    query: filtersObject,
-  });
+  const limit = require("../../pagination/limit.json")["wallet"];
 
-  return axios.get(urlWithQueries);
+  if (filtersObject) {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet"],
+      query: { limit, ...filtersObject },
+    });
+
+    return axios.get(urlWithQueries);
+  } else {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet"],
+      query: { limit },
+    });
+
+    return axios.get(urlWithQueries);
+  }
 };
 
 const getWalletAssets = (filtersObject, token) => {
-  const formData = new FormData();
+  const limit = require("../../pagination/limit.json")["wallet-asset"];
 
-  formData.append("token", token);
+  if (filtersObject) {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-asset"],
+      query: { limit, ...filtersObject },
+    });
 
-  const urlWithQueries = queryString.stringifyUrl({
-    url: api["wallet-asset"],
-    query: filtersObject,
-  });
-  const config = {
-    headers: {
-      token,
-    },
-  };
-  return axios.get(urlWithQueries);
+    return axios.get(urlWithQueries);
+  } else {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-asset"],
+      query: { limit },
+    });
+
+    return axios.get(urlWithQueries);
+  }
 };
 
 const getWalletTanks = (filtersObject) => {
-  const urlWithQueries = queryString.stringifyUrl({
-    url: api["wallet-tank"],
-    query: filtersObject,
-  });
+  const limit = require("../../pagination/limit.json")["wallet-tank"];
 
-  return axios.get(urlWithQueries);
+  if (filtersObject) {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-tank"],
+      query: { limit, ...filtersObject },
+    });
+
+    return axios.get(urlWithQueries);
+  } else {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-tank"],
+      query: { limit },
+    });
+
+    return axios.get(urlWithQueries);
+  }
 };
 
 const getWalletTankTypes = (filtersObject) => {
+  const limit = require("../../pagination/limit.json")["wallet-tank-type"];
+
   if (filtersObject) {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet-tank-type"],
-      query: filtersObject,
+      query: { limit, ...filtersObject },
     });
+
     return axios.get(urlWithQueries);
   } else {
-    return axios.get(api["wallet-tank-type"]);
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-tank-type"],
+      query: { limit },
+    });
+
+    return axios.get(urlWithQueries);
   }
 };
 

@@ -87,9 +87,13 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     }
   };
 
+  useEffect(() => {
+    receiverTanks.length === 1 && setSelectedWalletTank(0);
+  }, [receiverTanks]);
+
   return (
-    <div className="flex flex-col">
-      <div className="w-full">
+    <div className="flex flex-col w-80">
+      <div className="w-full mb-1">
         <Stepper type={data && data.type ? data.type : ""} step={findStep()} />
       </div>
       {data && data.type === "deposit" && (
@@ -110,7 +114,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
       <span className={`font-${font}-regular text-xl text-${oppositeTheme}`}>
         {addComma(+data.amount) + " " + data.currency_abb}
       </span>
-      <div className="w-72 mt-3">
+      <div className="w-80 mt-3">
         {data && data.status_title && data.document && hasPreviewImage() && (
           <CustomPreviewer2 imageUrl={data.document} />
         )}
@@ -132,7 +136,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   receiverTanks[selectedWalletTank] &&
                   receiverTanks[selectedWalletTank].bank_info
                     ? receiverTanks[selectedWalletTank].bank_info
-                    : lang["card-number"]
+                    : lang["card-number-or-paypal-email"]
                 }
               >
                 {receiverTanks.map((receiverTank, index) => {
@@ -197,9 +201,12 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 )}
             </div>
             {receiverTanks[selectedWalletTank] &&
-              receiverTanks[selectedWalletTank].description && (
-                <span class="bg-dark-back rounded-md px-3 pt-2.5 pb-1.5 text-center text-gray font-En-regular">
-                  {receiverTanks[selectedWalletTank].description}
+              receiverTanks[selectedWalletTank].description &&
+              lang[receiverTanks[selectedWalletTank].description] && (
+                <span
+                  class={`bg-dark-back rounded-md px-3 pt-2.5 pb-1.5 text-gray font-${font}-regular`}
+                >
+                  {lang[receiverTanks[selectedWalletTank].description] + "."}
                 </span>
               )}
             <CustomUploader setImage={setDocument} />

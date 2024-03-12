@@ -228,5 +228,7 @@
   "withdrawal-amount-error-message-3rd": "باشد",
   "transfer-amount-error-message-1st": "مقدار انتفال شما باید بین",
   "transfer-amount-error-message-2nd": "و",
-  "transfer-amount-error-message-3rd": "باشد"
+  "transfer-amount-error-message-3rd": "باشد",
+  "card-number-or-paypal-email": "شماره کارت/ایمیل پی پال",
+  "wallet-tank-paypal-description-code": "لطفا مبلغ درخواستی خود را در سامانه paypal به صورت \"انتقال برای دوست و خیشاوند\" برای ادرس ایمیل بالا ارسال فرمایید تا فرایند انتقالتان با کمترین کارمزد ممکن انجام پذیرد"
 }

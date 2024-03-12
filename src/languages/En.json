@@ -227,5 +227,7 @@
   "withdrawal-amount-error-message-3rd": "",
   "transfer-amount-error-message-1st": "Your transfer amount must be between",
   "transfer-amount-error-message-2nd": "&",
-  "transfer-amount-error-message-3rd": ""
+  "transfer-amount-error-message-3rd": "",
+  "card-number-or-paypal-email": "Card Number/Paypal Email",
+  "wallet-tank-paypal-description-code": "Please pay your requested amount in paypal system through \"friends and family\" option to the above email address so that your transfer process can be done with the lowest possible fee"
 }

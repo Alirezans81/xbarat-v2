@@ -101,6 +101,7 @@ export default function Step4({
                         ? currencies[selectedCurrencyIndex].abbreviation
                         : ""
                     }
+                    searchable
                   >
                     {currencies.map((currency, index) => {
                       if (index === 0 && index === currencies.length - 1) {

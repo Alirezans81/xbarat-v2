@@ -227,6 +227,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                     </span>
                   )
                 }
+                searchable
               >
                 {currencies.map((currency, index) => {
                   if (index === 0 && index === currencies.length - 1) {
@@ -293,6 +294,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                     </span>
                   )
                 }
+                searchable
               >
                 {locations.map((location, index) => {
                   if (index === 0 && index === locations.length - 1) {
@@ -355,7 +357,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                 rounded="lg"
                 onClick={handleSubmit}
               >
-                Submit
+                {lang["submit"]}
               </SubmitButton>
             </div>
           </div>

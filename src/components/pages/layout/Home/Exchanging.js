@@ -6,6 +6,7 @@ import { useWalletState } from "../../../../Providers/WalletProvider";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useCurrencyPairsState } from "../../../../Providers/CurrencyPairsProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function Exchanging({
   selectedCurrecnyPair,
@@ -29,6 +30,7 @@ export default function Exchanging({
   isDemo,
 }) {
   const lang = useLanguageState();
+  const font = useFontState();
 
   const currencies = useCurrenciesState();
   const currencyPairs = useCurrencyPairsState();
@@ -113,7 +115,14 @@ export default function Exchanging({
   }, [selectedTargetIndex]);
 
   return (
-    <div className="flex flex-col px-6 w-full h-full py-5">
+    <div className="flex flex-col px-6 w-full h-full py-5 relative">
+      <div className="absolute w-full left-0 -top-4 flex justify-center">
+        <span
+          className={`bg-blue text-light flex justify-center rounded-xl font-${font}-regular px-5 text-lg pt-1.5`}
+        >
+          {lang["exchange"]}
+        </span>
+      </div>
       <div className="flex-1 grid grid-cols-2 grid-rows-6 gap-x-8 w-full h-full">
         <div className="row-span-6">
           {selectedSourceIndex >= 0 && (

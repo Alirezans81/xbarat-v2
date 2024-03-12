@@ -524,6 +524,7 @@ export default function Withdrawal({
                       ? walletTanks[selectedWalletTankIndex].account_name
                       : ""
                   }
+                  searchable
                 >
                   {walletTanks.map((walletTank, index) => {
                     if (index === 0) {
@@ -591,6 +592,7 @@ export default function Withdrawal({
                     ? locations[selectedLocationIndex].title
                     : ""
                 }
+                searchable
               >
                 {locations.map((location, index) => {
                   if (index === 0 && index === locations.length - 1) {
