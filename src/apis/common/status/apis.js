@@ -1,9 +1,20 @@
 import axios from "axios";
+import queryString from "query-string";
 
-const api = require("../../api.json");
+const api =
+  process.env.REACT_APP_MODE === "PRODUCTION"
+    ? require("../../api-dev.json")
+    : require("../../api.json");
 
 const getStatuses = () => {
-  return axios.get(api["status"]);
+  const limit = require("../../pagination/limit.json")["status"];
+
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["status"],
+    query: { limit },
+  });
+
+  return axios.get(urlWithQueries);
 };
 
 export { getStatuses };

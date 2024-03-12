@@ -5,49 +5,50 @@ import { useDirectionState } from "../../../../Providers/DirectionProvider";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../../../apis/pages/Login/hooks";
-import {
-  useGetWalletAssets,
-  useGetWalletTanks,
-  useGetWallets,
-} from "../../../../apis/common/wallet/hooks";
-import {
-  useWalletSetState,
-  useWalletState,
-} from "../../../../Providers/WalletProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
+import { useToastDataSetState } from "../../../../Providers/ToastDataProvider";
 
 export default function LoginForm({ setIsSplashScreenLoading }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
   const lang = useLanguageState();
+  const font = useFontState();
   const { one: direction } = useDirectionState();
-  const wallet = useWalletState();
-  const setWallet = useWalletSetState();
+  const setToastData = useToastDataSetState();
 
-  const { login, isLoading: loginIsLoading, error } = useLogin();
+  const [showPassword, setShowPasswprd] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPasswprd(!showPassword);
+  };
+
+  const showErrorToast = (errorMessage) => {
+    setToastData({
+      status: "failed",
+      message: errorMessage,
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
+
+  const { login, isLoading: loginIsLoading, error: loginError } = useLogin();
   useEffect(() => {
     setIsSplashScreenLoading(loginIsLoading);
   }, [loginIsLoading]);
-  const { getWallets, isLoading: getWalletsIsLoading } = useGetWallets();
-  useEffect(() => {
-    setIsSplashScreenLoading(getWalletsIsLoading);
-  }, [getWalletsIsLoading]);
-  const { getWalletAssets, isLoading: getWalletAssetsIsLoading } =
-    useGetWalletAssets();
-  useEffect(() => {
-    setIsSplashScreenLoading(getWalletAssetsIsLoading);
-  }, [getWalletAssetsIsLoading]);
-  const { getWalletTanks, isLoading: getWalletTanksIsLoading } =
-    useGetWalletTanks();
-  useEffect(() => {
-    setIsSplashScreenLoading(getWalletTanksIsLoading);
-  }, [getWalletTanksIsLoading]);
+  useEffect(
+    () =>
+      loginError &&
+      loginError.response &&
+      showErrorToast(Object.values(loginError.response.data).join(" ")),
+    [loginError]
+  );
 
   const navigate = useNavigate();
   const navigateToHome = () => {
     navigate("/home");
   };
 
-  const [rememberMeCheck, setRememberMeCheck] = useState(false);
+  const [rememberMeCheck, setRememberMeCheck] = useState(true);
   const ToggleRememberMeCheck = () => setRememberMeCheck(!rememberMeCheck);
 
   const [validationErrors, setValidationErrors] = useState({});
@@ -83,31 +84,6 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
     return result;
   };
 
-  const setWallets = (data) => {
-    if (wallet && data) {
-      let temp = wallet;
-      temp.wallets = data;
-      setWallet(temp);
-      window.localStorage.setItem("wallet", JSON.stringify(temp));
-    }
-  };
-  const setWalletAssets = (data) => {
-    if (wallet && data) {
-      let temp = wallet;
-      temp.walletAssets = data;
-      setWallet(temp);
-      window.localStorage.setItem("wallet", JSON.stringify(temp));
-    }
-  };
-  const setWalletTanks = (data) => {
-    if (wallet && data) {
-      let temp = wallet;
-      temp.walletTanks = data;
-      setWallet(temp);
-      window.localStorage.setItem("wallet", JSON.stringify(temp));
-    }
-  };
-
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
@@ -115,17 +91,6 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
         login(
           values,
           (data) => {
-            // const userFilter = {
-            //   user:
-            //     data && data.user && data.user.username
-            //       ? data.user.username
-            //       : "",
-            // };
-
-            // getWallets(userFilter, setWallets);
-            // getWalletAssets(userFilter, setWalletAssets);
-            // getWalletTanks(userFilter, setWalletTanks);
-
             navigateToHome();
           },
           rememberMeCheck
@@ -145,7 +110,9 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
             }
           }}
         >
-          <div className="flex justify-between font-mine-bold items-center mb-3">
+          <div
+            className={`flex justify-between font-${font}-bold items-center mb-3`}
+          >
             <span className="text-blue text-3xl">{lang["log-in"]}</span>
             <Link
               to={"/signup"}
@@ -167,50 +134,63 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
             value={values.email}
           />
           {validationErrors.email && (
-            <span className="font-mine-thin text-red">
+            <span className={`font-${font}-thin text-red`}>
               {validationErrors.email}
             </span>
           )}
-          <input
-            name="password"
-            type="password"
-            placeholder={lang["password"]}
-            className={`input-${theme} mt-4 focus:outline-none`}
-            onChange={handleChange("password")}
-            onBlur={(e) => {
-              validatePassword(e.target.value);
-              handleBlur(e);
-            }}
-            value={values.password}
-          />
+          <div className="relative md:w-96">
+            <input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder={lang["password"]}
+              className={`input-${theme} mt-4 focus:outline-none`}
+              onChange={handleChange("password")}
+              onBlur={(e) => {
+                validatePassword(e.target.value);
+                handleBlur(e);
+              }}
+              value={values.password}
+            />
+            <button
+              type="button"
+              onClick={toggleShowPassword}
+              className="absolute top-6 right-3"
+            >
+              <img
+                className="w-7 h-7"
+                src={
+                  showPassword
+                    ? require("../../../../Images/common/preview.png")
+                    : require("../../../../Images/common/preview-disabled.png")
+                }
+              />
+            </button>
+          </div>
           {validationErrors.password && (
-            <span className="font-mine-thin text-red">
+            <span className={`font-${font}-thin text-red`}>
               {validationErrors.password}
             </span>
           )}
-          <div className="flex justify-between items-center mt-2">
+          <div className="flex flex-col-reverse gap-y-3 sm:flex-row justify-between sm:items-center mt-2">
             <div className="flex items-center">
               <button type="button" onClick={ToggleRememberMeCheck}>
                 <img
-                  className="w-4 h-4"
+                  className="w-4 h-4 md:w-5 md:h-5"
                   src={require(`../../../../Images/pages/Login/check-${rememberMeCheck}.png`)}
                 />
               </button>
               <span
-                className={`font-mine-regular pt-1 m${direction}-1 text-${oppositeTheme} text-sm`}
+                className={`font-${font}-regular pt-1 m${direction}-1 text-${oppositeTheme} text-sm`}
               >
                 {lang["remember-me"]}
               </span>
             </div>
             <Link to={"/forgot-password"}>
-              <span className="font-mine-regular text-blue text-sm">
+              <span className={`font-${font}-regular text-blue text-sm`}>
                 {lang["forgot-password"]}
               </span>
             </Link>
           </div>
-          {error && (
-            <span className="font-mine-thin text-red">{error.message}</span>
-          )}
           <button type="submit" className="button w-full mt-10">
             {lang["submit"]}
           </button>

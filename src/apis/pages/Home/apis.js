@@ -1,6 +1,10 @@
 import axios from "axios";
+import queryString from "query-string";
 
-const api = require("../../api.json");
+const api =
+  process.env.REACT_APP_MODE === "PRODUCTION"
+    ? require("../../api-dev.json")
+    : require("../../api.json");
 
 const getWatchList = () => {
   return axios.get(api["watch-list"]);
@@ -13,6 +17,26 @@ const getTableExchange = (params) => {
   formData.append("target", params.target);
 
   return axios.post(api["table-exchange"], formData);
+};
+
+const getOtherExchangesRate = (filtersObject) => {
+  const limit = require("../../pagination/limit.json")["other-exchanges-rate"];
+
+  if (filtersObject) {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["other-exchanges-rate"],
+      query: { limit, ...filtersObject },
+    });
+
+    return axios.get(urlWithQueries);
+  } else {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["other-exchanges-rate"],
+      query: { limit },
+    });
+
+    return axios.get(urlWithQueries);
+  }
 };
 
 const exchange = (params) => {
@@ -29,11 +53,13 @@ const exchange = (params) => {
 };
 
 const getPendingExchanges = (token) => {
-  const formData = new FormData();
+  if (token) {
+    const formData = new FormData();
 
-  formData.append("token", token);
+    formData.append("token", token);
 
-  return axios.post(api["pending-exchange"], formData);
+    return axios.post(api["pending-exchange"], formData);
+  }
 };
 
 const cancelPendingExchange = (pendingExchangeUrl) => {
@@ -43,6 +69,7 @@ const cancelPendingExchange = (pendingExchangeUrl) => {
 export {
   getWatchList,
   getTableExchange,
+  getOtherExchangesRate,
   exchange,
   getPendingExchanges,
   cancelPendingExchange,

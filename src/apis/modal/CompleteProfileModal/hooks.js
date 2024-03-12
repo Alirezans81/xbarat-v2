@@ -12,23 +12,23 @@ const useFetchStep1 = () => {
     window.localStorage.setItem("userInfo", JSON.stringify(value));
 
   const fetch = async (params, customFunction) => {
-    setIsLoading(true);
-    userInfo && userInfo.username
-      ? await fetchStep1(userInfo.username, params)
-          .then((data) => {
-            console.log(data);
-            setUser(data.data);
-            saveUser(data.data);
-            customFunction();
-            setIsLoading(false);
-            return data.data;
-          })
-          .catch((error) => {
-            console.log(error);
-            setError(error);
-            setIsLoading(false);
-          })
-      : setError("Somthing Wrong!");
+    if (userInfo && userInfo.username) {
+      setIsLoading(true);
+      await fetchStep1(userInfo.username, params)
+        .then((data) => {
+          process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+          setUser(data.data.results);
+          saveUser(data.data.results);
+          customFunction();
+          setIsLoading(false);
+          return data.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
+    }
   };
 
   return { fetchStep1: fetch, error, isLoading };
@@ -44,23 +44,23 @@ const useFetchStep2 = () => {
     window.localStorage.setItem("userInfo", JSON.stringify(value));
 
   const fetch = async (params, customFunction) => {
-    setIsLoading(true);
-    userInfo && userInfo.username
-      ? await fetchStep2(userInfo.username, params)
-          .then((data) => {
-            console.log(data);
-            setUser(data.data);
-            saveUser(data.data);
-            customFunction();
-            setIsLoading(false);
-            return data.data;
-          })
-          .catch((error) => {
-            console.log(error);
-            setError(error);
-            setIsLoading(false);
-          })
-      : setError("Somthing Wrong!");
+    if (userInfo && userInfo.username) {
+      setIsLoading(true);
+      await fetchStep2(userInfo.username, params)
+        .then((data) => {
+          process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+          setUser(data.data.results);
+          saveUser(data.data.results);
+          customFunction();
+          setIsLoading(false);
+          return data.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
+    }
   };
 
   return { fetchStep2: fetch, error, isLoading };
@@ -76,23 +76,23 @@ const useFetchStep3 = () => {
     window.localStorage.setItem("userInfo", JSON.stringify(value));
 
   const fetch = async (params, customFunction) => {
-    setIsLoading(true);
-    userInfo && userInfo.username
-      ? await fetchStep3(userInfo.username, params)
-          .then((data) => {
-            console.log(data);
-            setUser(data.data);
-            saveUser(data.data);
-            customFunction();
-            setIsLoading(false);
-            return data.data;
-          })
-          .catch((error) => {
-            console.log(error);
-            setError(error);
-            setIsLoading(false);
-          })
-      : setError("Somthing Wrong!");
+    if (userInfo && userInfo.username) {
+      setIsLoading(true);
+      await fetchStep3(userInfo.username, params)
+        .then((data) => {
+          process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+          setUser(data.data.results);
+          saveUser(data.data.results);
+          customFunction();
+          setIsLoading(false);
+          return data.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
+    }
   };
 
   return { fetchStep3: fetch, error, isLoading };

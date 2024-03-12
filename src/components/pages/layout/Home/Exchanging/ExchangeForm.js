@@ -1,12 +1,13 @@
 import { Formik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CustomDropdown, CustomItem } from "../../../../common/CustomDropdown";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import {
   useAddComma,
-  useIsNumberFloat,
+  useCalculateNotReverseRate,
+  useCalculateReverseRate,
   useRemoveComma,
 } from "../../../../../hooks/useNumberFunctions";
 import { useDirectionState } from "../../../../../Providers/DirectionProvider";
@@ -14,6 +15,12 @@ import SubmitButton from "../../../../common/SubmitButton";
 import { useUserState } from "../../../../../Providers/UserProvider";
 import { useStatusesState } from "../../../../../Providers/StatusesProvider";
 import { useExchange } from "../../../../../apis/pages/Home/hooks";
+import { useNavigate } from "react-router-dom";
+import { useFontState } from "../../../../../Providers/FontProvider";
+import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
+import CompleteProfileModal from "../../../../modals/CompleteProfileModal";
+import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
+import { useToastDataSetState } from "../../../../../Providers/ToastDataProvider";
 
 export default function ExchangeForm({
   walletBalance,
@@ -27,21 +34,33 @@ export default function ExchangeForm({
   setSelectedTargetIndex,
   rateIsReversed,
   targetLabel,
+  formDefaultAmount,
+  setFormDefaultAmount,
   formDefaultRate,
-  defaultRateType,
+  setFormDefaultRate,
   refreshPendingExchange,
+  amountInputRef,
+  rateInputRef,
+  isDemo,
 }) {
+  const userInfo = useUserState();
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
+  const navigate = useNavigate();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: oneDirection } = useDirectionState();
+  const refreshWallet = useRefreshWallet();
+
+  const [hasError, setHasError] = useState(true);
 
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const user = useUserState();
   const statuses = useStatusesState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
-  const isNumberFloat = useIsNumberFloat();
+  const calculateReverseRate = useCalculateReverseRate();
+  const calculateNotReverseRate = useCalculateNotReverseRate();
 
   const { exchange, isLoading: exchangeIsLoading } = useExchange();
   useEffect(
@@ -50,6 +69,41 @@ export default function ExchangeForm({
   );
 
   const [errorMessage, setErrorMessage] = useState("");
+  useEffect(() => {
+    if (errorMessage) setHasError(true);
+    else setHasError(false);
+  }, [errorMessage]);
+
+  const [targetSlug, setTargetSlug] = useState();
+
+  const findSource = (currency_slug) => {
+    let result = -1;
+    result = currencies.findIndex(
+      (currency) => currency.slug === currency_slug
+    );
+    result >= 0 && setSelectedSourceIndex(result);
+  };
+
+  const findTarget = (currency_slug) => {
+    let result = -1;
+    result = availableTargets.findIndex(
+      (currency) => currency.slug === currency_slug
+    );
+    result >= 0 && setSelectedTargetIndex(result);
+  };
+
+  useEffect(() => {
+    if (availableTargets.length > 0 && targetSlug) {
+      findTarget(targetSlug);
+    }
+  }, [availableTargets, targetSlug]);
+
+  const switchSourceAndTarget = () => {
+    const newTargetSlug = currencies[selectedSourceIndex].slug;
+    setTargetSlug(newTargetSlug);
+    findSource(availableTargets[selectedTargetIndex].slug);
+  };
+
   const computingTargetAmount = (amount, rate, multi) => {
     if (
       selectedCurrecnyPair &&
@@ -67,13 +121,28 @@ export default function ExchangeForm({
         if (!rateIsReversed) {
           return (newAmount * rate) / multi;
         } else {
-          return newAmount / rate;
+          return (
+            (newAmount *
+              +calculateReverseRate(
+                +rate,
+                +selectedCurrecnyPair.rate_multiplier,
+                +selectedCurrecnyPair.floating_number
+              )) /
+            multi
+          );
         }
       } else {
         if (!rateIsReversed) {
-          return newAmount / rate;
+          return (newAmount * multi) / rate;
         } else {
-          return (newAmount * rate) / multi;
+          return (
+            (newAmount * multi) /
+            +calculateReverseRate(
+              +rate,
+              +selectedCurrecnyPair.rate_multiplier,
+              +selectedCurrecnyPair.floating_number
+            )
+          );
         }
       }
     }
@@ -143,56 +212,135 @@ export default function ExchangeForm({
     }
   };
 
+  const navigateToLogin = () => navigate("login");
+
+  const setToastData = useToastDataSetState();
+  const openCompleteProfileMessageToast = () => {
+    setToastData({
+      status: "failed",
+      message: lang["complete-profile-toast-message"] + ".",
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
+
+  const setModalData = useModalDataSetState();
+  const openCompleteProfileModal = () => {
+    setModalData({
+      title: "",
+      children: <CompleteProfileModal />,
+      canClose: false,
+      isOpen: true,
+    });
+  };
+
+  const formikRef = useRef();
+  useEffect(() => {
+    !selectedCurrecnyPair && formikRef.current.resetForm();
+  }, [selectedCurrecnyPair]);
+
+  useEffect(() => {
+    if (selectedCurrecnyPair) {
+      const currentRate = formikRef.current.values.rate;
+      const reversedRate = calculateReverseRate(
+        removeComma(currentRate),
+        +selectedCurrecnyPair.rate_multiplier,
+        +selectedCurrecnyPair.floating_number
+      );
+      currentRate &&
+        reversedRate &&
+        formikRef.current.setFieldValue("rate", reversedRate);
+    }
+  }, [rateIsReversed]);
+
+  useEffect(() => {
+    formDefaultAmount &&
+      formikRef.current.setFieldValue("amount", formDefaultAmount);
+  }, [formDefaultRate]);
+  useEffect(() => {
+    formDefaultRate && formikRef.current.setFieldValue("rate", formDefaultRate);
+  }, [formDefaultRate]);
+
   return (
     <Formik
+      innerRef={formikRef}
       initialValues={{
         amount: "",
         rate: "",
       }}
-      onSubmit={(values) => {
-        const newAmount =
-          +selectedCurrecnyPair.fee_percentage === 0
-            ? +removeComma(values.amount)
-            : +removeComma(values.amount) *
-              ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
-        if (findError(+newAmount, +removeComma(values.rate))) {
-          const params = {
-            user: user && user.url ? user.url : "",
-            currency_pair:
-              selectedCurrecnyPair && selectedCurrecnyPair.url
-                ? selectedCurrecnyPair.url
-                : "",
-            amount_source: +removeComma(values.amount),
-            rate: +removeComma(values.rate),
-            amount_destination:
-              selectedCurrecnyPair && selectedCurrecnyPair.rate_multiplier
-                ? computingTargetAmount(
-                    removeComma(values.amount),
-                    removeComma(values.rate),
-                    selectedCurrecnyPair.rate_multiplier
-                  ).toFixed(6)
-                : 0,
-            status:
-              statuses.find((status) => status.title === "Pending").url || "",
-          };
+      onSubmit={(values, { resetForm }) => {
+        if (userInfo && userInfo.is_verified) {
+          const newAmount =
+            +selectedCurrecnyPair.fee_percentage === 0
+              ? +removeComma(values.amount)
+              : +removeComma(values.amount) *
+                ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
 
-          console.log(params);
-          exchange(params, refreshPendingExchange);
+          const selectedRate = rateIsReversed
+            ? calculateNotReverseRate(
+                +removeComma(values.rate),
+                +selectedCurrecnyPair.rate_multiplier,
+                +selectedCurrecnyPair.floating_number
+              )
+            : +removeComma(values.rate);
+          console.log("selected rate: ", selectedRate);
+          if (findError(newAmount, +removeComma(values.rate))) {
+            const params = {
+              user: user && user.url ? user.url : "",
+              currency_pair:
+                selectedCurrecnyPair && selectedCurrecnyPair.url
+                  ? selectedCurrecnyPair.url
+                  : "",
+              amount_source: +removeComma(values.amount),
+              rate: +selectedRate,
+              amount_destination:
+                selectedCurrecnyPair && selectedCurrecnyPair.rate_multiplier
+                  ? +computingTargetAmount(
+                      +removeComma(values.amount),
+                      +removeComma(values.rate),
+                      selectedCurrecnyPair.rate_multiplier
+                    ).toFixed(
+                      availableTargets[selectedTargetIndex].floating_number
+                    )
+                  : 0,
+              status:
+                statuses.find((status) => status.title === "Pending").url || "",
+            };
+
+            exchange(params, () => {
+              resetForm({
+                values: {
+                  amount: "",
+                  rate: "",
+                },
+              });
+              refreshWallet();
+              refreshPendingExchange();
+            });
+          }
+        } else {
+          openCompleteProfileMessageToast();
+          openCompleteProfileModal();
         }
       }}
     >
-      {({ handleBlur, handleChange, values, handleSubmit }) => {
+      {({ handleBlur, handleChange, values, handleSubmit, setFieldValue }) => {
         return (
           <form className="mt-2 h-full">
             <div className="flex items-center gap-1">
               <CustomDropdown
-                className="flex-1 font-mine-regular"
+                className={`flex-1 font-${font}-regular`}
                 label={
                   <div className="flex">
                     {selectedSourceIndex >= 0 && (
                       <img
                         className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
-                        src={currencies[selectedSourceIndex].sym_pic_gray}
+                        src={
+                          currencies[selectedSourceIndex]
+                            ? currencies[selectedSourceIndex].sym_pic_gray
+                            : ""
+                        }
                       />
                     )}
                     <span className={`-m${oneDirection}-0.5`}>
@@ -200,6 +348,7 @@ export default function ExchangeForm({
                     </span>
                   </div>
                 }
+                searchable
               >
                 {currencies.map((currency, index) => {
                   if (currency && currency.abbreviation) {
@@ -272,23 +421,34 @@ export default function ExchangeForm({
                   }
                 })}
               </CustomDropdown>
-              <img
-                className="w-5 h-5"
-                src={require("../../../../../Images/pages/layout/Home/exchange-arrow.png")}
-              />
+              <button
+                disabled={!selectedCurrecnyPair}
+                onClick={switchSourceAndTarget}
+                type="button"
+              >
+                <img
+                  className="w-5 h-5"
+                  src={require("../../../../../Images/pages/layout/Home/exchange-arrow.png")}
+                />
+              </button>
               <CustomDropdown
-                className="flex-1 font-mine-regular"
+                className={`flex-1 font-${font}-regular`}
                 label={
                   <div className="flex">
                     {selectedTargetIndex >= 0 && (
                       <img
                         className="w-7 h-7 -mt-1.5 mx-0.5"
-                        src={availableTargets[selectedTargetIndex].sym_pic_gray}
+                        src={
+                          availableTargets[selectedTargetIndex]
+                            ? availableTargets[selectedTargetIndex].sym_pic_gray
+                            : ""
+                        }
                       />
                     )}
                     <span>{targetLabel}</span>
                   </div>
                 }
+                searchable
               >
                 {availableTargets.map((currency, index) => {
                   if (index === 0) {
@@ -361,61 +521,108 @@ export default function ExchangeForm({
               </CustomDropdown>
             </div>
             <div
-              className={`flex items-center w-full gap-7 text-${oppositeTheme} font-mine-regular mt-2`}
+              className={`flex flex-row ${
+                font === "Fa" && "-reverse"
+              } items-center w-full gap-7 text-${oppositeTheme} font-${font}-regular mt-2`}
             >
-              <input
-                className={`flex-1 hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
-                placeholder={lang["amount"]}
-                disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
-                name="amount"
-                onBlur={(e) => {
-                  handleBlur(e);
-                  findError(
-                    removeComma(values.amount),
-                    removeComma(values.rate)
-                  );
-                }}
-                onChange={(e) => {
-                  handleChange(e);
-                  findError(
-                    removeComma(values.amount),
-                    removeComma(values.rate)
-                  );
-                }}
-                value={addComma(values.amount, false)}
-              />
-              <input
-                className={`flex-1 hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
-                placeholder={lang["rate"]}
-                disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
-                name="rate"
-                onBlur={(e) => {
-                  handleBlur(e);
-                  findError(
-                    removeComma(values.amount),
-                    removeComma(values.rate)
-                  );
-                }}
-                onChange={(e) => {
-                  handleChange(e);
-                  findError(
-                    removeComma(values.amount),
-                    removeComma(values.rate)
-                  );
-                }}
-                value={addComma(values.rate, true)}
-              />
-            </div>
+              <div className="flex-1 flex relative">
+                <input
+                  amountInputRef={amountInputRef}
+                  className={`flex-1 ${
+                    values.amount || +walletBalance === 0
+                      ? "text-center"
+                      : "text-left"
+                  } hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                  placeholder={lang["amount"]}
+                  disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
+                  name="amount"
+                  onBlur={(e) => {
+                    handleBlur(e);
+                    if (!isDemo) {
+                      findError(
+                        removeComma(e.target.value),
+                        removeComma(values.rate)
+                      );
+                    }
+                  }}
+                  onChange={(e) => {
+                    handleChange(e);
+                    formDefaultAmount && setFormDefaultAmount(null);
+                    if (!isDemo) {
+                      findError(
+                        removeComma(e.target.value),
+                        removeComma(values.rate)
+                      );
+                    }
+                  }}
+                  value={addComma(values.amount, false)}
+                />
+                {(values.amount === 0 || values.amount === "") &&
+                  selectedSourceIndex >= 0 &&
+                  selectedTargetIndex >= 0 &&
+                  +walletBalance !== 0 && (
+                    <button
+                      type="button"
+                      className="absolute top-2 right-3"
+                      onClick={() => {
+                        if (+walletBalance !== 0) {
+                          setFieldValue(
+                            "amount",
+                            addComma(+walletBalance, true)
+                          );
+                        } else {
+                          findError();
+                        }
+                      }}
+                    >
+                      <span
+                        className={`text-gray font-${font}-regular text-sm`}
+                      >
+                        {lang["amount-input-max-button-label"]}
+                      </span>
+                    </button>
+                  )}
+              </div>
 
+              <div className="flex-1 flex">
+                <input
+                  ref={rateInputRef}
+                  className={`flex-1 text-center hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                  placeholder={lang["rate"]}
+                  disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
+                  name="rate"
+                  onBlur={(e) => {
+                    handleBlur(e);
+                    if (!isDemo) {
+                      findError(
+                        removeComma(values.amount),
+                        removeComma(e.target.value)
+                      );
+                    }
+                  }}
+                  onChange={(e) => {
+                    handleChange(e);
+                    formDefaultRate && setFormDefaultRate(null);
+                    if (!isDemo) {
+                      findError(
+                        removeComma(values.amount),
+                        removeComma(e.target.value)
+                      );
+                    }
+                  }}
+                  value={addComma(values.rate, true)}
+                />
+              </div>
+            </div>
             {values.amount &&
               removeComma(values.amount) !== 0 &&
               selectedCurrecnyPair &&
-              (formDefaultRate ||
-                (values.rate && removeComma(values.rate) !== 0)) && (
+              values.rate &&
+              removeComma(values.rate) !== 0 && (
                 <div className="mt-1 flex items-center">
                   {errorMessage && errorMessage !== "" ? (
                     <span
-                      className={`text-red font-mine-regular mt-0.5 text-sm`}
+                      className={`text-red font-${font}-regular mt-0.5 text-sm`}
                     >
                       {errorMessage}
                     </span>
@@ -426,26 +633,17 @@ export default function ExchangeForm({
                         src={require(`../../../../../Images/arrow-right-${oppositeTheme}.png`)}
                       />
                       <span
-                        className={`text-${oppositeTheme} font-mine-regular mt-0.5 text-sm`}
+                        className={`text-${oppositeTheme} font-${font}-regular mt-0.5 text-sm`}
                       >
                         {addComma(
-                          isNumberFloat(
-                            computingTargetAmount(
-                              removeComma(values.amount),
-                              removeComma(values.rate),
-                              selectedCurrecnyPair.rate_multiplier
-                            )
+                          computingTargetAmount(
+                            removeComma(values.amount),
+                            removeComma(values.rate),
+                            selectedCurrecnyPair.rate_multiplier
+                          ).toFixed(
+                            availableTargets[selectedTargetIndex]
+                              .floating_number
                           )
-                            ? computingTargetAmount(
-                                removeComma(values.amount),
-                                removeComma(values.rate),
-                                selectedCurrecnyPair.rate_multiplier
-                              ).toFixed(selectedCurrecnyPair.floating_number)
-                            : computingTargetAmount(
-                                removeComma(values.amount),
-                                removeComma(values.rate),
-                                selectedCurrecnyPair.rate_multiplier
-                              )
                         ) +
                           " " +
                           (availableTargets[selectedTargetIndex]
@@ -456,19 +654,19 @@ export default function ExchangeForm({
                   )}
                 </div>
               )}
-
             <SubmitButton
               type="submit"
-              onClick={handleSubmit}
+              onClick={isDemo ? navigateToLogin : handleSubmit}
               className={
                 values.amount &&
                 removeComma(values.amount) !== 0 &&
-                (formDefaultRate ||
-                  (values.rate && removeComma(values.rate) !== 0))
+                values.rate &&
+                removeComma(values.rate) !== 0
                   ? "flex justify-center mt-0.5 items-center w-full py-0.5"
                   : "flex justify-center mt-7 items-center w-full py-0.5"
               }
               rounded="lg"
+              disabled={hasError}
             >
               {lang["submit"]}
             </SubmitButton>

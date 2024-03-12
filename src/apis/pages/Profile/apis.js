@@ -1,6 +1,13 @@
 import axios from "axios";
 
-const api = require("../../api.json");
+const api =
+  process.env.REACT_APP_MODE === "PRODUCTION"
+    ? require("../../api-dev.json")
+    : require("../../api.json");
+
+const getUserInfo = (username) => {
+  return axios.get(api["patch-profile"] + username + "/");
+};
 
 const updateNameAndAvatar = (username, params) => {
   const formData = new FormData();
@@ -29,4 +36,18 @@ const updateNationalInfo = (username, params) => {
   return axios.patch(api["patch-profile"] + username + "/", formData);
 };
 
-export { updateNameAndAvatar,updatePhone,  updateNationalInfo };
+const updateDefaultLocale = (username, params) => {
+  const formData = new FormData();
+
+  formData.append("default_locale", params.default_locale);
+
+  return axios.patch(api["patch-profile"] + username + "/", formData);
+};
+
+export {
+  getUserInfo,
+  updateNameAndAvatar,
+  updatePhone,
+  updateNationalInfo,
+  updateDefaultLocale,
+};

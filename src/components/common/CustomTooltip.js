@@ -7,25 +7,33 @@ const customTheme = {
   arrow: {
     base: "absolute z-10 h-2 w-2 rotate-45",
     style: {
-      dark: "bg-[#393C42]",
-      light: "bg-white",
-      auto: "bg-white dark:bg-[#393C42]",
+      dark: "bg-[#171D20] text-white",
+      light: "bg-white text-[#171D20]",
+      auto: "bg-white text-[#171D20] dark:bg-[#171D20] dark:text-white",
     },
     placement: "-4px",
   },
   base: "absolute inline-block z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm",
   hidden: "invisible opacity-0",
   style: {
-    dark: "bg-gray-900 text-white dark:bg-gray-700",
-    light: "border border-gray-200 bg-white text-gray-900",
-    auto: "border border-gray-200 bg-white text-gray-900 dark:border-none dark:bg-gray-700 dark:text-white",
+    dark: "bg-[#171D20] text-white",
+    light: "bg-white text-[#171D20]",
+    auto: "bg-white text-[#171D20] dark:bg-[#171D20] dark:text-white",
   },
   content: "relative z-20 font",
 };
 
-const CustomTooltip = ({ children, placement, className, content, style }) => {
+const CustomTooltip = ({
+  trigger,
+  children,
+  placement,
+  className,
+  content,
+  style,
+}) => {
   return (
     <Tooltip
+      trigger={trigger}
       theme={customTheme}
       placement={placement}
       className={className}

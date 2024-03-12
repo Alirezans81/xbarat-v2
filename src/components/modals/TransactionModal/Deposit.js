@@ -10,6 +10,8 @@ import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import { useAddComma, useRemoveComma } from "../../../hooks/useNumberFunctions";
 import SubmitButton from "../../common/SubmitButton";
 import { useStatusesState } from "../../../Providers/StatusesProvider";
+import { useFontState } from "../../../Providers/FontProvider";
+import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 
 export default function Deposit({
   currencies,
@@ -17,13 +19,16 @@ export default function Deposit({
   closeModal,
   refreshPendingRequests,
   getWalletData,
+  amount,
 }) {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
+  const setToastData = useToastDataSetState();
 
   const userInfo = useUserState();
   const statuses = useStatusesState();
@@ -41,6 +46,13 @@ export default function Deposit({
   );
 
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
+  useEffect(() => {
+    const currencyUrl = data && data.currency ? data.currency : "";
+    const foundIndex = currencies.findIndex(
+      (currency) => currency.url === currencyUrl
+    );
+    setSelectedCurrencyIndex(foundIndex);
+  }, []);
   const [locations, setLocations] = useState([]);
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(-1);
   const [locationDivClass, setLocationDivClass] = useState("");
@@ -60,64 +72,105 @@ export default function Deposit({
     }
   }, [selectedCurrencyIndex]);
 
+  const openNotRightAmountToast = (min, max) => {
+    setToastData({
+      status: "failed",
+      message:
+        lang["deposit-amount-error-message-1st"] +
+        " " +
+        addComma(min) +
+        " " +
+        lang["deposit-amount-error-message-2nd"] +
+        " " +
+        addComma(max) +
+        " " +
+        lang["deposit-amount-error-message-3rd"] +
+        ".",
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
+  const checkAmount = (amount) => {
+    if (currencies[selectedCurrencyIndex]) {
+      const min =
+        +currencies[selectedCurrencyIndex].min_deposit_lot *
+        +currencies[selectedCurrencyIndex].lot;
+      const max =
+        +currencies[selectedCurrencyIndex].max_deposit_lot *
+        +currencies[selectedCurrencyIndex].lot;
+
+      if (min <= amount && max >= amount) {
+        return true;
+      } else {
+        openNotRightAmountToast(min, max);
+        return false;
+      }
+    }
+  };
+
   return (
     <Formik
-      initialValues={{ amount: "" }}
+      initialValues={{ amount: amount || "" }}
       onSubmit={(values) => {
-        if (
-          currencies[selectedCurrencyIndex] &&
-          currencies[selectedCurrencyIndex].has_branches
-        ) {
-          createDeposit(
-            {
-              user_sender: userInfo && userInfo.url ? userInfo.url : "",
-              currency:
-                currencies[selectedCurrencyIndex] &&
-                currencies[selectedCurrencyIndex].url
-                  ? currencies[selectedCurrencyIndex].url
+        if (checkAmount(+removeComma(values.amount))) {
+          if (
+            currencies[selectedCurrencyIndex] &&
+            currencies[selectedCurrencyIndex].has_branches
+          ) {
+            createDeposit(
+              {
+                user_sender: userInfo && userInfo.url ? userInfo.url : "",
+                currency:
+                  currencies[selectedCurrencyIndex] &&
+                  currencies[selectedCurrencyIndex].url
+                    ? currencies[selectedCurrencyIndex].url
+                    : "",
+                amount: removeComma(values.amount),
+                status: statuses
+                  ? statuses.find((status) => status.title === "Admin Assign")
+                      .url
                   : "",
-              amount: removeComma(values.amount),
-              status: statuses
-                ? statuses.find((status) => status.title === "Admin Assign").url
-                : "",
-              branch:
-                locations[selectedLocationIndex] &&
-                locations[selectedLocationIndex].url
-                  ? locations[selectedLocationIndex].url
+                branch:
+                  locations[selectedLocationIndex] &&
+                  locations[selectedLocationIndex].url
+                    ? locations[selectedLocationIndex].url
+                    : "",
+              },
+              () => {
+                refreshPendingRequests();
+                closeModal();
+              }
+            );
+          } else {
+            createDeposit(
+              {
+                user_sender: userInfo && userInfo.url ? userInfo.url : "",
+                currency:
+                  currencies[selectedCurrencyIndex] &&
+                  currencies[selectedCurrencyIndex].url
+                    ? currencies[selectedCurrencyIndex].url
+                    : "",
+                amount: removeComma(values.amount),
+                status: statuses
+                  ? statuses.find((status) => status.title === "Admin Assign")
+                      .url
                   : "",
-            },
-            () => {
-              refreshPendingRequests();
-              closeModal();
-            }
-          );
-        } else {
-          createDeposit(
-            {
-              user_sender: userInfo && userInfo.url ? userInfo.url : "",
-              currency:
-                currencies[selectedCurrencyIndex] &&
-                currencies[selectedCurrencyIndex].url
-                  ? currencies[selectedCurrencyIndex].url
-                  : "",
-              amount: removeComma(values.amount),
-              status: statuses
-                ? statuses.find((status) => status.title === "Admin Assign").url
-                : "",
-            },
-            () => {
-              getWalletData();
-              refreshPendingRequests();
-              closeModal();
-            }
-          );
+              },
+              () => {
+                getWalletData();
+                refreshPendingRequests();
+                closeModal();
+              }
+            );
+          }
         }
       }}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <div className="flex flex-col">
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-            <span className={`font-mine-regular text-${oppositeTheme}`}>
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["currency"]}
             </span>
             <div className="w-full flex">
@@ -127,6 +180,7 @@ export default function Deposit({
                     ? currencies[selectedCurrencyIndex].abbreviation
                     : ""
                 }
+                searchable
               >
                 {currencies.map((currency, index) => {
                   if (index === 0 && index === currencies.length - 1) {
@@ -182,7 +236,7 @@ export default function Deposit({
             </div>
           </div>
           <div className={locationDivClass}>
-            <span className={`font-mine-regular text-${oppositeTheme}`}>
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["location"]}
             </span>
             <div className="w-full flex">
@@ -194,6 +248,7 @@ export default function Deposit({
                     ? locations[selectedLocationIndex].title
                     : ""
                 }
+                searchable
               >
                 {locations.map((location, index) => {
                   if (index === 0 && index === locations.length - 1) {
@@ -241,12 +296,12 @@ export default function Deposit({
             </div>
           </div>
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-            <span className={`font-mine-regular text-${oppositeTheme}`}>
+            <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["amount"]}
             </span>
             <div className="w-full flex">
               <input
-                className={`flex-1 hide-input-arrows bg-${theme}-back font-mine-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                 name="amount"
                 onBlur={handleBlur("amount")}
                 onChange={handleChange("amount")}

@@ -4,9 +4,11 @@ import { useThemeState } from "../../Providers/ThemeProvider";
 import { Formik } from "formik";
 import SubmitButton from "../common/SubmitButton";
 import { useTimer } from "react-timer-hook";
+import { useFontState } from "../../Providers/FontProvider";
 
 export default function OTPCodeModal() {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
@@ -30,19 +32,19 @@ export default function OTPCodeModal() {
   }, []);
 
   const resendButtonClass = isRunning
-    ? `bg-${theme}-back pt-1 px-3 rounded-full font-mine-regular text-gray text-sm`
-    : `bg-${theme}-back pt-1 px-3 rounded-full font-mine-regular text-blue text-sm`;
+    ? `bg-${theme}-back pt-1 px-3 rounded-full font-${font}-regular text-gray text-sm`
+    : `bg-${theme}-back pt-1 px-3 rounded-full font-${font}-regular text-blue text-sm`;
   const timerSpanClass = isRunning
-    ? `bg-${theme}-back w-16 text-center font-mine-regular pt-1 px-3 rounded-full text-${oppositeTheme}`
-    : `bg-${theme}-back w-16 text-center font-mine-regular pt-1 px-3 rounded-full text-gray`;
+    ? `bg-${theme}-back w-16 text-center-important font-${font}-regular pt-1 px-3 rounded-full text-${oppositeTheme}`
+    : `bg-${theme}-back w-16 text-center-important font-${font}-regular pt-1 px-3 rounded-full text-gray`;
 
   return (
     <div className="w-80">
       <div className="flex flex-col mt-2">
-        <span className={`text-${oppositeTheme} font-mine-thin`}>
+        <span className={`text-${oppositeTheme} font-${font}-thin`}>
           {lang["sended-otp-code-message-1st"] + "."}
         </span>
-        <span className={`text-${oppositeTheme} font-mine-thin`}>
+        <span className={`text-${oppositeTheme} font-${font}-thin`}>
           {lang["sended-otp-code-message-2nd"] + "."}
         </span>
       </div>
@@ -75,7 +77,7 @@ export default function OTPCodeModal() {
               </button>
             </div>
             <SubmitButton
-              className="w-full mb-2 mt-3 font-mine-bold text-lg"
+              className={`w-full mb-2 mt-3 font-${font}-bold text-lg`}
               onClick={handleBlur}
               rounded="lg"
             >

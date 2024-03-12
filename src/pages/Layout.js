@@ -27,6 +27,14 @@ import {
   useGetCurrencyPairs,
 } from "../apis/common/currency/hooks";
 import { useCurrencyPairsSetState } from "../Providers/CurrencyPairsProvider";
+import { useGetLanguages } from "../apis/common/language/hooks";
+import { useLanguageListSetState } from "../Providers/LanguageListProvider";
+import CompleteProfileModal from "../components/modals/CompleteProfileModal";
+import { useModalDataSetState } from "../Providers/ModalDataProvider";
+import { useFontState } from "../Providers/FontProvider";
+import MobileTopBar from "../components/pages/layout/MobileTopBar";
+import { useToastDataSetState } from "../Providers/ToastDataProvider";
+import { useCheckCompletedProfile } from "../hooks/useCheckCompletedProfile";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -36,14 +44,52 @@ export default function Layout() {
   const setToken = useTokenSetState();
   const setUser = useUserSetState();
   const user = useUserState();
+  const checkCompletedProfile = useCheckCompletedProfile();
   const setWallet = useWalletSetState();
   const setCurrencies = useCurrenciesSetState();
   const setCurrencyPairs = useCurrencyPairsSetState();
   const lang = useLanguageState();
+  const font = useFontState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const setLanguageList = useLanguageListSetState();
   const setStatuses = useStatusesSetState();
   const { pathname: activeRoute } = useLocation();
+  const { pathname: currentRoute } = useLocation();
+  const userInfo = useUserState();
+
   const [links, setLinks] = useState([]);
+
+  const setToastData = useToastDataSetState();
+  const openCompleteProfileMessageToast = () => {
+    setToastData({
+      status: "warning",
+      message: lang["complete-profile-toast-message"] + ".",
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
+
+  const setModalData = useModalDataSetState();
+  const openCompleteProfileModal = () => {
+    setModalData({
+      title: "",
+      children: <CompleteProfileModal />,
+      canClose: false,
+      isOpen: true,
+    });
+  };
+  useEffect(() => {
+    if (
+      userInfo &&
+      !userInfo.is_verified &&
+      !(currentRoute === "/") &&
+      !checkCompletedProfile()
+    ) {
+      openCompleteProfileMessageToast();
+      openCompleteProfileModal();
+    }
+  }, []);
 
   const getWalletData = useGetWalletData();
 
@@ -67,9 +113,28 @@ export default function Layout() {
     [getCurrenciesIsLoading]
   );
 
+  const { getLanguages, isLoading: getLanguagesIsLoading } = useGetLanguages();
+  useEffect(
+    () => setIsLoadingSplashScreen(getLanguagesIsLoading),
+    [getLanguagesIsLoading]
+  );
+
   useEffect(() => {
     getCurrencies(setCurrencies);
     getCurrencyPairs(null, setCurrencyPairs);
+
+    const stringLanguages = window.localStorage.getItem("languageList");
+    if (
+      stringLanguages !== "undefined" &&
+      stringLanguages !== "null" &&
+      stringLanguages !== null
+    ) {
+      setLanguageList(JSON.parse(stringLanguages));
+    } else {
+      getLanguages(setLanguageList, null, (languageList) =>
+        localStorage.setItem("languageList", JSON.stringify(languageList))
+      );
+    }
 
     const stringStatuses = window.localStorage.getItem("statues");
     if (
@@ -87,24 +152,31 @@ export default function Layout() {
     if (!token || !user) {
       const savedStringToken = window.localStorage.getItem("authToken");
       const savedStringUser = window.localStorage.getItem("userInfo");
+      const savedExpireTime = window.localStorage.getItem("expireTime");
+
       if (
         savedStringToken !== "undefined" &&
         savedStringToken !== "null" &&
         savedStringUser !== "undefined" &&
-        savedStringUser !== "null"
+        savedStringUser !== "null" &&
+        (savedExpireTime === "undefined" ||
+          !savedExpireTime ||
+          new Date(savedExpireTime) >= new Date())
       ) {
         const savedToken = JSON.parse(savedStringToken);
         const savedUser = JSON.parse(savedStringUser);
         setToken(savedToken);
         setUser(savedUser);
-        savedUser && savedUser.username && getWalletData(savedUser.username);
+        savedUser &&
+          savedUser.username &&
+          getWalletData(savedUser.username, savedToken);
       } else {
         setToken(null);
         setUser(null);
         setWallet({ wallets: [], walletAssets: [], walletTanks: [] });
       }
     } else {
-      user && user.username && getWalletData(user.username);
+      user && user.username && getWalletData(user.username, token);
     }
   }, []);
 
@@ -113,6 +185,11 @@ export default function Layout() {
 
   const isLoadingSplashScreen = useIsLoadingSplashScreenState();
 
+  const [isBlur, setBlur] = useState(false);
+  const switchBlur = () => {
+    setBlur(!isBlur);
+  };
+
   return (
     <>
       <CustomToast />
@@ -120,25 +197,34 @@ export default function Layout() {
       <LoadingSplashScreen isLoading={isLoadingSplashScreen} />
       <div
         dir={direction}
-        className={`w-screen h-screen flex flex-col bg-${theme} transition- duration-300`}
+        className={`w-browser h-browser flex flex-col bg-${theme} transition- duration-300`}
       >
         <NavbarSetting setLinks={setLinks} />
         <div
           onClick={isPagesModalOpen ? togglePagesModal : () => {}}
-          className="w-screen h-screen flex flex-col"
+          className="w-browser h-browser flex flex-col"
         >
-          <TopBar />
+          <div className="hidden md:block">
+            <TopBar />
+          </div>
+          <div className="block md:hidden">
+            <MobileTopBar isBlur={isBlur} switchBlur={switchBlur} />
+          </div>
           <div className="flex-1 flex h-5/6">
-            <Navbar links={links} />
+            <div className="hidden md:flex">
+              <Navbar links={links} />
+            </div>
             <div
-              className={`flex-1 max-h-full bg-${theme}-back rounded-t${oneDirection}-5xl p${oneDirection}-8 py-8 z-20`}
+              className={`relative flex-1 bg-${theme}-back rounded-tl-5xl md:pl-8 py-8 z-20 ${
+                !isBlur ? "blur" : ""
+              }`}
             >
               {activeRoute.replace("/", "") === "" || token ? (
                 <Outlet />
               ) : (
                 <div className="w-full h-full flex flex-col justify-center items-center">
                   <span
-                    className={`font-mine-thin text-3xl text-${oppositeTheme} text-center`}
+                    className={`font-${font}-thin text-3xl text-${oppositeTheme} text-center-important`}
                   >
                     {lang["not-logged-in-error"] + "."}
                   </span>

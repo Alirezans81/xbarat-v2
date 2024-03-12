@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const api = require("../../api.json");
+const api =
+  process.env.REACT_APP_MODE === "PRODUCTION"
+    ? require("../../api-dev.json")
+    : require("../../api.json");
 
 const getPendingRequests = (token) => {
   const formData = new FormData();
@@ -18,6 +21,7 @@ const uploadRequestDocument = (requestUrl, params) => {
   const formData = new FormData();
 
   formData.append("document", params.document);
+  formData.append("wallet_tank_receiver", params.wallet_tank_receiver);
   formData.append("status", params.status);
 
   return axios.patch(requestUrl, formData);

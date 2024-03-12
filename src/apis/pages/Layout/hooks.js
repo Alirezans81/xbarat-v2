@@ -17,13 +17,17 @@ const useLogout = () => {
     token &&
       logout(token)
         .then((data) => {
-          console.log(data);
+          process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
 
           setUser(null);
           window.localStorage.removeItem("userInfo");
 
           setToken(null);
           window.localStorage.removeItem("authToken");
+
+          window.localStorage.removeItem("expireTime");
+          window.localStorage.removeItem("statuses");
+          window.localStorage.removeItem("languageList");
 
           setIsLoading(false);
         })

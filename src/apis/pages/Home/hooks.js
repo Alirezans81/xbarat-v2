@@ -4,6 +4,7 @@ import {
   exchange,
   getPendingExchanges,
   cancelPendingExchange,
+  getOtherExchangesRate,
 } from "./apis";
 import { useState } from "react";
 
@@ -15,11 +16,11 @@ const useGetWatchList = () => {
     setIsLoading(true);
     await getWatchList()
       .then((data) => {
-        console.log(data);
-        setState(data.data);
-        customFunctionWithData && customFunctionWithData(data.data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        setState(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -39,11 +40,11 @@ const useGetTableExchange = () => {
     setIsLoading(true);
     await getTableExchange(params)
       .then((data) => {
-        console.log(data);
-        setState(data.data);
-        customFunctionWithData && customFunctionWithData(data.data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        setState(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -55,6 +56,30 @@ const useGetTableExchange = () => {
   return { getTableExchange: fetch, error, isLoading };
 };
 
+const useGetOtherExchangesRate = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (filtersObject, setState, customFunctionWithData) => {
+    setIsLoading(true);
+    await getOtherExchangesRate(filtersObject)
+      .then((data) => {
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        setState && setState(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data.results);
+        setIsLoading(false);
+        return data.data.results;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { getOtherExchangesRate: fetch, error, isLoading };
+};
+
 const useExchange = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -63,7 +88,7 @@ const useExchange = () => {
     setIsLoading(true);
     await exchange(params)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
         return data.data;
@@ -86,11 +111,11 @@ const useGetPendingExchanges = () => {
     setIsLoading(true);
     await getPendingExchanges(token)
       .then((data) => {
-        console.log(data);
-        setState(data.data);
-        customFunctionWithData && customFunctionWithData(data.data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        setState(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data;
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
@@ -110,7 +135,7 @@ const useCancelPendingExchange = () => {
     setIsLoading(true);
     await cancelPendingExchange(pendingExchangeUrl)
       .then((data) => {
-        console.log(data);
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
         setIsLoading(false);
         return data.data;
@@ -128,6 +153,7 @@ const useCancelPendingExchange = () => {
 export {
   useGetWatchList,
   useGetTableExchange,
+  useGetOtherExchangesRate,
   useExchange,
   useGetPendingExchanges,
   useCancelPendingExchange,

@@ -6,11 +6,14 @@ import { Formik } from "formik";
 import OTPCodeModal from "../../../../modals/OTPCodeModal";
 import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
 import { useUpdatePhone } from "../../../../../apis/pages/Profile/hooks";
+import CopyText from "../../../../common/CopyText";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function Personalnfo({ userInfo }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
   const [canEdit, setCanEdit] = useState();
   const formikRef = useRef();
 
@@ -37,7 +40,7 @@ export default function Personalnfo({ userInfo }) {
 
   return (
     <div
-      className={`bg-${theme}-back rounded-3xl w-full relative grid grid-cols-2 grid-rows-2 px-5 py-4`}
+      className={`bg-${theme}-back rounded-3xl w-full relative grid grid-cols-2 grid-rows-2 gap-y-2 lg:gap-y-0 px-5 py-4`}
     >
       <Formik
         innerRef={formikRef}
@@ -56,8 +59,8 @@ export default function Personalnfo({ userInfo }) {
                 updatePhoneMine(values);
               }}
             />
-            <div className="col-span-1 row-span-1 flex flex-col">
-              <span className="text-gray font-mine-regular">
+            <div className="col-span-2 lg:col-span-1 row-span-1 flex flex-col">
+              <span className={`text-gray font-${font}-regular`}>
                 {lang["email"]}
               </span>
               {canEdit ? (
@@ -71,14 +74,14 @@ export default function Personalnfo({ userInfo }) {
                 />
               ) : (
                 <span
-                  className={`font-mine-regular -mt-1 text-${oppositeTheme}`}
+                  className={`font-${font}-regular -mt-1 text-${oppositeTheme}`}
                 >
                   {userInfo && userInfo.email ? userInfo.email : ""}
                 </span>
               )}
             </div>
-            <div className="col-span-1 row-span-1 flex flex-col">
-              <span className="text-gray font-mine-regular">
+            <div className="col-span-2 lg:col-span-1 row-span-1 flex flex-col">
+              <span className={`text-gray font-${font}-regular`}>
                 {lang["phone-number"]}
               </span>
               {canEdit ? (
@@ -91,11 +94,34 @@ export default function Personalnfo({ userInfo }) {
                 />
               ) : (
                 <span
-                  className={`font-mine-regular -mt-1 text-${oppositeTheme}`}
+                  className={`font-${font}-regular -mt-1 text-${oppositeTheme}`}
                 >
                   {userInfo && userInfo.phone ? userInfo.phone : ""}
                 </span>
               )}
+            </div>
+            <div className="col-span-1 md:col-span-2 row-span-1 flex flex-col">
+              <span className={`text-gray font-${font}-regular`}>
+                {lang["referral-code"]}
+              </span>
+              <span
+                className={`flex items-center font-${font}-regular border-2 border-dashed border-gray rounded-full w-fit px-3 mt-1 text-${oppositeTheme}`}
+              >
+                <span className="pt-1.5 pb-1">
+                  {userInfo && userInfo.referral_code
+                    ? userInfo.referral_code
+                    : ""}
+                </span>
+                <div className="h-full border border-gray border-dashed mx-2" />
+
+                <CopyText
+                  text={
+                    userInfo && userInfo.referral_code
+                      ? userInfo.referral_code
+                      : ""
+                  }
+                />
+              </span>
             </div>
           </>
         )}

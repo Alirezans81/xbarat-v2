@@ -2,27 +2,42 @@ import React from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useDirectionState } from "../../../../../Providers/DirectionProvider";
 import { useAddComma } from "../../../../../hooks/useNumberFunctions";
+import { useConvertDateTime } from "../../../../../hooks/useConvertDateTime";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
-export default function OtherExchangeCard({ data }) {
+export default function OtherExchangeCard({ selectedCurrecnyPair, data }) {
   const theme = useThemeState();
+  const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { endComplete: endCompleteDirection } = useDirectionState();
   const addComma = useAddComma();
+  const convertDateTime = useConvertDateTime();
 
   return (
     <div
       className={`flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-2 pb-1`}
     >
       <div className="flex flex-col items-center">
-        <span className={`text-2xl font-mine-regular text-${oppositeTheme}`}>
-          {data.title}
+        <span className={`text-2xl font-${font}-regular text-${oppositeTheme}`}>
+          {data.exchange_title}
         </span>
         <div className="flex flex-col gap-0.5 items-center">
           <div className="flex items-center gap-1">
             <div className="flex items-center">
-              <img className="w-8 h-8" src={data.buy.source.imageSource.gray} />
-              <span className="font-mine-regular text-lg text-gray mt-1.5">
-                {data.buy.source.title}
+              <img
+                className="w-8 h-8"
+                src={
+                  selectedCurrecnyPair &&
+                  selectedCurrecnyPair.currency_source_sym_pic_gray
+                    ? selectedCurrecnyPair.currency_source_sym_pic_gray
+                    : ""
+                }
+              />
+              <span className={`font-${font}-regular text-lg text-gray mt-1.5`}>
+                {selectedCurrecnyPair &&
+                selectedCurrecnyPair.currency_source_abb
+                  ? selectedCurrecnyPair.currency_source_abb
+                  : ""}
               </span>
             </div>
             <img
@@ -30,18 +45,32 @@ export default function OtherExchangeCard({ data }) {
               src={require(`../../../../../Images/arrow-${endCompleteDirection}-blue.png`)}
             />
             <div className="flex items-center pr-2.5">
-              <img className="w-8 h-8" src={data.buy.target.imageSource.gray} />
-              <span className="font-mine-regular text-lg text-gray mt-2">
-                {data.buy.target.title}
+              <img
+                className="w-8 h-8"
+                src={
+                  selectedCurrecnyPair &&
+                  selectedCurrecnyPair.currency_destination_sym_pic_gray
+                    ? selectedCurrecnyPair.currency_destination_sym_pic_gray
+                    : ""
+                }
+              />
+              <span className={`font-${font}-regular text-lg text-gray mt-2`}>
+                {selectedCurrecnyPair &&
+                selectedCurrecnyPair.currency_destination_abb
+                  ? selectedCurrecnyPair.currency_destination_abb
+                  : ""}
               </span>
             </div>
           </div>
           <div className="flex justify-center gap-1 -mt-2 mx-auto">
-            <span className="font-mine-regular text-xl text-green">
-              {addComma(data.buy.rate)}
+            <span className={`font-${font}-regular text-xl text-green`}>
+              {addComma(data.source_to_destination_rate)}
             </span>
-            <span className="font-mine-regular text-xl text-blue-gradient">
-              {data.rateType}
+            <span className={`font-${font}-regular text-xl text-blue-gradient`}>
+              {selectedCurrecnyPair &&
+              selectedCurrecnyPair.default_rate_type_title
+                ? selectedCurrecnyPair.default_rate_type_title
+                : ""}
             </span>
           </div>
         </div>
@@ -50,10 +79,18 @@ export default function OtherExchangeCard({ data }) {
             <div className="flex items-center">
               <img
                 className="w-8 h-8"
-                src={data.sell.source.imageSource.gray}
+                src={
+                  selectedCurrecnyPair &&
+                  selectedCurrecnyPair.currency_destination_sym_pic_gray
+                    ? selectedCurrecnyPair.currency_destination_sym_pic_gray
+                    : ""
+                }
               />
-              <span className="font-mine-regular text-lg text-gray mt-1.5">
-                {data.sell.source.title}
+              <span className={`font-${font}-regular text-lg text-gray mt-1.5`}>
+                {selectedCurrecnyPair &&
+                selectedCurrecnyPair.currency_destination_abb
+                  ? selectedCurrecnyPair.currency_destination_abb
+                  : ""}
               </span>
             </div>
             <img
@@ -63,24 +100,35 @@ export default function OtherExchangeCard({ data }) {
             <div className="flex items-center pr-2.5">
               <img
                 className="w-8 h-8"
-                src={data.sell.target.imageSource.gray}
+                src={
+                  selectedCurrecnyPair &&
+                  selectedCurrecnyPair.currency_source_sym_pic_gray
+                    ? selectedCurrecnyPair.currency_source_sym_pic_gray
+                    : ""
+                }
               />
-              <span className="font-mine-regular text-lg text-gray mt-2">
-                {data.sell.target.title}
+              <span className={`font-${font}-regular text-lg text-gray mt-2`}>
+                {selectedCurrecnyPair &&
+                selectedCurrecnyPair.currency_source_abb
+                  ? selectedCurrecnyPair.currency_source_abb
+                  : ""}
               </span>
             </div>
           </div>
           <div className="flex justify-center gap-1 -mt-2 mx-auto">
-            <span className="font-mine-regular text-xl text-red">
-              {addComma(data.sell.rate)}
+            <span className={`font-${font}-regular text-xl text-red`}>
+              {addComma(data.destination_to_source_rate)}
             </span>
-            <span className="font-mine-regular text-xl text-blue-gradient">
-              {data.rateType}
+            <span className={`font-${font}-regular text-xl text-blue-gradient`}>
+              {selectedCurrecnyPair &&
+              selectedCurrecnyPair.default_rate_type_title
+                ? selectedCurrecnyPair.default_rate_type_title
+                : ""}
             </span>
           </div>
         </div>
-        <span className={`font-mine-regular text-sm text-gray mt-3`}>
-          {data.date.toLocaleString()}
+        <span className={`font-${font}-regular text-sm text-gray mt-3`}>
+          {convertDateTime(data.datetime)}
         </span>
       </div>
     </div>

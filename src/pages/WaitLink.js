@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import ThemeSwitcher from "../components/pages/layout/Navbar/ThemeSwitcher";
+import ThemeSwitcher from "../components/common/ThemeSwitcher";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import { useLanguageState } from "../Providers/LanguageProvider";
 import { useNavigate } from "react-router-dom";
+import { useFontState } from "../Providers/FontProvider";
 
 export default function WaitLink() {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { three: direction } = useDirectionState();
@@ -22,13 +24,13 @@ export default function WaitLink() {
   return (
     <div
       dir={direction}
-      className={`w-screen h-screen bg-${theme} relative transition-all duration-300`}
+      className={`w-browser h-browser bg-${theme} relative transition-all duration-300`}
     >
-      <div className="absolute w-screen h-screen bg-login flex justify-center items-center">
+      <div className="absolute w-browser h-browser bg-login flex justify-center items-center">
         <div className={`absolute top-3 ${themeSwitcherDivClasses}`}>
           <ThemeSwitcher />
         </div>
-        <div className="w-screen h-screen flex justify-evenly items-center">
+        <div className="w-browser h-browser flex justify-evenly items-center">
           <div
             className={`bg-${theme}-glass rounded-3xl flex w-4/12 flex-col items-center p-8 gap-y-6`}
           >
@@ -37,7 +39,7 @@ export default function WaitLink() {
               src={require("../Images/pages/layout/WaitLink/key.png")}
             />
             <span
-              className={`text-center text-2xl font-mine-bold text-${oppositeTheme}`}
+              className={`text-center-important text-2xl font-${font}-bold text-${oppositeTheme}`}
             >
               {lang["wait-link-message"] + "."}
             </span>

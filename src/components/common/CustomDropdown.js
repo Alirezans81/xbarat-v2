@@ -1,6 +1,9 @@
 import { Dropdown } from "flowbite-react";
 import React from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
+import { useFontState } from "../../Providers/FontProvider";
+import { Formik } from "formik";
+import { useLanguageState } from "../../Providers/LanguageProvider";
 
 const customTheme = {
   arrowIcon: "ml-2 h-4 w-4",
@@ -36,21 +39,25 @@ const customTheme = {
   inlineWrapper: "flex items-center",
 };
 
-function CustomDropdown({ children, label, className }) {
+function CustomDropdown({ children, label, className, disabled, searchable }) {
   const theme = useThemeState();
+  const lang = useLanguageState();
+  const font = useFontState();
   const buttonStyle =
     theme === "dark"
       ? {
-          backgroundColor: "#393C42",
+          backgroundColor: "#152831",
           color: "#fff",
-          fontFamily: "manjari-bold",
+          fontFamily: font === "Fa" ? "ModamFaNum-bold" : "manjari-bold",
+          paddingBottom: font === "Fa" ? 2 : 0,
           flex: 1,
           minWidth: 0,
         }
       : {
-          backgroundColor: "#F0F2F6",
+          backgroundColor: "#EEEEEE",
           color: "#2A2B2E",
-          fontFamily: "manjari-bold",
+          fontFamily: font === "Fa" ? "ModamFaNum-bold" : "manjari-bold",
+          paddingBottom: font === "Fa" ? 2 : 0,
           flex: 1,
           minWidth: 0,
         };
@@ -62,8 +69,29 @@ function CustomDropdown({ children, label, className }) {
       label={<span className={className + " -mb-6"}>{label}</span>}
       className={className + ` bg-${theme} rounded-xl hover:bg-${theme} z-20`}
       style={buttonStyle}
+      disabled={disabled}
     >
-      {children}
+      <div className="max-h-40 pr-1.5 py-1.5">
+        <div dir="ltr" className="max-h-36 overflow-y-scroll">
+          {searchable && (
+            <div className="w-full pl-2 pt-1 pr-0.5 mb-2 flex relative">
+              <Formik initialValues={{ search: "" }}>
+                {({ handleChange, handleBlur, values, handleSubmit }) => (
+                  <input
+                    name="search"
+                    placeholder={lang["search"]}
+                    className={`flex-1 hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 font-${font}-regular outline-white rounded-lg w-0 pt-2 pb-1`}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.search}
+                  />
+                )}
+              </Formik>
+            </div>
+          )}
+          {children}
+        </div>
+      </div>
     </Dropdown>
   );
 }
@@ -71,6 +99,7 @@ function CustomDropdown({ children, label, className }) {
 function CustomItem({ children, className, onClick }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const font = useFontState();
 
   return (
     <Dropdown.Item
@@ -78,10 +107,10 @@ function CustomItem({ children, className, onClick }) {
       onClick={onClick}
       className={
         className +
-        ` text-${oppositeTheme} bg-${theme} bg-${theme}-hover border-gray`
+        ` text-${oppositeTheme} bg-${theme} bg-${theme}-hover bg-${theme}-focus border-gray`
       }
     >
-      <div className={`font-mine-regular pt-1.5 text-${oppositeTheme}`}>
+      <div className={`font-${font}-regular pt-1.5 text-${oppositeTheme}`}>
         {children}
       </div>
     </Dropdown.Item>

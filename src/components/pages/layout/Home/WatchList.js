@@ -4,18 +4,32 @@ import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadin
 import CustomTable from "../../../common/CustomTable";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
-import { useAddComma } from "../../../../hooks/useNumberFunctions";
-import { useDirectionState } from "../../../../Providers/DirectionProvider";
+import {
+  useAddComma,
+  useCalculateReverseRate,
+} from "../../../../hooks/useNumberFunctions";
+import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 
-export default function WatchList() {
+export default function WatchList({
+  selectedSourceIndex,
+  availableTargets,
+  findSource,
+  findTarget,
+  rateIsReversed,
+  selectedCurrecnyPair,
+}) {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const { oneEnd: endDirection } = useDirectionState();
   const setLoading = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
+  const calculateReverseRate = useCalculateReverseRate();
 
-  const head = [lang["currency-pair"], lang["low"], lang["high"]];
+  const currencies = useCurrenciesState();
+
+  const head = [lang["currency-pair"], lang["rate"], lang["low"], lang["high"]];
   const [data, setData] = useState([]);
 
   const { getWatchList, isLoading: getWatchListIsLoading } = useGetWatchList();
@@ -25,25 +39,101 @@ export default function WatchList() {
     getWatchList(setData);
   }, []);
 
-  const watch_list_data =
-    data && data.watch_list
-      ? data.watch_list.map((row) => {
-          let temp = {};
-          temp.title = row.title;
-          temp.min_rate = addComma(row.min_rate);
-          temp.max_rate = addComma(row.max_rate);
+  const [targetSlug, setTargetSlug] = useState();
 
-          return temp;
-        })
-      : [];
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  const [watch_list_data, set_watch_list_data] = useState([]);
+  useEffect(() => {
+    data && data.watch_list
+      ? set_watch_list_data(
+          data.watch_list.map((row, index) => {
+            let temp = {};
+            temp.title = row.title;
+
+            if (
+              selectedCurrecnyPair &&
+              (selectedCurrecnyPair.url === row.currency_pair_url ||
+                selectedCurrecnyPair.url === row.currency_pair_reverse_url) &&
+              rateIsReversed
+            ) {
+              temp.rate = addComma(
+                calculateReverseRate(
+                  +row.rate,
+                  +selectedCurrecnyPair.rate_multiplier,
+                  +row.floating_number
+                )
+              );
+
+              temp.min_rate = addComma(
+                calculateReverseRate(
+                  +row.min_rate,
+                  +selectedCurrecnyPair.rate_multiplier,
+                  +row.floating_number
+                )
+              );
+              temp.max_rate = addComma(
+                calculateReverseRate(
+                  +row.max_rate,
+                  +selectedCurrecnyPair.rate_multiplier,
+                  +row.floating_number
+                )
+              );
+            } else {
+              temp.rate = addComma((+row.rate).toFixed(row.floating_number));
+              temp.min_rate = addComma(
+                (+row.min_rate).toFixed(row.floating_number)
+              );
+              temp.max_rate = addComma(
+                (+row.max_rate).toFixed(row.floating_number)
+              );
+            }
+
+            return temp;
+          })
+        )
+      : set_watch_list_data([]);
+  }, [data, rateIsReversed]);
+
+  useEffect(() => {
+    if (availableTargets.length > 0 && targetSlug) {
+      findTarget(targetSlug);
+    }
+  }, [availableTargets, targetSlug]);
+
+  useEffect(() => {
+    if (
+      data &&
+      data.watch_list &&
+      data.watch_list[0] &&
+      currencies.length > 0
+    ) {
+      findSource(data.watch_list[0].source);
+    }
+  }, [data, currencies]);
+  useEffect(() => {
+    if (data && data.watch_list && data.watch_list[0] && selectedSourceIndex >= 0) {
+      setTargetSlug(data.watch_list[0].target);
+    }
+  }, [selectedSourceIndex]);
 
   return (
     <div className="px-6 py-5 h-full flex flex-col">
-      <h1 className={`font-mine-regular text-2xl text-${oppositeTheme}`}>
+      <h1 className={`font-${font}-bold text-2xl text-${oppositeTheme}`}>
         {lang["watch-list-label"]}
       </h1>
-      <div className={`flex-1 overflow-y-auto mt-2 p${endDirection}-4`}>
-        <CustomTable heads={head} rows={watch_list_data} />
+      <div className={`flex-1 overflow-y-auto mt-2 pr-0 md:pr-4`}>
+        <CustomTable
+          heads={head}
+          rows={watch_list_data}
+          selectRow={(row, index) => {
+            if (data && data.watch_list) {
+              findSource(data.watch_list[index].source);
+              setTargetSlug(data.watch_list[index].target);
+              setSelectedIndex(index);
+            }
+          }}
+        />
       </div>
     </div>
   );

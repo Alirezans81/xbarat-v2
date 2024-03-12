@@ -4,12 +4,15 @@ import FilterButtons from "./PendingRequests/FilterButtons";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import CustomSlider from "../../../common/CustomSlider";
 import RequestCard from "./PendingRequests/RequestCard";
+import { useFontState } from "../../../../Providers/FontProvider";
+import { useSortByCreateDate } from "../../../../hooks/useConvertDateTime";
 
 export default function PendingRequests({
   refreshPendingRequests,
   pendingRequests: allPendingOrders,
 }) {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [showOrdersType, setShowOrdersType] = useState("");
@@ -23,6 +26,21 @@ export default function PendingRequests({
     setShowOrdersType(showOrdersType !== "transfer" ? "transfer" : "");
   };
 
+  const getQuantityOfCards = () => {
+    if (window.innerWidth >= 1280) {
+      return 4;
+    } else if (window.innerWidth >= 1024) {
+      return 3;
+    } else if (window.innerWidth >= 768) {
+      return 2;
+    } else if (window.innerWidth >= 640) {
+      return 2;
+    } else {
+      return 1;
+    }
+  };
+
+  const sortByCreateDate = useSortByCreateDate();
   const resetPending = () => {
     if (
       allPendingOrders &&
@@ -45,16 +63,21 @@ export default function PendingRequests({
         return transfer;
       });
 
-      setPendingOrders([
+      const temp = [
         ...convertedDeposits,
         ...convertedWithdrawals,
         ...convertedTransfers,
-      ]);
+      ];
+
+      setPendingOrders(temp.sort(sortByCreateDate));
     }
   };
 
   const [pendingOrders, setPendingOrders] = useState([]);
-  useEffect(() => resetPending(), [allPendingOrders]);
+  useEffect(() => {
+    setShowOrdersType("");
+    resetPending();
+  }, [allPendingOrders]);
 
   useEffect(() => {
     if (
@@ -75,20 +98,27 @@ export default function PendingRequests({
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex flex-row w-full justify-between items-center">
-        <span className={`font-mine-bold text-${oppositeTheme} text-2xl`}>
+      <div className="flex flex-col md:flex-row w-full gap-y-0.5 justify-between md:items-center">
+        <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
           {lang["pending-requests"]}
         </span>
-        <FilterButtons
-          showOrdersType={showOrdersType}
-          toggleShowDepositOrders={toggleShowDepositOrders}
-          toggleShowWithdrawalOrders={toggleShowWithdrawalOrders}
-          toggleShowTransferOrders={toggleShowTransferOrders}
-        />
+        {allPendingOrders && allPendingOrders.length !== 0 && (
+          <div className="w-full md:w-auto">
+            <FilterButtons
+              showOrdersType={showOrdersType}
+              toggleShowDepositOrders={toggleShowDepositOrders}
+              toggleShowWithdrawalOrders={toggleShowWithdrawalOrders}
+              toggleShowTransferOrders={toggleShowTransferOrders}
+            />
+          </div>
+        )}
       </div>
       <div className="flex-1 mt-3 px-7 relative">
         {pendingOrders.length !== 0 ? (
-          <CustomSlider slidesToShow={4} slidesToScroll={4}>
+          <CustomSlider
+            slidesToShow={getQuantityOfCards()}
+            slidesToScroll={getQuantityOfCards()}
+          >
             {pendingOrders.map((pendingOrder, index) => (
               <div
                 key={index}
@@ -102,8 +132,10 @@ export default function PendingRequests({
             ))}
           </CustomSlider>
         ) : (
-          <div className="absolute left-0 h-full w-full -mt-4 top-0 flex justify-center items-center">
-            <span className={`font-mine-thin text-3xl text-${oppositeTheme}`}>
+          <div className="absolute left-0 h-full w-full mt-5 md:-mt-4 top-0 flex justify-center items-center">
+            <span
+              className={`font-${font}-thin text-3xl text-${oppositeTheme}`}
+            >
               {lang["no-data"]}
             </span>
           </div>

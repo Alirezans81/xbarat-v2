@@ -6,19 +6,21 @@ const useGetWalletTankByCurrency = () => {
   const getWalletTankByCurrency = (currencyUrl) => {
     if (currencyUrl) {
       let walletAssetsTemp = [];
-      wallet.walletAssets.map(
-        (walletAsset) =>
+      wallet.walletAssets.map((walletAsset) => {
+        if (
           walletAsset &&
           walletAsset.currency &&
-          walletAsset.currency === currencyUrl &&
-          walletAssetsTemp.push(walletAsset)
-      );
+          walletAsset.currency === currencyUrl
+        ) {
+          walletAssetsTemp.push(walletAsset);
+        }
+      });
 
       let walletTanksTemp = [];
-      for (let i = 0; i < walletAssetsTemp.length; i++) {
-        for (let j = 0; j < wallet.walletTanks.length; j++) {
-          if (walletAssetsTemp[i].url === wallet.walletTanks[j].wallet_asset) {
-            walletTanksTemp.push(wallet.walletTanks[j]);
+      for (let i = 0; i < wallet.walletTanks.length; i++) {
+        for (let j = 0; j < walletAssetsTemp.length; j++) {
+          if (walletAssetsTemp[j].url === wallet.walletTanks[i].wallet_asset) {
+            walletTanksTemp.push(wallet.walletTanks[i]);
             break;
           }
         }
@@ -33,4 +35,21 @@ const useGetWalletTankByCurrency = () => {
   return getWalletTankByCurrency;
 };
 
-export { useGetWalletTankByCurrency };
+const useGetWalletAssetByCurrency = () => {
+  const wallet = useWalletState();
+
+  const getWalletAssetByCurrency = (currencyUrl) => {
+    if (currencyUrl) {
+      const { walletAssets } = wallet;
+      const walletAsset = walletAssets.find(
+        (walletAsset) => walletAsset.currency === currencyUrl
+      );
+
+      return walletAsset;
+    } else return null;
+  };
+
+  return getWalletAssetByCurrency;
+};
+
+export { useGetWalletTankByCurrency, useGetWalletAssetByCurrency };

@@ -1,6 +1,7 @@
 import { Dropdown } from "flowbite-react";
 import React from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
+import { useFontState } from "../../Providers/FontProvider";
 
 const customTheme = {
   arrowIcon: "ml-2 h-4 w-4",
@@ -36,12 +37,12 @@ const customTheme = {
   inlineWrapper: "flex items-center",
 };
 
-function CustomDropdown2({ children, label, className }) {
+function CustomDropdown2({ children, label, className, disabled }) {
   const theme = useThemeState();
   const buttonStyle =
     theme === "dark"
       ? {
-          backgroundColor: "#2A2B2E",
+          backgroundColor: "#171D20",
           color: "#fff",
           fontFamily: "manjari-bold",
           flex: 1,
@@ -62,8 +63,13 @@ function CustomDropdown2({ children, label, className }) {
       label={<span className={className + " -mb-6"}>{label}</span>}
       className={className + ` bg-${theme} rounded-xl hover:bg-${theme}`}
       style={buttonStyle}
+      disabled={disabled}
     >
-      {children}
+      <div className="max-h-40 pr-1.5 py-2">
+        <div dir="ltr" className="max-h-36 overflow-y-scroll">
+          {children}
+        </div>
+      </div>
     </Dropdown>
   );
 }
@@ -71,6 +77,7 @@ function CustomDropdown2({ children, label, className }) {
 function CustomItem2({ children, className, onClick }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const font = useFontState();
 
   return (
     <Dropdown.Item
@@ -81,7 +88,7 @@ function CustomItem2({ children, className, onClick }) {
         ` text-${oppositeTheme} bg-${theme} bg-${theme}-hover border-gray`
       }
     >
-      <div className={`font-mine-regular pt-1.5 text-${oppositeTheme}`}>
+      <div className={`font-${font}-regular pt-1.5 text-${oppositeTheme}`}>
         {children}
       </div>
     </Dropdown.Item>

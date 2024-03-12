@@ -3,7 +3,7 @@ const convertDateTime = (dateTime) => {
   return (
     newFormat.getFullYear() +
     "/" +
-    newFormat.getMonth() +
+    (newFormat.getMonth() + 1) +
     "/" +
     newFormat.getDate() +
     " " +
@@ -21,4 +21,20 @@ const useConvertDateTime = () => {
   return convertDateTime;
 };
 
-export { useConvertDateTime };
+const sortByCreateDate = (a, b) => {
+  if (a && a.datetime_create && b && b.datetime_create) {
+    if (new Date(a.datetime_create) < new Date(b.datetime_create)) {
+      return 1;
+    }
+    if (new Date(a.datetime_create) > new Date(b.datetime_create)) {
+      return -1;
+    }
+  }
+  return 0;
+};
+
+const useSortByCreateDate = () => {
+  return sortByCreateDate;
+};
+
+export { useConvertDateTime, useSortByCreateDate };

@@ -1,21 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CustomSlider from "../../../common/CustomSlider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import PendingExchangeCard from "./PendingExchange/PendingExchangeCard";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function PendingExchange({
   pendingExchanges,
   refreshPendingExchange,
+  resetHome,
+  setSource,
+  setTarget,
+  setAmount,
+  setRate,
+  selectedCurrecnyPair,
+  rateIsReversed,
 }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const font = useFontState();
 
   return (
     <div className="px-5 py-3 h-full">
       <div className="flex justify-between items-center w-full">
-        <span className={`text-2xl text-${oppositeTheme} mx-0.5`}>
+        <span
+          className={`text-2xl font-${font}-bold text-${oppositeTheme} mx-0.5`}
+        >
           {lang["pending-orders"]}
         </span>
       </div>
@@ -31,13 +42,22 @@ export default function PendingExchange({
                   lang={lang}
                   data={pendingExchange}
                   refreshPendingExchange={refreshPendingExchange}
+                  resetHome={resetHome}
+                  setSource={setSource}
+                  setTarget={setTarget}
+                  setAmount={setAmount}
+                  setRate={setRate}
+                  selectedCurrecnyPair={selectedCurrecnyPair}
+                  rateIsReversed={rateIsReversed}
                 />
               </div>
             ))}
           </CustomSlider>
         ) : (
           <div className="absolute left-0 h-full w-full -mt-8 top-0 flex justify-center items-center">
-            <span className={`font-mine-thin text-3xl text-${oppositeTheme}`}>
+            <span
+              className={`font-${font}-thin text-2xl md:text-3xl text-${oppositeTheme}`}
+            >
               {lang["no-data"]}
             </span>
           </div>

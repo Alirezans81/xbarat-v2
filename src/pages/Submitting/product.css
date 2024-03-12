@@ -1,0 +1,58 @@
+body {
+    background-color: #8F97A6;
+
+}
+
+.inputTextDatePagination {
+    display: flex;
+    justify-content: center;
+    
+    color-scheme: dark;
+    background-color: transparent;
+    width: 13.5%;
+    height: 6%;
+    border: solid 1px #8F97A6;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-family: manjari-bold;
+    padding-left: 0.4%;
+
+}
+
+.inputTextPagination {
+    color-scheme: dark;
+    background-color: transparent;
+    width: 65%;
+    height: 6%;
+    border: solid 1px #8F97A6;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    padding-left: 0.4%;
+
+}
+
+select {
+    background-color: #2A2B2E;
+    padding-top: 0.4%;
+    width: 13%;
+    height: 5.2%;
+    color: white;
+
+}
+
+select:not(:focus) {
+    border: solid 1px white;
+    border-radius: 10px;
+}
+
+select:focus {
+    border: solid 1px white;
+    border-radius: 10px;
+}
+
+.select-selected {
+    background-color: transparent;
+    border-radius: 10px;
+}

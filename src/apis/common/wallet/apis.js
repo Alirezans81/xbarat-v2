@@ -1,58 +1,112 @@
 import axios from "axios";
 import queryString from "query-string";
 
-const api = require("../../api.json");
+const api =
+  process.env.REACT_APP_MODE === "PRODUCTION"
+    ? require("../../api-dev.json")
+    : require("../../api.json");
 
 const getWallets = (filtersObject) => {
-  const urlWithQueries = queryString.stringifyUrl({
-    url: api["wallet"],
-    query: filtersObject,
-  });
+  const limit = require("../../pagination/limit.json")["wallet"];
 
-  return axios.get(urlWithQueries);
-};
-
-const getWalletAssets = (filtersObject) => {
-  const urlWithQueries = queryString.stringifyUrl({
-    url: api["wallet-asset"],
-    query: filtersObject,
-  });
-
-  return axios.get(urlWithQueries);
-};
-
-const getWalletTanks = (filtersObject) => {
-  const urlWithQueries = queryString.stringifyUrl({
-    url: api["wallet-tank"],
-    query: filtersObject,
-  });
-
-  return axios.get(urlWithQueries);
-};
-
-const getWalletTankTypes = (filtersObject) => {
   if (filtersObject) {
     const urlWithQueries = queryString.stringifyUrl({
-      url: api["wallet-tank-type"],
-      query: filtersObject,
+      url: api["wallet"],
+      query: { limit, ...filtersObject },
     });
+
     return axios.get(urlWithQueries);
   } else {
-    return axios.get(api["wallet-tank-type"]);
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet"],
+      query: { limit },
+    });
+
+    return axios.get(urlWithQueries);
   }
 };
 
-const createWalletAsset = (params) => {
-  const formData = new FormData();
+const getWalletAssets = (filtersObject, token) => {
+  const limit = require("../../pagination/limit.json")["wallet-asset"];
 
-  formData.append("wallet", params.wallet);
-  formData.append("currency", params.currency);
+  if (filtersObject) {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-asset"],
+      query: { limit, ...filtersObject },
+    });
 
-  return axios.post(api["wallet-asset"], params);
+    return axios.get(urlWithQueries);
+  } else {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-asset"],
+      query: { limit },
+    });
+
+    return axios.get(urlWithQueries);
+  }
+};
+
+const getWalletTanks = (filtersObject) => {
+  const limit = require("../../pagination/limit.json")["wallet-tank"];
+
+  if (filtersObject) {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-tank"],
+      query: { limit, ...filtersObject },
+    });
+
+    return axios.get(urlWithQueries);
+  } else {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-tank"],
+      query: { limit },
+    });
+
+    return axios.get(urlWithQueries);
+  }
+};
+
+const getWalletTankTypes = (filtersObject) => {
+  const limit = require("../../pagination/limit.json")["wallet-tank-type"];
+
+  if (filtersObject) {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-tank-type"],
+      query: { limit, ...filtersObject },
+    });
+
+    return axios.get(urlWithQueries);
+  } else {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-tank-type"],
+      query: { limit },
+    });
+
+    return axios.get(urlWithQueries);
+  }
 };
 
 const createWalletTank = (params) => {
   return axios.post(api["wallet-tank"], params);
+};
+
+const editWalletTank = (walletTankUrl, params) => {
+  const formData = new FormData();
+  params.url && formData.append("url", params.url);
+  params.currency_abb && formData.append("currency_abb", params.currency_abb);
+  params.wallet_tank_type &&
+    formData.append("wallet_tank_type", params.wallet_tank_type);
+  params.title && formData.append("title", params.title);
+  params.balance && formData.append("balance", params.balance);
+  params.locked && formData.append("locked", params.locked);
+  params.pending && formData.append("pending", params.pending);
+  params.bank_info && formData.append("bank_info", params.bank_info);
+  params.bank_name && formData.append("bank_name", params.bank_name);
+  params.is_deleted && formData.append("is_deleted", params.is_deleted);
+  params.account_name && formData.append("account_name", params.account_name);
+  formData.append("is_favorite", params.is_favorite);
+
+  return axios.patch(walletTankUrl, formData);
 };
 
 const createDeposit = (params) => {
@@ -97,9 +151,9 @@ export {
   getWalletAssets,
   getWalletTanks,
   getWalletTankTypes,
-  createWalletAsset,
   createWalletTank,
   createDeposit,
   createWithdrawal,
   createTransfer,
+  editWalletTank,
 };

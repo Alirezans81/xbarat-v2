@@ -16,12 +16,14 @@ import {
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { useUpdateNationalInfo } from "../../../../../apis/pages/Profile/hooks";
 import { useUserSetState } from "../../../../../Providers/UserProvider";
+import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function NationalInfo({ userInfo }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [canEdit, setCanEdit] = useState();
   const lang = useLanguageState();
+  const font = useFontState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const setUser = useUserSetState();
 
@@ -91,7 +93,7 @@ export default function NationalInfo({ userInfo }) {
 
   return (
     <div
-      className={`bg-${theme}-back rounded-3xl w-full flex-1 relative grid grid-cols-2 grid-rows-2 px-5 py-4`}
+      className={`bg-${theme}-back rounded-3xl w-full flex-1 relative grid grid-cols-2 grid-rows-2 px-5 py-4 gap-y-2`}
     >
       <EditButton
         canEdit={canEdit}
@@ -114,18 +116,26 @@ export default function NationalInfo({ userInfo }) {
         }}
       />
       <div className="col-span-2 row-span-1 flex flex-col">
-        <span className="text-gray font-mine-regular">
+        <span className={`text-gray font-${font}-regular`}>
           {lang["nationality"]}
         </span>
-        <span className={`font-mine-regular -mt-1 text-${oppositeTheme}`}>
+        <span className={`font-${font}-regular -mt-1 text-${oppositeTheme}`}>
           {nationality && nationality.title ? nationality.title : ""}
         </span>
       </div>
-      <div className="col-span-1 row-span-1 flex flex-col">
-        <span className="text-gray font-mine-regular">{lang["country"]}</span>
+      <div
+        className={
+          canEdit
+            ? "col-span-1 row-span-1 flex flex-col -mt-2.5"
+            : "col-span-1 row-span-1 flex flex-col"
+        }
+      >
+        <span className={`text-gray font-${font}-regular`}>
+          {lang["country"]}
+        </span>
         {canEdit ? (
           <CustomDropdown2
-            className="flex-1 font-mine-regular"
+            className={`flex-1 font-${font}-regular`}
             label={
               countriesIndex > -1
                 ? countriesList[countriesIndex].title
@@ -133,6 +143,7 @@ export default function NationalInfo({ userInfo }) {
                 ? userInfo.country.title
                 : ""
             }
+            searchable
           >
             {countriesList.map((country, index) => {
               if (country && country.title) {
@@ -182,16 +193,22 @@ export default function NationalInfo({ userInfo }) {
             })}
           </CustomDropdown2>
         ) : (
-          <span className={`font-mine-regular -mt-1 text-${oppositeTheme}`}>
+          <span className={`font-${font}-regular -mt-1 text-${oppositeTheme}`}>
             {country && country.title ? country.title : ""}
           </span>
         )}
       </div>
-      <div className="col-span-1 row-span-1 flex flex-col">
-        <span className="text-gray font-mine-regular">{lang["city"]}</span>
+      <div
+        className={
+          canEdit
+            ? "col-span-1 row-span-1 flex flex-col -mt-2.5"
+            : "col-span-1 row-span-1 flex flex-col"
+        }
+      >
+        <span className={`text-gray font-${font}-regular`}>{lang["city"]}</span>
         {canEdit ? (
           <CustomDropdown2
-            className="flex-1 font-mine-regular"
+            className={`flex-1 font-${font}-regular`}
             label={
               cityIndex > -1
                 ? citiesList[cityIndex].title
@@ -199,6 +216,7 @@ export default function NationalInfo({ userInfo }) {
                 ? userInfo.city.title
                 : ""
             }
+            searchable
           >
             {citiesList.map((city, index) => {
               if (city && city.title) {
@@ -248,7 +266,7 @@ export default function NationalInfo({ userInfo }) {
             })}
           </CustomDropdown2>
         ) : (
-          <span className={`font-mine-regular -mt-1 text-${oppositeTheme}`}>
+          <span className={`font-${font}-regular -mt-1 text-${oppositeTheme}`}>
             {city && city.title ? city.title : ""}
           </span>
         )}

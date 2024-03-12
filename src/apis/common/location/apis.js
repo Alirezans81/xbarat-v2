@@ -1,20 +1,34 @@
 import axios from "axios";
 import queryString from "query-string";
 
-const api = require("../../api.json");
+const api =
+  process.env.REACT_APP_MODE === "PRODUCTION"
+    ? require("../../api-dev.json")
+    : require("../../api.json");
+const limit = require("../../pagination/limit.json");
 
 const getNationalities = () => {
-  return axios.get(api["nationality"]);
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["nationality"],
+    query: { limit: limit["nationality"] },
+  });
+
+  return axios.get(urlWithQueries);
 };
 
 const getCounties = () => {
-  return axios.get(api["country"]);
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["country"],
+    query: { limit: limit["country"] },
+  });
+
+  return axios.get(urlWithQueries);
 };
 
 const getCities = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["city"],
-    query: filtersObject,
+    query: { ...filtersObject, limit: limit["city"] },
   });
 
   return axios.get(urlWithQueries);

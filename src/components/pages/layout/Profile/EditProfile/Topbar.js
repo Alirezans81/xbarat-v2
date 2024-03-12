@@ -8,9 +8,12 @@ import { Formik } from "formik";
 import { useUpdateNameAndAvatar } from "../../../../../apis/pages/Profile/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { useLimitSize } from "../../../../../hooks/useImageUploaderFunctions";
+import { useFontState } from "../../../../../Providers/FontProvider";
+import CopyText from "../../../../common/CopyText";
 
 export default function Topbar({ userInfo }) {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
@@ -45,8 +48,8 @@ export default function Topbar({ userInfo }) {
 
   return (
     <>
-      <div className="w-full flex justify-between items-start">
-        <div className="flex gap-3 items-center">
+      <div className="w-full flex justify-between items-center md:py-3">
+        <div className="flex gap-3 items-center h-9">
           <Formik
             initialValues={{
               first_name:
@@ -68,7 +71,7 @@ export default function Topbar({ userInfo }) {
                   message: "The image is too big (Must be less than 4 MB).",
                   canClose: true,
                   isOpen: true,
-                  showTime: 3000,
+                  showTime: 10000,
                 });
               }
             }}
@@ -87,7 +90,7 @@ export default function Topbar({ userInfo }) {
                       ref={profilePicRef}
                       type="file"
                       accept="image/*"
-                      className="w-0 h-0 absolute"
+                      className="w-0 h-0 hidden absolute"
                       name="avatar"
                       onChange={(event) => {
                         if (event.currentTarget.files[0]) {
@@ -105,31 +108,44 @@ export default function Topbar({ userInfo }) {
 
                     <img
                       ref={previewImageRef}
-                      className="w-16 h-16 rounded-full"
-                      style={{ objectFit: "cover" }}
+                      className="w-10 h-10 md:w-16 md:h-16 rounded-full object-cover"
                       src={require("../../../../../Images/pages/layout/Profile/edit-profile.png")}
                       alt="selected avatar"
                     />
                   </button>
                 ) : (
-                  <img
-                    className="w-16 h-16 rounded-full"
-                    style={{ objectFit: "cover" }}
-                    src={
-                      userInfo && userInfo.avatar
-                        ? userInfo.avatar
-                        : require("../../../../../Images/pages/layout/Profile/no-profile.png")
-                    }
-                    alt="current avatar"
-                  />
+                  <div className="relative">
+                    <img
+                      className="w-10 h-10 md:w-16 md:h-16 rounded-full"
+                      style={{ objectFit: "cover" }}
+                      src={
+                        userInfo && userInfo.avatar
+                          ? userInfo.avatar
+                          : require("../../../../../Images/pages/layout/Profile/no-profile.png")
+                      }
+                      alt="current avatar"
+                    />
+                    <div
+                      className={`absolute md:hidden top-0 w-10 h-10 md:w-16 md:h-16 rounded-full bg-dark-glass flex justify-center items-center`}
+                    >
+                      {userInfo && userInfo["is_verified"] && (
+                        <button onClick={() => setCanEditNameAndAvatar(true)}>
+                          <img
+                            className="w-5 h-5"
+                            src={require("../../../../../Images/pages/layout/Profile/edit-light.png")}
+                          />
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 )}
                 <div className="flex flex-col">
                   <div className="flex gap-2 items-center">
                     {canEditNameAndAvatar ? (
-                      <div className="mb-2 flex gap-2">
+                      <div className="md:mb-2 flex gap-2">
                         <div className="flex flex-row gap-x-2">
                           <input
-                            className={`bg-${theme}-back focus-outline-blue px-2.5 font-mint-regular py-1 w-28 rounded-lg text-${oppositeTheme}`}
+                            className={`bg-${theme}-back focus-outline-blue px-2.5 font-mint-regular py-1 text-xs md:text-base w-20 md:w-28 rounded-lg text-${oppositeTheme}`}
                             type="text"
                             onChange={handleChange("first_name")}
                             onBlur={handleBlur("first_name")}
@@ -137,7 +153,7 @@ export default function Topbar({ userInfo }) {
                             placeholder={lang["first-name"]}
                           />
                           <input
-                            className={`bg-${theme}-back focus-outline-blue px-2.5 font-mint-regular py-1 w-28 rounded-lg text-${oppositeTheme}`}
+                            className={`bg-${theme}-back focus-outline-blue px-2.5 font-mint-regular py-1 text-xs md:text-base w-20 md:w-28 rounded-lg text-${oppositeTheme}`}
                             type="text"
                             onChange={handleChange("last_name")}
                             onBlur={handleBlur("last_name")}
@@ -163,16 +179,18 @@ export default function Topbar({ userInfo }) {
                         </div>
                       </div>
                     ) : (
-                      <div className="flex gap-2 items-center -mt-0.5">
+                      <div className="flex gap-x-2 items-center -mt-0.5">
                         <span
-                          className={`font-mine-bold text-xl pt-2.5 text-${oppositeTheme}`}
+                          className={`font-${font}-bold whitespace-nowrap text-sm md:text-xl pt-2.5 text-${oppositeTheme}`}
                         >
-                          {userInfo["first_name"] + " " + userInfo["last_name"]}
+                          {userInfo && userInfo["get_full_name"]
+                            ? userInfo["get_full_name"]
+                            : ""}
                         </span>
-                        {userInfo && userInfo["is_active"] && (
+                        {userInfo && userInfo["is_verified"] && (
                           <button onClick={() => setCanEditNameAndAvatar(true)}>
                             <img
-                              className="w-4 h-4"
+                              className="hidden w-5 h-5 md:block"
                               src={require("../../../../../Images/pages/layout/Profile/edit.png")}
                             />
                           </button>
@@ -180,20 +198,34 @@ export default function Topbar({ userInfo }) {
                       </div>
                     )}
                   </div>
-                  <span className={`font-mine-regular text-gray -mt-1.5`}>
-                    {(userInfo && userInfo.personCode
-                      ? userInfo.personCode + " ("
-                      : "") +
-                      (userInfo && userInfo.role ? userInfo.role + ")" : "")}
-                  </span>
+                  {!canEditNameAndAvatar && (
+                    <div className="flex items-center gap-x-0.5 -mt-0.5">
+                      <span
+                        className={`text-sm md:text-base font-${font}-regular text-gray`}
+                      >
+                        {userInfo && userInfo.code ? userInfo.code : ""}
+                      </span>
+                      <div className="-mt-1">
+                        <CopyText
+                          text={userInfo && userInfo.code ? userInfo.code : ""}
+                          small
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </>
             )}
           </Formik>
         </div>
-        <button onClick={openChangePasswordModal} className="text-blue">
-          {lang["change-password"]}
-        </button>
+        {!canEditNameAndAvatar && (
+          <button
+            onClick={openChangePasswordModal}
+            className="text-blue text-xs md:text-base w-12 text-center-important md:w-auto"
+          >
+            {lang["change-password"]}
+          </button>
+        )}
       </div>
     </>
   );

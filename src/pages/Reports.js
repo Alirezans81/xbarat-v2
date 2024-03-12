@@ -1,36 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useThemeState } from "../Providers/ThemeProvider";
-import { useDirectionState } from "../Providers/DirectionProvider";
 import ExchangeHistory from "../components/pages/layout/Reports/ExchangeHistory";
 import DepositHistory from "../components/pages/layout/Reports/DepositHistory";
 import WithdrawalHistory from "../components/pages/layout/Reports/WithdrawalHistory";
 import TransferHistory from "../components/pages/layout/Reports/TransferHistory";
+import { useTokenState } from "../Providers/TokenProvider";
+import { useGetPendingRequests } from "../apis/pages/Wallet/hooks";
+import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
+import { useGetTop5Report } from "../apis/pages/Reports/hooks";
 
 export default function Reports() {
   const theme = useThemeState();
-  const { one: oneDirection } = useDirectionState();
+  const token = useTokenState();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+
+  const { getTop5Report, isLoading: getTop5ReportIsLoading } =
+    useGetTop5Report();
+  useEffect(
+    () => setIsLoadingSplashScreen(getTop5ReportIsLoading),
+    [getTop5ReportIsLoading]
+  );
+
+  const [report, setReport] = useState([]);
+  useEffect(() => {
+    getTop5Report(token, {}, setReport);
+  }, []);
+
+  const depositData = report.deposit || [];
+  const transferData = report.transfer || [];
+  const withdrawalData = report.withdrawal || [];
+  const exchangeData = report.exchange || [];
+
+  console.log(report);
 
   return (
-    <div className="w-full h-full grid grid-cols-12 grid-rows-2 gap-x-10 gap-y-7">
-      <div
-        className={`col-span-4 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
-      >
-        <ExchangeHistory />
-      </div>
-      <div
-        className={`col-span-8 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 px-7`}
-      >
-        <DepositHistory />
-      </div>
-      <div
-        className={`col-span-8 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
-      >
-        <WithdrawalHistory />
-      </div>
-      <div
-        className={`col-span-4 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 px-7`}
-      >
-        <TransferHistory />
+    <div className="absolute w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6">
+      <div className="md:mt-0 grid grid-cols-12 grid-rows-2 md:gap-x-10 gap-y-7 pb-16">
+        <div
+          className={`h-72 col-span-12 xl:col-span-4 row-span-1 bg-${theme} rounded-3xl md:rounded-r-none xl:rounded-3xl py-5 px-7`}
+        >
+          <ExchangeHistory data={exchangeData} />
+        </div>
+        <div
+          className={`h-72 col-span-12 xl:col-span-8 row-span-1 bg-${theme} rounded-3xl md:rounded-r-none py-5 px-7`}
+        >
+          <DepositHistory data={depositData} />
+        </div>
+        <div
+          className={`h-72 col-span-12 xl:col-span-8 row-span-1 bg-${theme} rounded-3xl md:rounded-r-none xl:rounded-3xl py-5 px-7`}
+        >
+          <WithdrawalHistory data={withdrawalData} />
+        </div>
+        <div
+          className={`h-72 col-span-12 xl:col-span-4 row-span-1 bg-${theme} rounded-3xl md:rounded-r-none py-5 px-7`}
+        >
+          <TransferHistory data={transferData} />
+        </div>
       </div>
     </div>
   );
