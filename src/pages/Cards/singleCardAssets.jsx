@@ -22,11 +22,10 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
   const handleShow = () => {
     updateShowState(assetData.currency_abb);
   };
-  console.log(lang);
   return (
     <>
       <div
-        className={`bg-${theme}-back  rounded-3xl w-full h-28 flex flex-row pb-3 pt-3 m-3 font-${font}`}
+        className={`bg-${theme}-back  rounded-3xl w-full h-fit flex flex-row pb-3 pt-3 m-3 font-${font} overflow-scroll`}
         style={{ gridRow: assetIndex, gridColumn: 1 }}
       >
         <div className="w-1/5"></div>
@@ -50,6 +49,7 @@ const SingleCardAssets = ({ assetData, assetIndex, updateShowState }) => {
             className="flex justify-end items-center w-full h-full"
           >
             <img
+              alt=""
               className="w-8 h-6 mr-3"
               src={theme === "light" ? arrowRightDark : arrowRightLight}
             />

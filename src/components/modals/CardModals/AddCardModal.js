@@ -69,23 +69,22 @@ export default function AddCardModal() {
 
   const validation = (params) => {
     if (
+      !params.account_name ||
+      !params.bank_info ||
+      !params.bank_name ||
+      !params.wallet_tank_type
+    ) {
+      return false;
+    }
+    if (
       params.wallet_tank_type.includes("email") &&
       !isValidEmail(params.bank_info)
     ) {
       return false;
     }
     if (
-      params.wallet_tank_type.includes("card") &&
-      params.bank_info.length !== 16
-    ) {
-      console.log(params.bank_info.length);
-      return false;
-    }
-    const sanitizedValue = params.bank_info.replace(/\D/g, "");
-
-    if (
       params.wallet_tank_type.includes("shaba") &&
-      (!params.bank_info.includes("IR") || sanitizedValue.length !== 24)
+      !params.bank_info.includes("IR")
     ) {
       return false;
     }
@@ -114,24 +113,25 @@ export default function AddCardModal() {
           ? api["wallet-tank-type"] + "paypal-email/"
           : api["wallet-tank-type"] + "shaba-number/",
     };
+
     if (validation(params)) {
       createWalletTank(params);
+      closeModal();
+      navigate("/profile/");
+      sleep(2800).then(() => {
+        window.location.reload();
+      });
     } else {
       setToastData({
         status: "failed",
-        message: "Please enter valid data",
+        message: "Please Enter Valid Data",
         canClose: true,
         isOpen: true,
         showTime: 10000,
       });
+      closeModal();
     }
-    closeModal();
-    navigate("/profile/");
-    sleep(1000).then(() => {
-      window.location.reload();
-    });
   };
-  console.log(listCurrency);
   return (
     <>
       <Formik
