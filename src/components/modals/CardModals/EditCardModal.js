@@ -9,6 +9,7 @@ import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSp
 import cross from "../../../Images/pages/layout/Profile/crossCardsGray.png";
 import { useModalDataState } from "../../../Providers/ModalDataProvider";
 import { useFontState } from "../../../Providers/FontProvider";
+import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 import { useNavigate } from "react-router-dom";
 
 export default function EditCardModal() {
@@ -17,9 +18,10 @@ export default function EditCardModal() {
   const theme = useThemeState();
   const navigate = useNavigate();
   const font = useFontState();
+  const setToastData = useToastDataSetState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
-  const [isDeleted, setIsDeleted] = useState(false);
+  const closeModal = useModalDataClose();
   const { editWalletTank, isLoading: editWalletTankIsLoading } =
     useEditWalletTanks();
 
@@ -27,21 +29,68 @@ export default function EditCardModal() {
     setIsLoadingSplashScreen(editWalletTankIsLoading);
   }, [editWalletTankIsLoading]);
 
-  const closeModal = useModalDataClose();
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
   const discard = () => {
     closeModal();
   };
+  const isValidEmail = (email) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+  const validation = (values) => {
+    if (
+      !values.account_name ||
+      !values.bank_info ||
+      !values.bank_name ||
+      !values.wallet_tank_type
+    ) {
+      return false;
+    }
+    if (
+      params.wallet_tank_type.includes("shaba") &&
+      !params.bank_info.includes("IR")
+    ) {
+      return false;
+    }
+    if (values.wallet_tank_type.includes("email")) {
+      if (!isValidEmail(values.bank_info)) {
+        return false;
+      }
+    }
+    return true;
+  };
   const updateCardInfo = (values) => {
-    editWalletTank(values.url, values);
+    values.bank_info = values.bank_info.replace(/\s/g, "");
+    if (validation(values)) {
+      editWalletTank(values.url, values);
+      closeModal();
+      navigate("/profile/");
+      sleep(2800).then(() => {
+        window.location.reload();
+      });
+    } else {
+      setToastData({
+        status: "failed",
+        message: "Please Enter Valid Data",
+        canClose: true,
+        isOpen: true,
+        showTime: 10000,
+      });
+      closeModal();
+    }
+  };
+  const params = { is_deleted: true, is_favorite: modalData.data.is_favorite };
+
+  function handleDeleteCard() {
+    editWalletTank(modalData.data.url, params);
     closeModal();
     navigate("/profile/");
-    sleep(1000).then(() => {
+    sleep(2800).then(() => {
       window.location.reload();
     });
-  };
+  }
 
   const addSpacefour = (values) => {
     const value = values.bank_info;
@@ -54,7 +103,6 @@ export default function EditCardModal() {
     return result;
   };
 
-  const params = { is_deleted: true, is_favorite: modalData.data.is_favorite };
   return (
     <>
       <Formik
@@ -63,7 +111,7 @@ export default function EditCardModal() {
           bank_name: modalData.data.bank_name,
           account_name: modalData.data.account_name,
           bank_info: modalData.data.bank_info,
-          is_deleted: isDeleted,
+          is_deleted: false,
           is_favorite: modalData.data.is_favorite,
           wallet_tank_type: modalData.data.wallet_tank_type,
         }}
@@ -142,14 +190,7 @@ export default function EditCardModal() {
                   </div>
                   <div className="w-1/2 flex justify-start">
                     <button
-                      onClick={() => {
-                        editWalletTank(values.url, params) &&
-                          closeModal() &&
-                          navigate("/profile/") &&
-                          sleep(1000).then(() => {
-                            window.location.reload();
-                          });
-                      }}
+                      onClick={handleDeleteCard}
                       className={
                         "bg-red rounded-xl text-white w-fit h-10 mt-3 p-2"
                       }
@@ -164,14 +205,7 @@ export default function EditCardModal() {
                       className={
                         "bg-red rounded-xl text-white w-fit h-10 mt-3 p-2"
                       }
-                      onClick={() => {
-                        editWalletTank(values.url, params) &&
-                          closeModal() &&
-                          navigate("/profile/") &&
-                          sleep(1000).then(() => {
-                            window.location.reload();
-                          });
-                      }}
+                      onClick={handleDeleteCard}
                     >
                       {lang["delete"]}
                     </button>
