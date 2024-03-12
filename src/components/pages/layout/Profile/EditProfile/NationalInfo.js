@@ -143,6 +143,7 @@ export default function NationalInfo({ userInfo }) {
                 ? userInfo.country.title
                 : ""
             }
+            searchable
           >
             {countriesList.map((country, index) => {
               if (country && country.title) {
@@ -215,6 +216,7 @@ export default function NationalInfo({ userInfo }) {
                 ? userInfo.city.title
                 : ""
             }
+            searchable
           >
             {citiesList.map((city, index) => {
               if (city && city.title) {

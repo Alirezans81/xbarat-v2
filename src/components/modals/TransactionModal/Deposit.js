@@ -180,6 +180,7 @@ export default function Deposit({
                     ? currencies[selectedCurrencyIndex].abbreviation
                     : ""
                 }
+                searchable
               >
                 {currencies.map((currency, index) => {
                   if (index === 0 && index === currencies.length - 1) {
@@ -247,6 +248,7 @@ export default function Deposit({
                     ? locations[selectedLocationIndex].title
                     : ""
                 }
+                searchable
               >
                 {locations.map((location, index) => {
                   if (index === 0 && index === locations.length - 1) {

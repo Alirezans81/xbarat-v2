@@ -348,6 +348,7 @@ export default function ExchangeForm({
                     </span>
                   </div>
                 }
+                searchable
               >
                 {currencies.map((currency, index) => {
                   if (currency && currency.abbreviation) {
@@ -447,6 +448,7 @@ export default function ExchangeForm({
                     <span>{targetLabel}</span>
                   </div>
                 }
+                searchable
               >
                 {availableTargets.map((currency, index) => {
                   if (index === 0) {

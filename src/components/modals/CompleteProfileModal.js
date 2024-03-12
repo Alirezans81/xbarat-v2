@@ -123,7 +123,7 @@ export default function CompleteProfileModal() {
     if (values.first_name && values.last_name && values.phone) {
       const phoneRegex =
         /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-      if (phoneRegex.test(values.phone)) {
+      if (phoneRegex.test(values.phone.replace(/ /g, ""))) {
         return true;
       }
 

@@ -48,14 +48,16 @@ function CustomDropdown({ children, label, className, disabled, searchable }) {
       ? {
           backgroundColor: "#152831",
           color: "#fff",
-          fontFamily: "manjari-bold",
+          fontFamily: font === "Fa" ? "ModamFaNum-bold" : "manjari-bold",
+          paddingBottom: font === "Fa" ? 2 : 0,
           flex: 1,
           minWidth: 0,
         }
       : {
           backgroundColor: "#EEEEEE",
           color: "#2A2B2E",
-          fontFamily: "manjari-bold",
+          fontFamily: font === "Fa" ? "ModamFaNum-bold" : "manjari-bold",
+          paddingBottom: font === "Fa" ? 2 : 0,
           flex: 1,
           minWidth: 0,
         };
