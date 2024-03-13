@@ -349,7 +349,7 @@ export default function AddCardModal() {
                   <div className="flex justify-end">
                     <SubmitButton
                       rounded="lg"
-                      className="mt-5 h-1/3 w-1/4"
+                      className="mt-5 h-1/3 w-fit p-2"
                       onClick={submitForm}
                     >
                       {lang["submit"]}
