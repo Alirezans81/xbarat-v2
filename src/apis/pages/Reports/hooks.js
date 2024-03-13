@@ -11,12 +11,15 @@ const useGetDepositHistory = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState) => {
+  const fetch = async (setState, setDataCount, setPreviousUrl, setNextUrl) => {
     setIsLoading(true);
     await getDepositHistory()
       .then((data) => {
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
+        setDataCount && setDataCount(data.data.count);
+        setPreviousUrl && setPreviousUrl(data.data.previous);
+        setNextUrl && setNextUrl(data.data.next);
         setIsLoading(false);
         return data.data.results;
       })

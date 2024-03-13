@@ -139,8 +139,8 @@
   "assign": "اتصال",
   "type-of-document": "نوع سند",
   "bank-account": "حساب بانکی",
-  "bank-account-title": "عنوان حساب بانکی",
-  "bank-account-number": "شماره حساب بانکی",
+  "bank-account-title": "نام صاحب حساب",
+  "bank-account-number": "شماره/آدرس حساب",
   "transaction": "عملیات",
   "user-code": "کد کاربر",
   "pending-request": "درخواست در حال انتظار",
@@ -230,5 +230,7 @@
   "transfer-amount-error-message-2nd": "و",
   "transfer-amount-error-message-3rd": "باشد",
   "card-number-or-paypal-email": "شماره کارت/ایمیل پی پال",
-  "wallet-tank-paypal-description-code": "لطفا مبلغ درخواستی خود را در سامانه paypal به صورت \"انتقال برای دوست و خیشاوند\" برای ادرس ایمیل بالا ارسال فرمایید تا فرایند انتقالتان با کمترین کارمزد ممکن انجام پذیرد"
+  "wallet-tank-paypal-description-code": "لطفا مبلغ درخواستی خود را در سامانه paypal به صورت \"انتقال برای دوست و خیشاوند\" برای ادرس ایمیل بالا ارسال فرمایید تا فرایند انتقالتان با کمترین کارمزد ممکن انجام پذیرد",
+  "type-of-account": "نوع حساب"
+
 }

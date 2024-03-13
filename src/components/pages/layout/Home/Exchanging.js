@@ -124,7 +124,7 @@ export default function Exchanging({
         </span>
       </div>
       <div className="flex-1 grid grid-cols-2 grid-rows-6 gap-x-8 w-full h-full">
-        <div className="row-span-6">
+        <div className="row-span-6 mt-2">
           {selectedSourceIndex >= 0 && (
             <Wallet
               balance={

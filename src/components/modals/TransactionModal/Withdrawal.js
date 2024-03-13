@@ -118,8 +118,15 @@ export default function Withdrawal({
     [getWalletTankTypesIsLoading]
   );
   useEffect(() => {
-    newCardMode && getWalletTankTypes({}, setWalletTankTypes);
-  }, [newCardMode]);
+    newCardMode &&
+      selectedCurrencyIndex >= 0 &&
+      getWalletTankTypes(
+        {
+          currencies: currencies[selectedCurrencyIndex].slug,
+        },
+        setWalletTankTypes
+      );
+  }, [newCardMode, selectedCurrencyIndex]);
 
   useEffect(() => {
     currencies[selectedCurrencyIndex] &&
@@ -312,73 +319,6 @@ export default function Withdrawal({
             </div>
           </div>
 
-          {/* <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-            <span className={`font-${font}-regular text-${oppositeTheme}`}>
-              {lang["currency"]}
-            </span>
-            <div className="w-full flex">
-              <CustomDropdown
-                label={
-                  selectedCurrencyIndex >= 0
-                    ? currencies[selectedCurrencyIndex].abbreviation
-                    : ""
-                }
-                disabled
-              >
-                {currencies.map((currency, index) => {
-                  if (index === 0 && index === currencies.length - 1) {
-                    return (
-                      <CustomItem
-                        key={index}
-                        className="rounded-xl"
-                        onClick={() => setSelectedCurrencyIndex(index)}
-                      >
-                        {currency && currency.abbreviation
-                          ? currency.abbreviation
-                          : "error"}
-                      </CustomItem>
-                    );
-                  } else if (index === 0) {
-                    return (
-                      <CustomItem
-                        key={index}
-                        className="rounded-t-xl"
-                        onClick={() => setSelectedCurrencyIndex(index)}
-                      >
-                        {currency && currency.abbreviation
-                          ? currency.abbreviation
-                          : "error"}
-                      </CustomItem>
-                    );
-                  } else if (index === currencies.length - 1) {
-                    return (
-                      <CustomItem
-                        key={index}
-                        className="rounded-b-xl"
-                        onClick={() => setSelectedCurrencyIndex(index)}
-                      >
-                        {currency && currency.abbreviation
-                          ? currency.abbreviation
-                          : "error"}
-                      </CustomItem>
-                    );
-                  } else {
-                    return (
-                      <CustomItem
-                        key={index}
-                        onClick={() => setSelectedCurrencyIndex(index)}
-                      >
-                        {currency && currency.abbreviation
-                          ? currency.abbreviation
-                          : "error"}
-                      </CustomItem>
-                    );
-                  }
-                })}
-              </CustomDropdown>
-            </div>
-          </div> */}
-
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["amount"]}
@@ -418,7 +358,7 @@ export default function Withdrawal({
               </button>
               <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
                 <span className={`font-${font}-regular text-${oppositeTheme}`}>
-                  {lang["type-of-document"]}
+                  {lang["type-of-account"]}
                 </span>
                 <div className="w-full flex">
                   <CustomDropdown

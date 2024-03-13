@@ -45,8 +45,12 @@ export default function Step4({
   const [selectedWalletTankType, setSelectedWalletTankType] = useState(-1);
 
   useEffect(() => {
-    getWalletTankTypes({}, setWalletTankTypes);
-  }, []);
+    selectedCurrencyIndex >= 0 &&
+      getWalletTankTypes(
+        { currencies: currencies[selectedCurrencyIndex].slug },
+        setWalletTankTypes
+      );
+  }, [selectedCurrencyIndex]);
 
   useEffect(() => {
     selectedCurrencyIndex >= 0 &&
@@ -158,7 +162,7 @@ export default function Step4({
               </div>
               <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
                 <span className={`font-${font}-regular text-${oppositeTheme}`}>
-                  {lang["type-of-document"]}
+                  {lang["type-of-account"]}
                 </span>
                 <div className="w-full flex">
                   <CustomDropdown

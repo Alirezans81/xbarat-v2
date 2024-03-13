@@ -6,6 +6,7 @@ import CustomTable from "../../../common/CustomTable";
 import { useGetTableExchange } from "../../../../apis/pages/Home/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
 import {
+  roundDown,
   useAddComma,
   useCalculateReverseRate,
 } from "../../../../hooks/useNumberFunctions";
@@ -106,11 +107,12 @@ export default function TableExchange({
                 placement="top"
                 content={
                   addComma(
-                    computeSourceToTargetReversedAmount(
-                      row.total_amount,
-                      row.rate,
-                      +selectedCurrecnyPair.rate_multiplier
-                    ).toFixed(
+                    roundDown(
+                      computeSourceToTargetReversedAmount(
+                        row.total_amount,
+                        row.rate,
+                        +selectedCurrecnyPair.rate_multiplier
+                      ),
                       availableTargets[selectedTargetIndex].floating_number
                     )
                   ) +
@@ -136,7 +138,7 @@ export default function TableExchange({
                   )
                 )
               : addComma(
-                  +row.rate.toFixed(selectedCurrecnyPair.floating_number)
+                  roundDown(+row.rate, +selectedCurrecnyPair.floating_number)
                 );
 
             return temp;
@@ -156,18 +158,21 @@ export default function TableExchange({
                   )
                 )
               : addComma(
-                  +row.rate.toFixed(selectedCurrecnyPair.floating_number)
+                  roundDown(+row.rate, +selectedCurrecnyPair.floating_number)
                 );
             temp.total_amount = (
               <CustomTooltip
                 placement="top"
                 content={
                   addComma(
-                    computeTargetToSourceReversedAmount(
-                      row.total_amount,
-                      row.rate,
-                      +selectedCurrecnyPair.rate_multiplier
-                    ).toFixed(currencies[selectedSourceIndex].floating_number)
+                    roundDown(
+                      computeTargetToSourceReversedAmount(
+                        row.total_amount,
+                        row.rate,
+                        +selectedCurrecnyPair.rate_multiplier
+                      ),
+                      +currencies[selectedSourceIndex].floating_number
+                    )
                   ) +
                   " " +
                   selectedCurrecnyPair.currency_source_abb
@@ -193,99 +198,6 @@ export default function TableExchange({
       set_target_to_source_data([]);
     }
   }, [tableExchangeData, rateIsReversed]);
-
-  // const source_to_target_data =
-  //   tableExchangeData &&
-  //   tableExchangeData.source_to_target &&
-  //   selectedCurrecnyPair
-  //     ? tableExchangeData.source_to_target.map((row) => {
-  //         if (row.rate) {
-  //           let temp = {};
-  //           temp.quantity = addComma(row.quantity);
-  //           temp.total_amount = (
-  //             <CustomTooltip
-  //               placement="top"
-  //               content={
-  //                 addComma(
-  //                   computeSourceToTargetReversedAmount(
-  //                     row.total_amount,
-  //                     row.rate,
-  //                     +selectedCurrecnyPair.rate_multiplier
-  //                   ).toFixed(
-  //                     availableTargets[selectedTargetIndex].floating_number
-  //                   )
-  //                 ) +
-  //                 " " +
-  //                 selectedCurrecnyPair.currency_destination_abb
-  //               }
-  //               className={`tooltip-${oppositeTheme}`}
-  //               style={oppositeTheme}
-  //             >
-  //               <span>
-  //                 {addComma(row.total_amount) +
-  //                   " " +
-  //                   selectedCurrecnyPair.currency_source_abb}
-  //               </span>
-  //             </CustomTooltip>
-  //           );
-  //           temp.rate = rateIsReversed
-  //             ? addComma(
-  //                 calculateReverseRate(
-  //                   +row.rate,
-  //                   1,
-  //                   +selectedCurrecnyPair.rate_multiplier,
-  //                   +selectedCurrecnyPair.floating_number
-  //                 )
-  //               )
-  //             : addComma(
-  //                 +row.rate.toFixed(selectedCurrecnyPair.floating_number)
-  //               );
-
-  //           return temp;
-  //         }
-  //       })
-  //     : [];
-
-  // const target_to_source_data =
-  //   tableExchangeData &&
-  //   tableExchangeData.target_to_source &&
-  //   selectedCurrecnyPair
-  //     ? tableExchangeData.target_to_source.map((row) => {
-  //         if (row.rate) {
-  //           let temp = {};
-  //           temp.rate = addComma(
-  //             +row.rate.toFixed(selectedCurrecnyPair.floating_number)
-  //           );
-  //           temp.total_amount = (
-  //             <CustomTooltip
-  //               placement="top"
-  //               content={
-  //                 addComma(
-  //                   computeTargetToSourceReversedAmount(
-  //                     row.total_amount,
-  //                     row.rate,
-  //                     +selectedCurrecnyPair.rate_multiplier
-  //                   ).toFixed(currencies[selectedSourceIndex].floating_number)
-  //                 ) +
-  //                 " " +
-  //                 selectedCurrecnyPair.currency_source_abb
-  //               }
-  //               className={`tooltip-${oppositeTheme}`}
-  //               style={oppositeTheme}
-  //             >
-  //               <span>
-  //                 {addComma(row.total_amount) +
-  //                   " " +
-  //                   selectedCurrecnyPair.currency_destination_abb}
-  //               </span>
-  //             </CustomTooltip>
-  //           );
-  //           temp.quantity = addComma(row.quantity);
-
-  //           return temp;
-  //         }
-  //       })
-  //     : [];
 
   const { getTableExchange, isLoading: getTableExchangeIsLoading } =
     useGetTableExchange();
