@@ -8,6 +8,7 @@ import {
   CustomDropdown,
   CustomItem,
 } from "../../../components/common/CustomDropdown";
+import { useGetWalletTankTypes } from "../../../apis/common/wallet/hooks";
 import { useNavigate } from "react-router-dom";
 import { useModalDataClose } from "../../../Providers/ModalDataProvider";
 import { useCurrenciesState } from "../../../Providers/CurrenciesProvider";
@@ -33,9 +34,7 @@ export default function AddCardModal() {
   const closeModal = useModalDataClose();
   const [asset, setAsset] = useState("");
   const [type, setType] = useState("");
-
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-
   const api =
     process.env.REACT_APP_MODE === "PRODUCTION"
       ? require("../../../apis/api-dev.json")
@@ -56,10 +55,29 @@ export default function AddCardModal() {
     const result = chunks ? chunks.join(" ") : "";
     return result;
   };
+
   const isValidEmail = (email) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
   };
+
+  const { getWalletTankTypes, isLoading: getWalletTankTypesIsLoading } =
+    useGetWalletTankTypes();
+  useEffect(
+    () => setIsLoadingSplashScreen(getWalletTankTypesIsLoading),
+    [getWalletTankTypesIsLoading]
+  );
+
+  const [types, setTypes] = useState("");
+  useEffect(() => {
+    getWalletTankTypes(setTypes, setTypes);
+  }, []);
+
+  let AvailableTypes = "";
+  if (types) {
+    AvailableTypes = types.filter((data) => data.currencies.includes(asset[1]));
+    console.log(AvailableTypes);
+  }
 
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
@@ -106,21 +124,16 @@ export default function AddCardModal() {
       locked: 0,
       pending: 0,
       currency: asset[1],
-      wallet_tank_type:
-        type === "Card"
-          ? api["wallet-tank-type"] + "card-number/"
-          : type === "Email"
-          ? api["wallet-tank-type"] + "paypal-email/"
-          : api["wallet-tank-type"] + "shaba-number/",
+      wallet_tank_type: type,
     };
 
     if (validation(params)) {
       createWalletTank(params);
       closeModal();
-      navigate("/profile/");
-      sleep(2800).then(() => {
-        window.location.reload();
-      });
+      // navigate("/profile/");
+      // sleep(2800).then(() => {
+      //   window.location.reload();
+      // });
     } else {
       setToastData({
         status: "failed",
@@ -201,7 +214,7 @@ export default function AddCardModal() {
                 </div>
                 <div
                   className={
-                    type.length !== 0
+                    type.length !== 0 || asset.length === 0
                       ? "hidden"
                       : "flex flex-col justify-center w-full px-2"
                   }
@@ -222,15 +235,17 @@ export default function AddCardModal() {
                           : type
                       }
                     >
-                      <CustomItem onClick={() => setType("Card")}>
-                        {lang["card-number"]}
-                      </CustomItem>
-                      <CustomItem onClick={() => setType("Shaba")}>
-                        {lang["shaba-number"]}
-                      </CustomItem>
-                      <CustomItem onClick={() => setType("Email")}>
-                        {lang["paypal-email"]}
-                      </CustomItem>
+                      {AvailableTypes
+                        ? AvailableTypes.map((data) => (
+                            <CustomItem onClick={() => setType(data.url)}>
+                              {data.slug.includes("card")
+                                ? lang["card-number"]
+                                : data.slug.includes("shaba")
+                                ? lang["shaba-number"]
+                                : lang["paypal-email"]}
+                            </CustomItem>
+                          ))
+                        : ""}
                     </CustomDropdown>
                   </div>
                 </div>
