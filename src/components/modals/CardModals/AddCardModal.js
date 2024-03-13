@@ -130,10 +130,10 @@ export default function AddCardModal() {
     if (validation(params)) {
       createWalletTank(params);
       closeModal();
-      // navigate("/profile/");
-      // sleep(2800).then(() => {
-      //   window.location.reload();
-      // });
+      navigate("/profile/");
+      sleep(2800).then(() => {
+        window.location.reload();
+      });
     } else {
       setToastData({
         status: "failed",
@@ -283,7 +283,11 @@ export default function AddCardModal() {
                 </div>
 
                 <div className={type ? "block" : "hidden"}>
-                  <div className={type === "Card" ? "flex flex-col" : "hidden"}>
+                  <div
+                    className={
+                      type.includes("card") ? "flex flex-col" : "hidden"
+                    }
+                  >
                     <span
                       className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
                     >
@@ -301,7 +305,9 @@ export default function AddCardModal() {
                     </div>
                   </div>
                   <div
-                    className={type === "Shaba" ? "flex flex-col" : "hidden"}
+                    className={
+                      type.includes("shaba") ? "flex flex-col" : "hidden"
+                    }
                   >
                     <span
                       className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
@@ -320,7 +326,9 @@ export default function AddCardModal() {
                     </div>
                   </div>
                   <div
-                    className={type === "Email" ? "flex flex-col" : "hidden"}
+                    className={
+                      type.includes("paypal") ? "flex flex-col" : "hidden"
+                    }
                   >
                     <span
                       className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
