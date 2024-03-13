@@ -70,7 +70,7 @@ export default function Home({ isDemo }) {
     [getPendingExchangesIsLoading]
   );
   const refreshPendingExchange = () => {
-    getPendingExchanges(token, setPendingExchanges);
+    token && getPendingExchanges(token, setPendingExchanges);
   };
   useEffect(() => refreshPendingExchange(), []);
 
