@@ -22,6 +22,7 @@ const Cards = () => {
   function discard() {
     setShow("");
   }
+  console.log(wallet);
 
   useEffect(() => {
     if (wallet) {
