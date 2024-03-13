@@ -6,6 +6,7 @@ import {
   useModalDataSetState,
 } from "../../../../../Providers/ModalDataProvider";
 import {
+  roundDown,
   useAddComma,
   useCalculateReverseRate,
 } from "../../../../../hooks/useNumberFunctions";
@@ -115,7 +116,12 @@ export default function PendingExchangeCard({
             src={require("../../../../../Images/arrow-right-blue.png")}
           />
           <span className={`font-${font}-regular mt-0.5 text-${oppositeTheme}`}>
-            {addComma(+data.amount_destination) +
+            {addComma(
+              roundDown(
+                +data.amount_destination,
+                +data.target_currency_floating_number || 0
+              )
+            ) +
               " " +
               data.currency_destination_abb}
           </span>

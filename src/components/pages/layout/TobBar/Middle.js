@@ -3,6 +3,7 @@ import { useWalletState } from "../../../../Providers/WalletProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
 import {
+  roundDown,
   useAddComma,
   useSortByBalance,
 } from "../../../../hooks/useNumberFunctions";
@@ -62,7 +63,8 @@ export default function Middle() {
                     className={`text-${oppositeTheme} font-${font}-regular text`}
                   >
                     {addComma(
-                      (+walletAsset.balance).toFixed(
+                      roundDown(
+                        +walletAsset.balance,
                         walletAsset.currency_floating_number || 0
                       )
                     ) +
@@ -76,7 +78,8 @@ export default function Middle() {
                       >
                         {"+ " +
                           addComma(
-                            (+walletAsset.pending).toFixed(
+                            roundDown(
+                              +walletAsset.pending,
                               walletAsset.currency_floating_number || 0
                             )
                           ) +
@@ -88,7 +91,8 @@ export default function Middle() {
                       <span className={`text-red text-sm font-${font}-regular`}>
                         {"+ " +
                           addComma(
-                            (+walletAsset.locked).toFixed(
+                            roundDown(
+                              +walletAsset.locked,
                               walletAsset.currency_floating_number || 0
                             )
                           ) +

@@ -51,9 +51,25 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
           user: data.user_receiver_username,
           currency_slug: data.currency_slug,
         },
-        (data) => {
-          const temp = data.filter((d) => d.show_order);
-          setReceiverTanks(temp);
+        (walletTanks) => {
+          if (data.currency_abb === "IRR") {
+            if (+data.amount <= 100_000_000) {
+              const temp = walletTanks.filter(
+                (d) =>
+                  d.show_order && d.wallet_tank_type_title === "Card Number"
+              );
+              setReceiverTanks(temp);
+            } else {
+              const temp = walletTanks.filter(
+                (d) =>
+                  d.show_order && d.wallet_tank_type_title === "Shaba Number"
+              );
+              setReceiverTanks(temp);
+            }
+          } else {
+            const temp = walletTanks.filter((d) => d.show_order);
+            setReceiverTanks(temp);
+          }
         }
       );
     }

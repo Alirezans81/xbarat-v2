@@ -101,6 +101,15 @@ const useCalculateNotReverseRate = () => {
   return calculateNotReversedRate;
 };
 
+const roundDown = (number, floating_number) => {
+  if (floating_number === 0) {
+    return Math.floor(number);
+  } else {
+    const aaa = floating_number * 10;
+    return Math.floor(number * aaa) / aaa;
+  }
+};
+
 export {
   useAddComma,
   useIsNumberFloat,
@@ -109,4 +118,5 @@ export {
   useSortByBalance,
   useCalculateReverseRate,
   useCalculateNotReverseRate,
+  roundDown,
 };

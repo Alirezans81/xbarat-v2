@@ -5,6 +5,7 @@ import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import {
+  roundDown,
   useAddComma,
   useCalculateNotReverseRate,
   useCalculateReverseRate,
@@ -157,23 +158,26 @@ export default function ExchangeForm({
         selectedCurrecnyPair.max_limit_amount_lot *
         currencies[selectedSourceIndex].lot;
 
-      let min_rate = (
+      let min_rate = roundDown(
         selectedCurrecnyPair.rate +
-        +selectedCurrecnyPair.rate_lot_user *
-          +selectedCurrecnyPair.min_limit_rate_lot_user
-      ).toFixed(selectedCurrecnyPair.floating_number);
-      let max_rate = (
+          +selectedCurrecnyPair.rate_lot_user *
+            +selectedCurrecnyPair.min_limit_rate_lot_user,
+        selectedCurrecnyPair.floating_number
+      );
+      let max_rate = roundDown(
         selectedCurrecnyPair.rate +
-        +selectedCurrecnyPair.rate_lot_user *
-          +selectedCurrecnyPair.max_limit_rate_lot_user
-      ).toFixed(selectedCurrecnyPair.floating_number);
+          +selectedCurrecnyPair.rate_lot_user *
+            +selectedCurrecnyPair.max_limit_rate_lot_user,
+        selectedCurrecnyPair.floating_number
+      );
       if (rateIsReversed) {
         let temp = min_rate;
-        min_rate = (
-          (1 / max_rate) *
-          selectedCurrecnyPair.rate_multiplier
-        ).toFixed(selectedCurrecnyPair.floating_number);
-        max_rate = ((1 / temp) * selectedCurrecnyPair.rate_multiplier).toFixed(
+        min_rate = roundDown(
+          (1 / max_rate) * selectedCurrecnyPair.rate_multiplier,
+          selectedCurrecnyPair.floating_number
+        );
+        max_rate = roundDown(
+          (1 / temp) * selectedCurrecnyPair.rate_multiplier,
           selectedCurrecnyPair.floating_number
         );
       }
@@ -300,9 +304,7 @@ export default function ExchangeForm({
                       +removeComma(values.amount),
                       +removeComma(values.rate),
                       selectedCurrecnyPair.rate_multiplier
-                    ).toFixed(
-                      availableTargets[selectedTargetIndex].floating_number
-                    )
+                    ).toFixed(6)
                   : 0,
               status:
                 statuses.find((status) => status.title === "Pending").url || "",
@@ -636,11 +638,12 @@ export default function ExchangeForm({
                         className={`text-${oppositeTheme} font-${font}-regular mt-0.5 text-sm`}
                       >
                         {addComma(
-                          computingTargetAmount(
-                            removeComma(values.amount),
-                            removeComma(values.rate),
-                            selectedCurrecnyPair.rate_multiplier
-                          ).toFixed(
+                          roundDown(
+                            computingTargetAmount(
+                              removeComma(values.amount),
+                              removeComma(values.rate),
+                              selectedCurrecnyPair.rate_multiplier
+                            ),
                             availableTargets[selectedTargetIndex]
                               .floating_number
                           )

@@ -5,6 +5,7 @@ import CustomTable from "../../../common/CustomTable";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import {
+  roundDown,
   useAddComma,
   useCalculateReverseRate,
 } from "../../../../hooks/useNumberFunctions";
@@ -80,12 +81,12 @@ export default function WatchList({
                 )
               );
             } else {
-              temp.rate = addComma((+row.rate).toFixed(row.floating_number));
+              temp.rate = addComma(roundDown(+row.rate, +row.floating_number));
               temp.min_rate = addComma(
-                (+row.min_rate).toFixed(row.floating_number)
+                roundDown(+row.min_rate, +row.floating_number)
               );
               temp.max_rate = addComma(
-                (+row.max_rate).toFixed(row.floating_number)
+                roundDown(+row.max_rate, +row.floating_number)
               );
             }
 
@@ -112,7 +113,12 @@ export default function WatchList({
     }
   }, [data, currencies]);
   useEffect(() => {
-    if (data && data.watch_list && data.watch_list[0] && selectedSourceIndex >= 0) {
+    if (
+      data &&
+      data.watch_list &&
+      data.watch_list[0] &&
+      selectedSourceIndex >= 0
+    ) {
       setTargetSlug(data.watch_list[0].target);
     }
   }, [selectedSourceIndex]);

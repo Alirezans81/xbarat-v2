@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
-import { useAddComma } from "../../../../../hooks/useNumberFunctions";
+import {
+  roundDown,
+  useAddComma,
+} from "../../../../../hooks/useNumberFunctions";
 import { useGetCurrency } from "../../../../../apis/common/currency/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
@@ -59,7 +62,8 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
           )}
           <span className={`text-${oppositeTheme}`}>
             {addComma(
-              (+walletAsset.balance).toFixed(
+              roundDown(
+                +walletAsset.balance,
                 walletAsset.currency_floating_number || 0
               )
             )}
@@ -72,7 +76,8 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
           <span className="text-green text-center leading-none md:leading-snug">
             {"+ " +
               addComma(
-                (+walletAsset.pending).toFixed(
+                roundDown(
+                  +walletAsset.pending,
                   walletAsset.currency_floating_number || 0
                 )
               ) +
@@ -82,7 +87,8 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
           <span className="text-red text-center leading-none md:leading-snug -mt-1">
             {"+ " +
               addComma(
-                (+walletAsset.locked).toFixed(
+                roundDown(
+                  +walletAsset.locked,
                   walletAsset.currency_floating_number || 0
                 )
               ) +

@@ -4,7 +4,10 @@ import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoa
 import CustomTable from "../../../../common/CustomTable";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
-import { useAddComma } from "../../../../../hooks/useNumberFunctions";
+import {
+  roundDown,
+  useAddComma,
+} from "../../../../../hooks/useNumberFunctions";
 import { useDirectionState } from "../../../../../Providers/DirectionProvider";
 import { useCurrenciesState } from "../../../../../Providers/CurrenciesProvider";
 import { useFontState } from "../../../../../Providers/FontProvider";
@@ -50,21 +53,21 @@ export default function ListWatchList({
       ? data.watch_list.map((row) => {
           let temp = {};
           temp.title = row.title;
-          temp.rate = addComma((+row.rate).toFixed(row.floating_number));
+          temp.rate = addComma(roundDown(+row.rate, +row.floating_number));
           temp.min_rate = addComma(
-            (+row.min_rate).toFixed(row.floating_number)
+            roundDown(+row.min_rate, +row.floating_number)
           );
           temp.max_rate = addComma(
-            (+row.max_rate).toFixed(row.floating_number)
+            roundDown(+row.max_rate, +row.floating_number)
           );
           temp.yesterday_rate_average = addComma(
-            (+row.yesterday_rate_average).toFixed(row.floating_number)
+            roundDown(+row.yesterday_rate_average, +row.floating_number)
           );
           temp.yesterday_rate_low = addComma(
-            (+row.yesterday_rate_low).toFixed(row.floating_number)
+            roundDown(+row.yesterday_rate_low, +row.floating_number)
           );
           temp.yesterday_rate_high = addComma(
-            (+row.yesterday_rate_high).toFixed(row.floating_number)
+            roundDown(+row.yesterday_rate_high, +row.floating_number)
           );
 
           return temp;
