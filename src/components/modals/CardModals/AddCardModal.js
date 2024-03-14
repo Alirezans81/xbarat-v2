@@ -231,17 +231,21 @@ export default function AddCardModal() {
                           : type
                       }
                     >
-                      {AvailableTypes
-                        ? AvailableTypes.map((data) => (
-                            <CustomItem onClick={() => setType(data.url)}>
-                              {data.slug.includes("card")
-                                ? lang["card-number"]
-                                : data.slug.includes("shaba")
-                                ? lang["shaba-number"]
-                                : lang["paypal-email"]}
-                            </CustomItem>
-                          ))
-                        : ""}
+                      {AvailableTypes ? (
+                        AvailableTypes.map((data) => (
+                          <CustomItem onClick={() => setType(data.url)}>
+                            {data.slug.includes("card")
+                              ? lang["card-number"]
+                              : data.slug.includes("shaba")
+                              ? lang["shaba-number"]
+                              : lang["paypal-email"]}
+                          </CustomItem>
+                        ))
+                      ) : (
+                        <div className="w-full h-full">
+                          {lang["no_wallet_tank_type_available"]}
+                        </div>
+                      )}
                     </CustomDropdown>
                   </div>
                 </div>
