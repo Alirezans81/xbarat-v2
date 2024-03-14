@@ -72,11 +72,11 @@ const Cards = () => {
         <div
           className={`col-span-12 md:col-span-9 bg-${theme} rounded-3xl md:rounded-r-none flex flex-col p-5 overflow-y-scroll`}
         >
-          <div className="w-full h-8 flex justify-end">
+          <div className="w-full h-9 flex justify-end pr-5">
             <button
               onClick={openAddCardModal}
               className={
-                "bg-blue-gradient text-white rounded-2xl w-36 mr-5 h-full items-center font-thin mt-1"
+                "bg-blue-gradient text-white rounded-2xl w-40 mr-5 h-5/6 items-center font-thin mt-1"
               }
             >
               <span className="mt-1 pb-0">{lang["add"]}</span>
@@ -133,7 +133,7 @@ const Cards = () => {
               <button
                 onClick={openAddCardModal}
                 className={
-                  "bg-blue-gradient text-white rounded-2xl w-36 h-full items-center font-thin"
+                  "bg-blue-gradient text-white rounded-2xl w-full h-full items-center font-thin"
                 }
               >
                 <span className="mt-1 pb-0">Add</span>

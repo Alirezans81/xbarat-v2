@@ -35,10 +35,6 @@ export default function AddCardModal() {
   const [asset, setAsset] = useState("");
   const [type, setType] = useState("");
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const api =
-    process.env.REACT_APP_MODE === "PRODUCTION"
-      ? require("../../../apis/api-dev.json")
-      : require("../../../apis/api.json");
 
   let listCurrency = currencies.map((data) => [
     data.abbreviation,
@@ -200,7 +196,7 @@ export default function AddCardModal() {
                     {listCurrency.map((data) => (
                       <CustomItem
                         onClick={() => setAsset(data)}
-                        className={"bg-transparent h-fit"}
+                        className={`bg-${theme} h-fit`}
                       >
                         <div className="flex flex-row  w-10 h-10 justify-center">
                           <img className="w-fit h-fit" alt="" src={data[2]} />
