@@ -42,7 +42,7 @@ export default function DepositHistoryScreen() {
     if (temp) setDeposits(temp.filter((data) => data.user_sender === user.url));
   }, [filterCards]);
   useEffect(() => {
-    if (filterCards) {
+    if (filterCards && !filterCards.clear) {
       if (filterCards.status) {
         const statusFilter = deposits.filter(
           (data) => data.status_title === filterCards.status.title

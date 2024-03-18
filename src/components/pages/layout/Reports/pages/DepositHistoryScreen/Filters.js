@@ -27,6 +27,13 @@ export default function Filters({ status, setFilterCards }) {
       currency: filterCurrency,
       status: filterStatus,
       range: selectionRange,
+      clear: false,
+    };
+    setFilterCards(Filter);
+  };
+  const handleNoFilter = () => {
+    let Filter = {
+      clear: true,
     };
     setFilterCards(Filter);
   };
@@ -166,6 +173,11 @@ export default function Filters({ status, setFilterCards }) {
             />
           </div>
         </div>
+      </div>
+      <div className="w-full h-10 bg-red rounded-lg flex items-center justify-center text-white">
+        <button onClick={handleNoFilter} className="w-full">
+          Remove All Filters
+        </button>
       </div>
       <div className="w-full h-fit">
         <SubmitButton rounded="lg" className={"w-full"} onClick={handleFilter}>
