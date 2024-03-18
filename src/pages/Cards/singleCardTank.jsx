@@ -81,7 +81,8 @@ const SingleCardTank = ({ index, data }) => {
       return result;
     }
     if (walletTankType && walletTankType.includes("shaba")) {
-      const sanitizedValue = value.replace("-", " ");
+      const sanitizedValue = value;
+
       return sanitizedValue;
     } else {
       return value;
