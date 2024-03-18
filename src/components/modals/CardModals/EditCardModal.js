@@ -49,8 +49,8 @@ export default function EditCardModal() {
       return false;
     }
     if (
-      params.wallet_tank_type.includes("shaba") &&
-      !params.bank_info.includes("IR")
+      values.wallet_tank_type.includes("shaba") &&
+      !values.bank_info.includes("IR")
     ) {
       return false;
     }
@@ -102,6 +102,7 @@ export default function EditCardModal() {
     }
     return result;
   };
+  console.log(modalData);
 
   return (
     <>

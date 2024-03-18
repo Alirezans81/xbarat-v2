@@ -56,10 +56,8 @@ export default function DepositHistoryScreen() {
         setDeposits(currency);
       }
       if (filterCards.sourcAmount) {
-        console.log(filterCards.sourceAmount);
-        console.log(deposits);
         const source = deposits.filter(
-          (data) => data.amount >= filterCards.sourceAmount
+          (data) => parseInt(data.amount) <= parseInt(filterCards.sourceAmount)
         );
         console.log(source);
         setDeposits(source);
