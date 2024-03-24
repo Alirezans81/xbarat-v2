@@ -25,6 +25,7 @@ export default function PendingExchangeCard({
   setTarget,
   setAmount,
   setRate,
+  focusOnRateInput,
   selectedCurrecnyPair,
   rateIsReversed,
 }) {
@@ -61,10 +62,11 @@ export default function PendingExchangeCard({
 
                 resetHome();
 
-                setSource(data.currency_source_url);
-                setTarget(data.currency_destination_url);
+                setSource(data.currency_source_slug);
+                setTarget(data.currency_destination_slug);
                 setAmount(addComma(+data.amount_source));
                 setRate(addComma(+data.rate));
+                focusOnRateInput();
               });
           }}
           message={lang["edit-exchange-modal-message"] + "?"}
@@ -153,7 +155,7 @@ export default function PendingExchangeCard({
       <div className="flex gap-2 mt-2 w-full px-6">
         <button
           type="button"
-          // onClick={openEditAreYouSureModal}
+          onClick={openEditAreYouSureModal}
           className="flex-1 border-2 border-blue rounded-lg pt-0.5"
         >
           <span className={`font-${font}-bold text-blue`}>{lang["edit"]}</span>

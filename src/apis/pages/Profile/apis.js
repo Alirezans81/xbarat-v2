@@ -14,7 +14,7 @@ const updateNameAndAvatar = (username, params) => {
 
   formData.append("first_name", params.first_name);
   formData.append("last_name", params.last_name);
-  params.avatar && formData.append("avatar", params.avatar);
+  params.avatar && formData.append("avatar", params.avatar, "avatar.png");
 
   return axios.patch(api["patch-profile"] + username + "/", formData);
 };

@@ -30,7 +30,7 @@ const fetchStep3 = (username, params) => {
 
   formData.append("identity_type", params.identity_type);
   formData.append("identity_code", params.identity_code);
-  formData.append("document", params.document);
+  formData.append("document", params.document, "document.png");
 
   return axios.patch(api["patch-profile"] + username + "/", formData);
 };

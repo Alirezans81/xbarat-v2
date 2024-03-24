@@ -98,20 +98,6 @@ export default function Home({ isDemo }) {
     target && availableTargets.length > 0 && findTarget(target);
   }, [target, availableTargets]);
 
-  const [amount, setAmount] = useState();
-  const [rate, setRate] = useState();
-  useEffect(() => {
-    if (
-      amount &&
-      rate &&
-      selectedSourceIndex !== -1 &&
-      selectedTargetIndex !== -1
-    ) {
-      setFormDefaultAmount(amount);
-      setFormDefaultRate(rate);
-    }
-  }, [amount, rate, selectedSourceIndex, selectedTargetIndex]);
-
   if (pageMode === "card" || window.innerWidth <= canSwitchPageModeWidth) {
     return (
       <>
@@ -196,8 +182,9 @@ export default function Home({ isDemo }) {
                 resetHome={resetHome}
                 setSource={setSource}
                 setTarget={setTarget}
-                setAmount={setAmount}
-                setRate={setRate}
+                setAmount={setFormDefaultAmount}
+                setRate={setFormDefaultRate}
+                focusOnRateInput={focusOnRateInput}
                 selectedCurrecnyPair={selectedCurrecnyPair}
                 rateIsReversed={rateIsReversed}
               />
