@@ -86,7 +86,9 @@ const useSortByBalance = () => {
 };
 
 const calculateReverseRate = (rate, rate_multiplier, floating_number) => {
-  return +((1 / +rate) * +rate_multiplier).toFixed(floating_number);
+  return rate === 0
+    ? 0
+    : +((1 / +rate) * +rate_multiplier).toFixed(floating_number);
 };
 
 const useCalculateReverseRate = () => {
@@ -94,7 +96,9 @@ const useCalculateReverseRate = () => {
 };
 
 const calculateNotReversedRate = (rate, rate_multiplier, floating_number) => {
-  return +(1 / (+rate / +rate_multiplier)).toFixed(floating_number);
+  return rate === 0
+    ? 0
+    : +(1 / (+rate / +rate_multiplier)).toFixed(floating_number);
 };
 
 const useCalculateNotReverseRate = () => {

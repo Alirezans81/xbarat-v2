@@ -35,7 +35,7 @@ export default function Balance({ refreshPendingRequests }) {
     } else if (window.innerWidth >= 1024) {
       return 4;
     } else if (window.innerWidth >= 768) {
-      return 4;
+      return 3;
     } else if (window.innerWidth >= 640) {
       return 2;
     } else {

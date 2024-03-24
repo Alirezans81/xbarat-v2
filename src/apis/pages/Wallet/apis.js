@@ -20,7 +20,7 @@ const cancelPendingRequest = (requestUrl) => {
 const uploadRequestDocument = (requestUrl, params) => {
   const formData = new FormData();
 
-  formData.append("document", params.document);
+  formData.append("document", params.document, "document.png");
   formData.append("wallet_tank_receiver", params.wallet_tank_receiver);
   formData.append("status", params.status);
 
