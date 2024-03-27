@@ -485,8 +485,8 @@ export default function Withdrawal({
                           key={index}
                           onClick={() => setSelectedWalletTankIndex(index)}
                         >
-                          {walletTank && walletTank.abbreviation
-                            ? walletTank.abbreviation
+                          {walletTank && walletTank.account_name
+                            ? walletTank.account_name
                             : "error"}
                         </CustomItem>
                       );

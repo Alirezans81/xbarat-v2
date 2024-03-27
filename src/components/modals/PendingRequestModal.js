@@ -56,18 +56,18 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             if (+data.amount <= 100_000_000) {
               const temp = walletTanks.filter(
                 (d) =>
-                  d.show_order && d.wallet_tank_type_title === "Card Number"
+                  d.show_order && d.bank_info && d.wallet_tank_type_title === "Card Number"
               );
               setReceiverTanks(temp);
             } else {
               const temp = walletTanks.filter(
                 (d) =>
-                  d.show_order && d.wallet_tank_type_title === "Shaba Number"
+                  d.show_order && d.bank_info && d.wallet_tank_type_title === "Shaba Number"
               );
               setReceiverTanks(temp);
             }
           } else {
-            const temp = walletTanks.filter((d) => d.show_order);
+            const temp = walletTanks.filter((d) => d.show_order && d.bank_info);
             setReceiverTanks(temp);
           }
         }

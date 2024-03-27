@@ -170,11 +170,8 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                         : "",
                   },
                   () => {
-                    resetForm({
-                      values: {
-                        amount: "",
-                      },
-                    });
+                    setSelectedCurrencyIndex(-1);
+                    resetForm();
                     refreshWallet();
                     refreshPendingRequests();
                   }
@@ -196,6 +193,8 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                       : "",
                   },
                   () => {
+                    setSelectedCurrencyIndex(-1);
+                    resetForm();
                     refreshWallet();
                     refreshPendingRequests();
                   }

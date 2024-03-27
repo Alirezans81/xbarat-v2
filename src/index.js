@@ -13,8 +13,10 @@ import { MyQueryClientProvider } from "./Providers/QueryClientProvider";
 import { WalletProvider } from "./Providers/WalletProvider";
 import { IsLoadingSplashScreenProvider } from "./Providers/IsLoadingSplashScreenProvider";
 import "react-tooltip/dist/react-tooltip.css";
+import "react-image-crop/dist/ReactCrop.css";
 import { ToastDataProvider } from "./Providers/ToastDataProvider";
 import { ModalDataProvider } from "./Providers/ModalDataProvider";
+import { CropImageModalProvider } from "./Providers/CropImageModalProvider";
 import { StatusesProvider } from "./Providers/StatusesProvider";
 import { CurrenciesProvider } from "./Providers/CurrenciesProvider";
 import { CurrencyPairsProvider } from "./Providers/CurrencyPairsProvider";
@@ -32,23 +34,25 @@ root.render(
             <ThemeProvider>
               <DirectionProvider>
                 <ModalDataProvider>
-                  <ToastDataProvider>
-                    <IsLoadingSplashScreenProvider>
-                      <StatusesProvider>
-                        <CurrenciesProvider>
-                          <CurrencyPairsProvider>
-                            <TokenProvider>
-                              <WalletProvider>
-                                <UserProvider>
-                                  <App />
-                                </UserProvider>
-                              </WalletProvider>
-                            </TokenProvider>
-                          </CurrencyPairsProvider>
-                        </CurrenciesProvider>
-                      </StatusesProvider>
-                    </IsLoadingSplashScreenProvider>
-                  </ToastDataProvider>
+                  <CropImageModalProvider>
+                    <ToastDataProvider>
+                      <IsLoadingSplashScreenProvider>
+                        <StatusesProvider>
+                          <CurrenciesProvider>
+                            <CurrencyPairsProvider>
+                              <TokenProvider>
+                                <WalletProvider>
+                                  <UserProvider>
+                                    <App />
+                                  </UserProvider>
+                                </WalletProvider>
+                              </TokenProvider>
+                            </CurrencyPairsProvider>
+                          </CurrenciesProvider>
+                        </StatusesProvider>
+                      </IsLoadingSplashScreenProvider>
+                    </ToastDataProvider>
+                  </CropImageModalProvider>
                 </ModalDataProvider>
               </DirectionProvider>
             </ThemeProvider>

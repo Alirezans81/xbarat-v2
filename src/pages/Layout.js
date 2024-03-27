@@ -13,6 +13,7 @@ import NavbarSetting from "../components/pages/layout/NavbarSetting";
 import LoadingSplashScreen from "../components/common/LoadingSplashScreen";
 import CustomToast from "../components/common/CustomToast";
 import CustomModal from "../components/common/CustomModal";
+import CustomCropImageModal from "../components/common/CustomCropImageModal";
 import { useUserSetState, useUserState } from "../Providers/UserProvider";
 import {
   useWalletSetState,
@@ -194,6 +195,7 @@ export default function Layout() {
     <>
       <CustomToast />
       <CustomModal />
+      <CustomCropImageModal />
       <LoadingSplashScreen isLoading={isLoadingSplashScreen} />
       <div
         dir={direction}
