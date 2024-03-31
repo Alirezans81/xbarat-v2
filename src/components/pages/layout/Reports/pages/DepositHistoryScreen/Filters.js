@@ -32,7 +32,7 @@ export default function Filters({ status, setFilterCards }) {
     setFilterCards(Filter);
   };
   const handleNoFilter = () => {
-    let Filter = {
+    const Filter = {
       clear: true,
     };
     setFilterCurrency("");

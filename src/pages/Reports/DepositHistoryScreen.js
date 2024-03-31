@@ -46,7 +46,7 @@ export default function DepositHistoryScreen() {
   }, []);
 
   useEffect(() => {
-    if (temp) setDeposits(temp.filter((data) => data.user_sender === user.url));
+    if (temp) setDeposits(temp);
   }, [filterCards]);
   useEffect(() => {
     if (filterCards && !filterCards.clear) {
@@ -73,10 +73,9 @@ export default function DepositHistoryScreen() {
   }, [deposits]);
   useEffect(() => {
     if (temp) {
-      setDeposits(temp.filter((data) => data.user_sender === user.url));
+      setDeposits(temp);
     }
   }, [temp]);
-  console.log(deposits);
 
   return (
     <div className="w-full h-full grid grid-cols-5 grid-rows-1 gap-10">

@@ -5,6 +5,7 @@ import {
   getExchangeHistory,
   getTop5Report,
   getDepositHistorySingleUser,
+  getWithdrawHistorySingleUser,
 } from "./apis";
 import { useState } from "react";
 
