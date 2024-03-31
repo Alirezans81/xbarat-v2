@@ -5,12 +5,18 @@ const api =
   process.env.REACT_APP_MODE === "PRODUCTION"
     ? require("../../api-dev.json")
     : require("../../api.json");
+const user = JSON.parse(window.localStorage.getItem("userInfo"));
 
 const getDepositHistorySingleUser = (filtersObject) => {
-  const user = JSON.parse(window.localStorage.getItem("userInfo"));
-
   const urlWithQueries = queryString.stringifyUrl({
     url: api["deposit"] + "?user_sender=" + user.username,
+    query: filtersObject || {},
+  });
+  return axios.get(urlWithQueries);
+};
+const getWithdrawHistorySingleUser = (filtersObject) => {
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["withdraw"] + "?user_sender=" + user.username,
     query: filtersObject || {},
   });
   return axios.get(urlWithQueries);
@@ -67,4 +73,5 @@ export {
   getExchangeHistory,
   getTop5Report,
   getDepositHistorySingleUser,
+  getWithdrawHistorySingleUser,
 };

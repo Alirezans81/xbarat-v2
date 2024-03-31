@@ -58,6 +58,31 @@ const useGetDepositHistorySingleUser = () => {
 
   return { getDepositHistorySingleUser: fetch, error, isLoading };
 };
+const useGetWithdrawHistorySingleUser = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (setState, setDataCount, setPreviousUrl, setNextUrl) => {
+    setIsLoading(true);
+    await getWithdrawHistorySingleUser()
+      .then((data) => {
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        setState(data.data.results);
+        setDataCount && setDataCount(data.data.count);
+        setPreviousUrl && setPreviousUrl(data.data.previous);
+        setNextUrl && setNextUrl(data.data.next);
+        setIsLoading(false);
+        return data.data.results;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { getWithdrawHistorySingleUser: fetch, error, isLoading };
+};
 
 const useGetTransferHistory = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -158,4 +183,5 @@ export {
   useGetExchangeHistory,
   useGetDepositHistorySingleUser,
   useGetTop5Report,
+  useGetWithdrawHistorySingleUser,
 };
