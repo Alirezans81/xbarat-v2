@@ -5,7 +5,7 @@ import Filters from "../../components/pages/layout/Reports/pages/DepositHistoryS
 import Cards from "../../components/pages/layout/Reports/pages/DepositHistoryScreen/Cards";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useGetStatuses } from "../../apis/common/status/hooks";
-import { useGetDepositHistory } from "../../apis/pages/Reports/hooks";
+import { useGetDepositHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import { useUserState } from "../../Providers/UserProvider";
 export default function DepositHistoryScreen() {
   const theme = useThemeState();
@@ -18,15 +18,22 @@ export default function DepositHistoryScreen() {
   const [nextDataUrl, setNextDataUrl] = useState();
   const [previousDataUrl, setPreviousDataUrl] = useState();
   const [filterCards, setFilterCards] = useState("");
-  const { getDepositHistory, isLoading: getDepositHistoryIsLoading } =
-    useGetDepositHistory();
+  const {
+    getDepositHistorySingleUser,
+    isLoading: getDepositHistorySingleUserIsLoading,
+  } = useGetDepositHistorySingleUser();
   useEffect(
-    () => setIsLoadingSplashScreen(getDepositHistoryIsLoading),
-    [getDepositHistoryIsLoading]
+    () => setIsLoadingSplashScreen(getDepositHistorySingleUserIsLoading),
+    [getDepositHistorySingleUserIsLoading]
   );
 
   useEffect(() => {
-    getDepositHistory(setTemp, null, setNextDataUrl, setPreviousDataUrl);
+    getDepositHistorySingleUser(
+      setTemp,
+      null,
+      setNextDataUrl,
+      setPreviousDataUrl
+    );
   }, []);
 
   const { getStatuses, isLoading: getStatusesIsLoading } = useGetStatuses();
@@ -69,6 +76,8 @@ export default function DepositHistoryScreen() {
       setDeposits(temp.filter((data) => data.user_sender === user.url));
     }
   }, [temp]);
+  console.log(deposits);
+
   return (
     <div className="w-full h-full grid grid-cols-5 grid-rows-1 gap-10">
       <div

@@ -6,7 +6,15 @@ const api =
     ? require("../../api-dev.json")
     : require("../../api.json");
 
+const getDepositHistorySingleUser = (filtersObject) => {
+  const user = JSON.parse(window.localStorage.getItem("userInfo"));
 
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["deposit"] + "?user_sender=" + user.username,
+    query: filtersObject || {},
+  });
+  return axios.get(urlWithQueries);
+};
 const getDepositHistory = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["deposit"],
@@ -58,4 +66,5 @@ export {
   getTransferHistory,
   getExchangeHistory,
   getTop5Report,
+  getDepositHistorySingleUser,
 };
