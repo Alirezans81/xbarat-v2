@@ -46,9 +46,6 @@ export default function DepositHistoryScreen() {
   }, []);
 
   useEffect(() => {
-    if (temp) setDeposits(temp);
-  }, [filterCards]);
-  useEffect(() => {
     if (filterCards && !filterCards.clear) {
       if (filterCards.status) {
         const statusFilter = deposits.filter(
@@ -62,15 +59,23 @@ export default function DepositHistoryScreen() {
         );
         setDeposits(currency);
       }
-      if (filterCards.sourcAmount) {
+      if (filterCards.sourceAmount) {
         const source = deposits.filter(
-          (data) => parseInt(data.amount) <= parseInt(filterCards.sourceAmount)
+          (data) => parseInt(data.amount) >= parseInt(filterCards.sourceAmount)
         );
-        console.log(source);
         setDeposits(source);
       }
+      if (filterCards.sourceAmount) {
+        const target = deposits.filter(
+          (data) => parseInt(data.amount) <= parseInt(filterCards.targetAmount)
+        );
+        setDeposits(target);
+      }
     }
-  }, [deposits]);
+    if (filterCards && filterCards.clear) {
+      setDeposits(temp);
+    }
+  }, [filterCards]);
   useEffect(() => {
     if (temp) {
       setDeposits(temp);

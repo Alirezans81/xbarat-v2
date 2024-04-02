@@ -22,7 +22,7 @@ export default function Filters({ status, setFilterCards }) {
   const [target, setTarget] = useState("");
   const handleFilter = () => {
     let Filter = {
-      sourcAmount: parseInt(source),
+      sourceAmount: parseInt(source),
       targetAmount: parseInt(target),
       currency: filterCurrency,
       status: filterStatus,
