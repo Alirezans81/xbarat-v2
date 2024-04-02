@@ -244,9 +244,9 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
           )}
         {pendingOrder && pendingOrder.status_title === "Reject" && (
           <span
-            className={`font-${font}-thin text-${oppositeTheme} text-sm md:text-lg md:leading-none`}
+            className={`font-${font}-thin overflow-hidden whitespace-nowrap text-ellipsis text-${oppositeTheme} text-sm md:text-lg md:leading-none`}
           >
-            {pendingOrder.rejectReason}
+            {pendingOrder.reject_description}
           </span>
         )}
       </div>
