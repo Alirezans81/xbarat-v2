@@ -77,8 +77,6 @@ export default function DepositHistoryScreen() {
       setDeposits(temp);
     }
   }, [temp]);
-  console.log(filterCards);
-  console.log(temp);
   return (
     <div className="w-full h-full grid grid-cols-5 grid-rows-1 gap-10">
       <div
