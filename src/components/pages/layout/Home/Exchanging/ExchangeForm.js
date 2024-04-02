@@ -288,7 +288,6 @@ export default function ExchangeForm({
                 +selectedCurrecnyPair.floating_number
               )
             : +removeComma(values.rate);
-          console.log("selected rate: ", selectedRate);
           if (findError(newAmount, +removeComma(values.rate))) {
             const params = {
               user: user && user.url ? user.url : "",
@@ -299,12 +298,17 @@ export default function ExchangeForm({
               amount_source: +removeComma(values.amount),
               rate: +selectedRate,
               amount_destination:
-                selectedCurrecnyPair && selectedCurrecnyPair.rate_multiplier
-                  ? +computingTargetAmount(
-                      +removeComma(values.amount),
-                      +removeComma(values.rate),
-                      selectedCurrecnyPair.rate_multiplier
-                    ).toFixed(6)
+                selectedCurrecnyPair &&
+                selectedCurrecnyPair.rate_multiplier &&
+                availableTargets[selectedTargetIndex]
+                  ? roundDown(
+                      +computingTargetAmount(
+                        +removeComma(values.amount),
+                        +removeComma(values.rate),
+                        selectedCurrecnyPair.rate_multiplier
+                      ),
+                      availableTargets[selectedTargetIndex].floating_number
+                    )
                   : 0,
               status:
                 statuses.find((status) => status.title === "Pending").url || "",

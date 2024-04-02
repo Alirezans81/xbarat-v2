@@ -231,6 +231,7 @@
   "transfer-amount-error-message-3rd": "باشد",
   "card-number-or-paypal-email": "شماره کارت/ایمیل پی پال",
   "wallet-tank-paypal-description-code": "لطفا مبلغ درخواستی خود را در سامانه paypal به صورت \"انتقال برای دوست و خیشاوند\" برای ادرس ایمیل بالا ارسال فرمایید تا فرایند انتقالتان با کمترین کارمزد ممکن انجام پذیرد",
-  "type-of-account": "نوع حساب"
-
+  "type-of-account": "نوع حساب",
+  "delete-wallet-tank-modal-message": "آیا از حذف کارت خود مطمعن هستید",
+  "edit-card": "ویراش کارت"
 }

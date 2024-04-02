@@ -31,8 +31,6 @@ export default function Reports() {
   const withdrawalData = report.withdrawal || [];
   const exchangeData = report.exchange || [];
 
-  console.log(report);
-
   return (
     <div className="absolute w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6">
       <div className="md:mt-0 grid grid-cols-12 grid-rows-2 md:gap-x-10 gap-y-7 pb-16">
