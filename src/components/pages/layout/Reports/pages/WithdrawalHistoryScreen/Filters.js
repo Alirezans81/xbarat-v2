@@ -114,29 +114,6 @@ export default function Filters({ status, setFilterCards }) {
         </div>
       </div>
 
-      <div className="flex flex-col">
-        <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
-          {lang["amount"]}
-        </span>
-        <div className="mt-2 w-full">
-          <div className="w-full flex">
-            <input
-              onChange={(e) => setSource(e.target.value)}
-              className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
-              placeholder={lang["source"]}
-              value={source}
-            />
-          </div>
-          <div className="w-full flex mt-2">
-            <input
-              onChange={(e) => setTarget(e.target.value)}
-              className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
-              placeholder={lang["target"]}
-              value={target}
-            />
-          </div>
-        </div>
-      </div>
       <div className="w-full h-10 bg-red rounded-lg flex items-center justify-center text-white">
         <button onClick={handleNoFilter} className="w-full">
           Remove All Filters

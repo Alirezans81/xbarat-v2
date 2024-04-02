@@ -46,42 +46,39 @@ export default function DepositHistoryScreen() {
   }, []);
 
   useEffect(() => {
-    if (filterCards && !filterCards.clear) {
+    if (filterCards) {
       if (filterCards.status) {
-        const statusFilter = deposits.filter(
+        const statusFilter = temp.filter(
           (data) => data.status_title === filterCards.status.title
         );
         setDeposits(statusFilter);
       }
       if (filterCards.currency) {
-        const currency = deposits.filter(
+        const currency = temp.filter(
           (data) => data.currency_abb === filterCards.currency.abbreviation
         );
         setDeposits(currency);
       }
-      if (filterCards.sourceAmount) {
-        const source = deposits.filter(
-          (data) => parseInt(data.amount) >= parseInt(filterCards.sourceAmount)
+      if (filterCards.range) {
+        const start = filterCards.range.startDate.getTime();
+        const end = filterCards.range.endDate.getTime();
+        const TimeRange = temp.filter(
+          (data) =>
+            (new Date(data.datetime_create).getTime() >= start) &
+            (new Date(data.datetime_create).getTime() <= end)
         );
-        setDeposits(source);
+        setDeposits(TimeRange);
       }
-      if (filterCards.sourceAmount) {
-        const target = deposits.filter(
-          (data) => parseInt(data.amount) <= parseInt(filterCards.targetAmount)
-        );
-        setDeposits(target);
-      }
-    }
-    if (filterCards && filterCards.clear) {
-      setDeposits(temp);
     }
   }, [filterCards]);
+
   useEffect(() => {
     if (temp) {
       setDeposits(temp);
     }
   }, [temp]);
-
+  console.log(filterCards);
+  console.log(temp);
   return (
     <div className="w-full h-full grid grid-cols-5 grid-rows-1 gap-10">
       <div

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../../../Providers/LanguageProvider";
 import CustomDateTimeInput from "../../../../../common/CustomDateTimePicker";
@@ -18,32 +18,24 @@ export default function Filters({ status, setFilterCards }) {
   const currency = useCurrenciesState();
   const [filterCurrency, setFilterCurrency] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
-  const [source, setSource] = useState("");
-  const [target, setTarget] = useState("");
+  useEffect(() => {
+    console.log(filterCurrency);
+    handleFilter();
+  }, [filterCurrency, filterStatus, selectionRange]);
   const handleFilter = () => {
     let Filter = {
-      sourceAmount: parseInt(source),
-      targetAmount: parseInt(target),
       currency: filterCurrency,
       status: filterStatus,
       range: selectionRange,
-      clear: false,
     };
+    console.log(Filter);
+
     setFilterCards(Filter);
+    console.log(Filter);
   };
-  const handleNoFilter = () => {
-    const Filter = {
-      clear: true,
-    };
-    setFilterCurrency("");
-    setFilterStatus("");
-    setSource("");
-    setTarget("");
-    setSelectionRange("");
-    setFilterCards(Filter);
-  };
+
   return (
-    <div className="flex flex-col w-full h-full justify-between">
+    <div className="flex flex-col w-full h-full justify-start">
       <div className="flex flex-col">
         <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
           {lang["date-&-time"]}
@@ -69,7 +61,7 @@ export default function Filters({ status, setFilterCards }) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-5">
         <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
           {lang["currency"]}
         </span>
@@ -114,7 +106,7 @@ export default function Filters({ status, setFilterCards }) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-5">
         <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
           {lang["status"]}
         </span>
@@ -157,39 +149,6 @@ export default function Filters({ status, setFilterCards }) {
             </CustomDropdown>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col">
-        <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
-          {lang["amount"]}
-        </span>
-        <div className="mt-2 w-full">
-          <div className="w-full flex">
-            <input
-              onChange={(e) => setSource(e.target.value)}
-              className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
-              placeholder={lang["source"]}
-              value={source}
-            />
-          </div>
-          <div className="w-full flex mt-2">
-            <input
-              onChange={(e) => setTarget(e.target.value)}
-              className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
-              placeholder={lang["target"]}
-              value={target}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="w-full h-10 bg-red rounded-lg flex items-center justify-center text-white">
-        <button onClick={handleNoFilter} className="w-full">
-          Remove All Filters
-        </button>
-      </div>
-      <div className="w-full h-fit">
-        <SubmitButton rounded="lg" className={"w-full"} onClick={handleFilter}>
-          {lang["submit"]}
-        </SubmitButton>
       </div>
     </div>
   );

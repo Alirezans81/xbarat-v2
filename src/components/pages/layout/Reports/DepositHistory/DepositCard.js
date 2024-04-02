@@ -12,7 +12,6 @@ export default function DepositCard({ data }) {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const addComma = useAddComma();
   const convertDateTime = useConvertDateTime();
-  console.log(data);
   return (
     <div
       className={`flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-4 pb-1 overflow-hidden`}

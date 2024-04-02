@@ -4,10 +4,11 @@ import { useLanguageState } from "../../../../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../../../../Providers/ThemeProvider";
 import { useFontState } from "../../../../../../Providers/FontProvider";
 export default function Cards({ data }) {
-  const [deposits, setDeposits] = useState("");
+  const [deposit, setDeposit] = useState([]);
   useEffect(() => {
-    setDeposits(data);
+    setDeposit(data);
   }, [data]);
+
   const theme = useThemeState();
 
   const font = useFontState();
@@ -18,13 +19,13 @@ export default function Cards({ data }) {
     <>
       <div
         className={
-          deposits.length !== 0
+          deposit.length !== 0
             ? "w-full h-full grid grid-cols-3 mb-14"
             : "hidden"
         }
       >
-        {deposits
-          ? deposits.map((data, index) => (
+        {deposit
+          ? deposit.map((data, index) => (
               <div key={index} className="col-span-1 h-48 p-2">
                 <DepositCard data={data} lang={lang} />
               </div>
@@ -33,7 +34,7 @@ export default function Cards({ data }) {
       </div>
       <div
         className={
-          deposits.length === 0
+          deposit.length === 0
             ? "w-full h-full flex justify-center items-center"
             : "hidden"
         }
