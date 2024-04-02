@@ -19,7 +19,6 @@ export default function Filters({ status, setFilterCards }) {
   const [filterCurrency, setFilterCurrency] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   useEffect(() => {
-    console.log(filterCurrency);
     handleFilter();
   }, [filterCurrency, filterStatus, selectionRange]);
   const handleFilter = () => {
@@ -28,10 +27,8 @@ export default function Filters({ status, setFilterCards }) {
       status: filterStatus,
       range: selectionRange,
     };
-    console.log(Filter);
 
     setFilterCards(Filter);
-    console.log(Filter);
   };
 
   return (
