@@ -35,10 +35,6 @@ export default function AddCardModal() {
   const [asset, setAsset] = useState("");
   const [type, setType] = useState("");
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const api =
-    process.env.REACT_APP_MODE === "PRODUCTION"
-      ? require("../../../apis/api-dev.json")
-      : require("../../../apis/api.json");
 
   let listCurrency = currencies.map((data) => [
     data.abbreviation,
@@ -200,7 +196,7 @@ export default function AddCardModal() {
                     {listCurrency.map((data) => (
                       <CustomItem
                         onClick={() => setAsset(data)}
-                        className={"bg-transparent h-fit"}
+                        className={`bg-${theme} h-fit`}
                       >
                         <div className="flex flex-row  w-10 h-10 justify-center">
                           <img className="w-fit h-fit" alt="" src={data[2]} />
@@ -235,17 +231,21 @@ export default function AddCardModal() {
                           : type
                       }
                     >
-                      {AvailableTypes
-                        ? AvailableTypes.map((data) => (
-                            <CustomItem onClick={() => setType(data.url)}>
-                              {data.slug.includes("card")
-                                ? lang["card-number"]
-                                : data.slug.includes("shaba")
-                                ? lang["shaba-number"]
-                                : lang["paypal-email"]}
-                            </CustomItem>
-                          ))
-                        : ""}
+                      {AvailableTypes ? (
+                        AvailableTypes.map((data) => (
+                          <CustomItem onClick={() => setType(data.url)}>
+                            {data.slug.includes("card")
+                              ? lang["card-number"]
+                              : data.slug.includes("shaba")
+                              ? lang["shaba-number"]
+                              : lang["paypal-email"]}
+                          </CustomItem>
+                        ))
+                      ) : (
+                        <div className="w-full h-full">
+                          {lang["no_wallet_tank_type_available"]}
+                        </div>
+                      )}
                     </CustomDropdown>
                   </div>
                 </div>
@@ -349,7 +349,7 @@ export default function AddCardModal() {
                   <div className="flex justify-end">
                     <SubmitButton
                       rounded="lg"
-                      className="mt-5 h-1/3 w-1/4"
+                      className="mt-5 h-1/3 w-fit p-2"
                       onClick={submitForm}
                     >
                       {lang["submit"]}
