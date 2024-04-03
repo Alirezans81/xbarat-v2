@@ -26,6 +26,8 @@ export default function Filters({ status, setFilterCards }) {
       range: selectionRange,
       clear: false,
     };
+    console.log(Filter);
+
     setFilterCards(Filter);
   };
   const handleReset = () => {
@@ -55,7 +57,7 @@ export default function Filters({ status, setFilterCards }) {
               rounded={"3xl"}
               onClick={handleReset}
             >
-              <img className="w-9 h-9" src={refresh} alt="" />
+              <img className="w-6 h-6" src={refresh} alt="" />
             </button>
           </div>
         </div>

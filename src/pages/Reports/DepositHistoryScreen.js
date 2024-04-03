@@ -46,31 +46,45 @@ export default function DepositHistoryScreen() {
   useEffect(() => {
     getStatuses(setStatus);
   }, []);
+  function findIntersection(array1, array2, array3) {
+    const set1 = new Set(array1.map((obj) => JSON.stringify(obj)));
+    const set2 = new Set(array2.map((obj) => JSON.stringify(obj)));
+    const set3 = new Set(array3.map((obj) => JSON.stringify(obj)));
 
+    const intersection = [...set1].filter(
+      (objStr) => set2.has(objStr) && set3.has(objStr)
+    );
+
+    return intersection.map((objStr) => JSON.parse(objStr));
+  }
   useEffect(() => {
     if (filterCards && !filterCards.clear) {
+      let statusFilter = temp;
+      let currency = temp;
+      let TimeRange = temp;
       if (filterCards.status) {
-        const statusFilter = temp.filter(
+        statusFilter = temp.filter(
           (data) => data.status_title === filterCards.status.title
         );
-        setDeposits(statusFilter);
       }
       if (filterCards.currency) {
-        const currency = temp.filter(
+        currency = temp.filter(
           (data) => data.currency_abb === filterCards.currency.abbreviation
         );
-        setDeposits(currency);
       }
       if (filterCards.range) {
         const start = filterCards.range.startDate.getTime();
         const end = filterCards.range.endDate.getTime();
-        const TimeRange = temp.filter(
+        TimeRange = temp.filter(
           (data) =>
             (new Date(data.datetime_create).getTime() >= start) &
             (new Date(data.datetime_create).getTime() <= end)
         );
-        setDeposits(TimeRange);
       }
+      console.log(statusFilter, currency, TimeRange);
+      const intersection = findIntersection(statusFilter, currency, TimeRange);
+      console.log(intersection);
+      setDeposits(intersection);
     }
     if (filterCards && filterCards.clear) {
       setDeposits(temp);
