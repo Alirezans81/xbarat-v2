@@ -7,12 +7,14 @@ import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplas
 import { useGetStatuses } from "../../apis/common/status/hooks";
 import { useGetDepositHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import { useUserState } from "../../Providers/UserProvider";
+import SubmitButton from "../../components/common/SubmitButton";
 export default function DepositHistoryScreen() {
   const theme = useThemeState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const user = useUserState();
   const { one: oneDirection } = useDirectionState();
   const [temp, setTemp] = useState("");
+  const [cards, setCards] = useState(true);
   const [status, setStatus] = useState("");
   const [deposits, setDeposits] = useState("");
   const [nextDataUrl, setNextDataUrl] = useState();
@@ -46,7 +48,7 @@ export default function DepositHistoryScreen() {
   }, []);
 
   useEffect(() => {
-    if (filterCards) {
+    if (filterCards && !filterCards.clear) {
       if (filterCards.status) {
         const statusFilter = temp.filter(
           (data) => data.status_title === filterCards.status.title
@@ -70,6 +72,9 @@ export default function DepositHistoryScreen() {
         setDeposits(TimeRange);
       }
     }
+    if (filterCards && filterCards.clear) {
+      setDeposits(temp);
+    }
   }, [filterCards]);
 
   useEffect(() => {
@@ -78,20 +83,66 @@ export default function DepositHistoryScreen() {
     }
   }, [temp]);
   return (
-    <div className="w-full h-full grid grid-cols-5 grid-rows-1 gap-10">
-      <div
-        className={`col-span-1 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
-      >
-        <Filters status={status} setFilterCards={setFilterCards} />
-      </div>
+    <>
+      <div className="grid md:hidden w-full h-full grid-cols-5 grid-rows-1 gap-10 px-8 py-2">
+        <div
+          className={
+            !cards
+              ? `col-span-5 row-span-1 bg-${theme} rounded-3xl py-5 px-7 h-full`
+              : "hidden"
+          }
+        >
+          <div className="w-full h-10 flex justify-end items-center rounded-3xl">
+            <SubmitButton
+              onClick={() => setCards(true)}
+              className={" mr-2 w-1/4 h-full"}
+              rounded={"full"}
+            >
+              Close Filters
+            </SubmitButton>
+          </div>
+          <div className="w-full h-full mt-3 ">
+            <Filters status={status} setFilterCards={setFilterCards} />
+          </div>
+        </div>
 
-      <div
-        className={`col-span-4 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4 `}
-      >
-        <div className="overflow-y-auto h-full pr-3">
-          <Cards data={deposits} />
+        <div
+          className={
+            cards
+              ? `col-span-5 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4 flex flex-col rounded-3xl `
+              : "hidden"
+          }
+        >
+          <div className="h-10 w-full flex justify-end items-center rounded-3xl">
+            <SubmitButton
+              onClick={() => setCards(false)}
+              className={" mr-5 w-1/4 h-full"}
+              rounded={"full"}
+            >
+              Open Filters
+            </SubmitButton>
+          </div>
+          <div className="overflow-y-auto h-full pr-3 mt-3 w-full">
+            <Cards data={deposits} />
+          </div>
         </div>
       </div>
-    </div>
+
+      <div className="hidden md:grid w-full h-full  grid-cols-5 grid-rows-1 gap-10">
+        <div
+          className={`md:col-span-2 lg:col-span-1 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
+        >
+          <Filters status={status} setFilterCards={setFilterCards} />
+        </div>
+
+        <div
+          className={`lg:col-span-4 md:col-span-3 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4`}
+        >
+          <div className="overflow-y-auto h-full pr-3">
+            <Cards data={deposits} />
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

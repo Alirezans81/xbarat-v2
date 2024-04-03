@@ -5,9 +5,95 @@ import { useThemeState } from "../../../../../../Providers/ThemeProvider";
 import { useFontState } from "../../../../../../Providers/FontProvider";
 export default function Cards({ data }) {
   const [deposit, setDeposit] = useState([]);
-  // useEffect(() => {
-  //   setDeposit(data);
-  // }, [data]);
+  // const [deposit, setDeposit] = useState([
+  //   {
+  //     currency_abb: "USD",
+  //     amount: 100,
+  //     user_receiver_username: "sinamollazadeh20031381",
+  //     status_title: "Approved",
+  //     datetime_create: "1928321987398879",
+  //   },
+  //   {
+  //     currency_abb: "USD",
+  //     amount: 100,
+  //     user_receiver_username: "sinamollazadeh20031381",
+  //     status_title: "Approved",
+  //     datetime_create: "1928321987398879",
+  //   },
+  //   {
+  //     currency_abb: "USD",
+  //     amount: 100,
+  //     user_receiver_username: "sinamollazadeh20031381",
+  //     status_title: "Approved",
+  //     datetime_create: "1928321987398879",
+  //   },
+  //   {
+  //     currency_abb: "USD",
+  //     amount: 100,
+  //     user_receiver_username: "sinamollazadeh20031381",
+  //     status_title: "Approved",
+  //     datetime_create: "1928321987398879",
+  //   },
+  //   {
+  //     currency_abb: "USD",
+  //     amount: 100,
+  //     user_receiver_username: "sinamollazadeh20031381",
+  //     status_title: "Approved",
+  //     datetime_create: "1928321987398879",
+  //   },
+  //   {
+  //     currency_abb: "USD",
+  //     amount: 100,
+  //     user_receiver_username: "sinamollazadeh20031381",
+  //     status_title: "Approved",
+  //     datetime_create: "1928321987398879",
+  //   },
+  //   {
+  //     currency_abb: "USD",
+  //     amount: 100,
+  //     user_receiver_username: "sinamollazadeh20031381",
+  //     status_title: "Approved",
+  //     datetime_create: "1928321987398879",
+  //   },
+  //   {
+  //     currency_abb: "USD",
+  //     amount: 100,
+  //     user_receiver_username: "sinamollazadeh20031381",
+  //     status_title: "Approved",
+  //     datetime_create: "1928321987398879",
+  //   },
+  //   {
+  //     currency_abb: "USD",
+  //     amount: 100,
+  //     user_receiver_username: "sinamollazadeh20031381",
+  //     status_title: "Approved",
+  //     datetime_create: "1928321987398879",
+  //   },
+  //   {
+  //     currency_abb: "USD",
+  //     amount: 100,
+  //     user_receiver_username: "sinamollazadeh20031381",
+  //     status_title: "Approved",
+  //     datetime_create: "1928321987398879",
+  //   },
+  //   {
+  //     currency_abb: "USD",
+  //     amount: 100,
+  //     user_receiver_username: "sinamollazadeh20031381",
+  //     status_title: "Approved",
+  //     datetime_create: "1928321987398879",
+  //   },
+  //   {
+  //     currency_abb: "USD",
+  //     amount: 100,
+  //     user_receiver_username: "sinamollazadeh20031381",
+  //     status_title: "Approved",
+  //     datetime_create: "1928321987398879",
+  //   },
+  // ]);
+  useEffect(() => {
+    setDeposit(data);
+  }, [data]);
 
   const theme = useThemeState();
 
@@ -20,7 +106,7 @@ export default function Cards({ data }) {
       <div
         className={
           deposit.length !== 0
-            ? "w-full h-full grid grid-cols-3 mb-14"
+            ? "w-full h-full grid lg:grid-cols-3 mb-14 xs:grid-cols-1"
             : "hidden"
         }
       >
