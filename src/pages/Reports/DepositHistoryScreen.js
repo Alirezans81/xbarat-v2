@@ -6,12 +6,10 @@ import Cards from "../../components/pages/layout/Reports/pages/DepositHistoryScr
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useGetStatuses } from "../../apis/common/status/hooks";
 import { useGetDepositHistorySingleUser } from "../../apis/pages/Reports/hooks";
-import { useUserState } from "../../Providers/UserProvider";
 import SubmitButton from "../../components/common/SubmitButton";
 export default function DepositHistoryScreen() {
   const theme = useThemeState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
-  const user = useUserState();
   const { one: oneDirection } = useDirectionState();
   const [temp, setTemp] = useState("");
   const [cards, setCards] = useState(true);

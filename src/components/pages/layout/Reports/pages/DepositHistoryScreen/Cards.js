@@ -4,102 +4,15 @@ import { useLanguageState } from "../../../../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../../../../Providers/ThemeProvider";
 import { useFontState } from "../../../../../../Providers/FontProvider";
 export default function Cards({ data }) {
-  const [deposit, setDeposit] = useState([]);
-  // const [deposit, setDeposit] = useState([
-  //   {
-  //     currency_abb: "USD",
-  //     amount: 100,
-  //     user_receiver_username: "sinamollazadeh20031381",
-  //     status_title: "Approved",
-  //     datetime_create: "1928321987398879",
-  //   },
-  //   {
-  //     currency_abb: "USD",
-  //     amount: 100,
-  //     user_receiver_username: "sinamollazadeh20031381",
-  //     status_title: "Approved",
-  //     datetime_create: "1928321987398879",
-  //   },
-  //   {
-  //     currency_abb: "USD",
-  //     amount: 100,
-  //     user_receiver_username: "sinamollazadeh20031381",
-  //     status_title: "Approved",
-  //     datetime_create: "1928321987398879",
-  //   },
-  //   {
-  //     currency_abb: "USD",
-  //     amount: 100,
-  //     user_receiver_username: "sinamollazadeh20031381",
-  //     status_title: "Approved",
-  //     datetime_create: "1928321987398879",
-  //   },
-  //   {
-  //     currency_abb: "USD",
-  //     amount: 100,
-  //     user_receiver_username: "sinamollazadeh20031381",
-  //     status_title: "Approved",
-  //     datetime_create: "1928321987398879",
-  //   },
-  //   {
-  //     currency_abb: "USD",
-  //     amount: 100,
-  //     user_receiver_username: "sinamollazadeh20031381",
-  //     status_title: "Approved",
-  //     datetime_create: "1928321987398879",
-  //   },
-  //   {
-  //     currency_abb: "USD",
-  //     amount: 100,
-  //     user_receiver_username: "sinamollazadeh20031381",
-  //     status_title: "Approved",
-  //     datetime_create: "1928321987398879",
-  //   },
-  //   {
-  //     currency_abb: "USD",
-  //     amount: 100,
-  //     user_receiver_username: "sinamollazadeh20031381",
-  //     status_title: "Approved",
-  //     datetime_create: "1928321987398879",
-  //   },
-  //   {
-  //     currency_abb: "USD",
-  //     amount: 100,
-  //     user_receiver_username: "sinamollazadeh20031381",
-  //     status_title: "Approved",
-  //     datetime_create: "1928321987398879",
-  //   },
-  //   {
-  //     currency_abb: "USD",
-  //     amount: 100,
-  //     user_receiver_username: "sinamollazadeh20031381",
-  //     status_title: "Approved",
-  //     datetime_create: "1928321987398879",
-  //   },
-  //   {
-  //     currency_abb: "USD",
-  //     amount: 100,
-  //     user_receiver_username: "sinamollazadeh20031381",
-  //     status_title: "Approved",
-  //     datetime_create: "1928321987398879",
-  //   },
-  //   {
-  //     currency_abb: "USD",
-  //     amount: 100,
-  //     user_receiver_username: "sinamollazadeh20031381",
-  //     status_title: "Approved",
-  //     datetime_create: "1928321987398879",
-  //   },
-  // ]);
-  useEffect(() => {
-    setDeposit(data);
-  }, [data]);
-
   const theme = useThemeState();
-
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const [deposit, setDeposit] = useState([]);
+
+  useEffect(() => {
+    setDeposit(data);
+  }, [data]);
 
   return (
     <>

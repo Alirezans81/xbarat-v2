@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../../../Providers/LanguageProvider";
 import CustomDateTimeInput from "../../../../../common/CustomDateTimePicker";
@@ -6,6 +6,7 @@ import {
   CustomDropdown,
   CustomItem,
 } from "../../../../../common/CustomDropdown";
+import refresh from "../../../../../../Images/rotate-arrow.png";
 import SubmitButton from "../../../../../common/SubmitButton";
 import { useFontState } from "../../../../../../Providers/FontProvider";
 import { useCurrenciesState } from "../../../../../../Providers/CurrenciesProvider";
@@ -18,35 +19,48 @@ export default function Filters({ status, setFilterCards }) {
   const currency = useCurrenciesState();
   const [filterCurrency, setFilterCurrency] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
-  const [source, setSource] = useState("");
-  const [target, setTarget] = useState("");
   const handleFilter = () => {
-    let Filter = {
-      sourcAmount: parseInt(source),
-      targetAmount: parseInt(target),
+    const Filter = {
       currency: filterCurrency,
       status: filterStatus,
       range: selectionRange,
       clear: false,
     };
+    console.log(Filter);
+
     setFilterCards(Filter);
   };
-  const handleNoFilter = () => {
+  const handleReset = () => {
+    setFilterCurrency("");
+    setFilterStatus("");
+    setSelectionRange("");
     const Filter = {
       clear: true,
     };
-    setFilterCurrency("");
-    setSource("");
-    setTarget("");
-    setSelectionRange("");
     setFilterCards(Filter);
   };
+
   return (
-    <div className="flex flex-col w-full h-full justify-between">
+    <div className="flex flex-col w-full h-full justify-start">
       <div className="flex flex-col">
-        <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
-          {lang["date-&-time"]}
-        </span>
+        <div className="w-full flex flex-row items-center ">
+          <div className="w-7/12 flex justify-start items-end">
+            <span
+              className={`text-${oppositeTheme} text-2xl font-${font}-bold mt-1`}
+            >
+              {lang["date-&-time"]}
+            </span>
+          </div>
+          <div className="w-5/12 flex justify-end items-start">
+            <button
+              className="w-full h-full flex justify-end"
+              rounded={"3xl"}
+              onClick={handleReset}
+            >
+              <img className="w-6 h-6" src={refresh} alt="" />
+            </button>
+          </div>
+        </div>
         <div className="mt-2">
           <div>
             <CustomDateTimeInput
@@ -68,7 +82,7 @@ export default function Filters({ status, setFilterCards }) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-5">
         <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
           {lang["currency"]}
         </span>
@@ -113,14 +127,58 @@ export default function Filters({ status, setFilterCards }) {
           </div>
         </div>
       </div>
-
-      <div className="w-full h-10 bg-red rounded-lg flex items-center justify-center text-white">
-        <button onClick={handleNoFilter} className="w-full">
-          Remove All Filters
-        </button>
+      <div className="flex flex-col mt-5">
+        <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
+          {lang["status"]}
+        </span>
+        <div className="mt-2 w-full">
+          <div className="w-full flex">
+            <CustomDropdown
+              className="justify-between"
+              label={
+                <div>
+                  <div
+                    className={
+                      filterStatus
+                        ? "flex justify-center items-center"
+                        : "hidden"
+                    }
+                  >
+                    <span>{filterStatus.title}</span>
+                  </div>
+                </div>
+              }
+            >
+              {status ? (
+                status.map((data) => (
+                  <CustomItem
+                    onClick={() => setFilterStatus(data)}
+                    className={`bg-${theme} h-fit`}
+                  >
+                    <div className="flex w-full h-full justify-center">
+                      <span className=" w-full h-full flex justify-center items-center ">
+                        {data.title}
+                      </span>
+                    </div>
+                  </CustomItem>
+                ))
+              ) : (
+                <div>
+                  Unfortunately This Service Is Not Available At This Time
+                </div>
+              )}
+            </CustomDropdown>
+          </div>
+        </div>
       </div>
-      <div className="w-full h-fit">
-        <SubmitButton rounded="lg" className={"w-full"} onClick={handleFilter}>
+      <div
+        className={"w-full h-1/3 justify-start align-center flex flex-col mt-5"}
+      >
+        <SubmitButton
+          rounded={"3xl"}
+          className={"w-full h-1/6"}
+          onClick={handleFilter}
+        >
           {lang["submit"]}
         </SubmitButton>
       </div>

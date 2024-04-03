@@ -21,6 +21,13 @@ const getWithdrawHistorySingleUser = (filtersObject) => {
   });
   return axios.get(urlWithQueries);
 };
+const getExchangeHistorySingleUser = (filtersObject) => {
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["exchane"] + "?user=" + user.username,
+    query: filtersObject || {},
+  });
+  return axios.get(urlWithQueries);
+};
 const getDepositHistory = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["deposit"],
@@ -74,4 +81,5 @@ export {
   getTop5Report,
   getDepositHistorySingleUser,
   getWithdrawHistorySingleUser,
+  getExchangeHistorySingleUser,
 };
