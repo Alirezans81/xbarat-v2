@@ -5,9 +5,9 @@ import { useThemeState } from "../../../../../../Providers/ThemeProvider";
 import { useFontState } from "../../../../../../Providers/FontProvider";
 export default function Cards({ data }) {
   const [deposit, setDeposit] = useState([]);
-  useEffect(() => {
-    setDeposit(data);
-  }, [data]);
+  // useEffect(() => {
+  //   setDeposit(data);
+  // }, [data]);
 
   const theme = useThemeState();
 

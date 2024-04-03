@@ -19,15 +19,20 @@ module.exports = {
       gray: "#8F97A6",
     },
     screens: {
-      xs: "0px", // min-width
+      xs: "420px",
+      // => @media (min-width: 640px) { ... }
+
       sm: "640px",
       // => @media (min-width: 640px) { ... }
 
       md: "768px",
       // => @media (min-width: 768px) { ... }
-
+      
       lg: "1024px",
       // => @media (min-width: 1024px) { ... }
+
+      xlg: "1200px",
+      // => @media (min-width: 1200px) { ... }
 
       xl: "1280px",
       // => @media (min-width: 1280px) { ... }

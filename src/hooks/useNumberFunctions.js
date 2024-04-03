@@ -109,7 +109,8 @@ const roundDown = (number, floating_number) => {
   if (floating_number === 0) {
     return Math.floor(number);
   } else {
-    const aaa = floating_number * 10;
+    const aaa =  10 ** floating_number;
+    console.log(aaa);
     return Math.floor(number * aaa) / aaa;
   }
 };
