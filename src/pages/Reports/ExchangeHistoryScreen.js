@@ -19,6 +19,7 @@ export default function ExchangeHistoryScreen() {
   const [nextDataUrl, setNextDataUrl] = useState();
   const [previousDataUrl, setPreviousDataUrl] = useState();
   const [filterCards, setFilterCards] = useState("");
+  const s = "sina";
   const { getExchangeHistory, isLoading: getExchangeHistoryIsLoading } =
     useGetExchangeHistory();
   useEffect(
