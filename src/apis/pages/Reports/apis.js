@@ -28,6 +28,13 @@ const getExchangeHistorySingleUser = (filtersObject) => {
   });
   return axios.get(urlWithQueries);
 };
+const getTransferHistorySingleUser = (filtersObject) => {
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["transfer"] + "?user_sender=" + user.username,
+    query: filtersObject || {},
+  });
+  return axios.get(urlWithQueries);
+};
 const getDepositHistory = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["deposit"],
@@ -82,4 +89,5 @@ export {
   getDepositHistorySingleUser,
   getWithdrawHistorySingleUser,
   getExchangeHistorySingleUser,
+  getTransferHistorySingleUser,
 };
