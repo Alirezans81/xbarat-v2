@@ -41,6 +41,9 @@
   "pending": "Pending",
   "locked": "Locked",
   "source": "Source",
+  "source_currency": "source currency",
+  "target_currency": "target currency",
+
   "target": "Target",
   "amount": "Amount",
   "rate": "Rate",

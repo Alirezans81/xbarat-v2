@@ -19,26 +19,17 @@ export default function ExchangeHistoryScreen() {
   const [nextDataUrl, setNextDataUrl] = useState();
   const [previousDataUrl, setPreviousDataUrl] = useState();
   const [filterCards, setFilterCards] = useState("");
-  const s = "sina";
   const { getExchangeHistory, isLoading: getExchangeHistoryIsLoading } =
     useGetExchangeHistory();
   useEffect(
     () => setIsLoadingSplashScreen(getExchangeHistoryIsLoading),
     [getExchangeHistoryIsLoading]
   );
-
+  console.log(exchange);
   useEffect(() => {
     getExchangeHistory(setTemp, null, setNextDataUrl, setPreviousDataUrl);
   }, []);
 
-  const { getStatuses, isLoading: getStatusesIsLoading } = useGetStatuses();
-  useEffect(
-    () => setIsLoadingSplashScreen(getStatusesIsLoading),
-    [getStatusesIsLoading]
-  );
-  useEffect(() => {
-    getStatuses(setStatus);
-  }, []);
   function findIntersection(array1, array2, array3) {
     const set1 = new Set(array1.map((obj) => JSON.stringify(obj)));
     const set2 = new Set(array2.map((obj) => JSON.stringify(obj)));
@@ -52,17 +43,23 @@ export default function ExchangeHistoryScreen() {
   }
   useEffect(() => {
     if (filterCards && !filterCards.clear) {
-      let statusFilter = temp;
-      let currency = temp;
+      let source_currency = temp;
+      let target_currency = temp;
+      console.log(filterCards);
       let TimeRange = temp;
-      if (filterCards.status) {
-        statusFilter = temp.filter(
-          (data) => data.status_title === filterCards.status.title
+
+      if (filterCards.source_currency) {
+        source_currency = temp.filter(
+          (data) =>
+            data.currency_source_abb ===
+            filterCards.source_currency.abbreviation
         );
       }
-      if (filterCards.currency) {
-        currency = temp.filter(
-          (data) => data.currency_abb === filterCards.currency.abbreviation
+      if (filterCards.target_currency) {
+        target_currency = temp.filter(
+          (data) =>
+            data.currency_destination_abb ===
+            filterCards.target_currency.abbreviation
         );
       }
       if (filterCards.range) {
@@ -74,9 +71,11 @@ export default function ExchangeHistoryScreen() {
             (new Date(data.datetime_create).getTime() <= end)
         );
       }
-      console.log(statusFilter, currency, TimeRange);
-      const intersection = findIntersection(statusFilter, currency, TimeRange);
-      console.log(intersection);
+      const intersection = findIntersection(
+        target_currency,
+        source_currency,
+        TimeRange
+      );
       setExchange(intersection);
     }
     if (filterCards && filterCards.clear) {

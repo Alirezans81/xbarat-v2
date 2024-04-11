@@ -23,7 +23,7 @@ const getWithdrawHistorySingleUser = (filtersObject) => {
 };
 const getExchangeHistorySingleUser = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
-    url: api["exchane"] + "?user=" + user.username,
+    url: api["exchange"] + "?user=" + user.username,
     query: filtersObject || {},
   });
   return axios.get(urlWithQueries);
@@ -57,7 +57,7 @@ const getTransferHistory = (filtersObject) => {
 
 const getExchangeHistory = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
-    url: api["exchnage"],
+    url: api["exchange"],
     query: filtersObject || {},
   });
 
