@@ -17,6 +17,7 @@ export default function DepositHistoryScreen() {
   const [nextDataUrl, setNextDataUrl] = useState();
   const [previousDataUrl, setPreviousDataUrl] = useState();
   const [filterCards, setFilterCards] = useState("");
+
   const {
     getTransferHistorySingleUser,
     isLoading: getTransferHistorySingleUserIsLoading,
@@ -105,7 +106,7 @@ export default function DepositHistoryScreen() {
             </SubmitButton>
           </div>
           <div className="w-full h-full mt-3 ">
-            <Filters status={status} setFilterCards={setFilterCards} />
+            <Filters setFilterCards={setFilterCards} />
           </div>
         </div>
 
@@ -135,7 +136,7 @@ export default function DepositHistoryScreen() {
         <div
           className={`md:col-span-2 lg:col-span-1 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
         >
-          <Filters status={status} setFilterCards={setFilterCards} />
+          <Filters setFilterCards={setFilterCards} />
         </div>
 
         <div

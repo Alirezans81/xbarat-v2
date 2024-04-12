@@ -6,13 +6,15 @@ import {
   CustomDropdown,
   CustomItem,
 } from "../../../../../common/CustomDropdown";
+import { useStatusesState } from "../../../../../../Providers/StatusesProvider";
 import refresh from "../../../../../../Images/rotate-arrow.png";
 import SubmitButton from "../../../../../common/SubmitButton";
 import { useFontState } from "../../../../../../Providers/FontProvider";
 import { useCurrenciesState } from "../../../../../../Providers/CurrenciesProvider";
-export default function Filters({ status, setFilterCards }) {
+export default function Filters({ setFilterCards }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const status = useStatusesState();
   const lang = useLanguageState();
   const [selectionRange, setSelectionRange] = useState();
   const font = useFontState();

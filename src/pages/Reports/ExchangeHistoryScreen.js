@@ -5,7 +5,6 @@ import Filters from "../../components/pages/layout/Reports/pages/ExchangeHistory
 import Cards from "../../components/pages/layout/Reports/pages/ExchangeHistoryScreen/Cards";
 import { useGetExchangeHistory } from "../../apis/pages/Reports/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
-import { useGetStatuses } from "../../apis/common/status/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
 
 export default function ExchangeHistoryScreen() {
@@ -14,7 +13,6 @@ export default function ExchangeHistoryScreen() {
   const { one: oneDirection } = useDirectionState();
   const [temp, setTemp] = useState("");
   const [cards, setCards] = useState(true);
-  const [status, setStatus] = useState("");
   const [exchange, setExchange] = useState("");
   const [nextDataUrl, setNextDataUrl] = useState();
   const [previousDataUrl, setPreviousDataUrl] = useState();
@@ -25,7 +23,6 @@ export default function ExchangeHistoryScreen() {
     () => setIsLoadingSplashScreen(getExchangeHistoryIsLoading),
     [getExchangeHistoryIsLoading]
   );
-  console.log(exchange);
   useEffect(() => {
     getExchangeHistory(setTemp, null, setNextDataUrl, setPreviousDataUrl);
   }, []);
@@ -109,7 +106,7 @@ export default function ExchangeHistoryScreen() {
             </SubmitButton>
           </div>
           <div className="w-full h-full mt-3 ">
-            <Filters status={status} setFilterCards={setFilterCards} />
+            <Filters setFilterCards={setFilterCards} />
           </div>
         </div>
 
@@ -139,7 +136,7 @@ export default function ExchangeHistoryScreen() {
         <div
           className={`md:col-span-2 lg:col-span-1 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
         >
-          <Filters status={status} setFilterCards={setFilterCards} />
+          <Filters setFilterCards={setFilterCards} />
         </div>
 
         <div

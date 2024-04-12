@@ -6,7 +6,6 @@ import Filters from "../../components/pages/layout/Reports/pages/WithdrawalHisto
 import Cards from "../../components/pages/layout/Reports/pages/WithdrawalHistoryScreen/Cards";
 import { useGetWithdrawHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
-import { useGetStatuses } from "../../apis/common/status/hooks";
 export default function WithdrawalHistoryScreen() {
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const theme = useThemeState();
@@ -39,14 +38,6 @@ export default function WithdrawalHistoryScreen() {
     );
   }, []);
 
-  const { getStatuses, isLoading: getStatusesIsLoading } = useGetStatuses();
-  useEffect(
-    () => setIsLoadingSplashScreen(getStatusesIsLoading),
-    [getStatusesIsLoading]
-  );
-  useEffect(() => {
-    getStatuses(setStatus);
-  }, []);
   function findIntersection(array1, array2, array3) {
     const set1 = new Set(array1.map((obj) => JSON.stringify(obj)));
     const set2 = new Set(array2.map((obj) => JSON.stringify(obj)));
@@ -115,7 +106,7 @@ export default function WithdrawalHistoryScreen() {
             </SubmitButton>
           </div>
           <div className="w-full h-full mt-3 ">
-            <Filters status={status} setFilterCards={setFilterCards} />
+            <Filters setFilterCards={setFilterCards} />
           </div>
         </div>
 
@@ -145,7 +136,7 @@ export default function WithdrawalHistoryScreen() {
         <div
           className={`md:col-span-2 lg:col-span-1 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
         >
-          <Filters status={status} setFilterCards={setFilterCards} />
+          <Filters setFilterCards={setFilterCards} />
         </div>
 
         <div
