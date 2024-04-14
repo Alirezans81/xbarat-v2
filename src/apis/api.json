@@ -27,5 +27,6 @@
   "check-email": "https://xbarat-back.pro/api/user/forget-password-check/",
   "send-email": "https://api.emailjs.com/api/v1.0/email/send",
   "forgot-password": "https://xbarat-back.pro/api/user/forget-password-set/",
-  "top-5-report": "https://xbarat-back.pro/api/report/"
+  "top-5-report": "https://xbarat-back.pro/api/report/",
+  "change-password": "https://xbarat-back.pro/api/user/change-password/"
 }       

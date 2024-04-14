@@ -349,12 +349,11 @@ body {
 .button {
   font-family: manjari-bold;
   padding-inline: 20px;
-  padding-top: 17px;
+  padding-top: 15px;
   padding-bottom: 8px;
   border-radius: 10px;
   background: linear-gradient(157deg, #0A8DFF 0%, #619AEF 100%);
   color: #fff;
-  font-size: 1.1rem;
 }
 
 .disabled-button {
