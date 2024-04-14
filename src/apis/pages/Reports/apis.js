@@ -5,6 +5,8 @@ const api =
   process.env.REACT_APP_MODE === "PRODUCTION"
     ? require("../../api-dev.json")
     : require("../../api.json");
+const limit = require("../../pagination/limit.json");
+
 const user = JSON.parse(window.localStorage.getItem("userInfo"));
 
 const getDepositHistorySingleUser = (filtersObject) => {
@@ -14,6 +16,7 @@ const getDepositHistorySingleUser = (filtersObject) => {
   });
   return axios.get(urlWithQueries);
 };
+
 const getWithdrawHistorySingleUser = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["withdraw"] + "?user_sender=" + user.username,
@@ -21,6 +24,7 @@ const getWithdrawHistorySingleUser = (filtersObject) => {
   });
   return axios.get(urlWithQueries);
 };
+
 const getExchangeHistorySingleUser = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["exchange"] + "?user=" + user.username,
@@ -28,6 +32,7 @@ const getExchangeHistorySingleUser = (filtersObject) => {
   });
   return axios.get(urlWithQueries);
 };
+
 const getTransferHistorySingleUser = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["transfer"] + "?user_sender=" + user.username,
@@ -35,10 +40,13 @@ const getTransferHistorySingleUser = (filtersObject) => {
   });
   return axios.get(urlWithQueries);
 };
+
 const getDepositHistory = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["deposit"],
-    query: filtersObject || {},
+    query: { limit: limit["deposit"], ...filtersObject } || {
+      limit: limit["deposit"],
+    },
   });
 
   return axios.get(urlWithQueries);
@@ -47,7 +55,9 @@ const getDepositHistory = (filtersObject) => {
 const getWithdrawHistory = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["withdrawal"],
-    query: filtersObject || {},
+    query: { limit: limit["withdrawal"], ...filtersObject } || {
+      limit: limit["withdrawal"],
+    },
   });
 
   return axios.get(urlWithQueries);
@@ -56,7 +66,9 @@ const getWithdrawHistory = (filtersObject) => {
 const getTransferHistory = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["transfer"],
-    query: filtersObject || {},
+    query: { limit: limit["transfer"], ...filtersObject } || {
+      limit: limit["transfer"],
+    },
   });
 
   return axios.get(urlWithQueries);
@@ -65,7 +77,9 @@ const getTransferHistory = (filtersObject) => {
 const getExchangeHistory = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["exchange"],
-    query: filtersObject || {},
+    query: { limit: limit["exchange"], ...filtersObject } || {
+      limit: limit["exchange"],
+    },
   });
 
   return axios.get(urlWithQueries);
