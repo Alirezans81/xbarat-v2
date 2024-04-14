@@ -4,7 +4,6 @@ import { useDirectionState } from "../../Providers/DirectionProvider";
 import Filters from "../../components/pages/layout/Reports/pages/DepositHistoryScreen/Filters";
 import Cards from "../../components/pages/layout/Reports/pages/DepositHistoryScreen/Cards";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
-import { useGetStatuses } from "../../apis/common/status/hooks";
 import { useGetDepositHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
 export default function DepositHistoryScreen() {
