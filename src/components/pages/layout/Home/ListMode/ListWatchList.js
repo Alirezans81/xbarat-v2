@@ -53,6 +53,7 @@ export default function ListWatchList({
       ? data.watch_list.map((row) => {
           let temp = {};
           temp.title = row.title;
+
           temp.rate = addComma(roundDown(+row.rate, +row.floating_number));
           temp.min_rate = addComma(
             roundDown(+row.min_rate, +row.floating_number)
@@ -60,14 +61,15 @@ export default function ListWatchList({
           temp.max_rate = addComma(
             roundDown(+row.max_rate, +row.floating_number)
           );
-          temp.yesterday_rate_average = addComma(
-            roundDown(+row.yesterday_rate_average, +row.floating_number)
+
+          temp.week_avg_rate = addComma(
+            roundDown(+row.week_avg_rate, +row.floating_number)
           );
-          temp.yesterday_rate_low = addComma(
-            roundDown(+row.yesterday_rate_low, +row.floating_number)
+          temp.week_min_rate = addComma(
+            roundDown(+row.week_min_rate, +row.floating_number)
           );
-          temp.yesterday_rate_high = addComma(
-            roundDown(+row.yesterday_rate_high, +row.floating_number)
+          temp.week_max_rate = addComma(
+            roundDown(+row.week_max_rate, +row.floating_number)
           );
 
           return temp;
