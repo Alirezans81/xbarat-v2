@@ -1,22 +1,70 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../../../Providers/LanguageProvider";
 import CustomDateTimeInput from "../../../../../common/CustomDateTimePicker";
-import { CustomDropdown } from "../../../../../common/CustomDropdown";
+import {
+  CustomDropdown,
+  CustomItem,
+} from "../../../../../common/CustomDropdown";
+import refresh from "../../../../../../Images/rotate-arrow.png";
+import SubmitButton from "../../../../../common/SubmitButton";
+import { useStatusesState } from "../../../../../../Providers/StatusesProvider";
 import { useFontState } from "../../../../../../Providers/FontProvider";
-
-export default function Filters({ selectionRange, setSelectionRange }) {
+import { useCurrenciesState } from "../../../../../../Providers/CurrenciesProvider";
+export default function Filters({ setFilterCards }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const status = useStatusesState();
   const lang = useLanguageState();
+  const [selectionRange, setSelectionRange] = useState();
   const font = useFontState();
+  const currency = useCurrenciesState();
+  const [filterSourceCurrency, setFilterSourceCurrency] = useState("");
+  const [filterTargetCurrency, setFilterTargetCurrency] = useState("");
+
+  const [filterStatus, setFilterStatus] = useState("");
+  const handleFilter = () => {
+    const Filter = {
+      source_currency: filterSourceCurrency,
+      target_currency: filterTargetCurrency,
+      range: selectionRange,
+      clear: false,
+    };
+    console.log(Filter);
+
+    setFilterCards(Filter);
+  };
+  const handleReset = () => {
+    setFilterSourceCurrency("");
+    setFilterTargetCurrency("");
+    setSelectionRange("");
+    const Filter = {
+      clear: true,
+    };
+    setFilterCards(Filter);
+  };
 
   return (
-    <div className="flex flex-col w-full h-full justify-between">
+    <div className="flex flex-col w-full h-full justify-start">
       <div className="flex flex-col">
-        <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
-          {lang["date-&-time"]}
-        </span>
+        <div className="w-full flex flex-row items-center ">
+          <div className="w-7/12 flex justify-start items-end">
+            <span
+              className={`text-${oppositeTheme} text-2xl font-${font}-bold mt-1`}
+            >
+              {lang["date-&-time"]}
+            </span>
+          </div>
+          <div className="w-5/12 flex justify-end items-start">
+            <button
+              className="w-full h-full flex justify-end"
+              rounded={"3xl"}
+              onClick={handleReset}
+            >
+              <img className="w-6 h-6" src={refresh} alt="" />
+            </button>
+          </div>
+        </div>
         <div className="mt-2">
           <div>
             <CustomDateTimeInput
@@ -38,50 +86,123 @@ export default function Filters({ selectionRange, setSelectionRange }) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-5">
         <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
-          {lang["currency"]}
+          {lang["source_currency"]}
         </span>
         <div className="mt-2 w-full">
           <div className="w-full flex">
-            <CustomDropdown className="justify-between" />
-          </div>
-          <div className="w-full flex mt-2">
-            <CustomDropdown className="justify-between" />
+            <CustomDropdown
+              className="justify-between"
+              label={
+                <div>
+                  <div
+                    className={
+                      filterSourceCurrency ? "flex flex-row" : "hidden"
+                    }
+                  >
+                    <img
+                      className={`w-7 h-7 -mt-1.5 `}
+                      src={filterSourceCurrency.sym_pic_gray}
+                      alt=""
+                    />
+                    <span>{filterSourceCurrency.abbreviation}</span>
+                  </div>
+                  <div
+                    className={
+                      filterSourceCurrency ? "hidden" : "flex flex-row"
+                    }
+                  >
+                    <span></span>
+                  </div>
+                </div>
+              }
+            >
+              {currency.map((data) => (
+                <CustomItem
+                  onClick={() => setFilterSourceCurrency(data)}
+                  className={`bg-${theme} h-fit`}
+                >
+                  <div className="flex flex-row  w-10 h-10 justify-center">
+                    <img
+                      className="w-fit h-fit"
+                      alt=""
+                      src={data.sym_pic_gray}
+                    />
+                    <span className=" w-fit h-fit mt-3 ml-2">
+                      {data.abbreviation}
+                    </span>
+                  </div>
+                </CustomItem>
+              ))}
+            </CustomDropdown>
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-5">
         <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
-          {lang["amount"]}
+          {lang["target_currency"]}
         </span>
         <div className="mt-2 w-full">
           <div className="w-full flex">
-            <input
-              className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
-              placeholder={lang["source"]}
-            />
-          </div>
-          <div className="w-full flex mt-2">
-            <input
-              className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
-              placeholder={lang["target"]}
-            />
+            <CustomDropdown
+              className="justify-between"
+              label={
+                <div>
+                  <div
+                    className={
+                      filterTargetCurrency ? "flex flex-row" : "hidden"
+                    }
+                  >
+                    <img
+                      className={`w-7 h-7 -mt-1.5 `}
+                      src={filterTargetCurrency.sym_pic_gray}
+                      alt=""
+                    />
+                    <span>{filterTargetCurrency.abbreviation}</span>
+                  </div>
+                  <div
+                    className={
+                      filterTargetCurrency ? "hidden" : "flex flex-row"
+                    }
+                  >
+                    <span></span>
+                  </div>
+                </div>
+              }
+            >
+              {currency.map((data) => (
+                <CustomItem
+                  onClick={() => setFilterTargetCurrency(data)}
+                  className={`bg-${theme} h-fit`}
+                >
+                  <div className="flex flex-row  w-10 h-10 justify-center">
+                    <img
+                      className="w-fit h-fit"
+                      alt=""
+                      src={data.sym_pic_gray}
+                    />
+                    <span className=" w-fit h-fit mt-3 ml-2">
+                      {data.abbreviation}
+                    </span>
+                  </div>
+                </CustomItem>
+              ))}
+            </CustomDropdown>
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
-        <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
-          {lang["rate"]}
-        </span>
-        <div className="mt-2 w-full">
-          <div className="w-full flex">
-            <input
-              className={`flex-1 hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 outline-white rounded-lg w-full pt-2 pb-1`}
-              placeholder={lang["rate"]}
-            />
-          </div>
-        </div>
+
+      <div
+        className={"w-full h-1/3 justify-start align-center flex flex-col mt-5"}
+      >
+        <SubmitButton
+          rounded={"3xl"}
+          className={"w-full h-1/6"}
+          onClick={handleFilter}
+        >
+          {lang["submit"]}
+        </SubmitButton>
       </div>
     </div>
   );

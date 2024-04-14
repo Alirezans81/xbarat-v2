@@ -5,7 +5,9 @@ import {
   getExchangeHistory,
   getTop5Report,
   getDepositHistorySingleUser,
+  getExchangeHistorySingleUser,
   getWithdrawHistorySingleUser,
+  getTransferHistorySingleUser,
 } from "./apis";
 import { useState } from "react";
 
@@ -59,6 +61,33 @@ const useGetDepositHistorySingleUser = () => {
 
   return { getDepositHistorySingleUser: fetch, error, isLoading };
 };
+
+const useGetExchangeHistorySingleUser = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (setState, setDataCount, setPreviousUrl, setNextUrl) => {
+    setIsLoading(true);
+    await getExchangeHistorySingleUser()
+      .then((data) => {
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        setState(data.data.results);
+        setDataCount && setDataCount(data.data.count);
+        setPreviousUrl && setPreviousUrl(data.data.previous);
+        setNextUrl && setNextUrl(data.data.next);
+        setIsLoading(false);
+        return data.data.results;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { getExchangeHistorySingleUser: fetch, error, isLoading };
+};
+
 const useGetWithdrawHistorySingleUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -83,6 +112,31 @@ const useGetWithdrawHistorySingleUser = () => {
   };
 
   return { getWithdrawHistorySingleUser: fetch, error, isLoading };
+};
+const useGetTransferHistorySingleUser = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (setState, setDataCount, setPreviousUrl, setNextUrl) => {
+    setIsLoading(true);
+    await getTransferHistorySingleUser()
+      .then((data) => {
+        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        setState(data.data.results);
+        setDataCount && setDataCount(data.data.count);
+        setPreviousUrl && setPreviousUrl(data.data.previous);
+        setNextUrl && setNextUrl(data.data.next);
+        setIsLoading(false);
+        return data.data.results;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { getTransferHistorySingleUser: fetch, error, isLoading };
 };
 
 const useGetTransferHistory = () => {
@@ -185,4 +239,6 @@ export {
   useGetDepositHistorySingleUser,
   useGetTop5Report,
   useGetWithdrawHistorySingleUser,
+  useGetExchangeHistorySingleUser,
+  useGetTransferHistorySingleUser,
 };

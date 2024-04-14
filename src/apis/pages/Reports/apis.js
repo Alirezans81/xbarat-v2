@@ -21,6 +21,20 @@ const getWithdrawHistorySingleUser = (filtersObject) => {
   });
   return axios.get(urlWithQueries);
 };
+const getExchangeHistorySingleUser = (filtersObject) => {
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["exchange"] + "?user=" + user.username,
+    query: filtersObject || {},
+  });
+  return axios.get(urlWithQueries);
+};
+const getTransferHistorySingleUser = (filtersObject) => {
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["transfer"] + "?user_sender=" + user.username,
+    query: filtersObject || {},
+  });
+  return axios.get(urlWithQueries);
+};
 const getDepositHistory = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["deposit"],
@@ -50,7 +64,7 @@ const getTransferHistory = (filtersObject) => {
 
 const getExchangeHistory = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
-    url: api["exchnage"],
+    url: api["exchange"],
     query: filtersObject || {},
   });
 
@@ -74,4 +88,6 @@ export {
   getTop5Report,
   getDepositHistorySingleUser,
   getWithdrawHistorySingleUser,
+  getExchangeHistorySingleUser,
+  getTransferHistorySingleUser,
 };

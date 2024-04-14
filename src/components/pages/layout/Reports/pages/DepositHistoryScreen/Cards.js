@@ -4,23 +4,22 @@ import { useLanguageState } from "../../../../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../../../../Providers/ThemeProvider";
 import { useFontState } from "../../../../../../Providers/FontProvider";
 export default function Cards({ data }) {
-  const [deposit, setDeposit] = useState([]);
-  // useEffect(() => {
-  //   setDeposit(data);
-  // }, [data]);
-
   const theme = useThemeState();
-
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
+  const [deposit, setDeposit] = useState([]);
+
+  useEffect(() => {
+    setDeposit(data);
+  }, [data]);
 
   return (
     <>
       <div
         className={
           deposit.length !== 0
-            ? "w-full h-full grid grid-cols-3 mb-14"
+            ? "w-full h-full grid lg:grid-cols-3 mb-14 xs:grid-cols-1"
             : "hidden"
         }
       >

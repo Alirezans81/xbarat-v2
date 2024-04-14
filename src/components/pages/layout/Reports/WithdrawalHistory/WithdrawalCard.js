@@ -29,7 +29,7 @@ export default function WithdrawalCard({ lang, data }) {
           <span className="">{lang["from"] || "from"}</span>
           <span className="mx-1.5">{data.user_sender_code}</span>
         </div>
-        <RequestStatus status={data.status} />
+        <RequestStatus status={data.status_title} />
       </div>
       <span className={`font-${font}-regular text-sm text-gray mt-20 mb-2`}>
         {convertDateTime(data.datetime_done)}
