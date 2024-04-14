@@ -33,9 +33,9 @@ export default function ListWatchList({
     lang["rate"],
     lang["low"],
     lang["high"],
-    lang["yesterday-avg"],
-    lang["yesterday-low"],
-    lang["yesterday-high"],
+    lang["week-avg"],
+    lang["week-low"],
+    lang["week-high"],
   ];
   const [data, setData] = useState([]);
 
