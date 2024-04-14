@@ -232,5 +232,7 @@
   "wallet-tank-paypal-description-code": "Please pay your requested amount in paypal system through \"friends and family\" option to the above email address so that your transfer process can be done with the lowest possible fee",
   "type-of-account": "Type of Account",
   "delete-wallet-tank-modal-message": "Are you sure to delete the card",
-  "edit-card": "Edit Card"
+  "edit-card": "Edit Card",
+  "accept-policy": "Do you accept privacy and policies rules in order to work with the platform",
+  "password-updated": "Your password has been updated"
 }

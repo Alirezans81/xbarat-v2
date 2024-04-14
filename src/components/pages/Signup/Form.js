@@ -174,6 +174,9 @@ export default function Form({ setIsSplashScreenLoading }) {
     return result;
   };
 
+  const [acceptedPolicy, setAcceptedPolicy] = useState(false);
+  const toggleAcceptedPolicy = () => setAcceptedPolicy((prev) => !prev);
+
   return (
     <Formik
       initialValues={{
@@ -382,7 +385,34 @@ export default function Form({ setIsSplashScreenLoading }) {
               )}
             </>
           )}
-          <button type="submit" className="button w-full mt-10">
+          <div className="w-full mt-3">
+            <div className="flex gap-x-2 items-start">
+              <button
+                className="mt-0.5"
+                type="button"
+                onClick={toggleAcceptedPolicy}
+              >
+                <img
+                  className="w-4 h-4 md:w-5 md:h-5"
+                  src={require(`../../../Images/pages/Login/check-${acceptedPolicy}.png`)}
+                />
+              </button>
+              <a
+                href="https://xbarat.net/privacy-policy"
+                className={`flex-1 font-${font}-regular pt-1 text-blue underline underline-offset-2 text-sm`}
+                target="_blank"
+              >
+                {lang["accept-policy"] + "?"}
+              </a>
+            </div>
+          </div>
+          <button
+            type="submit"
+            disabled={!acceptedPolicy}
+            className={`${
+              acceptedPolicy ? "button" : "disabled-button"
+            } w-full mt-8`}
+          >
             {lang["submit"]}
           </button>
         </form>
