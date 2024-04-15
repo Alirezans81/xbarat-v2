@@ -26,7 +26,7 @@ export default function DepositHistoryScreen() {
   );
 
   useEffect(() => {
-    getDepositHistory(setTemp, null, setNextDataUrl, setPreviousDataUrl);
+    getDepositHistory(setTemp, null, setPreviousDataUrl, setNextDataUrl);
   }, []);
 
   function findIntersection(array1, array2, array3) {
