@@ -6,6 +6,7 @@ import Cards from "../../components/pages/layout/Reports/pages/DepositHistoryScr
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useGetDepositHistory } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
+
 export default function DepositHistoryScreen() {
   const theme = useThemeState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
