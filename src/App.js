@@ -9,7 +9,6 @@ import Layout from "./pages/Layout";
 import OnLoad from "./pages/OnLoad";
 import Home from "./pages/Home";
 import Wallet from "./pages/Wallet";
-import Temp from "./pages/temp";
 import Reports from "./pages/Reports";
 import ExchangeHistoryScreen from "./pages/Reports/ExchangeHistoryScreen";
 import DepositHistoryScreen from "./pages/Reports/DepositHistoryScreen";
@@ -101,7 +100,6 @@ export default function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/pagination" element={<Temp />} />
 
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/wait-link" element={<WaitLink />} />
