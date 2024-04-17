@@ -18,6 +18,7 @@ export default function DepositHistoryScreen() {
   const [deposits, setDeposits] = useState("");
   const [nextDataUrl, setNextDataUrl] = useState();
   const [previousDataUrl, setPreviousDataUrl] = useState();
+  const [offset, setOffset] = useState(0);
   const [dataCount, setDataCount] = useState("");
   const [filterCards, setFilterCards] = useState("");
   const { getDepositHistory, isLoading: getDepositHistoryIsLoading } =
@@ -32,9 +33,10 @@ export default function DepositHistoryScreen() {
       setTemp,
       setDataCount,
       setPreviousDataUrl,
-      setNextDataUrl
+      setNextDataUrl,
+      offset
     );
-  }, []);
+  }, [offset]);
 
   function findIntersection(array1, array2, array3) {
     const set1 = new Set(array1.map((obj) => JSON.stringify(obj)));
@@ -147,6 +149,7 @@ export default function DepositHistoryScreen() {
             <CustomPagination
               totalPages={Math.ceil(dataCount / limit["deposit"])}
               itemsPerPage={limit["deposit"]}
+              setOffset={setOffset}
             />
           </div>
         </div>

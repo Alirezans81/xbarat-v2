@@ -1,4 +1,5 @@
 import axios from "axios";
+import { stringify } from "postcss";
 import queryString from "query-string";
 
 const api =
@@ -38,16 +39,18 @@ const getTransferHistorySingleUser = (filtersObject) => {
     url: api["transfer"] + "?user_sender=" + user.username,
     query: filtersObject || {},
   });
+
   return axios.get(urlWithQueries);
 };
 
 const getDepositHistory = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["deposit"],
-    query: { limit: limit["deposit"], ...filtersObject } || {
+    query: { limit: limit["deposit"], offset: filtersObject } || {
       limit: limit["deposit"],
     },
   });
+  console.log(urlWithQueries);
 
   return axios.get(urlWithQueries);
 };
