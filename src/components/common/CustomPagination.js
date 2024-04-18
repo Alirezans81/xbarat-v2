@@ -19,7 +19,7 @@ export default function CustomPagination({
   };
 
   return (
-    <div className={`flex overflow-x-auto sm:justify-center bg-${theme}`}>
+    <div className={`flex overflow-x-auto sm:justify-center bg-none w-full`}>
       <Pagination
         layout="pagination"
         previousLabel=""
@@ -28,6 +28,7 @@ export default function CustomPagination({
         totalPages={totalPages}
         onPageChange={handlePageChange}
         showIcons
+        className="flex items-center space-x-3"
       />
     </div>
   );
