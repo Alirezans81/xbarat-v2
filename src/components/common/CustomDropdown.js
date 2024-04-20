@@ -71,8 +71,8 @@ function CustomDropdown({ children, label, className, disabled, searchable }) {
       style={buttonStyle}
       disabled={disabled}
     >
-      <div className="max-h-40 pr-1.5 py-1.5">
-        <div dir="ltr" className="max-h-36 overflow-y-scroll">
+      <div className="max-h-64 pr-1.5 py-1.5">
+        <div dir="ltr" className="max-h-60 overflow-y-scroll">
           {searchable && (
             <div className="w-full pl-2 pt-1 pr-0.5 mb-2 flex relative">
               <Formik initialValues={{ search: "" }}>

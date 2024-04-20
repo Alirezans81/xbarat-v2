@@ -65,8 +65,8 @@ function CustomDropdown2({ children, label, className, disabled }) {
       style={buttonStyle}
       disabled={disabled}
     >
-      <div className="max-h-40 pr-1.5 py-2">
-        <div dir="ltr" className="max-h-36 overflow-y-scroll">
+      <div className="max-h-64 pr-1.5 py-2">
+        <div dir="ltr" className="max-h-60 overflow-y-scroll">
           {children}
         </div>
       </div>
