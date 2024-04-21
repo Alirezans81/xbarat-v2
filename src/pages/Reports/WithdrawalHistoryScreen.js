@@ -6,8 +6,12 @@ import Filters from "../../components/pages/layout/Reports/pages/WithdrawalHisto
 import Cards from "../../components/pages/layout/Reports/pages/WithdrawalHistoryScreen/Cards";
 import { useGetWithdrawHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
+import CustomPagination from "../../components/common/CustomPagination";
 export default function WithdrawalHistoryScreen() {
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const limit = require("../../apis/pagination/limit.json");
+  const [dataCount, setDataCount] = useState(0);
+  const [offset, setOffset] = useState(0);
   const theme = useThemeState();
   const { one: oneDirection } = useDirectionState();
 
@@ -32,11 +36,11 @@ export default function WithdrawalHistoryScreen() {
   useEffect(() => {
     getWithdrawHistorySingleUser(
       setTemp,
-      null,
+      setDataCount,
       setNextDataUrl,
       setPreviousDataUrl
     );
-  }, []);
+  }, [offset]);
 
   function findIntersection(array1, array2, array3) {
     const set1 = new Set(array1.map((obj) => JSON.stringify(obj)));
@@ -144,6 +148,19 @@ export default function WithdrawalHistoryScreen() {
         >
           <div className="overflow-y-auto h-full pr-3">
             <Cards data={withdraw} />
+            <div
+              className={
+                dataCount > limit["withdrawal"]
+                  ? `w-full h-1/6 flex items-center justify-center`
+                  : "hidden"
+              }
+            >
+              <CustomPagination
+                totalPages={Math.ceil(dataCount / limit["withdrawal"])}
+                itemsPerPage={limit["withdrawal"]}
+                setOffset={setOffset}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -146,12 +146,20 @@ export default function DepositHistoryScreen() {
         >
           <div className="overflow-y-auto h-full pr-3">
             <Cards data={deposits} />
-            <div className="w-full h-1/6 flex items-center justify-center">
-              <CustomPagination
-                totalPages={Math.ceil(dataCount / limit["deposit"])}
-                itemsPerPage={limit["deposit"]}
-                setOffset={setOffset}
-              />
+            <div
+              className={
+                dataCount > limit["deposit"]
+                  ? `w-3/4 h-1/6 fixed bottom-0`
+                  : "hidden"
+              }
+            >
+              <div className="w-2/3 lg:w-full h-full flex items-center justify-center">
+                <CustomPagination
+                  totalPages={Math.ceil(dataCount / limit["deposit"])}
+                  itemsPerPage={limit["deposit"]}
+                  setOffset={setOffset}
+                />
+              </div>
             </div>
           </div>
         </div>

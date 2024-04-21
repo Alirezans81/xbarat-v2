@@ -6,14 +6,18 @@ import Cards from "../../components/pages/layout/Reports/pages/DepositHistoryScr
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useGetTransferHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
+import CustomPagination from "../../components/common/CustomPagination";
 export default function DepositHistoryScreen() {
   const theme = useThemeState();
+  const limit = require("../../apis/pagination/limit.json");
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { one: oneDirection } = useDirectionState();
   const [temp, setTemp] = useState("");
   const [cards, setCards] = useState(true);
   const [status, setStatus] = useState("");
-  const [deposits, setDeposits] = useState("");
+  const [transfers, setTransfers] = useState("");
+  const [dataCount, setDataCount] = useState(0);
+  const [offset, setOffset] = useState(0);
   const [nextDataUrl, setNextDataUrl] = useState();
   const [previousDataUrl, setPreviousDataUrl] = useState();
   const [filterCards, setFilterCards] = useState("");
@@ -30,11 +34,11 @@ export default function DepositHistoryScreen() {
   useEffect(() => {
     getTransferHistorySingleUser(
       setTemp,
-      null,
+      setDataCount,
       setNextDataUrl,
       setPreviousDataUrl
     );
-  }, []);
+  }, [offset]);
 
   function findIntersection(array1, array2, array3) {
     const set1 = new Set(array1.map((obj) => JSON.stringify(obj)));
@@ -74,16 +78,16 @@ export default function DepositHistoryScreen() {
       console.log(statusFilter, currency, TimeRange);
       const intersection = findIntersection(statusFilter, currency, TimeRange);
       console.log(intersection);
-      setDeposits(intersection);
+      setTransfers(intersection);
     }
     if (filterCards && filterCards.clear) {
-      setDeposits(temp);
+      setTransfers(temp);
     }
   }, [filterCards]);
 
   useEffect(() => {
     if (temp) {
-      setDeposits(temp);
+      setTransfers(temp);
     }
   }, [temp]);
   return (
@@ -127,7 +131,7 @@ export default function DepositHistoryScreen() {
             </SubmitButton>
           </div>
           <div className="overflow-y-auto h-full pr-3 mt-3 w-full">
-            <Cards data={deposits} />
+            <Cards data={transfers} />
           </div>
         </div>
       </div>
@@ -143,7 +147,20 @@ export default function DepositHistoryScreen() {
           className={`lg:col-span-4 md:col-span-3 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4`}
         >
           <div className="overflow-y-auto h-full pr-3">
-            <Cards data={deposits} />
+            <Cards data={transfers} />
+            <div
+              className={
+                dataCount > limit["transfer"]
+                  ? `w-full h-1/6 flex items-center justify-center`
+                  : "hidden"
+              }
+            >
+              <CustomPagination
+                totalPages={Math.ceil(dataCount / limit["transfer"])}
+                itemsPerPage={limit["transfer"]}
+                setOffset={setOffset}
+              />
+            </div>
           </div>
         </div>
       </div>

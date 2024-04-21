@@ -18,7 +18,7 @@ export default function Cards({ data }) {
       <div
         className={
           exchange.length !== 0
-            ? "w-full h-full grid lg:grid-cols-3 mb-14 xs:grid-cols-1"
+            ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1"
             : "hidden"
         }
       >
