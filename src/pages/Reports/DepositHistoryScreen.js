@@ -6,8 +6,9 @@ import Cards from "../../components/pages/layout/Reports/pages/DepositHistoryScr
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useGetDepositHistory } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
-
+import CustomPagination from "../../components/common/CustomPagination";
 export default function DepositHistoryScreen() {
+  const limit = require("../../apis/pagination/limit.json");
   const theme = useThemeState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { one: oneDirection } = useDirectionState();
@@ -17,6 +18,8 @@ export default function DepositHistoryScreen() {
   const [deposits, setDeposits] = useState("");
   const [nextDataUrl, setNextDataUrl] = useState();
   const [previousDataUrl, setPreviousDataUrl] = useState();
+  const [offset, setOffset] = useState(0);
+  const [dataCount, setDataCount] = useState("");
   const [filterCards, setFilterCards] = useState("");
   const { getDepositHistory, isLoading: getDepositHistoryIsLoading } =
     useGetDepositHistory();
@@ -26,8 +29,14 @@ export default function DepositHistoryScreen() {
   );
 
   useEffect(() => {
-    getDepositHistory(setTemp, null, setNextDataUrl, setPreviousDataUrl);
-  }, []);
+    getDepositHistory(
+      setTemp,
+      setDataCount,
+      setPreviousDataUrl,
+      setNextDataUrl,
+      offset
+    );
+  }, [offset]);
 
   function findIntersection(array1, array2, array3) {
     const set1 = new Set(array1.map((obj) => JSON.stringify(obj)));
@@ -137,6 +146,21 @@ export default function DepositHistoryScreen() {
         >
           <div className="overflow-y-auto h-full pr-3">
             <Cards data={deposits} />
+            <div
+              className={
+                dataCount > limit["deposit"]
+                  ? `w-3/4 h-1/6 fixed bottom-0`
+                  : "hidden"
+              }
+            >
+              <div className="w-2/3 lg:w-full h-full flex items-center justify-center">
+                <CustomPagination
+                  totalPages={Math.ceil(dataCount / limit["deposit"])}
+                  itemsPerPage={limit["deposit"]}
+                  setOffset={setOffset}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

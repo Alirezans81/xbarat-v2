@@ -6,9 +6,11 @@ import Cards from "../../components/pages/layout/Reports/pages/ExchangeHistorySc
 import { useGetExchangeHistory } from "../../apis/pages/Reports/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import SubmitButton from "../../components/common/SubmitButton";
-
+import CustomPagination from "../../components/common/CustomPagination";
 export default function ExchangeHistoryScreen() {
   const theme = useThemeState();
+  const limit = require("../../apis/pagination/limit.json");
+
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { one: oneDirection } = useDirectionState();
   const [temp, setTemp] = useState("");
@@ -17,6 +19,8 @@ export default function ExchangeHistoryScreen() {
   const [nextDataUrl, setNextDataUrl] = useState();
   const [previousDataUrl, setPreviousDataUrl] = useState();
   const [filterCards, setFilterCards] = useState("");
+  const [dataCount, setDataCount] = useState(0);
+  const [offset, setOffset] = useState(0);
   const { getExchangeHistory, isLoading: getExchangeHistoryIsLoading } =
     useGetExchangeHistory();
   useEffect(
@@ -24,8 +28,13 @@ export default function ExchangeHistoryScreen() {
     [getExchangeHistoryIsLoading]
   );
   useEffect(() => {
-    getExchangeHistory(setTemp, null, setNextDataUrl, setPreviousDataUrl);
-  }, []);
+    getExchangeHistory(
+      setTemp,
+      setDataCount,
+      setNextDataUrl,
+      setPreviousDataUrl
+    );
+  }, [offset]);
 
   function findIntersection(array1, array2, array3) {
     const set1 = new Set(array1.map((obj) => JSON.stringify(obj)));
@@ -144,6 +153,19 @@ export default function ExchangeHistoryScreen() {
         >
           <div className="overflow-y-auto h-full pr-3">
             <Cards data={exchange} />
+            <div
+              className={
+                dataCount > limit["exchange"]
+                  ? `w-full h-1/6 flex items-center justify-center`
+                  : "hidden"
+              }
+            >
+              <CustomPagination
+                totalPages={Math.ceil(dataCount / limit["exchange"])}
+                itemsPerPage={limit["exchange"]}
+                setOffset={setOffset}
+              />
+            </div>
           </div>
         </div>
       </div>
