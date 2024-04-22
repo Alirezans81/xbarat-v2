@@ -44,6 +44,8 @@
   "source_currency": "source currency",
   "target_currency": "target currency",
 
+  "open_filters": "Open Filters",
+  "close_filters": "Close Filters",
   "target": "Target",
   "amount": "Amount",
   "rate": "Rate",

@@ -6,9 +6,11 @@ import Cards from "../../components/pages/layout/Reports/pages/DepositHistoryScr
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useGetTransferHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
+import { useLanguageState } from "../../Providers/LanguageProvider";
 import CustomPagination from "../../components/common/CustomPagination";
 export default function DepositHistoryScreen() {
   const theme = useThemeState();
+  const lang = useLanguageState();
   const limit = require("../../apis/pagination/limit.json");
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { one: oneDirection } = useDirectionState();
@@ -106,7 +108,7 @@ export default function DepositHistoryScreen() {
               className={" mr-2 w-1/4 h-full"}
               rounded={"full"}
             >
-              Close Filters
+              {lang["close_filters"]}
             </SubmitButton>
           </div>
           <div className="w-full h-full mt-3 ">
@@ -127,7 +129,7 @@ export default function DepositHistoryScreen() {
               className={" mr-5 w-1/4 h-full"}
               rounded={"full"}
             >
-              Open Filters
+              {lang["open_filters"]}
             </SubmitButton>
           </div>
           <div className="overflow-y-auto h-full pr-3 mt-3 w-full">

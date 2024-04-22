@@ -7,9 +7,11 @@ import Cards from "../../components/pages/layout/Reports/pages/WithdrawalHistory
 import { useGetWithdrawHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
 import CustomPagination from "../../components/common/CustomPagination";
+import { useLanguageState } from "../../Providers/LanguageProvider";
 export default function WithdrawalHistoryScreen() {
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const limit = require("../../apis/pagination/limit.json");
+  const lang = useLanguageState();
   const [dataCount, setDataCount] = useState(0);
   const [offset, setOffset] = useState(0);
   const theme = useThemeState();
@@ -106,7 +108,7 @@ export default function WithdrawalHistoryScreen() {
               className={" mr-2 w-1/4 h-full"}
               rounded={"full"}
             >
-              Close Filters
+              {lang["close_filters"]}
             </SubmitButton>
           </div>
           <div className="w-full h-full mt-3 ">
@@ -127,7 +129,7 @@ export default function WithdrawalHistoryScreen() {
               className={" mr-5 w-1/4 h-full"}
               rounded={"full"}
             >
-              Open Filters
+              {lang["open_filters"]}
             </SubmitButton>
           </div>
           <div className="overflow-y-auto h-full pr-3 mt-3 w-full">

@@ -6,10 +6,12 @@ import Cards from "../../components/pages/layout/Reports/pages/DepositHistoryScr
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useGetDepositHistory } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
+import { useLanguageState } from "../../Providers/LanguageProvider";
 import CustomPagination from "../../components/common/CustomPagination";
 export default function DepositHistoryScreen() {
   const limit = require("../../apis/pagination/limit.json");
   const theme = useThemeState();
+  const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { one: oneDirection } = useDirectionState();
   const [temp, setTemp] = useState("");
@@ -104,7 +106,7 @@ export default function DepositHistoryScreen() {
               className={" mr-2 w-1/4 h-full"}
               rounded={"full"}
             >
-              Close Filters
+              {lang["close_filters"]}
             </SubmitButton>
           </div>
           <div className="w-full h-full mt-3 ">
@@ -125,16 +127,31 @@ export default function DepositHistoryScreen() {
               className={" mr-5 w-1/4 h-full"}
               rounded={"full"}
             >
-              Open Filters
+              {lang["open_filters"]}
             </SubmitButton>
           </div>
           <div className="overflow-y-auto h-full pr-3 mt-3 w-full">
             <Cards data={deposits} />
+            <div
+              className={
+                dataCount > limit["deposit"]
+                  ? `w-full  h-1/6 fixed bottom-0`
+                  : "hidden"
+              }
+            >
+              <div className="w-full h-full flex items-center">
+                <CustomPagination
+                  totalPages={Math.ceil(dataCount / limit["deposit"])}
+                  itemsPerPage={limit["deposit"]}
+                  setOffset={setOffset}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="hidden md:grid w-full h-full  grid-cols-5 grid-rows-1 gap-10">
+      <div className="hidden md:grid w-full h-full grid-cols-5 grid-rows-1 gap-10">
         <div
           className={`md:col-span-2 lg:col-span-1 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
         >
@@ -142,7 +159,7 @@ export default function DepositHistoryScreen() {
         </div>
 
         <div
-          className={`lg:col-span-4 md:col-span-3 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4`}
+          className={`lg:col-span-4 md:col-span-3 row-span-1 bg-${theme} rounded-${oneDirection}-3xl`}
         >
           <div className="overflow-y-auto h-full pr-3">
             <Cards data={deposits} />
@@ -153,7 +170,7 @@ export default function DepositHistoryScreen() {
                   : "hidden"
               }
             >
-              <div className="w-2/3 lg:w-full h-full flex items-center justify-center">
+              <div className="w-full h-full flex items-center justify-center">
                 <CustomPagination
                   totalPages={Math.ceil(dataCount / limit["deposit"])}
                   itemsPerPage={limit["deposit"]}

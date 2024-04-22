@@ -7,8 +7,10 @@ export default function CustomPagination({
   itemsPerPage,
   setOffset,
 }) {
+  const theme = useThemeState();
+  const oppositeTheme = theme === "dark" ? "light" : "dark";
   const style = {
-    base: "",
+    base: `bg-red w-full h-full flex justify-center items-center `,
     layout: {
       table: {
         base: "text-sm text-gray-700 dark:text-gray-400",
@@ -16,7 +18,7 @@ export default function CustomPagination({
       },
     },
     pages: {
-      base: "xs:mt-0 mt-2 inline-flex items-center -space-x-px",
+      base: "xs:mt-0 mt-2 inline-flex items-center -space-x-px ",
       showIcon: "inline-flex",
       previous: {
         base: "ml-0 rounded-l-lg border border-gray-300 bg-white px-3 py-2 leading-tight text-gray-500 enabled:hover:bg-gray-100 enabled:hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 enabled:dark:hover:bg-gray-700 enabled:dark:hover:text-white",
@@ -34,9 +36,6 @@ export default function CustomPagination({
       },
     },
   };
-  const theme = useThemeState();
-  const oppositeTheme = theme === "dark" ? "light" : "dark";
-
   const [currentPage, setCurrentPage] = useState(1);
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -55,7 +54,7 @@ export default function CustomPagination({
         totalPages={totalPages}
         onPageChange={handlePageChange}
         showIcons
-        style={style}
+        theme={style}
         className="flex items-center space-x-3"
       />
     </div>

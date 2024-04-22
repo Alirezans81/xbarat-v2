@@ -6,11 +6,12 @@ import Cards from "../../components/pages/layout/Reports/pages/ExchangeHistorySc
 import { useGetExchangeHistory } from "../../apis/pages/Reports/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import SubmitButton from "../../components/common/SubmitButton";
+import { useLanguageState } from "../../Providers/LanguageProvider";
 import CustomPagination from "../../components/common/CustomPagination";
 export default function ExchangeHistoryScreen() {
   const theme = useThemeState();
   const limit = require("../../apis/pagination/limit.json");
-
+  const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { one: oneDirection } = useDirectionState();
   const [temp, setTemp] = useState("");
@@ -111,7 +112,7 @@ export default function ExchangeHistoryScreen() {
               className={" mr-2 w-1/4 h-full"}
               rounded={"full"}
             >
-              Close Filters
+              {lang["close_filters"]}
             </SubmitButton>
           </div>
           <div className="w-full h-full mt-3 ">
@@ -132,7 +133,7 @@ export default function ExchangeHistoryScreen() {
               className={" mr-5 w-1/4 h-full"}
               rounded={"full"}
             >
-              Open Filters
+              {lang["open_filters"]}
             </SubmitButton>
           </div>
           <div className="overflow-y-auto h-full pr-3 mt-3 w-full">
