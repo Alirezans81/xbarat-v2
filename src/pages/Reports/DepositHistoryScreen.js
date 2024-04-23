@@ -90,6 +90,7 @@ export default function DepositHistoryScreen() {
   }, [temp]);
   return (
     <>
+      {/* mobile phone */}
       <div className="grid md:hidden w-full h-full grid-cols-5 grid-rows-1 gap-10 px-8 py-2">
         <div
           className={
@@ -101,7 +102,7 @@ export default function DepositHistoryScreen() {
           <div className="w-full h-10 flex justify-end items-center rounded-3xl">
             <SubmitButton
               onClick={() => setCards(true)}
-              className={" mr-2 w-1/4 h-full"}
+              className={"mr-0 px-5 h-full"}
               rounded={"full"}
             >
               Close Filters
@@ -122,18 +123,28 @@ export default function DepositHistoryScreen() {
           <div className="h-10 w-full flex justify-end items-center rounded-3xl">
             <SubmitButton
               onClick={() => setCards(false)}
-              className={" mr-5 w-1/4 h-full"}
+              className={"mr-[22px] px-5 py-1 h-full"}
               rounded={"full"}
             >
               Open Filters
             </SubmitButton>
           </div>
-          <div className="overflow-y-auto h-full pr-3 mt-3 w-full">
-            <Cards data={deposits} />
+          <div className="w-full h-full flex flex-col gap-y-4 pb-12 items-center">
+            <div className="flex-1 overflow-y-auto h-full pr-3 mt-3 w-full">
+              <Cards data={deposits} />
+            </div>
+            <div className="w-fit z-10">
+              <CustomPagination
+                totalPages={Math.ceil(dataCount / limit["deposit"])}
+                itemsPerPage={limit["deposit"]}
+                setOffset={setOffset}
+              />
+            </div>
           </div>
         </div>
       </div>
 
+      {/* tablet & laptop */}
       <div className="hidden md:grid w-full h-full  grid-cols-5 grid-rows-1 gap-10">
         <div
           className={`md:col-span-2 lg:col-span-1 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
@@ -142,9 +153,9 @@ export default function DepositHistoryScreen() {
         </div>
 
         <div
-          className={`lg:col-span-4 md:col-span-3 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4`}
+          className={`flex flex-col gap-y-4 lg:col-span-4 md:col-span-3 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4`}
         >
-          <div className="overflow-y-auto h-full pr-3">
+          <div className="flex-1 overflow-y-auto pr-3">
             <Cards data={deposits} />
             <div
               className={
@@ -152,15 +163,14 @@ export default function DepositHistoryScreen() {
                   ? `w-3/4 h-1/6 fixed bottom-0`
                   : "hidden"
               }
-            >
-              <div className="w-2/3 lg:w-full h-full flex items-center justify-center">
-                <CustomPagination
-                  totalPages={Math.ceil(dataCount / limit["deposit"])}
-                  itemsPerPage={limit["deposit"]}
-                  setOffset={setOffset}
-                />
-              </div>
-            </div>
+            ></div>
+          </div>
+          <div className="w-full flex items-center justify-center z-10">
+            <CustomPagination
+              totalPages={Math.ceil(dataCount / limit["deposit"])}
+              itemsPerPage={limit["deposit"]}
+              setOffset={setOffset}
+            />
           </div>
         </div>
       </div>
