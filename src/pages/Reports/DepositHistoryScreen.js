@@ -4,7 +4,7 @@ import { useDirectionState } from "../../Providers/DirectionProvider";
 import Filters from "../../components/pages/layout/Reports/pages/DepositHistoryScreen/Filters";
 import Cards from "../../components/pages/layout/Reports/pages/DepositHistoryScreen/Cards";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
-import { useGetDepositHistory } from "../../apis/pages/Reports/hooks";
+import { useGetDepositHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
 import CustomPagination from "../../components/common/CustomPagination";
 import { useLanguageState } from "../../Providers/LanguageProvider";
@@ -24,15 +24,17 @@ export default function DepositHistoryScreen() {
   const [offset, setOffset] = useState(0);
   const [dataCount, setDataCount] = useState("");
   const [filterCards, setFilterCards] = useState("");
-  const { getDepositHistory, isLoading: getDepositHistoryIsLoading } =
-    useGetDepositHistory();
+  const {
+    getDepositHistorySingleUser,
+    isLoading: getDepositHistorySingleUserIsLoading,
+  } = useGetDepositHistorySingleUser();
   useEffect(
-    () => setIsLoadingSplashScreen(getDepositHistoryIsLoading),
-    [getDepositHistoryIsLoading]
+    () => setIsLoadingSplashScreen(getDepositHistorySingleUserIsLoading),
+    [getDepositHistorySingleUserIsLoading]
   );
 
   useEffect(() => {
-    getDepositHistory(
+    getDepositHistorySingleUser(
       setTemp,
       setDataCount,
       setPreviousDataUrl,
