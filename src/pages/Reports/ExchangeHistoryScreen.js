@@ -3,32 +3,35 @@ import { useThemeState } from "../../Providers/ThemeProvider";
 import { useDirectionState } from "../../Providers/DirectionProvider";
 import Filters from "../../components/pages/layout/Reports/pages/ExchangeHistoryScreen/Filters";
 import Cards from "../../components/pages/layout/Reports/pages/ExchangeHistoryScreen/Cards";
-import { useGetExchangeHistory } from "../../apis/pages/Reports/hooks";
+import { useGetExchangeHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import SubmitButton from "../../components/common/SubmitButton";
+import { useLanguageState } from "../../Providers/LanguageProvider";
 import CustomPagination from "../../components/common/CustomPagination";
 export default function ExchangeHistoryScreen() {
   const theme = useThemeState();
   const limit = require("../../apis/pagination/limit.json");
-
+  const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { one: oneDirection } = useDirectionState();
   const [temp, setTemp] = useState("");
   const [cards, setCards] = useState(true);
-  const [exchange, setExchange] = useState("");
+  const [exchanges, setExchanges] = useState("");
   const [nextDataUrl, setNextDataUrl] = useState();
   const [previousDataUrl, setPreviousDataUrl] = useState();
   const [filterCards, setFilterCards] = useState("");
   const [dataCount, setDataCount] = useState(0);
   const [offset, setOffset] = useState(0);
-  const { getExchangeHistory, isLoading: getExchangeHistoryIsLoading } =
-    useGetExchangeHistory();
+  const {
+    getExchangeHistorySingleUser,
+    isLoading: getExchangeHistorySingleUserIsLoading,
+  } = useGetExchangeHistorySingleUser();
   useEffect(
-    () => setIsLoadingSplashScreen(getExchangeHistoryIsLoading),
-    [getExchangeHistoryIsLoading]
+    () => setIsLoadingSplashScreen(getExchangeHistorySingleUserIsLoading),
+    [getExchangeHistorySingleUserIsLoading]
   );
   useEffect(() => {
-    getExchangeHistory(
+    getExchangeHistorySingleUser(
       setTemp,
       setDataCount,
       setNextDataUrl,
@@ -82,21 +85,21 @@ export default function ExchangeHistoryScreen() {
         source_currency,
         TimeRange
       );
-      setExchange(intersection);
+      setExchanges(intersection);
     }
     if (filterCards && filterCards.clear) {
-      setExchange(temp);
+      setExchanges(temp);
     }
   }, [filterCards]);
 
   useEffect(() => {
     if (temp) {
-      setExchange(temp);
+      setExchanges(temp);
     }
   }, [temp]);
-
   return (
     <>
+      {/* mobile phone */}
       <div className="grid md:hidden w-full h-full grid-cols-5 grid-rows-1 gap-10 px-8 py-2">
         <div
           className={
@@ -108,10 +111,10 @@ export default function ExchangeHistoryScreen() {
           <div className="w-full h-10 flex justify-end items-center rounded-3xl">
             <SubmitButton
               onClick={() => setCards(true)}
-              className={" mr-2 w-1/4 h-full"}
+              className={"mr-0 px-5 h-full"}
               rounded={"full"}
             >
-              Close Filters
+              {lang["close_filters"]}
             </SubmitButton>
           </div>
           <div className="w-full h-full mt-3 ">
@@ -129,35 +132,19 @@ export default function ExchangeHistoryScreen() {
           <div className="h-10 w-full flex justify-end items-center rounded-3xl">
             <SubmitButton
               onClick={() => setCards(false)}
-              className={" mr-5 w-1/4 h-full"}
+              className={"mr-[22px] px-5 py-1 h-full"}
               rounded={"full"}
             >
-              Open Filters
+              {lang["open_filters"]}
             </SubmitButton>
           </div>
-          <div className="overflow-y-auto h-full pr-3 mt-3 w-full">
-            <Cards data={exchange} />
-          </div>
-        </div>
-      </div>
-
-      <div className="hidden md:grid w-full h-full  grid-cols-5 grid-rows-1 gap-10">
-        <div
-          className={`md:col-span-2 lg:col-span-1 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
-        >
-          <Filters setFilterCards={setFilterCards} />
-        </div>
-
-        <div
-          className={`lg:col-span-4 md:col-span-3 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4`}
-        >
-          <div className="overflow-y-auto h-full pr-3">
-            <Cards data={exchange} />
+          <div className="w-full h-full flex flex-col gap-y-4 pb-12 items-center">
+            <div className="flex-1 overflow-y-auto h-full pr-3 mt-3 w-full">
+              <Cards data={exchanges} />
+            </div>
             <div
               className={
-                dataCount > limit["exchange"]
-                  ? `w-full h-1/6 flex items-center justify-center`
-                  : "hidden"
+                dataCount > limit["exchange"] ? `w-fit z-10` : "hidden"
               }
             >
               <CustomPagination
@@ -166,6 +153,36 @@ export default function ExchangeHistoryScreen() {
                 setOffset={setOffset}
               />
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* tablet & laptop */}
+      <div className="hidden md:grid w-full h-full  grid-cols-5 grid-rows-1 gap-10">
+        <div
+          className={`md:col-span-2 lg:col-span-1 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
+        >
+          <Filters setFilterCards={setFilterCards} />
+        </div>
+
+        <div
+          className={`flex flex-col gap-y-4 lg:col-span-4 md:col-span-3 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4`}
+        >
+          <div className="flex-1 overflow-y-auto pr-3">
+            <Cards data={exchanges} />
+          </div>
+          <div
+            className={
+              dataCount > limit["exchange"]
+                ? `w-full flex items-center justify-center z-10`
+                : "hidden"
+            }
+          >
+            <CustomPagination
+              totalPages={Math.ceil(dataCount / limit["exchange"])}
+              itemsPerPage={limit["exchange"]}
+              setOffset={setOffset}
+            />
           </div>
         </div>
       </div>
