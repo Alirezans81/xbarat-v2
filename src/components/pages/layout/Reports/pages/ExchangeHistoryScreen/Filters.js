@@ -146,7 +146,7 @@ export default function Filters({ setFilterCards }) {
         <div className="mt-2 w-full">
           <div className="w-full flex">
             <CustomDropdown
-              className="justify-between md:w-1/12 w-1/3"
+              className="justify-between w-fit"
               label={
                 <div>
                   <div
@@ -176,12 +176,8 @@ export default function Filters({ setFilterCards }) {
                   onClick={() => setFilterTargetCurrency(data)}
                   className={`bg-${theme} h-fit`}
                 >
-                  <div className="flex flex-row  w-10 h-10 justify-center">
-                    <img
-                      className="w-fit h-fit"
-                      alt=""
-                      src={data.sym_pic_gray}
-                    />
+                  <div className="flex flex-row  w-16 h-10 justify-center">
+                    <img className="w-10 h-10" alt="" src={data.sym_pic_gray} />
                     <span className=" w-fit h-fit mt-3 ml-2">
                       {data.abbreviation}
                     </span>
