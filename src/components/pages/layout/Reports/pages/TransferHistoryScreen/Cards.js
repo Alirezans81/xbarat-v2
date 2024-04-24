@@ -16,7 +16,11 @@ export default function Cards({ data }) {
     <>
       <div
         className={
-          transfer.length !== 0
+          (transfer.length <= 9) & (transfer.length >= 7)
+            ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1"
+            : (transfer.length <= 6) & (transfer.length >= 4)
+            ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1 grid-rows-3"
+            : (transfer.length <= 3) & (transfer.length >= 1)
             ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1"
             : "hidden"
         }
