@@ -22,15 +22,15 @@ export default function CustomPagination({
       base: "xs:mt-0 mt-2 inline-flex items-center -space-x-px",
       showIcon: "inline-flex",
       previous: {
-        base: "ml-0 rounded-lg px-3 py-2 leading-tight text-blue enabled:hover:bg-[#0A8DFF] enabled:hover:text-light",
+        base: "transtion-all duration-200 ml-0 rounded-lg px-3 py-2 leading-tight text-blue enabled:hover:bg-[#0A8DFF] enabled:hover:text-light",
         icon: "h-5 w-5",
       },
       next: {
-        base: "rounded-lg px-3 py-2 leading-tight bg-transparent text-blue enabled:hover:bg-[#0A8DFF] enabled:hover:text-light",
+        base: "transtion-all duration-200 rounded-lg px-3 py-2 leading-tight bg-transparent text-blue enabled:hover:bg-[#0A8DFF] enabled:hover:text-light",
         icon: "h-5 w-5",
       },
       selector: {
-        base: "w-12 border-blue bg-dark py-2 pb-2.5 hover:text-[#0A8DFF] ",
+        base: "transtion-all duration-200 w-12 border-blue bg-dark py-2 pb-2.5 hover:text-[#0A8DFF] ",
         active: "bg-dark-back text-light rounded-lg pb-2.5",
         disabled: "cursor-not-allowed opacity-50 hover:text-[#0A8DFF]",
       },
