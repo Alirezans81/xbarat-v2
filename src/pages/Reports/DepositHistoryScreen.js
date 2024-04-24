@@ -7,9 +7,12 @@ import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplas
 import { useGetDepositHistory } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
 import CustomPagination from "../../components/common/CustomPagination";
+import { useLanguageState } from "../../Providers/LanguageProvider";
 export default function DepositHistoryScreen() {
   const limit = require("../../apis/pagination/limit.json");
   const theme = useThemeState();
+  const lang = useLanguageState();
+
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { one: oneDirection } = useDirectionState();
   const [temp, setTemp] = useState("");
@@ -105,7 +108,7 @@ export default function DepositHistoryScreen() {
               className={"mr-0 px-5 h-full"}
               rounded={"full"}
             >
-              Close Filters
+              {lang["close_filters"]}
             </SubmitButton>
           </div>
           <div className="w-full h-full mt-3 ">
@@ -126,14 +129,17 @@ export default function DepositHistoryScreen() {
               className={"mr-[22px] px-5 py-1 h-full"}
               rounded={"full"}
             >
-              Open Filters
+              {lang["open_filters"]}
             </SubmitButton>
           </div>
           <div className="w-full h-full flex flex-col gap-y-4 pb-12 items-center">
             <div className="flex-1 overflow-y-auto h-full pr-3 mt-3 w-full">
               <Cards data={deposits} />
             </div>
-            <div className="w-fit z-10">
+            <div
+              className={dataCount > limit["deposit"] ? `w-fit z-10` : "hidden"}
+            >
+              {" "}
               <CustomPagination
                 totalPages={Math.ceil(dataCount / limit["deposit"])}
                 itemsPerPage={limit["deposit"]}
@@ -157,15 +163,14 @@ export default function DepositHistoryScreen() {
         >
           <div className="flex-1 overflow-y-auto pr-3">
             <Cards data={deposits} />
-            <div
-              className={
-                dataCount > limit["deposit"]
-                  ? `w-3/4 h-1/6 fixed bottom-0`
-                  : "hidden"
-              }
-            ></div>
           </div>
-          <div className="w-full flex items-center justify-center z-10">
+          <div
+            className={
+              dataCount > limit["deposit"]
+                ? `w-full flex items-center justify-center z-10`
+                : "hidden"
+            }
+          >
             <CustomPagination
               totalPages={Math.ceil(dataCount / limit["deposit"])}
               itemsPerPage={limit["deposit"]}

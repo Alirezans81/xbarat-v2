@@ -1,116 +1,49 @@
-import React, { useState } from "react";
-import ExchangeCard from "../../ExchangeHistory/ExchangeCard";
+import React, { useState, useEffect } from "react";
 import { useLanguageState } from "../../../../../../Providers/LanguageProvider";
-
-export default function Cards() {
+import { useFontState } from "../../../../../../Providers/FontProvider";
+import TransferCard from "../../TransferHistory/TransferCard";
+import { useThemeState } from "../../../../../../Providers/ThemeProvider";
+export default function Cards({ data }) {
+  const [transfer, setTransfer] = useState([]);
+  const font = useFontState();
+  const theme = useThemeState();
+  const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
-
-  const [datas, setDatas] = useState([
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "IRR" },
-        defaultRateType: "USD/IRR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "open",
-    },
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "IRR" },
-        defaultRateType: "USD/IRR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "open",
-    },
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "EUR" },
-        defaultRateType: "USD/EUR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "done",
-    },
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "EUR" },
-        defaultRateType: "USD/EUR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "done",
-    },
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "EUR" },
-        defaultRateType: "USD/EUR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "done",
-    },
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "EUR" },
-        defaultRateType: "USD/EUR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "done",
-    },
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "EUR" },
-        defaultRateType: "USD/EUR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "done",
-    },
-    {
-      currencyPair: {
-        source: { title: "USD" },
-        target: { title: "EUR" },
-        defaultRateType: "USD/EUR",
-      },
-      amount: 1000,
-      targetAmount: 15000000,
-      rate: 497500,
-      date: new Date(),
-      status: "done",
-    },
-  ]);
-
+  useEffect(() => {
+    setTransfer(data);
+  }, [data]);
   return (
-    <div className="w-full max-h-full grid grid-cols-3 mb-14">
-      {datas.map((data, index) => (
-        <div key={index} className="col-span-1 h-48 p-2">
-          <ExchangeCard data={data} lang={lang} />
+    <>
+      <div
+        className={
+          transfer.length !== 0
+            ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1"
+            : "hidden"
+        }
+      >
+        {transfer
+          ? transfer.map((data, index) => (
+              <div key={index} className="col-span-1 h-48 p-2">
+                <TransferCard data={data} lang={lang} />
+              </div>
+            ))
+          : ""}
+      </div>
+      <div
+        className={
+          transfer.length === 0
+            ? "w-full h-full flex justify-center items-center"
+            : "hidden"
+        }
+      >
+        <div className="flex-1 flex justify-center items-center">
+          <span
+            className={`font-${font}-thin -ml-4 md:-ml-0 text-2xl md:text-3xl text-${oppositeTheme}`}
+          >
+            {lang["no-data"]}
+          </span>
         </div>
-      ))}
-    </div>
+      </div>
+    </>
   );
 }

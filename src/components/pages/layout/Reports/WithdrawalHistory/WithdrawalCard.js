@@ -26,7 +26,7 @@ export default function WithdrawalCard({ lang, data }) {
         <div
           className={`flex flex-row text-${oppositeTheme} font-${font}-regular items-center -mt-1.5`}
         >
-          <span className="">{lang["from"] || "from"}</span>
+          <span className="">{lang["from"]}</span>
           <span className="mx-1.5">{data.user_sender_code}</span>
         </div>
         <RequestStatus status={data.status_title} />

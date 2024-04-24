@@ -93,7 +93,7 @@ export default function Filters({ setFilterCards }) {
         <div className="mt-2 w-full">
           <div className="w-full flex">
             <CustomDropdown
-              className="justify-between"
+              className="justify-between md:w-1/12 w-1/3"
               label={
                 <div>
                   <div
@@ -146,7 +146,7 @@ export default function Filters({ setFilterCards }) {
         <div className="mt-2 w-full">
           <div className="w-full flex">
             <CustomDropdown
-              className="justify-between"
+              className="justify-between md:w-1/12 w-1/3"
               label={
                 <div>
                   <div
@@ -194,11 +194,11 @@ export default function Filters({ setFilterCards }) {
       </div>
 
       <div
-        className={"w-full h-1/3 justify-start align-center flex flex-col mt-5"}
+        className={"w-full mt-auto justify-start align-center flex flex-col"}
       >
         <SubmitButton
           rounded={"3xl"}
-          className={"w-full h-1/6"}
+          className={"w-full py-1"}
           onClick={handleFilter}
         >
           {lang["submit"]}

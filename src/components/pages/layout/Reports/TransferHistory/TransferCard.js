@@ -1,12 +1,13 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useAddComma } from "../../../../../hooks/useNumberFunctions";
 import { useConvertDateTime } from "../../../../../hooks/useConvertDateTime";
 import RequestStatus from "../../common/RequestStatus";
 import { useFontState } from "../../../../../Providers/FontProvider";
-
-export default function TransferCard({ lang, data }) {
+import { useLanguageState } from "../../../../../Providers/LanguageProvider";
+export default function TransferCard({ data }) {
   const theme = useThemeState();
+  const lang = useLanguageState();
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const addComma = useAddComma();
@@ -29,7 +30,7 @@ export default function TransferCard({ lang, data }) {
           <span className="">{lang["to"]}</span>
           <span className="mx-1.5">{data.user_receiver}</span>
         </div>
-        <RequestStatus status={data.status} />
+        <RequestStatus status={data.status_title} />
       </div>
       <span className={`font-${font}-regular text-sm text-gray mt-20 mb-2`}>
         {convertDateTime(data.datetime_done)}
