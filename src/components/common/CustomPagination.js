@@ -10,7 +10,7 @@ export default function CustomPagination({
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const style = {
-    base: `bg-red w-full h-full flex justify-center items-center `,
+    base: ` w-full h-full flex justify-center items-center `,
     layout: {
       table: {
         base: "text-sm text-gray-700 dark:text-gray-400",
