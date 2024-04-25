@@ -39,7 +39,7 @@ export default function DepositHistoryScreen() {
       setDataCount,
       setPreviousDataUrl,
       setNextDataUrl,
-      offset
+      { offset }
     );
   }, [offset]);
 
@@ -78,9 +78,7 @@ export default function DepositHistoryScreen() {
             (new Date(data.datetime_create).getTime() <= end)
         );
       }
-      console.log(statusFilter, currency, TimeRange);
       const intersection = findIntersection(statusFilter, currency, TimeRange);
-      console.log(intersection);
       setDeposits(intersection);
     }
     if (filterCards && filterCards.clear) {
