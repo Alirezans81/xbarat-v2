@@ -46,9 +46,15 @@ const useGetDepositHistorySingleUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState, setDataCount, setPreviousUrl, setNextUrl) => {
+  const fetch = async (
+    setState,
+    setDataCount,
+    setPreviousUrl,
+    setNextUrl,
+    filtersObject
+  ) => {
     setIsLoading(true);
-    await getDepositHistorySingleUser()
+    await getDepositHistorySingleUser(filtersObject)
       .then((data) => {
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
@@ -72,9 +78,15 @@ const useGetExchangeHistorySingleUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState, setDataCount, setPreviousUrl, setNextUrl) => {
+  const fetch = async (
+    setState,
+    setDataCount,
+    setPreviousUrl,
+    setNextUrl,
+    filtersObject
+  ) => {
     setIsLoading(true);
-    await getExchangeHistorySingleUser()
+    await getExchangeHistorySingleUser(filtersObject)
       .then((data) => {
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
@@ -98,9 +110,15 @@ const useGetWithdrawHistorySingleUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState, setDataCount, setPreviousUrl, setNextUrl) => {
+  const fetch = async (
+    setState,
+    setDataCount,
+    setPreviousUrl,
+    setNextUrl,
+    filtersObject
+  ) => {
     setIsLoading(true);
-    await getWithdrawHistorySingleUser()
+    await getWithdrawHistorySingleUser(filtersObject)
       .then((data) => {
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
@@ -123,9 +141,15 @@ const useGetTransferHistorySingleUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState, setDataCount, setPreviousUrl, setNextUrl) => {
+  const fetch = async (
+    setState,
+    setDataCount,
+    setPreviousUrl,
+    setNextUrl,
+    filtersObject
+  ) => {
     setIsLoading(true);
-    await getTransferHistorySingleUser()
+    await getTransferHistorySingleUser(filtersObject)
       .then((data) => {
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
@@ -149,9 +173,15 @@ const useGetTransferHistory = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState) => {
+  const fetch = async (
+    setState,
+    setDataCount,
+    setPreviousUrl,
+    setNextUrl,
+    filtersObject
+  ) => {
     setIsLoading(true);
-    await getTransferHistory()
+    await getTransferHistory(filtersObject)
       .then((data) => {
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
@@ -172,9 +202,15 @@ const useGetExchangeHistory = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState) => {
+  const fetch = async (
+    setState,
+    setDataCount,
+    setPreviousUrl,
+    setNextUrl,
+    filtersObject
+  ) => {
     setIsLoading(true);
-    await getExchangeHistory()
+    await getExchangeHistory(filtersObject)
       .then((data) => {
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
@@ -195,9 +231,15 @@ const useGetWithdrawHistory = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState) => {
+  const fetch = async (
+    setState,
+    setDataCount,
+    setPreviousUrl,
+    setNextUrl,
+    filtersObject
+  ) => {
     setIsLoading(true);
-    await getWithdrawHistory()
+    await getWithdrawHistory(filtersObject)
       .then((data) => {
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(data.data.results);
