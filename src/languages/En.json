@@ -41,8 +41,8 @@
   "pending": "Pending",
   "locked": "Locked",
   "source": "Source",
-  "source_currency": "source currency",
-  "target_currency": "target currency",
+  "source_currency": "Source Currency",
+  "target_currency": "Target Currency",
 
   "open_filters": "Open Filters",
   "close_filters": "Close Filters",
