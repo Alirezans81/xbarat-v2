@@ -38,7 +38,8 @@ export default function TransferHistoryScreen() {
       setTemp,
       setDataCount,
       setNextDataUrl,
-      setPreviousDataUrl
+      setPreviousDataUrl,
+      { offset }
     );
   }, [offset]);
 
@@ -77,9 +78,7 @@ export default function TransferHistoryScreen() {
             (new Date(data.datetime_create).getTime() <= end)
         );
       }
-      console.log(statusFilter, currency, TimeRange);
       const intersection = findIntersection(statusFilter, currency, TimeRange);
-      console.log(intersection);
       setTransfers(intersection);
     }
     if (filterCards && filterCards.clear) {

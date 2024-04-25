@@ -35,7 +35,8 @@ export default function ExchangeHistoryScreen() {
       setTemp,
       setDataCount,
       setNextDataUrl,
-      setPreviousDataUrl
+      setPreviousDataUrl,
+      { offset }
     );
   }, [offset]);
 
@@ -54,7 +55,6 @@ export default function ExchangeHistoryScreen() {
     if (filterCards && !filterCards.clear) {
       let source_currency = temp;
       let target_currency = temp;
-      console.log(filterCards);
       let TimeRange = temp;
 
       if (filterCards.source_currency) {

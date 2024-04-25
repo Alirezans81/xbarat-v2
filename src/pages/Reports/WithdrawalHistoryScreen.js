@@ -4,7 +4,7 @@ import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplas
 import { useDirectionState } from "../../Providers/DirectionProvider";
 import Filters from "../../components/pages/layout/Reports/pages/WithdrawalHistoryScreen/Filters";
 import Cards from "../../components/pages/layout/Reports/pages/WithdrawalHistoryScreen/Cards";
-import { useGetWithdrawHistory } from "../../apis/pages/Reports/hooks";
+import { useGetWithdrawHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
 import CustomPagination from "../../components/common/CustomPagination";
 import { useLanguageState } from "../../Providers/LanguageProvider";
@@ -26,19 +26,22 @@ export default function WithdrawalHistoryScreen() {
   const [previousDataUrl, setPreviousDataUrl] = useState("");
   const [nextDataUrl, setNextDataUrl] = useState();
 
-  const { getWithdrawHistory, isLoading: getWithdrawHistoryIsLoading } =
-    useGetWithdrawHistory();
+  const {
+    getWithdrawHistorySingleUser,
+    isLoading: getWithdrawHistorySingleUserIsLoading,
+  } = useGetWithdrawHistorySingleUser();
   useEffect(
-    () => setIsLoadingSplashScreen(getWithdrawHistoryIsLoading),
-    [getWithdrawHistoryIsLoading]
+    () => setIsLoadingSplashScreen(getWithdrawHistorySingleUserIsLoading),
+    [getWithdrawHistorySingleUserIsLoading]
   );
 
   useEffect(() => {
-    getWithdrawHistory(
+    getWithdrawHistorySingleUser(
       setTemp,
       setDataCount,
       setNextDataUrl,
-      setPreviousDataUrl
+      setPreviousDataUrl,
+      { offset }
     );
   }, [offset]);
 
