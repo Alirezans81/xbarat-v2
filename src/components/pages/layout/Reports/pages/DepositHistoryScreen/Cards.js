@@ -18,14 +18,18 @@ export default function Cards({ data }) {
     <>
       <div
         className={
-          deposit.length !== 0
-            ? "w-full h-full grid lg:grid-cols-3 mb-14 xs:grid-cols-1"
+          (deposit.length <= 9) & (deposit.length >= 7)
+            ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1"
+            : (deposit.length <= 6) & (deposit.length >= 4)
+            ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1 grid-rows-3"
+            : (deposit.length <= 3) & (deposit.length >= 1)
+            ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1"
             : "hidden"
         }
       >
         {deposit
           ? deposit.map((data, index) => (
-              <div key={index} className="col-span-1 h-48 p-2">
+              <div key={index} className="col-span-1 h-48 p-1">
                 <DepositCard data={data} lang={lang} />
               </div>
             ))

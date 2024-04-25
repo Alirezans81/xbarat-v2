@@ -235,5 +235,6 @@
   "delete-wallet-tank-modal-message": "آیا از حذف کارت خود مطمعن هستید",
   "edit-card": "ویراش کارت",
   "accept-policy": "آیا قوانین حریم خصوصی و سیاست را به منظور استفاده از سایت قبول میکنید",
-  "password-updated": "پسورد شما تغییر پیدا کرد"
+  "password-updated": "پسورد شما تغییر پیدا کرد",
+  "email-exists-error": "این ایمیل از قبل وجود دارد"
 }

@@ -17,8 +17,12 @@ export default function Cards({ data }) {
     <>
       <div
         className={
-          exchange.length !== 0
-            ? "w-full h-full grid lg:grid-cols-3 mb-14 xs:grid-cols-1"
+          (exchange.length <= 9) & (exchange.length >= 7)
+            ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1"
+            : (exchange.length <= 6) & (exchange.length >= 4)
+            ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1 grid-rows-3"
+            : (exchange.length <= 3) & (exchange.length >= 1)
+            ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1"
             : "hidden"
         }
       >

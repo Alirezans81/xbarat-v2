@@ -11,6 +11,7 @@ import SubmitButton from "../../../../../common/SubmitButton";
 import { useFontState } from "../../../../../../Providers/FontProvider";
 import { useCurrenciesState } from "../../../../../../Providers/CurrenciesProvider";
 import { useStatusesState } from "../../../../../../Providers/StatusesProvider";
+
 export default function Filters({ setFilterCards }) {
   const theme = useThemeState();
   const status = useStatusesState();
@@ -43,12 +44,12 @@ export default function Filters({ setFilterCards }) {
   };
 
   return (
-    <div className="flex flex-col w-full h-full justify-start">
+    <div className="flex flex-col w-full h-full justify-start pb-16 md:pb-2.5">
       <div className="flex flex-col">
-        <div className="w-full flex flex-row items-center ">
-          <div className="w-7/12 flex justify-start items-end">
+        <div className="w-full flex flex-row items-center">
+          <div className="flex-1 flex justify-start items-end">
             <span
-              className={`text-${oppositeTheme} text-2xl font-${font}-bold mt-1`}
+              className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
             >
               {lang["date-&-time"]}
             </span>
@@ -84,14 +85,14 @@ export default function Filters({ setFilterCards }) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col mt-5">
-        <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
+      <div className="flex flex-col mt-5 ">
+        <span className={`text-${oppositeTheme} text-xl font-${font}-bold`}>
           {lang["currency"]}
         </span>
         <div className="mt-2 w-full">
           <div className="w-full flex">
             <CustomDropdown
-              className="justify-between"
+              className="justify-between w-fit"
               label={
                 <div>
                   <div className={filterCurrency ? "flex flex-row" : "hidden"}>
@@ -113,12 +114,8 @@ export default function Filters({ setFilterCards }) {
                   onClick={() => setFilterCurrency(data)}
                   className={`bg-${theme} h-fit`}
                 >
-                  <div className="flex flex-row  w-10 h-10 justify-center">
-                    <img
-                      className="w-fit h-fit"
-                      alt=""
-                      src={data.sym_pic_gray}
-                    />
+                  <div className="flex flex-row w-16 h-10 justify-center">
+                    <img className="w-10 h-10" alt="" src={data.sym_pic_gray} />
                     <span className=" w-fit h-fit mt-3 ml-2">
                       {data.abbreviation}
                     </span>
@@ -130,7 +127,7 @@ export default function Filters({ setFilterCards }) {
         </div>
       </div>
       <div className="flex flex-col mt-5">
-        <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
+        <span className={`text-${oppositeTheme} text-xl font-${font}-bold`}>
           {lang["status"]}
         </span>
         <div className="mt-2 w-full">
@@ -174,11 +171,11 @@ export default function Filters({ setFilterCards }) {
         </div>
       </div>
       <div
-        className={"w-full h-1/3 justify-start align-center flex flex-col mt-5"}
+        className={"w-full mt-auto justify-start align-center flex flex-col"}
       >
         <SubmitButton
           rounded={"3xl"}
-          className={"w-full h-1/6"}
+          className={"w-full py-1"}
           onClick={handleFilter}
         >
           {lang["submit"]}

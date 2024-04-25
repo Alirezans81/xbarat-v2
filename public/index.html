@@ -10,6 +10,7 @@
       name="description"
       content="A service for transfering money all accross the world"
     />
+    <meta name="enamad" content="403046" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -25,7 +26,11 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <script type="text/javascript"> window.RAYCHAT_TOKEN = "a559abdf-5472-4786-b84c-e4f121a1010f"; (function () { d = document; s = d.createElement("script"); s.src = "https://widget-react.raychat.io/install/widget.js"; s.async = 1; d.getElementsByTagName("head")[0].appendChild(s); })();</script>
+
+    <!-- Raychat -->
+      <script type="text/javascript"> window.RAYCHAT_TOKEN = "a559abdf-5472-4786-b84c-e4f121a1010f"; (function () { d = document; s = d.createElement("script"); s.src = "https://widget-react.raychat.io/install/widget.js"; s.async = 1; d.getElementsByTagName("head")[0].appendChild(s); })();</script>
+    <!-- /Raychat -->
+
     <title>Xbarat</title>
   </head>
   <body>
@@ -38,8 +43,28 @@
       You can add webfonts, meta tags, or analytics to this file.
       The build step will place the bundled scripts into the <body> tag.
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+        To begin the development, run `npm start` or `yarn start`.
+        To create a production bundle, use `npm run build` or `yarn build`.
+      -->
+      
+      <!-- Goftino -->
+        <script type="text/javascript">
+          // !function(){var i="8zbZU0",a=window,d=document;function g(){var g=d.createElement("script"),s="https://www.goftino.com/widget/"+i,l=localStorage.getItem("goftino_"+i);g.async=!0,g.src=l?s+"?o="+l:s;d.getElementsByTagName("head")[0].appendChild(g);}"complete"===d.readyState?g():a.attachEvent?a.attachEvent("onload",g):a.addEventListener("load",g,!1);}();
+        </script>
+        <!--- Add lines below for Widget customization --->
+        <script>
+            // window.addEventListener('goftino_ready', function () {
+            //     Goftino.setWidget({
+            //         hasIcon: false,
+            //         counter: '#unread_counter'
+            //     });
+            
+            //     document.getElementById("new_widget_button").addEventListener("click", function () {
+            //         Goftino.toggle();
+            //     });
+            // });
+        </script>
+      <!-- /Goftino -->
+
   </body>
 </html>

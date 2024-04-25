@@ -4,10 +4,16 @@ import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplas
 import { useDirectionState } from "../../Providers/DirectionProvider";
 import Filters from "../../components/pages/layout/Reports/pages/WithdrawalHistoryScreen/Filters";
 import Cards from "../../components/pages/layout/Reports/pages/WithdrawalHistoryScreen/Cards";
-import { useGetWithdrawHistorySingleUser } from "../../apis/pages/Reports/hooks";
+import { useGetWithdrawHistory } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
+import CustomPagination from "../../components/common/CustomPagination";
+import { useLanguageState } from "../../Providers/LanguageProvider";
 export default function WithdrawalHistoryScreen() {
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const limit = require("../../apis/pagination/limit.json");
+  const lang = useLanguageState();
+  const [dataCount, setDataCount] = useState(0);
+  const [offset, setOffset] = useState(0);
   const theme = useThemeState();
   const { one: oneDirection } = useDirectionState();
 
@@ -15,28 +21,26 @@ export default function WithdrawalHistoryScreen() {
   const [status, setStatus] = useState("");
   const [temp, setTemp] = useState("");
   const [filterCards, setFilterCards] = useState("");
-  const [withdraw, setWithdraw] = useState("");
+  const [withdrawals, setWithdrawals] = useState("");
 
   const [previousDataUrl, setPreviousDataUrl] = useState("");
   const [nextDataUrl, setNextDataUrl] = useState();
 
-  const {
-    getWithdrawHistorySingleUser,
-    isLoading: getWithdrawHistorySingleUserIsLoading,
-  } = useGetWithdrawHistorySingleUser();
+  const { getWithdrawHistory, isLoading: getWithdrawHistoryIsLoading } =
+    useGetWithdrawHistory();
   useEffect(
-    () => setIsLoadingSplashScreen(getWithdrawHistorySingleUserIsLoading),
-    [getWithdrawHistorySingleUserIsLoading]
+    () => setIsLoadingSplashScreen(getWithdrawHistoryIsLoading),
+    [getWithdrawHistoryIsLoading]
   );
 
   useEffect(() => {
-    getWithdrawHistorySingleUser(
+    getWithdrawHistory(
       setTemp,
-      null,
+      setDataCount,
       setNextDataUrl,
       setPreviousDataUrl
     );
-  }, []);
+  }, [offset]);
 
   function findIntersection(array1, array2, array3) {
     const set1 = new Set(array1.map((obj) => JSON.stringify(obj)));
@@ -74,20 +78,21 @@ export default function WithdrawalHistoryScreen() {
         );
       }
       const intersection = findIntersection(statusFilter, currency, TimeRange);
-      setWithdraw(intersection);
+      setWithdrawals(intersection);
     }
     if (filterCards && filterCards.clear) {
-      setWithdraw(temp);
+      setWithdrawals(temp);
     }
   }, [filterCards]);
 
   useEffect(() => {
     if (temp) {
-      setWithdraw(temp);
+      setWithdrawals(temp);
     }
   }, [temp]);
   return (
     <>
+      {/* mobile phone */}
       <div className="grid md:hidden w-full h-full grid-cols-5 grid-rows-1 gap-10 px-8 py-2">
         <div
           className={
@@ -99,10 +104,10 @@ export default function WithdrawalHistoryScreen() {
           <div className="w-full h-10 flex justify-end items-center rounded-3xl">
             <SubmitButton
               onClick={() => setCards(true)}
-              className={" mr-2 w-1/4 h-full"}
+              className={"mr-0 px-5 h-full"}
               rounded={"full"}
             >
-              Close Filters
+              {lang["close_filters"]}
             </SubmitButton>
           </div>
           <div className="w-full h-full mt-3 ">
@@ -120,18 +125,33 @@ export default function WithdrawalHistoryScreen() {
           <div className="h-10 w-full flex justify-end items-center rounded-3xl">
             <SubmitButton
               onClick={() => setCards(false)}
-              className={" mr-5 w-1/4 h-full"}
+              className={"mr-[22px] px-5 py-1 h-full"}
               rounded={"full"}
             >
-              Open Filters
+              {lang["open_filters"]}
             </SubmitButton>
           </div>
-          <div className="overflow-y-auto h-full pr-3 mt-3 w-full">
-            <Cards data={withdraw} />
+          <div className="w-full h-full flex flex-col gap-y-4 pb-12 items-center">
+            <div className="flex-1 overflow-y-auto h-full pr-3 mt-3 w-full">
+              <Cards data={withdrawals} />
+            </div>
+            <div
+              className={
+                dataCount > limit["withdrawal"] ? `w-fit z-10` : "hidden"
+              }
+            >
+              {" "}
+              <CustomPagination
+                totalPages={Math.ceil(dataCount / limit["withdrawal"])}
+                itemsPerPage={limit["withdrawal"]}
+                setOffset={setOffset}
+              />
+            </div>
           </div>
         </div>
       </div>
 
+      {/* tablet & laptop */}
       <div className="hidden md:grid w-full h-full  grid-cols-5 grid-rows-1 gap-10">
         <div
           className={`md:col-span-2 lg:col-span-1 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
@@ -140,10 +160,31 @@ export default function WithdrawalHistoryScreen() {
         </div>
 
         <div
-          className={`lg:col-span-4 md:col-span-3 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4`}
+          className={`flex flex-col gap-y-4 lg:col-span-4 md:col-span-3 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4`}
         >
-          <div className="overflow-y-auto h-full pr-3">
-            <Cards data={withdraw} />
+          <div className="flex-1 overflow-y-auto pr-3">
+            <Cards data={withdrawals} />
+            <div
+              className={
+                dataCount > limit["withdrawal"]
+                  ? `w-3/4 h-1/6 fixed bottom-0`
+                  : "hidden"
+              }
+            ></div>
+          </div>
+          <div
+            className={
+              dataCount > limit["withdrawal"]
+                ? `w-full flex items-center justify-center z-10`
+                : "hidden"
+            }
+          >
+            {" "}
+            <CustomPagination
+              totalPages={Math.ceil(dataCount / limit["withdrawal"])}
+              itemsPerPage={limit["withdrawal"]}
+              setOffset={setOffset}
+            />
           </div>
         </div>
       </div>

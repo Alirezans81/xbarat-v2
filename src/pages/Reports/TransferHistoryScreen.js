@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useDirectionState } from "../../Providers/DirectionProvider";
-import Filters from "../../components/pages/layout/Reports/pages/DepositHistoryScreen/Filters";
-import Cards from "../../components/pages/layout/Reports/pages/DepositHistoryScreen/Cards";
+import Filters from "../../components/pages/layout/Reports/pages/TransferHistoryScreen/Filters";
+import Cards from "../../components/pages/layout/Reports/pages/TransferHistoryScreen/Cards";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useGetTransferHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
-export default function DepositHistoryScreen() {
+import { useLanguageState } from "../../Providers/LanguageProvider";
+import CustomPagination from "../../components/common/CustomPagination";
+export default function TransferHistoryScreen() {
   const theme = useThemeState();
+  const lang = useLanguageState();
+  const limit = require("../../apis/pagination/limit.json");
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { one: oneDirection } = useDirectionState();
   const [temp, setTemp] = useState("");
   const [cards, setCards] = useState(true);
   const [status, setStatus] = useState("");
-  const [deposits, setDeposits] = useState("");
+  const [transfers, setTransfers] = useState("");
+  const [dataCount, setDataCount] = useState(0);
+  const [offset, setOffset] = useState(0);
   const [nextDataUrl, setNextDataUrl] = useState();
   const [previousDataUrl, setPreviousDataUrl] = useState();
   const [filterCards, setFilterCards] = useState("");
@@ -30,11 +36,11 @@ export default function DepositHistoryScreen() {
   useEffect(() => {
     getTransferHistorySingleUser(
       setTemp,
-      null,
+      setDataCount,
       setNextDataUrl,
       setPreviousDataUrl
     );
-  }, []);
+  }, [offset]);
 
   function findIntersection(array1, array2, array3) {
     const set1 = new Set(array1.map((obj) => JSON.stringify(obj)));
@@ -74,20 +80,21 @@ export default function DepositHistoryScreen() {
       console.log(statusFilter, currency, TimeRange);
       const intersection = findIntersection(statusFilter, currency, TimeRange);
       console.log(intersection);
-      setDeposits(intersection);
+      setTransfers(intersection);
     }
     if (filterCards && filterCards.clear) {
-      setDeposits(temp);
+      setTransfers(temp);
     }
   }, [filterCards]);
 
   useEffect(() => {
     if (temp) {
-      setDeposits(temp);
+      setTransfers(temp);
     }
   }, [temp]);
   return (
     <>
+      {/* mobile phone */}
       <div className="grid md:hidden w-full h-full grid-cols-5 grid-rows-1 gap-10 px-8 py-2">
         <div
           className={
@@ -99,10 +106,10 @@ export default function DepositHistoryScreen() {
           <div className="w-full h-10 flex justify-end items-center rounded-3xl">
             <SubmitButton
               onClick={() => setCards(true)}
-              className={" mr-2 w-1/4 h-full"}
+              className={"mr-0 px-5 h-full"}
               rounded={"full"}
             >
-              Close Filters
+              {lang["close_filters"]}
             </SubmitButton>
           </div>
           <div className="w-full h-full mt-3 ">
@@ -120,18 +127,33 @@ export default function DepositHistoryScreen() {
           <div className="h-10 w-full flex justify-end items-center rounded-3xl">
             <SubmitButton
               onClick={() => setCards(false)}
-              className={" mr-5 w-1/4 h-full"}
+              className={"mr-[22px] px-5 py-1 h-full"}
               rounded={"full"}
             >
-              Open Filters
+              {lang["open_filters"]}
             </SubmitButton>
           </div>
-          <div className="overflow-y-auto h-full pr-3 mt-3 w-full">
-            <Cards data={deposits} />
+          <div className="w-full h-full flex flex-col gap-y-4 pb-12 items-center">
+            <div className="flex-1 overflow-y-auto h-full pr-3 mt-3 w-full">
+              <Cards data={transfers} />
+            </div>
+            <div
+              className={
+                dataCount > limit["transfer"] ? `w-fit z-10` : "hidden"
+              }
+            >
+              {" "}
+              <CustomPagination
+                totalPages={Math.ceil(dataCount / limit["transfer"])}
+                itemsPerPage={limit["transfer"]}
+                setOffset={setOffset}
+              />
+            </div>
           </div>
         </div>
       </div>
 
+      {/* tablet & laptop */}
       <div className="hidden md:grid w-full h-full  grid-cols-5 grid-rows-1 gap-10">
         <div
           className={`md:col-span-2 lg:col-span-1 row-span-1 bg-${theme} rounded-3xl py-5 px-7`}
@@ -140,10 +162,24 @@ export default function DepositHistoryScreen() {
         </div>
 
         <div
-          className={`lg:col-span-4 md:col-span-3 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4`}
+          className={`flex flex-col gap-y-4 lg:col-span-4 md:col-span-3 row-span-1 bg-${theme} rounded-${oneDirection}-3xl py-5 pl-7 pr-4`}
         >
-          <div className="overflow-y-auto h-full pr-3">
-            <Cards data={deposits} />
+          <div className="flex-1 overflow-y-auto pr-3">
+            <Cards data={transfers} />
+          </div>
+          <div
+            className={
+              dataCount > limit["transfer"]
+                ? `w-full flex items-center justify-center z-10`
+                : "hidden"
+            }
+          >
+            {" "}
+            <CustomPagination
+              totalPages={Math.ceil(dataCount / limit["transfer"])}
+              itemsPerPage={limit["transfer"]}
+              setOffset={setOffset}
+            />
           </div>
         </div>
       </div>

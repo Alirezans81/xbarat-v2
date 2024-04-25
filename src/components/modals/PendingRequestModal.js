@@ -56,18 +56,26 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             if (+data.amount <= 100000000) {
               const temp = walletTanks.filter(
                 (d) =>
-                  d.show_order && d.is_active && d.bank_info && d.wallet_tank_type_title === "Card Number"
+                  d.show_order &&
+                  d.is_active &&
+                  d.bank_info &&
+                  d.wallet_tank_type_title === "Card Number"
               );
               setReceiverTanks(temp);
             } else {
               const temp = walletTanks.filter(
                 (d) =>
-                  d.show_order && d.is_active && d.bank_info && d.wallet_tank_type_title === "Shaba Number"
+                  d.show_order &&
+                  d.is_active &&
+                  d.bank_info &&
+                  d.wallet_tank_type_title === "Shaba Number"
               );
               setReceiverTanks(temp);
             }
           } else {
-            const temp = walletTanks.filter((d) => d.show_order && d.is_active && d.bank_info);
+            const temp = walletTanks.filter(
+              (d) => d.show_order && d.is_active && d.bank_info
+            );
             setReceiverTanks(temp);
           }
         }
@@ -226,8 +234,16 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 </span>
               )}
             <CustomUploader setImage={setDocument} />
+            {receiverTanks[selectedWalletTank] &&
+              receiverTanks[selectedWalletTank].bank_info_image && (
+                <img
+                  className="mx-auto w-5/12 object-contain rounded-xl"
+                  src={receiverTanks[selectedWalletTank].bank_info_image}
+                />
+              )}
           </div>
         )}
+
         <div className="my-1.5">
           <PendingRequestModalStatus
             status={data.status_title}
