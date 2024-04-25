@@ -93,7 +93,7 @@ export default function Filters({ setFilterCards }) {
         <div className="mt-2 w-full">
           <div className="w-full flex">
             <CustomDropdown
-              className="justify-between md:w-1/12 w-1/3"
+              className="justify-between w-fit"
               label={
                 <div>
                   <div
