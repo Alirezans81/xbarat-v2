@@ -13,7 +13,9 @@ const user = JSON.parse(window.localStorage.getItem("userInfo"));
 const getDepositHistorySingleUser = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["deposit"] + "?user_sender=" + user.username,
-    query: filtersObject || {},
+    query: filtersObject
+      ? { limit: limit["deposit"], ...filtersObject }
+      : { limit: limit["deposit"] },
   });
   return axios.get(urlWithQueries);
 };
@@ -21,7 +23,9 @@ const getDepositHistorySingleUser = (filtersObject) => {
 const getWithdrawHistorySingleUser = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["withdraw"] + "?user_sender=" + user.username,
-    query: filtersObject || {},
+    query: filtersObject
+      ? { limit: limit["withdraw"], ...filtersObject }
+      : { limit: limit["withdraw"] },
   });
   return axios.get(urlWithQueries);
 };
@@ -29,7 +33,9 @@ const getWithdrawHistorySingleUser = (filtersObject) => {
 const getExchangeHistorySingleUser = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["exchange"] + "?user=" + user.username,
-    query: filtersObject || {},
+    query: filtersObject
+      ? { limit: limit["exchange"], ...filtersObject }
+      : { limit: limit["exchange"] },
   });
   return axios.get(urlWithQueries);
 };
@@ -37,7 +43,9 @@ const getExchangeHistorySingleUser = (filtersObject) => {
 const getTransferHistorySingleUser = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["transfer"] + "?user_sender=" + user.username,
-    query: filtersObject || {},
+    query: filtersObject
+      ? { limit: limit["transfer"], ...filtersObject }
+      : { limit: limit["transfer"] },
   });
 
   return axios.get(urlWithQueries);

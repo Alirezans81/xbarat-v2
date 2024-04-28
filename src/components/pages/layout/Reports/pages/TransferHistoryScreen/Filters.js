@@ -48,7 +48,7 @@ export default function Filters({ setFilterCards }) {
         <div className="w-full flex flex-row items-center ">
           <div className="w-7/12 flex justify-start items-end">
             <span
-              className={`text-${oppositeTheme} text-2xl font-${font}-bold mt-1`}
+              className={`text-${oppositeTheme} text-xl font-${font}-bold mt-1`}
             >
               {lang["date-&-time"]}
             </span>
@@ -85,7 +85,7 @@ export default function Filters({ setFilterCards }) {
         </div>
       </div>
       <div className="flex flex-col mt-5">
-        <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
+        <span className={`text-${oppositeTheme} text-xl font-${font}-bold`}>
           {lang["currency"]}
         </span>
         <div className="mt-2 w-full">
@@ -126,7 +126,7 @@ export default function Filters({ setFilterCards }) {
         </div>
       </div>
       <div className="flex flex-col mt-5">
-        <span className={`text-${oppositeTheme} text-2xl font-${font}-bold`}>
+        <span className={`text-${oppositeTheme} text-xl font-${font}-bold`}>
           {lang["status"]}
         </span>
         <div className="mt-2 w-full">
