@@ -139,7 +139,6 @@ export default function DepositHistoryScreen() {
             <div
               className={dataCount > limit["deposit"] ? `w-fit z-10` : "hidden"}
             >
-              {" "}
               <CustomPagination
                 totalPages={Math.ceil(dataCount / limit["deposit"])}
                 itemsPerPage={limit["deposit"]}

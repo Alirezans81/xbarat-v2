@@ -16,11 +16,7 @@ export default function Cards({ data }) {
     <>
       <div
         className={
-          (withdraw.length <= 9) & (withdraw.length >= 7)
-            ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1"
-            : (withdraw.length <= 6) & (withdraw.length >= 4)
-            ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1 grid-rows-3"
-            : (withdraw.length <= 3) & (withdraw.length >= 1)
+          withdraw.length > 0
             ? "w-full h-5/6 grid lg:grid-cols-3 xs:grid-cols-1"
             : "hidden"
         }
