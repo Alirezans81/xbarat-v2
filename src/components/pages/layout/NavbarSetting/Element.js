@@ -20,32 +20,34 @@ export default function Element({ data, toggle, onClick }) {
     }
   };
 
-  return (
-    <div
-      className={`bg-${theme}-back rounded-lg px-2 py-1 flex justify-between my-2 min-w-[13rem]`}
-    >
-      <Link
-        onClick={getOnClickFunction()}
-        to={data.route}
-        className={`flex flex-1 items-center`}
+  if (data) {
+    return (
+      <div
+        className={`bg-${theme}-back rounded-lg px-2 py-1 flex justify-between my-2 min-w-[13rem]`}
       >
-        <div className={`bg-${theme} p-2.5 rounded-full`}>
-          <img className="w-5 h-5" src={data.imgs[`${oppositeTheme}`]} />
-        </div>
-        <span
-          className={`font-${font}-regular mt-1 m${direction}-2 text-${oppositeTheme}`}
+        <Link
+          onClick={getOnClickFunction()}
+          to={data.route}
+          className={`flex flex-1 items-center`}
         >
-          {data.title}
-        </span>
-      </Link>
-      {toggle && (
-        <button onClick={toggle}>
-          <img
-            className="w-5 h-5"
-            src={require(`../../../../Images/pages/layout/Navbar/setting/star-shown-${data.shown}.png`)}
-          />
-        </button>
-      )}
-    </div>
-  );
+          <div className={`bg-${theme} p-2.5 rounded-full`}>
+            <img className="w-5 h-5" src={data.imgs[`${oppositeTheme}`]} />
+          </div>
+          <span
+            className={`font-${font}-regular mt-1 m${direction}-2 text-${oppositeTheme}`}
+          >
+            {data.title}
+          </span>
+        </Link>
+        {toggle && (
+          <button onClick={toggle}>
+            <img
+              className="w-5 h-5"
+              src={require(`../../../../Images/pages/layout/Navbar/setting/star-shown-${data.shown}.png`)}
+            />
+          </button>
+        )}
+      </div>
+    );
+  }
 }

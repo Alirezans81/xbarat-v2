@@ -13,9 +13,11 @@ export default function Links({ links }) {
   const checkRouteShapeVisibility = () => {
     let found = false;
     links.map((link, index) => {
-      if (currentRoute === link.route) {
-        setActiveRouteShapeIsVisible(true);
-        found = true;
+      if (link) {
+        if (currentRoute === link.route) {
+          setActiveRouteShapeIsVisible(true);
+          found = true;
+        }
       }
     });
 
@@ -46,7 +48,7 @@ export default function Links({ links }) {
           <NavbarLink
             title={link.title}
             imgs={link.imgs}
-            route={link.route}
+            route={link ? link.route : ""}
             setActiveRouteShapeTopPosition={setActiveRouteShapeTopPosition}
             setActiveRouteShapeIsVisible={setActiveRouteShapeIsVisible}
           />
