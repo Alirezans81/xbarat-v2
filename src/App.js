@@ -6,6 +6,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import WaitLink from "./pages/WaitLink";
 import NoPage from "./pages/NoPage";
 import Layout from "./pages/Layout";
+import Giftcard from "./pages/GiftCards/Giftcard";
 import OnLoad from "./pages/OnLoad";
 import Home from "./pages/Home";
 import Wallet from "./pages/Wallet";
@@ -152,6 +153,7 @@ export default function App() {
                 <Route path="singular" element={<Singular />} />
                 <Route path="pair" element={<Pair />} />
               </Route>
+              <Route path="gift-card" element={<Giftcard />} />
               <Route path="more">
                 <Route path="robots" element={<Robots />} />
               </Route>
