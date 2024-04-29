@@ -1,4 +1,5 @@
 import { getBranches, getBranch } from "./apis";
+import FilterIsActive from "../../../functions/filterIsActivefunction";
 import { useState } from "react";
 
 const useGetBranches = () => {
@@ -13,7 +14,7 @@ const useGetBranches = () => {
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return FilterIsActive(data.data.results);
       })
       .catch((error) => {
         console.log(error);

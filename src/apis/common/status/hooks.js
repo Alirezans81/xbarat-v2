@@ -1,5 +1,6 @@
 import { getStatuses } from "./apis";
 import { useState } from "react";
+import FilterIsActive from "../../../functions/filterIsActivefunction";
 
 const useGetStatuses = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +15,7 @@ const useGetStatuses = () => {
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data.results;
+        return FilterIsActive(data.data.results);
       })
       .catch((error) => {
         console.log(error);

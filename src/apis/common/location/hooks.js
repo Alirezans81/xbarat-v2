@@ -7,8 +7,8 @@ import {
   getCountry,
   getCity,
 } from "./apis";
+import { FilterIsActive } from "../../../functions/filterIsActivefunction";
 import { useState } from "react";
-
 const useGetNationalities = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -21,7 +21,7 @@ const useGetNationalities = () => {
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return FilterIsActive(data.data.results);
       })
       .catch((error) => {
         console.log(error);
@@ -45,7 +45,7 @@ const useGetCountries = () => {
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return FilterIsActive(data.data.results);
       })
       .catch((error) => {
         console.log(error);
@@ -69,7 +69,7 @@ const useGetCities = () => {
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return FilterIsActive(data.data.results);
       })
       .catch((error) => {
         console.log(error);
