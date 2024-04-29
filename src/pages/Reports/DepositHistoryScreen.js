@@ -7,12 +7,14 @@ import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplas
 import { useGetDepositHistorySingleUser } from "../../apis/pages/Reports/hooks";
 import SubmitButton from "../../components/common/SubmitButton";
 import CustomPagination from "../../components/common/CustomPagination";
+import { useWalletState } from "../../Providers/WalletProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 export default function DepositHistoryScreen() {
   const limit = require("../../apis/pagination/limit.json");
   const theme = useThemeState();
   const lang = useLanguageState();
-
+  const wallet = useWalletState();
+  console.log(wallet);
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { one: oneDirection } = useDirectionState();
   const [temp, setTemp] = useState("");

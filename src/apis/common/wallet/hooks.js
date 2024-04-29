@@ -10,7 +10,7 @@ import {
   editWalletTank,
 } from "./apis";
 import { useState } from "react";
-
+import FilterIsActive from "../../../components/functions/filterIsActivefunction";
 const useGetWallets = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -25,11 +25,11 @@ const useGetWallets = () => {
     await getWallets(filtersObject)
       .then((data) => {
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
-        setState(data.data.results);
+        setState(FilterIsActive(data.data.results));
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data.results;
+        return FilterIsActive(data.data.results);
       })
       .catch((error) => {
         console.log(error);
@@ -155,11 +155,12 @@ const useEditWalletTanks = () => {
     customFunctionWithData
   ) => {
     setIsLoading(true);
-    await editWalletTank(walletTankUrl, params,customFunctionWithData)
+    await editWalletTank(walletTankUrl, params, customFunctionWithData)
       .then((data) => {
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         customFunction && customFunction();
-        customFunctionWithData && customFunctionWithData(params.username,params.token);
+        customFunctionWithData &&
+          customFunctionWithData(params.username, params.token);
         setIsLoading(false);
         return data.data.results;
       })

@@ -1,7 +1,5 @@
 import axios from "axios";
-import { stringify } from "postcss";
 import queryString from "query-string";
-
 const api =
   process.env.REACT_APP_MODE === "PRODUCTION"
     ? require("../../api-dev.json")
@@ -17,16 +15,18 @@ const getDepositHistorySingleUser = (filtersObject) => {
       ? { limit: limit["deposit"], ...filtersObject }
       : { limit: limit["deposit"] },
   });
+
   return axios.get(urlWithQueries);
 };
 
 const getWithdrawHistorySingleUser = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
-    url: api["withdraw"] + "?user_sender=" + user.username,
+    url: api["withdrawal"] + "?user_receiver=" + user.username,
     query: filtersObject
-      ? { limit: limit["withdraw"], ...filtersObject }
-      : { limit: limit["withdraw"] },
+      ? { limit: limit["withdrawal"], ...filtersObject }
+      : { limit: limit["withdrawal"] },
   });
+
   return axios.get(urlWithQueries);
 };
 
@@ -37,6 +37,7 @@ const getExchangeHistorySingleUser = (filtersObject) => {
       ? { limit: limit["exchange"], ...filtersObject }
       : { limit: limit["exchange"] },
   });
+
   return axios.get(urlWithQueries);
 };
 
