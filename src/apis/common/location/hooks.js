@@ -7,7 +7,7 @@ import {
   getCountry,
   getCity,
 } from "./apis";
-import { FilterIsActive } from "../../../functions/filterIsActivefunction";
+import FilterIsActive from "../../../functions/filterIsActivefunction";
 import { useState } from "react";
 const useGetNationalities = () => {
   const [isLoading, setIsLoading] = useState(false);
