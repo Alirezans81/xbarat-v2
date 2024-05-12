@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api =
-  process.env.REACT_APP_MODE === "PRODUCTION"
+  process.env.REACT_APP_MODE === "DEVELOPMENT"
     ? require("../../api-dev.json")
     : require("../../api.json");
 

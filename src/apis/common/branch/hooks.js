@@ -10,7 +10,7 @@ const useGetBranches = () => {
     setIsLoading(true);
     await getBranches(filtersObject)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
@@ -34,7 +34,7 @@ const useGetBranch = () => {
     setIsLoading(true);
     await getBranch(branchUrl)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data);
         customFunction && customFunction();
         setIsLoading(false);

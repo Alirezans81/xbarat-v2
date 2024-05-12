@@ -16,7 +16,7 @@ const useGetNextData = () => {
     setIsLoading(true);
     await getNextData()
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         setCount && setCount(data.data.count);
         setPreviousDataUrl && setPreviousDataUrl(data.data.previous);
@@ -51,7 +51,7 @@ const useGetPreviousData = () => {
     setIsLoading(true);
     await getPreviousData()
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         setCount && setCount(data.data.count);
         setPreviousDataUrl && setPreviousDataUrl(data.data.previous);

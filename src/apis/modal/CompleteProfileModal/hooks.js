@@ -16,7 +16,7 @@ const useFetchStep1 = () => {
       setIsLoading(true);
       await fetchStep1(userInfo.username, params)
         .then((data) => {
-          process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data.results);
           saveUser(data.data.results);
           customFunction();
@@ -48,7 +48,7 @@ const useFetchStep2 = () => {
       setIsLoading(true);
       await fetchStep2(userInfo.username, params)
         .then((data) => {
-          process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data.results);
           saveUser(data.data.results);
           customFunction();
@@ -80,7 +80,7 @@ const useFetchStep3 = () => {
       setIsLoading(true);
       await fetchStep3(userInfo.username, params)
         .then((data) => {
-          process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data.results);
           saveUser(data.data.results);
           customFunction();
