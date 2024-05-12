@@ -9,7 +9,7 @@ const useGetStatuses = () => {
     setIsLoading(true);
     await getStatuses()
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);

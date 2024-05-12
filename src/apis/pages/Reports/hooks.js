@@ -25,7 +25,7 @@ const useGetDepositHistory = () => {
     setIsLoading(true);
     await getDepositHistory(filtersObject)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         setDataCount && setDataCount(data.data.count);
         setPreviousUrl && setPreviousUrl(data.data.previous);
@@ -56,7 +56,7 @@ const useGetDepositHistorySingleUser = () => {
     setIsLoading(true);
     await getDepositHistorySingleUser(filtersObject)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         setDataCount && setDataCount(data.data.count);
         setPreviousUrl && setPreviousUrl(data.data.previous);
@@ -88,7 +88,7 @@ const useGetExchangeHistorySingleUser = () => {
     setIsLoading(true);
     await getExchangeHistorySingleUser(filtersObject)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         setDataCount && setDataCount(data.data.count);
         setPreviousUrl && setPreviousUrl(data.data.previous);
@@ -120,7 +120,7 @@ const useGetWithdrawHistorySingleUser = () => {
     setIsLoading(true);
     await getWithdrawHistorySingleUser(filtersObject)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         setDataCount && setDataCount(data.data.count);
         setPreviousUrl && setPreviousUrl(data.data.previous);
@@ -151,7 +151,7 @@ const useGetTransferHistorySingleUser = () => {
     setIsLoading(true);
     await getTransferHistorySingleUser(filtersObject)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         setDataCount && setDataCount(data.data.count);
         setPreviousUrl && setPreviousUrl(data.data.previous);
@@ -183,7 +183,7 @@ const useGetTransferHistory = () => {
     setIsLoading(true);
     await getTransferHistory(filtersObject)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         setIsLoading(false);
         return data.data.results;
@@ -212,7 +212,7 @@ const useGetExchangeHistory = () => {
     setIsLoading(true);
     await getExchangeHistory(filtersObject)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         setIsLoading(false);
         return data.data.results;
@@ -241,7 +241,7 @@ const useGetWithdrawHistory = () => {
     setIsLoading(true);
     await getWithdrawHistory(filtersObject)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         setIsLoading(false);
         return data.data.results;
@@ -264,7 +264,7 @@ const useGetTop5Report = () => {
     setIsLoading(true);
     await getTop5Report(token, params)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         setIsLoading(false);
         return data.data.results;

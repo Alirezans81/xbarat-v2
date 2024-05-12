@@ -13,7 +13,7 @@ const useChangePassword = () => {
       setIsLoading(true);
       await changePassword(token, params)
         .then((data) => {
-          process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           customFunction();
           setIsLoading(false);
           return data.data.results;

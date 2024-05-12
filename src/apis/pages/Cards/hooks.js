@@ -9,7 +9,7 @@ const useUpdateWalletTank = () => {
     setIsLoading(true);
     await updateWalletTank(walletTankUrl, params)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
         return data.data;
