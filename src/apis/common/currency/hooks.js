@@ -9,7 +9,7 @@ const useGetCurrencies = () => {
     setIsLoading(true);
     await getCurrencies()
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
@@ -33,7 +33,7 @@ const useGetCurrency = () => {
     setIsLoading(true);
     await getCurrency(currencyUrl)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data);
         customFunction && customFunction();
         setIsLoading(false);
@@ -57,7 +57,7 @@ const useGetCurrencyPairs = () => {
     setIsLoading(true);
     await getCurrencyPairs(filtersObject)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);

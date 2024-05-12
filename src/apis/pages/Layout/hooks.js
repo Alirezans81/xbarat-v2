@@ -17,7 +17,7 @@ const useLogout = () => {
     token &&
       logout(token)
         .then((data) => {
-          process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
 
           setUser(null);
           window.localStorage.removeItem("userInfo");

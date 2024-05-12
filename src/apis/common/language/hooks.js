@@ -14,7 +14,7 @@ const useGetLanguages = () => {
     setIsLoading(true);
     await getLanguages()
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);
@@ -45,7 +45,7 @@ const useGetLanguageFile = () => {
     setIsLoading(true);
     await getLanguageFile(fileUrl)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState && setState(data.data);
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data);

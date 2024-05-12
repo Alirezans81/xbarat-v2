@@ -10,6 +10,7 @@ import { useFontState } from "../Providers/FontProvider";
 import { useGetUserInfo } from "../apis/pages/Profile/hooks";
 import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
 import { useUserState } from "../Providers/UserProvider";
+import { useToastDataSetState } from "../Providers/ToastDataProvider";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export default function Profile() {
   const font = useFontState();
   const theme = useThemeState();
   const setLoading = useIsLoadingSplashScreenSetState();
+  const setToastData = useToastDataSetState();
 
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   function handleCards() {
@@ -25,11 +27,29 @@ export default function Profile() {
   }
 
   const { getUserInfo, isLoading: getUserInfoIsLoading } = useGetUserInfo();
-  useEffect(() => setLoading(getUserInfoIsLoading), [getUserInfoIsLoading]);
+  useEffect(
+    () => setLoading(getUserInfoIsLoading),
+    [setLoading, getUserInfoIsLoading]
+  );
+
+  const openRejectionToast = (reject_text) => {
+    setToastData({
+      status: "failed",
+      message: reject_text,
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
 
   useEffect(() => {
-    userInfo && userInfo.username && !userInfo.is_verified && getUserInfo();
-  }, []);
+    userInfo &&
+      userInfo.username &&
+      !userInfo.is_verified &&
+      getUserInfo(null, (data) => {
+        data && data.reject_text && openRejectionToast(data.reject_text);
+      });
+  }, [getUserInfo, userInfo]);
 
   return (
     <div className="absolute w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6">

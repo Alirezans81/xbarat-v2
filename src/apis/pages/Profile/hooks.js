@@ -17,15 +17,16 @@ const useGetUserInfo = () => {
   const saveUser = (value) =>
     window.localStorage.setItem("userInfo", JSON.stringify(value));
 
-  const fetch = async (customFunction) => {
+  const fetch = async (customFunction, customFunctionWithData) => {
     if (userInfo && userInfo.username) {
       setIsLoading(true);
       await getUserInfo(userInfo.username)
         .then((data) => {
-          process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data);
           saveUser(data.data);
           customFunction && customFunction();
+          customFunctionWithData && customFunctionWithData(data.data);
           setIsLoading(false);
           return data.data;
         })
@@ -54,7 +55,7 @@ const useUpdateNameAndAvatar = () => {
     userInfo && userInfo.username
       ? await updateNameAndAvatar(userInfo.username, params)
           .then((data) => {
-            process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+            process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
             setUser(data.data.results);
             saveUser(data.data.results);
             customFunction();
@@ -86,7 +87,7 @@ const useUpdatePhone = () => {
     userInfo && userInfo.username
       ? await updatePhone(userInfo.username, params)
           .then((data) => {
-            process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+            process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
             setUser(data.data.results);
             saveUser(data.data.results);
             customFunction && customFunction();
@@ -118,7 +119,7 @@ const useUpdateNationalInfo = () => {
     userInfo && userInfo.username
       ? await updateNationalInfo(userInfo.username, params)
           .then((data) => {
-            process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+            process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
             setUser(data.data.results);
             saveUser(data.data.results);
             customFunctionWithData && customFunctionWithData(data.data.results);
@@ -150,7 +151,7 @@ const useUpdateDefaultLocale = () => {
     userInfo && userInfo.username
       ? await updateDefaultLocale(userInfo.username, params)
           .then((data) => {
-            process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+            process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
             setUser(data.data.results);
             saveUser(data.data.results);
             customFunctionWithData && customFunctionWithData(data.data.results);
