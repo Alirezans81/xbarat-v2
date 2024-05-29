@@ -3,7 +3,7 @@ import { stringify } from "postcss";
 import queryString from "query-string";
 
 const api =
-  process.env.REACT_APP_MODE === "PRODUCTION"
+  process.env.REACT_APP_MODE === "DEVELOPMENT"
     ? require("../../api-dev.json")
     : require("../../api.json");
 const limit = require("../../pagination/limit.json");

@@ -14,7 +14,7 @@ const useLogin = () => {
     setIsLoading(true);
     login(params)
       .then((data) => {
-        process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setUser(data.data.results.user);
         setToken(data.data.results.token);
 

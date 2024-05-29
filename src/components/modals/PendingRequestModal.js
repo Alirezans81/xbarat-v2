@@ -255,14 +255,17 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
         {data && data.status_title === "Upload Document" && (
           <SubmitButton
             onClick={() => {
-              if (data && data.url && document) {
+              if (
+                data &&
+                data.url &&
+                document &&
+                receiverTanks[selectedWalletTank]
+              ) {
                 uploadRequestDocument(
                   data.url,
                   {
                     document,
-                    wallet_tank_receiver: receiverTanks[selectedWalletTank]
-                      ? receiverTanks[selectedWalletTank].url
-                      : "",
+                    wallet_tank_receiver: receiverTanks[selectedWalletTank].url,
                     status: statuses
                       ? statuses.find(
                           (status) => status.title === "Admin Approve"
