@@ -100,7 +100,6 @@ export default function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/wait-link" element={<WaitLink />} />
             <Route path="*" element={<NoPage />} />

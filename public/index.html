@@ -28,14 +28,57 @@
     -->
 
     <!-- Raychat -->
-      <script type="text/javascript"> window.RAYCHAT_TOKEN = "a559abdf-5472-4786-b84c-e4f121a1010f"; (function () { d = document; s = d.createElement("script"); s.src = "https://widget-react.raychat.io/install/widget.js"; s.async = 1; d.getElementsByTagName("head")[0].appendChild(s); })();</script>
+    <!-- <script type="text/javascript">
+      window.RAYCHAT_TOKEN = "c876dcdd-7743-47f6-afdd-a9cd0a50531d";
+      (function () {
+        d = document;
+        s = d.createElement("script");
+        s.src = "https://widget-react.raychat.io/install/widget.js";
+        s.async = 1;
+        d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script> -->
     <!-- /Raychat -->
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-W8ELWNTPLE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-W8ELWNTPLE");
+    </script>
+    <!-- /Google tag (gtag.js) -->
 
     <title>Xbarat</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <button
+      id="new_widget_button"
+      style="
+        background-color: #0a8dff;
+        z-index: 100;
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        padding: 12px;
+        border-radius: 100%;
+      "
+    >
+      <img
+        alt="Goftino Button"
+        src="./ticket.png"
+        style="width: 35px; height: 35px"
+      />
+    </button>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -46,25 +89,42 @@
         To begin the development, run `npm start` or `yarn start`.
         To create a production bundle, use `npm run build` or `yarn build`.
       -->
-      
-      <!-- Goftino -->
-        <script type="text/javascript">
-          // !function(){var i="8zbZU0",a=window,d=document;function g(){var g=d.createElement("script"),s="https://www.goftino.com/widget/"+i,l=localStorage.getItem("goftino_"+i);g.async=!0,g.src=l?s+"?o="+l:s;d.getElementsByTagName("head")[0].appendChild(g);}"complete"===d.readyState?g():a.attachEvent?a.attachEvent("onload",g):a.addEventListener("load",g,!1);}();
-        </script>
-        <!--- Add lines below for Widget customization --->
-        <script>
-            // window.addEventListener('goftino_ready', function () {
-            //     Goftino.setWidget({
-            //         hasIcon: false,
-            //         counter: '#unread_counter'
-            //     });
-            
-            //     document.getElementById("new_widget_button").addEventListener("click", function () {
-            //         Goftino.toggle();
-            //     });
-            // });
-        </script>
-      <!-- /Goftino -->
 
+    <!-- Goftino -->
+    <script type="text/javascript">
+      !(function () {
+        var i = "8zbZU0",
+          a = window,
+          d = document;
+        function g() {
+          var g = d.createElement("script"),
+            s = "https://www.goftino.com/widget/" + i,
+            l = localStorage.getItem("goftino_" + i);
+          (g.async = !0), (g.src = l ? s + "?o=" + l : s);
+          d.getElementsByTagName("head")[0].appendChild(g);
+        }
+        "complete" === d.readyState
+          ? g()
+          : a.attachEvent
+          ? a.attachEvent("onload", g)
+          : a.addEventListener("load", g, !1);
+      })();
+    </script>
+    <!--- Add lines below for Widget customization --->
+    <script>
+      window.addEventListener("goftino_ready", function () {
+        Goftino.setWidget({
+          hasIcon: false,
+          counter: "#unread_counter",
+        });
+
+        document
+          .getElementById("new_widget_button")
+          .addEventListener("click", function () {
+            Goftino.toggle();
+          });
+      });
+    </script>
+    <!-- /Goftino -->
   </body>
 </html>
