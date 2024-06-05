@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useLanguageState } from "../Providers/LanguageProvider";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useTokenState } from "../Providers/TokenProvider";
@@ -9,6 +9,7 @@ import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashSc
 import { useFontState } from "../Providers/FontProvider";
 
 export default function OnLoad({ children }) {
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const lang = useLanguageState();
   const font = useFontState();
@@ -53,6 +54,26 @@ export default function OnLoad({ children }) {
     ) {
       navigate("/home");
     } else window.localStorage.removeItem("linksShown");
+
+    // 13 khordad 1403
+    if (pathname === "/") {
+      const prev = +window.localStorage.getItem("visit_count");
+
+      if (prev) {
+        window.localStorage.setItem("visit_count", prev + 1 + "");
+
+        process.env.REACT_APP_MODE === "DEVELOPMENT" &&
+          console.log(
+            "visit_count: ",
+            window.localStorage.getItem("visit_count")
+          );
+      } else {
+        window.localStorage.setItem("visit_count", "1");
+
+        process.env.REACT_APP_MODE === "DEVELOPMENT" &&
+          console.log("visit_count: 1");
+      }
+    }
   }, []);
 
   if (children) {

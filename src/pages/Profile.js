@@ -49,7 +49,7 @@ export default function Profile() {
       getUserInfo(null, (data) => {
         data && data.reject_text && openRejectionToast(data.reject_text);
       });
-  }, [getUserInfo, userInfo]);
+  }, []);
 
   return (
     <div className="absolute w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6">
