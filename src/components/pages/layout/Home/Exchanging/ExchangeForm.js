@@ -112,7 +112,7 @@ export default function ExchangeForm({
       selectedTargetIndex >= 0
     ) {
       const newAmount =
-        +selectedCurrecnyPair.fee_percentage === 0
+        +selectedCurrecnyPair.fee_percentage === 0 || user.free_exchange
           ? amount
           : amount * ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
       if (

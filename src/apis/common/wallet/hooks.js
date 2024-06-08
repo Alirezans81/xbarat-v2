@@ -24,13 +24,8 @@ const useGetWallets = () => {
     setIsLoading(true);
     await getWallets(filtersObject)
       .then((data) => {
-<<<<<<< HEAD
         process.env.REACT_APP_MODE === "PRODUCTION" && console.log(data);
         setState(FilterIsActive(data.data.results));
-=======
-        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
-        setState(data.data.results);
->>>>>>> 287215c845f28707fdf754559e0ed808072933bb
         customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
