@@ -4,29 +4,30 @@ import Withdraw from "./Withdraw";
 import Deposit from "./Deposit";
 import Transfer from "./Transfer";
 const TutorialModal = () => {
+  const TutorialContext = require("./temp.json");
+  const deposit = TutorialContext.ContextTutorial.Deposit;
+  const withdraw = TutorialContext.ContextTutorial.Withdraw;
+  const transfer = TutorialContext.ContextTutorial.Transfer;
+
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const [tutorial, setTutorial] = useState({ title: "", status: "" });
-  const temp = ">";
-  const context =
-    "If You Wish To Deposit Your Money Into Xbarat You Can Do So By 1.Enter Your Currency  2.Enter The Amount Of Money You Wish To Deposit 3.Click In Deposit 4.Send A Picture Of Your Recipt ";
-  console.log(tutorial);
+  const [tutorial, setTutorial] = useState("");
   var w = window.innerWidth;
-  var cols = w <= 640 ? 1 : 3;
+  var cols = w <= 640 ? 1 : w > 640 && w <= 768 ? 2 : 3;
   return (
     <>
       {/* Main */}
       <div
         className={
-          tutorial.title === ""
-            ? `py-5 grid grid-cols-${cols} grid-rows-10 text-${oppositeTheme} gap-x-5 h-[30rem] w-[${
-                cols * 10
+          tutorial === ""
+            ? `py-5 grid grid-cols-${cols} grid-rows-10 text-${oppositeTheme} gap-x-5 h-[25rem] w-[${
+                cols * 5
               }rem] overflow-y-scroll animate-upward`
             : "hidden"
         }
       >
         <button
-          onClick={() => setTutorial({ title: "Deposit", status: "" })}
+          onClick={() => setTutorial("Deposit")}
           className={`h-fit  row-span-10 flex flex-col justify-start items-center bg-${theme}-back rounded-2xl py-5 px-4 mt-5`}
         >
           <span className="bg-blue text-light rounded-2xl w-full flex justify-center py-2">
@@ -35,11 +36,21 @@ const TutorialModal = () => {
           <span
             className={`w-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
           >
-            {context}
+            {deposit.context[0]}
+            <br />
+            {deposit.context[1]}
+            <br />
+            {deposit.context[2]}
+            <br />
+            {deposit.context[3]}
+            <br />
+            {deposit.context[4]}
+            <br />
+            {deposit.context[5]}
           </span>
         </button>
         <button
-          onClick={() => setTutorial({ title: "Withdraw", status: "" })}
+          onClick={() => setTutorial("Withdraw")}
           className={`h-fit  row-span-10 flex flex-col justify-start items-center bg-${theme}-back rounded-2xl py-5 px-4 mt-5`}
         >
           <span className="bg-blue text-light rounded-2xl w-full flex justify-center py-2">
@@ -48,11 +59,21 @@ const TutorialModal = () => {
           <span
             className={`w-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
           >
-            {context}
+            {withdraw.context[0]}
+            <br />
+            {withdraw.context[1]}
+            <br />
+            {withdraw.context[2]}
+            <br />
+            {withdraw.context[3]}
+            <br />
+            {withdraw.context[4]}
+            <br />
+            {withdraw.context[5]}
           </span>
         </button>
         <button
-          onClick={() => setTutorial({ title: "Transfer", status: "" })}
+          onClick={() => setTutorial("Transfer")}
           className={`h-fit  row-span-10 flex flex-col justify-start items-center bg-${theme}-back rounded-2xl py-5 px-4 mt-5`}
         >
           <span className="bg-blue text-light rounded-2xl w-full flex justify-center py-2">
@@ -61,7 +82,17 @@ const TutorialModal = () => {
           <span
             className={`w-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
           >
-            {context}
+            {transfer.context[0]}
+            <br />
+            {transfer.context[1]}
+            <br />
+            {transfer.context[2]}
+            <br />
+            {transfer.context[3]}
+            <br />
+            {transfer.context[4]}
+            <br />
+            {transfer.context[5]}
           </span>
         </button>
       </div>
@@ -69,84 +100,63 @@ const TutorialModal = () => {
       {/* Deposit */}
       <div
         className={
-          tutorial.title === "Deposit"
-            ? `grid grid-cols-12 grid-rows-6 text-${oppositeTheme} gap-x-5 h-[30rem] overflow-y-scroll gap-y-2 animate-upward`
+          tutorial === "Deposit"
+            ? `grid grid-cols-12 grid-rows-6 text-${oppositeTheme} gap-x-5 h-[30rem] w-fit max-h-[35rem] overflow-y-scroll gap-y-2 animate-upward`
             : "hidden"
         }
       >
         <div className="col-span-12 row-span-1 flex flex-row justify-start items-center gap-x-5 animate-rightward">
           <button
-            onClick={() => setTutorial({ title: "", status: "" })}
-            className="text-base"
+            onClick={() => setTutorial("")}
+            className="text-base bg-blue text-light rounded-2xl py-2 px-5"
           >
-            {tutorial.title}
-          </button>
-          <span className="text-blue">{temp}</span>
-          <button
-            onClick={() => setTutorial({ title: "Deposit", status: "" })}
-            className="text-base"
-          >
-            {tutorial.status}
+            {tutorial}
           </button>
         </div>
         <div className={`flex row-span-5 col-span-12 h-full `}>
-          <Deposit tutorial={tutorial} setTutorial={setTutorial} />
+          <Deposit deposit={deposit} />
         </div>
       </div>
 
       {/* Withdraw */}
       <div
         className={
-          tutorial.title === "Withdraw"
+          tutorial === "Withdraw"
             ? `grid grid-cols-12 grid-rows-6 text-${oppositeTheme} gap-x-5 h-[30rem] overflow-y-scroll gap-y-2 animate-upward`
             : "hidden"
         }
       >
         <div className="col-span-12 row-span-1 flex flex-row justify-start items-center gap-x-5 animate-rightward">
           <button
-            onClick={() => setTutorial({ title: "", status: "" })}
-            className="text-base"
+            onClick={() => setTutorial("")}
+            className="text-base bg-blue text-light rounded-2xl py-2 px-5"
           >
-            {tutorial.title}
-          </button>
-          <span className="text-blue">{temp}</span>
-          <button
-            onClick={() => setTutorial({ title: "Withdraw", status: "" })}
-            className="text-base"
-          >
-            {tutorial.status}
+            {tutorial}
           </button>
         </div>
         <div className={`flex row-span-5 col-span-12 h-full `}>
-          <Withdraw tutorial={tutorial} setTutorial={setTutorial} />
+          <Withdraw withdraw={withdraw} />
         </div>
       </div>
 
       {/* Transfer */}
       <div
         className={
-          tutorial.title === "Transfer"
+          tutorial === "Transfer"
             ? `grid grid-cols-12 grid-rows-6 text-${oppositeTheme} gap-x-5 h-[30rem] overflow-y-scroll gap-y-2 animate-upward`
             : "hidden"
         }
       >
         <div className="col-span-12 row-span-1 flex flex-row justify-start items-center gap-x-5 animate-rightward">
           <button
-            onClick={() => setTutorial({ title: "", status: "" })}
-            className="text-base"
+            onClick={() => setTutorial("")}
+            className="text-base bg-blue text-light rounded-2xl py-2 px-5"
           >
-            {tutorial.title}
-          </button>
-          <span className="text-blue">{temp}</span>
-          <button
-            onClick={() => setTutorial({ title: "Deposit", status: "" })}
-            className="text-base"
-          >
-            {tutorial.status}
+            {tutorial}
           </button>
         </div>
         <div className={`flex row-span-5 col-span-12 h-full `}>
-          <Transfer tutorial={tutorial} setTutorial={setTutorial} />
+          <Transfer transfer={transfer} />
         </div>
       </div>
     </>

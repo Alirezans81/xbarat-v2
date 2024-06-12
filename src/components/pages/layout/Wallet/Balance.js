@@ -69,7 +69,7 @@ export default function Balance({ refreshPendingRequests }) {
               {lang["your-balance"]}
             </span>
             <button
-              className="text-blue text-2xl mb-1 flex justify-start items-start"
+              className="text-blue text-2xl mb-2 flex justify-start items-start"
               onClick={() => openTutorialModal()}
             >
               ?
