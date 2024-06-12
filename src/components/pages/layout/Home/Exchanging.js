@@ -127,22 +127,8 @@ export default function Exchanging({
         <div className="row-span-6 mt-2">
           {selectedSourceIndex >= 0 && (
             <Wallet
-              balance={
-                selectedCurrecnyWalletData && selectedCurrecnyWalletData.balance
-                  ? +selectedCurrecnyWalletData.balance
-                  : 0
-              }
+              walletData={selectedCurrecnyWalletData}
               currency={currencies[selectedSourceIndex].abbreviation}
-              pending={
-                selectedCurrecnyWalletData && selectedCurrecnyWalletData.pending
-                  ? +selectedCurrecnyWalletData.pending
-                  : 0
-              }
-              locked={
-                selectedCurrecnyWalletData && selectedCurrecnyWalletData.locked
-                  ? +selectedCurrecnyWalletData.locked
-                  : 0
-              }
             />
           )}
         </div>

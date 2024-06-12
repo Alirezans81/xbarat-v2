@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useLanguageSetState } from "../../Providers/LanguageProvider";
+import {
+  useLanguageSetState,
+  useLanguageState,
+} from "../../Providers/LanguageProvider";
 import { CustomDropdown, CustomItem } from "./CustomDropdown";
 import { CustomDropdown2, CustomItem2 } from "./CustomDropdown2";
 import { useGetLanguageFile } from "../../apis/common/language/hooks";
@@ -7,13 +10,18 @@ import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplas
 import { useLanguageListState } from "../../Providers/LanguageListProvider";
 import { useFontSetState } from "../../Providers/FontProvider";
 import { useUpdateDefaultLocale } from "../../apis/pages/Profile/hooks";
+import { useUserState } from "../../Providers/UserProvider";
+import { useToastDataSetState } from "../../Providers/ToastDataProvider";
 
 export default function LanguageSwitcher({ with_background }) {
   const setLoading = useIsLoadingSplashScreenSetState();
 
   const languages = useLanguageListState();
+  const lang = useLanguageState();
   const setLang = useLanguageSetState();
   const setFont = useFontSetState();
+  const userInfo = useUserState();
+  const setToastData = useToastDataSetState();
 
   const { updateDefaultLocale, isLoading: updateDefaultLocaleIsLoading } =
     useUpdateDefaultLocale();
@@ -53,9 +61,22 @@ export default function LanguageSwitcher({ with_background }) {
         setLang
       );
 
-      updateDefaultLocale({
-        default_locale: languages[selectedLanguageIndex].url,
-      });
+      updateDefaultLocale(
+        {
+          default_locale: languages[selectedLanguageIndex].url,
+        },
+        (data) => {
+          if (!userInfo.is_active && data.is_active) {
+            setToastData({
+              status: "success",
+              message: lang["user-activated-toast-message"],
+              canClose: true,
+              isOpen: true,
+              showTime: 10000,
+            });
+          }
+        }
+      );
     }
   }, [selectedLanguageIndex]);
 

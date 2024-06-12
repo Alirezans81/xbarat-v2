@@ -16,12 +16,13 @@ import SubmitButton from "../../../../common/SubmitButton";
 import { useUserState } from "../../../../../Providers/UserProvider";
 import { useStatusesState } from "../../../../../Providers/StatusesProvider";
 import { useExchange } from "../../../../../apis/pages/Home/hooks";
-import { useNavigate } from "react-router-dom";
 import { useFontState } from "../../../../../Providers/FontProvider";
 import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
 import CompleteProfileModal from "../../../../modals/CompleteProfileModal";
 import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
 import { useToastDataSetState } from "../../../../../Providers/ToastDataProvider";
+import LoginSignupModal from "../../../../modals/LoginSignupModal";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function ExchangeForm({
   walletBalance,
@@ -48,7 +49,6 @@ export default function ExchangeForm({
   const lang = useLanguageState();
   const font = useFontState();
   const theme = useThemeState();
-  const navigate = useNavigate();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: oneDirection } = useDirectionState();
   const refreshWallet = useRefreshWallet();
@@ -62,6 +62,7 @@ export default function ExchangeForm({
   const removeComma = useRemoveComma();
   const calculateReverseRate = useCalculateReverseRate();
   const calculateNotReverseRate = useCalculateNotReverseRate();
+  const navigate = useNavigate();
 
   const { exchange, isLoading: exchangeIsLoading } = useExchange();
   useEffect(
@@ -74,6 +75,7 @@ export default function ExchangeForm({
     if (errorMessage) setHasError(true);
     else setHasError(false);
   }, [errorMessage]);
+  const [submitButtonFunction, setSubmitButtonFunction] = useState("submit");
 
   const [targetSlug, setTargetSlug] = useState();
 
@@ -183,6 +185,7 @@ export default function ExchangeForm({
       }
 
       if (+walletBalance < amount) {
+        setSubmitButtonFunction("deposit");
         setErrorMessage(lang["not-enough-balance-error"] + ".");
         return false;
       } else if (amount < min_amount) {
@@ -210,13 +213,21 @@ export default function ExchangeForm({
         );
         return false;
       } else {
+        setSubmitButtonFunction("submit");
         setErrorMessage(null);
         return true;
       }
     }
   };
 
-  const navigateToLogin = () => navigate("login");
+  const OpenLoginSignupModal = () => {
+    setModalData({
+      title: lang["login-signup-modal-title"],
+      children: <LoginSignupModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
 
   const setToastData = useToastDataSetState();
   const openCompleteProfileMessageToast = () => {
@@ -661,22 +672,45 @@ export default function ExchangeForm({
                   )}
                 </div>
               )}
-            <SubmitButton
-              type="submit"
-              onClick={isDemo ? navigateToLogin : handleSubmit}
-              className={
-                values.amount &&
-                removeComma(values.amount) !== 0 &&
-                values.rate &&
-                removeComma(values.rate) !== 0
-                  ? "flex justify-center mt-0.5 items-center w-full py-0.5"
-                  : "flex justify-center mt-7 items-center w-full py-0.5"
-              }
-              rounded="lg"
-              disabled={hasError}
-            >
-              {lang["submit"]}
-            </SubmitButton>
+            {submitButtonFunction === "submit" ? (
+              <SubmitButton
+                type={isDemo ? "button" : "submit"}
+                onClick={isDemo ? OpenLoginSignupModal : handleSubmit}
+                className={
+                  values.amount &&
+                  removeComma(values.amount) !== 0 &&
+                  values.rate &&
+                  removeComma(values.rate) !== 0
+                    ? "flex justify-center mt-0.5 items-center w-full py-0.5"
+                    : "flex justify-center mt-7 items-center w-full py-0.5"
+                }
+                rounded="lg"
+                disabled={hasError}
+              >
+                {lang["submit"]}
+              </SubmitButton>
+            ) : (
+              <button
+                type="button"
+                onClick={() =>
+                  navigate("/wallet", {
+                    state: {
+                      selectedCurrency: currencies[selectedSourceIndex],
+                    },
+                  })
+                }
+                className={
+                  values.amount &&
+                  removeComma(values.amount) !== 0 &&
+                  values.rate &&
+                  removeComma(values.rate) !== 0
+                    ? `flex justify-center mt-0.5 items-center w-full pt-2 pb-1 rounded-lg bg-green font-${font}-bold text-light`
+                    : `flex justify-center mt-7 items-center w-full pt-2 pb-1 rounded-lg bg-green font-${font}-bold text-light`
+                }
+              >
+                {lang["deposit"]}
+              </button>
+            )}
           </form>
         );
       }}

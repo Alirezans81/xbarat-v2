@@ -8,6 +8,7 @@ import { useCheckEmail, useSendEmail } from "../../../apis/common/email/hooks";
 import { useGenerateCode } from "../../../hooks/useGenerateCode";
 import { useFontState } from "../../../Providers/FontProvider";
 import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
+import { useLogin } from "../../../apis/pages/Login/hooks";
 
 export default function Form({ setIsSplashScreenLoading }) {
   const theme = useThemeState();
@@ -105,9 +106,20 @@ export default function Form({ setIsSplashScreenLoading }) {
     [signupError]
   );
 
+  const { login, isLoading: loginIsLoading, error: loginError } = useLogin();
+  useEffect(() => {
+    setIsSplashScreenLoading(loginIsLoading);
+  }, [loginIsLoading]);
+  useEffect(
+    () =>
+      loginError &&
+      loginError.response &&
+      showErrorToast(Object.values(loginError.response.data).join(" ")),
+    [loginError]
+  );
   const navigate = useNavigate();
-  const navigateToLogin = () => {
-    navigate("/login");
+  const navigateToHome = () => {
+    navigate("/home");
   };
 
   const [validationErrors, setValidationErrors] = useState({});
@@ -188,13 +200,20 @@ export default function Form({ setIsSplashScreenLoading }) {
       }}
       onSubmit={(values) => {
         if (mode === "check") {
-          checkEmail(
-            values.email,
-            () => showErrorToast(lang["email-exists-error"]),
-            null,
-            () => sendCode(values.email)
-          );
-        } else if (mode == "submit") {
+          if (acceptedPolicy) {
+            checkEmail(
+              values.email,
+              () => showErrorToast(lang["email-exists-error"]),
+              null,
+              () => sendCode(values.email)
+            );
+          } else {
+            let newValidationErrors = validationErrors;
+            newValidationErrors.acceptedPolicy =
+              "You have not accepted the privacy & policy" + "!";
+            new setValidationErrors(newValidationErrors);
+          }
+        } else if (mode === "submit") {
           if (values.verify_email_code === code) {
             signup(
               {
@@ -209,7 +228,13 @@ export default function Form({ setIsSplashScreenLoading }) {
                     lang["successful-signup-2nd"] +
                     "."
                 );
-                navigateToLogin();
+
+                login(
+                  { email: values.email, password: values.password },
+                  (data) => {
+                    navigateToHome();
+                  }
+                );
               }
             );
           } else setCodeError(lang["email-varification-code-error"] + ".");
@@ -221,6 +246,7 @@ export default function Form({ setIsSplashScreenLoading }) {
           onSubmit={(e) => {
             e.preventDefault();
 
+            console.log(mode);
             if (mode === "check" && validateEmail(values.email)) {
               handleSubmit(e);
             } else if (
@@ -385,34 +411,36 @@ export default function Form({ setIsSplashScreenLoading }) {
               )}
             </>
           )}
-          <div className="w-full mt-3">
-            <div className="flex gap-x-2 items-start">
-              <button
-                className="mt-0.5"
-                type="button"
-                onClick={toggleAcceptedPolicy}
-              >
-                <img
-                  className="w-4 h-4 md:w-5 md:h-5"
-                  src={require(`../../../Images/pages/Login/check-${acceptedPolicy}.png`)}
-                />
-              </button>
-              <a
-                href="https://xbarat.net/privacy-policy"
-                className={`flex-1 font-${font}-regular pt-1 text-blue underline underline-offset-2 text-sm`}
-                target="_blank"
-              >
-                {lang["accept-policy"] + "?"}
-              </a>
+          {mode === "check" && (
+            <div className="w-full mt-3">
+              <div className="flex gap-x-2 items-start">
+                <button
+                  className="mt-0.5"
+                  type="button"
+                  onClick={toggleAcceptedPolicy}
+                >
+                  <img
+                    className="w-4 h-4 md:w-5 md:h-5"
+                    src={require(`../../../Images/pages/Login/check-${acceptedPolicy}.png`)}
+                  />
+                </button>
+                <a
+                  href="https://xbarat.net/privacy-policy"
+                  className={`flex-1 font-${font}-regular pt-1 text-blue underline underline-offset-2 text-sm`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {lang["accept-policy"] + "?"}
+                </a>
+              </div>
             </div>
-          </div>
-          <button
-            type="submit"
-            disabled={!acceptedPolicy}
-            className={`${
-              acceptedPolicy ? "button" : "disabled-button"
-            } w-full mt-8`}
-          >
+          )}
+          {validationErrors.acceptedPolicy && (
+            <span className={`font-${font}-thin text-red`}>
+              {validationErrors.acceptedPolicy}
+            </span>
+          )}
+          <button type="submit" className={`button w-full mt-8`}>
             {lang["submit"]}
           </button>
         </form>
