@@ -69,7 +69,7 @@ export default function Balance({ refreshPendingRequests }) {
               {lang["your-balance"]}
             </span>
             <button
-              className="text-blue text-2xl -mt-1"
+              className="text-blue text-2xl mb-1 flex justify-start items-start"
               onClick={() => openTutorialModal()}
             >
               ?
@@ -110,7 +110,7 @@ export default function Balance({ refreshPendingRequests }) {
               {lang["your-balance"]}
             </span>
             <button
-              className="text-blue text-2xl -mt-1"
+              className="text-blue text-2xl mb-1 flex justify-start items-start"
               onClick={() => openTutorialModal()}
             >
               ?
@@ -143,7 +143,7 @@ export default function Balance({ refreshPendingRequests }) {
               {lang["your-balance"]}
             </span>
             <button
-              className="text-blue text-2xl -mt-1"
+              className="text-blue text-2xl mb-1 flex justify-start items-start"
               onClick={() => openTutorialModal()}
             >
               ?

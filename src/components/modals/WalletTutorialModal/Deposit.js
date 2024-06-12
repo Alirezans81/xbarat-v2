@@ -2,36 +2,35 @@ import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useStatusesState } from "../../../Providers/StatusesProvider";
 
-const Deposit = ({ setTutorial }) => {
+const Deposit = ({ tutorial, setTutorial }) => {
   const [depositStatus, setDepositStatus] = useState("");
-
+  useEffect(() => {
+    !tutorial.status && setDepositStatus("");
+  }, [tutorial]);
   const theme = useThemeState();
   const status = useStatusesState();
   const [statusState, setStatusState] = useState("");
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const numStatuses = status ? status.length : 9;
+  var w = window.innerWidth;
   useEffect(() => {
     const filtered = status
       ? status.filter((data) => data.title === depositStatus)
       : "";
-    setStatusState(filtered.length ? filtered : "");
-    setTutorial({
-      title: "Deposit",
-      status: filtered.length ? filtered[0].title : "",
-    });
+    depositStatus && setStatusState(filtered.length ? filtered : "");
+    depositStatus &&
+      setTutorial({
+        title: "Deposit",
+        status: filtered.length ? filtered[0].title : "",
+      });
   }, [depositStatus]);
-  console.log();
   return (
-    <div className={`w-full max-w-[1280px] overflow-scroll  h-full `}>
+    <div
+      className={`w-full max-w-[1280px] overflow-scroll  h-full animate-upward`}
+    >
       <div
-        id="one"
         className={
           depositStatus === ""
-            ? `grid grid-cols-${
-                document.getElementById("one").offsetWidth <= 100
-                  ? 1
-                  : numStatuses / 2 - (numStatuses % 2) / 2
-              }  gap-x-5   gap-y-2`
+            ? `grid grid-cols-${w <= 500 ? 2 : 4}  gap-x-5   gap-y-2`
             : "hidden"
         }
       >
@@ -39,13 +38,13 @@ const Deposit = ({ setTutorial }) => {
           status.map((data) => (
             <button
               onClick={() => setDepositStatus(data.title)}
-              className={`col-span-1 row-span-1 grid grid-cols-1 grid-rows-6 gap-y-2`}
+              className={`bg-${theme}-back rounded-2xl p-5 col-span-1 row-span-1 grid grid-cols-1 grid-rows-6 gap-y-2 animate-upward`}
             >
               <div className="bg-blue flex justify-center items-center rounded-2xl p-2 col-span-1 row-span-1 text-light h-full">
                 {data.title}
               </div>
               <div
-                className={`bg-${oppositeTheme} text-start text-${theme} rounded-2xl p-5 justify-center items-start col-span-1 row-span-4 h-full`}
+                className={`bg-${theme} text-start text-${oppositeTheme} h-full rounded-2xl p-5 justify-center items-start col-span-1 row-span-5`}
               >
                 This Status Is Fuck You
               </div>
@@ -58,7 +57,7 @@ const Deposit = ({ setTutorial }) => {
       <div
         className={
           depositStatus.length !== 0
-            ? `w-full h-full text-${oppositeTheme}`
+            ? `w-full h-full text-${oppositeTheme} animate-upward`
             : "hidden"
         }
       >
