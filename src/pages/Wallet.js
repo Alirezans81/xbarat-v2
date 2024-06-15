@@ -9,6 +9,9 @@ import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashSc
 import { useTokenState } from "../Providers/TokenProvider";
 import { useLanguageState } from "../Providers/LanguageProvider";
 import { useFontState } from "../Providers/FontProvider";
+// import { useLocation, useNavigation } from "react-router-dom";
+// import { useModalDataSetState } from "../Providers/ModalDataProvider";
+// import TransactionModal from "../components/modals/TransactionModal";
 
 export default function Wallet() {
   const theme = useThemeState();
@@ -16,7 +19,29 @@ export default function Wallet() {
   const lang = useLanguageState();
   const font = useFontState();
   const token = useTokenState();
+  // const setModalData = useModalDataSetState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  // const location = useLocation();
+
+  // const openTransactionModal = (defaultType, refreshPendingRequests) => {
+  //   setModalData({
+  //     title: lang["transaction"],
+  //     children: <TransactionModal />,
+  //     props: {
+  //       defaultType,
+  //       refreshPendingRequests,
+  //     },
+  //     canClose: true,
+  //     isOpen: true,
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   const selectedCurrency = location.state && location.state.selectedCurrency
+  //     ? location.state.selectedCurrency
+  //     : null;
+  //   selectedCurrency && openTransactionModal("deposit", refreshPendingRequests);
+  // }, []);
 
   const { getPendingRequests, isLoading: getPendingRequestsIsLoading } =
     useGetPendingRequests();

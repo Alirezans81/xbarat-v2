@@ -16,12 +16,13 @@ import SubmitButton from "../../../../common/SubmitButton";
 import { useUserState } from "../../../../../Providers/UserProvider";
 import { useStatusesState } from "../../../../../Providers/StatusesProvider";
 import { useExchange } from "../../../../../apis/pages/Home/hooks";
-import { useNavigate } from "react-router-dom";
 import { useFontState } from "../../../../../Providers/FontProvider";
 import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
 import CompleteProfileModal from "../../../../modals/CompleteProfileModal";
 import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
 import { useToastDataSetState } from "../../../../../Providers/ToastDataProvider";
+import LoginSignupModal from "../../../../modals/LoginSignupModal";
+import { useNavigate } from "react-router-dom";
 
 export default function ExchangeForm({
   walletBalance,
@@ -40,6 +41,7 @@ export default function ExchangeForm({
   formDefaultRate,
   setFormDefaultRate,
   refreshPendingExchange,
+  findCurrencyBalanceInWallet,
   amountInputRef,
   rateInputRef,
   isDemo,
@@ -48,7 +50,6 @@ export default function ExchangeForm({
   const lang = useLanguageState();
   const font = useFontState();
   const theme = useThemeState();
-  const navigate = useNavigate();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: oneDirection } = useDirectionState();
   const refreshWallet = useRefreshWallet();
@@ -62,6 +63,7 @@ export default function ExchangeForm({
   const removeComma = useRemoveComma();
   const calculateReverseRate = useCalculateReverseRate();
   const calculateNotReverseRate = useCalculateNotReverseRate();
+  const navigate = useNavigate();
 
   const { exchange, isLoading: exchangeIsLoading } = useExchange();
   useEffect(
@@ -69,11 +71,14 @@ export default function ExchangeForm({
     [exchangeIsLoading]
   );
 
+  const [tip, setTip] = useState();
+
   const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
     if (errorMessage) setHasError(true);
     else setHasError(false);
   }, [errorMessage]);
+  const [submitButtonFunction, setSubmitButtonFunction] = useState("submit");
 
   const [targetSlug, setTargetSlug] = useState();
 
@@ -183,6 +188,7 @@ export default function ExchangeForm({
       }
 
       if (+walletBalance < amount) {
+        setSubmitButtonFunction("deposit");
         setErrorMessage(lang["not-enough-balance-error"] + ".");
         return false;
       } else if (amount < min_amount) {
@@ -210,13 +216,21 @@ export default function ExchangeForm({
         );
         return false;
       } else {
+        setSubmitButtonFunction("submit");
         setErrorMessage(null);
         return true;
       }
     }
   };
 
-  const navigateToLogin = () => navigate("login");
+  const OpenLoginSignupModal = () => {
+    setModalData({
+      title: lang["login-signup-modal-title"],
+      children: <LoginSignupModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
 
   const setToastData = useToastDataSetState();
   const openCompleteProfileMessageToast = () => {
@@ -321,7 +335,9 @@ export default function ExchangeForm({
                   rate: "",
                 },
               });
-              refreshWallet();
+              refreshWallet(null, {
+                asset: (data) => findCurrencyBalanceInWallet(data),
+              });
               refreshPendingExchange();
             });
           }
@@ -542,7 +558,27 @@ export default function ExchangeForm({
                   placeholder={lang["amount"]}
                   disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
                   name="amount"
+                  onFocus={() => {
+                    const min_amount =
+                      selectedCurrecnyPair.min_limit_amount_lot *
+                      currencies[selectedSourceIndex].lot;
+                    const max_amount =
+                      selectedCurrecnyPair.max_limit_amount_lot *
+                      currencies[selectedSourceIndex].lot;
+                    !values.amount &&
+                      !errorMessage &&
+                      setTip(
+                        lang["between"] +
+                          " " +
+                          addComma(min_amount) +
+                          " " +
+                          lang["and"] +
+                          " " +
+                          addComma(max_amount)
+                      );
+                  }}
                   onBlur={(e) => {
+                    setTip("");
                     handleBlur(e);
                     if (!isDemo) {
                       findError(
@@ -552,6 +588,8 @@ export default function ExchangeForm({
                     }
                   }}
                   onChange={(e) => {
+                    (errorMessage || (e.target.value && values.rate)) &&
+                      setTip("");
                     handleChange(e);
                     formDefaultAmount && setFormDefaultAmount(null);
                     if (!isDemo) {
@@ -597,7 +635,44 @@ export default function ExchangeForm({
                   placeholder={lang["rate"]}
                   disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
                   name="rate"
+                  onFocus={() => {
+                    let min_rate = roundDown(
+                      selectedCurrecnyPair.rate +
+                        +selectedCurrecnyPair.rate_lot_user *
+                          +selectedCurrecnyPair.min_limit_rate_lot_user,
+                      selectedCurrecnyPair.floating_number
+                    );
+                    let max_rate = roundDown(
+                      selectedCurrecnyPair.rate +
+                        +selectedCurrecnyPair.rate_lot_user *
+                          +selectedCurrecnyPair.max_limit_rate_lot_user,
+                      selectedCurrecnyPair.floating_number
+                    );
+                    if (rateIsReversed) {
+                      let temp = min_rate;
+                      min_rate = roundDown(
+                        (1 / max_rate) * selectedCurrecnyPair.rate_multiplier,
+                        selectedCurrecnyPair.floating_number
+                      );
+                      max_rate = roundDown(
+                        (1 / temp) * selectedCurrecnyPair.rate_multiplier,
+                        selectedCurrecnyPair.floating_number
+                      );
+                    }
+                    !values.rate &&
+                      !errorMessage &&
+                      setTip(
+                        lang["between"] +
+                          " " +
+                          addComma(min_rate) +
+                          " " +
+                          lang["and"] +
+                          " " +
+                          addComma(max_rate)
+                      );
+                  }}
                   onBlur={(e) => {
+                    setTip("");
                     handleBlur(e);
                     if (!isDemo) {
                       findError(
@@ -607,6 +682,8 @@ export default function ExchangeForm({
                     }
                   }}
                   onChange={(e) => {
+                    (errorMessage || (values.amount && e.target.value)) &&
+                      setTip("");
                     handleChange(e);
                     formDefaultRate && setFormDefaultRate(null);
                     if (!isDemo) {
@@ -620,6 +697,17 @@ export default function ExchangeForm({
                 />
               </div>
             </div>
+            {tip && (
+              <div className="-mb-7 mt-0.5">
+                <div className="-mt-0.5">
+                  <span
+                    className={`text-${oppositeTheme} font-${font}-regular`}
+                  >
+                    {tip}
+                  </span>
+                </div>
+              </div>
+            )}
             {values.amount &&
               removeComma(values.amount) !== 0 &&
               selectedCurrecnyPair &&
@@ -633,50 +721,92 @@ export default function ExchangeForm({
                       {errorMessage}
                     </span>
                   ) : (
-                    <>
-                      <img
-                        className="w-5 h-5"
-                        src={require(`../../../../../Images/arrow-right-${oppositeTheme}.png`)}
-                      />
+                    <div className="w-full flex items-center justify-between">
+                      <div className="flex items-center gap-x-1">
+                        <img
+                          className="w-5 h-5"
+                          src={require(`../../../../../Images/arrow-right-${oppositeTheme}.png`)}
+                        />
+                        <span
+                          className={`text-${oppositeTheme} font-${font}-regular mt-0.5 text`}
+                        >
+                          {addComma(
+                            roundDown(
+                              computingTargetAmount(
+                                removeComma(values.amount),
+                                removeComma(values.rate),
+                                selectedCurrecnyPair.rate_multiplier
+                              ),
+                              availableTargets[selectedTargetIndex]
+                                .floating_number
+                            )
+                          ) +
+                            " " +
+                            (availableTargets[selectedTargetIndex]
+                              ? availableTargets[selectedTargetIndex]
+                                  .abbreviation
+                              : "")}
+                        </span>
+                      </div>
                       <span
-                        className={`text-${oppositeTheme} font-${font}-regular mt-0.5 text-sm`}
+                        className={`text-${oppositeTheme} font-${font}-regular -mb-0.5`}
                       >
-                        {addComma(
-                          roundDown(
-                            computingTargetAmount(
-                              removeComma(values.amount),
-                              removeComma(values.rate),
-                              selectedCurrecnyPair.rate_multiplier
-                            ),
-                            availableTargets[selectedTargetIndex]
-                              .floating_number
-                          )
-                        ) +
-                          " " +
-                          (availableTargets[selectedTargetIndex]
-                            ? availableTargets[selectedTargetIndex].abbreviation
-                            : "")}
+                        {+selectedCurrecnyPair.fee_percentage
+                          ? "-" +
+                            addComma(
+                              (+removeComma(values.amount) *
+                                +selectedCurrecnyPair.fee_percentage) /
+                                100
+                            ) +
+                            " " +
+                            currencies[selectedSourceIndex].abbreviation +
+                            " " +
+                            lang["fee"]
+                          : ""}
                       </span>
-                    </>
+                    </div>
                   )}
                 </div>
               )}
-            <SubmitButton
-              type="submit"
-              onClick={isDemo ? navigateToLogin : handleSubmit}
-              className={
-                values.amount &&
-                removeComma(values.amount) !== 0 &&
-                values.rate &&
-                removeComma(values.rate) !== 0
-                  ? "flex justify-center mt-0.5 items-center w-full py-0.5"
-                  : "flex justify-center mt-7 items-center w-full py-0.5"
-              }
-              rounded="lg"
-              disabled={hasError}
-            >
-              {lang["submit"]}
-            </SubmitButton>
+            {submitButtonFunction === "submit" ? (
+              <SubmitButton
+                type={isDemo ? "button" : "submit"}
+                onClick={isDemo ? OpenLoginSignupModal : handleSubmit}
+                className={
+                  values.amount &&
+                  removeComma(values.amount) !== 0 &&
+                  values.rate &&
+                  removeComma(values.rate) !== 0
+                    ? "flex justify-center mt-0.5 items-center w-full py-0.5"
+                    : "flex justify-center mt-7 items-center w-full py-0.5"
+                }
+                rounded="lg"
+                disabled={hasError}
+              >
+                {lang["submit"]}
+              </SubmitButton>
+            ) : (
+              <button
+                type="button"
+                onClick={() =>
+                  navigate("/wallet", {
+                    state: {
+                      selectedCurrency: currencies[selectedSourceIndex],
+                    },
+                  })
+                }
+                className={
+                  values.amount &&
+                  removeComma(values.amount) !== 0 &&
+                  values.rate &&
+                  removeComma(values.rate) !== 0
+                    ? `flex justify-center mt-0.5 items-center w-full pt-2 pb-1 rounded-lg bg-green font-${font}-bold text-light`
+                    : `flex justify-center mt-7 items-center w-full pt-2 pb-1 rounded-lg bg-green font-${font}-bold text-light`
+                }
+              >
+                {lang["deposit"]}
+              </button>
+            )}
           </form>
         );
       }}
