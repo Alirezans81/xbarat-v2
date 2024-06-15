@@ -58,23 +58,79 @@ const WalletProvider = ({ children }) => {
     [getWalletTanksIsLoading]
   );
 
-  const getWalletData = (username, token) => {
+  const getWalletData = (
+    username,
+    token,
+    customFunction,
+    customFunctionWithData
+  ) => {
     if (username) {
       const userFilter = {
         user: username,
       };
 
-      getWallets(userFilter, setWallets);
-      getWalletAssets(token, userFilter, setWalletAssets);
-      getWalletTanks(userFilter, setWalletTanks);
+      getWallets(
+        userFilter,
+        setWallets,
+        customFunction && customFunction.wallet
+          ? customFunction.wallet
+          : () => {},
+        customFunctionWithData && customFunctionWithData.wallet
+          ? customFunctionWithData.wallet
+          : () => {}
+      );
+      getWalletAssets(
+        token,
+        userFilter,
+        setWalletAssets,
+        customFunction && customFunction.asset
+          ? customFunction.asset
+          : () => {},
+        customFunctionWithData && customFunctionWithData.asset
+          ? customFunctionWithData.asset
+          : () => {}
+      );
+      getWalletTanks(
+        userFilter,
+        setWalletTanks,
+        customFunction && customFunction.tank ? customFunction.tank : () => {},
+        customFunctionWithData && customFunctionWithData.tank
+          ? customFunctionWithData.tank
+          : () => {}
+      );
     } else if (user && user.username) {
       const userFilter = {
         user: user.username,
       };
 
-      getWallets(userFilter, setWallets);
-      getWalletAssets(userFilter, setWalletAssets);
-      getWalletTanks(userFilter, setWalletTanks);
+      getWallets(
+        userFilter,
+        setWallets,
+        customFunction && customFunction.wallet
+          ? customFunction.wallet
+          : () => {},
+        customFunctionWithData && customFunctionWithData.wallet
+          ? customFunctionWithData.wallet
+          : () => {}
+      );
+      getWalletAssets(
+        userFilter,
+        setWalletAssets,
+        customFunction && customFunction.asset
+          ? customFunction.asset
+          : () => {},
+        customFunctionWithData && customFunctionWithData.asset
+          ? customFunctionWithData.asset
+          : () => {}
+      );
+      getWalletTanks(
+        userFilter,
+        setWalletTanks,
+        customFunction && customFunction.tank ? customFunction.tank : () => {},
+        customFunctionWithData && customFunctionWithData.tank
+          ? customFunctionWithData.tank
+          : () => {}
+      );
     }
   };
 

@@ -98,9 +98,7 @@ export default function CompleteProfileModal() {
     if (userInfo) {
       userInfo.first_name && userInfo.last_name && userInfo.phone && setStep(2);
       userInfo.nationality && userInfo.country && userInfo.city && setStep(3);
-      userInfo.identity_type &&
-        userInfo.identity_code &&
-        userInfo.document &&
+      (userInfo.identity_type || userInfo.identity_code || userInfo.document) &&
         setStep(4);
 
       userInfo.rejection_reason &&
@@ -272,7 +270,17 @@ export default function CompleteProfileModal() {
                   ? fetchStep3(values, nextStep)
                   : nextStep();
               }
-              step === 3 && fetchStep3(values, nextStep);
+              if (step === 3) {
+                if (
+                  values.identity_type ||
+                  values.identity_code ||
+                  values.document
+                ) {
+                  fetchStep3(values, nextStep);
+                } else {
+                  nextStep();
+                }
+              }
               if (step === 4) {
                 validateFetchStep4(values)
                   ? fetchStep4(values, nextStep)

@@ -19,6 +19,7 @@ import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
 export default function PendingExchangeCard({
   lang,
   data,
+  findCurrencyBalanceInWallet,
   refreshPendingExchange,
   resetHome,
   setSource,
@@ -57,7 +58,9 @@ export default function PendingExchangeCard({
               data.url &&
               cancelPendingExchange(data.url, () => {
                 refreshPendingExchange();
-                refreshWallet();
+                refreshWallet(null, {
+                  asset: (data) => findCurrencyBalanceInWallet(data),
+                });
                 closeModal();
 
                 resetHome();
@@ -87,7 +90,9 @@ export default function PendingExchangeCard({
               data.url &&
               cancelPendingExchange(data.url, () => {
                 refreshPendingExchange();
-                refreshWallet();
+                refreshWallet(null, {
+                  asset: (data) => findCurrencyBalanceInWallet(data),
+                });
                 closeModal();
               });
           }}

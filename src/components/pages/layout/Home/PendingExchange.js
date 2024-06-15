@@ -7,6 +7,7 @@ import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function PendingExchange({
   pendingExchanges,
+  findCurrencyBalanceInWallet,
   refreshPendingExchange,
   resetHome,
   setSource,
@@ -42,6 +43,7 @@ export default function PendingExchange({
                 <PendingExchangeCard
                   lang={lang}
                   data={pendingExchange}
+                  findCurrencyBalanceInWallet={findCurrencyBalanceInWallet}
                   refreshPendingExchange={refreshPendingExchange}
                   resetHome={resetHome}
                   setSource={setSource}

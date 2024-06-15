@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useAddComma } from "../../../../../hooks/useNumberFunctions";
 import { useFontState } from "../../../../../Providers/FontProvider";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 
-export default function Wallet({ balance, currency, pending, locked }) {
+export default function Wallet({ walletData, currency }) {
   const theme = useThemeState();
   const font = useFontState();
   const lang = useLanguageState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+
+  const [balance, setBalance] = useState(0);
+  const [pending, setPending] = useState(0);
+  const [locked, setLocked] = useState(0);
+  useEffect(() => {
+    walletData && walletData.balance && setBalance(+walletData.balance);
+    walletData && walletData.pending && setPending(+walletData.pending);
+    walletData && walletData.locked && setLocked(+walletData.locked);
+  }, [walletData]);
 
   const addComma = useAddComma();
 

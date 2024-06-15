@@ -7,9 +7,14 @@ const useRefreshWallet = () => {
   const getWalletData = useGetWalletData();
   const token = useTokenState();
 
-  const refreshWallet = () => {
+  const refreshWallet = (customFunction, customFunctionWithData) => {
     if (user && user.username) {
-      getWalletData(user.username, token);
+      getWalletData(
+        user.username,
+        token,
+        customFunction,
+        customFunctionWithData
+      );
     }
   };
 

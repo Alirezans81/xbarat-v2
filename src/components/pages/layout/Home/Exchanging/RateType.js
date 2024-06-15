@@ -15,7 +15,6 @@ export default function RateType({
   selectedCurrecnyPair,
   default_rate_type_title,
   setFormDefaultRate,
-  focusOnInput,
 }) {
   const theme = useThemeState();
   const font = useFontState();
@@ -54,7 +53,6 @@ export default function RateType({
                   )
                 : addComma(+rate));
             setFormDefaultRate(formDefaultRate);
-            focusOnInput();
           }}
         >
           <span className={`font-${font}-thin text-${oppositeTheme} `}>
