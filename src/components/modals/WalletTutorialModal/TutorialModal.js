@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
+import { useLanguageListState } from "../../../Providers/LanguageListProvider";
 import Withdraw from "./Withdraw";
 import Deposit from "./Deposit";
 import Transfer from "./Transfer";
@@ -10,7 +11,6 @@ const TutorialModal = () => {
   const deposit = TutorialContext && TutorialContext.Deposit;
   const withdraw = TutorialContext && TutorialContext.Withdraw;
   const transfer = TutorialContext && TutorialContext.Transfer;
-
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [tutorial, setTutorial] = useState("");
@@ -33,7 +33,7 @@ const TutorialModal = () => {
           className={`h-fit  row-span-10 flex flex-col justify-start items-center bg-${theme}-back rounded-2xl py-5 px-4 mt-5`}
         >
           <span className="bg-blue text-light rounded-2xl w-full flex justify-center py-2">
-            Deposit
+            {lang["deposit"]}
           </span>
           <span
             className={`w-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
@@ -56,7 +56,7 @@ const TutorialModal = () => {
           className={`h-fit  row-span-10 flex flex-col justify-start items-center bg-${theme}-back rounded-2xl py-5 px-4 mt-5`}
         >
           <span className="bg-blue text-light rounded-2xl w-full flex justify-center py-2">
-            Withdraw
+            {lang["withdrawal"]}
           </span>
           <span
             className={`w-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
@@ -79,7 +79,7 @@ const TutorialModal = () => {
           className={`h-fit  row-span-10 flex flex-col justify-start items-center bg-${theme}-back rounded-2xl py-5 px-4 mt-5`}
         >
           <span className="bg-blue text-light rounded-2xl w-full flex justify-center py-2">
-            Transfer
+            {lang["transfer"]}
           </span>
           <span
             className={`w-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
@@ -112,7 +112,7 @@ const TutorialModal = () => {
             onClick={() => setTutorial("")}
             className="text-base bg-blue text-light rounded-2xl py-2 px-5"
           >
-            {tutorial}
+            {lang["deposit"]}
           </button>
         </div>
         <div className={`flex row-span-5 col-span-12 h-full `}>
@@ -133,7 +133,7 @@ const TutorialModal = () => {
             onClick={() => setTutorial("")}
             className="text-base bg-blue text-light rounded-2xl py-2 px-5"
           >
-            {tutorial}
+            {lang["withdrawal"]}
           </button>
         </div>
         <div className={`flex row-span-5 col-span-12 h-full `}>
@@ -154,7 +154,7 @@ const TutorialModal = () => {
             onClick={() => setTutorial("")}
             className="text-base bg-blue text-light rounded-2xl py-2 px-5"
           >
-            {tutorial}
+            {lang["transfer"]}
           </button>
         </div>
         <div className={`flex row-span-5 col-span-12 h-full `}>

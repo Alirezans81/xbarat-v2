@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../Providers/ThemeProvider";
-import { useStatusesState } from "../../../Providers/StatusesProvider";
 
 const Deposit = ({ deposit }) => {
   const theme = useThemeState();
+
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   var w = window.innerWidth;
   const { context, status } = deposit;
