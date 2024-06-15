@@ -5,6 +5,22 @@ module.exports = {
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    extend: {
+      animation: {
+        upward: "upward 2s ease-out 1",
+        rightward: "rightward 2s ease-out 1",
+      },
+      keyframes: {
+        upward: {
+          "0%": { margin: "30px 0px 0px 0px" },
+          "100%": { margin: "0px" },
+        },
+        rightward: {
+          "0%": { margin: "0px 0px 0px 30px" },
+          "100%": { margin: "0px" },
+        },
+      },
+    },
     colors: {
       dark: "#2A2B2E",
       "dark-back": "#152831",
@@ -27,7 +43,7 @@ module.exports = {
 
       md: "768px",
       // => @media (min-width: 768px) { ... }
-      
+
       lg: "1024px",
       // => @media (min-width: 1024px) { ... }
 

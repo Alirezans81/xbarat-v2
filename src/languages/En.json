@@ -303,5 +303,71 @@
   "index-telegram": "Telegram",
   "index-facebook": "Facebook",
   "index-x": "X",
-  "index-copyright": "Copyright by @alirezanasiri.pro"
+  "index-copyright": "Copyright by @alirezanasiri.pro",
+  "ContextTutorial": {
+    "Deposit": {
+      "context": [
+        "If You Want to Deposit Your Money.Here is the Step By Step Solution",
+        "1-Go to the \"wallet\" Section.",
+        "2-Enter The Currency Of Your Deposit.",
+        "3-Type The Amount That You Want To Deposit.",
+        "4-Click The \"Submit\" Button",
+        "5-Wait For Admin Assign"
+      ],
+      "status": {
+        "Accept": {
+          "desc": "Your Request Was Accepted",
+          "full": "This Means That Your Deposit Request Was Completed Successfully And The Money Is Available In The \"Your Balance\" Section"
+        },
+        "Reject": {
+          "desc": "Your Requet Was Rejected",
+          "full": "Your Deposit Request Was Rejected Possibly Because Of A Flaw In Your Uploaded Document Or An Error In The Transfer Flow Of the Money"
+        },
+        "Upload Document": {
+          "desc": "In This Situation You Must Upload A Document Of Your Deposit Recipt",
+          "full": "You Have To Upload A Picture of The Recipt That Contains The End Users's Account And The Amount Entered By You In The Previous Steps"
+        }
+      }
+    },
+    "Withdraw": {
+      "context": [
+        "If You Want to Withdraw Your Money. Here is the Step By Step Solution",
+        "1-Go to the \"wallet\" Section.",
+        "2-Select The \"Withdrawal\" Button In The Card Regarding Your Desiered Currency.",
+        "3-Type The Amount That You Want Withdrawed.",
+        "4-Select Your Bank Account",
+        "5-Click The \"Submit\" Button"
+      ],
+      "status": {
+        "Accept": {
+          "desc": "Your Request Was Accepted",
+          "full": "Your Withdrawal Request Was Completed Successfully And It Should Show On Your Back Acccount You Selected by You In The Previous Steps "
+        },
+        "Reject": {
+          "desc": "Your Requet Was Rejected",
+          "full": "Your Withdrawal Request Was Rejected nd This Could Happen Bacause You may Have Not Had The Sufficient Amount Of Money On That Currency"
+        }
+      }
+    },
+    "Transfer": {
+      "context": [
+        "If You Want to Transfer Your Money. Here is the Step By Step Solution",
+        "1-Go to the \"wallet\" Section.",
+        "2-Select The \"Transfer\" Button In The Card Regarding Your Desiered Currency.",
+        "3-Type The Amount That You Want.",
+        "4-Type The Destination User Code",
+        "5-Click The \"Submit\" Button"
+      ],
+      "status": {
+        "Accept": {
+          "desc": "Your Request Was Accepted",
+          "full": "The Money Has Been Transfered Successfully And You Can Verify This By Contacting The End User Provided By You In The Previous Steps"
+        },
+        "Reject": {
+          "desc": "Your Requet Was Rejected",
+          "full": "Your Transfer Request Was Rejected Becuase You May Not Have Had The Suficient Amount Of Money To Transfer Or Because The End User Provided By You May Not Have Been Valid"
+        }
+      }
+    }
+  }
 }

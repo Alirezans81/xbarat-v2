@@ -170,6 +170,14 @@
   "add_cards_title": "عنوان",
   "add": "اضافه",
   "banks": "بانک ها",
+<<<<<<< HEAD
+  "source_currency": "ارز مبدا",
+  "target_currency": "ارز مقصد",
+
+  "open_filters": "بازکردن فیلتر",
+  "close_filters": "بستن فیلتر",
+=======
+>>>>>>> b0b12a2d2b4c1b59c9e662104b9243608dd8d90f
   "Account_Name": "نام دارنده کارت",
   "Bank_Info": "شماره حساب",
   "balance": "موجودی",
@@ -236,6 +244,9 @@
   "edit-card": "ویراش کارت",
   "accept-policy": "آیا قوانین حریم خصوصی و سیاست را به منظور استفاده از سایت قبول میکنید",
   "password-updated": "پسورد شما تغییر پیدا کرد",
+<<<<<<< HEAD
+  "email-exists-error": "این ایمیل از قبل وجود دارد"
+=======
   "email-exists-error": "این ایمیل از قبل وجود دارد",
   "login-signup-modal-title": "وارد نشده اید",
   "login-signup-modal-desc": "باید ابتدا ثبت نام کنید یا وارد شوید",
@@ -300,4 +311,5 @@
   "index-facebook": "فیسبوک",
   "index-x": "ایکس",
   "index-copyright": "ساخته شده توسط @alirezanasiri.pro"
+>>>>>>> b0b12a2d2b4c1b59c9e662104b9243608dd8d90f
 }

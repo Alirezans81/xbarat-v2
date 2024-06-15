@@ -2,6 +2,7 @@ import React from "react";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import CustomSlider from "../../../common/CustomSlider";
+import TutorialModal from "../../../modals/WalletTutorialModal/TutorialModal";
 import CurrencyCard from "./Balance/CurrencyCard";
 import { useWalletState } from "../../../../Providers/WalletProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
@@ -15,7 +16,14 @@ export default function Balance({ refreshPendingRequests }) {
   const lang = useLanguageState();
   const font = useFontState();
   const setModalData = useModalDataSetState();
-
+  const openTutorialModal = () => {
+    setModalData({
+      title: "Tutorial",
+      children: <TutorialModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
   const openTransactionModal = (defaultType, refreshPendingRequests) => {
     setModalData({
       title: lang["transaction"],
@@ -54,9 +62,19 @@ export default function Balance({ refreshPendingRequests }) {
     return (
       <div className="h-full flex flex-col gap-y-2">
         <div className="w-full flex justify-between items-center">
-          <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
-            {lang["your-balance"]}
-          </span>
+          <div className="flex flex-row items-center justify-center gap-x-2">
+            <span
+              className={`font-${font}-bold text-${oppositeTheme} text-2xl`}
+            >
+              {lang["your-balance"]}
+            </span>
+            <button
+              className="text-blue text-2xl mb-2 flex justify-start items-start"
+              onClick={() => openTutorialModal()}
+            >
+              ?
+            </button>
+          </div>
           <button
             onClick={() => openTransactionModal("deposit")}
             className="hidden md:flex xl:hidden gap-x-2 items-center border border-green rounded-full px-4 pt-2 pb-1"
@@ -85,9 +103,19 @@ export default function Balance({ refreshPendingRequests }) {
     return (
       <div className="h-full flex flex-col gap-y-2 ">
         <div className="w-full flex justify-between">
-          <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
-            {lang["your-balance"]}
-          </span>
+          <div className="flex flex-row items-end justify-center gap-x-2">
+            <span
+              className={`font-${font}-bold text-${oppositeTheme} text-2xl`}
+            >
+              {lang["your-balance"]}
+            </span>
+            <button
+              className="text-blue text-2xl mb-1 flex justify-start items-start"
+              onClick={() => openTutorialModal()}
+            >
+              ?
+            </button>
+          </div>
         </div>
         <div className="flex-1 px-7 relative flex flex-row justify-center items-center w-full">
           {walletAssets.map((walletAsset, index) => (
@@ -108,9 +136,19 @@ export default function Balance({ refreshPendingRequests }) {
     return (
       <div className="h-full flex flex-col gap-y-2">
         <div className="w-full flex justify-between">
-          <span className={`font-${font}-bold text-${oppositeTheme} text-2xl`}>
-            {lang["your-balance"]}
-          </span>
+          <div className="flex flex-row items-end justify-center gap-x-2">
+            <span
+              className={`font-${font}-bold text-${oppositeTheme} text-2xl`}
+            >
+              {lang["your-balance"]}
+            </span>
+            <button
+              className="text-blue text-2xl mb-1 flex justify-start items-start"
+              onClick={() => openTutorialModal()}
+            >
+              ?
+            </button>
+          </div>
         </div>
         <div className="flex-1 px-7 relative">
           {walletAssets.length !== 0 ? (

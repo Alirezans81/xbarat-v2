@@ -1,4 +1,5 @@
 import { getCurrencies, getCurrency, getCurrencyPairs } from "./apis";
+import FilterIsActive from "../../../functions/filterIsActivefunction";
 import { useState } from "react";
 
 const useGetCurrencies = () => {
@@ -13,7 +14,7 @@ const useGetCurrencies = () => {
         setState(data.data.results);
         customFunction && customFunction();
         setIsLoading(false);
-        return data.data.results;
+        return FilterIsActive(data.data.results);
       })
       .catch((error) => {
         console.log(error);
@@ -61,7 +62,7 @@ const useGetCurrencyPairs = () => {
         setState(data.data.results);
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data.results;
+        return FilterIsActive(data.data.results);
       })
       .catch((error) => {
         console.log(error);
