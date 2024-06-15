@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useThemeState } from "../../../Providers/ThemeProvider";
+import { useLanguageState } from "../../../Providers/LanguageProvider";
 import Withdraw from "./Withdraw";
 import Deposit from "./Deposit";
 import Transfer from "./Transfer";
 const TutorialModal = () => {
-  const TutorialContext = require("./temp.json");
+  const lang = useLanguageState();
+  const TutorialContext = lang["ContextTutorial"];
   const deposit = TutorialContext.ContextTutorial.Deposit;
   const withdraw = TutorialContext.ContextTutorial.Withdraw;
   const transfer = TutorialContext.ContextTutorial.Transfer;
