@@ -7,9 +7,9 @@ import Transfer from "./Transfer";
 const TutorialModal = () => {
   const lang = useLanguageState();
   const TutorialContext = lang["ContextTutorial"];
-  const deposit = TutorialContext.ContextTutorial.Deposit;
-  const withdraw = TutorialContext.ContextTutorial.Withdraw;
-  const transfer = TutorialContext.ContextTutorial.Transfer;
+  const deposit = TutorialContext && TutorialContext.Deposit;
+  const withdraw = TutorialContext && TutorialContext.Withdraw;
+  const transfer = TutorialContext && TutorialContext.Transfer;
 
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
