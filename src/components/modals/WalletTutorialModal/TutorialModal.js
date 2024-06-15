@@ -10,7 +10,8 @@ const TutorialModal = () => {
   const deposit = TutorialContext && TutorialContext.Deposit;
   const withdraw = TutorialContext && TutorialContext.Withdraw;
   const transfer = TutorialContext && TutorialContext.Transfer;
-
+  const temp =
+    "اگر قصد واریز پول خود را دارید از اینجا میتوانید مرحله به مرحله روند واریز را مشاهده کنید";
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [tutorial, setTutorial] = useState("");
@@ -36,9 +37,10 @@ const TutorialModal = () => {
             {lang["deposit"]}
           </span>
           <span
+            style={{ direction: "rtl" }}
             className={`w-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
           >
-            {deposit.context[0]}
+            {temp}
             <br />
             {deposit.context[1]}
             <br />

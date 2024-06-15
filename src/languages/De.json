@@ -14,7 +14,7 @@
   "forgot-password": "Passwort vergessen?",
   "not-logged-in-error": "Sie sollten angemeldet sein, um auf diese Seite zugreifen zu können",
   "email-empty-error": "Geben sie ihre E-Mailadresse ein",
-  "email-invalid-error" : "Geben sie eine gültige E-Mail-Adresse an",
+  "email-invalid-error": "Geben sie eine gültige E-Mail-Adresse an",
   "password-empty-error": "Geben Sie Ihr Passwort ein",
   "password-short-error": "Das Passwort sollte mindestens 8 Zeichen lang sein",
   "password-contain-error": "Das Passwort sollte eines der folgenden Zeichen enthalten: [a-z], [A-Z], [0-9], [!@#$%*?]",
@@ -209,5 +209,71 @@
   "complete-profile-step-3-not-required-message-1st": "Dieser Schritt ist nicht notwendig",
   "complete-profile-step-3-not-required-message-2nd": "Sie können Ihr Dokument hochladen oder mit dem nächsten Schritt fortfahren",
   "complete-profile-step-4-not-required-message-1st": "Dieser Schritt ist nicht notwendig",
-  "complete-profile-step-4-not-required-message-2nd": "Sie können Ihre Informationen eingeben oder mit dem nächsten Schritt fortfahren"
+  "complete-profile-step-4-not-required-message-2nd": "Sie können Ihre Informationen eingeben oder mit dem nächsten Schritt fortfahren",
+  "ContextTutorial": {
+    "Deposit": {
+      "context": [
+        "Wenn Sie Ihr Geld einzahlen möchten, finden Sie hier die Schritt-für-Schritt-Lösung",
+        "1-Gehen Sie zum Abschnitt \"Wallet\".",
+        "2-Geben Sie die Währung Ihrer Einzahlung ein.",
+        "3-Geben Sie den Betrag ein, den Sie einzahlen möchten.",
+        "4-Klicken Sie auf die Schaltfläche \"Senden\"",
+        "5-Warten Sie auf die Zuweisung durch den Administrator"
+      ],
+      "status": {
+        "Akzeptieren": {
+          "desc": "Ihre Anfrage wurde akzeptiert",
+          "full": "Dies bedeutet, dass Ihre Einzahlungsanfrage erfolgreich abgeschlossen wurde und das Geld im Abschnitt \"Ihr Guthaben\" verfügbar ist"
+        },
+        "Ablehnen": {
+          "desc": "Ihre Anfrage wurde abgelehnt",
+          "full": "Ihre Einzahlungsanfrage wurde möglicherweise aufgrund eines Fehlers in Ihrem hochgeladenen Dokument oder eines Fehlers im Überweisungsfluss des Geldes abgelehnt"
+        },
+        "Dokument hochladen": {
+          "desc": "In diesem Fall müssen Sie ein Dokument Ihres Einzahlungsbelegs hochladen",
+          "full": "Sie müssen ein Bild des Belegs hochladen, der das Konto des Endbenutzers und den von Ihnen in den vorherigen Schritten eingegebenen Betrag enthält"
+        }
+      }
+    },
+    "Withdraw": {
+      "context": [
+        "Wenn Sie Ihr Geld abheben möchten. Hier ist die Schritt-für-Schritt-Lösung",
+        "1-Gehen Sie zum Abschnitt \"Wallet\".",
+        "2-Wählen Sie die Schaltfläche \"Abhebung\" auf der Karte in Bezug auf Ihre gewünschte Währung.",
+        "3-Geben Sie den Betrag ein, den Sie abheben möchten.",
+        "4-Wählen Sie Ihr Bankkonto",
+        "5-Klicken Sie auf die Schaltfläche \"Senden\""
+      ],
+      "status": {
+        "Akzeptieren": {
+          "desc": "Ihre Anfrage wurde akzeptiert",
+          "full": "Ihre Auszahlungsanfrage wurde erfolgreich abgeschlossen und sollte auf Ihrem Konto angezeigt werden, das Sie in den vorherigen Schritten ausgewählt haben"
+        },
+        "Ablehnen": {
+          "desc": "Ihre Anfrage wurde abgelehnt",
+          "full": "Ihre Auszahlungsanfrage wurde abgelehnt und dies könnte passieren, weil Sie möglicherweise nicht über den ausreichenden Geldbetrag in dieser Währung verfügten"
+        }
+      }
+    },
+    "Transfer": {
+      "context": [
+        "Wenn Sie Ihr Geld. Hier ist die Schritt-für-Schritt-Lösung",
+        "1-Gehen Sie zum Abschnitt \"Wallet\".",
+        "2-Wählen Sie die Schaltfläche \"Überweisen\" auf der Karte in Bezug auf Ihre gewünschte Währung.",
+        "3-Geben Sie den gewünschten Betrag ein.",
+        "4-Geben Sie den Zielbenutzercode ein",
+        "5-Klicken Sie auf die Schaltfläche \"Senden\""
+      ],
+      "status": {
+        "Akzeptieren": {
+          "desc": "Ihre Anfrage wurde akzeptiert",
+          "full": "Das Geld wurde erfolgreich überwiesen und Sie können dies überprüfen, indem Sie den von Ihnen in den vorherigen Schritten angegebenen Endbenutzer kontaktieren"
+        },
+        "Ablehnen": {
+          "desc": "Ihre Anfrage wurde abgelehnt",
+          "full": "Ihre Überweisungsanfrage wurde abgelehnt, weil Sie möglicherweise nicht über den ausreichenden Geldbetrag zum Überweisen verfügten oder weil der von Ihnen angegebene Endbenutzer möglicherweise nicht gültig war"
+        }
+      }
+    }
+  }
 }
