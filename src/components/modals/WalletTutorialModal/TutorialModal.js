@@ -33,7 +33,7 @@ const TutorialModal = () => {
           className={`h-fit  row-span-10 flex flex-col justify-start items-center bg-${theme}-back rounded-2xl py-5 px-4 mt-5`}
         >
           <span className="bg-blue text-light rounded-2xl w-full flex justify-center py-2">
-            Deposit
+            {lang["deposit"]}
           </span>
           <span
             className={`w-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
@@ -56,7 +56,7 @@ const TutorialModal = () => {
           className={`h-fit  row-span-10 flex flex-col justify-start items-center bg-${theme}-back rounded-2xl py-5 px-4 mt-5`}
         >
           <span className="bg-blue text-light rounded-2xl w-full flex justify-center py-2">
-            Withdraw
+            {lang["withdrawal"]}
           </span>
           <span
             className={`w-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
@@ -79,7 +79,7 @@ const TutorialModal = () => {
           className={`h-fit  row-span-10 flex flex-col justify-start items-center bg-${theme}-back rounded-2xl py-5 px-4 mt-5`}
         >
           <span className="bg-blue text-light rounded-2xl w-full flex justify-center py-2">
-            Transfer
+            {lang["transfer"]}
           </span>
           <span
             className={`w-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
