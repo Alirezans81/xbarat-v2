@@ -41,6 +41,7 @@ export default function ExchangeForm({
   formDefaultRate,
   setFormDefaultRate,
   refreshPendingExchange,
+  findCurrencyBalanceInWallet,
   amountInputRef,
   rateInputRef,
   isDemo,
@@ -69,6 +70,8 @@ export default function ExchangeForm({
     () => setIsLoadingSplashScreen(exchangeIsLoading),
     [exchangeIsLoading]
   );
+
+  const [tip, setTip] = useState();
 
   const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
@@ -332,7 +335,9 @@ export default function ExchangeForm({
                   rate: "",
                 },
               });
-              refreshWallet();
+              refreshWallet(null, {
+                asset: (data) => findCurrencyBalanceInWallet(data),
+              });
               refreshPendingExchange();
             });
           }
@@ -553,7 +558,27 @@ export default function ExchangeForm({
                   placeholder={lang["amount"]}
                   disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
                   name="amount"
+                  onFocus={() => {
+                    const min_amount =
+                      selectedCurrecnyPair.min_limit_amount_lot *
+                      currencies[selectedSourceIndex].lot;
+                    const max_amount =
+                      selectedCurrecnyPair.max_limit_amount_lot *
+                      currencies[selectedSourceIndex].lot;
+                    !values.amount &&
+                      !errorMessage &&
+                      setTip(
+                        lang["between"] +
+                          " " +
+                          addComma(min_amount) +
+                          " " +
+                          lang["&"] +
+                          " " +
+                          addComma(max_amount)
+                      );
+                  }}
                   onBlur={(e) => {
+                    setTip("");
                     handleBlur(e);
                     if (!isDemo) {
                       findError(
@@ -563,6 +588,8 @@ export default function ExchangeForm({
                     }
                   }}
                   onChange={(e) => {
+                    (errorMessage || (e.target.value && values.rate)) &&
+                      setTip("");
                     handleChange(e);
                     formDefaultAmount && setFormDefaultAmount(null);
                     if (!isDemo) {
@@ -608,7 +635,44 @@ export default function ExchangeForm({
                   placeholder={lang["rate"]}
                   disabled={selectedSourceIndex < 0 || selectedTargetIndex < 0}
                   name="rate"
+                  onFocus={() => {
+                    let min_rate = roundDown(
+                      selectedCurrecnyPair.rate +
+                        +selectedCurrecnyPair.rate_lot_user *
+                          +selectedCurrecnyPair.min_limit_rate_lot_user,
+                      selectedCurrecnyPair.floating_number
+                    );
+                    let max_rate = roundDown(
+                      selectedCurrecnyPair.rate +
+                        +selectedCurrecnyPair.rate_lot_user *
+                          +selectedCurrecnyPair.max_limit_rate_lot_user,
+                      selectedCurrecnyPair.floating_number
+                    );
+                    if (rateIsReversed) {
+                      let temp = min_rate;
+                      min_rate = roundDown(
+                        (1 / max_rate) * selectedCurrecnyPair.rate_multiplier,
+                        selectedCurrecnyPair.floating_number
+                      );
+                      max_rate = roundDown(
+                        (1 / temp) * selectedCurrecnyPair.rate_multiplier,
+                        selectedCurrecnyPair.floating_number
+                      );
+                    }
+                    !values.rate &&
+                      !errorMessage &&
+                      setTip(
+                        lang["between"] +
+                          " " +
+                          addComma(min_rate) +
+                          " " +
+                          lang["&"] +
+                          " " +
+                          addComma(max_rate)
+                      );
+                  }}
                   onBlur={(e) => {
+                    setTip("");
                     handleBlur(e);
                     if (!isDemo) {
                       findError(
@@ -618,6 +682,8 @@ export default function ExchangeForm({
                     }
                   }}
                   onChange={(e) => {
+                    (errorMessage || (values.amount && e.target.value)) &&
+                      setTip("");
                     handleChange(e);
                     formDefaultRate && setFormDefaultRate(null);
                     if (!isDemo) {
@@ -631,6 +697,17 @@ export default function ExchangeForm({
                 />
               </div>
             </div>
+            {tip && (
+              <div className="-mb-7 mt-0.5">
+                <div className="-mt-0.5">
+                  <span
+                    className={`text-${oppositeTheme} font-${font}-regular`}
+                  >
+                    {tip}
+                  </span>
+                </div>
+              </div>
+            )}
             {values.amount &&
               removeComma(values.amount) !== 0 &&
               selectedCurrecnyPair &&
@@ -644,31 +721,50 @@ export default function ExchangeForm({
                       {errorMessage}
                     </span>
                   ) : (
-                    <>
-                      <img
-                        className="w-5 h-5"
-                        src={require(`../../../../../Images/arrow-right-${oppositeTheme}.png`)}
-                      />
+                    <div className="w-full flex items-center justify-between">
+                      <div className="flex items-center gap-x-1">
+                        <img
+                          className="w-5 h-5"
+                          src={require(`../../../../../Images/arrow-right-${oppositeTheme}.png`)}
+                        />
+                        <span
+                          className={`text-${oppositeTheme} font-${font}-regular mt-0.5 text`}
+                        >
+                          {addComma(
+                            roundDown(
+                              computingTargetAmount(
+                                removeComma(values.amount),
+                                removeComma(values.rate),
+                                selectedCurrecnyPair.rate_multiplier
+                              ),
+                              availableTargets[selectedTargetIndex]
+                                .floating_number
+                            )
+                          ) +
+                            " " +
+                            (availableTargets[selectedTargetIndex]
+                              ? availableTargets[selectedTargetIndex]
+                                  .abbreviation
+                              : "")}
+                        </span>
+                      </div>
                       <span
-                        className={`text-${oppositeTheme} font-${font}-regular mt-0.5 text-sm`}
+                        className={`text-${oppositeTheme} font-${font}-regular -mb-0.5`}
                       >
-                        {addComma(
-                          roundDown(
-                            computingTargetAmount(
-                              removeComma(values.amount),
-                              removeComma(values.rate),
-                              selectedCurrecnyPair.rate_multiplier
-                            ),
-                            availableTargets[selectedTargetIndex]
-                              .floating_number
-                          )
-                        ) +
-                          " " +
-                          (availableTargets[selectedTargetIndex]
-                            ? availableTargets[selectedTargetIndex].abbreviation
-                            : "")}
+                        {+selectedCurrecnyPair.fee_percentage
+                          ? "-" +
+                            addComma(
+                              (+removeComma(values.amount) *
+                                +selectedCurrecnyPair.fee_percentage) /
+                                100
+                            ) +
+                            " " +
+                            currencies[selectedSourceIndex].abbreviation +
+                            " " +
+                            lang["fee"]
+                          : ""}
                       </span>
-                    </>
+                    </div>
                   )}
                 </div>
               )}

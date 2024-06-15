@@ -17,7 +17,6 @@ export default function Wallet({ walletData, currency }) {
     walletData && walletData.balance && setBalance(+walletData.balance);
     walletData && walletData.pending && setPending(+walletData.pending);
     walletData && walletData.locked && setLocked(+walletData.locked);
-    console.log(walletData);
   }, [walletData]);
 
   const addComma = useAddComma();

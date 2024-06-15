@@ -241,11 +241,12 @@
   "accept-policy": "Do you accept privacy and policies rules in order to work with the platform",
   "password-updated": "Your password has been updated",
   "email-exists-error": "Email already exists",
-
   "login-signup-modal-title": "Not logged in",
   "login-signup-modal-desc": "You must log in or sign up first!",
   "user-activated-toast-message": "Your account has been activated!",
-
+  "between": "between",
+  "and": "&",
+  "fee": "fee",
   "index-xbarat-desc": "A peer to peer exchange & transfer national currencies platform. We connect people, not Intermediation.",
   "index-go-to-platform-button": "Explore Now",
   "index-privacy-&-policy": "Privacy & Policy",

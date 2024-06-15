@@ -15,6 +15,8 @@ import ListWatchList from "../components/pages/layout/Home/ListMode/ListWatchLis
 import ListOtherExchanges from "../components/pages/layout/Home/ListMode/ListOtherExchanges";
 import ListPendingExchange from "../components/pages/layout/Home/ListMode/ListPendingExchange";
 import { useCurrenciesState } from "../Providers/CurrenciesProvider";
+import { useRefreshWallet } from "../hooks/useRefreshWallet";
+import { useWalletState } from "../Providers/WalletProvider";
 
 export default function Home({ isDemo }) {
   const theme = useThemeState();
@@ -25,6 +27,8 @@ export default function Home({ isDemo }) {
   const setLoading = useIsLoadingSplashScreenSetState();
   const token = useTokenState();
   const currencies = useCurrenciesState();
+  const wallet = useWalletState();
+  const refreshWallet = useRefreshWallet();
 
   const amountInputRef = useRef();
   const focusOnAmountInput = () => {
@@ -35,7 +39,7 @@ export default function Home({ isDemo }) {
     rateInputRef.current.focus();
   };
 
-  const [pageMode, setPageMode] = useState("list");
+  const [pageMode, setPageMode] = useState("card");
   const canSwitchPageModeWidth = 1280;
   useEffect(() => {
     const result = window.localStorage.getItem("homePageMode");
@@ -61,6 +65,9 @@ export default function Home({ isDemo }) {
   const [selectedSourceIndex, setSelectedSourceIndex] = useState(-1);
   const [availableTargets, setAvailableTargets] = useState([]);
   const [selectedTargetIndex, setSelectedTargetIndex] = useState(-1);
+
+  const [selectedCurrecnyWalletData, setSelectedCurrecnyWalletData] =
+    useState();
 
   const [pendingExchanges, setPendingExchanges] = useState([]);
   const { getPendingExchanges, isLoading: getPendingExchangesIsLoading } =
@@ -98,6 +105,30 @@ export default function Home({ isDemo }) {
     target && availableTargets.length > 0 && findTarget(target);
   }, [target, availableTargets]);
 
+  const findCurrencyBalanceInWallet = (newWalletAssets) => {
+    if (newWalletAssets) {
+      if (selectedSourceIndex >= 0) {
+        const found = newWalletAssets.find(
+          (walletAsset) =>
+            walletAsset.currency === currencies[selectedSourceIndex].url
+        );
+        found
+          ? setSelectedCurrecnyWalletData(found)
+          : setSelectedCurrecnyWalletData(null);
+      }
+    } else {
+      if (selectedSourceIndex >= 0) {
+        const found = wallet.walletAssets.find(
+          (walletAsset) =>
+            walletAsset.currency === currencies[selectedSourceIndex].url
+        );
+        found
+          ? setSelectedCurrecnyWalletData(found)
+          : setSelectedCurrecnyWalletData(null);
+      }
+    }
+  };
+
   if (pageMode === "card" || window.innerWidth <= canSwitchPageModeWidth) {
     return (
       <>
@@ -129,7 +160,7 @@ export default function Home({ isDemo }) {
           </div>
           <div className="mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16 pt-4">
             <div
-              className={`order-2 md:order-1 h-72 bg-${theme} rounded-3xl flex justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12`}
+              className={`order-2 md:order-1 h-72 bg-${theme} border-4 border-blue rounded-3xl flex justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12`}
             >
               <Exchanging
                 selectedCurrecnyPair={selectedCurrecnyPair}
@@ -147,6 +178,8 @@ export default function Home({ isDemo }) {
                 selectedTargetIndex={selectedTargetIndex}
                 setAvailableTargets={setAvailableTargets}
                 setSelectedTargetIndex={setSelectedTargetIndex}
+                selectedCurrecnyWalletData={selectedCurrecnyWalletData}
+                findCurrencyBalanceInWallet={findCurrencyBalanceInWallet}
                 amountInputRef={amountInputRef}
                 rateInputRef={rateInputRef}
                 focusOnInput={focusOnRateInput}
@@ -178,6 +211,7 @@ export default function Home({ isDemo }) {
             >
               <PendingExchange
                 pendingExchanges={pendingExchanges}
+                findCurrencyBalanceInWallet={findCurrencyBalanceInWallet}
                 refreshPendingExchange={refreshPendingExchange}
                 resetHome={resetHome}
                 setSource={setSource}
@@ -238,7 +272,7 @@ export default function Home({ isDemo }) {
               />
             </div>
             <div
-              className={`h-72 bg-${theme} rounded-3xl flex justify-center items-center row-span-3 col-span-3`}
+              className={`h-72 bg-${theme} border-4 border-blue rounded-3xl flex justify-center items-center row-span-3 col-span-3`}
             >
               <Exchanging
                 selectedCurrecnyPair={selectedCurrecnyPair}

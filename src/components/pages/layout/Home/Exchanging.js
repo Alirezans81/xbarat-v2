@@ -7,6 +7,7 @@ import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useCurrencyPairsState } from "../../../../Providers/CurrencyPairsProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
+import { useRefreshWallet } from "../../../../hooks/useRefreshWallet";
 
 export default function Exchanging({
   selectedCurrecnyPair,
@@ -24,6 +25,8 @@ export default function Exchanging({
   selectedTargetIndex,
   setAvailableTargets,
   setSelectedTargetIndex,
+  selectedCurrecnyWalletData,
+  findCurrencyBalanceInWallet,
   amountInputRef,
   rateInputRef,
   focusOnInput,
@@ -35,9 +38,6 @@ export default function Exchanging({
   const currencies = useCurrenciesState();
   const currencyPairs = useCurrencyPairsState();
   const wallet = useWalletState();
-
-  const [selectedCurrecnyWalletData, setSelectedCurrecnyWalletData] =
-    useState();
 
   const [sourceLabel, setSourceLabel] = useState(lang["source"]);
   useEffect(() => {
@@ -56,17 +56,6 @@ export default function Exchanging({
     setTargetLabel(lang["target"]);
   }, [lang]);
 
-  const findCurrencyBalanceInWallet = () => {
-    if (selectedSourceIndex >= 0) {
-      const found = wallet.walletAssets.find(
-        (walletAsset) =>
-          walletAsset.currency === currencies[selectedSourceIndex].url
-      );
-      found
-        ? setSelectedCurrecnyWalletData(found)
-        : setSelectedCurrecnyWalletData(null);
-    }
-  };
   const findAvailableTargets = () => {
     const foundCurrencyPairs = currencyPairs.filter(
       (currencyPair) =>
@@ -95,7 +84,7 @@ export default function Exchanging({
   }, [selectedSourceIndex]);
 
   useEffect(() => {
-    findCurrencyBalanceInWallet();
+    findCurrencyBalanceInWallet && findCurrencyBalanceInWallet();
   }, [selectedSourceIndex, wallet]);
 
   useEffect(() => {
@@ -116,7 +105,7 @@ export default function Exchanging({
 
   return (
     <div className="flex flex-col px-6 w-full h-full py-5 relative">
-      <div className="absolute w-full left-0 -top-4 flex justify-center">
+      <div className="absolute w-full left-0 -top-5 flex justify-center">
         <span
           className={`bg-blue text-light flex justify-center rounded-xl font-${font}-regular px-5 text-lg pt-1.5`}
         >
@@ -179,6 +168,7 @@ export default function Exchanging({
             selectedCurrecnyPair ? selectedCurrecnyPair.defaultRateType : ""
           }
           refreshPendingExchange={refreshPendingExchange}
+          findCurrencyBalanceInWallet={findCurrencyBalanceInWallet}
           amountInputRef={amountInputRef}
           rateInputRef={rateInputRef}
           isDemo={isDemo}
