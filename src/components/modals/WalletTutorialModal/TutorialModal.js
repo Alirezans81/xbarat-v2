@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
+import { useLanguageListState } from "../../../Providers/LanguageListProvider";
 import Withdraw from "./Withdraw";
 import Deposit from "./Deposit";
 import Transfer from "./Transfer";
@@ -10,7 +11,6 @@ const TutorialModal = () => {
   const deposit = TutorialContext && TutorialContext.Deposit;
   const withdraw = TutorialContext && TutorialContext.Withdraw;
   const transfer = TutorialContext && TutorialContext.Transfer;
-
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [tutorial, setTutorial] = useState("");
@@ -112,7 +112,7 @@ const TutorialModal = () => {
             onClick={() => setTutorial("")}
             className="text-base bg-blue text-light rounded-2xl py-2 px-5"
           >
-            {tutorial}
+            {lang["deposit"]}
           </button>
         </div>
         <div className={`flex row-span-5 col-span-12 h-full `}>
@@ -133,7 +133,7 @@ const TutorialModal = () => {
             onClick={() => setTutorial("")}
             className="text-base bg-blue text-light rounded-2xl py-2 px-5"
           >
-            {tutorial}
+            {lang["withdrawal"]}
           </button>
         </div>
         <div className={`flex row-span-5 col-span-12 h-full `}>
@@ -154,7 +154,7 @@ const TutorialModal = () => {
             onClick={() => setTutorial("")}
             className="text-base bg-blue text-light rounded-2xl py-2 px-5"
           >
-            {tutorial}
+            {lang["transfer"]}
           </button>
         </div>
         <div className={`flex row-span-5 col-span-12 h-full `}>
