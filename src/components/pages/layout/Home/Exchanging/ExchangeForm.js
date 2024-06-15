@@ -22,7 +22,7 @@ import CompleteProfileModal from "../../../../modals/CompleteProfileModal";
 import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
 import { useToastDataSetState } from "../../../../../Providers/ToastDataProvider";
 import LoginSignupModal from "../../../../modals/LoginSignupModal";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ExchangeForm({
   walletBalance,
@@ -572,7 +572,7 @@ export default function ExchangeForm({
                           " " +
                           addComma(min_amount) +
                           " " +
-                          lang["&"] +
+                          lang["and"] +
                           " " +
                           addComma(max_amount)
                       );
@@ -666,7 +666,7 @@ export default function ExchangeForm({
                           " " +
                           addComma(min_rate) +
                           " " +
-                          lang["&"] +
+                          lang["and"] +
                           " " +
                           addComma(max_rate)
                       );

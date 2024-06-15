@@ -7,7 +7,6 @@ import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useCurrencyPairsState } from "../../../../Providers/CurrencyPairsProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
-import { useRefreshWallet } from "../../../../hooks/useRefreshWallet";
 
 export default function Exchanging({
   selectedCurrecnyPair,
