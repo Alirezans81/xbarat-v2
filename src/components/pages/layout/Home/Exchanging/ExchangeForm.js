@@ -1,4 +1,5 @@
 import { Formik } from "formik";
+import SubmitModal from "../../../../modals/SubmitModal/SubmitModal";
 import React, { useEffect, useRef, useState } from "react";
 import { CustomDropdown, CustomItem } from "../../../../common/CustomDropdown";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
@@ -249,6 +250,14 @@ export default function ExchangeForm({
       title: "",
       children: <CompleteProfileModal />,
       canClose: false,
+      isOpen: true,
+    });
+  };
+  const openSubmitModal = () => {
+    setModalData({
+      title: "Submit",
+      children: <SubmitModal />,
+      canClose: true,
       isOpen: true,
     });
   };

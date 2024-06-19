@@ -1,11 +1,11 @@
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useFontState } from "../../../Providers/FontProvider";
-const Deposit = ({ deposit }) => {
+const Exchange = ({ exchange }) => {
   const theme = useThemeState();
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   var w = window.innerWidth;
-  const { context, status } = deposit;
+  const { context, status } = exchange;
   const statusCount = Object.keys(status).length;
 
   return (
@@ -53,4 +53,4 @@ const Deposit = ({ deposit }) => {
   );
 };
 
-export default Deposit;
+export default Exchange;
