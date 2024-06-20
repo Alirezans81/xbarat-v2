@@ -2,6 +2,7 @@ import { Formik } from "formik";
 import SubmitModal from "../../../../modals/SubmitModal/SubmitModal";
 import React, { useEffect, useRef, useState } from "react";
 import { CustomDropdown, CustomItem } from "../../../../common/CustomDropdown";
+import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
@@ -20,7 +21,6 @@ import { useExchange } from "../../../../../apis/pages/Home/hooks";
 import { useFontState } from "../../../../../Providers/FontProvider";
 import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
 import CompleteProfileModal from "../../../../modals/CompleteProfileModal";
-import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
 import { useToastDataSetState } from "../../../../../Providers/ToastDataProvider";
 import LoginSignupModal from "../../../../modals/LoginSignupModal";
 import { useNavigate } from "react-router-dom";
@@ -47,6 +47,7 @@ export default function ExchangeForm({
   rateInputRef,
   isDemo,
 }) {
+  const setModalData = useModalDataSetState();
   const userInfo = useUserState();
   const lang = useLanguageState();
   const font = useFontState();
@@ -89,6 +90,16 @@ export default function ExchangeForm({
       (currency) => currency.slug === currency_slug
     );
     result >= 0 && setSelectedSourceIndex(result);
+  };
+
+  const openSubmitModal = (values) => {
+    setModalData({
+      title: "Submit",
+      children: <SubmitModal data={values} />,
+
+      canClose: true,
+      isOpen: true,
+    });
   };
 
   const findTarget = (currency_slug) => {
@@ -244,20 +255,11 @@ export default function ExchangeForm({
     });
   };
 
-  const setModalData = useModalDataSetState();
   const openCompleteProfileModal = () => {
     setModalData({
       title: "",
       children: <CompleteProfileModal />,
       canClose: false,
-      isOpen: true,
-    });
-  };
-  const openSubmitModal = () => {
-    setModalData({
-      title: "Submit",
-      children: <SubmitModal />,
-      canClose: true,
       isOpen: true,
     });
   };
@@ -311,6 +313,7 @@ export default function ExchangeForm({
                 +selectedCurrecnyPair.floating_number
               )
             : +removeComma(values.rate);
+
           if (findError(newAmount, +removeComma(values.rate))) {
             const params = {
               user: user && user.url ? user.url : "",
@@ -336,7 +339,7 @@ export default function ExchangeForm({
               status:
                 statuses.find((status) => status.title === "Pending").url || "",
             };
-
+            openSubmitModal({ params });
             exchange(params, () => {
               resetForm({
                 values: {
@@ -351,8 +354,8 @@ export default function ExchangeForm({
             });
           }
         } else {
-          openCompleteProfileMessageToast();
-          openCompleteProfileModal();
+          // openCompleteProfileMessageToast();
+          // openCompleteProfileModal();
         }
       }}
     >

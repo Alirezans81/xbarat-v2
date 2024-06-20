@@ -19,15 +19,15 @@ const TutorialModal = () => {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [tutorial, setTutorial] = useState("");
   var w = window.innerWidth;
-  var cols =
-    w <= 640 ? 1 : w > 640 && w <= 768 ? 2 : w > 768 && w <= 1024 ? 3 : 4;
+  console.log(w);
+  var cols = w <= 640 ? 1 : w > 640 && w <= 768 ? 2 : w > 1024 ? 4 : 3;
   return (
     <>
       {/* Main */}
       <div
         className={
           tutorial === ""
-            ? `py-5 grid grid-cols-${cols} grid-rows-10 text-${oppositeTheme} gap-x-5 h-[25rem] w-[${
+            ? `py-5 grid grid-cols-${cols} grid-rows-10 text-${oppositeTheme} gap-5 h-[25rem] w-[${
                 cols * 5
               }rem] overflow-y-scroll animate-upward`
             : "hidden"
