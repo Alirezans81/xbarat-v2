@@ -92,11 +92,10 @@ export default function ExchangeForm({
     result >= 0 && setSelectedSourceIndex(result);
   };
 
-  const openSubmitModal = (values) => {
+  const openSubmitModal = (values, exchange) => {
     setModalData({
-      title: "Submit",
-      children: <SubmitModal data={values} />,
-
+      title: lang["submit"],
+      children: <SubmitModal data={values} exchange={exchange} />,
       canClose: true,
       isOpen: true,
     });
@@ -339,23 +338,25 @@ export default function ExchangeForm({
               status:
                 statuses.find((status) => status.title === "Pending").url || "",
             };
-            openSubmitModal({ params });
-            exchange(params, () => {
-              resetForm({
-                values: {
-                  amount: "",
-                  rate: "",
-                },
+            openSubmitModal(params, (customFunction) => {
+              exchange(params, () => {
+                customFunction && customFunction();
+                resetForm({
+                  values: {
+                    amount: "",
+                    rate: "",
+                  },
+                });
+                refreshWallet(null, {
+                  asset: (data) => findCurrencyBalanceInWallet(data),
+                });
+                refreshPendingExchange();
               });
-              refreshWallet(null, {
-                asset: (data) => findCurrencyBalanceInWallet(data),
-              });
-              refreshPendingExchange();
             });
           }
         } else {
-          // openCompleteProfileMessageToast();
-          // openCompleteProfileModal();
+          openCompleteProfileMessageToast();
+          openCompleteProfileModal();
         }
       }}
     >

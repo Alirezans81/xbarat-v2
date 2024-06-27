@@ -1,23 +1,28 @@
 import { useCurrencyPairsState } from "../../../Providers/CurrencyPairsProvider";
 import { useUserState } from "../../../Providers/UserProvider";
 import { useFontState } from "../../../Providers/FontProvider";
+import SubmitButton from "../../common/SubmitButton";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../Providers/ThemeProvider";
-const SubmitModal = ({ data }) => {
+import { useModalDataClose } from "../../../Providers/ModalDataProvider";
+import { useState } from "react";
+const SubmitModal = ({ data, exchange }) => {
+  console.log(data);
+  console.log(exchange);
+  const [sure, setSure] = useState(false);
   const lang = useLanguageState();
   const theme = useThemeState();
+  const closeModal = useModalDataClose();
   const currencyPairs = useCurrencyPairsState();
-  const oppositeTheme = theme == "dark" ? "light" : "dark";
+  const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
   const user = useUserState();
-  const pairs = currencyPairs.filter(
-    (pair) => pair.url === data.params.currency_pair
-  );
+  const pairs = currencyPairs.filter((pair) => pair.url === data.currency_pair);
 
   return (
     <div>
       <div
-        className={`grid grid-cols-1 gird-rows-6 w-fit h-fit font-${font}-regular gap-y-5`}
+        className={`grid grid-cols-1 gird-rows-6 w-fit h-fit font-${font}-regular gap-y-5 pb-3`}
       >
         <div
           className={`row-span-1 col-span-1 bg-${theme}-back text-blue  min-w-[20rem] rounded-2xl p-2 flex justify-center`}
@@ -53,9 +58,7 @@ const SubmitModal = ({ data }) => {
               <span>{lang["amount"]}</span>
               <span>{lang["source"]}</span>
             </div>
-            <span className="w-1/2 flex justify-end">
-              {data.params.amount_source}
-            </span>
+            <span className="w-1/2 flex justify-end">{data.amount_source}</span>
           </div>
           <div
             dir={font === "Fa" ? "rtl" : "ltr"}
@@ -64,7 +67,7 @@ const SubmitModal = ({ data }) => {
             <span className="text-blue-gradient flex justify-start w-1/2">
               {lang["rate"]}
             </span>
-            <span className="w-1/2 flex justify-end">{data.params.rate}</span>
+            <span className="w-1/2 flex justify-end">{data.rate}</span>
           </div>
           <div
             dir={font === "Fa" ? "rtl" : "ltr"}
@@ -75,10 +78,17 @@ const SubmitModal = ({ data }) => {
               <span>{lang["target"]}</span>
             </div>
             <span className="w-1/2 flex justify-end">
-              {data.params.amount_destination}
+              {data.amount_destination}
             </span>
           </div>
         </div>
+        <SubmitButton
+          onClick={() => exchange(closeModal)}
+          rounded={"2xl"}
+          className="w-full h-full text-light p-2"
+        >
+          {lang["submit"]}
+        </SubmitButton>
       </div>
     </div>
   );
