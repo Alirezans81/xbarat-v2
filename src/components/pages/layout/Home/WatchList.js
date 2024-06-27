@@ -124,11 +124,11 @@ export default function WatchList({
   }, [selectedSourceIndex]);
 
   return (
-    <div className="px-6 py-5 h-full flex flex-col">
+    <div className="px-6 py-5 h-full flex flex-col  overflow-x-scroll">
       <h1 className={`font-${font}-bold text-2xl text-${oppositeTheme}`}>
         {lang["watch-list-label"]}
       </h1>
-      <div className={`flex-1 overflow-y-auto mt-2 pr-0 md:pr-4`}>
+      <div className={`flex-1 overflow-y-auto min-w-[20rem] mt-2 pr-0 md:pr-4`}>
         <CustomTable
           heads={head}
           rows={watch_list_data}

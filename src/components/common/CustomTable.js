@@ -10,7 +10,7 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
   const colsQuantity = heads.length;
 
   return (
-    <div className="flex-1 w-full flex flex-col overflow-y-visible">
+    <div className="flex-1 w-full flex flex-col overflow-y-visible overflow-x-scroll">
       <div
         className={`grid grid-cols-${colsQuantity} gap-x-4 w-full items-center px-4 md:px-0`}
       >
@@ -37,7 +37,7 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
               {Object.values(row).map((value, tdIndex) => (
                 <span
                   key={tdIndex}
-                  className={`flex whitespace-nowrap text-sm md:text-base justify-center col-span-1 text-center-important font-${font}-regular text-${oppositeTheme} mt-0.5 -mb-0.5`}
+                  className={`flex whitespace-nowrap text-sm md:text-base justify-center col-span-1 text-center-important font-${font}-regular text-${oppositeTheme} mt-0.5 -mb-0.5 `}
                 >
                   {value}
                 </span>

@@ -39,7 +39,9 @@ const SubmitModal = ({ data, exchange }) => {
             <span className="text-blue-gradient w-1/2 flex justify-start">
               {lang["from"]}
             </span>
-            <span className="w-1/2 flex justify-end">{user.username}</span>
+            <span className={`w-1/2 flex justify-end text-${oppositeTheme}`}>
+              {user.username}
+            </span>
           </div>
           <div
             dir={font === "Fa" ? "rtl" : "ltr"}
@@ -48,7 +50,9 @@ const SubmitModal = ({ data, exchange }) => {
             <span className="text-blue-gradient w-1/2 flex justify-start">
               {lang["currency-pair"]}
             </span>
-            <span className="w-1/2 flex justify-end">{pairs[0].title}</span>
+            <span className={`w-1/2 flex justify-end text-${oppositeTheme}`}>
+              {pairs[0].title}
+            </span>
           </div>
           <div
             dir={font === "Fa" ? "rtl" : "ltr"}
@@ -58,7 +62,9 @@ const SubmitModal = ({ data, exchange }) => {
               <span>{lang["amount"]}</span>
               <span>{lang["source"]}</span>
             </div>
-            <span className="w-1/2 flex justify-end">{data.amount_source}</span>
+            <span className={`w-1/2 flex justify-end text-${oppositeTheme}`}>
+              {data.amount_source}
+            </span>
           </div>
           <div
             dir={font === "Fa" ? "rtl" : "ltr"}
@@ -67,7 +73,9 @@ const SubmitModal = ({ data, exchange }) => {
             <span className="text-blue-gradient flex justify-start w-1/2">
               {lang["rate"]}
             </span>
-            <span className="w-1/2 flex justify-end">{data.rate}</span>
+            <span className={`w-1/2 flex justify-end text-${oppositeTheme}`}>
+              {data.rate}
+            </span>
           </div>
           <div
             dir={font === "Fa" ? "rtl" : "ltr"}
@@ -77,7 +85,7 @@ const SubmitModal = ({ data, exchange }) => {
               <span>{lang["amount"]}</span>
               <span>{lang["target"]}</span>
             </div>
-            <span className="w-1/2 flex justify-end">
+            <span className={`text-${oppositeTheme} w-1/2 flex justify-end`}>
               {data.amount_destination}
             </span>
           </div>
