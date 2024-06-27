@@ -5,11 +5,7 @@ import SubmitButton from "../../common/SubmitButton";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useModalDataClose } from "../../../Providers/ModalDataProvider";
-import { useState } from "react";
 const SubmitModal = ({ data, exchange }) => {
-  console.log(data);
-  console.log(exchange);
-  const [sure, setSure] = useState(false);
   const lang = useLanguageState();
   const theme = useThemeState();
   const closeModal = useModalDataClose();
@@ -22,7 +18,7 @@ const SubmitModal = ({ data, exchange }) => {
   return (
     <div>
       <div
-        className={`grid grid-cols-1 gird-rows-6 w-fit h-fit font-${font}-regular gap-y-5 pb-3`}
+        className={`grid grid-cols-1 gird-rows-6 w-fit h-fit font-${font}-regular gap-y-5 pb-3 `}
       >
         <div
           className={`row-span-1 col-span-1 bg-${theme}-back text-blue  min-w-[20rem] rounded-2xl p-2 flex justify-center`}
@@ -30,7 +26,7 @@ const SubmitModal = ({ data, exchange }) => {
           {lang["exchange"]}
         </div>
         <div
-          className={`col-span-1 row-span-5 bg-${theme}-back flex flex-col  rounded-2xl p-5`}
+          className={`col-span-1 row-span-5 bg-${theme}-back flex flex-col  rounded-2xl p-5 `}
         >
           <div
             dir={font === "Fa" ? "rtl" : "ltr"}
@@ -93,7 +89,7 @@ const SubmitModal = ({ data, exchange }) => {
         <SubmitButton
           onClick={() => exchange(closeModal)}
           rounded={"2xl"}
-          className="w-full h-full text-light p-2"
+          className="w-full h-full max-h-[3rem] text-light p-2 "
         >
           {lang["submit"]}
         </SubmitButton>
