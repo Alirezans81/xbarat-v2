@@ -13,7 +13,6 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
       delete rows[i].min_rate;
     }
   }
-  console.log(rows.length);
 
   const colsQuantity = heads.length;
 
