@@ -6,6 +6,14 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
   const theme = useThemeState();
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const w = window.innerWidth;
+  if (w <= 440) {
+    heads.pop();
+    for (let i = 0; i < rows.length; i++) {
+      delete rows[i].min_rate;
+    }
+  }
+  console.log(rows.length);
 
   const colsQuantity = heads.length;
 

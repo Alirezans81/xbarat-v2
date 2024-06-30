@@ -124,22 +124,24 @@ export default function WatchList({
   }, [selectedSourceIndex]);
 
   return (
-    <div className="px-6 py-5 h-full flex flex-col  overflow-x-scroll">
+    <div className="px-6 py-5 h-full flex flex-col ">
       <h1 className={`font-${font}-bold text-2xl text-${oppositeTheme}`}>
         {lang["watch-list-label"]}
       </h1>
-      <div className={`flex-1 overflow-y-auto min-w-[20rem] mt-2 pr-0 md:pr-4`}>
-        <CustomTable
-          heads={head}
-          rows={watch_list_data}
-          selectRow={(row, index) => {
-            if (data && data.watch_list) {
-              findSource(data.watch_list[index].source);
-              setTargetSlug(data.watch_list[index].target);
-              setSelectedIndex(index);
-            }
-          }}
-        />
+      <div className={`flex-1 mt-2 pr-0 md:pr-4 overflow-x-scroll`}>
+        <div className="min-w-[20rem] h-full">
+          <CustomTable
+            heads={head}
+            rows={watch_list_data}
+            selectRow={(row, index) => {
+              if (data && data.watch_list) {
+                findSource(data.watch_list[index].source);
+                setTargetSlug(data.watch_list[index].target);
+                setSelectedIndex(index);
+              }
+            }}
+          />
+        </div>
       </div>
     </div>
   );
