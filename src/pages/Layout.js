@@ -36,6 +36,7 @@ import { useFontState } from "../Providers/FontProvider";
 import MobileTopBar from "../components/pages/layout/MobileTopBar";
 import { useToastDataSetState } from "../Providers/ToastDataProvider";
 import { useCheckCompletedProfile } from "../hooks/useCheckCompletedProfile";
+import MobileBottomBar from "../components/pages/layout/MobileBottomBar";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -210,7 +211,14 @@ export default function Layout() {
             <TopBar />
           </div>
           <div className="block md:hidden">
-            <MobileTopBar isBlur={isBlur} switchBlur={switchBlur} />
+            <MobileBottomBar links={links} />
+          </div>
+          <div className="block md:hidden">
+            <MobileTopBar
+              links={links}
+              isBlur={isBlur}
+              switchBlur={switchBlur}
+            />
           </div>
           <div className="flex-1 flex h-5/6">
             <div className="hidden md:flex">

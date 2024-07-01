@@ -148,7 +148,7 @@ export default function Home({ isDemo }) {
             </button>
           </div>
         )}
-        <div className="absolute flex flex-col w-full h-full overflow-y-auto px-8 md:p-0">
+        <div className="absolute flex flex-col w-full h-full overflow-y-auto px-8 md:p-0 pb-20">
           <div
             className={`w-full bg-${theme} shadow-${theme} rounded-2xl flex justify-center md:hidden pt-5 pb-2.5 px-5 mt-2`}
           >

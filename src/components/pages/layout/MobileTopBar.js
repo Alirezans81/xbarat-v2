@@ -5,7 +5,7 @@ import Notch from "./MobileTopBar/Notch";
 import MyMenu from "../../pages/layout/MobileTopBar/MyMenu";
 import { useLocation } from "react-router-dom";
 
-export default function MobileTopBar({ isBlur, switchBlur }) {
+export default function MobileTopBar({ links, isBlur, switchBlur }) {
   const user = useUserState();
   const { pathname: currentRoute } = useLocation();
 
@@ -17,7 +17,7 @@ export default function MobileTopBar({ isBlur, switchBlur }) {
   return (
     <div className="flex justify-between w-full px-4 pt-5">
       <div className="relative">
-        <MyMenu switchBlur={switchBlur} />
+        <MyMenu links={links} switchBlur={switchBlur} />
       </div>
       <div className={`flex flex-1 ${!isBlur ? "blur" : ""}`}>
         <Notch />
