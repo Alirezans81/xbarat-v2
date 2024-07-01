@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useFontState } from "../../../Providers/FontProvider";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 
 const Transfer = ({ transfer }) => {
   const theme = useThemeState();
+  const font = useFontState();
+
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   var w = window.innerWidth;
   const { context, status } = transfer;
@@ -32,6 +34,7 @@ const Transfer = ({ transfer }) => {
         {status ? (
           Object.entries(status).map(([statusName, statusDetails]) => (
             <div
+              dir={font === "Fa" ? "rtl" : "ltr"}
               className={`bg-${theme}-back rounded-2xl p-5 col-span-1 row-span-1 grid grid-cols-1 grid-rows-6 gap-y-2 animate-upward`}
             >
               <div className="bg-blue flex justify-center items-center rounded-2xl p-2 col-span-1 row-span-1 text-light h-fit text-center">

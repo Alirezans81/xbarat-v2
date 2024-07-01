@@ -111,6 +111,23 @@ export default function QuickDeposit({ refreshPendingRequests }) {
       showTime: 10000,
     });
   };
+  const openDepositSummary = (amount, currency) => {
+    setToastData({
+      status: "success",
+      message:
+        "Your Deposit Of" +
+        " " +
+        addComma(amount) +
+        " " +
+        currency.abbreviation +
+        " " +
+        "Was Made Succesfully" +
+        ".",
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
   const checkAmount = (amount) => {
     if (currencies[selectedCurrencyIndex]) {
       const min =
@@ -121,6 +138,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
         +currencies[selectedCurrencyIndex].lot;
 
       if (min <= amount && max >= amount) {
+        openDepositSummary(amount, currencies[selectedCurrencyIndex]);
         return true;
       } else {
         openNotRightAmountToast(min, max);

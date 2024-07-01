@@ -274,6 +274,26 @@
           "full": "Ihre Überweisungsanfrage wurde abgelehnt, weil Sie möglicherweise nicht über den ausreichenden Geldbetrag zum Überweisen verfügten oder weil der von Ihnen angegebene Endbenutzer möglicherweise nicht gültig war"
         }
       }
+    },
+    "Exchange": {
+      "context": [
+        "Wenn Sie Ihr Geld umtauschen möchten, finden Sie hier die Schritt-für-Schritt-Lösung",
+        "1-Gehen Sie zum Abschnitt \"Home\".",
+        "2-Geben Sie die Währungen Ihres Umtauschs ein.",
+        "3-Geben Sie den Betrag ein, den Sie umtauschen möchten.",
+        "4-Geben Sie den Kurs ein, zu dem Sie umtauschen möchten.",
+        "5-Klicken Sie auf die Schaltfläche \"Senden\""
+      ],
+      "status": {
+        "Akzeptieren": {
+          "desc": "Ihre Anfrage wurde akzeptiert",
+          "full": "Dies bedeutet, dass Ihre Umtauschanfrage erfolgreich abgeschlossen wurde und das Geld im Abschnitt \"Ihr Guthaben\" auf Ihrer Zielwährungskarte verfügbar ist"
+        },
+        "Ablehnen": {
+          "desc": "Ihre Anfrage wurde abgelehnt",
+          "full": "Ihre Umtauschanfrage wurde möglicherweise aufgrund eines Fehlers im Überweisungsfluss des Geldes abgelehnt"
+        }
+      }
     }
   }
 }
