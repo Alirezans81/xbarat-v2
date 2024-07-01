@@ -10,7 +10,7 @@ import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadin
 import { useUserState } from "../../../../Providers/UserProvider";
 import Element from "../NavbarSetting/Element";
 
-export default function MyMenu({ switchBlur }) {
+export default function MyMenu({ switchBlur, links: allLinks }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
@@ -22,54 +22,6 @@ export default function MyMenu({ switchBlur }) {
   useEffect(() => setLoading(isLoading), [isLoading]);
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-
-  const [allLinks, setAllLinks] = useState([
-    {
-      title: lang["home"],
-      route: "/home",
-      imgs: {
-        dark: require("../../../../Images/pages/layout/Navbar/home-dark.png"),
-        light: require("../../../../Images/pages/layout/Navbar/home-light.png"),
-        gray: require("../../../../Images/pages/layout/Navbar/home-gray.png"),
-      },
-      shown: true,
-    },
-    {
-      title: lang["wallet"],
-      route: "/wallet",
-      imgs: {
-        dark: require("../../../../Images/pages/layout/Navbar/wallet-dark.png"),
-        light: require("../../../../Images/pages/layout/Navbar/wallet-light.png"),
-        gray: require("../../../../Images/pages/layout/Navbar/wallet-gray.png"),
-      },
-      shown: true,
-    },
-  ]);
-
-  useEffect(() => {
-    setAllLinks([
-      {
-        title: lang["home"],
-        route: "/home",
-        imgs: {
-          dark: require("../../../../Images/pages/layout/Navbar/home-dark.png"),
-          light: require("../../../../Images/pages/layout/Navbar/home-light.png"),
-          gray: require("../../../../Images/pages/layout/Navbar/home-gray.png"),
-        },
-        shown: true,
-      },
-      {
-        title: lang["wallet"],
-        route: "/wallet",
-        imgs: {
-          dark: require("../../../../Images/pages/layout/Navbar/wallet-dark.png"),
-          light: require("../../../../Images/pages/layout/Navbar/wallet-light.png"),
-          gray: require("../../../../Images/pages/layout/Navbar/wallet-gray.png"),
-        },
-        shown: true,
-      },
-    ]);
-  }, [lang]);
 
   function useOutsideAlerter(ref) {
     useEffect(() => {

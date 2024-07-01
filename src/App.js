@@ -48,13 +48,27 @@ import {
 import { useFontSetState } from "./Providers/FontProvider";
 import Updating from "./pages/Updating";
 import Startup from "./pages/Startup";
+import TutorialModal from "./components/modals/WalletTutorialModal/TutorialModal";
+import { useModalDataSetState } from "./Providers/ModalDataProvider";
+import { useThemeState } from "./Providers/ThemeProvider";
 
 export default function App() {
+  const theme = useThemeState();
+  const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const isLoading = useIsLoadingSplashScreenState();
   const setLoading = useIsLoadingSplashScreenSetState();
   const setLang = useLanguageSetState();
   const setFont = useFontSetState();
+  const setModalData = useModalDataSetState();
+  const openTutorialModal = () => {
+    setModalData({
+      title: "Tutorial",
+      children: <TutorialModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
 
   const languageList = useLanguageListState();
   const setLanguageList = useLanguageListSetState();
@@ -96,6 +110,12 @@ export default function App() {
   } else if (lang) {
     return (
       <>
+        <button
+          className={`z-[50] absolute bottom-[170px] md:bottom-[90px] right-[19px] w-[60px] h-[60px] flex justify-center items-center text-3xl bg-${theme}-back shadow-dark shadow-sm-light rounded-full text-${oppositeTheme}`}
+          onClick={openTutorialModal}
+        >
+          <span className="text-4xl -mt-1">?</span>
+        </button>
         <LoadingSplashScreen isLoading={isLoading} />
         <BrowserRouter>
           <Routes>

@@ -4,7 +4,7 @@ const IsLoadingSplashScreenContext = createContext();
 const IsLoadingSplashScreenContextSetState = createContext();
 
 const IsLoadingSplashScreenProvider = ({ children }) => {
-  const [isLoadingSplashScreen, setIsLoadingSplashScreen] = useState();
+  const [isLoadingSplashScreen, setIsLoadingSplashScreen] = useState(false);
 
   return (
     <IsLoadingSplashScreenContext.Provider value={isLoadingSplashScreen}>
