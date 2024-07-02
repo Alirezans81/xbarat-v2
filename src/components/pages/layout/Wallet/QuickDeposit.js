@@ -115,14 +115,14 @@ export default function QuickDeposit({ refreshPendingRequests }) {
     setToastData({
       status: "success",
       message:
-        "Your Deposit Of" +
+        lang["your_deposit_of"] +
         " " +
         addComma(amount) +
         " " +
         currency.abbreviation +
         " " +
-        "Was Made Succesfully" +
-        ".",
+        lang["was_made_succesfully"],
+
       canClose: true,
       isOpen: true,
       showTime: 10000,

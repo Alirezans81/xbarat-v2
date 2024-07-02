@@ -141,7 +141,9 @@ const TutorialModal = () => {
       >
         <div
           dir={font === "Fa" ? "rtl" : "ltr"}
-          className={`col-span-12 row-span-1 flex flex-row justify-start items-center px-5 gap-x-5 animate-rightward`}
+          className={`col-span-12 row-span-1 flex flex-row justify-start items-center px-5 gap-x-5 ${
+            font === "Fa" ? "animate-leftward" : "animate-rightward"
+          }`}
         >
           <button
             onClick={() => setTutorial("")}
@@ -165,7 +167,9 @@ const TutorialModal = () => {
       >
         <div
           dir={font === "Fa" ? "rtl" : "ltr"}
-          className={`col-span-12 row-span-1 flex flex-row justify-start items-center px-5 gap-x-5 animate-rightward`}
+          className={`col-span-12 row-span-1 flex flex-row justify-start items-center px-5 gap-x-5 ${
+            font === "Fa" ? "animate-leftward" : "animate-rightward"
+          }`}
         >
           {" "}
           <button
@@ -190,7 +194,9 @@ const TutorialModal = () => {
       >
         <div
           dir={font === "Fa" ? "rtl" : "ltr"}
-          className={`col-span-12 row-span-1 flex flex-row justify-start items-center px-5 gap-x-5 animate-rightward`}
+          className={`col-span-12 row-span-1 flex flex-row justify-start items-center px-5 gap-x-5 ${
+            font === "Fa" ? "animate-leftward" : "animate-rightward"
+          }`}
         >
           {" "}
           <button
@@ -215,7 +221,9 @@ const TutorialModal = () => {
       >
         <div
           dir={font === "Fa" ? "rtl" : "ltr"}
-          className={`col-span-12 row-span-1 flex flex-row justify-start items-center px-5 gap-x-5 animate-rightward`}
+          className={`col-span-12 row-span-1 flex flex-row justify-start items-center px-5 gap-x-5 ${
+            font === "Fa" ? "animate-leftward" : "animate-rightward"
+          }`}
         >
           {" "}
           <button
