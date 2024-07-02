@@ -12,7 +12,6 @@ import { TokenProvider } from "./Providers/TokenProvider";
 import { MyQueryClientProvider } from "./Providers/QueryClientProvider";
 import { WalletProvider } from "./Providers/WalletProvider";
 import { IsLoadingSplashScreenProvider } from "./Providers/IsLoadingSplashScreenProvider";
-import "react-tooltip/dist/react-tooltip.css";
 import "react-image-crop/dist/ReactCrop.css";
 import { ToastDataProvider } from "./Providers/ToastDataProvider";
 import { ModalDataProvider } from "./Providers/ModalDataProvider";
@@ -43,7 +42,6 @@ root.render(
                               <TokenProvider>
                                 <WalletProvider>
                                   <UserProvider>
-                                    
                                     <App />
                                   </UserProvider>
                                 </WalletProvider>
