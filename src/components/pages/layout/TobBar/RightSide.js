@@ -4,10 +4,9 @@ import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useDirectionState } from "../../../../Providers/DirectionProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { Link, useLocation } from "react-router-dom";
-import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
-import CompleteProfileModal from "../../../modals/CompleteProfileModal";
 import LanguageSwitcher from "../../../common/LanguageSwitcher";
 import { useFontState } from "../../../../Providers/FontProvider";
+import Notification from "../../../common/Notification";
 
 export default function RightSide() {
   const user = useUserState();
@@ -16,15 +15,7 @@ export default function RightSide() {
   const { one: direction, endComplete: endDirection } = useDirectionState();
   const lang = useLanguageState();
   const font = useFontState();
-  const setModalData = useModalDataSetState();
-  const openCompleteProfileModal = () => {
-    setModalData({
-      title: "",
-      children: <CompleteProfileModal />,
-      canClose: false,
-      isOpen: true,
-    });
-  };
+
   const { pathname: currentRoute } = useLocation();
   const backgroundClass =
     currentRoute === "/profile" ? "bg-blue" : `bg-${theme}-back`;
@@ -38,6 +29,9 @@ export default function RightSide() {
 
   return (
     <div className="flex items-center">
+      <div className="mx-0 z-50">
+        <Notification />
+      </div>
       <div className="mx-3 z-50">
         <LanguageSwitcher />
       </div>
