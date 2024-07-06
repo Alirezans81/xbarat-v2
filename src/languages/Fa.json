@@ -328,6 +328,8 @@
       }
     }
   },
+  "your_deposit_of": "واریز شما به مبلغ",
+  "was_made_succesfully": "با موفقیت انجام شد",
   "login-signup-modal-title": "وارد نشده اید",
   "login-signup-modal-desc": "باید ابتدا ثبت نام کنید یا وارد شوید",
   "user-activated-toast-message": "اکانت شما توسط ادمین تایید شده است",

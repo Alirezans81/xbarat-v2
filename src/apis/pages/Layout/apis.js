@@ -12,5 +12,8 @@ const logout = (token) => {
 
   return axios.post(api["log-out"], formData);
 };
+const getNews = (offset) => {
+  axios.get(api["news"] + "?" + `offset=${offset}`);
+};
 
-export { logout };
+export { logout, getNews };

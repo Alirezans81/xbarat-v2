@@ -210,6 +210,8 @@
   "complete-profile-step-3-not-required-message-2nd": "Sie können Ihr Dokument hochladen oder mit dem nächsten Schritt fortfahren",
   "complete-profile-step-4-not-required-message-1st": "Dieser Schritt ist nicht notwendig",
   "complete-profile-step-4-not-required-message-2nd": "Sie können Ihre Informationen eingeben oder mit dem nächsten Schritt fortfahren",
+  "your_deposit_of": "Ihre Einzahlung von",
+  "was_made_succesfully": "wurde erfolgreich durchgeführt",
   "ContextTutorial": {
     "Deposit": {
       "context": [
