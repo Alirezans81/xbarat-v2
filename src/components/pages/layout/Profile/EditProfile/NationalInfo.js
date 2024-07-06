@@ -95,7 +95,7 @@ export default function NationalInfo({ userInfo }) {
     <div
       className={`bg-${theme}-back rounded-3xl w-full flex-1 relative grid grid-cols-2 grid-rows-2 px-5 py-4 gap-y-2`}
     >
-      <EditButton
+      {/* <EditButton
         canEdit={canEdit}
         setCanEdit={setCanEdit}
         customFunction={() => {
@@ -114,7 +114,7 @@ export default function NationalInfo({ userInfo }) {
             });
           }
         }}
-      />
+      /> */}
       <div className="col-span-2 row-span-1 flex flex-col">
         <span className={`text-gray font-${font}-regular`}>
           {lang["nationality"]}

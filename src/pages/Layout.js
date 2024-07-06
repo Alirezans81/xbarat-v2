@@ -211,7 +211,7 @@ export default function Layout() {
             <TopBar />
           </div>
           <div className="block md:hidden">
-            <MobileBottomBar links={links} />
+            <MobileBottomBar links={links} isBlur={isBlur} />
           </div>
           <div className="block md:hidden">
             <MobileTopBar

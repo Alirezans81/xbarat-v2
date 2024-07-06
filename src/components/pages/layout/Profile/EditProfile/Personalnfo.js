@@ -51,14 +51,14 @@ export default function Personalnfo({ userInfo }) {
       >
         {({ handleChange, handleBlur, values }) => (
           <>
-            <EditButton
+            {/* <EditButton
               canEdit={canEdit}
               setCanEdit={setCanEdit}
               customFunction={() => {
                 setCanEdit(false);
                 updatePhoneMine(values);
               }}
-            />
+            /> */}
             <div className="col-span-2 lg:col-span-1 row-span-1 flex flex-col">
               <span className={`text-gray font-${font}-regular`}>
                 {lang["email"]}
