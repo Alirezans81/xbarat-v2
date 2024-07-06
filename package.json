@@ -12,7 +12,7 @@
     "comma-number": "^2.1.0",
     "date-fns": "^2.30.0",
     "flowbite": "^1.8.1",
-    "flowbite-react": "^0.5.0",
+    "flowbite-react": "^0.10.1",
     "formik": "^2.4.2",
     "iran-sheba": "^1.1.0",
     "postcss": "^8.4.27",
