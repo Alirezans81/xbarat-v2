@@ -1,7 +1,7 @@
 import { useTokenSetState } from "../../../Providers/TokenProvider";
 import { useUserSetState } from "../../../Providers/UserProvider";
-import { logout } from "./apis";
-import { getNews } from "./apis";
+import { logout, getNews, getNotifs } from "./apis";
+
 import { useState } from "react";
 
 const useLogout = () => {
@@ -45,9 +45,9 @@ const useGetNews = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState, offset, customFunctionWithData) => {
+  const fetch = async (setState, customFunctionWithData) => {
     setIsLoading(true);
-    await getNews(offset)
+    await getNews()
       .then((data) => {
         process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
@@ -63,5 +63,28 @@ const useGetNews = () => {
   };
   return { getNews: fetch, error, isLoading };
 };
+const useGetNotifs = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
-export { useLogout, useGetNews };
+  const fetch = async (setState, customFunctionWithData) => {
+    setIsLoading(true);
+    await getNotifs()
+      .then((data) => {
+        console.log(data);
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+        setState(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data.results);
+        setIsLoading(false);
+        return data.data.results;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+  return { getNotifs: fetch, error, isLoading };
+};
+
+export { useLogout, useGetNews, useGetNotifs };

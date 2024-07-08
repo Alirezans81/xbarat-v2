@@ -27,6 +27,8 @@ import {
   useGetCurrencies,
   useGetCurrencyPairs,
 } from "../apis/common/currency/hooks";
+import { useNotificationsSetState } from "../Providers/NotificationProvider";
+import { useGetNotifs } from "../apis/pages/Layout/hooks";
 import { useCurrencyPairsSetState } from "../Providers/CurrencyPairsProvider";
 import { useGetLanguages } from "../apis/common/language/hooks";
 import { useLanguageListSetState } from "../Providers/LanguageListProvider";
@@ -44,6 +46,7 @@ export default function Layout() {
   const { three: direction, one: oneDirection } = useDirectionState();
   const token = useTokenState();
   const setToken = useTokenSetState();
+  const setNotification = useNotificationsSetState();
   const setUser = useUserSetState();
   const user = useUserState();
   const checkCompletedProfile = useCheckCompletedProfile();
@@ -101,6 +104,12 @@ export default function Layout() {
     [getStatusesIsLoading]
   );
 
+  const { getNotifs, isLoading: getNotifsIsLoading } = useGetNotifs();
+  useEffect(
+    () => setIsLoadingSplashScreen(getNotifsIsLoading),
+    [getNotifsIsLoading]
+  );
+
   const { getCurrencyPairs, isLoading: getCurrencyPairsIsLoading } =
     useGetCurrencyPairs();
   useEffect(
@@ -124,7 +133,7 @@ export default function Layout() {
   useEffect(() => {
     getCurrencies(setCurrencies);
     getCurrencyPairs(null, setCurrencyPairs);
-
+    getNotifs(setNotification, null);
     const stringLanguages = window.localStorage.getItem("languageList");
     if (
       stringLanguages !== "undefined" &&

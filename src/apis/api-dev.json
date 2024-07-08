@@ -29,5 +29,6 @@
   "forgot-password": "https://smicln.ir/api/user/forget-password-set/",
   "top-5-report": "https://smicln.ir/api/report/",
   "change-password": "https://xbarat-back.pro/api/user/change-password/",
-  "news": "https://smicln.ir/api/news/"
+  "news": "https://smicln.ir/api/news/",
+  "notifs": "https://smicln.ir/api/notify/"
 }

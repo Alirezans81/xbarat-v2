@@ -3,6 +3,7 @@ import { CustomTooltip2 } from "./CustomTooltip2";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
+import { useNotificationsState } from "../../Providers/NotificationProvider";
 
 export function Notif() {
   const theme = useThemeState();
@@ -40,17 +41,19 @@ export function Notif() {
 
 function Content() {
   const lang = useLanguageState();
+  const Notifs = useNotificationsState();
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [notifs, setNotifs] = useState([]);
-
+  useEffect(() => {
+    console.log(Notifs);
+  }, []);
   return (
     <div className="max-w-[90dvw] md:max-w-[23rem] flex flex-col gap-y-3 px-1.5 py-2 max-h-[80dvh] overflow-y-auto">
-      {notifs.map((notif, index) => (
-        <Notif key={index} />
-      ))}
-      {notifs.length === 0 && (
+      {notifs.length !== 0 ? (
+        notifs.map((notif, index) => <Notif key={index} />)
+      ) : (
         <div className="px-10 pt-5 pb-4">
           <span
             className={`text-${oppositeTheme} font-${font}-regular text-lg md:text-xl`}
@@ -59,6 +62,15 @@ function Content() {
           </span>
         </div>
       )}
+      {/* {notifs.length === 0 && (
+        <div className="px-10 pt-5 pb-4">
+          <span
+            className={`text-${oppositeTheme} font-${font}-regular text-lg md:text-xl`}
+          >
+            {lang["no-data"]}
+          </span>
+        </div>
+      )} */}
     </div>
   );
 }

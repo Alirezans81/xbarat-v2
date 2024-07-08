@@ -20,7 +20,7 @@ const TutorialModal = () => {
   const [tutorial, setTutorial] = useState("");
   var w = window.innerWidth;
   console.log(w);
-  var cols = w <= 640 ? 1 : w > 640 && w <= 768 ? 2 : w > 1024 ? 4 : 3;
+  var cols = w <= 768 ? 1 : 2;
   return (
     <>
       {/* Main */}
@@ -42,7 +42,7 @@ const TutorialModal = () => {
           </span>
           <span
             dir={font === "Fa" ? "rtl" : "ltr"}
-            className={`w-full h-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
+            className={`w-full h-full bg-${theme} rounded-2xl p-5 text-start mt-5`}
           >
             {deposit.context[0]}
             <br />
@@ -66,7 +66,7 @@ const TutorialModal = () => {
           </span>
           <span
             dir={font === "Fa" ? "rtl" : "ltr"}
-            className={`w-full h-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
+            className={`w-full h-full  bg-${theme} rounded-2xl p-5 text-start mt-5`}
           >
             {withdraw.context[0]}
             <br />
@@ -90,7 +90,7 @@ const TutorialModal = () => {
           </span>
           <span
             dir={font === "Fa" ? "rtl" : "ltr"}
-            className={`w-full h-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
+            className={`w-full h-full  bg-${theme} rounded-2xl p-5 text-start mt-5`}
           >
             {transfer.context[0]}
             <br />
@@ -114,7 +114,7 @@ const TutorialModal = () => {
           </span>
           <span
             dir={font === "Fa" ? "rtl" : "ltr"}
-            className={`w-full h-full md:w-[12rem] bg-${theme} rounded-2xl p-5 text-start mt-5`}
+            className={`w-full h-full  bg-${theme} rounded-2xl p-5 text-start mt-5`}
           >
             {exchange.context[0]}
             <br />

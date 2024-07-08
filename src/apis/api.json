@@ -23,10 +23,11 @@
   "pending-exchange": "https://xbarat-back.pro/api/index/pending-exchange/",
   "status": "https://xbarat-back.pro/api/status/",
   "other-exchanges-rate": "https://xbarat-back.pro/api/exchange-rate/",
-  "locale" : "https://xbarat-back.pro/api/locale/",
+  "locale": "https://xbarat-back.pro/api/locale/",
   "check-email": "https://xbarat-back.pro/api/user/forget-password-check/",
   "send-email": "https://api.emailjs.com/api/v1.0/email/send",
   "forgot-password": "https://xbarat-back.pro/api/user/forget-password-set/",
   "top-5-report": "https://xbarat-back.pro/api/report/",
-  "change-password": "https://xbarat-back.pro/api/user/change-password/"
-}       
+  "change-password": "https://xbarat-back.pro/api/user/change-password/",
+  "notifs": "https://xbarat-back/api/notify"
+}
