@@ -3,12 +3,29 @@ import { CustomTooltip2 } from "./CustomTooltip2";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
+import { useDeleteNotification } from "../../apis/pages/Layout/hooks";
 import { useNotificationsState } from "../../Providers/NotificationProvider";
-
-export function Notif() {
+import { useGetNotifs } from "../../apis/pages/Layout/hooks";
+import { useNotificationsSetState } from "../../Providers/NotificationProvider";
+import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
+export function Notif({ index, notif, getNotification }) {
   const theme = useThemeState();
   const font = useFontState();
+  const setNotifications = useNotificationsSetState();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+
+  const { deleteNotification, isLoading: deleteNotificationIsLoading } =
+    useDeleteNotification();
+  useEffect(
+    () => setIsLoadingSplashScreen(deleteNotificationIsLoading),
+    [deleteNotificationIsLoading]
+  );
+
+  function handleDelete() {
+    deleteNotification(notif.url);
+    getNotification();
+  }
 
   return (
     <div
@@ -21,10 +38,16 @@ export function Notif() {
             src={require(`../../Images/pages/layout/Navbar/wallet-${oppositeTheme}.png`)}
             className={`w-12 h-12 bg-${theme}-back p-3 rounded-full`}
           />
-          <span className={`-mb-1 text-lg`}>Deposit Confirmation</span>
+          <span className={`-mb-1 text-lg`}>{notif.subject}</span>
         </div>
 
-        <button className="">
+        <button
+          onClick={() => {
+            deleteNotification(notif.url);
+            getNotification();
+          }}
+          className=""
+        >
           <img
             alt=""
             className="w-5 h-5"
@@ -32,28 +55,37 @@ export function Notif() {
           />
         </button>
       </div>
-      <span className="">
-        Your deposit has been confirmed.ahsdhfs esaahydsy ser hsr hrsd ursd
-      </span>
+      <span className="">{notif.description}</span>
     </div>
   );
 }
 
 function Content() {
   const lang = useLanguageState();
-  const Notifs = useNotificationsState();
   const font = useFontState();
+  const notifs = useNotificationsState();
+  const setNotifications = useNotificationsSetState();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const [notifs, setNotifs] = useState([]);
-  useEffect(() => {
-    console.log(Notifs);
-  }, []);
+  const [get, setGet] = useState(false);
+  const { getNotifs, isLoading: getNotifsIsLoading } = useGetNotifs();
+  useEffect(
+    () => setIsLoadingSplashScreen(getNotifsIsLoading),
+    [getNotifsIsLoading]
+  );
+  // const [notifs, setNotifs] = useState([]);
+  function getNotification() {
+    getNotifs(setNotifications, null, null);
+  }
   return (
     <div className="max-w-[90dvw] md:max-w-[23rem] flex flex-col gap-y-3 px-1.5 py-2 max-h-[80dvh] overflow-y-auto">
-      {notifs.length !== 0 ? (
-        notifs.map((notif, index) => <Notif key={index} />)
-      ) : (
+      {notifs &&
+        notifs.map((notif, index) => (
+          <Notif key={index} notif={notif} getNotification={getNotification} />
+        ))}
+      {(!notifs || notifs.length === 0) && (
         <div className="px-10 pt-5 pb-4">
           <span
             className={`text-${oppositeTheme} font-${font}-regular text-lg md:text-xl`}
@@ -62,15 +94,6 @@ function Content() {
           </span>
         </div>
       )}
-      {/* {notifs.length === 0 && (
-        <div className="px-10 pt-5 pb-4">
-          <span
-            className={`text-${oppositeTheme} font-${font}-regular text-lg md:text-xl`}
-          >
-            {lang["no-data"]}
-          </span>
-        </div>
-      )} */}
     </div>
   );
 }
@@ -79,6 +102,7 @@ export default function Notification() {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
+  const notifications = useNotificationsState();
 
   const [open, setOpen] = useState(false);
   function useOutsideAlerter(ref1) {
@@ -105,7 +129,7 @@ export default function Notification() {
   return (
     <CustomTooltip2
       trigger="click"
-      content={<Content />}
+      content={<Content notifications={notifications} />}
       style={theme}
       placement="bottom"
       className="rounded-xl z-[200]"
@@ -118,7 +142,7 @@ export default function Notification() {
       >
         <span className="absolute right-0 bg-red text-light w-5 h-5 rounded-full flex justify-center items-center">
           <span className={`${font === "Fa" ? "-mb-0.5" : "-mb-1.5"} text-sm`}>
-            0
+            {notifications ? notifications.length : 0}
           </span>
         </span>
         <img

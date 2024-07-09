@@ -55,7 +55,6 @@ const useGetCurrencyPairs = () => {
   const [error, setError] = useState();
 
   const fetch = async (filtersObject, setState, customFunctionWithData) => {
-    console.log(filtersObject);
     setIsLoading(true);
     await getCurrencyPairs(filtersObject)
       .then((data) => {

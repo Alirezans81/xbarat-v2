@@ -46,7 +46,7 @@ export default function Layout() {
   const { three: direction, one: oneDirection } = useDirectionState();
   const token = useTokenState();
   const setToken = useTokenSetState();
-  const setNotification = useNotificationsSetState();
+  const setNotifications = useNotificationsSetState();
   const setUser = useUserSetState();
   const user = useUserState();
   const checkCompletedProfile = useCheckCompletedProfile();
@@ -133,7 +133,7 @@ export default function Layout() {
   useEffect(() => {
     getCurrencies(setCurrencies);
     getCurrencyPairs(null, setCurrencyPairs);
-    getNotifs(setNotification, null);
+    getNotifs(setNotifications, null, null);
     const stringLanguages = window.localStorage.getItem("languageList");
     if (
       stringLanguages !== "undefined" &&
