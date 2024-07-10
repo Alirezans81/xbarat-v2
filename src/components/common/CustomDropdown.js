@@ -110,7 +110,7 @@ function CustomItem({ children, className, onClick }) {
         ` text-${oppositeTheme} bg-${theme} bg-${theme}-hover bg-${theme}-focus border-gray`
       }
     >
-      <div className={`font-${font}-regular pt-1.5 text-${oppositeTheme}`}>
+      <div className={`w-full font-${font}-regular pt-1.5 text-${oppositeTheme}`}>
         {children}
       </div>
     </Dropdown.Item>

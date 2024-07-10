@@ -116,23 +116,25 @@ export default function MyMenu({ switchBlur, links: allLinks }) {
           </div>
           <div className="w-full flex justify-between items-center">
             <ThemeSwitcher horizental />
-            <Link
-              onClick={() => logout()}
-              to="/login"
-              data-tooltip-id="logout-tooltip"
-            >
-              <div className="relative top-0 left-0">
-                <img className="w-8 h-8 opacity-0" />
-                <img
-                  className="w-8 h-8 transition-all duration-100 hover:opacity-0 absolute top-0 left-0"
-                  src={require("../../../../Images/pages/layout/Navbar/logout-gray.png")}
-                />
-                <img
-                  className="w-8 h-8 transition-all duration-100 opacity-0 hover:opacity-100 absolute top-0 left-0"
-                  src={require(`../../../../Images/pages/layout/Navbar/logout-${oppositeTheme}.png`)}
-                />
-              </div>
-            </Link>
+            {userInfo && (
+              <Link
+                onClick={() => logout()}
+                to="/login"
+                data-tooltip-id="logout-tooltip"
+              >
+                <div className="relative top-0 left-0">
+                  <img className="w-8 h-8 opacity-0" />
+                  <img
+                    className="w-8 h-8 transition-all duration-100 hover:opacity-0 absolute top-0 left-0"
+                    src={require("../../../../Images/pages/layout/Navbar/logout-gray.png")}
+                  />
+                  <img
+                    className="w-8 h-8 transition-all duration-100 opacity-0 hover:opacity-100 absolute top-0 left-0"
+                    src={require(`../../../../Images/pages/layout/Navbar/logout-${oppositeTheme}.png`)}
+                  />
+                </div>
+              </Link>
+            )}
           </div>
         </div>
       </div>
