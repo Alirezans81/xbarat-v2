@@ -392,5 +392,16 @@
   "index-telegram": "تلگرام",
   "index-facebook": "فیسبوک",
   "index-x": "ایکس",
-  "index-copyright": "ساخته شده توسط @alirezanasiri.pro"
+  "index-copyright": "ساخته شده توسط @alirezanasiri.pro",
+  "add-to-home-screen-modal-title": "وب اپلیکیشن ایکس برات را به صفحه اصلی موبایل خود اضافه کنید.",
+  "add-to-home-screen-modal-step-1-1st": "در نوار پایین روی دکمه",
+  "add-to-home-screen-modal-step-1-2nd": " Share ",
+  "add-to-home-screen-modal-step-1-3rd": "بزنید.",
+  "add-to-home-screen-modal-step-2-1st": "در منوی بازشده، در قسمت پایین، گزینه",
+  "add-to-home-screen-modal-step-2-2nd": " Add to Home Screen ",
+  "add-to-home-screen-modal-step-2-3rd": "را انتخاب کنید.",
+  "add-to-home-screen-modal-step-3-1st": "در مرحله بعد در قسمت بالا روی",
+  "add-to-home-screen-modal-step-3-2nd": " Add ",
+  "add-to-home-screen-modal-step-3-3rd": "بزنید.",
+  "add-to-home-screen-modal-close-button-text": "فهمیدم"
 }

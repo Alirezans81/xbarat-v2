@@ -15,25 +15,24 @@ export default function MobileBottomBar({ links, isBlur }) {
 
   return (
     <div
-      className={`absolute w-[100dvw] bottom-[0dvh] backdrop-blur-xl backdrop-brightness-75 z-[25] flex shadow-md shadow-dark ${
-        !isBlur ? "blur" : ""
-      }`}
+      className={`absolute w-[100dvw] bottom-[0dvh] backdrop-blur-2xl z-[25] pt-3 ${
+        "standalone" in navigator &&
+        !navigator.standalone &&
+        /iphone|ipod|ipad/gi.test(navigator.platform) &&
+        /Safari/i.test(navigator.appVersion)
+          ? "pb-2"
+          : "pb-5"
+      } flex shadow-md shadow-dark ${!isBlur ? "blur" : ""}`}
     >
       {links.map((link, index) => (
         <Link
           key={index}
-          className="flex-1 flex flex-col items-center gap-y-2 pt-4 pb-2.5"
+          className="flex-1 flex flex-col items-center gap-y-2"
           to={link.route}
         >
           <img
             alt={link.title}
-            src={
-              pathname === link.route
-                ? link.imgs.blue
-                : theme === "dark"
-                ? link.imgs.gray
-                : link.imgs.dark
-            }
+            src={pathname === link.route ? link.imgs.blue : link.imgs.gray}
             className="w-8 h-8"
           />
           <span
@@ -42,42 +41,42 @@ export default function MobileBottomBar({ links, isBlur }) {
                 ? "text-blue"
                 : theme === "dark"
                 ? `text-gray`
-                : "text-dark"
+                : "text-gray"
             }`}
           >
             {link.title}
           </span>
         </Link>
       ))}
-      {user && (
-        <Link
-          className="flex-1 flex flex-col items-center gap-y-2 pt-4 pb-2.5"
-          to={"/profile"}
+      <Link
+        className="flex-1 flex flex-col items-center gap-y-2"
+        to={"/profile"}
+      >
+        <img
+          alt={lang["profile"]}
+          src={
+            user && user.avatar
+              ? user.avatar
+              : require("../../../Images/pages/layout/Profile/no-profile.png")
+          }
+          className={`w-8 h-8 rounded-full object-cover ${
+            pathname === "/profile"
+              ? "border-2 border-blue"
+              : `border-2 border-gray`
+          }`}
+        />
+        <span
+          className={`font-${font}-bold text-sm ${
+            pathname === "/profile"
+              ? "text-blue"
+              : theme === "dark"
+              ? `text-gray`
+              : "text-gray"
+          }`}
         >
-          <img
-            alt={lang["profile"]}
-            src={
-              user && user.avatar
-                ? user.avatar
-                : require("../../../Images/pages/layout/Profile/no-profile.png")
-            }
-            className={`w-8 h-8 rounded-full ${
-              pathname === "/profile" ? "border-2 border-blue" : ""
-            }`}
-          />
-          <span
-            className={`font-${font}-bold text-sm ${
-              pathname === "/profile"
-                ? "text-blue"
-                : theme === "dark"
-                ? `text-gray`
-                : "text-dark"
-            }`}
-          >
-            {lang["profile"]}
-          </span>
-        </Link>
-      )}
+          {lang["profile"]}
+        </span>
+      </Link>
     </div>
   );
 }

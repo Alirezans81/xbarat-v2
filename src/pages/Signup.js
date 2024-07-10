@@ -12,11 +12,23 @@ import { useGetLanguages } from "../apis/common/language/hooks";
 import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 import Slogan from "../components/common/Slogan";
 import CustomToast from "../components/common/CustomToast";
+import { useModalDataSetState } from "../Providers/ModalDataProvider";
+import TutorialModal from "../components/modals/WalletTutorialModal/TutorialModal";
 
 export default function Signup() {
   const setToken = useTokenSetState();
+  const setModalData = useModalDataSetState();
+  const openTutorialModal = () => {
+    setModalData({
+      title: "Tutorial",
+      children: <TutorialModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
 
   const theme = useThemeState();
+  const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { three: direction } = useDirectionState();
   const themeSwitcherDivClasses = direction === "rtl" ? "left-4" : "right-4";
   const languageSwitcherDivClasses = direction === "rtl" ? "right-4" : "left-4";
@@ -51,6 +63,12 @@ export default function Signup() {
 
   return (
     <>
+      <button
+        className={`z-[50] absolute bottom-[30px] md:bottom-[90px] right-[19px] w-[60px] h-[60px] flex justify-center items-center text-3xl bg-${theme}-back shadow-dark shadow-sm-light rounded-full text-${oppositeTheme}`}
+        onClick={openTutorialModal}
+      >
+        <span className="text-4xl -mt-1">?</span>
+      </button>
       <CustomToast />
       <div
         dir={direction}
