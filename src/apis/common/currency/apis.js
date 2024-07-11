@@ -1,10 +1,10 @@
 import axios from "axios";
 import queryString from "query-string";
 
-const api =
-  process.env.REACT_APP_MODE === "DEVELOPMENT"
-    ? require("../../api-dev.json")
-    : require("../../api.json");
+import prod from "../../api";
+import dev from "../../api-dev";
+
+const api = process.env.REACT_APP_MODE === "DEVELOPMENT" ? prod() : dev();
 
 const getCurrencies = () => {
   const limit = require("../../pagination/limit.json")["currency"];
