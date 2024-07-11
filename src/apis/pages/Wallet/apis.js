@@ -3,7 +3,7 @@ import axios from "axios";
 import prod from "../../api";
 import dev from "../../api-dev";
 
-const api = process.env.REACT_APP_MODE === "DEVELOPMENT" ? prod() : dev();
+const api = process.env.REACT_APP_MODE === "DEVELOPMENT" ? dev() : prod();
 
 const getPendingRequests = (token) => {
   const formData = new FormData();
