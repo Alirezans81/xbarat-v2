@@ -37,6 +37,8 @@ import MobileTopBar from "../components/pages/layout/MobileTopBar";
 import { useToastDataSetState } from "../Providers/ToastDataProvider";
 import { useCheckCompletedProfile } from "../hooks/useCheckCompletedProfile";
 import MobileBottomBar from "../components/pages/layout/MobileBottomBar";
+import TutorialModal from "../components/modals/WalletTutorialModal/TutorialModal";
+import AddToHomeScreenModal from "../components/modals/AddToHomeScreenModal";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -72,6 +74,15 @@ export default function Layout() {
     });
   };
 
+  const openTutorialModal = () => {
+    setModalData({
+      title: "Tutorial",
+      children: <TutorialModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
+
   const setModalData = useModalDataSetState();
   const openCompleteProfileModal = () => {
     setModalData({
@@ -81,6 +92,15 @@ export default function Layout() {
       isOpen: true,
     });
   };
+  const openAddToHomeScreen = () => {
+    setModalData({
+      title: "",
+      children: <AddToHomeScreenModal />,
+      canClose: false,
+      isOpen: true,
+    });
+  };
+
   useEffect(() => {
     if (
       userInfo &&
@@ -180,6 +200,15 @@ export default function Layout() {
     } else {
       user && user.username && getWalletData(user.username, token);
     }
+
+    if (
+      "standalone" in navigator &&
+      !navigator.standalone &&
+      /iphone|ipod|ipad/gi.test(navigator.platform) &&
+      /Safari/i.test(navigator.appVersion)
+    ) {
+      openAddToHomeScreen();
+    }
   }, []);
 
   const isPagesModalOpen = useIsPagesModalOpenState();
@@ -194,6 +223,12 @@ export default function Layout() {
 
   return (
     <>
+      <button
+        className={`z-[50] absolute bottom-[170px] md:bottom-[90px] right-[19px] w-[60px] h-[60px] flex justify-center items-center text-3xl bg-${theme}-back shadow-dark shadow-sm-light rounded-full text-${oppositeTheme}`}
+        onClick={openTutorialModal}
+      >
+        <span className="text-4xl -mt-1">?</span>
+      </button>
       <CustomToast />
       <CustomModal />
       <CustomCropImageModal />

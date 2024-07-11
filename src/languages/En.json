@@ -391,5 +391,16 @@
         }
       }
     }
-  }
+  },
+  "add-to-home-screen-modal-title": "Add the Xbarat's web application to your home screen.",
+  "add-to-home-screen-modal-step-1-1st": "Click on the",
+  "add-to-home-screen-modal-step-1-2nd": " Share ",
+  "add-to-home-screen-modal-step-1-3rd": "button in the bottom bar.",
+  "add-to-home-screen-modal-step-2-1st": "Click",
+  "add-to-home-screen-modal-step-2-2nd": " Add to Home Screen ",
+  "add-to-home-screen-modal-step-2-3rd": "in the menu that opens at the bottom.",
+  "add-to-home-screen-modal-step-3-1st": "In the next step, click on",
+  "add-to-home-screen-modal-step-3-2nd": " Add ",
+  "add-to-home-screen-modal-step-3-3rd": "at the top.",
+  "add-to-home-screen-modal-close-button-text": "Understood"
 }
