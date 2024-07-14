@@ -110,7 +110,6 @@ export default function App() {
   } else if (lang) {
     return (
       <>
-        
         <LoadingSplashScreen isLoading={isLoading} />
         <BrowserRouter>
           <Routes>
@@ -129,7 +128,7 @@ export default function App() {
                 }
               />
               <Route path="home" element={<Home />} />
-              <Route path="wallet" element={<Wallet />} />
+              {/* <Route path="wallet" element={<Wallet />} /> */}
               <Route path="reports" element={<Reports />} />
               <Route
                 path="exchange-history"

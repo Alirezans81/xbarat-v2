@@ -1,6 +1,5 @@
 export default function api() {
   const devApiDomain = process.env.REACT_APP_DEV_API_DOMAIN;
-
   return {
     "sign-up": `${devApiDomain}api/user/`,
     "log-in": `${devApiDomain}api/user/login/`,
