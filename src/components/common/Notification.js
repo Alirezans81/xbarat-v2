@@ -22,11 +22,6 @@ export function Notif({ index, notif, getNotification }) {
     [deleteNotificationIsLoading]
   );
 
-  function handleDelete() {
-    deleteNotification(notif.url);
-    getNotification();
-  }
-
   return (
     <div
       className={`flex flex-col gap-y-2 font-${font}-regular text-${oppositeTheme} bg-${theme} p-3 rounded-xl`}
@@ -44,7 +39,7 @@ export function Notif({ index, notif, getNotification }) {
         <button
           onClick={() => {
             deleteNotification(notif.url);
-            getNotification();
+            getNotification(setNotifications);
           }}
           className=""
         >
@@ -64,7 +59,6 @@ function Content() {
   const lang = useLanguageState();
   const font = useFontState();
   const notifs = useNotificationsState();
-  const setNotifications = useNotificationsSetState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
   const theme = useThemeState();
@@ -75,8 +69,7 @@ function Content() {
     () => setIsLoadingSplashScreen(getNotifsIsLoading),
     [getNotifsIsLoading]
   );
-  // const [notifs, setNotifs] = useState([]);
-  function getNotification() {
+  function getNotification(setNotifications) {
     getNotifs(setNotifications, null, null);
   }
   return (

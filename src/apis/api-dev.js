@@ -1,5 +1,6 @@
 export default function api() {
-  const devApiDomain = process.env.REACT_APP_DEV_API_DOMAIN;
+  // const devApiDomain = process.env.REACT_APP_DEV_API_DOMAIN;
+  const devApiDomain = "https://smicln.ir/";
   return {
     "sign-up": `${devApiDomain}api/user/`,
     "log-in": `${devApiDomain}api/user/login/`,
@@ -26,6 +27,7 @@ export default function api() {
     status: `${devApiDomain}api/status/`,
     "other-exchanges-rate": `${devApiDomain}api/exchange-rate/`,
     locale: `${devApiDomain}api/locale/`,
+    notify: `${devApiDomain}api/notify`,
     "check-email": `${devApiDomain}api/user/forget-password-check/`,
     "send-email": `http://api.emailjs.com/api/v1.0/email/send`,
     "forgot-password": `${devApiDomain}api/user/forget-password-set/`,
