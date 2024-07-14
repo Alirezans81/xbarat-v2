@@ -18,7 +18,7 @@ export default function OtherExchangeCard({ selectedCurrecnyPair, data }) {
       className={`flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-2 pb-1`}
     >
       <div className="flex flex-col items-center">
-        <span className={`text-2xl font-${font}-regular text-${oppositeTheme}`}>
+        <span className={`text-2xl font-${font}-regular text-center text-${oppositeTheme}`}>
           {data.exchange_title}
         </span>
         <div className="flex flex-col gap-0.5 items-center">

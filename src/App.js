@@ -110,12 +110,7 @@ export default function App() {
   } else if (lang) {
     return (
       <>
-        <button
-          className={`z-[50] absolute bottom-[170px] md:bottom-[90px] right-[19px] w-[60px] h-[60px] flex justify-center items-center text-3xl bg-${theme}-back shadow-dark shadow-sm-light rounded-full text-${oppositeTheme}`}
-          onClick={openTutorialModal}
-        >
-          <span className="text-4xl -mt-1">?</span>
-        </button>
+        
         <LoadingSplashScreen isLoading={isLoading} />
         <BrowserRouter>
           <Routes>
