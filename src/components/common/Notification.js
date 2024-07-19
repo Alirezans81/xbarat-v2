@@ -8,7 +8,7 @@ import { useNotificationsState } from "../../Providers/NotificationProvider";
 import { useGetNotifs } from "../../apis/pages/Layout/hooks";
 import { useNotificationsSetState } from "../../Providers/NotificationProvider";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
-export function Notif({ index, notif, getNotification }) {
+export function Notif({ notif, getNotification }) {
   const theme = useThemeState();
   const font = useFontState();
   const setNotifications = useNotificationsSetState();
