@@ -10,6 +10,7 @@ const ModalDataProvider = ({ children }) => {
     children: <></>,
     canClose: true,
     isOpen: false,
+    onClose: () => {},
   });
 
   const closeModal = () => {
@@ -18,6 +19,7 @@ const ModalDataProvider = ({ children }) => {
       children: <></>,
       canClose: false,
       isOpen: false,
+      onClose: () => {},
     });
   };
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import queryString from "query-string";
 
 import prod from "../../api";
 import dev from "../../api-dev";
@@ -12,8 +13,15 @@ const logout = (token) => {
 
   return axios.post(api["log-out"], formData);
 };
-const getNews = (offset) => {
-  axios.get(api["news"] + "?" + `offset=${offset}`);
+const getNews = () => {
+  const limit = require("../../pagination/limit.json")["news"];
+
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["news"],
+    query: { limit },
+  });
+
+  return axios.get(urlWithQueries);
 };
 
 export { logout, getNews };

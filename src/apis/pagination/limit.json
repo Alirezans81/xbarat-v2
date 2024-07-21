@@ -27,5 +27,6 @@
   "check-email": 10,
   "send-email": 10,
   "forgot-password": 10,
-  "change-password": 10
+  "change-password": 10,
+  "news": 50
 }

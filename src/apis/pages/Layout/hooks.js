@@ -45,9 +45,9 @@ const useGetNews = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState, offset, customFunctionWithData) => {
+  const fetch = async (setState, customFunctionWithData) => {
     setIsLoading(true);
-    await getNews(offset)
+    await getNews()
       .then((data) => {
         process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
