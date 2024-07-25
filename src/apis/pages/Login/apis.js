@@ -4,7 +4,7 @@ import prod from "../../api";
 import dev from "../../api-dev";
 
 const api = dev();
-
+console.log(process.env);
 const login = (params) => {
   const formData = new FormData();
 
