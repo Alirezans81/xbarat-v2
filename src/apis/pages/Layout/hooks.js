@@ -45,11 +45,7 @@ const useGetNews = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-<<<<<<< HEAD
   const fetch = async (setState, customFunction, customFunctionWithData) => {
-=======
-  const fetch = async (setState, customFunctionWithData) => {
->>>>>>> 69ff67a4f2671f49108fb88bdc1fd2fd23a9bb4c
     setIsLoading(true);
     await getNews()
       .then((data) => {
@@ -99,11 +95,12 @@ const useDeleteNotification = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (requestUrl) => {
+  const fetch = async (requestUrl, customFunction) => {
     setIsLoading(true);
     await deleteNotification(requestUrl)
       .then((data) => {
         process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+        customFunction && customFunction();
         setIsLoading(false);
         return data.data;
       })

@@ -17,7 +17,6 @@ import { ToastDataProvider } from "./Providers/ToastDataProvider";
 import { ModalDataProvider } from "./Providers/ModalDataProvider";
 import { CropImageModalProvider } from "./Providers/CropImageModalProvider";
 import { StatusesProvider } from "./Providers/StatusesProvider";
-import { NotificationsProvider } from "./Providers/NotificationProvider";
 import { CurrenciesProvider } from "./Providers/CurrenciesProvider";
 import { CurrencyPairsProvider } from "./Providers/CurrencyPairsProvider";
 import { LanguageListProvider } from "./Providers/LanguageListProvider";
@@ -37,21 +36,19 @@ root.render(
                   <CropImageModalProvider>
                     <ToastDataProvider>
                       <IsLoadingSplashScreenProvider>
-                        <NotificationsProvider>
-                          <StatusesProvider>
-                            <CurrenciesProvider>
-                              <CurrencyPairsProvider>
-                                <TokenProvider>
-                                  <WalletProvider>
-                                    <UserProvider>
-                                      <App />
-                                    </UserProvider>
-                                  </WalletProvider>
-                                </TokenProvider>
-                              </CurrencyPairsProvider>
-                            </CurrenciesProvider>
-                          </StatusesProvider>
-                        </NotificationsProvider>
+                        <StatusesProvider>
+                          <CurrenciesProvider>
+                            <CurrencyPairsProvider>
+                              <TokenProvider>
+                                <WalletProvider>
+                                  <UserProvider>
+                                    <App />
+                                  </UserProvider>
+                                </WalletProvider>
+                              </TokenProvider>
+                            </CurrencyPairsProvider>
+                          </CurrenciesProvider>
+                        </StatusesProvider>
                       </IsLoadingSplashScreenProvider>
                     </ToastDataProvider>
                   </CropImageModalProvider>

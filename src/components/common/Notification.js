@@ -4,14 +4,11 @@ import { useThemeState } from "../../Providers/ThemeProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useDeleteNotification } from "../../apis/pages/Layout/hooks";
-import { useNotificationsState } from "../../Providers/NotificationProvider";
 import { useGetNotifs } from "../../apis/pages/Layout/hooks";
-import { useNotificationsSetState } from "../../Providers/NotificationProvider";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 export function Notif({ notif, getNotification }) {
   const theme = useThemeState();
   const font = useFontState();
-  const setNotifications = useNotificationsSetState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
@@ -38,8 +35,9 @@ export function Notif({ notif, getNotification }) {
 
         <button
           onClick={() => {
-            deleteNotification(notif.url);
-            getNotification(setNotifications);
+            deleteNotification(notif.url, () => {
+              getNotification();
+            });
           }}
           className=""
         >
@@ -55,28 +53,18 @@ export function Notif({ notif, getNotification }) {
   );
 }
 
-function Content() {
+function Content({ notifs, getNotification }) {
   const lang = useLanguageState();
   const font = useFontState();
-  const notifs = useNotificationsState();
-  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const [get, setGet] = useState(false);
-  const { getNotifs, isLoading: getNotifsIsLoading } = useGetNotifs();
-  useEffect(
-    () => setIsLoadingSplashScreen(getNotifsIsLoading),
-    [getNotifsIsLoading]
-  );
-  function getNotification(setNotifications) {
-    getNotifs(setNotifications, null, null);
-  }
+
   return (
     <div className="max-w-[90dvw] md:max-w-[23rem] flex flex-col gap-y-3 px-1.5 py-2 max-h-[80dvh] overflow-y-auto">
       {notifs &&
         notifs.map((notif, index) => (
-          <Notif key={index} notif={notif} getNotification={getNotification} />
+          <Notif notif={notif} getNotification={getNotification} />
         ))}
       {(!notifs || notifs.length === 0) && (
         <div className="px-10 pt-5 pb-4">
@@ -92,11 +80,22 @@ function Content() {
 }
 
 export default function Notification() {
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
-  const notifications = useNotificationsState();
-
+  const [notifs, setNotifs] = useState();
+  const { getNotifs, isLoading: getNotifsIsLoading } = useGetNotifs();
+  useEffect(
+    () => setIsLoadingSplashScreen(getNotifsIsLoading),
+    [getNotifsIsLoading]
+  );
+  useEffect(() => {
+    getNotification();
+  }, []);
+  function getNotification() {
+    getNotifs(setNotifs, null, null);
+  }
   const [open, setOpen] = useState(false);
   function useOutsideAlerter(ref1) {
     useEffect(() => {
@@ -122,7 +121,7 @@ export default function Notification() {
   return (
     <CustomTooltip2
       trigger="click"
-      content={<Content notifications={notifications} />}
+      content={<Content notifs={notifs} getNotification={getNotification} />}
       style={theme}
       placement="bottom"
       className="rounded-xl z-[200]"
@@ -135,7 +134,7 @@ export default function Notification() {
       >
         <span className="absolute right-0 bg-red text-light w-5 h-5 rounded-full flex justify-center items-center">
           <span className={`${font === "Fa" ? "-mb-0.5" : "-mb-1.5"} text-sm`}>
-            {notifications ? notifications.length : 0}
+            {notifs ? notifs.length : 0}
           </span>
         </span>
         <img

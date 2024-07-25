@@ -14,9 +14,6 @@ const logout = (token) => {
   return axios.post(api["log-out"], formData);
 };
 const getNews = () => {
-<<<<<<< HEAD
-  axios.get(api["news"]);
-=======
   const limit = require("../../pagination/limit.json")["news"];
 
   const urlWithQueries = queryString.stringifyUrl({
@@ -25,7 +22,6 @@ const getNews = () => {
   });
 
   return axios.get(urlWithQueries);
->>>>>>> 69ff67a4f2671f49108fb88bdc1fd2fd23a9bb4c
 };
 const getNotifs = () => {
   return axios.get(api["notify"]);
