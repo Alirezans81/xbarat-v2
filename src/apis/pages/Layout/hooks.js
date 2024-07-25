@@ -1,7 +1,7 @@
 import { useTokenSetState } from "../../../Providers/TokenProvider";
 import { useUserSetState } from "../../../Providers/UserProvider";
-import { logout } from "./apis";
-import { getNews } from "./apis";
+import { logout, getNews, getNotifs, deleteNotification } from "./apis";
+import FilterIsActive from "../../../functions/filterIsActivefunction";
 import { useState } from "react";
 
 const useLogout = () => {
@@ -45,15 +45,16 @@ const useGetNews = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState, customFunctionWithData) => {
+  const fetch = async (setState, customFunction, customFunctionWithData) => {
     setIsLoading(true);
     await getNews()
       .then((data) => {
         process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         setState(data.data.results);
+        customFunction && customFunction();
         customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return data.data.results;
+        return FilterIsActive(data.data.results);
       })
       .catch((error) => {
         console.log(error);
@@ -61,7 +62,56 @@ const useGetNews = () => {
         setIsLoading(false);
       });
   };
+
   return { getNews: fetch, error, isLoading };
 };
+const useGetNotifs = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
-export { useLogout, useGetNews };
+  const fetch = async (setState, customFunction, customFunctionWithData) => {
+    setIsLoading(true);
+    await getNotifs()
+      .then((data) => {
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+        const win = JSON.parse(window.localStorage.userInfo);
+        const temp = data.data.results.filter((data) => data.user === win.url);
+        setState(temp);
+        customFunction && customFunction();
+        customFunctionWithData && customFunctionWithData(temp);
+        setIsLoading(false);
+        return FilterIsActive(temp);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { getNotifs: fetch, error, isLoading };
+};
+const useDeleteNotification = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (requestUrl, customFunction) => {
+    setIsLoading(true);
+    await deleteNotification(requestUrl)
+      .then((data) => {
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+        customFunction && customFunction();
+        setIsLoading(false);
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { deleteNotification: fetch, error, isLoading };
+};
+
+export { useLogout, useGetNews, useGetNotifs, useDeleteNotification };

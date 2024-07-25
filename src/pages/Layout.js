@@ -27,6 +27,7 @@ import {
   useGetCurrencies,
   useGetCurrencyPairs,
 } from "../apis/common/currency/hooks";
+import { useGetNotifs } from "../apis/pages/Layout/hooks";
 import { useCurrencyPairsSetState } from "../Providers/CurrencyPairsProvider";
 import { useGetLanguages } from "../apis/common/language/hooks";
 import { useLanguageListSetState } from "../Providers/LanguageListProvider";
@@ -160,7 +161,6 @@ export default function Layout() {
   useEffect(() => {
     getCurrencies(setCurrencies);
     getCurrencyPairs(null, setCurrencyPairs);
-
     const stringLanguages = window.localStorage.getItem("languageList");
     if (
       stringLanguages !== "undefined" &&

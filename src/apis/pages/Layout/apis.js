@@ -23,5 +23,10 @@ const getNews = () => {
 
   return axios.get(urlWithQueries);
 };
-
-export { logout, getNews };
+const getNotifs = () => {
+  return axios.get(api["notify"]);
+};
+const deleteNotification = (requestUrl) => {
+  axios.delete(requestUrl);
+};
+export { logout, getNews, getNotifs, deleteNotification };
