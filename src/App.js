@@ -110,7 +110,6 @@ export default function App() {
   } else if (lang) {
     return (
       <>
-        
         <LoadingSplashScreen isLoading={isLoading} />
         <BrowserRouter>
           <Routes>

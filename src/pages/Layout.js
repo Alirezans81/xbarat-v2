@@ -107,10 +107,10 @@ export default function Layout() {
       isOpen: true,
     });
   };
-  const openNewsModal = ({ title }, onClose) => {
+  const openNewsModal = (news, onClose) => {
     setModalData({
-      title: title,
-      children: <NewsModal />,
+      title: news.title,
+      children: <NewsModal {...news} />,
       canClose: true,
       isOpen: true,
       onClose,
@@ -243,22 +243,52 @@ export default function Layout() {
     [getNewsIsLoading]
   );
   const [news, setNews] = useState([]);
+  const newsIsSaved = (slug) => {
+    const savedNews = JSON.parse(window.localStorage.getItem("news")) || [];
+
+    let result = false;
+    savedNews.map((news) => {
+      if (news.slug === slug) result = true;
+    });
+
+    return result;
+  };
   const [newOpenNumber, setNewsOpenNumber] = useState(0);
   useEffect(() => {
     getNews(setNews);
   }, []);
   useEffect(() => {
-    if (news && modalData && news.length > 0) {
-      openNewsModal(news[newOpenNumber], () =>
-        setNewsOpenNumber((prev) => prev + 1)
-      );
+    if (
+      news &&
+      modalData &&
+      news.length > 0 &&
+      Date(news[0].end_date) <= Date() &&
+      (!newsIsSaved(news[0].slug) || news[0].important)
+    ) {
+      openNewsModal(news[newOpenNumber], () => {
+        let savedNews = JSON.parse(window.localStorage.getItem("news")) || [];
+        savedNews.push(news[newOpenNumber]);
+        localStorage.setItem("news", JSON.stringify(savedNews));
+
+        setNewsOpenNumber((prev) => prev + 1);
+      });
     }
   }, [news]);
   useEffect(() => {
-    if (news && modalData && news[newOpenNumber]) {
-      openNewsModal(news[newOpenNumber], () =>
-        setNewsOpenNumber((prev) => prev + 1)
-      );
+    if (
+      news &&
+      modalData &&
+      news[newOpenNumber] &&
+      Date(news[newOpenNumber].end_date) <= Date() &&
+      (!newsIsSaved(news[newOpenNumber].slug) || news[newOpenNumber].important)
+    ) {
+      openNewsModal(news[newOpenNumber], () => {
+        let savedNews = JSON.parse(window.localStorage.getItem("news"));
+        savedNews.push(news[newOpenNumber]);
+        localStorage.setItem("news", JSON.stringify(savedNews));
+
+        setNewsOpenNumber((prev) => prev + 1);
+      });
     }
   }, [newOpenNumber]);
 
