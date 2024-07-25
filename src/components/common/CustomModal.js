@@ -13,7 +13,7 @@ export default function CustomModal() {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { one: oneDirection } = useDirectionState();
 
-  const { title, children, canClose, isOpen } = useModalDataState();
+  const { title, children, canClose, isOpen, onClose } = useModalDataState();
   const closeModal = useModalDataClose();
 
   const containerClass = isOpen ? "z-40 opacity-100" : "-z-10 opacity-0";
@@ -37,7 +37,10 @@ export default function CustomModal() {
           {canClose && (
             <button
               className={`m${oneDirection}-3`}
-              onClick={() => closeModal()}
+              onClick={() => {
+                onClose && onClose();
+                closeModal();
+              }}
             >
               <img
                 className="w-5 h-5"

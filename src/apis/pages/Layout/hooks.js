@@ -45,7 +45,11 @@ const useGetNews = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
+<<<<<<< HEAD
   const fetch = async (setState, customFunction, customFunctionWithData) => {
+=======
+  const fetch = async (setState, customFunctionWithData) => {
+>>>>>>> 69ff67a4f2671f49108fb88bdc1fd2fd23a9bb4c
     setIsLoading(true);
     await getNews()
       .then((data) => {

@@ -13,4 +13,4 @@ EXPOSE 5173
 
 RUN npm ci
 
-CMD ["npm", "run", "server"]
+CMD ["npm", "run", "start"]
