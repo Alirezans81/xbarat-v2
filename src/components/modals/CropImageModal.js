@@ -4,6 +4,7 @@ import ReactCrop, { convertToPixelCrop } from "react-image-crop";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useCropImageModalClose } from "../../Providers/CropImageModalProvider";
+import imageCompression from "browser-image-compression";
 
 const setCanvasPreview = (
   image, // HTMLImageElement
@@ -66,13 +67,26 @@ export default function CropImageModal({ imageSrc, setImage }) {
     height: 50,
   });
 
+  const compressFile = async (file) => {
+    try {
+      return imageCompression(file);
+    } catch (error) {
+      console.log("error: ", error);
+      return file;
+    }
+  };
+
   const handleSubmit = () => {
     setCanvasPreview(
       imageRef.current,
       canvasRef.current,
       convertToPixelCrop(crop, imageRef.current.width, imageRef.current.height)
     );
-    canvasRef.current.toBlob((blob) => setImage(blob));
+    canvasRef.current.toBlob((blob) => {
+      compressFile(blob).then((result) => {
+        setImage(result);
+      });
+    });
     closeCropImageModal();
   };
 
@@ -86,6 +100,7 @@ export default function CropImageModal({ imageSrc, setImage }) {
           keepSelection
         >
           <img
+            alt="uplooad file"
             ref={imageRef}
             className="max-w-[80dvw] h-[80dvh]"
             src={imageSrc}

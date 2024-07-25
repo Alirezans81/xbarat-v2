@@ -54,12 +54,14 @@ export default function LanguageSwitcher({ with_background }) {
         selectedLanguageIndex + ""
       );
 
-      getLanguageFile(
-        languages[selectedLanguageIndex].file,
-        null,
-        null,
-        setLang
-      );
+      if (!lang) {
+        getLanguageFile(
+          languages[selectedLanguageIndex].file,
+          null,
+          null,
+          setLang
+        );
+      }
 
       updateDefaultLocale(
         {

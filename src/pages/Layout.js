@@ -31,7 +31,10 @@ import { useCurrencyPairsSetState } from "../Providers/CurrencyPairsProvider";
 import { useGetLanguages } from "../apis/common/language/hooks";
 import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 import CompleteProfileModal from "../components/modals/CompleteProfileModal";
-import { useModalDataSetState } from "../Providers/ModalDataProvider";
+import {
+  useModalDataSetState,
+  useModalDataState,
+} from "../Providers/ModalDataProvider";
 import { useFontState } from "../Providers/FontProvider";
 import MobileTopBar from "../components/pages/layout/MobileTopBar";
 import { useToastDataSetState } from "../Providers/ToastDataProvider";
@@ -39,6 +42,8 @@ import { useCheckCompletedProfile } from "../hooks/useCheckCompletedProfile";
 import MobileBottomBar from "../components/pages/layout/MobileBottomBar";
 import TutorialModal from "../components/modals/WalletTutorialModal/TutorialModal";
 import AddToHomeScreenModal from "../components/modals/AddToHomeScreenModal";
+import { useGetNews } from "../apis/pages/Layout/hooks";
+import NewsModal from "../components/modals/NewsModal";
 
 export default function Layout() {
   const theme = useThemeState();
@@ -64,6 +69,7 @@ export default function Layout() {
   const [links, setLinks] = useState([]);
 
   const setToastData = useToastDataSetState();
+
   const openCompleteProfileMessageToast = () => {
     setToastData({
       status: "warning",
@@ -83,6 +89,7 @@ export default function Layout() {
     });
   };
 
+  const modalData = useModalDataState();
   const setModalData = useModalDataSetState();
   const openCompleteProfileModal = () => {
     setModalData({
@@ -98,6 +105,15 @@ export default function Layout() {
       children: <AddToHomeScreenModal />,
       canClose: false,
       isOpen: true,
+    });
+  };
+  const openNewsModal = (news, onClose) => {
+    setModalData({
+      title: news.title,
+      children: <NewsModal {...news} />,
+      canClose: true,
+      isOpen: true,
+      onClose,
     });
   };
 
@@ -220,6 +236,61 @@ export default function Layout() {
   const switchBlur = () => {
     setBlur(!isBlur);
   };
+
+  const { getNews, isLoading: getNewsIsLoading } = useGetNews();
+  useEffect(
+    () => setIsLoadingSplashScreen(getNewsIsLoading),
+    [getNewsIsLoading]
+  );
+  const [news, setNews] = useState([]);
+  const newsIsSaved = (slug) => {
+    const savedNews = JSON.parse(window.localStorage.getItem("news")) || [];
+
+    let result = false;
+    savedNews.map((news) => {
+      if (news.slug === slug) result = true;
+    });
+
+    return result;
+  };
+  const [newOpenNumber, setNewsOpenNumber] = useState(0);
+  useEffect(() => {
+    getNews(setNews);
+  }, []);
+  useEffect(() => {
+    if (
+      news &&
+      modalData &&
+      news.length > 0 &&
+      Date(news[0].end_date) <= Date() &&
+      (!newsIsSaved(news[0].slug) || news[0].important)
+    ) {
+      openNewsModal(news[newOpenNumber], () => {
+        let savedNews = JSON.parse(window.localStorage.getItem("news")) || [];
+        savedNews.push(news[newOpenNumber]);
+        localStorage.setItem("news", JSON.stringify(savedNews));
+
+        setNewsOpenNumber((prev) => prev + 1);
+      });
+    }
+  }, [news]);
+  useEffect(() => {
+    if (
+      news &&
+      modalData &&
+      news[newOpenNumber] &&
+      Date(news[newOpenNumber].end_date) <= Date() &&
+      (!newsIsSaved(news[newOpenNumber].slug) || news[newOpenNumber].important)
+    ) {
+      openNewsModal(news[newOpenNumber], () => {
+        let savedNews = JSON.parse(window.localStorage.getItem("news"));
+        savedNews.push(news[newOpenNumber]);
+        localStorage.setItem("news", JSON.stringify(savedNews));
+
+        setNewsOpenNumber((prev) => prev + 1);
+      });
+    }
+  }, [newOpenNumber]);
 
   return (
     <>
