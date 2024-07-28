@@ -1,5 +1,5 @@
-import { useFontState } from "../../../Providers/FontProvider";
-import { useThemeState } from "../../../Providers/ThemeProvider";
+import { useThemeState } from "../../../../Providers/ThemeProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 
 const Transfer = ({ transfer }) => {
   const theme = useThemeState();

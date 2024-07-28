@@ -1,11 +1,14 @@
-import { useThemeState } from "../../../Providers/ThemeProvider";
-import { useFontState } from "../../../Providers/FontProvider";
-const Deposit = ({ deposit }) => {
+import { useThemeState } from "../../../../Providers/ThemeProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
+
+const Withdraw = ({ withdraw }) => {
   const theme = useThemeState();
   const font = useFontState();
+
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   var w = window.innerWidth;
-  const { context, status } = deposit;
+
+  const { context, status } = withdraw;
   const statusCount = Object.keys(status).length;
 
   return (
@@ -53,4 +56,4 @@ const Deposit = ({ deposit }) => {
   );
 };
 
-export default Deposit;
+export default Withdraw;

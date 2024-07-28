@@ -48,7 +48,7 @@ import {
 import { useFontSetState } from "./Providers/FontProvider";
 import Updating from "./pages/Updating";
 import Startup from "./pages/Startup";
-import TutorialModal from "./components/modals/WalletTutorialModal/TutorialModal";
+import TutorialModal from "./components/modals/Tutorials/WalletTutorialModal/TutorialModal";
 import { useModalDataSetState } from "./Providers/ModalDataProvider";
 import { useThemeState } from "./Providers/ThemeProvider";
 

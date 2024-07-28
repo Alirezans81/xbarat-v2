@@ -13,7 +13,7 @@ import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 import Slogan from "../components/common/Slogan";
 import CustomToast from "../components/common/CustomToast";
 import { useModalDataSetState } from "../Providers/ModalDataProvider";
-import TutorialModal from "../components/modals/WalletTutorialModal/TutorialModal";
+import TutorialModal from "../components/modals/Tutorials/WalletTutorialModal/TutorialModal";
 
 export default function Signup() {
   const setToken = useTokenSetState();

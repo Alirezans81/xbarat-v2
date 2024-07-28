@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useThemeState } from "../../../Providers/ThemeProvider";
-import { useLanguageState } from "../../../Providers/LanguageProvider";
-import { useFontState } from "../../../Providers/FontProvider";
+import { useThemeState } from "../../../../Providers/ThemeProvider";
+import { useLanguageState } from "../../../../Providers/LanguageProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 import Withdraw from "./Withdraw";
 import Deposit from "./Deposit";
 import Transfer from "./Transfer";
