@@ -34,30 +34,28 @@ export default function ComponentTutorialCardBalance({
         className={`w-fit h-full flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-4 pb-4 px-10 gap-y-2`}
       >
         <div
-          className={`flex flex-row font-${font}-bold text-xl max-w-[10rem] md:max-w-none overflow-x-auto scroll-horizental pt-2 bg-${
-            hovered === "balance" ? oppositeTheme : "none"
-          } rounded-2xl `}
+          className={`flex flex-row font-${font}-bold text-xl max-w-[10rem] md:max-w-none overflow-x-auto scroll-horizental pt-2 bg-none  rounded-2xl `}
         >
           {currency[`sym_pic_${oppositeTheme}`] ? (
             <img
-              className="w-7 h-7 -mt-1"
-              src={
-                currency[
-                  `sym_pic_${hovered === "balance" ? theme : oppositeTheme}`
-                ]
-              }
+              className={`${
+                hovered === "balance" ? "w-9 h-9" : "w-7 h-7"
+              } -mt-1`}
+              src={currency[`sym_pic_${oppositeTheme}`]}
             />
           ) : (
             <span
-              className={`text-${
-                hovered === "balance" ? theme : oppositeTheme
+              className={`text-${oppositeTheme} text-${
+                hovered === "balance" ? "3xl" : "xl"
               } font-${font}-regular`}
             >
               {currency && currency.abbreviation ? currency.abbreviation : ""}
             </span>
           )}
           <span
-            className={`text-${hovered === "balance" ? theme : oppositeTheme}`}
+            className={`text-${oppositeTheme} text-${
+              hovered === "balance" ? "3xl" : "xl"
+            }`}
           >
             {addComma(
               roundDown(
@@ -72,8 +70,8 @@ export default function ComponentTutorialCardBalance({
           className={` md:mb-4 flex flex-col md:gap-y-0 font-${font}-regular items-center`}
         >
           <span
-            className={`w-fit px-5 text-green text-center leading-none md:leading-snug -mt-1 transition-all duration-500 bg-${
-              hovered === "pending" ? oppositeTheme : "none"
+            className={`w-fit px-5 text-green text-center leading-none md:leading-snug -mt-1 transition-all duration-500 ${
+              hovered === "pending" ? "font-black text-xl" : "font-light"
             } rounded-2xl`}
           >
             {"+ " +
@@ -87,8 +85,8 @@ export default function ComponentTutorialCardBalance({
               lang["pending"]}
           </span>
           <span
-            className={`w-fit px-5 text-red text-center leading-none md:leading-snug mt-1 transition-all duration-500 bg-${
-              hovered === "locked" ? oppositeTheme : "none"
+            className={`w-fit px-5 text-red text-center leading-none md:leading-snug mt-1 transition-all duration-500 ${
+              hovered === "locked" ? "font-black text-xl" : "font-light"
             } rounded-2xl`}
           >
             {"+ " +
@@ -103,18 +101,18 @@ export default function ComponentTutorialCardBalance({
           </span>
         </div>
         <div
-          className={`flex flex-col gap-y-2 font-${font}-bold w-full text-sm items-center mt-3 md:mt-1`}
+          className={`flex flex-col gap-y-2 font-${font}-bold w-fit text-sm items-center mt-5 md:mt-1`}
         >
           <div
-            className={`border-2 border-blue text-blue rounded-lg pt-2 pb-0.5 w-full transitioin-all duration-500 flex justify-center bg-${
-              hovered === "transfer" ? oppositeTheme : "none"
+            className={`border-2 border-blue border-solid text-blue rounded-lg  px-10 pt-2 pb-0.5 w-full  flex justify-center ${
+              hovered === "transfer" ? "text-xl font-bold" : "text-sm"
             }`}
           >
             {lang["transfer"]}
           </div>
           <div
-            className={`border-2 border-red text-red rounded-lg pt-2 pb-0.5 w-full transitioin-all duration-500 flex justify-center bg-${
-              hovered === "withdraw" ? oppositeTheme : "none"
+            className={`border-2 border-red border-solid text-red rounded-lg pt-2  px-10 pb-0.5 w-full transitioin-all duration-500 flex justify-center ${
+              hovered === "withdraw" ? "text-xl font-bold" : "text-sm"
             }`}
           >
             {lang["withdrawal"]}
