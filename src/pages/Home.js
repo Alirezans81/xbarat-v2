@@ -277,17 +277,21 @@ export default function Home({ isDemo }) {
               <Exchanging
                 selectedCurrecnyPair={selectedCurrecnyPair}
                 setSelectedCurrencnyPair={setSelectedCurrencnyPair}
+                formDefaultAmount={formDefaultAmount}
+                setFormDefaultAmount={setFormDefaultAmount}
                 formDefaultRate={formDefaultRate}
+                setFormDefaultRate={setFormDefaultRate}
                 rateIsReversed={rateIsReversed}
                 setRateIsReversed={setRateIsReversed}
                 refreshPendingExchange={refreshPendingExchange}
-                setFormDefaultRate={setFormDefaultRate}
                 selectedSourceIndex={selectedSourceIndex}
                 setSelectedSourceIndex={setSelectedSourceIndex}
                 availableTargets={availableTargets}
                 selectedTargetIndex={selectedTargetIndex}
                 setAvailableTargets={setAvailableTargets}
                 setSelectedTargetIndex={setSelectedTargetIndex}
+                selectedCurrecnyWalletData={selectedCurrecnyWalletData}
+                findCurrencyBalanceInWallet={findCurrencyBalanceInWallet}
                 amountInputRef={amountInputRef}
                 rateInputRef={rateInputRef}
                 focusOnInput={focusOnRateInput}

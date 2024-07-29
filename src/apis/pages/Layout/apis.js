@@ -13,6 +13,7 @@ const logout = (token) => {
 
   return axios.post(api["log-out"], formData);
 };
+
 const getNews = () => {
   const limit = require("../../pagination/limit.json")["news"];
 
@@ -23,10 +24,13 @@ const getNews = () => {
 
   return axios.get(urlWithQueries);
 };
+
 const getNotifs = () => {
   return axios.get(api["notify"]);
 };
+
 const deleteNotification = (requestUrl) => {
-  axios.delete(requestUrl);
+  return axios.delete(requestUrl);
 };
+
 export { logout, getNews, getNotifs, deleteNotification };
