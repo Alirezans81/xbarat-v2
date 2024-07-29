@@ -6,7 +6,8 @@ import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useDeleteNotification } from "../../apis/pages/Layout/hooks";
 import { useGetNotifs } from "../../apis/pages/Layout/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
-export function Notif({ notif, getNotification }) {
+
+export function Notif({ notif, getNotifications }) {
   const theme = useThemeState();
   const font = useFontState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
@@ -36,7 +37,7 @@ export function Notif({ notif, getNotification }) {
         <button
           onClick={() => {
             deleteNotification(notif.url, () => {
-              getNotification();
+              getNotifications();
             });
           }}
           className=""
@@ -53,10 +54,9 @@ export function Notif({ notif, getNotification }) {
   );
 }
 
-function Content({ notifs, getNotification }) {
+function Content({ notifs, getNotifications }) {
   const lang = useLanguageState();
   const font = useFontState();
-
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
@@ -64,7 +64,11 @@ function Content({ notifs, getNotification }) {
     <div className="max-w-[90dvw] md:max-w-[23rem] flex flex-col gap-y-3 px-1.5 py-2 max-h-[80dvh] overflow-y-auto">
       {notifs &&
         notifs.map((notif, index) => (
-          <Notif notif={notif} getNotification={getNotification} />
+          <Notif
+            key={index}
+            notif={notif}
+            getNotifications={getNotifications}
+          />
         ))}
       {(!notifs || notifs.length === 0) && (
         <div className="px-10 pt-5 pb-4">
@@ -80,22 +84,12 @@ function Content({ notifs, getNotification }) {
 }
 
 export default function Notification() {
-  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
-  const [notifs, setNotifs] = useState();
-  const { getNotifs, isLoading: getNotifsIsLoading } = useGetNotifs();
-  useEffect(
-    () => setIsLoadingSplashScreen(getNotifsIsLoading),
-    [getNotifsIsLoading]
-  );
-  useEffect(() => {
-    getNotification();
-  }, []);
-  function getNotification() {
-    getNotifs(setNotifs, null, null);
-  }
+
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+
   const [open, setOpen] = useState(false);
   function useOutsideAlerter(ref1) {
     useEffect(() => {
@@ -118,10 +112,23 @@ export default function Notification() {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
 
+  const [notifs, setNotifs] = useState();
+  const { getNotifs, isLoading: getNotifsIsLoading } = useGetNotifs();
+  useEffect(
+    () => setIsLoadingSplashScreen(getNotifsIsLoading),
+    [getNotifsIsLoading]
+  );
+  function getNotifications() {
+    getNotifs(setNotifs, null, null);
+  }
+  useEffect(() => {
+    getNotifications();
+  }, []);
+
   return (
     <CustomTooltip2
       trigger="click"
-      content={<Content notifs={notifs} getNotification={getNotification} />}
+      content={<Content notifs={notifs} getNotifications={getNotifications} />}
       style={theme}
       placement="bottom"
       className="rounded-xl z-[200]"
