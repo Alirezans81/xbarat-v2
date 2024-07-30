@@ -77,7 +77,7 @@ const Tutorial = () => {
       </button>
 
       <div
-        className={`col-span-12 row-span-7 flex w-full h-[18rem] justify-center items-center p-5 bg-${theme}`}
+        className={`col-span-12 row-span-7 flex w-full h-full justify-center items-center p-5 bg-${theme}`}
       >
         <ComponentTutorialCardBalance
           hovered={hovered}

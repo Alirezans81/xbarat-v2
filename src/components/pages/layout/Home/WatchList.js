@@ -9,6 +9,8 @@ import {
   useAddComma,
   useCalculateReverseRate,
 } from "../../../../hooks/useNumberFunctions";
+import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
+import TutorialModal from "../../../modals/Tutorials/WatchlistTutorialModal/Tutorial";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
 
@@ -21,6 +23,7 @@ export default function WatchList({
   selectedCurrecnyPair,
 }) {
   const lang = useLanguageState();
+  const setModalData = useModalDataSetState();
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -32,7 +35,14 @@ export default function WatchList({
 
   const head = [lang["currency-pair"], lang["rate"], lang["low"], lang["high"]];
   const [data, setData] = useState([]);
-
+  const openTutorialModal = () => {
+    setModalData({
+      title: "Watchlist Tutorial",
+      children: <TutorialModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
   const { getWatchList, isLoading: getWatchListIsLoading } = useGetWatchList();
   useEffect(() => setLoading(getWatchListIsLoading), [getWatchListIsLoading]);
 
@@ -45,6 +55,7 @@ export default function WatchList({
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const [watch_list_data, set_watch_list_data] = useState([]);
+  console.log(head);
   useEffect(() => {
     data && data.watch_list
       ? set_watch_list_data(
@@ -125,9 +136,17 @@ export default function WatchList({
 
   return (
     <div className="px-6 py-5 h-full flex flex-col ">
-      <h1 className={`font-${font}-bold text-2xl text-${oppositeTheme}`}>
-        {lang["watch-list-label"]}
-      </h1>
+      <div className="w-fit h-fit flex flex-row gap-x-2 justify-start">
+        <h1 className={`font-${font}-bold text-2xl text-${oppositeTheme}`}>
+          {lang["watch-list-label"]}
+        </h1>
+        <button
+          onClick={() => openTutorialModal()}
+          className="bg-none text-blue text-2xl w-full h-full -mt-1"
+        >
+          ?
+        </button>
+      </div>
       <div className={`flex-1 mt-2 pr-0 md:pr-4 overflow-x-scroll`}>
         <div className="min-w-[20rem] h-full">
           <CustomTable
