@@ -9,8 +9,8 @@ const Tutorial = () => {
   const row = {
     title: "IRR/AFN",
     rate: 1.6,
-    max_rate: 1.8,
     min_rate: 1.3,
+    max_rate: 1.8,
   };
   const heads = ["Currency Pair", "Rate", "Low", "High"];
   const [hovered, setHovered] = useState(-1);
@@ -87,7 +87,7 @@ const Tutorial = () => {
             key={tdIndex}
             className={`flex whitespace-nowrap ${
               hovered === tdIndex
-                ? "px-2 text-2xl"
+                ? "px-2 text-2xl underline"
                 : "text-sm md:text-base lg:text-xl px-2"
             } justify-center col-span-1 text-center-important font-${font}-regular text-${oppositeTheme}`}
           >

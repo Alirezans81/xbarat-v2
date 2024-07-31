@@ -55,7 +55,6 @@ export default function WatchList({
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const [watch_list_data, set_watch_list_data] = useState([]);
-  console.log(head);
   useEffect(() => {
     data && data.watch_list
       ? set_watch_list_data(

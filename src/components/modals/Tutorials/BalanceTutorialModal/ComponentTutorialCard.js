@@ -25,9 +25,7 @@ export default function ComponentTutorialCardBalance({
   useEffect(() => {
     getCurrency(walletAsset.currency, setCurrency);
   }, []);
-  useEffect(() => {
-    console.log(hovered);
-  }, [hovered]);
+  useEffect(() => {}, [hovered]);
   if (currency) {
     return (
       <div
@@ -105,14 +103,14 @@ export default function ComponentTutorialCardBalance({
         >
           <div
             className={`border-2 border-blue border-solid text-blue rounded-lg  px-10 pt-2 pb-0.5 w-full  flex justify-center ${
-              hovered === "transfer" ? "text-xl font-bold" : "text-sm"
+              hovered === "transfer" ? "text-lg font-bold" : "text-sm"
             }`}
           >
             {lang["transfer"]}
           </div>
           <div
             className={`border-2 border-red border-solid text-red rounded-lg pt-2  px-10 pb-0.5 w-full transitioin-all duration-500 flex justify-center ${
-              hovered === "withdraw" ? "text-xl font-bold" : "text-sm"
+              hovered === "withdraw" ? "text-lg font-bold" : "text-sm"
             }`}
           >
             {lang["withdrawal"]}
