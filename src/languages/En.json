@@ -402,5 +402,6 @@
   "add-to-home-screen-modal-step-3-1st": "In the next step, click on",
   "add-to-home-screen-modal-step-3-2nd": " Add ",
   "add-to-home-screen-modal-step-3-3rd": "at the top.",
-  "add-to-home-screen-modal-close-button-text": "Understood"
+  "add-to-home-screen-modal-close-button-text": "Understood",
+  "privacy-&-policy-error": "You have not accepted the privacy & policy!"
 }

@@ -39,11 +39,11 @@ export default function LanguageSwitcher({ with_background }) {
   );
 
   useEffect(() => {
-    const savedLanguageIndex = +window.localStorage.getItem(
+    const savedLanguageIndex = window.localStorage.getItem(
       "selectedLanguageIndex"
     );
 
-    setSelectedLanguageIndex(savedLanguageIndex);
+    savedLanguageIndex && setSelectedLanguageIndex(+savedLanguageIndex);
   }, []);
 
   useEffect(() => {
@@ -54,14 +54,12 @@ export default function LanguageSwitcher({ with_background }) {
         selectedLanguageIndex + ""
       );
 
-      if (!lang) {
-        getLanguageFile(
-          languages[selectedLanguageIndex].file,
-          null,
-          null,
-          setLang
-        );
-      }
+      getLanguageFile(
+        languages[selectedLanguageIndex].file,
+        null,
+        null,
+        setLang
+      );
 
       updateDefaultLocale(
         {
