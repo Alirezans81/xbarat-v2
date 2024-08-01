@@ -8,8 +8,6 @@ import { useTokenSetState } from "../Providers/TokenProvider";
 import Form from "../components/pages/Signup/Form";
 import LeftSide from "../components/pages/Login/LeftSide";
 import LanguageSwitcher from "../components/common/LanguageSwitcher";
-import { useGetLanguages } from "../apis/common/language/hooks";
-import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 import Slogan from "../components/common/Slogan";
 import CustomToast from "../components/common/CustomToast";
 import { useModalDataSetState } from "../Providers/ModalDataProvider";
@@ -34,15 +32,8 @@ export default function Signup() {
   const languageSwitcherDivClasses = direction === "rtl" ? "right-4" : "left-4";
 
   const [isSplashScreenLoading, setIsSplashScreenLoading] = useState(false);
-  const setLanguageList = useLanguageListSetState();
 
   const navigate = useNavigate();
-
-  const { getLanguages, isLoading: getLanguagesIsLoading } = useGetLanguages();
-  useEffect(
-    () => setIsSplashScreenLoading(getLanguagesIsLoading),
-    [getLanguagesIsLoading]
-  );
 
   const resetApp = () => {
     setToken(null);
@@ -55,10 +46,6 @@ export default function Signup() {
 
   useEffect(() => {
     resetApp();
-
-    getLanguages(setLanguageList, null, (languageList) =>
-      localStorage.setItem("languageList", JSON.stringify(languageList))
-    );
   }, []);
 
   return (

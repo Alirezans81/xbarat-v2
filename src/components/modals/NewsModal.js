@@ -54,7 +54,7 @@ export default function NewsModal({
           {summary || ""}
         </span>
       </div>
-      <div className="flex flex-col gap-8 md:gap-4 max-h-[42dvh] overflow-y-auto">
+      <div className="flex flex-col gap-8 md:gap-4 max-h-[42dvh] md:max-h-[26dvh] overflow-y-auto">
         <Row
           font={font}
           oppositeTheme={oppositeTheme}
@@ -70,7 +70,9 @@ export default function NewsModal({
         />
       </div>
       <div className="w-full flex justify-between items-end">
-        <span className={`text-gray text-sm font-${font}-regular flex`}>
+        <span
+          className={`text-gray text-sm font-${font}-regular flex w-32 md:w-auto`}
+        >
           {convertDateTime(start_date) + " - " + convertDateTime(end_date)}
         </span>
         <div className="flex items-center gap-x-2">

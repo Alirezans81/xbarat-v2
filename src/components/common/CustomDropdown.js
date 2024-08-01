@@ -71,7 +71,7 @@ function CustomDropdown({ children, label, className, disabled, searchable }) {
       style={buttonStyle}
       disabled={disabled}
     >
-      <div className="max-h-64 pr-1.5 py-1.5">
+      <div className="max-h-64 pr-1.5 py-1.5 scroll-horizental">
         <div dir="ltr" className="max-h-60 overflow-y-scroll">
           {searchable && (
             <div className="w-full pl-2 pt-1 pr-0.5 mb-2 flex relative">
@@ -110,7 +110,9 @@ function CustomItem({ children, className, onClick }) {
         ` text-${oppositeTheme} bg-${theme} bg-${theme}-hover bg-${theme}-focus border-gray`
       }
     >
-      <div className={`w-full font-${font}-regular pt-1.5 text-${oppositeTheme}`}>
+      <div
+        className={`w-full font-${font}-regular pt-1.5 text-${oppositeTheme}`}
+      >
         {children}
       </div>
     </Dropdown.Item>
