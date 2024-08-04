@@ -3,9 +3,11 @@ import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { useForgotPassword } from "../../../apis/pages/ForgotPassword/hooks";
-import { useCheckEmail, useSendEmail } from "../../../apis/common/email/hooks";
-import { useGenerateCode } from "../../../hooks/useGenerateCode";
+import {
+  useForgetPasswordCheck,
+  useForgetPasswordSendEmail,
+  useForgetPasswordSet,
+} from "../../../apis/pages/ForgotPassword/hooks";
 import { useFontState } from "../../../Providers/FontProvider";
 
 export default function Form({ setIsSplashScreenLoading }) {
@@ -17,21 +19,7 @@ export default function Form({ setIsSplashScreenLoading }) {
   const [mode, setMode] = useState("");
   const [token, setToken] = useState();
 
-  const {
-    checkEmail,
-    isLoading: checkEmailIsLoading,
-    error: checkEmailError,
-  } = useCheckEmail();
-  useEffect(() => {
-    setIsSplashScreenLoading(checkEmailIsLoading);
-  }, [checkEmailIsLoading]);
-
-  const generateCode = useGenerateCode();
   const [code, setCode] = useState();
-  const { sendEmail, isLoading: sendEmailIsLoading } = useSendEmail();
-  useEffect(() => {
-    setIsSplashScreenLoading(sendEmailIsLoading);
-  }, [sendEmailIsLoading]);
   const [codeError, setCodeError] = useState();
 
   const navigate = useNavigate();
@@ -39,8 +27,22 @@ export default function Form({ setIsSplashScreenLoading }) {
     navigate("/login");
   };
 
-  const { forgotPassword, isLoading: forgotPasswordIsLoading } =
-    useForgotPassword();
+  const {
+    forgetPasswordSendEmail,
+    isLoading: forgetPasswordSendEmailIsLoading,
+  } = useForgetPasswordSendEmail();
+  useEffect(() => {
+    setIsSplashScreenLoading(forgetPasswordSendEmailIsLoading);
+  }, [forgetPasswordSendEmailIsLoading]);
+
+  const { forgetPasswordCheck, isLoading: forgetPasswordCheckIsLoading } =
+    useForgetPasswordCheck();
+  useEffect(() => {
+    setIsSplashScreenLoading(forgetPasswordCheckIsLoading);
+  }, [forgetPasswordCheckIsLoading]);
+
+  const { forgetPasswordSet, isLoading: forgotPasswordIsLoading } =
+    useForgetPasswordSet();
   useEffect(() => {
     setIsSplashScreenLoading(forgotPasswordIsLoading);
   }, [forgotPasswordIsLoading]);
@@ -109,6 +111,11 @@ export default function Form({ setIsSplashScreenLoading }) {
     return result;
   };
 
+  const [showPassword, setShowPasswprd] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPasswprd(!showPassword);
+  };
+
   return (
     <Formik
       initialValues={{
@@ -119,27 +126,24 @@ export default function Form({ setIsSplashScreenLoading }) {
       }}
       onSubmit={(values) => {
         if (mode === "") {
-          checkEmail(values.email, null, (data) => {
-            const generatedCode = generateCode(6);
-            data && data.token && setToken(data.token);
-            setCode(generatedCode);
-            process.env.REACT_APP_MODE === "DEPLOYMENT"
-              ? sendEmail({
-                  to_email: values.email,
-                  subject: lang["email-varification-subject"],
-                  message:
-                    lang["email-varification-message"] + ": " + generatedCode,
-                })
-              : console.log(generatedCode);
+          forgetPasswordSendEmail(values, () => {
             setMode("verify");
           });
         } else if (mode === "verify") {
-          if (values.verify_email_code === code) {
-            setMode("confirm");
-          } else setCodeError(lang["email-varification-code-error"] + "!");
+          forgetPasswordCheck(
+            { code: values.verify_email_code },
+            null,
+            (data) => {
+              if (data && data.results && data.results.token) {
+                setToken(data.results.token);
+                setMode("confirm");
+              }
+            }
+          );
         } else if (mode === "confirm") {
+          console.log(token);
           token &&
-            forgotPassword(
+            forgetPasswordSet(
               { password: values.password, token },
               navigateToLogin
             );
@@ -195,11 +199,6 @@ export default function Form({ setIsSplashScreenLoading }) {
                   {validationErrors.email}
                 </span>
               )}
-              {checkEmailError && (
-                <span className={`font-${font}-thin text-red`}>
-                  {lang["email-not-exist-error-message"] + "!"}
-                </span>
-              )}
             </>
           )}
           {mode === "verify" && (
@@ -240,19 +239,36 @@ export default function Form({ setIsSplashScreenLoading }) {
           )}
           {mode === "confirm" && (
             <>
-              <input
-                name="password"
-                type="password"
-                placeholder={lang["password"]}
-                className={`input-${theme} mt-4 focus:outline-none`}
-                onChange={handleChange("password")}
-                onBlur={(e) => {
-                  validatePassword(e.target.value);
-                  passwordContainsCheck(e.target.value);
-                  handleBlur(e);
-                }}
-                value={values.password}
-              />
+              <div className="relative">
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder={lang["password"]}
+                  className={`input-${theme} mt-4 focus:outline-none`}
+                  onChange={handleChange("password")}
+                  onBlur={(e) => {
+                    validatePassword(e.target.value);
+                    passwordContainsCheck(e.target.value);
+                    handleBlur(e);
+                  }}
+                  value={values.password}
+                />
+                <button
+                  type="button"
+                  onClick={toggleShowPassword}
+                  className="absolute top-6 right-3"
+                >
+                  <img
+                    alt=""
+                    className="w-7 h-7"
+                    src={
+                      showPassword
+                        ? require("../../../Images/common/preview.png")
+                        : require("../../../Images/common/preview-disabled.png")
+                    }
+                  />
+                </button>
+              </div>
               {validationErrors.password && (
                 <span className={`font-${font}-thin text-red`}>
                   {validationErrors.password}
@@ -260,7 +276,7 @@ export default function Form({ setIsSplashScreenLoading }) {
               )}
               <input
                 name="confirmPassword"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder={lang["confirm-password"]}
                 className={`input-${theme} mt-4 focus:outline-none`}
                 onChange={handleChange("confirmPassword")}
