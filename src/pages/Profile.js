@@ -12,19 +12,46 @@ import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashSc
 import { useUserState } from "../Providers/UserProvider";
 import { useToastDataSetState } from "../Providers/ToastDataProvider";
 
-export default function Profile() {
+const Link = ({
+  theme,
+  oppositeTheme,
+  font,
+  title,
+  darkImage,
+  lightImage,
+  link,
+}) => {
   const navigate = useNavigate();
+
+  return (
+    <div className="flex flex-col items-center col-span-1 mr-auto">
+      <button
+        onClick={() => navigate(link)}
+        className={`flex items-center justify-center bg-${theme}-back w-16 h-16 rounded-lg`}
+      >
+        <img
+          className="w-8 h-8"
+          src={theme === "light" ? darkImage : lightImage}
+          alt=""
+        />
+      </button>
+      <span
+        className={`text-${oppositeTheme} mt-2 whitespace-nowrap font-${font}-regular`}
+      >
+        {title}
+      </span>
+    </div>
+  );
+};
+
+export default function Profile() {
   const lang = useLanguageState();
   const userInfo = useUserState();
   const font = useFontState();
   const theme = useThemeState();
   const setLoading = useIsLoadingSplashScreenSetState();
   const setToastData = useToastDataSetState();
-
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  function handleCards() {
-    navigate("cards");
-  }
 
   const { getUserInfo, isLoading: getUserInfoIsLoading } = useGetUserInfo();
   useEffect(
@@ -60,24 +87,18 @@ export default function Profile() {
           <EditProfile />
         </div>
         <div
-          className={`col-span-12 md:col-span-7 row-span-1 bg-${theme} rounded-3xl md:rounded-r-none text-white flex p-10`}
+          className={`col-span-12 md:col-span-7 bg-${theme} rounded-3xl md:rounded-r-none text-white flex py-10 pl-10`}
         >
-          <div className="flex flex-col items-center">
-            <button
-              onClick={handleCards}
-              className={`flex items-center justify-center bg-${theme}-back w-16 h-16 rounded-lg`}
-            >
-              <img
-                className="w-8 h-8"
-                src={theme === "light" ? cardsDark : cardsLight}
-                alt=""
-              />
-            </button>
-            <span
-              className={`text-${oppositeTheme} mt-2 whitespace-nowrap font-${font}-regular`}
-            >
-              {lang["cards-profile"]}
-            </span>
+          <div className="w-full h-full grid grid-cols-6 gap-y-7">
+            <Link
+              theme={theme}
+              oppositeTheme={oppositeTheme}
+              font={font}
+              title={lang["cards-profile"]}
+              darkImage={cardsDark}
+              lightImage={cardsLight}
+              link={"cards"}
+            />
           </div>
         </div>
         <div
