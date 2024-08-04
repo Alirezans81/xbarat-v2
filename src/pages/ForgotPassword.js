@@ -5,8 +5,6 @@ import LanguageSwitcher from "../components/common/LanguageSwitcher";
 import LeftSide from "../components/pages/Login/LeftSide";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
-import { useLanguageListSetState } from "../Providers/LanguageListProvider";
-import { useGetLanguages } from "../apis/common/language/hooks";
 import { useTokenSetState } from "../Providers/TokenProvider";
 import Form from "../components/pages/ForgotPassword/Form";
 import Slogan from "../components/common/Slogan";
@@ -22,15 +20,8 @@ export default function ForgotPassword() {
   const languageSwitcherDivClasses = direction === "rtl" ? "right-4" : "left-4";
 
   const [isSplashScreenLoading, setIsSplashScreenLoading] = useState(false);
-  const setLanguageList = useLanguageListSetState();
 
   const navigate = useNavigate();
-
-  const { getLanguages, isLoading: getLanguagesIsLoading } = useGetLanguages();
-  useEffect(
-    () => setIsSplashScreenLoading(getLanguagesIsLoading),
-    [getLanguagesIsLoading]
-  );
 
   const resetApp = () => {
     setToken(null);
@@ -43,10 +34,6 @@ export default function ForgotPassword() {
 
   useEffect(() => {
     resetApp();
-
-    getLanguages(setLanguageList, null, (languageList) =>
-      localStorage.setItem("languageList", JSON.stringify(languageList))
-    );
   }, []);
 
   return (

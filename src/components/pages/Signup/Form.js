@@ -280,6 +280,7 @@ export default function Form({ setIsSplashScreenLoading }) {
                   className="absolute top-6 right-3"
                 >
                   <img
+                    alt=""
                     className="w-7 h-7"
                     src={
                       showPassword
