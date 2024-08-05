@@ -16,7 +16,7 @@ import DepositHistoryScreen from "./pages/Reports/DepositHistoryScreen";
 import WithdrawalHistoryScreen from "./pages/Reports/WithdrawalHistoryScreen";
 import TransferHistoryScreen from "./pages/Reports/TransferHistoryScreen";
 import Profile from "./pages/Profile";
-import Cards from "./pages/Cards";
+import Cards from "./pages/Profile/Cards";
 import Tickets from "./pages/Tickets";
 import ExConfirmation from "./pages/Submitting/Exchange/Exchanges";
 import Transfers from "./pages/Submitting/Transfer/Transfers";
@@ -51,6 +51,7 @@ import Startup from "./pages/Startup";
 import TutorialModal from "./components/modals/WalletTutorialModal/TutorialModal";
 import { useModalDataSetState } from "./Providers/ModalDataProvider";
 import { useThemeState } from "./Providers/ThemeProvider";
+import Referral from "./pages/Profile/Referral";
 
 export default function App() {
   const theme = useThemeState();
@@ -149,6 +150,7 @@ export default function App() {
               <Route path="profile">
                 <Route index element={<Profile />} />
                 <Route path="cards" element={<Cards />} />
+                <Route path="referral" element={<Referral />} />
               </Route>
               <Route path="tickets" element={<Tickets />} />
               <Route path="submitting">

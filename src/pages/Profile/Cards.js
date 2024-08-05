@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useThemeState } from "../Providers/ThemeProvider";
-import { useLanguageState } from "../Providers/LanguageProvider";
-import { useFontState } from "../Providers/FontProvider";
-import { useCurrenciesState } from "../Providers/CurrenciesProvider";
-import { useGetWalletTankByCurrency } from "../hooks/useWalletFilter";
-import CurrencyCard from "../components/pages/layout/Cards/CurrencyCard";
-import CustomSlider from "../components/common/CustomSlider";
-import WalletTankCard from "../components/pages/layout/Cards/WalletTankCard";
-import { useModalDataSetState } from "../Providers/ModalDataProvider";
-import EditAddCardModal from "../components/modals/EditAddCardModal";
+import { useThemeState } from "../../Providers/ThemeProvider";
+import { useLanguageState } from "../../Providers/LanguageProvider";
+import { useFontState } from "../../Providers/FontProvider";
+import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
+import { useGetWalletTankByCurrency } from "../../hooks/useWalletFilter";
+import CurrencyCard from "../../components/pages/layout/Cards/CurrencyCard";
+import CustomSlider from "../../components/common/CustomSlider";
+import WalletTankCard from "../../components/pages/layout/Cards/WalletTankCard";
+import { useModalDataSetState } from "../../Providers/ModalDataProvider";
+import EditAddCardModal from "../../components/modals/EditAddCardModal";
 
 export default function Cards() {
   const theme = useThemeState();
