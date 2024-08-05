@@ -4,13 +4,16 @@ import { useThemeState } from "../Providers/ThemeProvider";
 import EditProfile from "../components/pages/layout/Profile/EditProfile";
 import LastTickets from "../components/pages/layout/Profile/LastTickets";
 import { useLanguageState } from "../Providers/LanguageProvider";
-import cardsDark from "../Images/pages/layout/Profile/cardsDark.png";
-import cardsLight from "../Images/pages/layout/Profile/cardsLight.png";
 import { useFontState } from "../Providers/FontProvider";
 import { useGetUserInfo } from "../apis/pages/Profile/hooks";
 import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
 import { useUserState } from "../Providers/UserProvider";
 import { useToastDataSetState } from "../Providers/ToastDataProvider";
+
+import cardsDark from "../Images/pages/layout/Profile/links/cards-dark.png";
+import cardsLight from "../Images/pages/layout/Profile/links/cards-light.png";
+import referralDark from "../Images/pages/layout/Profile/links/referral-dark.png";
+import referralLight from "../Images/pages/layout/Profile/links/referral-light.png";
 
 const Link = ({
   theme,
@@ -98,6 +101,15 @@ export default function Profile() {
               darkImage={cardsDark}
               lightImage={cardsLight}
               link={"cards"}
+            />
+            <Link
+              theme={theme}
+              oppositeTheme={oppositeTheme}
+              font={font}
+              title={lang["referral"]}
+              darkImage={referralDark}
+              lightImage={referralLight}
+              link={"referral"}
             />
           </div>
         </div>
