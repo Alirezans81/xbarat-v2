@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
@@ -9,6 +9,8 @@ export default function Referral() {
   const font = useFontState();
   const lang = useLanguageState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const [percentage, setPercentage] = useState("40");
+  const [people, setPeople] = useState(1);
 
   return (
     <>
@@ -24,7 +26,24 @@ export default function Referral() {
         <div
           className={` rounded-2xl col-start-4 col-end-8 py-5 px-6 bg-${theme} `}
         >
-          <span>Receive</span>
+          <div className="flex flex-col gap-2">
+            <div className="flex justify-between">
+              <span>Receive</span>
+              <div className="flex gap-x-2 items-center">
+                <span className="text-xs">
+                  {parseInt(percentage * 0.2)} people
+                </span>
+                <span>{percentage}%</span>
+              </div>
+            </div>
+            <div className="bg-red-500 w-full rounded-full">
+              <div
+                className={`bg-green-500 rounded-full h-2`}
+                style={{ width: percentage + "%" }}
+              ></div>
+            </div>
+            <div>d</div>
+          </div>
         </div>
 
         <div
