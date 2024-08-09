@@ -15,4 +15,12 @@ const signup = (params) => {
   return axios.post(api["sign-up"], formData);
 };
 
-export { signup };
+const verifyEmail = (code) => {
+  const formData = new FormData();
+
+  formData.append("code", code);
+
+  return axios.post(api["verify-email"], formData);
+};
+
+export { signup, verifyEmail };

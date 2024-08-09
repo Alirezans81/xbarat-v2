@@ -3,8 +3,8 @@ import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { useSignup } from "../../../apis/pages/Signup/hooks";
-import { useCheckEmail, useSendEmail } from "../../../apis/common/email/hooks";
+import { useSignup, useVerifyEmail } from "../../../apis/pages/Signup/hooks";
+import { useSendEmail } from "../../../apis/common/email/hooks";
 import { useGenerateCode } from "../../../hooks/useGenerateCode";
 import { useFontState } from "../../../Providers/FontProvider";
 import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
@@ -24,25 +24,10 @@ export default function Form({ setIsSplashScreenLoading }) {
 
   const [mode, setMode] = useState("check");
 
-  const generateCode = useGenerateCode();
-  const [code, setCode] = useState("");
-  const [codeError, setCodeError] = useState();
-
   const [resendButtonEnabled, setResendButtonEnabled] = useState(false);
 
-  const sendCode = (email) => {
-    const generatedCode = generateCode(6);
-    setCode(generatedCode);
-    process.env.REACT_APP_MODE === "DEPLOYMENT"
-      ? sendEmail(
-          {
-            to_email: email,
-            subject: lang["email-varification-subject"],
-            message: lang["email-varification-message"] + ": " + generatedCode,
-          },
-          () => mode !== "submit" && setMode("submit")
-        )
-      : console.log("generatedCode: ", generatedCode);
+  const sendCode = (values) => {
+    signup(values, () => mode !== "submit" && setMode("submit"));
     setResendButtonEnabled(false);
     setTimeout(() => setResendButtonEnabled(true), 60000);
     mode !== "submit" && setMode("submit");
@@ -68,29 +53,6 @@ export default function Form({ setIsSplashScreenLoading }) {
   };
 
   const {
-    checkEmail,
-    isLoading: checkEmailIsLoading,
-    error: checkEmailError,
-  } = useCheckEmail();
-  useEffect(() => {
-    setIsSplashScreenLoading(checkEmailIsLoading);
-  }, [checkEmailIsLoading]);
-
-  const {
-    sendEmail,
-    isLoading: sendEmailIsLoading,
-    error: sendEmailError,
-  } = useSendEmail();
-  useEffect(() => {
-    setIsSplashScreenLoading(sendEmailIsLoading);
-  }, [sendEmailIsLoading]);
-  useEffect(() => {
-    sendEmailError &&
-      sendEmailError.response &&
-      showErrorToast(Object.values(sendEmailError.response.data).join(" "));
-  }, [sendEmailError]);
-
-  const {
     signup,
     isLoading: signupIsLoading,
     error: signupError,
@@ -104,6 +66,22 @@ export default function Form({ setIsSplashScreenLoading }) {
       signupError.response &&
       showErrorToast(Object.values(signupError.response.data).join(" ")),
     [signupError]
+  );
+
+  const {
+    verifyEmail,
+    isLoading: verifyEmailIsLoading,
+    error: verifyEmailError,
+  } = useVerifyEmail();
+  useEffect(() => {
+    setIsSplashScreenLoading(verifyEmailIsLoading);
+  }, [verifyEmailIsLoading]);
+  useEffect(
+    () =>
+      verifyEmailError &&
+      verifyEmailError.response &&
+      showErrorToast(Object.values(verifyEmailError.response.data).join(" ")),
+    [verifyEmailError]
   );
 
   const { login, isLoading: loginIsLoading, error: loginError } = useLogin();
@@ -201,43 +179,32 @@ export default function Form({ setIsSplashScreenLoading }) {
       onSubmit={(values) => {
         if (mode === "check") {
           if (acceptedPolicy) {
-            checkEmail(
-              values.email,
-              () => showErrorToast(lang["email-exists-error"]),
-              null,
-              () => sendCode(values.email)
-            );
-          } else {
-            let newValidationErrors = validationErrors;
-            newValidationErrors.acceptedPolicy =
-              "You have not accepted the privacy & policy" + "!";
-            new setValidationErrors(newValidationErrors);
-          }
-        } else if (mode === "submit") {
-          if (values.verify_email_code === code) {
             signup(
               {
                 email: values.email,
                 password: values.password,
                 referral: values.referral,
               },
-              () => {
-                showSuccessToast(
-                  lang["successful-signup-1st"] +
-                    ". " +
-                    lang["successful-signup-2nd"] +
-                    "."
-                );
-
-                login(
-                  { email: values.email, password: values.password },
-                  (data) => {
-                    navigateToHome();
-                  }
-                );
-              }
+              () => setMode("submit")
             );
-          } else setCodeError(lang["email-varification-code-error"] + ".");
+          } else {
+            let newValidationErrors = validationErrors;
+            newValidationErrors.acceptedPolicy = lang["privacy-&-policy-error"];
+            setValidationErrors(newValidationErrors);
+          }
+        } else if (mode === "submit") {
+          verifyEmail(values.verify_email_code, () => {
+            showSuccessToast(
+              lang["successful-signup-1st"] +
+                ". " +
+                lang["successful-signup-2nd"] +
+                "."
+            );
+
+            login({ email: values.email, password: values.password }, () =>
+              navigateToHome()
+            );
+          });
         }
       }}
     >
@@ -246,7 +213,6 @@ export default function Form({ setIsSplashScreenLoading }) {
           onSubmit={(e) => {
             e.preventDefault();
 
-            console.log(mode);
             if (mode === "check" && validateEmail(values.email)) {
               handleSubmit(e);
             } else if (
@@ -388,7 +354,7 @@ export default function Form({ setIsSplashScreenLoading }) {
                   <button
                     type="button"
                     disabled={!resendButtonEnabled}
-                    onClick={() => sendCode(values.email)}
+                    onClick={() => sendCode(values)}
                   >
                     <img
                       className="absolute right-2.5 top-6 w-7 h-7"
@@ -404,41 +370,38 @@ export default function Form({ setIsSplashScreenLoading }) {
                   {"You can click on resend after 1 minute."}
                 </span>
               </div>
-              {codeError && (
-                <span className={`font-${font}-thin text-red`}>
-                  {codeError}
-                </span>
-              )}
             </>
           )}
           {mode === "check" && (
-            <div className="w-full mt-3">
-              <div className="flex gap-x-2 items-start">
-                <button
-                  className="mt-0.5"
-                  type="button"
-                  onClick={toggleAcceptedPolicy}
-                >
-                  <img
-                    className="w-4 h-4 md:w-5 md:h-5"
-                    src={require(`../../../Images/pages/Login/check-${acceptedPolicy}.png`)}
-                  />
-                </button>
-                <a
-                  href="https://xbarat.net/privacy-policy"
-                  className={`flex-1 font-${font}-regular pt-1 text-blue underline underline-offset-2 text-sm`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {lang["accept-policy"] + "?"}
-                </a>
+            <>
+              <div className="w-full mt-3">
+                <div className="flex gap-x-2 items-start">
+                  <button
+                    className="mt-0.5"
+                    type="button"
+                    onClick={toggleAcceptedPolicy}
+                  >
+                    <img
+                      className="w-4 h-4 md:w-5 md:h-5"
+                      src={require(`../../../Images/pages/Login/check-${acceptedPolicy}.png`)}
+                    />
+                  </button>
+                  <a
+                    href="https://xbarat.net/privacy-policy"
+                    className={`flex-1 font-${font}-regular pt-1 text-blue underline underline-offset-2 text-sm`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {lang["accept-policy"] + "?"}
+                  </a>
+                </div>
               </div>
-            </div>
-          )}
-          {validationErrors.acceptedPolicy && (
-            <span className={`font-${font}-thin text-red`}>
-              {validationErrors.acceptedPolicy}
-            </span>
+              {validationErrors.acceptedPolicy && (
+                <span className={`font-${font}-thin text-red`}>
+                  {validationErrors.acceptedPolicy}
+                </span>
+              )}
+            </>
           )}
           <button type="submit" className={`button w-full mt-8`}>
             {lang["submit"]}

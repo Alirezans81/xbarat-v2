@@ -1,4 +1,4 @@
-import { signup } from "./apis";
+import { signup, verifyEmail } from "./apis";
 import { useState } from "react";
 
 const useSignup = () => {
@@ -24,4 +24,27 @@ const useSignup = () => {
   return { signup: fetch, error, isLoading };
 };
 
-export { useSignup };
+const useVerifyEmail = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (code, customFunction) => {
+    setIsLoading(true);
+    await verifyEmail(code)
+      .then((data) => {
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+        customFunction && customFunction();
+        setIsLoading(false);
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { verifyEmail: fetch, error, isLoading };
+};
+
+export { useSignup, useVerifyEmail };
