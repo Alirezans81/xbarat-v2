@@ -205,6 +205,7 @@ export default function Layout() {
         const savedUser = JSON.parse(savedStringUser);
         setToken(savedToken);
         setUser(savedUser);
+
         savedUser &&
           savedUser.username &&
           getWalletData(savedUser.username, savedToken);

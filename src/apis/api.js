@@ -2,7 +2,8 @@ export default function api() {
   const apiDomain = process.env.REACT_APP_API_DOMAIN;
 
   return {
-    "sign-up": `${apiDomain}api/user/`,
+    "sign-up": `${apiDomain}api/user/signup/`,
+    "verify-email": `${apiDomain}api/user/verify-email/`,
     "log-in": `${apiDomain}api/user/login/`,
     "log-out": `${apiDomain}api/user/logout/`,
     "patch-profile": `${apiDomain}api/user/`,
@@ -28,8 +29,10 @@ export default function api() {
     "other-exchanges-rate": `${apiDomain}api/exchange-rate/`,
     locale: `${apiDomain}api/locale/`,
     "check-email": `${apiDomain}api/user/forget-password-check/`,
-    "send-email": `http://api.emailjs.com/api/v1.0/email/send`,
-    "forgot-password": `${apiDomain}api/user/forget-password-set/`,
+    "send-email": `${apiDomain}api/user/forget-password-send-mail/`,
+    "forget-password-send-mail": `${apiDomain}api/user/forget-password-send-mail/`,
+    "forget-password-check": `${apiDomain}api/user/forget-password-check/`,
+    "forget-password-set": `${apiDomain}api/user/forget-password-set/`,
     "top-5-report": `${apiDomain}api/report/`,
     "change-password": `${apiDomain}api/user/change-password/`,
     news: `${apiDomain}api/news/`,
