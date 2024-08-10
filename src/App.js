@@ -1,33 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import ForgotPassword from "./pages/ForgotPassword";
-import WaitLink from "./pages/WaitLink";
-import NoPage from "./pages/NoPage";
-import Layout from "./pages/Layout";
-import Giftcard from "./pages/GiftCards/Giftcard";
-import OnLoad from "./pages/OnLoad";
-import Home from "./pages/Home";
-import Wallet from "./pages/Wallet";
-import Reports from "./pages/Reports";
-import ExchangeHistoryScreen from "./pages/Reports/ExchangeHistoryScreen";
-import DepositHistoryScreen from "./pages/Reports/DepositHistoryScreen";
-import WithdrawalHistoryScreen from "./pages/Reports/WithdrawalHistoryScreen";
-import TransferHistoryScreen from "./pages/Reports/TransferHistoryScreen";
-import Profile from "./pages/Profile";
-import Cards from "./pages/Profile/Cards";
-import Tickets from "./pages/Tickets";
-import ExConfirmation from "./pages/Submitting/Exchange/Exchanges";
-import Transfers from "./pages/Submitting/Transfer/Transfers";
-import Assignment from "./pages/Submitting/Assignment";
-import Accounting from "./pages/Submitting/Accounting";
-import Users from "./pages/User Mangement/Users";
-import Admins from "./pages/User Mangement/Admins";
-import Branches from "./pages/User Mangement/Branches";
-import Singular from "./pages/Currency/Singular";
-import Pair from "./pages/Currency/Pair";
-import Robots from "./pages/More/Robots";
+
 import {
   useLanguageSetState,
   useLanguageState,
@@ -46,30 +19,45 @@ import {
   useIsLoadingSplashScreenState,
 } from "./Providers/IsLoadingSplashScreenProvider";
 import { useFontSetState } from "./Providers/FontProvider";
+
 import Updating from "./pages/Updating";
 import Startup from "./pages/Startup";
-import TutorialModal from "./components/modals/WalletTutorialModal/TutorialModal";
-import { useModalDataSetState } from "./Providers/ModalDataProvider";
-import { useThemeState } from "./Providers/ThemeProvider";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
+import WaitLink from "./pages/WaitLink";
+import NoPage from "./pages/NoPage";
+import Layout from "./pages/Layout";
+import Giftcard from "./pages/GiftCards/Giftcard";
+import OnLoad from "./pages/OnLoad";
+import Home from "./pages/Home";
+import Wallet from "./pages/Wallet";
+import Reports from "./pages/Reports";
+import ExchangeHistoryScreen from "./pages/Reports/ExchangeHistoryScreen";
+import DepositHistoryScreen from "./pages/Reports/DepositHistoryScreen";
+import WithdrawalHistoryScreen from "./pages/Reports/WithdrawalHistoryScreen";
+import TransferHistoryScreen from "./pages/Reports/TransferHistoryScreen";
+import Profile from "./pages/Profile";
+import Tickets from "./pages/Profile/Tickets";
+import Cards from "./pages/Profile/Cards";
 import Referral from "./pages/Profile/Referral";
+import ExConfirmation from "./pages/Submitting/Exchange/Exchanges";
+import Transfers from "./pages/Submitting/Transfer/Transfers";
+import Assignment from "./pages/Submitting/Assignment";
+import Accounting from "./pages/Submitting/Accounting";
+import Users from "./pages/User Mangement/Users";
+import Admins from "./pages/User Mangement/Admins";
+import Branches from "./pages/User Mangement/Branches";
+import Singular from "./pages/Currency/Singular";
+import Pair from "./pages/Currency/Pair";
+import Robots from "./pages/More/Robots";
 
 export default function App() {
-  const theme = useThemeState();
-  const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const isLoading = useIsLoadingSplashScreenState();
   const setLoading = useIsLoadingSplashScreenSetState();
   const setLang = useLanguageSetState();
   const setFont = useFontSetState();
-  const setModalData = useModalDataSetState();
-  const openTutorialModal = () => {
-    setModalData({
-      title: "Tutorial",
-      children: <TutorialModal />,
-      canClose: true,
-      isOpen: true,
-    });
-  };
 
   const languageList = useLanguageListState();
   const setLanguageList = useLanguageListSetState();
@@ -151,8 +139,8 @@ export default function App() {
                 <Route index element={<Profile />} />
                 <Route path="cards" element={<Cards />} />
                 <Route path="referral" element={<Referral />} />
+                <Route path="tickets" element={<Tickets />} />
               </Route>
-              <Route path="tickets" element={<Tickets />} />
               <Route path="submitting">
                 <Route path="assignment" element={<Assignment />} />
                 <Route path="exchanges" element={<ExConfirmation />} />

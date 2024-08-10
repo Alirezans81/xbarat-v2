@@ -10,6 +10,8 @@ import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashSc
 import { useUserState } from "../Providers/UserProvider";
 import { useToastDataSetState } from "../Providers/ToastDataProvider";
 
+import ticketDark from "../Images/pages/layout/Profile/links/ticket-dark.png";
+import ticketLight from "../Images/pages/layout/Profile/links/ticket-light.png";
 import cardsDark from "../Images/pages/layout/Profile/links/cards-dark.png";
 import cardsLight from "../Images/pages/layout/Profile/links/cards-light.png";
 import referralDark from "../Images/pages/layout/Profile/links/referral-dark.png";
@@ -93,6 +95,15 @@ export default function Profile() {
           className={`col-span-12 md:col-span-7 bg-${theme} rounded-3xl md:rounded-r-none text-white flex py-10 pl-10`}
         >
           <div className="w-full h-full grid grid-cols-6 gap-y-7">
+            {/* <Link
+              theme={theme}
+              oppositeTheme={oppositeTheme}
+              font={font}
+              title={lang["tickets"]}
+              darkImage={ticketDark}
+              lightImage={ticketLight}
+              link={"tickets"}
+            /> */}
             <Link
               theme={theme}
               oppositeTheme={oppositeTheme}
@@ -102,7 +113,7 @@ export default function Profile() {
               lightImage={cardsLight}
               link={"cards"}
             />
-            <Link
+            {/* <Link
               theme={theme}
               oppositeTheme={oppositeTheme}
               font={font}
@@ -110,7 +121,7 @@ export default function Profile() {
               darkImage={referralDark}
               lightImage={referralLight}
               link={"referral"}
-            />
+            /> */}
           </div>
         </div>
         <div
