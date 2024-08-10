@@ -7,7 +7,8 @@ import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useCurrencyPairsState } from "../../../../Providers/CurrencyPairsProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
-
+import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
+import Tutorial from "../../../modals/Tutorials/ExchangeTutorialModal/Tutorial";
 export default function Exchanging({
   selectedCurrecnyPair,
   setSelectedCurrencnyPair,
@@ -33,7 +34,7 @@ export default function Exchanging({
 }) {
   const lang = useLanguageState();
   const font = useFontState();
-
+  const setModalData = useModalDataSetState();
   const currencies = useCurrenciesState();
   const currencyPairs = useCurrencyPairsState();
   const wallet = useWalletState();
@@ -101,7 +102,14 @@ export default function Exchanging({
       setRateIsReversed(false);
     }
   }, [selectedTargetIndex]);
-
+  const openTutorialModal = () => {
+    setModalData({
+      title: "Exchange Tutorial",
+      children: <Tutorial />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
   return (
     <div className="flex flex-col px-6 w-full h-full py-5 relative">
       <div className="absolute w-full left-0 -top-5 flex justify-center">
@@ -121,7 +129,7 @@ export default function Exchanging({
           )}
         </div>
         <div className="row-span-1 col-span-1" />
-        <div className="row-span-6 col-span-1 flex items-end">
+        <div className="row-span-6 col-span-1 flex items-end flex-row">
           {selectedCurrecnyPair && (
             <RateType
               rate={selectedCurrecnyPair.rate}
@@ -140,6 +148,12 @@ export default function Exchanging({
               focusOnInput={focusOnInput}
             />
           )}
+          <button
+            onClick={openTutorialModal}
+            className="flex-1 bg-none text-blue"
+          >
+            ?
+          </button>
         </div>
       </div>
       <div className="flex-1 mt-auto">

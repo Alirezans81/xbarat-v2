@@ -1,5 +1,5 @@
-import { useThemeState } from "../../../Providers/ThemeProvider";
-import { useFontState } from "../../../Providers/FontProvider";
+import { useThemeState } from "../../../../Providers/ThemeProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 const Exchange = ({ exchange }) => {
   const theme = useThemeState();
   const font = useFontState();
