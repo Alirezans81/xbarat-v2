@@ -26,8 +26,8 @@ export default function Referral() {
         <div
           className={` rounded-2xl col-start-4 col-end-8 py-5 px-6 bg-${theme} `}
         >
-          <div className="flex flex-col gap-2">
-            <div className="flex justify-between">
+          <div className="flex flex-col gap-y-4">
+            <div className="flex justify-between ">
               <span>Receive</span>
               <div className="flex gap-x-2 items-center">
                 <span className="text-xs">
@@ -36,13 +36,17 @@ export default function Referral() {
                 <span>{percentage}%</span>
               </div>
             </div>
-            <div className="bg-red-500 w-full rounded-full">
+            <div className="bg-dark-back w-full rounded-full">
               <div
                 className={`bg-green-500 rounded-full h-2`}
                 style={{ width: percentage + "%" }}
               ></div>
             </div>
-            <div>d</div>
+            <div className="flex flex-col gap-y-1">
+              <div className="bg-dark-back flex-2/3">1</div>
+              <div className="bg-dark-back flex-1/3">2</div>
+              <div className="bg-dark-back flex-1/3">3</div>
+            </div>
           </div>
         </div>
 
