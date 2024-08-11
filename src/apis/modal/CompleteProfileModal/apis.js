@@ -35,4 +35,12 @@ const fetchStep3 = (username, params) => {
   return axios.patch(api["patch-profile"] + username + "/", formData);
 };
 
-export { fetchStep1, fetchStep2, fetchStep3 };
+const fetchStep4 = (username, params) => {
+  const formData = new FormData();
+
+  formData.append("main_currency", params.main_currency);
+
+  return axios.patch(api["patch-profile"] + username + "/", formData);
+};
+
+export { fetchStep1, fetchStep2, fetchStep3, fetchStep4 };
