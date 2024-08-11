@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFontState } from "../../../../Providers/FontProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
-
+import ChatCard from "../Referral/ChatCard";
 export default function Chats({ topic }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -20,18 +20,7 @@ export default function Chats({ topic }) {
   } else {
     return (
       <div className="w-full h-full flex flex-wrap gap-x-5 px-5 py-5">
-        <div className="min-w-[14rem] inline h-36 bg-dark-back"></div>
-        <div className="min-w-[14rem] inline h-36 bg-dark-back"></div>
-        <div className="min-w-[14rem] inline h-36 bg-dark-back"></div>
-        <div className="min-w-[14rem] inline h-36 bg-dark-back"></div>
-        <div className="min-w-[14rem] inline h-36 bg-dark-back"></div>
-        <div className="min-w-[14rem] inline h-36 bg-dark-back"></div>
-        <div className="min-w-[14rem] inline h-36 bg-dark-back"></div>
-        <div className="min-w-[14rem] inline h-36 bg-dark-back"></div>
-        <div className="min-w-[14rem] inline h-36 bg-dark-back"></div>
-        <div className="min-w-[14rem] inline h-36 bg-dark-back"></div>
-        <div className="min-w-[14rem] inline h-36 bg-dark-back"></div>
-        <div className="min-w-[14rem] inline h-36 bg-dark-back"></div>
+        <ChatCard />
       </div>
     );
   }

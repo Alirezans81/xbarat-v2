@@ -26,7 +26,9 @@ export default function Tickets() {
               : null
           }
         />
+        
+        </div>
       </div>
-    </div>
+    
   );
 }
