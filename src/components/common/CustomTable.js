@@ -10,7 +10,7 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
   const colsQuantity = heads.length;
 
   return (
-    <div className="flex-1 w-full flex flex-col overflow-y-visible overflow-x-scroll">
+    <div className="flex-1 w-full flex flex-col overflow-y-auto overflow-x-auto">
       <div
         className={`grid grid-cols-${colsQuantity} gap-x-4 w-full items-center px-4 md:px-0`}
       >

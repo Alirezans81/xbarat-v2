@@ -2,7 +2,7 @@
   "sign-up": 10,
   "log-in": 10,
   "log-out": 10,
-  "patch-profile": 10,
+  "patch-profile": 100,
   "nationality": 100,
   "country": 100,
   "city": 100,

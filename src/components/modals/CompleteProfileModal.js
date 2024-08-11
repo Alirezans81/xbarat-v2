@@ -11,6 +11,7 @@ import {
   useFetchStep1,
   useFetchStep2,
   useFetchStep3,
+  useFetchStep4,
 } from "../../apis/modal/CompleteProfileModal/hooks";
 import { Formik } from "formik";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
@@ -157,7 +158,17 @@ export default function CompleteProfileModal() {
   const { fetchStep1, isLoading: fetchStep1IsLoading } = useFetchStep1();
   const { fetchStep2, isLoading: fetchStep2IsLoading } = useFetchStep2();
   const { fetchStep3, isLoading: fetchStep3IsLoading } = useFetchStep3();
+  const { fetchStep4: userFetchStep4, isLoading: fetchStep4IsLoading } =
+    useFetchStep4();
   const fetchStep4 = (values, customFunction) => {
+    userFetchStep4({
+      main_currency:
+        currencies[selectedCurrencyIndex] &&
+        currencies[selectedCurrencyIndex].url
+          ? currencies[selectedCurrencyIndex].url
+          : "",
+    });
+
     const createWalletTankParams = {
       user: userInfo && userInfo.url ? userInfo.url : "",
       currency:
@@ -185,13 +196,12 @@ export default function CompleteProfileModal() {
     () => setIsLoadingSplashScreen(fetchStep3IsLoading),
     [fetchStep3IsLoading]
   );
+  useEffect(
+    () => setIsLoadingSplashScreen(fetchStep4IsLoading),
+    [fetchStep4IsLoading]
+  );
 
   const nextStep = () => {
-    if (step === 3) {
-      userInfo &&
-        userInfo.username &&
-        getWallets({ user: userInfo.username }, setWallets);
-    }
     step <= 4 && setStep(step + 1);
   };
   const previousStep = () => {
