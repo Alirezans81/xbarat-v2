@@ -15,31 +15,30 @@ export default function Filters() {
   const [selectionRange, setSelectionRange] = useState();
 
   return (
-    <div className="flex flex-col justify-between h-full">
-      <span className={`text-xl font-${font}-bold`}>Referral</span>
-
+    <div className="flex flex-col justify-between h-full gap-y-3 md:gap-y-0">
+      <span className={`text-xl font-${font}-bold`}>{lang["referral"]}</span>
       <Formik initialValues={{ person_code: "" }} onSubmit={(values) => {}}>
         {({ handleBlur, handleChange, values, handleSubmit }) => (
           <>
             <div className="flex flex-col gap-y-2">
-              <span className="text-xl -mb-1">Date & Time</span>
+              <span className="text-xl -mb-1">{lang["date-&-time"]}</span>
               <CustomDateTimeInput
                 selectionRange={selectionRange}
                 setSelectionRange={setSelectionRange}
                 type="start"
-                placeHolder="Start"
+                placeHolder={lang["start"]}
                 className="w-full"
               />
               <CustomDateTimeInput
                 selectionRange={selectionRange}
                 setSelectionRange={setSelectionRange}
                 type="end"
-                placeHolder="End"
+                placeHolder={lang["end"]}
                 className="w-full"
               />
             </div>
-            <div className="flex flex-col gap-y-2">
-              <span className="text-xl -mb-1">Person Code</span>
+            <div className="flex flex-col gap-y-2 mt-1.5">
+              <span className="text-xl -mb-1">{lang["person-code"]}</span>
               <input
                 name="person_code"
                 className={`w-full hide-input-arrows bg-${theme} font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
@@ -55,7 +54,7 @@ export default function Filters() {
             </div>
             <SubmitButton
               rounded="lg"
-              className="mt-5 mb-3 h-10"
+              className="mt-3 h-10"
               onClick={handleSubmit}
             >
               {lang["submit"]}
