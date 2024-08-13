@@ -2,13 +2,13 @@ import React from "react";
 
 export default function ChatCard() {
   return (
-    <div className="flex flex-col text-light bg-dark-back max-h-44 max-w-72 rounded-2xl px-3 py-3 justify-between">
+    <div className="flex flex-col text-light bg-dark-back max-h-44 max-w-74 rounded-2xl px-3 py-3 justify-between">
       <div>
         <div className="flex justify-between text-xl ">
           <span>Cancel Request</span>
           <img
-            src={require("../../../../Images/pages/Tickets/Ticket sign.png")}
-            className="w-7 h-5"
+            src={require("../../../../Images/pages/Tickets/open-ticket.png")}
+            className=" h-5"
           />
         </div>
         <span className="text-blue text-xs">New Message</span>

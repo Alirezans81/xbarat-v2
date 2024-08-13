@@ -24,7 +24,7 @@ export default function Chats({ topic }) {
       <>
         <div className=" w-full h-full overflow-y-scroll">
           <div className="flex content-center justify-between px-12 pt-5 ">
-            <div>
+            <div className="content-center">
               <div className="flex gap-x-3">
                 <CustomDropdown label={"Status"} />
                 <CustomDateTimeInput placeHolder={"From Date"} />
@@ -32,10 +32,12 @@ export default function Chats({ topic }) {
               </div>
             </div>
             <div>
-              <img
-                src={require("../../../../Images/pages/Tickets/Ticket sign.png")}
-                className="w-6 h-6"
-              />
+              <button className="bg-blue rounded-full p-3">
+                <img
+                  src={require("../../../../Images/pages/Tickets/new-ticket.png")}
+                  className="w-6 h-6"
+                />
+              </button>
             </div>
           </div>
           <div className="w-full h-full flex flex-wrap px-12 py-5 gap-6 ">
