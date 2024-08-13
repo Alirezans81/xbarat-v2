@@ -1,8 +1,14 @@
 import React from "react";
-
+import { useFontState } from "../../../../Providers/FontProvider";
+import { useThemeState } from "../../../../Providers/ThemeProvider";
 export default function ChatCard() {
+  const theme = useThemeState();
+
+  const oppositeTheme = theme === "dark" ? "light" : "dark";
   return (
-    <div className="flex flex-col text-light bg-dark-back max-h-44 max-w-74 rounded-2xl px-3 py-3 justify-between">
+    <div
+      className={`flex flex-col text-${oppositeTheme} bg-${theme}-back max-h-44 max-w-74 rounded-2xl px-3 py-3 justify-between`}
+    >
       <div>
         <div className="flex justify-between text-xl ">
           <span>Cancel Request</span>

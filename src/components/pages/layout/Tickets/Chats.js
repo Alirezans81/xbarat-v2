@@ -3,7 +3,7 @@ import { useFontState } from "../../../../Providers/FontProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import ChatCard from "../Referral/ChatCard";
 import CustomDateTimeInput from "../../../common/CustomDateTimePicker";
-import { CustomDropdown, CustomItem } from "../../../common/CustomDropdown";
+import { CustomDropdown2, CustomItem2 } from "../../../common/CustomDropdown2";
 export default function Chats({ topic }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -22,11 +22,13 @@ export default function Chats({ topic }) {
   } else {
     return (
       <>
-        <div className=" w-full h-full overflow-y-scroll">
+        <div
+          className={` w-full h-full overflow-y-scroll text-${oppositeTheme} font-${font}-thin`}
+        >
           <div className="flex content-center justify-between px-12 pt-5 ">
             <div className="content-center">
               <div className="flex gap-x-3">
-                <CustomDropdown label={"Status"} />
+                <CustomDropdown2 theme={theme} label={"Status"} />
                 <CustomDateTimeInput placeHolder={"From Date"} />
                 <CustomDateTimeInput placeHolder={"From Date"} />
               </div>
