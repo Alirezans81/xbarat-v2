@@ -306,6 +306,29 @@
   "index-copyright": "Copyright by @alirezanasiri.pro",
   "your_deposit_of": "Your Deposit Of",
   "was_made_succesfully": "Was Made Successfully",
+  "watchListTutorial": {
+    "currencyPair": "Currency Pair: The Pair Of Two Currencies Described In the Row in The List",
+    "rate": "Rate: The Standard Rate That Is Being Matched With This Currency Pair",
+    "low": "Low: The Lowest Matched Price With This Currency Pair",
+    "high": "High: The Highest Matched Price With This Currency Pair"
+  },
+  "yourBalanceTutorial": {
+    "balance": "You Can See Your Balance Here",
+    "pending": "You Can See The Amount Of Your Pending Money",
+    "locked": "You Can See The Amount Of Your Locked Money",
+    "transfer": "You Can Transfer Your Money Using This Button",
+    "withdraw": "You Can Withdraw Your Money Using This Button"
+  },
+  "exchangeTutorial": {
+    "avgRate": "This Is The Average Rate For This Currency Pair",
+    "reverse": "With This Button You Can Toggle Reverse Your Exchange",
+    "sourceCurrency": "You Can Pick The Source Currency Here",
+    "targetCurrency": "You Can Pick The Target Currency Here",
+    "sourceAmount": "You Can Enter The Source Amount Here",
+    "customRate": "You Can Enter Your Custom Rate For Exchange Here",
+    "targetAmount": "This Part Is The Target Amount",
+    "fee": "This Is Our Exchange Fee"
+  },
   "ContextTutorial": {
     "Deposit": {
       "context": [

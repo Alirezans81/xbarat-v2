@@ -1,14 +1,17 @@
 import { React, useState } from "react";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
+import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import ExchangeFormTutorialComponent from "./ExchangeFormTutorialComponent";
 const Tutorial = () => {
+  const lang = useLanguageState();
+  const context = lang.exchangeTutorial;
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [hovered, setHovered] = useState("");
   return (
-    <div className="flex flex-row justify-center items-center w-fit h-fit px-5">
+    <div className="w-full h-full overflow-scroll flex flex-col justify-center items-center w-fit h-fit px-0 md:px-5">
       <ul
-        className={`text-${oppositeTheme} w-fit h-full list-disc h-fit text-base flex flex-col dotted justify-start items-start gap-y-2`}
+        className={`text-${oppositeTheme} md:text-base w-fit h-full text-sm flex flex-col justify-start items-start gap-y-2`}
       >
         <li
           onMouseEnter={() => setHovered("Average Rate")}
@@ -18,7 +21,7 @@ const Tutorial = () => {
             hovered === "Average Rate" ? "bg-blue" : "bg-none"
           }`}
         >
-          This Is The Average Rate For This Currency Pair
+          {context["avgRate"]}
         </li>
         <li
           onMouseEnter={() => setHovered("Toggle")}
@@ -28,7 +31,7 @@ const Tutorial = () => {
             hovered === "Toggle" ? "bg-blue" : "bg-none"
           }`}
         >
-          With This Button You Can Toggle Reverse Your Exchange
+          {context["reverse"]}
         </li>
         <li
           onMouseEnter={() => setHovered("Source Currency")}
@@ -38,7 +41,7 @@ const Tutorial = () => {
             hovered === "Source Currency" ? "bg-blue" : "bg-none"
           }`}
         >
-          You Can Pick The Source Currency Here
+          {context["sourceCurrency"]}
         </li>
         <li
           onMouseEnter={() => setHovered("Target Currency")}
@@ -48,7 +51,7 @@ const Tutorial = () => {
             hovered === "Target Currency" ? "bg-blue" : "bg-none"
           }`}
         >
-          You Can Pick The Target Currency Here
+          {context["targetCurrency"]}
         </li>
         <li
           onMouseEnter={() => setHovered("Source Amount")}
@@ -58,7 +61,7 @@ const Tutorial = () => {
             hovered === "Source Amount" ? "bg-blue" : "bg-none"
           }`}
         >
-          You Can Enter The Source Amount Here
+          {context["sourceAmount"]}
         </li>
         <li
           onMouseEnter={() => setHovered("Custom Rate")}
@@ -68,7 +71,7 @@ const Tutorial = () => {
             hovered === "Custom Rate" ? "bg-blue" : "bg-none"
           }`}
         >
-          You Can Enter Your Custom Rate For Exchange Here
+          {context["customRate"]}
         </li>
         <li
           onMouseEnter={() => setHovered("Target Amount")}
@@ -78,7 +81,7 @@ const Tutorial = () => {
             hovered === "Target Amount" ? "bg-blue" : "bg-none"
           }`}
         >
-          This Part Is The Target Amount
+          {context["targetAmount"]}
         </li>
         <li
           onMouseEnter={() => setHovered("Fee")}
@@ -88,10 +91,10 @@ const Tutorial = () => {
             hovered === "Fee" ? "bg-blue" : "bg-none"
           }`}
         >
-          This Is Our Exchange Fee
+          {context["fee"]}
         </li>
       </ul>
-      <div className="border-blue border-solid border-2 rounded-2xl flex-1 h-full w-fit flex justify-center items-center">
+      <div className="mt-10 border-blue border-solid border-2 rounded-2xl flex-1 h-full w-fit flex justify-center items-center">
         <ExchangeFormTutorialComponent hovered={hovered} />
       </div>
     </div>
