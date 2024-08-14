@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useFontState } from "../../Providers/FontProvider";
@@ -97,4 +98,10 @@ export default function Referral() {
       </>
     );
   }
+=======
+import React from "react";
+
+export default function Referral() {
+  return <div>Referral</div>;
+>>>>>>> 05d536c (change cards routing in folders - add referral page)
 }
