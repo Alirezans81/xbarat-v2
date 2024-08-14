@@ -1,14 +1,13 @@
-import React from "react";
+import { React, useState } from "react";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
+import ExchangeFormTutorialComponent from "./ExchangeFormTutorialComponent";
+import { useWalletState } from "../../../../Providers/WalletProvider";
 const Tutorial = () => {
-  const currencies = useCurrenciesState();
-  console.log(currencies);
-  const selectedCurrecnyPair = {
-    rate: 1.6,
-    defaultRateType: 1,
-    has_reverse_rate: true,
-  };
-  return <div className="w-fit h-fit bg-red ">Sina</div>;
+  return (
+    <div className="w-full h-full justify-center border-blue border-solid border-2 rounded-2xl w-fit h-fit">
+      <ExchangeFormTutorialComponent />
+    </div>
+  );
 };
 
 export default Tutorial;
