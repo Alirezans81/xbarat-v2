@@ -212,6 +212,29 @@
   "complete-profile-step-4-not-required-message-2nd": "Sie können Ihre Informationen eingeben oder mit dem nächsten Schritt fortfahren",
   "your_deposit_of": "Ihre Einzahlung von",
   "was_made_succesfully": "wurde erfolgreich durchgeführt",
+  "watchListTutorial": {
+    "currencyPair": "Währungspaar: Das Paar aus zwei Währungen, die in der Zeile der Liste beschrieben werden",
+    "rate": "Kurs: Der Standardkurs, der diesem Währungspaar zugeordnet wird",
+    "low": "Niedrig: Der niedrigste übereinstimmende Preis mit diesem Währungspaar",
+    "high": "Hoch: Der höchste übereinstimmende Preis mit diesem Währungspaar"
+  },
+  "yourBalanceTutorial": {
+    "balance": "Hier können Sie Ihr Guthaben einsehen",
+    "pending": "Sie können den Betrag Ihres ausstehenden Geldes sehen",
+    "locked": "Sie können den Betrag Ihres gesperrten Geldes sehen",
+    "transfer": "Mit dieser Schaltfläche können Sie Ihr Geld überweisen",
+    "withdraw": "Mit dieser Schaltfläche können Sie Ihr Geld abheben"
+  },
+  "exchangeTutorial": {
+    "avgRate": "Dies ist der Durchschnittskurs für dieses Währungspaar",
+    "reverse": "Mit dieser Schaltfläche können Sie Ihren Umtausch umkehren",
+    "sourceCurrency": "Hier können Sie die Quellwährung auswählen",
+    "targetCurrency": "Hier können Sie die Zielwährung auswählen",
+    "sourceAmount": "Hier können Sie den Quellbetrag eingeben",
+    "customRate": "Hier können Sie Ihren individuellen Wechselkurs für den Umtausch eingeben",
+    "targetAmount": "Dieser Teil ist der Zielbetrag",
+    "fee": "Dies ist unsere Umtauschgebühr"
+  },
   "ContextTutorial": {
     "Deposit": {
       "context": [
