@@ -82,15 +82,20 @@ export default function App() {
   );
 
   useEffect(() => {
-    const savedLanguageIndex = +localStorage.getItem("selectedLanguageIndex");
-    if (savedLanguageIndex >= 0 && languageList[savedLanguageIndex]) {
-      setFont(languageList[savedLanguageIndex].symbol);
-      getLanguageFile(
-        languageList[savedLanguageIndex].file,
-        null,
-        null,
-        setLang
-      );
+    if (languageList && languageList.length > 0) {
+      const savedLanguageIndex = +localStorage.getItem("selectedLanguageIndex");
+      if (savedLanguageIndex >= 0 && languageList[savedLanguageIndex]) {
+        setFont(languageList[savedLanguageIndex].symbol);
+        getLanguageFile(
+          languageList[savedLanguageIndex].file,
+          null,
+          null,
+          setLang
+        );
+      } else {
+        setFont(languageList[0].symbol);
+        getLanguageFile(languageList[0].file, null, null, setLang);
+      }
     }
   }, [languageList]);
 
