@@ -12,7 +12,6 @@ const useFetchStep1 = () => {
     window.localStorage.setItem("userInfo", JSON.stringify(value));
 
   const fetch = async (params, customFunction) => {
-    console.log(1);
     if (userInfo && userInfo.username) {
       setIsLoading(true);
       await fetchStep1(userInfo.username, params)

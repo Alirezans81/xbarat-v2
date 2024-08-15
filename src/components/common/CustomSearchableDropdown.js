@@ -25,9 +25,7 @@ export default function CustomSearchableDropdown({
     list && list.length && setFilteredList(list);
   }, [list]);
 
-  const search = (values) => {
-    console.log(values);
-  };
+  const search = (values) => {};
 
   if (typeNumber === 1) {
     return (

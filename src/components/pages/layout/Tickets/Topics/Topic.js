@@ -11,11 +11,11 @@ export default function Topic({ data, selected, onSelect }) {
     <div
       className={`transition-all duration-200 ${
         selected ? "bg-blue" : `bg-${theme}-back`
-      } h-36 rounded-2xl px-4 py-3.5 flex flex-col justify-between`}
+      } min-h-[9rem] rounded-2xl px-4 py-3.5 flex flex-col gap-y-1`}
     >
       <div className="w-full flex justify-between items-center">
         <span className={`font-${font}-bold text-${oppositeTheme} text-xl`}>
-          Deposit & Withdrawal
+          {data && data.title ? data.title : ""}
         </span>
         <button
           disabled={selected}
@@ -37,8 +37,7 @@ export default function Topic({ data, selected, onSelect }) {
           selected ? "text-light" : "text-gray"
         }`}
       >
-        If you have problem with your deposit/withdrawal request you can ticket
-        it here
+        {data && data.description ? data.description : ""}
       </span>
     </div>
   );

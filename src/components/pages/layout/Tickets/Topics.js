@@ -19,7 +19,7 @@ export default function Topics({
       </span>
       <div className="flex-1 overflow-y-auto">
         {topics.map((topic, index) => (
-          <div className={index === 0 ? "" : "mt-3"}>
+          <div key={index} className={index === 0 ? "" : "mt-3"}>
             <Topic
               key={index}
               data={topic}

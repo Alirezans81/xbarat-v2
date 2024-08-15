@@ -28,5 +28,8 @@
   "send-email": 10,
   "forgot-password": 10,
   "change-password": 10,
-  "news": 50
+  "news": 50,
+  "ticket-category": 50,
+  "ticket": 100,
+  "ticket-detail": 100
 }

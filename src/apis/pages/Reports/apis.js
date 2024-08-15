@@ -59,7 +59,6 @@ const getDepositHistory = (filtersObject) => {
       limit: limit["deposit"],
     },
   });
-  console.log(urlWithQueries);
 
   return axios.get(urlWithQueries);
 };
@@ -87,8 +86,6 @@ const getTransferHistory = (filtersObject) => {
 };
 
 const getExchangeHistory = (filtersObject) => {
-  console.log(filtersObject);
-
   const urlWithQueries = queryString.stringifyUrl({
     url: api["exchange"],
     query: { limit: limit["exchange"], ...filtersObject } || {
