@@ -3,25 +3,42 @@ import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useFontState } from "../../../../../Providers/FontProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { Formik } from "formik";
-import { useGetMessages } from "../../../../../apis/pages/Tickets/hooks";
+import {
+  useGetMessages,
+  useSendMessage,
+} from "../../../../../apis/pages/Tickets/hooks";
 import Message from "./Chat/Message";
+import { useUserState } from "../../../../../Providers/UserProvider";
 
 export default function Chat({ data, onBackClick }) {
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const setLoading = useIsLoadingSplashScreenSetState();
-
+  const user = useUserState();
   const [messages, setMessages] = useState([]);
+  const [send, setSend] = useState(false);
 
   const { getMessages, isLoading: getMessagesIsLoading } = useGetMessages();
   useEffect(() => setLoading(getMessagesIsLoading), [getMessagesIsLoading]);
 
   useEffect(() => {
     data && data.code && getMessages(data.code, setMessages);
-  }, []);
+  }, [send]);
+
+  const { sendMessages, isLoading: sendMessagesIsLoading } = useSendMessage();
+  useEffect(() => setLoading(sendMessagesIsLoading), [sendMessagesIsLoading]);
 
   const formikRef = useRef();
+  const AddMessage = (values) => {
+    const params = {
+      user: user.url,
+      ticket: data.url,
+      text: values.text,
+    };
+    sendMessages(params);
+    setSend(!send);
+  };
 
   return (
     <div
@@ -51,8 +68,8 @@ export default function Chat({ data, onBackClick }) {
           <Formik
             innerRef={formikRef}
             initialValues={{ text: "" }}
-            onSubmit={(values) => {
-              console.log(values);
+            onSubmit={(e) => {
+              AddMessage(e);
               formikRef.current.resetForm();
             }}
           >
