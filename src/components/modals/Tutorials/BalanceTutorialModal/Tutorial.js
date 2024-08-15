@@ -1,26 +1,15 @@
 import ComponentTutorialCardBalance from "./ComponentTutorialCard";
+import { useWalletState } from "../../../../Providers/WalletProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
+import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useState } from "react";
 const Tutorial = () => {
   const theme = useThemeState();
+  const wallet = useWalletState();
+  const lang = useLanguageState();
+  const context = lang.yourBalanceTutorial;
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [hovered, setHovered] = useState("");
-  // const url =
-  //   process.env.REACT_APP_MODE === "DEVELOPMENT"
-  //     ? process.env.REACT_APP_DEV_API_DOMAIN
-  //     : process.env.REACT_APP_API_DOMAIN;
-  const url = "https://xbarat-back.pro/";
-  const walletAssetTemp = {
-    currency: `${url}api/currency/iranian-rial/`,
-    currency_abb: "IRR",
-    currency_floating_number: null,
-    currency_sym_pic_gray: `${url}media/images/Currency/irr-gray_pFwnrQh.png`,
-    currency_sym_pic_light: `${url}media/images/Currency/irr-light_1Nr58Ii.png`,
-    currency_sym_pic_dark: `${url}media/images/Currency/irr-dark_cUCE9I6.png`,
-    balance: "1000.000000",
-    pending: "500.000000",
-    locked: "200.000000",
-  };
   return (
     <div
       className={`w-fit h-full gird gird-cols-12 grid-rows-12 bg-${theme} p-5 rounded-2xl text-${oppositeTheme} transition-all duration-500`}
@@ -33,7 +22,7 @@ const Tutorial = () => {
           hovered === "balance" ? "bg-blue-500 py-1 px-5" : ""
         } transition-all duration-500 rounded-2xl  w-full flex justify-start items-start h-full`}
       >
-        This Part Shows Your Balance
+        {context["balance"]}
       </button>
       <button
         onClick={() => setHovered("pending")}
@@ -43,7 +32,7 @@ const Tutorial = () => {
           hovered === "pending" ? "bg-blue-500 py-1 px-5" : ""
         } transition-all duration-500 rounded-2xl mt-2 w-full flex justify-start items-start h-full`}
       >
-        This Part Shows Your Pending Money Amount
+        {context["pending"]}
       </button>
       <button
         onClick={() => setHovered("locked")}
@@ -53,7 +42,7 @@ const Tutorial = () => {
           hovered === "locked" ? "bg-blue-500 py-1 px-5" : ""
         } transition-all duration-500 rounded-2xl  mt-2 w-full flex justify-start items-start h-full`}
       >
-        This Part Shows Your Locked Money Amount
+        {context["locked"]}
       </button>
       <button
         onClick={() => setHovered("transfer")}
@@ -63,7 +52,7 @@ const Tutorial = () => {
           hovered === "transfer" ? "bg-blue-500 py-1 px-5" : ""
         } transition-all duration-500 rounded-2xl  mt-2 w-full flex justify-start items-start h-full`}
       >
-        This Button Enables You To Transfer Your Money To Others
+        {context["transfer"]}
       </button>
       <button
         onClick={() => setHovered("withdraw")}
@@ -73,7 +62,7 @@ const Tutorial = () => {
           hovered === "withdraw" ? "bg-blue-500 py-1 px-5" : ""
         } transition-all duration-500 rounded-2xl  mt-2 w-full flex justify-start items-start h-full`}
       >
-        This Button Enables You To Withdraw Your Money
+        {context["withdraw"]}
       </button>
 
       <div
@@ -82,7 +71,7 @@ const Tutorial = () => {
         <ComponentTutorialCardBalance
           hovered={hovered}
           setHovered={setHovered}
-          walletAsset={walletAssetTemp}
+          walletAsset={wallet.walletAssets[0]}
         />
       </div>
     </div>

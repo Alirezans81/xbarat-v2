@@ -2,8 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { useFontState } from "../../../../Providers/FontProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
+import { useLanguageState } from "../../../../Providers/LanguageProvider";
 const Tutorial = () => {
   const theme = useThemeState();
+  const lang = useLanguageState();
+
+  const context = lang.watchListTutorial;
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
   const row = {
@@ -29,8 +33,7 @@ const Tutorial = () => {
           onMouseLeave={() => setHovered(-1)}
           onClick={() => setHovered(0)}
         >
-          Currency Pair: The Pair Of Two Currencies Described In the Row in The
-          List
+          {context["currencyPair"]}
         </li>
         <li
           className={`${
@@ -42,7 +45,8 @@ const Tutorial = () => {
           onClick={() => setHovered(1)}
           onMouseLeave={() => setHovered(-1)}
         >
-          Rate: The Standard Rate That Is Being Matched With This Currency Pair
+          {" "}
+          {context["rate"]}
         </li>
         <li
           className={`${
@@ -54,7 +58,8 @@ const Tutorial = () => {
           onMouseLeave={() => setHovered(-1)}
           onClick={() => setHovered(2)}
         >
-          Low: The Lowest Matched Price With This Currency Pair
+          {" "}
+          {context["low"]}
         </li>
         <li
           className={`${
@@ -66,7 +71,8 @@ const Tutorial = () => {
           onClick={() => setHovered(3)}
           onMouseLeave={() => setHovered(-1)}
         >
-          High: The Highest Matched Price With This Currency Pair
+          {" "}
+          {context["high"]}
         </li>
       </ul>
       <div className={`grid grid-cols-4 gap-x-4 w-full items-center pb-1 pt-5`}>
