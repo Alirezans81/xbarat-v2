@@ -38,8 +38,7 @@ import DepositHistoryScreen from "./pages/Reports/DepositHistoryScreen";
 import WithdrawalHistoryScreen from "./pages/Reports/WithdrawalHistoryScreen";
 import TransferHistoryScreen from "./pages/Reports/TransferHistoryScreen";
 import Profile from "./pages/Profile";
-import Tickets from "./pages/Profile/Tickets";
-import Cards from "./pages/Profile/Profile/Cards";
+import Cards from "./pages/Profile/Cards";
 import Referral from "./pages/Profile/Referral";
 import ExConfirmation from "./pages/Submitting/Exchange/Exchanges";
 import Transfers from "./pages/Submitting/Transfer/Transfers";
@@ -51,30 +50,6 @@ import Branches from "./pages/User Mangement/Branches";
 import Singular from "./pages/Currency/Singular";
 import Pair from "./pages/Currency/Pair";
 import Robots from "./pages/More/Robots";
-import {
-  useLanguageSetState,
-  useLanguageState,
-} from "./Providers/LanguageProvider";
-import {
-  useLanguageListSetState,
-  useLanguageListState,
-} from "./Providers/LanguageListProvider";
-import {
-  useGetLanguageFile,
-  useGetLanguages,
-} from "./apis/common/language/hooks";
-import LoadingSplashScreen from "./components/common/LoadingSplashScreen";
-import {
-  useIsLoadingSplashScreenSetState,
-  useIsLoadingSplashScreenState,
-} from "./Providers/IsLoadingSplashScreenProvider";
-import { useFontSetState } from "./Providers/FontProvider";
-import Updating from "./pages/Updating";
-import Startup from "./pages/Startup";
-import TutorialModal from "./components/modals/Tutorials/WalletTutorialModal/TutorialModal";
-import { useModalDataSetState } from "./Providers/ModalDataProvider";
-import { useThemeState } from "./Providers/ThemeProvider";
-import Referral from "./pages/Profile/Referral";
 
 export default function App() {
   const lang = useLanguageState();
