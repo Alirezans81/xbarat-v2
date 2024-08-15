@@ -1,36 +1,46 @@
 import React from "react";
 import { useFontState } from "../../../../Providers/FontProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
-export default function ChatCard() {
-  const theme = useThemeState();
+import { useConvertDateTime } from "../../../../hooks/useConvertDateTime";
 
+export default function ChatCard({ data, onSelect }) {
+  const font = useFontState();
+  const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const convertDateTime = useConvertDateTime();
+
   return (
     <div
-      className={`flex flex-col text-${oppositeTheme} bg-${theme}-back max-h-44 max-w-74 rounded-2xl px-3 py-3 justify-between`}
+      className={`flex flex-col text-${oppositeTheme} bg-${theme}-back h-48 rounded-2xl px-5 pt-4 pb-3 justify-between font-${font}-regular relative`}
     >
-      <div>
-        <div className="flex justify-between text-xl ">
-          <span>Cancel Request</span>
-          <img
-            src={require("../../../../Images/pages/Tickets/open-ticket.png")}
-            className=" h-5"
-          />
+      <button onClick={onSelect} className="absolute right-3.5 top-3.5 z-10">
+        <img
+          alt=""
+          src={require(`../../../../Images/arrow-right-${oppositeTheme}.png`)}
+          className="w-7 h-7"
+        />
+      </button>
+      <div className="flex flex-col gap-y-2">
+        <div className="flex flex-col">
+          <span className={`text-2xl w-56 line-clamp-1`}>
+            {data && data.title ? data.title : ""}
+          </span>
+          <div className="flex gap-x-2">
+            <span className="text-blue text-sm -mt-0.5">New Message</span>
+          </div>
         </div>
-        <span className="text-blue text-xs">New Message</span>
-        <div className="line-clamp-2 w-64">
-          <span className=" text-xs text-gray ">
-            You should check your wallet first and then try again Fugiat aute
-            dolor tempor amet elit consequat fugiat eu. Non elit veniam in qui
-            ullamco. Exercitation esse ut velit magna et velit duis laborum.
-            Nulla veniam qui voluptate officia quis. Cillum id pariatur sint
-            nostrud incididunt eiusmod cillum voluptate aliqua. Officia anim
-            veniam qui cupidatat dolor Lorem in culpa consectetur eu.
+        <div className="line-clamp-3 w-64">
+          <span className="text-gray">
+            {data && data.last_message ? data.last_message : ""}
           </span>
         </div>
       </div>
       <div>
-        <span className="text-gray">2022 January </span>
+        <span className="text-gray">
+          {data && data.last_update_date
+            ? convertDateTime(data.last_update_date)
+            : ""}
+        </span>
       </div>
     </div>
   );

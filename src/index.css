@@ -536,3 +536,9 @@ body {
 .rtl {
   direction: rtl;
 }
+
+.ticket-input {
+  font-family: manjari-regular;
+  outline: none !important;
+  
+}

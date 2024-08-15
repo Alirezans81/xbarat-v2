@@ -95,7 +95,7 @@ export default function Profile() {
           className={`col-span-12 md:col-span-7 bg-${theme} rounded-3xl md:rounded-r-none text-white flex py-10 pl-10`}
         >
           <div className="w-full h-full flex flex-wrap justify-start md:gap-x-14 gap-7">
-            {/* <Link
+            <Link
               theme={theme}
               oppositeTheme={oppositeTheme}
               font={font}
@@ -103,7 +103,7 @@ export default function Profile() {
               darkImage={ticketDark}
               lightImage={ticketLight}
               link={"tickets"}
-            /> */}
+            />
             <Link
               theme={theme}
               oppositeTheme={oppositeTheme}

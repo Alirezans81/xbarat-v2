@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFontState } from "../../../../Providers/FontProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import ChatCard from "../Referral/ChatCard";
 import CustomDateTimeInput from "../../../common/CustomDateTimePicker";
-import { CustomDropdown2, CustomItem2 } from "../../../common/CustomDropdown2";
-export default function Chats({ topic }) {
+import { CustomDropdown2 } from "../../../common/CustomDropdown2";
+export default function Chats({ data, topic, setMode, setSelectedChatIndex }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
-
-  const [chats, setChats] = useState([1, 1, 1, 1, 1, 1, 1, 1, 1]);
 
   if (!topic) {
     return (
@@ -23,9 +21,9 @@ export default function Chats({ topic }) {
     return (
       <>
         <div
-          className={` w-full h-full overflow-y-scroll text-${oppositeTheme} font-${font}-thin`}
+          className={` w-full h-full text-${oppositeTheme} font-${font}-thin flex flex-col gap-y-4`}
         >
-          <div className="flex content-center justify-between px-12 pt-5 ">
+          <div className="flex content-center justify-between">
             <div className="content-center">
               <div className="flex gap-x-3">
                 <CustomDropdown2 theme={theme} label={"Status"} />
@@ -36,20 +34,24 @@ export default function Chats({ topic }) {
             <div>
               <button className="bg-blue rounded-full p-3">
                 <img
+                  alt=""
                   src={require("../../../../Images/pages/Tickets/new-ticket.png")}
                   className="w-6 h-6"
                 />
               </button>
             </div>
           </div>
-          <div className="w-full h-full flex flex-wrap px-12 py-5 gap-6 ">
-            <ChatCard />
-            <ChatCard />
-            <ChatCard />
-            <ChatCard />
-            <ChatCard />
-            <ChatCard />
-            <ChatCard />
+          <div className="w-full h-full flex flex-wrap gap-6 overflow-y-scroll">
+            {data.map((chat, index) => (
+              <ChatCard
+                key={index}
+                data={chat}
+                onSelect={() => {
+                  setMode("chat");
+                  setSelectedChatIndex(index);
+                }}
+              />
+            ))}
           </div>
         </div>
       </>

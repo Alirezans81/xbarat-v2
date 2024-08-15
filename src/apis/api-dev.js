@@ -37,5 +37,8 @@ export default function api() {
     "top-5-report": `${devApiDomain}api/report/`,
     "change-password": `${devApiDomain}api/user/change-password/`,
     news: `${devApiDomain}api/news/`,
+    "ticket-category": `${devApiDomain}api/ticket-category/`,
+    ticket: `${devApiDomain}api/ticket/`,
+    "ticket-detail": `${devApiDomain}api/ticket-detail/`,
   };
 }
