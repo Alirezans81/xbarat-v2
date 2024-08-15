@@ -38,6 +38,7 @@ import DepositHistoryScreen from "./pages/Reports/DepositHistoryScreen";
 import WithdrawalHistoryScreen from "./pages/Reports/WithdrawalHistoryScreen";
 import TransferHistoryScreen from "./pages/Reports/TransferHistoryScreen";
 import Profile from "./pages/Profile";
+import Tickets from "./pages/Profile/Tickets";
 import Cards from "./pages/Profile/Cards";
 import Referral from "./pages/Profile/Referral";
 import ExConfirmation from "./pages/Submitting/Exchange/Exchanges";
@@ -141,6 +142,7 @@ export default function App() {
               />
               <Route path="profile">
                 <Route index element={<Profile />} />
+                <Route path="tickets" element={<Tickets />} />
                 <Route path="cards" element={<Cards />} />
                 <Route path="referral" element={<Referral />} />
               </Route>
