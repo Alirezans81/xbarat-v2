@@ -4,6 +4,8 @@ export default function api() {
   return {
     "sign-up": `${apiDomain}api/user/signup/`,
     "verify-email": `${apiDomain}api/user/verify-email/`,
+    "sign-up": `${apiDomain}api/user/signup/`,
+    "verify-email": `${apiDomain}api/user/verify-email/`,
     "log-in": `${apiDomain}api/user/login/`,
     "log-out": `${apiDomain}api/user/logout/`,
     "patch-profile": `${apiDomain}api/user/`,
@@ -36,5 +38,8 @@ export default function api() {
     "top-5-report": `${apiDomain}api/report/`,
     "change-password": `${apiDomain}api/user/change-password/`,
     news: `${apiDomain}api/news/`,
+    "ticket-category": `${apiDomain}api/ticket-category/`,
+    ticket: `${apiDomain}api/ticket/`,
+    "ticket-detail": `${apiDomain}api/ticket-detail/`,
   };
 }

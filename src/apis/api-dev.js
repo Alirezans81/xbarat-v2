@@ -3,6 +3,7 @@ export default function api() {
 
   return {
     "sign-up": `${devApiDomain}api/user/signup/`,
+    "verify-email": `${devApiDomain}api/user/verify-email/signup/`,
     "verify-email": `${devApiDomain}api/user/verify-email/`,
     "log-in": `${devApiDomain}api/user/login/`,
     "log-out": `${devApiDomain}api/user/logout/`,
@@ -29,6 +30,7 @@ export default function api() {
     "other-exchanges-rate": `${devApiDomain}api/exchange-rate/`,
     locale: `${devApiDomain}api/locale/`,
     notify: `${devApiDomain}api/notify/`,
+    notify: `${devApiDomain}api/notify/`,
     "check-email": `${devApiDomain}api/user/forget-password-check/`,
     "send-email": `${devApiDomain}api/user/forget-password-send-mail/`,
     "forget-password-send-mail": `${devApiDomain}api/user/forget-password-send-mail/`,
@@ -37,5 +39,8 @@ export default function api() {
     "top-5-report": `${devApiDomain}api/report/`,
     "change-password": `${devApiDomain}api/user/change-password/`,
     news: `${devApiDomain}api/news/`,
+    "ticket-category": `${devApiDomain}api/ticket-category/`,
+    ticket: `${devApiDomain}api/ticket/`,
+    "ticket-detail": `${devApiDomain}api/ticket-detail/`,
   };
 }

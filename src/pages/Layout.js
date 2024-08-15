@@ -41,7 +41,7 @@ import MobileTopBar from "../components/pages/layout/MobileTopBar";
 import { useToastDataSetState } from "../Providers/ToastDataProvider";
 import { useCheckCompletedProfile } from "../hooks/useCheckCompletedProfile";
 import MobileBottomBar from "../components/pages/layout/MobileBottomBar";
-import TutorialModal from "../components/modals/WalletTutorialModal/TutorialModal";
+import TutorialModal from "../components/modals/Tutorials/WalletTutorialModal/TutorialModal";
 import AddToHomeScreenModal from "../components/modals/AddToHomeScreenModal";
 import { useGetNews } from "../apis/pages/Layout/hooks";
 import NewsModal from "../components/modals/NewsModal";

@@ -15,7 +15,6 @@ import ListWatchList from "../components/pages/layout/Home/ListMode/ListWatchLis
 import ListOtherExchanges from "../components/pages/layout/Home/ListMode/ListOtherExchanges";
 import ListPendingExchange from "../components/pages/layout/Home/ListMode/ListPendingExchange";
 import { useCurrenciesState } from "../Providers/CurrenciesProvider";
-import { useRefreshWallet } from "../hooks/useRefreshWallet";
 import { useWalletState } from "../Providers/WalletProvider";
 
 export default function Home({ isDemo }) {
@@ -28,7 +27,6 @@ export default function Home({ isDemo }) {
   const token = useTokenState();
   const currencies = useCurrenciesState();
   const wallet = useWalletState();
-  const refreshWallet = useRefreshWallet();
 
   const amountInputRef = useRef();
   const focusOnAmountInput = () => {

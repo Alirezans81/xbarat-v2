@@ -5,7 +5,6 @@ import DepositHistory from "../components/pages/layout/Reports/DepositHistory";
 import WithdrawalHistory from "../components/pages/layout/Reports/WithdrawalHistory";
 import TransferHistory from "../components/pages/layout/Reports/TransferHistory";
 import { useTokenState } from "../Providers/TokenProvider";
-import { useGetPendingRequests } from "../apis/pages/Wallet/hooks";
 import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashScreenProvider";
 import { useGetTop5Report } from "../apis/pages/Reports/hooks";
 import { useFontState } from "../Providers/FontProvider";

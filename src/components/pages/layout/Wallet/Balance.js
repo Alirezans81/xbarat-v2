@@ -2,14 +2,13 @@ import React from "react";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import CustomSlider from "../../../common/CustomSlider";
-import TutorialModal from "../../../modals/WalletTutorialModal/TutorialModal";
+import TutorialModal from "../../../modals/Tutorials/BalanceTutorialModal/Tutorial.js";
 import CurrencyCard from "./Balance/CurrencyCard";
 import { useWalletState } from "../../../../Providers/WalletProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
 import TransactionModal from "../../../modals/TransactionModal";
 import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
 import { useSortByBalance } from "../../../../hooks/useNumberFunctions";
-
 export default function Balance({ refreshPendingRequests }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -18,7 +17,7 @@ export default function Balance({ refreshPendingRequests }) {
   const setModalData = useModalDataSetState();
   const openTutorialModal = () => {
     setModalData({
-      title: "Tutorial",
+      title: "Balance Tutorial",
       children: <TutorialModal />,
       canClose: true,
       isOpen: true,

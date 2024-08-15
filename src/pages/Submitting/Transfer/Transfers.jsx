@@ -119,7 +119,7 @@ const Exchanges = () => {
                   selectionRange={selectionRange}
                   setSelectionRange={setSelectionRange}
                   type="start"
-                  placeHolder="Start"
+                  placeHolder={lang["start"]}
                   className="w-full"
                 />
               </div>
@@ -128,7 +128,7 @@ const Exchanges = () => {
                   selectionRange={selectionRange}
                   setSelectionRange={setSelectionRange}
                   type="end"
-                  placeHolder="End"
+                  placeHolder={lang["end"]}
                   className="w-full"
                 />
               </div>

@@ -2,7 +2,7 @@
   "sign-up": 10,
   "log-in": 10,
   "log-out": 10,
-  "patch-profile": 10,
+  "patch-profile": 100,
   "nationality": 100,
   "country": 100,
   "city": 100,
@@ -28,5 +28,8 @@
   "send-email": 10,
   "forgot-password": 10,
   "change-password": 10,
-  "news": 50
+  "news": 50,
+  "ticket-category": 50,
+  "ticket": 100,
+  "ticket-detail": 100
 }
