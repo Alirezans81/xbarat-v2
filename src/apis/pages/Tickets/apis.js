@@ -38,4 +38,14 @@ const getMessages = (ticketCode) => {
   return axios.get(urlWithQueries);
 };
 
-export { getTopics, getChats, getMessages };
+const sendMessages = (params) => {
+  const formData = new FormData();
+
+  formData.append("ticket", params.ticket);
+  formData.append("user", params.user);
+  formData.append("text", params.text);
+
+  return axios.post(api["ticket-detail"], formData);
+};
+
+export { getTopics, getChats, getMessages, sendMessages };
