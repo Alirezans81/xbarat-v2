@@ -135,18 +135,22 @@ export default function WatchList({
 
   return (
     <div className="px-6 py-5 h-full flex flex-col ">
-      <div className="w-fit h-fit flex flex-row gap-x-2 justify-start">
-        <h1 className={`font-${font}-bold text-2xl text-${oppositeTheme}`}>
+      <div className="flex flex-row gap-x-2 justify-start">
+        <h1
+          className={`font-${font}-bold text-2xl text-${oppositeTheme} ${
+            font === "Fa" ? "-mt-2" : ""
+          }`}
+        >
           {lang["watch-list-label"]}
         </h1>
         <button
           onClick={() => openTutorialModal()}
-          className="bg-none text-blue text-2xl w-full h-full -mt-1"
+          className="w-fit text-blue text-2xl -mt-3"
         >
           ?
         </button>
       </div>
-      <div className={`flex-1 mt-2 pr-0 md:pr-4 overflow-x-scroll`}>
+      <div className={`flex-1 mt-2 pr-0 md:pr-4 overflow-y-scroll`}>
         <div className="min-w-[20rem] h-full">
           <CustomTable
             heads={head}

@@ -25,12 +25,16 @@ export default function Tickets() {
   const { getChats, isLoading: getChatsIsLoading } = useGetChats();
   useEffect(() => setLoading(getChatsIsLoading), [getChatsIsLoading]);
   useEffect(() => {
+    refreshChats();
+  }, [selectedTopicIndex]);
+
+  const refreshChats = () => {
     selectedTopicIndex >= 0 &&
       selectedTopicIndex < topics.length &&
       topics[selectedTopicIndex] &&
       topics[selectedTopicIndex].slug &&
       getChats(topics[selectedTopicIndex].slug, setChats);
-  }, [selectedTopicIndex]);
+  };
 
   return (
     <div className="w-full h-full lg:grid grid-cols-11 grid-rows-1 md:gap-x-10 gap-y-6 flex flex-col overflow-y-auto px-7 md:px-0">
@@ -54,6 +58,7 @@ export default function Tickets() {
             }
             setMode={setMode}
             setSelectedChatIndex={setSelectedChatIndex}
+            refreshChats={refreshChats}
           />
         ) : (
           <Chat

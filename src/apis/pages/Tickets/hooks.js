@@ -1,5 +1,11 @@
 import { useUserState } from "../../../Providers/UserProvider";
-import { getTopics, getChats, getMessages, sendMessages } from "./apis";
+import {
+  getTopics,
+  getChats,
+  getMessages,
+  sendMessages,
+  createChat,
+} from "./apis";
 import { useState } from "react";
 
 const useGetTopics = () => {
@@ -105,4 +111,33 @@ const useSendMessage = () => {
   return { sendMessages: fetch, error, isLoading };
 };
 
-export { useGetTopics, useGetChats, useGetMessages, useSendMessage };
+const useCreateChat = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const fetch = async (params, customFunction) => {
+    setIsLoading(true);
+    await createChat(params)
+      .then((data) => {
+        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+        customFunction && customFunction();
+        setIsLoading(false);
+        return data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setIsLoading(false);
+      });
+  };
+
+  return { createChat: fetch, error, isLoading };
+};
+
+export {
+  useGetTopics,
+  useGetChats,
+  useGetMessages,
+  useSendMessage,
+  useCreateChat,
+};

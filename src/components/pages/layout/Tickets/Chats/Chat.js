@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useFontState } from "../../../../../Providers/FontProvider";
-import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { Formik } from "formik";
 import {
   useGetMessages,
@@ -14,20 +13,18 @@ export default function Chat({ data, onBackClick }) {
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const setLoading = useIsLoadingSplashScreenSetState();
   const user = useUserState();
   const [messages, setMessages] = useState([]);
-  const [send, setSend] = useState(false);
 
-  const { getMessages, isLoading: getMessagesIsLoading } = useGetMessages();
-  useEffect(() => setLoading(getMessagesIsLoading), [getMessagesIsLoading]);
+  const messagesDivRef = useRef();
+
+  const { getMessages } = useGetMessages();
 
   useEffect(() => {
     data && data.code && getMessages(data.code, setMessages);
-  }, [send]);
+  }, []);
 
-  const { sendMessages, isLoading: sendMessagesIsLoading } = useSendMessage();
-  useEffect(() => setLoading(sendMessagesIsLoading), [sendMessagesIsLoading]);
+  const { sendMessages } = useSendMessage();
 
   const formikRef = useRef();
   const AddMessage = (values) => {
@@ -36,9 +33,13 @@ export default function Chat({ data, onBackClick }) {
       ticket: data.url,
       text: values.text,
     };
-    sendMessages(params);
-    setSend(!send);
+    sendMessages(params, () => getMessages(data.code, setMessages));
   };
+
+  useEffect(() => {
+    messages.length > 0 &&
+      messagesDivRef.current.lastElementChild.scrollIntoView();
+  }, [messages]);
 
   return (
     <div
@@ -55,16 +56,19 @@ export default function Chat({ data, onBackClick }) {
       <span className={`text-3xl font-${font}-bold mt-1`}>
         {data && data.title ? data.title : ""}
       </span>
-      <div
-        className={`flex-1 w-full bg-${theme}-back rounded-3xl px-6 py-5 relative`}
-      >
-        <div className="w-full h-full flex flex-col gap-y-3 pb-20">
+      <div className={`flex-1 w-full bg-${theme}-back rounded-3xl relative`}>
+        <div
+          ref={messagesDivRef}
+          className="w-full h-full flex flex-col gap-y-3 pb-28 absolute left-0 top-0 px-6 py-5 overflow-y-auto scroll-smooth"
+        >
           {messages.map((message, index) => (
             <Message key={index} data={message} />
           ))}
         </div>
 
-        <div className={`w-full absolute left-0 bottom-5 px-6`}>
+        <div
+          className={`w-full absolute left-0 bottom-0 rounded-3xl py-4 px-6 backdrop-blur-md`}
+        >
           <Formik
             innerRef={formikRef}
             initialValues={{ text: "" }}
@@ -103,7 +107,7 @@ export default function Chat({ data, onBackClick }) {
                   <img
                     alt=""
                     className="w-8 h-8"
-                    src={require(`../../../../../Images/pages/Tickets/send-${oppositeTheme}.png`)}
+                    src={require(`../../../../../Images/pages/Tickets/send-blue.png`)}
                   />
                 </button>
               </form>

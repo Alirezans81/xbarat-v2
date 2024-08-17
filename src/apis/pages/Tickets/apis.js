@@ -41,11 +41,22 @@ const getMessages = (ticketCode) => {
 const sendMessages = (params) => {
   const formData = new FormData();
 
-  formData.append("ticket", params.ticket);
-  formData.append("user", params.user);
-  formData.append("text", params.text);
+  params && params.ticket && formData.append("ticket", params.ticket);
+  params && params.user && formData.append("user", params.user);
+  params && params.text && formData.append("text", params.text);
+  params && params.file && formData.append("file", params.file);
 
   return axios.post(api["ticket-detail"], formData);
 };
 
-export { getTopics, getChats, getMessages, sendMessages };
+const createChat = (params) => {
+  const formData = new FormData();
+
+  params && params.user && formData.append("user", params.user);
+  params && params.category && formData.append("category", params.category);
+  params && params.title && formData.append("title", params.title);
+
+  return axios.post(api["ticket"], formData);
+};
+
+export { getTopics, getChats, getMessages, sendMessages, createChat };

@@ -16,8 +16,12 @@ export default function Message({ data }) {
         } justify-between items-center gap-x-6`}
       >
         <div
-          className={`bg-${theme} text-lg lg:max-w-[40%] px-4 pt-3 pb-2 rounded-2xl ${
-            data.user === userInfo.url ? "rounded-tl-none" : "rounded-tr-none"
+          className={` text-lg lg:max-w-[40%] px-4 pt-3 pb-2 rounded-2xl shadow-lg shadow-black/5 ${
+            data.user === userInfo.url
+              ? `rounded-tl-none ${
+                  theme === "dark" ? "bg-white/10" : "bg-light"
+                }`
+              : `rounded-tr-none bg-blue text-light`
           }`}
         >
           {data.text}
