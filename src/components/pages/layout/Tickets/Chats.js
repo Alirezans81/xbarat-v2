@@ -4,10 +4,28 @@ import { useThemeState } from "../../../../Providers/ThemeProvider";
 import ChatCard from "../Referral/ChatCard";
 import CustomDateTimeInput from "../../../common/CustomDateTimePicker";
 import { CustomDropdown2 } from "../../../common/CustomDropdown2";
-export default function Chats({ data, topic, setMode, setSelectedChatIndex }) {
+import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
+import NewTicketModal from "../../../modals/NewTicketModal";
+export default function Chats({
+  data,
+  topic,
+  setMode,
+  setSelectedChatIndex,
+  refreshChats,
+}) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
+  const setModalData = useModalDataSetState();
+
+  const openNewTicketModal = () => {
+    setModalData({
+      title: "",
+      children: <NewTicketModal category={topic} refreshChats={refreshChats} />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
 
   if (!topic) {
     return (
@@ -32,7 +50,10 @@ export default function Chats({ data, topic, setMode, setSelectedChatIndex }) {
               </div>
             </div>
             <div>
-              <button className="bg-blue rounded-full p-3">
+              <button
+                onClick={openNewTicketModal}
+                className="bg-blue rounded-full p-3"
+              >
                 <img
                   alt=""
                   src={require("../../../../Images/pages/Tickets/new-ticket.png")}

@@ -14,7 +14,11 @@ export default function Topic({ data, selected, onSelect }) {
       } min-h-[9rem] rounded-2xl px-4 py-3.5 flex flex-col gap-y-1`}
     >
       <div className="w-full flex justify-between items-center">
-        <span className={`font-${font}-bold text-${oppositeTheme} text-xl`}>
+        <span
+          className={`font-${font}-bold ${
+            selected ? "text-light" : `text-${oppositeTheme}`
+          } text-xl`}
+        >
           {data && data.title ? data.title : ""}
         </span>
         <button
