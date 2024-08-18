@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useFontState } from "../../../../Providers/FontProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import ChatCard from "../Referral/ChatCard";
@@ -6,13 +6,19 @@ import CustomDateTimeInput from "../../../common/CustomDateTimePicker";
 import { CustomDropdown2 } from "../../../common/CustomDropdown2";
 import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
 import NewTicketModal from "../../../modals/NewTicketModal";
+import { useLanguageState } from "../../../../Providers/LanguageProvider";
 export default function Chats({
   data,
   topic,
   setMode,
   setSelectedChatIndex,
+  lastTicketButtonRef,
   refreshChats,
+  setOnLoadSendMessage,
+  setOnLoadMessage,
+  setOnLoadFile,
 }) {
+  const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
@@ -21,7 +27,16 @@ export default function Chats({
   const openNewTicketModal = () => {
     setModalData({
       title: "",
-      children: <NewTicketModal category={topic} refreshChats={refreshChats} />,
+      children: (
+        <NewTicketModal
+          category={topic}
+          refreshChats={refreshChats}
+          lastTicketButtonRef={lastTicketButtonRef}
+          setOnLoadSendMessage={setOnLoadSendMessage}
+          setOnLoadMessage={setOnLoadMessage}
+          setOnLoadFile={setOnLoadFile}
+        />
+      ),
       canClose: true,
       isOpen: true,
     });
@@ -62,18 +77,25 @@ export default function Chats({
               </button>
             </div>
           </div>
-          <div className="w-full h-full flex flex-wrap gap-6 overflow-y-scroll">
-            {data.map((chat, index) => (
-              <ChatCard
-                key={index}
-                data={chat}
-                onSelect={() => {
-                  setMode("chat");
-                  setSelectedChatIndex(index);
-                }}
-              />
-            ))}
-          </div>
+          {data && data.length > 0 ? (
+            <div className="w-full h-full flex flex-wrap gap-6 overflow-y-scroll">
+              {data.map((chat, index) => (
+                <ChatCard
+                  key={index}
+                  data={chat}
+                  onSelect={() => {
+                    setMode("chat");
+                    setSelectedChatIndex(index);
+                  }}
+                  lastTicketButtonRef={index === 0 ? lastTicketButtonRef : null}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <span className="text-5xl -mt-5">{lang["no-data"]}</span>
+            </div>
+          )}
         </div>
       </>
     );

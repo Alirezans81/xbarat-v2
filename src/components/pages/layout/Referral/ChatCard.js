@@ -3,7 +3,7 @@ import { useFontState } from "../../../../Providers/FontProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useConvertDateTime } from "../../../../hooks/useConvertDateTime";
 
-export default function ChatCard({ data, onSelect }) {
+export default function ChatCard({ data, onSelect, lastTicketButtonRef }) {
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -13,7 +13,11 @@ export default function ChatCard({ data, onSelect }) {
     <div
       className={`flex flex-col text-${oppositeTheme} bg-${theme}-back h-48 rounded-2xl px-5 pt-4 pb-3 justify-between font-${font}-regular relative`}
     >
-      <button onClick={onSelect} className="absolute right-3.5 top-3.5 z-10">
+      <button
+        ref={lastTicketButtonRef}
+        onClick={onSelect}
+        className="absolute right-3.5 top-3.5 z-10"
+      >
         <img
           alt=""
           src={require(`../../../../Images/arrow-right-${oppositeTheme}.png`)}

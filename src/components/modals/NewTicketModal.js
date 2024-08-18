@@ -8,7 +8,14 @@ import { useCreateChat } from "../../apis/pages/Tickets/hooks";
 import { useUserState } from "../../Providers/UserProvider";
 import { useModalDataClose } from "../../Providers/ModalDataProvider";
 
-export default function NewTicketModal({ category, refreshChats }) {
+export default function NewTicketModal({
+  category,
+  refreshChats,
+  lastTicketButtonRef,
+  setOnLoadSendMessage,
+  setOnLoadMessage,
+  setOnLoadFile,
+}) {
   const lang = useLanguageState();
   const font = useFontState();
   const theme = useThemeState();
@@ -17,6 +24,8 @@ export default function NewTicketModal({ category, refreshChats }) {
   const closeModal = useModalDataClose();
 
   const { createChat, isLoading: createChatIsLoading } = useCreateChat();
+
+  console.log(lastTicketButtonRef);
 
   return (
     <div className="">
@@ -31,10 +40,12 @@ export default function NewTicketModal({ category, refreshChats }) {
             category: category && category.url ? category.url : "",
             title: values.title,
           };
-
           createChat(params, () => {
             closeModal();
-            refreshChats();
+            refreshChats(() => {
+              setOnLoadSendMessage(true);
+              setOnLoadMessage(values.message);
+            });
           });
         }}
       >

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import Topics from "../../components/pages/layout/Tickets/Topics";
 import Chats from "../../components/pages/layout/Tickets/Chats";
@@ -28,13 +28,29 @@ export default function Tickets() {
     refreshChats();
   }, [selectedTopicIndex]);
 
-  const refreshChats = () => {
+  const refreshChats = (customFunction) => {
     selectedTopicIndex >= 0 &&
       selectedTopicIndex < topics.length &&
       topics[selectedTopicIndex] &&
       topics[selectedTopicIndex].slug &&
-      getChats(topics[selectedTopicIndex].slug, setChats);
+      getChats(topics[selectedTopicIndex].slug, setChats, customFunction);
   };
+
+  useEffect(() => {
+    mode === "allChats" && refreshChats();
+  }, [mode]);
+
+  const lastTicketButtonRef = useRef();
+  const [onLoadSendMessage, setOnLoadSendMessage] = useState(false);
+  const [onLoadMessage, setOnLoadMessage] = useState();
+  const [onLoadFile, setOnLoadFile] = useState();
+  useEffect(() => {
+    if (onLoadSendMessage && chats && chats.length > 0) {
+      lastTicketButtonRef &&
+        lastTicketButtonRef.current &&
+        lastTicketButtonRef.current.click();
+    }
+  }, [chats, onLoadSendMessage]);
 
   return (
     <div className="w-full h-full lg:grid grid-cols-11 grid-rows-1 md:gap-x-10 gap-y-6 flex flex-col overflow-y-auto px-7 md:px-0">
@@ -58,7 +74,11 @@ export default function Tickets() {
             }
             setMode={setMode}
             setSelectedChatIndex={setSelectedChatIndex}
+            lastTicketButtonRef={lastTicketButtonRef}
             refreshChats={refreshChats}
+            setOnLoadSendMessage={setOnLoadSendMessage}
+            setOnLoadMessage={setOnLoadMessage}
+            setOnLoadFile={setOnLoadFile}
           />
         ) : (
           <Chat
@@ -71,6 +91,12 @@ export default function Tickets() {
               setMode("allChats");
               setSelectedChatIndex(-1);
             }}
+            onLoadSendMessage={onLoadSendMessage}
+            setOnLoadSendMessage={setOnLoadSendMessage}
+            onLoadMessage={onLoadMessage}
+            onLoadFile={onLoadFile}
+            setOnLoadMessage={setOnLoadMessage}
+            setOnLoadFile={setOnLoadFile}
           />
         )}
       </div>

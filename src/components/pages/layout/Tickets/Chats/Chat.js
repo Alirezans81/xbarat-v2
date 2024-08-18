@@ -9,7 +9,16 @@ import {
 import Message from "./Chat/Message";
 import { useUserState } from "../../../../../Providers/UserProvider";
 
-export default function Chat({ data, onBackClick }) {
+export default function Chat({
+  data,
+  onBackClick,
+  onLoadSendMessage,
+  setOnLoadSendMessage,
+  onLoadMessage,
+  onLoadFile,
+  setOnLoadMessage,
+  setOnLoadFile,
+}) {
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -40,6 +49,15 @@ export default function Chat({ data, onBackClick }) {
     messages.length > 0 &&
       messagesDivRef.current.lastElementChild.scrollIntoView();
   }, [messages]);
+
+  useEffect(() => {
+    if (onLoadSendMessage && (onLoadMessage || onLoadFile)) {
+      AddMessage({ text: onLoadMessage });
+      setOnLoadSendMessage(false);
+      setOnLoadMessage(null);
+      setOnLoadFile(null);
+    }
+  }, [onLoadSendMessage, onLoadMessage, onLoadFile]);
 
   return (
     <div
