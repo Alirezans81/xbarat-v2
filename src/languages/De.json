@@ -212,6 +212,7 @@
   "complete-profile-step-4-not-required-message-2nd": "Sie können Ihre Informationen eingeben oder mit dem nächsten Schritt fortfahren",
   "your_deposit_of": "Ihre Einzahlung von",
   "was_made_succesfully": "wurde erfolgreich durchgeführt",
+  "fee": "Gebühr",
   "watchListTutorial": {
     "currencyPair": "Währungspaar: Das Paar aus zwei Währungen, die in der Zeile der Liste beschrieben werden",
     "rate": "Kurs: Der Standardkurs, der diesem Währungspaar zugeordnet wird",

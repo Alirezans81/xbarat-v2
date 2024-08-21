@@ -2,8 +2,10 @@ import ComponentTutorialCardBalance from "./ComponentTutorialCard";
 import { useWalletState } from "../../../../Providers/WalletProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
+import { useFontState } from "../../../../Providers/FontProvider";
 import { useState } from "react";
 const Tutorial = () => {
+  const font=useFontState()
   const theme = useThemeState();
   const wallet = useWalletState();
   const lang = useLanguageState();
@@ -12,6 +14,7 @@ const Tutorial = () => {
   const [hovered, setHovered] = useState("");
   return (
     <div
+      dir={font!=="Fa"?"ltr":"rtl"}
       className={`w-fit h-full gird gird-cols-12 grid-rows-12 bg-${theme} p-5 rounded-2xl text-${oppositeTheme} transition-all duration-500`}
     >
       <button

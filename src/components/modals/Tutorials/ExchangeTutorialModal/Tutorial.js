@@ -2,16 +2,21 @@ import { React, useState } from "react";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import ExchangeFormTutorialComponent from "./ExchangeFormTutorialComponent";
+import { useFontState } from "../../../../Providers/FontProvider";
 const Tutorial = () => {
   const lang = useLanguageState();
+  const font=useFontState();
   const context = lang.exchangeTutorial;
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [hovered, setHovered] = useState("");
   return (
-    <div className="w-full h-full overflow-scroll flex flex-col justify-center items-center w-fit h-fit px-0 md:px-5">
+    <div 
+    className="w-full h-full overflow-scroll flex flex-col justify-center items-center w-fit h-fit px-0 md:px-5">
       <ul
         className={`text-${oppositeTheme} md:text-base w-fit h-full text-sm flex flex-col justify-start items-start gap-y-2`}
+        dir={font!=="Fa"?"ltr":"rtl"}
+
       >
         <li
           onMouseEnter={() => setHovered("Average Rate")}
