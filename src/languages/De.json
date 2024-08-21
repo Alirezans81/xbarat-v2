@@ -219,6 +219,8 @@
     "low": "Niedrig: Der niedrigste übereinstimmende Preis mit diesem Währungspaar",
     "high": "Hoch: Der höchste übereinstimmende Preis mit diesem Währungspaar"
   },
+  "privacyPolicy":"Datenschutz und Richtlinien",
+  "privacyLanding":"Willkommen bei Xbarat. Wir verpflichten uns, Ihre Privatsphäre zu schützen und die Sicherheit Ihrer persönlichen Daten zu gewährleisten. In dieser Datenschutzrichtlinie wird erläutert, wie wir Ihre Daten erfassen, verwenden und weitergeben.",
   "indexPrivacyPolicy": [
     {
       "title": "Warum sammeln wir Daten?",
@@ -373,3 +375,4 @@
     }
   }
 }
+
