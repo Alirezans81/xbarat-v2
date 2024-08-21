@@ -19,7 +19,6 @@ const TutorialModal = () => {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const [tutorial, setTutorial] = useState("");
   var w = window.innerWidth;
-  console.log(w);
   var cols = w <= 768 ? 1 : 2;
   return (
     <>
@@ -55,6 +54,10 @@ const TutorialModal = () => {
             {deposit.context[4]}
             <br />
             {deposit.context[5]}
+            <br />
+            {deposit.context[6]}
+            <br />
+            {deposit.context[7]}
           </span>
         </button>
         <button
