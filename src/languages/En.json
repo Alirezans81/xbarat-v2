@@ -279,20 +279,20 @@
   "index-journey-desc-1": "We transfer your money in 4 steps",
   "index-journey-desc-2": "Signup & Complete Profile - Deposit - Exchange - Withdraw or Transfer",
   "index-journey-step-1-title": "Signup & Complete Profile",
-  "index-journey-step-1-desc": "Enter the system from the login button, select the registration option and enter your email. Create a personal password and after repeating it in the next field, agree to the terms of Xbrat. The confirmation code will be sent to the email you registered on the site. After entering the code in the relevant field and confirming, your account will be created and you will be transferred to the Xbrat main page. On the main page, go to the profile section and enter your details.",
+  "index-journey-step-1-desc": "Enter the system from the login button, select the registration option and enter your email. Create a personal password and after repeating it in the next field, agree to the terms of Xbarat. The confirmation code will be sent to the email you registered on the site. After entering the code in the relevant field and confirming, your account will be created and you will be transferred to the Xbarat main page. On the main page, go to the profile section and enter your details.",
   "index-journey-step-2-title": "Deposit",
   "index-journey-step-2-desc": "Enter the wallet section (bar on the left side of the site) and select your desired currency (the currency you want to convert), enter the currency amount, after selecting the send option, wait for the admin's approval. After admin approval, depending on your chosen currency (riyal, dollar, euro, etc.), Shaba number, card number or PayPal address will be displayed in the wallet top-up request section. Make the deposit and upload the deposit slip in the same section of the request. After admin approval, your wallet will be charged.",
   "index-journey-step-3-title": "Exchange",
   "index-journey-step-3-desc": "Enter the main page of the site, click on the desired currency pair (for example: Rial to Euro) in the Watch List section, enter the amount and rate you offer and select the send option. Wait for the admin's approval to convert your currency.",
   "index-journey-step-4-title": "Transfer/Withdrawal",
-  "index-journey-step-4-desc": "Note that only users who have an authenticated user account on the Xbrat site are able to transfer currency. In the wallet section, click on the desired currency and select the transfer option. In the first field, select the amount of currency and in the second field, enter the user code of the recipient of the currency (person or account to which you want to transfer). After selecting the send option and admin confirmation, the currency will be transferred. Go to your wallet and click on the desired currency, select the withdrawal option and enter the withdrawal amount, in the Bank Account field, enter the Shaba number, card number or PayPal address of the destination and send the option. Choose. Wait for the admin to upload the deposit slip in the withdrawal request section.",
+  "index-journey-step-4-desc": "Note that only users who have an authenticated user account on the Xbarat site are able to transfer currency. In the wallet section, click on the desired currency and select the transfer option. In the first field, select the amount of currency and in the second field, enter the user code of the recipient of the currency (person or account to which you want to transfer). After selecting the send option and admin confirmation, the currency will be transferred. Go to your wallet and click on the desired currency, select the withdrawal option and enter the withdrawal amount, in the Bank Account field, enter the Shaba number, card number or PayPal address of the destination and send the option. Choose. Wait for the admin to upload the deposit slip in the withdrawal request section.",
   "index-support-map": "Support Map",
   "index-support-map-title": "We’re a distributed platform",
   "index-support-map-desc": "We can support countries all around the world.",
   "index-footer-trust-title-1": "We are build on",
   "index-footer-trust-title-2": "Trust",
   "index-footer-trust-title-3": "",
-  "index-footer-trust-desc": "Xbarat has become one of the most popular currency transfer sites in Iran with the official seal of the Ministry of Industry, Mines and Trade, as well as with more than 5000 active users and countless transactions. Xbrat, relying on the capabilities of its expert team, tries to provide the best services to its users.",
+  "index-footer-trust-desc": "Xbarat has become one of the most popular currency transfer sites in Iran with the official seal of the Ministry of Industry, Mines and Trade, as well as with more than 5000 active users and countless transactions. Xbarat, relying on the capabilities of its expert team, tries to provide the best services to its users.",
   "index-footer-trust-bottom": "Lorem ipsum dolor sit",
   "index-product": "Product",
   "index-features": "Features",
@@ -306,6 +306,59 @@
   "index-copyright": "Copyright by @alirezanasiri.pro",
   "your_deposit_of": "Your Deposit Of",
   "was_made_succesfully": "Was Made Successfully",
+  "privacyPolicy":"Privacy And Policy",
+  "privacyLanding":"Welcome to Xbarat.We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and share your data.",
+
+  "indexPrivacyPolicy": [
+    {
+      "title": "Why Do We Collect Data",
+      "drop": [
+        {
+          "head": "Validate Transaction",
+          "value": "Transaction Verification is required to guarantee that our users will have a secure platform to exchange,transfer,withdraw or deposit money and since We Do not have a money pool and all transactions are done by connecting users together we have to verify all transactions between every two users."
+        },
+        {
+          "head": "Support",
+          "value": "We At Xbarat Feel The Need To Provide The Best Service To Our Users And Since We Have User WorldWide Gathering Information Helps us Offer The Quickest And Best Customer Support Which We Do By Connecting People To Our Representers That Station Nearby And Also Connect Them Based On Their Need's."
+        },
+        {
+          "head": "Validate Identity",
+          "value": "Identity verification is required to guarantee and keep your transactions safe. With the help of validation companies in Iran and Europe, Xbarat guarantees its users and improves the transaction process. In Xbarat, the identity documents of you and other users are used only to verify and ensure the correctness of the transaction process; With this action, the possibility of any error and misuse of your property will be zero."
+        }
+      ]
+    },
+
+    {
+      "title": "How Do We Collect Data",
+      "drop": [
+        {
+          "head": "Personal Data",
+          "value": "We Collect Your Personal Data When You Sign up In Xbarat Througn Places That You Can Control What Information You Give Us So That No Data Is Collected Without Consent"
+        },
+        {
+          "head": "Transaction Receipts",
+          "value": "Each Transaction Between Every Two User Comes Through Our Transaction Verification Team Which They Examine Every Detail Of Every Transaction That Is Provided By The Users Making Them."
+        }
+      ]
+    },
+    {
+      "title": "What Data We Collect",
+      "drop": [
+        {
+          "head": "Contact Info",
+          "value": "We Collect Your Phone Number,Email Address Your City/Country"
+        },
+        {
+          "head": "Identity Info",
+          "value": "As Said Earlier We Have To Verify Identities And To Do So We Collect An Identification Record Such as a Passport Picture Or An ID Card Picture"
+        },
+        {
+          "head": "Banking Information",
+          "value": "We Are In a Money Exchange Bussiness Hence Making Us Collect Information Regarding The Banks That The Deposits Should Go To Or Where Will Our Users Deposit Their Money From"
+        }
+      ]
+    }
+  ],
   "watchListTutorial": {
     "currencyPair": "Currency Pair: The Pair Of Two Currencies Described In the Row in The List",
     "rate": "Rate: The Standard Rate That Is Being Matched With This Currency Pair",
@@ -524,3 +577,4 @@
   "target-referral-people": "people",
   "total-receives": "Total Receives"
 }
+

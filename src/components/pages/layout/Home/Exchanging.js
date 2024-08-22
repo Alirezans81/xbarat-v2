@@ -150,7 +150,7 @@ export default function Exchanging({
           )}
           <button
             onClick={openTutorialModal}
-            className="flex-1 bg-none text-blue"
+            className="flex-1 bg-none text-blue  h-full flex justify-start px-2"
           >
             ?
           </button>
