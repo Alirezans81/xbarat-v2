@@ -51,6 +51,7 @@ import Branches from "./pages/User Mangement/Branches";
 import Singular from "./pages/Currency/Singular";
 import Pair from "./pages/Currency/Pair";
 import Robots from "./pages/More/Robots";
+import GiftCard from "./pages/Profile/GiftCard";
 
 export default function App() {
   const lang = useLanguageState();
@@ -145,6 +146,7 @@ export default function App() {
                 <Route path="tickets" element={<Tickets />} />
                 <Route path="cards" element={<Cards />} />
                 <Route path="referral" element={<Referral />} />
+                <Route path="gift-card" element={<GiftCard />} />
               </Route>
               <Route path="submitting">
                 <Route path="assignment" element={<Assignment />} />

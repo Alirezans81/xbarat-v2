@@ -31,5 +31,6 @@
   "news": 50,
   "ticket-category": 50,
   "ticket": 100,
-  "ticket-detail": 100
+  "ticket-detail": 100,
+  "giftcard-site": 50
 }

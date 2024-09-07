@@ -9,6 +9,7 @@ const PrevArrow = (props) => {
 
   return (
     <img
+      alt="previous"
       className={className + " w-5 h-5"}
       style={style}
       onClick={onClick}
@@ -23,6 +24,7 @@ const NextArrow = (props) => {
 
   return (
     <img
+      alt="next"
       className={className + " w-5 h-5"}
       style={style}
       onClick={onClick}

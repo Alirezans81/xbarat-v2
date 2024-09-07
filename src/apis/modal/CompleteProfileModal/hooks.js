@@ -19,7 +19,7 @@ const useFetchStep1 = () => {
           process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data.results);
           saveUser(data.data.results);
-          customFunction();
+          customFunction && customFunction();
           setIsLoading(false);
           return data.data.results;
         })
@@ -51,7 +51,7 @@ const useFetchStep2 = () => {
           process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data.results);
           saveUser(data.data.results);
-          customFunction();
+          customFunction && customFunction();
           setIsLoading(false);
           return data.data.results;
         })
@@ -83,7 +83,7 @@ const useFetchStep3 = () => {
           process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data.results);
           saveUser(data.data.results);
-          customFunction();
+          customFunction && customFunction();
           setIsLoading(false);
           return data.data.results;
         })
@@ -115,7 +115,7 @@ const useFetchStep4 = () => {
           process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data.results);
           saveUser(data.data.results);
-          customFunction();
+          customFunction && customFunction();
           setIsLoading(false);
           return data.data.results;
         })

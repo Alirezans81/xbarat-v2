@@ -52,8 +52,6 @@ export default function WatchList({
 
   const [targetSlug, setTargetSlug] = useState();
 
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-
   const [watch_list_data, set_watch_list_data] = useState([]);
   useEffect(() => {
     data && data.watch_list
@@ -110,7 +108,7 @@ export default function WatchList({
     if (availableTargets.length > 0 && targetSlug) {
       findTarget(targetSlug);
     }
-  }, [availableTargets, targetSlug]);
+  }, [availableTargets, selectedSourceIndex, targetSlug]);
 
   useEffect(() => {
     if (
@@ -127,11 +125,11 @@ export default function WatchList({
       data &&
       data.watch_list &&
       data.watch_list[0] &&
-      selectedSourceIndex >= 0
+      data.watch_list[0].target
     ) {
       setTargetSlug(data.watch_list[0].target);
     }
-  }, [selectedSourceIndex]);
+  }, [data]);
 
   return (
     <div className="px-6 py-5 h-full flex flex-col ">
@@ -159,7 +157,6 @@ export default function WatchList({
               if (data && data.watch_list) {
                 findSource(data.watch_list[index].source);
                 setTargetSlug(data.watch_list[index].target);
-                setSelectedIndex(index);
               }
             }}
           />

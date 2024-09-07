@@ -9,6 +9,8 @@ iframe#webpack-dev-server-client-overlay {
 html {
   height: 100dvh;
   width: 100dvw;
+  overflow: hidden;
+  padding: 0px;
 }
 
 body {
@@ -226,11 +228,15 @@ body {
 }
 
 .hover-bg-blue:hover {
-  background-color: #0a8dff;
+  background-color: #0a8dff !important;
 }
 
 .border-blue {
   border-color: #0a8dff;
+}
+
+.border-hover-blue:hover {
+  border-color: #0a8dff !important;
 }
 
 .outline-blue {
@@ -265,6 +271,10 @@ body {
 
 .bg-green {
   background-color: #0b9b08;
+}
+
+.hover-bg-green:hover {
+  background-color: #0b9b08 !important;
 }
 
 .border-green {
@@ -540,5 +550,4 @@ body {
 .ticket-input {
   font-family: manjari-regular;
   outline: none !important;
-  
 }

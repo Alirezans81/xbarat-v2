@@ -40,5 +40,6 @@ export default function api() {
     "ticket-category": `${devApiDomain}api/ticket-category/`,
     ticket: `${devApiDomain}api/ticket/`,
     "ticket-detail": `${devApiDomain}api/ticket-detail/`,
+    "giftcard-site": `${devApiDomain}api/giftcard-site/`,
   };
 }
