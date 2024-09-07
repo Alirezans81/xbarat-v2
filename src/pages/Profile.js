@@ -122,6 +122,15 @@ export default function Profile() {
               lightImage={referralLight}
               link={"referral"}
             />
+            {/* <Link
+              theme={theme}
+              oppositeTheme={oppositeTheme}
+              font={font}
+              title={lang["gift-cards"]}
+              darkImage={referralDark}
+              lightImage={referralLight}
+              link={"gift-card"}
+            /> */}
           </div>
         </div>
         <div
