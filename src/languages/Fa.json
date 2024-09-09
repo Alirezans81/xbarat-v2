@@ -242,9 +242,9 @@
   "accept-policy": "آیا قوانین حریم خصوصی و سیاست را به منظور استفاده از سایت قبول میکنید",
   "password-updated": "پسورد شما تغییر پیدا کرد",
   "email-exists-error": "این ایمیل از قبل وجود دارد",
-  "privacyPolicy":"حریم خصوصی",
+  "privacyPolicy": "حریم خصوصی",
 
-  "privacyLanding":"به ایکس برات خوش آمدید. ما در اینجا متعهد به محافظت از حریم خصوصی و اطلاعات شما هستیم. این سیاست حریم خصوصی نحوه جمع آوری، استفاده و اشتراک گذاری داده های شما را توضیح می دهد.  ",
+  "privacyLanding": "به ایکس برات خوش آمدید. ما در اینجا متعهد به محافظت از حریم خصوصی و اطلاعات شما هستیم. این سیاست حریم خصوصی نحوه جمع آوری، استفاده و اشتراک گذاری داده های شما را توضیح می دهد.  ",
 
   "indexPrivacyPolicy": [
     {
@@ -472,7 +472,9 @@
   "index-whats-app": "واتسپ",
   "index-facebook": "فیسبوک",
   "index-x": "ایکس",
-  "index-copyright": "ساخته شده توسط @xbarat.com",
+  "index-copyright": "ساخته شده توسط xbarat.com@",
+  "index-menu": "منو",
+  "index-get-in-touch": "در ارتباط باشید",
   "add-to-home-screen-modal-title": "وب اپلیکیشن ایکس برات را به صفحه اصلی موبایل خود اضافه کنید.",
   "add-to-home-screen-modal-step-1-1st": "در نوار پایین روی دکمه",
   "add-to-home-screen-modal-step-1-2nd": " Share ",
@@ -582,4 +584,3 @@
   "target-referral-people": "نفر",
   "total-receives": "مجموع دریافتی"
 }
-
