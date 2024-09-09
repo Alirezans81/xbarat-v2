@@ -65,12 +65,23 @@ export default function App() {
   const { getLanguages, isLoading: getLanguagesIsLoading } = useGetLanguages();
   useEffect(() => setLoading(getLanguagesIsLoading), [getLanguagesIsLoading]);
 
+  const queryParameters = new URLSearchParams(window.location.search);
+  const platform = queryParameters.get("platform");
+
   useEffect(() => {
     getLanguages(
-      setLanguageList,
+      (data) => {
+        if (data && data.length > 0) {
+          if (platform === "ios") {
+            console.log(1);
+            setLanguageList(data.filter((e) => e.symbol !== "Fa"));
+          } else {
+            setLanguageList(data);
+          }
+        }
+      },
       null,
-      (languageList) =>
-        localStorage.setItem("languageList", JSON.stringify(languageList)),
+      null,
       () => setLang("")
     );
   }, []);

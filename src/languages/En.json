@@ -305,10 +305,12 @@
   "index-facebook": "Facebook",
   "index-x": "X",
   "index-copyright": "Copyright by @xbarat.com",
+  "index-menu": "Menu",
+  "index-get-in-touch": "Get in Touch",
   "your_deposit_of": "Your Deposit Of",
   "was_made_succesfully": "Was Made Successfully",
-  "privacyPolicy":"Privacy And Policy",
-  "privacyLanding":"Welcome to Xbarat.We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and share your data.",
+  "privacyPolicy": "Privacy And Policy",
+  "privacyLanding": "Welcome to Xbarat.We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and share your data.",
 
   "indexPrivacyPolicy": [
     {
@@ -578,4 +580,3 @@
   "target-referral-people": "people",
   "total-receives": "Total Receives"
 }
-

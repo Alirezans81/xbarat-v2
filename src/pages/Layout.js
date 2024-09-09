@@ -27,10 +27,8 @@ import {
   useGetCurrencies,
   useGetCurrencyPairs,
 } from "../apis/common/currency/hooks";
-import { useGetNotifs } from "../apis/pages/Layout/hooks";
 import { useCurrencyPairsSetState } from "../Providers/CurrencyPairsProvider";
 import { useGetLanguages } from "../apis/common/language/hooks";
-import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 import CompleteProfileModal from "../components/modals/CompleteProfileModal";
 import {
   useModalDataSetState,
@@ -49,7 +47,7 @@ import NewsModal from "../components/modals/NewsModal";
 export default function Layout() {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
-  const { three: direction, one: oneDirection } = useDirectionState();
+  const { three: direction } = useDirectionState();
   const token = useTokenState();
   const setToken = useTokenSetState();
   const setUser = useUserSetState();
@@ -61,7 +59,6 @@ export default function Layout() {
   const lang = useLanguageState();
   const font = useFontState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
-  const setLanguageList = useLanguageListSetState();
   const setStatuses = useStatusesSetState();
   const { pathname: activeRoute } = useLocation();
   const { pathname: currentRoute } = useLocation();
@@ -161,18 +158,6 @@ export default function Layout() {
   useEffect(() => {
     getCurrencies(setCurrencies);
     getCurrencyPairs(null, setCurrencyPairs);
-    const stringLanguages = window.localStorage.getItem("languageList");
-    if (
-      stringLanguages !== "undefined" &&
-      stringLanguages !== "null" &&
-      stringLanguages !== null
-    ) {
-      setLanguageList(JSON.parse(stringLanguages));
-    } else {
-      getLanguages(setLanguageList, null, (languageList) =>
-        localStorage.setItem("languageList", JSON.stringify(languageList))
-      );
-    }
 
     const stringStatuses = window.localStorage.getItem("statues");
     if (
