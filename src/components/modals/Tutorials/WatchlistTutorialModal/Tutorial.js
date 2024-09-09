@@ -6,7 +6,6 @@ import { useLanguageState } from "../../../../Providers/LanguageProvider";
 const Tutorial = () => {
   const theme = useThemeState();
   const lang = useLanguageState();
-
   const context = lang.watchListTutorial;
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
@@ -16,23 +15,26 @@ const Tutorial = () => {
     min_rate: 1.3,
     max_rate: 1.8,
   };
-  const heads = ["Currency Pair", "Rate", "Low", "High"];
+  const heads = [lang['currency-pair'], lang['rate'], lang["low"], lang["high"]];
   const [hovered, setHovered] = useState(-1);
   return (
     <div className="w-fit h-fit flex flex-col justify-center items-center gap-y-3 py-3 px-5">
       <ul
+        dir={font!=="Fa"?"ltr":"rtl"}
+
         className={`w-full h-fit flex justify-start items-start gap-y-1 flex-col text-${oppositeTheme} pl-1 py-1 transition-all duration-500`}
       >
         <li
           className={`${
             hovered === 0
-              ? "bg-blue rounded-2xl transition-all duration-500 w-fit p-2"
+              ? "bg-blue rounded-2xl transition-all duration-500 p-2"
               : "bg-none p-2"
           }`}
           onMouseEnter={() => setHovered(0)}
-          onMouseLeave={() => setHovered(-1)}
           onClick={() => setHovered(0)}
+          onMouseLeave={() => setHovered(-1)}
         >
+          {" "}
           {context["currencyPair"]}
         </li>
         <li
@@ -93,8 +95,8 @@ const Tutorial = () => {
             key={tdIndex}
             className={`flex whitespace-nowrap ${
               hovered === tdIndex
-                ? "px-2 text-2xl underline"
-                : "text-sm md:text-base lg:text-xl px-2"
+                ? "px-2 text-2xl underline animate-appear"
+                : "px-2 text-2xl"
             } justify-center col-span-1 text-center-important font-${font}-regular text-${oppositeTheme}`}
           >
             {value}

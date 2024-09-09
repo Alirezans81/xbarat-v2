@@ -10,7 +10,6 @@ const Withdraw = ({ withdraw }) => {
 
   const { context, status } = withdraw;
   const statusCount = Object.keys(status).length;
-
   return (
     <div
       className={`w-full max-w-[1280px] overflow-scroll  h-full animate-upward flex justify-center`}

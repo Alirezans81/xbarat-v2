@@ -212,12 +212,65 @@
   "complete-profile-step-4-not-required-message-2nd": "Sie können Ihre Informationen eingeben oder mit dem nächsten Schritt fortfahren",
   "your_deposit_of": "Ihre Einzahlung von",
   "was_made_succesfully": "wurde erfolgreich durchgeführt",
+  "fee": "Gebühr",
   "watchListTutorial": {
     "currencyPair": "Währungspaar: Das Paar aus zwei Währungen, die in der Zeile der Liste beschrieben werden",
     "rate": "Kurs: Der Standardkurs, der diesem Währungspaar zugeordnet wird",
     "low": "Niedrig: Der niedrigste übereinstimmende Preis mit diesem Währungspaar",
     "high": "Hoch: Der höchste übereinstimmende Preis mit diesem Währungspaar"
   },
+  "privacyPolicy":"Datenschutz und Richtlinien",
+  "privacyLanding":"Willkommen bei Xbarat. Wir verpflichten uns, Ihre Privatsphäre zu schützen und die Sicherheit Ihrer persönlichen Daten zu gewährleisten. In dieser Datenschutzrichtlinie wird erläutert, wie wir Ihre Daten erfassen, verwenden und weitergeben.",
+  "indexPrivacyPolicy": [
+    {
+      "title": "Warum sammeln wir Daten?",
+      "drop": [
+        {
+          "head": "Transaktion validieren",
+          "value": "Die Transaktionsüberprüfung ist erforderlich, um zu garantieren, dass unseren Benutzern eine sichere Plattform zum Umtauschen, Überweisen, Abheben oder Einzahlen von Geld zur Verfügung steht. Da wir keinen Geldpool haben und alle Transaktionen durch die Verbindung von Benutzern durchgeführt werden, müssen wir alle Transaktionen zwischen jeweils zwei Benutzern überprüfen."
+        },
+        {
+          "head": "Unterstützung",
+          "value": "Wir bei Xbarat haben das Bedürfnis, unseren Benutzern den besten Service zu bieten. Und da wir Benutzer auf der ganzen Welt haben, hilft uns das Sammeln von Informationen dabei, den schnellsten und besten Kundensupport anzubieten. Dies tun wir, indem wir Menschen mit unseren Vertretern in der Nähe verbinden und sie auch je nach ihren Bedürfnissen verbinden."
+        },
+        {
+          "head": "Identität validieren",
+          "value": "Eine Identitätsüberprüfung ist erforderlich, um die Sicherheit Ihrer Transaktionen zu gewährleisten. Mithilfe von Validierungsunternehmen im Iran und in Europa garantiert Xbrat seinen Benutzern und verbessert den Transaktionsprozess. Bei Xbrat werden die Ausweisdokumente von Ihnen und anderen Benutzern nur verwendet, um die Richtigkeit des Transaktionsprozesses zu überprüfen und sicherzustellen. Mit dieser Aktion wird die Möglichkeit eines Fehlers oder Missbrauchs Ihres Eigentums auf Null reduziert."
+        }
+      ]
+    },
+
+    {
+      "title": "Wie erfassen wir Daten?",
+      "drop": [
+        {
+          "head": "Personenbezogene Daten",
+          "value": "Wir erfassen Ihre persönlichen Daten, wenn Sie sich bei Xbarat anmelden. Dabei können Sie kontrollieren, welche Informationen Sie uns geben, sodass keine Daten ohne Ihre Zustimmung erfasst werden."
+        },
+        {
+          "head": "Transaktionsbelege",
+          "value": "Jede Transaktion zwischen zwei Benutzern wird von unserem Transaktionsüberprüfungsteam durchgeführt. Dieses prüft jedes Detail jeder Transaktion, das von den Benutzern angegeben wird, die sie durchführen."
+        }
+      ]
+    },
+    {
+      "title": "Welche Daten erheben wir?",
+      "drop": [
+        {
+          "head": "Kontaktinformationen",
+          "value": "Wir erfassen Ihre Telefonnummer, E-Mail-Adresse, Ihre Stadt/Ihr Land"
+        },
+        {
+          "head": "Identitätsinformationen",
+          "value": "Wie bereits erwähnt, müssen wir Identitäten überprüfen und dazu einen Identifikationsdatensatz wie ein Passbild oder ein Ausweisbild erfassen"
+        },
+        {
+          "head": "Bankdaten",
+          "value": "Wir sind in einem Geldwechselgeschäft tätig und müssen daher Informationen über die Banken sammeln, an die die Einlagen gehen sollen, oder darüber, von wo aus unsere Benutzer ihr Geld einzahlen werden"
+        }
+      ]
+    }
+  ],
   "yourBalanceTutorial": {
     "balance": "Hier können Sie Ihr Guthaben einsehen",
     "pending": "Sie können den Betrag Ihres ausstehenden Geldes sehen",
@@ -322,3 +375,4 @@
     }
   }
 }
+

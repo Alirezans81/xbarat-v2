@@ -307,6 +307,59 @@
   "index-copyright": "Copyright by @xbarat.com",
   "your_deposit_of": "Your Deposit Of",
   "was_made_succesfully": "Was Made Successfully",
+  "privacyPolicy":"Privacy And Policy",
+  "privacyLanding":"Welcome to Xbarat.We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and share your data.",
+
+  "indexPrivacyPolicy": [
+    {
+      "title": "Why Do We Collect Data",
+      "drop": [
+        {
+          "head": "Validate Transaction",
+          "value": "Transaction Verification is required to guarantee that our users will have a secure platform to exchange,transfer,withdraw or deposit money and since We Do not have a money pool and all transactions are done by connecting users together we have to verify all transactions between every two users."
+        },
+        {
+          "head": "Support",
+          "value": "We At Xbarat Feel The Need To Provide The Best Service To Our Users And Since We Have User WorldWide Gathering Information Helps us Offer The Quickest And Best Customer Support Which We Do By Connecting People To Our Representers That Station Nearby And Also Connect Them Based On Their Need's."
+        },
+        {
+          "head": "Validate Identity",
+          "value": "Identity verification is required to guarantee and keep your transactions safe. With the help of validation companies in Iran and Europe, Xbarat guarantees its users and improves the transaction process. In Xbarat, the identity documents of you and other users are used only to verify and ensure the correctness of the transaction process; With this action, the possibility of any error and misuse of your property will be zero."
+        }
+      ]
+    },
+
+    {
+      "title": "How Do We Collect Data",
+      "drop": [
+        {
+          "head": "Personal Data",
+          "value": "We Collect Your Personal Data When You Sign up In Xbarat Througn Places That You Can Control What Information You Give Us So That No Data Is Collected Without Consent"
+        },
+        {
+          "head": "Transaction Receipts",
+          "value": "Each Transaction Between Every Two User Comes Through Our Transaction Verification Team Which They Examine Every Detail Of Every Transaction That Is Provided By The Users Making Them."
+        }
+      ]
+    },
+    {
+      "title": "What Data We Collect",
+      "drop": [
+        {
+          "head": "Contact Info",
+          "value": "We Collect Your Phone Number,Email Address Your City/Country"
+        },
+        {
+          "head": "Identity Info",
+          "value": "As Said Earlier We Have To Verify Identities And To Do So We Collect An Identification Record Such as a Passport Picture Or An ID Card Picture"
+        },
+        {
+          "head": "Banking Information",
+          "value": "We Are In a Money Exchange Bussiness Hence Making Us Collect Information Regarding The Banks That The Deposits Should Go To Or Where Will Our Users Deposit Their Money From"
+        }
+      ]
+    }
+  ],
   "watchListTutorial": {
     "currencyPair": "Currency Pair: The Pair Of Two Currencies Described In the Row in The List",
     "rate": "Rate: The Standard Rate That Is Being Matched With This Currency Pair",
@@ -525,3 +578,4 @@
   "target-referral-people": "people",
   "total-receives": "Total Receives"
 }
+
