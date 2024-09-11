@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useState } from "react";
 import ReactCrop, { convertToPixelCrop } from "react-image-crop";
 import { useLanguageState } from "../../Providers/LanguageProvider";
+import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useCropImageModalClose } from "../../Providers/CropImageModalProvider";
 import imageCompression from "browser-image-compression";
@@ -55,25 +56,27 @@ export default function CropImageModal({ imageSrc, setImage }) {
   const lang = useLanguageState();
   const font = useFontState();
   const closeCropImageModal = useCropImageModalClose();
+  const setLoading = useIsLoadingSplashScreenSetState();
 
   const imageRef = useRef();
   const canvasRef = useRef();
 
   const [crop, setCrop] = useState({
     unit: "%",
-    x: 25,
-    y: 25,
-    width: 50,
-    height: 50,
+    x: 0,
+    y: 0,
+    width: 100,
+    height: 100,
   });
 
   const compressFile = async (file) => {
-    try {
-      return imageCompression(file);
-    } catch (error) {
-      console.log("error: ", error);
-      return file;
-    }
+    // setLoading(true);
+    // const data = await imageCompression(file)
+    //   .then(() => setLoading(false))
+    //   .catch(() => setLoading(false));
+    // return data;
+
+    return file;
   };
 
   const handleSubmit = () => {
