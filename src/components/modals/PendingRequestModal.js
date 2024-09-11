@@ -254,6 +254,14 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
         </div>
         {data && data.status_title === "Upload Document" && (
           <SubmitButton
+            disabled={
+              !(
+                data &&
+                data.url &&
+                document &&
+                receiverTanks[selectedWalletTank]
+              )
+            }
             onClick={() => {
               if (
                 data &&

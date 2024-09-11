@@ -1,8 +1,11 @@
+const flowbite = require("flowbite-react/tailwind");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
+    flowbite.content(),
   ],
   theme: {
     extend: {
@@ -10,7 +13,7 @@ module.exports = {
         upward: "upward 2s ease-out 1",
         rightward: "rightward 2s ease-out 1",
         leftward: "leftward 2s ease-out 1",
-        appear:"appear 2s ease-out 1"
+        appear: "appear 2s ease-out 1",
       },
       keyframes: {
         upward: {
@@ -26,7 +29,7 @@ module.exports = {
           "100%": { margin: "0px" },
         },
         appear: {
-          "0%": { opacity:'0' },
+          "0%": { opacity: "0" },
           "100%": { margin: "1" },
         },
       },
@@ -67,5 +70,5 @@ module.exports = {
       // => @media (min-width: 1536px) { ... }
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [flowbite.plugin()],
 };
