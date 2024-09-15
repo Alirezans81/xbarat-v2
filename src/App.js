@@ -102,11 +102,17 @@ export default function App() {
           languageList[savedLanguageIndex].file,
           null,
           null,
-          setLang
+          setLang,
+          () => {
+            setLang(require("./languages/En.json"));
+          }
         );
       } else {
         setFont(languageList[0].symbol);
-        getLanguageFile(languageList[0].file, null, null, setLang);
+        getLanguageFile(languageList[0].file, null, null, setLang, () => {
+          localStorage.removeItem("selectedLanguageIndex");
+          setLang(require("./languages/En.json"));
+        });
       }
     }
   }, [languageList]);

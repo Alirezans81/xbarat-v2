@@ -41,7 +41,8 @@ const useGetLanguageFile = () => {
     fileUrl,
     setState,
     customFunction,
-    customFunctionWithData
+    customFunctionWithData,
+    onError
   ) => {
     setIsLoading(true);
     await getLanguageFile(fileUrl)
@@ -54,6 +55,7 @@ const useGetLanguageFile = () => {
         return data.data;
       })
       .catch((error) => {
+        onError && onError();
         console.log(error);
         setError(error);
         setIsLoading(false);
