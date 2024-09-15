@@ -43,7 +43,9 @@ export default function LanguageSwitcher({ with_background }) {
       "selectedLanguageIndex"
     );
 
-    savedLanguageIndex && setSelectedLanguageIndex(+savedLanguageIndex);
+    savedLanguageIndex
+      ? setSelectedLanguageIndex(+savedLanguageIndex)
+      : setSelectedLanguageIndex(0);
   }, []);
 
   useEffect(() => {
@@ -58,7 +60,11 @@ export default function LanguageSwitcher({ with_background }) {
         languages[selectedLanguageIndex].file,
         null,
         null,
-        setLang
+        setLang,
+        () => {
+          window.localStorage.setItem("selectedLanguageIndex", 0 + "");
+          setLang(require("../../languages/En.json"));
+        }
       );
 
       updateDefaultLocale(
