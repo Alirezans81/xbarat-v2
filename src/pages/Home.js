@@ -17,7 +17,7 @@ import ListPendingExchange from "../components/pages/layout/Home/ListMode/ListPe
 import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 import { useWalletState } from "../Providers/WalletProvider";
 
-export default function Home({ isDemo }) {
+export default function Home({ isDemo, platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
@@ -127,6 +127,14 @@ export default function Home({ isDemo }) {
     }
   };
 
+  // console.log("----------------------------------------------");
+  // console.log("currencies: ", currencies);
+  // console.log("availableTargets: ", availableTargets);
+  // console.log("selectedSourceIndex: ", selectedSourceIndex);
+  // console.log("selectedTargetIndex: ", selectedTargetIndex);
+  // console.log("selectedCurrecnyPair: ", selectedCurrecnyPair);
+  // console.log("----------------------------------------------");
+
   if (pageMode === "card" || window.innerWidth <= canSwitchPageModeWidth) {
     return (
       <>
@@ -194,6 +202,7 @@ export default function Home({ isDemo }) {
                 findTarget={findTarget}
                 rateIsReversed={rateIsReversed}
                 selectedCurrecnyPair={selectedCurrecnyPair}
+                platform={platform}
               />
             </div>
             <div

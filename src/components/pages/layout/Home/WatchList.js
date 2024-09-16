@@ -21,6 +21,7 @@ export default function WatchList({
   findTarget,
   rateIsReversed,
   selectedCurrecnyPair,
+  platform,
 }) {
   const lang = useLanguageState();
   const setModalData = useModalDataSetState();
@@ -54,54 +55,68 @@ export default function WatchList({
 
   const [watch_list_data, set_watch_list_data] = useState([]);
   useEffect(() => {
-    data && data.watch_list
-      ? set_watch_list_data(
-          data.watch_list.map((row, index) => {
-            let temp = {};
-            temp.title = row.title;
+    if (data && data.watch_list) {
+      let a = data.watch_list.map((row, index) => {
+        let temp = {};
+        temp.title = row.title;
 
-            if (
-              selectedCurrecnyPair &&
-              (selectedCurrecnyPair.url === row.currency_pair_url ||
-                selectedCurrecnyPair.url === row.currency_pair_reverse_url) &&
-              rateIsReversed
-            ) {
-              temp.rate = addComma(
-                calculateReverseRate(
-                  +row.rate,
-                  +selectedCurrecnyPair.rate_multiplier,
-                  +row.floating_number
-                )
-              );
+        if (
+          selectedCurrecnyPair &&
+          (selectedCurrecnyPair.url === row.currency_pair_url ||
+            selectedCurrecnyPair.url === row.currency_pair_reverse_url) &&
+          rateIsReversed
+        ) {
+          temp.rate = addComma(
+            calculateReverseRate(
+              +row.rate,
+              +selectedCurrecnyPair.rate_multiplier,
+              +row.floating_number
+            )
+          );
 
-              temp.min_rate = addComma(
-                calculateReverseRate(
-                  +row.min_rate,
-                  +selectedCurrecnyPair.rate_multiplier,
-                  +row.floating_number
-                )
-              );
-              temp.max_rate = addComma(
-                calculateReverseRate(
-                  +row.max_rate,
-                  +selectedCurrecnyPair.rate_multiplier,
-                  +row.floating_number
-                )
-              );
+          temp.min_rate = addComma(
+            calculateReverseRate(
+              +row.min_rate,
+              +selectedCurrecnyPair.rate_multiplier,
+              +row.floating_number
+            )
+          );
+          temp.max_rate = addComma(
+            calculateReverseRate(
+              +row.max_rate,
+              +selectedCurrecnyPair.rate_multiplier,
+              +row.floating_number
+            )
+          );
+        } else {
+          temp.rate = addComma(roundDown(+row.rate, +row.floating_number));
+          temp.min_rate = addComma(
+            roundDown(+row.min_rate, +row.floating_number)
+          );
+          temp.max_rate = addComma(
+            roundDown(+row.max_rate, +row.floating_number)
+          );
+        }
+
+        return temp;
+      });
+
+      if (platform === "ios") {
+        set_watch_list_data(
+          a.filter((e) => {
+            if (e.source === "iranian-rial" || e.target === "iranian-rial") {
+              return false;
             } else {
-              temp.rate = addComma(roundDown(+row.rate, +row.floating_number));
-              temp.min_rate = addComma(
-                roundDown(+row.min_rate, +row.floating_number)
-              );
-              temp.max_rate = addComma(
-                roundDown(+row.max_rate, +row.floating_number)
-              );
+              return true;
             }
-
-            return temp;
           })
-        )
-      : set_watch_list_data([]);
+        );
+      } else {
+        set_watch_list_data(a);
+      }
+    } else {
+      set_watch_list_data([]);
+    }
   }, [data, rateIsReversed]);
 
   useEffect(() => {

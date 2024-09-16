@@ -135,7 +135,7 @@ export default function App() {
                 index
                 element={
                   <OnLoad>
-                    <Home isDemo />
+                    <Home platform={platform} isDemo />
                   </OnLoad>
                 }
               />
