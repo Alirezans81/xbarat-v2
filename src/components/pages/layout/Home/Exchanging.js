@@ -41,13 +41,13 @@ export default function Exchanging({
 
   const [sourceLabel, setSourceLabel] = useState(lang["source"]);
   useEffect(() => {
-    selectedSourceIndex >= 0
+    selectedSourceIndex >= 0 && currencies[selectedSourceIndex]
       ? setSourceLabel(currencies[selectedSourceIndex].abbreviation)
       : setSourceLabel(lang["source"]);
   }, [selectedSourceIndex]);
   const [targetLabel, setTargetLabel] = useState(lang["target"]);
   useEffect(() => {
-    selectedTargetIndex >= 0
+    selectedTargetIndex >= 0 && availableTargets[selectedTargetIndex]
       ? setTargetLabel(availableTargets[selectedTargetIndex].abbreviation)
       : setTargetLabel(lang["target"]);
   }, [selectedTargetIndex]);
@@ -88,7 +88,12 @@ export default function Exchanging({
   }, [selectedSourceIndex, wallet]);
 
   useEffect(() => {
-    if (selectedSourceIndex >= 0 && selectedTargetIndex >= 0) {
+    if (
+      selectedSourceIndex >= 0 &&
+      currencies[selectedSourceIndex] &&
+      selectedTargetIndex >= 0 &&
+      availableTargets[selectedTargetIndex]
+    ) {
       const found = currencyPairs.find(
         (currencyPair) =>
           currencyPair.currency_source ===
@@ -101,7 +106,7 @@ export default function Exchanging({
 
       setRateIsReversed(false);
     }
-  }, [selectedTargetIndex]);
+  }, [selectedSourceIndex, selectedTargetIndex]);
   const openTutorialModal = () => {
     setModalData({
       title: "Exchange Tutorial",
@@ -110,6 +115,7 @@ export default function Exchanging({
       isOpen: true,
     });
   };
+
   return (
     <div className="flex flex-col px-6 w-full h-full py-5 relative">
       <div className="absolute w-full left-0 -top-5 flex justify-center">
