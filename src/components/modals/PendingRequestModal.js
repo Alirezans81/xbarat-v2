@@ -27,6 +27,9 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
   const closeModal = useModalDataClose();
 
   const [document, setDocument] = useState();
+  useEffect(() => {
+    setLoading(false);
+  }, [document]);
 
   const { uploadRequestDocument, isLoading: uploadRequestDocumentIsLoading } =
     useUploadRequestDocument();
@@ -161,6 +164,13 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   receiverTanks[selectedWalletTank].bank_info
                     ? receiverTanks[selectedWalletTank].bank_info
                     : lang["card-number-or-paypal-email"]
+                }
+                labelClassName={
+                  selectedWalletTank >= 0 &&
+                  receiverTanks[selectedWalletTank] &&
+                  receiverTanks[selectedWalletTank].bank_info
+                    ? "ml-20 w-[55%] line-clamp-1"
+                    : ""
                 }
               >
                 {receiverTanks.map((receiverTank, index) => {

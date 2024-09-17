@@ -33,11 +33,11 @@ const CropImageModalProvider = ({ children }) => {
 
   return (
     <CropImageModalContextState.Provider value={cropImageModal}>
-      <CropImageModalContextOpen.Provider value={openCropImageModal}>
-        <CropImageModalContextClose.Provider value={closeModal}>
+      <CropImageModalContextClose.Provider value={closeModal}>
+        <CropImageModalContextOpen.Provider value={openCropImageModal}>
           {children}
-        </CropImageModalContextClose.Provider>
-      </CropImageModalContextOpen.Provider>
+        </CropImageModalContextOpen.Provider>
+      </CropImageModalContextClose.Provider>
     </CropImageModalContextState.Provider>
   );
 };

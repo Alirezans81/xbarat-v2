@@ -49,6 +49,11 @@ export default function Step3({
       getNationality(userInfo.nationality, setNationality);
   }, []);
 
+  const [document, setDocument] = useState();
+  useEffect(() => {
+    setIsLoadingSplashScreen(false);
+  }, [document]);
+
   const [requiredFeilds, setRequiredFeilds] = useState([]);
   const [selectedRequiredFeildIndex, setSelectedRequiredFeildIndex] =
     useState(-1);
@@ -185,7 +190,10 @@ export default function Step3({
                 </span>
                 <div className="w-full flex">
                   <CustomUploader
-                    setImage={(image) => setFieldValue("document", image)}
+                    setImage={(image) => {
+                      setDocument(image);
+                      setFieldValue("document", image);
+                    }}
                   />
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import {
@@ -65,15 +65,25 @@ export default function App() {
   const { getLanguages, isLoading: getLanguagesIsLoading } = useGetLanguages();
   useEffect(() => setLoading(getLanguagesIsLoading), [getLanguagesIsLoading]);
 
-  const queryParameters = new URLSearchParams(window.location.search);
-  const platform = queryParameters.get("platform");
+  const [platform, setPlatform] = useState();
+  useEffect(() => {
+    const savedPlatform = localStorage.getItem("platform");
+
+    if (!savedPlatform) {
+      const queryParameters = new URLSearchParams(window.location.search);
+      const initPlatform = queryParameters.get("platform");
+      setPlatform(initPlatform);
+      localStorage.setItem("platform", initPlatform);
+    } else {
+      setPlatform(savedPlatform);
+    }
+  }, []);
 
   useEffect(() => {
     getLanguages(
       (data) => {
         if (data && data.length > 0) {
           if (platform === "ios") {
-            console.log(1);
             setLanguageList(data.filter((e) => e.symbol !== "Fa"));
           } else {
             setLanguageList(data);
@@ -125,12 +135,12 @@ export default function App() {
         <LoadingSplashScreen isLoading={isLoading} />
         <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login platform={platform} />} />
+            <Route path="/signup" element={<Signup platform={platform} />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/wait-link" element={<WaitLink />} />
             <Route path="*" element={<NoPage />} />
-            <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Layout platform={platform} />}>
               <Route
                 index
                 element={
@@ -139,7 +149,7 @@ export default function App() {
                   </OnLoad>
                 }
               />
-              <Route path="home" element={<Home />} />
+              <Route path="home" element={<Home platform={platform} />} />
               <Route path="wallet" element={<Wallet />} />
               <Route path="reports" element={<Reports />} />
               <Route

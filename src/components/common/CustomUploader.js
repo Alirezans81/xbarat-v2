@@ -23,8 +23,8 @@ export default function CustomUploader({ setImage }) {
 
   const [fileName, setFileName] = useState("");
 
-  const handleImageInputChange = (event) => {
-    const file = event.currentTarget.files[0];
+  const handleImageInputChange = (e) => {
+    const file = e.target.files[0];
     if (limitImageSize(file)) {
       const reader = new FileReader();
       reader.addEventListener("load", () => {

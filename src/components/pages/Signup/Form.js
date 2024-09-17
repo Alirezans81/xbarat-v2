@@ -4,8 +4,6 @@ import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignup, useVerifyEmail } from "../../../apis/pages/Signup/hooks";
-import { useSendEmail } from "../../../apis/common/email/hooks";
-import { useGenerateCode } from "../../../hooks/useGenerateCode";
 import { useFontState } from "../../../Providers/FontProvider";
 import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 import { useLogin } from "../../../apis/pages/Login/hooks";

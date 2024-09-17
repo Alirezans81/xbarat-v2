@@ -39,7 +39,7 @@ const customTheme = {
   inlineWrapper: "flex items-center",
 };
 
-function CustomDropdown({ children, label, className, disabled, searchable }) {
+function CustomDropdown({ children, label, className, labelClassName, disabled, searchable }) {
   const theme = useThemeState();
   const lang = useLanguageState();
   const font = useFontState();
@@ -52,6 +52,7 @@ function CustomDropdown({ children, label, className, disabled, searchable }) {
           paddingBottom: font === "Fa" ? 2 : 0,
           flex: 1,
           minWidth: 0,
+          overflow: "hidden",
         }
       : {
           backgroundColor: "#EEEEEE",
@@ -60,13 +61,14 @@ function CustomDropdown({ children, label, className, disabled, searchable }) {
           paddingBottom: font === "Fa" ? 2 : 0,
           flex: 1,
           minWidth: 0,
+          overflow: "hidden",
         };
 
   return (
     <Dropdown
       theme={customTheme}
       color="dark"
-      label={<span className={className + " -mb-6"}>{label}</span>}
+      label={<span className={labelClassName + " -mb-6"}>{label}</span>}
       className={className + ` bg-${theme} rounded-xl hover:bg-${theme} z-20`}
       style={buttonStyle}
       disabled={disabled}

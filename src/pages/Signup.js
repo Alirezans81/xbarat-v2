@@ -13,7 +13,7 @@ import CustomToast from "../components/common/CustomToast";
 import { useModalDataSetState } from "../Providers/ModalDataProvider";
 import TutorialModal from "../components/modals/Tutorials/WalletTutorialModal/TutorialModal";
 
-export default function Signup() {
+export default function Signup({ platform }) {
   const setToken = useTokenSetState();
   const setModalData = useModalDataSetState();
   const openTutorialModal = () => {
@@ -51,7 +51,11 @@ export default function Signup() {
   return (
     <>
       <button
-        className={`z-[50] absolute bottom-[30px] md:bottom-[90px] right-[19px] w-[60px] h-[60px] flex justify-center items-center text-3xl bg-${theme}-back shadow-dark shadow-sm-light rounded-full text-${oppositeTheme}`}
+        className={`z-[50] absolute ${
+          platform === "ios"
+            ? "bottom-[110px] md:bottom-[20px]"
+            : "bottom-[170px] md:bottom-[90px]"
+        } right-[19px] w-[60px] h-[60px] flex justify-center items-center text-3xl bg-${theme}-back shadow-dark shadow-sm-light rounded-full text-${oppositeTheme}`}
         onClick={openTutorialModal}
       >
         <span className="text-4xl -mt-1">?</span>

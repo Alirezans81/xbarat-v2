@@ -4,7 +4,6 @@ const limitSize = (file) => {
   }
   return true;
 };
-
 const useLimitSize = () => {
   return limitSize;
 };
