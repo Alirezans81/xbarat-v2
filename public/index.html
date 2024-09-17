@@ -128,9 +128,18 @@
     <!-- /Goftino -->
 
     <script>
-      const platform = localStorage.getItem("platform");
-      if (platform === "ios") {
-        document.getElementById("new_widget_button").style.display = "none";
+      const savedPlatform = localStorage.getItem("platform");
+
+      if (!savedPlatform) {
+        const queryParameters = new URLSearchParams(window.location.search);
+        const initPlatform = queryParameters.get("platform");
+        if (initPlatform === "ios") {
+          document.getElementById("new_widget_button").style.display = "none";
+        }
+      } else {
+        if (savedPlatform === "ios") {
+          document.getElementById("new_widget_button").style.display = "none";
+        }
       }
     </script>
     <style>

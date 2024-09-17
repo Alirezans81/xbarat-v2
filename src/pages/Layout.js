@@ -156,18 +156,25 @@ export default function Layout({ platform }) {
   );
 
   useEffect(() => {
-    getCurrencies((data) => {
-      setCurrencies(data.filter((currency) => currency.abbreviation !== "IRR"));
-    });
-    getCurrencyPairs(null, (data) => {
-      setCurrencyPairs(
-        data.filter(
-          (currencyPair) =>
-            currencyPair.currency_source_abb !== "IRR" &&
-            currencyPair.currency_destination_abb !== "IRR"
-        )
-      );
-    });
+    if (platform === "ios") {
+      getCurrencies((data) => {
+        setCurrencies(
+          data.filter((currency) => currency.abbreviation !== "IRR")
+        );
+      });
+      getCurrencyPairs(null, (data) => {
+        setCurrencyPairs(
+          data.filter(
+            (currencyPair) =>
+              currencyPair.currency_source_abb !== "IRR" &&
+              currencyPair.currency_destination_abb !== "IRR"
+          )
+        );
+      });
+    } else {
+      getCurrencies(setCurrencies);
+      getCurrencyPairs(null, setCurrencyPairs);
+    }
 
     const stringStatuses = window.localStorage.getItem("statues");
     if (
