@@ -51,8 +51,8 @@ export default function Step3({
 
   const [document, setDocument] = useState();
   useEffect(() => {
-    document && setIsLoadingSplashScreen(false);
-  });
+    setIsLoadingSplashScreen(false);
+  }, [document]);
 
   const [requiredFeilds, setRequiredFeilds] = useState([]);
   const [selectedRequiredFeildIndex, setSelectedRequiredFeildIndex] =

@@ -5,7 +5,6 @@ import { useToastDataSetState } from "../../Providers/ToastDataProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useCropImageModalOpen } from "../../Providers/CropImageModalProvider";
-import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 
 export default function CustomUploader({ setImage }) {
   const lang = useLanguageState();
@@ -14,7 +13,6 @@ export default function CustomUploader({ setImage }) {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const limitImageSize = useLimitSize();
   const setToastData = useToastDataSetState();
-  const setLoading = useIsLoadingSplashScreenSetState();
 
   const openCropImageModal = useCropImageModalOpen();
 

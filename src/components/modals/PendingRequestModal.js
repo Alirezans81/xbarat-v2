@@ -28,7 +28,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
 
   const [document, setDocument] = useState();
   useEffect(() => {
-    document && setLoading(false);
+    setLoading(false);
   }, [document]);
 
   const { uploadRequestDocument, isLoading: uploadRequestDocumentIsLoading } =

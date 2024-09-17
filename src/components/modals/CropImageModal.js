@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import ReactCrop, { convertToPixelCrop } from "react-image-crop";
 import { useLanguageState } from "../../Providers/LanguageProvider";
@@ -49,7 +49,7 @@ const setCanvasPreview = (
     image.naturalHeight
   );
 
-  ctx.restore();
+  // ctx.restore();
 };
 
 export default function CropImageModal({ imageSrc, setImage }) {
