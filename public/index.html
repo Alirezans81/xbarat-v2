@@ -126,6 +126,13 @@
       });
     </script>
     <!-- /Goftino -->
+
+    <script>
+      const platform = localStorage.getItem("platform");
+      if (platform === "ios") {
+        document.getElementById("new_widget_button").style.display = "none";
+      }
+    </script>
     <style>
       @media only screen and (max-width: 768px) {
         #new_widget_button {

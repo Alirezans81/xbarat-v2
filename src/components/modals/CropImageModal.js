@@ -5,7 +5,7 @@ import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useCropImageModalClose } from "../../Providers/CropImageModalProvider";
-import imageCompression from "browser-image-compression";
+import Compressor from "compressorjs";
 
 const setCanvasPreview = (
   image, // HTMLImageElement
@@ -63,32 +63,28 @@ export default function CropImageModal({ imageSrc, setImage }) {
 
   const [crop, setCrop] = useState({
     unit: "%",
-    x: 0,
-    y: 0,
-    width: 100,
-    height: 100,
+    x: 25,
+    y: 25,
+    width: 50,
+    height: 50,
   });
 
-  const compressFile = async (file) => {
-    // setLoading(true);
-    // const data = await imageCompression(file)
-    //   .then(() => setLoading(false))
-    //   .catch(() => setLoading(false));
-    // return data;
-
-    return file;
-  };
-
   const handleSubmit = () => {
+    setLoading(true);
     setCanvasPreview(
       imageRef.current,
       canvasRef.current,
       convertToPixelCrop(crop, imageRef.current.width, imageRef.current.height)
     );
-    canvasRef.current.toBlob((blob) => {
-      compressFile(blob).then((result) => {
-        setImage(result);
+    canvasRef.current.toBlob((image) => {
+      new Compressor(image, {
+        quality: 0.8,
+        success: (compressedResult) => {
+          setImage(compressedResult);
+        },
       });
+
+      // setImage(image);
     });
     closeCropImageModal();
   };

@@ -103,13 +103,9 @@ export default function WatchList({
 
       if (platform === "ios") {
         set_watch_list_data(
-          a.filter((e) => {
-            if (e.source === "iranian-rial" || e.target === "iranian-rial") {
-              return false;
-            } else {
-              return true;
-            }
-          })
+          a.filter(
+            (e) => !e.title.includes("IRR")
+          )
         );
       } else {
         set_watch_list_data(a);

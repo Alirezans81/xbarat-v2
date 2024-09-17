@@ -15,7 +15,7 @@ import CustomToast from "../components/common/CustomToast";
 import { useModalDataSetState } from "../Providers/ModalDataProvider";
 import TutorialModal from "../components/modals/Tutorials/WalletTutorialModal/TutorialModal";
 
-export default function Login() {
+export default function Login({ platform }) {
   const setToken = useTokenSetState();
   const setModalData = useModalDataSetState();
   const openTutorialModal = () => {
@@ -53,7 +53,11 @@ export default function Login() {
   return (
     <>
       <button
-        className={`z-[50] absolute bottom-[30px] md:bottom-[90px] right-[19px] w-[60px] h-[60px] flex justify-center items-center text-3xl bg-${theme}-back shadow-dark shadow-sm-light rounded-full text-${oppositeTheme}`}
+        className={`z-[50] absolute ${
+          platform === "ios"
+            ? "bottom-[110px] md:bottom-[20px]"
+            : "bottom-[170px] md:bottom-[90px]"
+        } right-[19px] w-[60px] h-[60px] flex justify-center items-center text-3xl bg-${theme}-back shadow-dark shadow-sm-light rounded-full text-${oppositeTheme}`}
         onClick={openTutorialModal}
       >
         <span className="text-4xl -mt-1">?</span>
@@ -75,7 +79,9 @@ export default function Login() {
             <LeftSide />
           </div>
           <div className="hidden md:flex h-full">
-            <RightSide setIsSplashScreenLoading={setIsSplashScreenLoading} />
+            <RightSide
+              setIsSplashScreenLoading={setIsSplashScreenLoading}
+            />
           </div>
           <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center">
             <button onClick={() => navigate("/")}>
@@ -84,7 +90,9 @@ export default function Login() {
                 src={require("../Images/pages/layout/logo.png")}
               />
             </button>
-            <RightSide setIsSplashScreenLoading={setIsSplashScreenLoading} />
+            <RightSide
+              setIsSplashScreenLoading={setIsSplashScreenLoading}
+            />
             <Slogan />
           </div>
         </div>

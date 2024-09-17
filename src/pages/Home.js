@@ -127,14 +127,6 @@ export default function Home({ isDemo, platform }) {
     }
   };
 
-  // console.log("----------------------------------------------");
-  // console.log("currencies: ", currencies);
-  // console.log("availableTargets: ", availableTargets);
-  // console.log("selectedSourceIndex: ", selectedSourceIndex);
-  // console.log("selectedTargetIndex: ", selectedTargetIndex);
-  // console.log("selectedCurrecnyPair: ", selectedCurrecnyPair);
-  // console.log("----------------------------------------------");
-
   if (pageMode === "card" || window.innerWidth <= canSwitchPageModeWidth) {
     return (
       <>
@@ -276,6 +268,7 @@ export default function Home({ isDemo, platform }) {
                 setSelectedSourceIndex={setSelectedSourceIndex}
                 availableTargets={availableTargets}
                 setSelectedTargetIndex={setSelectedTargetIndex}
+                platform={platform}
               />
             </div>
             <div
