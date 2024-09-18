@@ -7,6 +7,7 @@ import { useSignup, useVerifyEmail } from "../../../apis/pages/Signup/hooks";
 import { useFontState } from "../../../Providers/FontProvider";
 import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 import { useLogin } from "../../../apis/pages/Login/hooks";
+import { useTimer } from "react-timer-hook";
 
 export default function Form({ setIsSplashScreenLoading }) {
   const theme = useThemeState();
@@ -24,10 +25,38 @@ export default function Form({ setIsSplashScreenLoading }) {
 
   const [resendButtonEnabled, setResendButtonEnabled] = useState(false);
 
+  const timerSeconds = 60;
+  const {
+    totalSeconds,
+    seconds,
+    minutes,
+    hours,
+    days,
+    isRunning,
+    start,
+    pause,
+    resume,
+    restart,
+  } = useTimer({
+    expiryTimestamp: null,
+    onExpire: () => setResendButtonEnabled(true),
+  });
+  useEffect(() => {
+    if (mode === "submit") {
+      const time = new Date();
+      time.setSeconds(time.getSeconds() + timerSeconds);
+      restart(time, true);
+    }
+  }, [mode]);
+
   const sendCode = (values) => {
     signup(values, () => mode !== "submit" && setMode("submit"));
+
     setResendButtonEnabled(false);
-    setTimeout(() => setResendButtonEnabled(true), 60000);
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + timerSeconds);
+    restart(time, true);
+
     mode !== "submit" && setMode("submit");
   };
 
@@ -365,9 +394,21 @@ export default function Form({ setIsSplashScreenLoading }) {
                     />
                   </button>
                 </div>
-                <span className={`font-${font}-regular text-gray`}>
-                  {"You can click on resend after 1 minute."}
-                </span>
+                <div className="flex flex-wrap gap-x-1">
+                  <span className={`font-${font}-regular text-gray w-fit`}>
+                    {"You can click on resend after 1 minute."}
+                    <span
+                      className={`font-${font}-regular text-blue w-8 sm:hidden`}
+                    >
+                      {" " + minutes + ":" + seconds}
+                    </span>
+                  </span>
+                  <span
+                    className={`font-${font}-regular text-blue w-8 hidden sm:inline`}
+                  >
+                    {minutes + ":" + seconds}
+                  </span>
+                </div>
               </div>
             </>
           )}
