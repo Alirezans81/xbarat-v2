@@ -72,7 +72,6 @@ export default function ReferralPlans({ currency }) {
                     {lang["exchange-reward-desc-2nd"]}
                   </span>
                   {lang["exchange-reward-desc-3rd"]}
-                  code
                 </span>
               </div>
             </div>
