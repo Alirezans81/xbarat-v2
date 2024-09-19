@@ -583,5 +583,8 @@
   "receive": "دریافتی",
   "target-referral-people": "نفر",
   "total-receives": "مجموع دریافتی",
-  "Tether_token_on_bep20_network": "توکن های تتر در شبکه BEP20 هستند"
+  "Tether_token_on_bep20_network": "توکن های تتر در شبکه BEP20 هستند",
+  "hesab-pay-number": "شماره حساب پی",
+  "crypto-wallet-address": "آدرش کیف پول",
+  "using": "با استفاده از"
 }
