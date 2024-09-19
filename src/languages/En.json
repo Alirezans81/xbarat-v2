@@ -578,5 +578,6 @@
   "exchange-reward-desc-3rd": "with your referral code",
   "receive": "Receive",
   "target-referral-people": "people",
-  "total-receives": "Total Receives"
+  "total-receives": "Total Receives",
+  "Tether_token_on_bep20_network": "Tether tokens are on BEP20 network"
 }
