@@ -579,5 +579,8 @@
   "receive": "Receive",
   "target-referral-people": "people",
   "total-receives": "Total Receives",
-  "Tether_token_on_bep20_network": "Tether tokens are on BEP20 network"
+  "Tether_token_on_bep20_network": "Tether tokens are on BEP20 network",
+  "hesab-pay-number": "Hesab Pay Number",
+  "crypto-wallet-address": "Crypto Wallet Address",
+  "using": "Using"
 }
