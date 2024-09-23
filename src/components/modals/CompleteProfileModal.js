@@ -97,9 +97,20 @@ export default function CompleteProfileModal() {
 
   useEffect(() => {
     if (userInfo) {
-      userInfo.first_name && userInfo.last_name && userInfo.phone && setStep(2);
-      userInfo.nationality && userInfo.country && userInfo.city && setStep(3);
-      (userInfo.identity_type || userInfo.identity_code || userInfo.document) &&
+      step === 1 &&
+        userInfo.first_name &&
+        userInfo.last_name &&
+        userInfo.phone &&
+        setStep(2);
+      step === 2 &&
+        userInfo.nationality &&
+        userInfo.country &&
+        userInfo.city &&
+        setStep(3);
+      step === 3 &&
+        userInfo.identity_type &&
+        userInfo.identity_code &&
+        userInfo.document &&
         setStep(4);
 
       userInfo.rejection_reason &&
@@ -107,8 +118,8 @@ export default function CompleteProfileModal() {
     }
   }, [userInfo]);
   useEffect(() => {
-    walletTanks[0] && setStep(5);
-  }, [walletTanks]);
+    step === 4 && walletTanks[0] && setStep(5);
+  }, [walletTanks, step]);
 
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
