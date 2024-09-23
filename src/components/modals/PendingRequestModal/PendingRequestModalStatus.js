@@ -3,12 +3,16 @@ import RequestStatus from "../../pages/layout/common/RequestStatus";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useFontState } from "../../../Providers/FontProvider";
-
+import { useModalDataSetState } from "../../../Providers/ModalDataProvider";
+import { useState } from "react";
+import PendingRequestTipsUploadDocument from "./PendingRequestTipsUploadDocument";
 export default function PendingRequestModalStatus({ status, rejectReason }) {
   const theme = useThemeState();
+  const setModalData = useModalDataSetState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
+  const [tips, setTips] = useState(false);
 
   if (status === "Admin Assign") {
     return (
@@ -30,24 +34,30 @@ export default function PendingRequestModalStatus({ status, rejectReason }) {
       </div>
     );
   } else if (status === "Upload Document") {
-    return (
-      <div
-        className={`flex flex-col bg-${theme}-back px-3.5 pt-3 rounded-xl pb-2 w-full`}
-      >
-        <div className="flex flex-row items-center -mt-1.5">
-          <img
-            className="w-6 h-6"
-            src={require("../../../Images/pages/layout/Wallet/statues/uploadDocument.png")}
-          />
-          <span className={`font-${font}-bold text-lg text-blue mx-1 pt-2`}>
-            {lang["upload-document"]}
-          </span>
+    if (tips) {
+      return (
+        <div className="w-full h-full">
+          <div
+            className={`flex flex-col bg-${theme}-back px-3.5 pt-3 rounded-xl pb-2 w-full`}
+          >
+            <div className="flex flex-row items-center -mt-1.5">
+              <img
+                className="w-6 h-6"
+                src={require("../../../Images/pages/layout/Wallet/statues/uploadDocument.png")}
+              />
+              <span className={`font-${font}-bold text-lg text-blue mx-1 pt-2`}>
+                {lang["upload-document"]}
+              </span>
+            </div>
+            <span className={`font-${font}-thin text-${oppositeTheme} mx-1`}>
+              {lang["upload-document-message"] + "."}
+            </span>
+          </div>
         </div>
-        <span className={`font-${font}-thin text-${oppositeTheme} mx-1`}>
-          {lang["upload-document-message"] + "."}
-        </span>
-      </div>
-    );
+      );
+    } else {
+      return <PendingRequestTipsUploadDocument setTips={setTips} />;
+    }
   } else if (status === "Admin Approve") {
     return (
       <div
