@@ -6,12 +6,16 @@ import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useDeleteNotification } from "../../apis/pages/Layout/hooks";
 import { useGetNotifs } from "../../apis/pages/Layout/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
+import { useConvertNotif } from "../../hooks/useConvertNotif";
+import { useUserState } from "../../Providers/UserProvider";
 
 export function Notif({ notif, getNotifications }) {
   const theme = useThemeState();
   const font = useFontState();
+  const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+  const convertNotif = useConvertNotif();
 
   const { deleteNotification, isLoading: deleteNotificationIsLoading } =
     useDeleteNotification();
@@ -22,16 +26,21 @@ export function Notif({ notif, getNotifications }) {
 
   return (
     <div
-      className={`flex flex-col gap-y-2 font-${font}-regular text-${oppositeTheme} bg-${theme} p-3 rounded-xl`}
+      className={`flex flex-col gap-y-3 font-${font}-regular text-${oppositeTheme} bg-${theme} p-3 rounded-xl`}
     >
-      <div className="w-full flex justify-between items-start gap-x-10">
+      <div className="w-full flex justify-between items-start gap-x-2">
         <div className="flex items-center gap-x-2.5">
           <img
             alt=""
             src={require(`../../Images/pages/layout/Navbar/wallet-${oppositeTheme}.png`)}
-            className={`w-12 h-12 bg-${theme}-back p-3 rounded-full`}
+            className={`w-12 h-12 bg-${theme}-back p-3 rounded-full float-left inline`}
           />
-          <span className={`-mb-1 text-lg`}>{notif.subject}</span>
+          <span
+            dir={font === "Fa" ? "rtl" : "ltr"}
+            className={`-mb-1 text-lg max-w-[60dvw] md:w-72 leading-5`}
+          >
+            {convertNotif(notif.subject)}
+          </span>
         </div>
 
         <button
@@ -40,7 +49,7 @@ export function Notif({ notif, getNotifications }) {
               getNotifications();
             });
           }}
-          className=""
+          className="w-5"
         >
           <img
             alt=""
@@ -49,7 +58,12 @@ export function Notif({ notif, getNotifications }) {
           />
         </button>
       </div>
-      <span className="">{notif.description}</span>
+      <span
+        dir={font === "Fa" ? "rtl" : "ltr"}
+        className={`max-w-[80dvw] md:w-96 ${font === "Fa" ? "pb-2" : ""}`}
+      >
+        {convertNotif(notif.message)}
+      </span>
     </div>
   );
 }
@@ -61,7 +75,7 @@ function Content({ notifs, getNotifications }) {
   const oppositeTheme = theme === "dark" ? "light" : "dark";
 
   return (
-    <div className="max-w-[90dvw] md:max-w-[23rem] flex flex-col gap-y-3 px-1.5 py-2 max-h-[80dvh] overflow-y-auto">
+    <div className="max-w-[90dvw] flex flex-col gap-y-3 px-1.5 py-2 max-h-[80dvh] overflow-y-auto">
       {notifs &&
         notifs.map((notif, index) => (
           <Notif
@@ -87,6 +101,7 @@ export default function Notification() {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
+  const userInfo = useUserState();
 
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
@@ -112,18 +127,18 @@ export default function Notification() {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
 
-  const [notifs, setNotifs] = useState();
+  const [notifs, setNotifs] = useState([]);
   const { getNotifs, isLoading: getNotifsIsLoading } = useGetNotifs();
   useEffect(
     () => setIsLoadingSplashScreen(getNotifsIsLoading),
     [getNotifsIsLoading]
   );
-  function getNotifications() {
-    getNotifs(setNotifs, null, null);
+  function getNotifications(username) {
+    getNotifs(username, setNotifs, null, null);
   }
   useEffect(() => {
-    getNotifications();
-  }, []);
+    userInfo && userInfo.username && getNotifications(userInfo.username);
+  }, [userInfo]);
 
   return (
     <CustomTooltip2

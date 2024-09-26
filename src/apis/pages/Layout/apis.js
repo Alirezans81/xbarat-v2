@@ -25,8 +25,15 @@ const getNews = () => {
   return axios.get(urlWithQueries);
 };
 
-const getNotifs = () => {
-  return axios.get(api["notify"]);
+const getNotifs = (user) => {
+  const limit = require("../../pagination/limit.json")["notify"];
+
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["notify"],
+    query: { limit, user },
+  });
+
+  return axios.get(urlWithQueries);
 };
 
 const deleteNotification = (requestUrl) => {

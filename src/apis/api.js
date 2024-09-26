@@ -28,6 +28,7 @@ export default function api() {
     status: `${apiDomain}api/status/`,
     "other-exchanges-rate": `${apiDomain}api/exchange-rate/`,
     locale: `${apiDomain}api/locale/`,
+    notify: `${apiDomain}api/notify/`,
     "check-email": `${apiDomain}api/user/forget-password-check/`,
     "send-email": `${apiDomain}api/user/forget-password-send-mail/`,
     "forget-password-send-mail": `${apiDomain}api/user/forget-password-send-mail/`,
