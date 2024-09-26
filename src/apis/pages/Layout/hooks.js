@@ -1,5 +1,5 @@
 import { useTokenSetState } from "../../../Providers/TokenProvider";
-import { useUserSetState } from "../../../Providers/UserProvider";
+import { useUserSetState, useUserState } from "../../../Providers/UserProvider";
 import { logout, getNews, getNotifs, deleteNotification } from "./apis";
 import FilterIsActive from "../../../functions/filterIsActivefunction";
 import { useState } from "react";
@@ -69,18 +69,21 @@ const useGetNotifs = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (setState, customFunction, customFunctionWithData) => {
+  const fetch = async (
+    username,
+    setState,
+    customFunction,
+    customFunctionWithData
+  ) => {
     setIsLoading(true);
-    await getNotifs()
+    await getNotifs(username)
       .then((data) => {
         process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
-        const win = JSON.parse(window.localStorage.userInfo);
-        const temp = data.data.results.filter((data) => data.user === win.url);
-        setState(temp);
+        setState(data.data.results);
         customFunction && customFunction();
-        customFunctionWithData && customFunctionWithData(temp);
+        customFunctionWithData && customFunctionWithData(data.data.results);
         setIsLoading(false);
-        return FilterIsActive(temp);
+        return data.data.results;
       })
       .catch((error) => {
         console.log(error);
