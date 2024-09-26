@@ -1,14 +1,11 @@
-import React from "react";
+import { React, useState } from "react";
 import RequestStatus from "../../pages/layout/common/RequestStatus";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useFontState } from "../../../Providers/FontProvider";
-import { useModalDataSetState } from "../../../Providers/ModalDataProvider";
-import { useState } from "react";
 import PendingRequestTipsUploadDocument from "./PendingRequestTipsUploadDocument";
 export default function PendingRequestModalStatus({ status, rejectReason }) {
   const theme = useThemeState();
-  const setModalData = useModalDataSetState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
