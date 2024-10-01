@@ -24,6 +24,7 @@
   "status": 0,
   "other-exchanges-rate": 0,
   "locale": 0,
+  "notify": 0,
   "check-email": 0,
   "send-email": 0,
   "forgot-password": 0,

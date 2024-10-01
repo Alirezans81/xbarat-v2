@@ -137,9 +137,7 @@ export default function TableExchange({
                     +selectedCurrecnyPair.floating_number
                   )
                 )
-              : addComma(
-                  roundDown(+row.rate, +selectedCurrecnyPair.floating_number)
-                );
+              : addComma(+row.rate);
 
             return temp;
           }
@@ -157,9 +155,7 @@ export default function TableExchange({
                     +selectedCurrecnyPair.floating_number
                   )
                 )
-              : addComma(
-                  roundDown(+row.rate, +selectedCurrecnyPair.floating_number)
-                );
+              : addComma(+row.rate);
             temp.total_amount = (
               <CustomTooltip
                 placement="top"
@@ -225,13 +221,14 @@ export default function TableExchange({
     selectedCurrecnyPair.currency_destination
   ) {
     return (
-      <div className="p-3 grid grid-cols-2 gap-y-16 mr-2">
-        <div className="col-span-2  md:col-span-1 relative flex flex-col items-center overflow-visible">
+      <div className="p-3 grid grid-cols-2 grid-rows-1 gap-y-16 mr-2 h-full">
+        <div className="col-span-2 md:col-span-1 relative flex flex-col items-center">
           <div
             className={`flex items-center absolute -mt-8 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
           >
             <div className="flex items-center">
               <img
+                alt=""
                 className="w-6 h-6"
                 src={selectedCurrecnyPair.currency_source_sym_pic_light}
               />
@@ -240,11 +237,13 @@ export default function TableExchange({
               </span>
             </div>
             <img
+              alt=""
               className="w-5 h-5"
               src={require(`../../../../Images/arrow-${direction}-light.png`)}
             />
             <div className="flex items-center">
               <img
+                alt=""
                 className="w-6 h-6"
                 src={selectedCurrecnyPair.currency_destination_sym_pic_light}
               />
@@ -253,7 +252,7 @@ export default function TableExchange({
               </span>
             </div>
           </div>
-          <div className="w-full flex-1 pt-4 px-5">
+          <div className="w-full flex-1 pt-4 px-5 pb-2 overflow-y-auto">
             <CustomTable
               heads={source_to_target_head}
               rows={source_to_target_data}
@@ -271,6 +270,7 @@ export default function TableExchange({
           >
             <div className="flex items-center">
               <img
+                alt=""
                 className="w-6 h-6"
                 src={selectedCurrecnyPair.currency_destination_sym_pic_light}
               />
@@ -279,11 +279,13 @@ export default function TableExchange({
               </span>
             </div>
             <img
+              alt=""
               className="w-5 h-5"
               src={require(`../../../../Images/arrow-${direction}-light.png`)}
             />
             <div className="flex items-center">
               <img
+                alt=""
                 className="w-6 h-6"
                 src={selectedCurrecnyPair.currency_source_sym_pic_light}
               />
@@ -292,7 +294,7 @@ export default function TableExchange({
               </span>
             </div>
           </div>
-          <div className="w-full flex-1 pt-4 px-5">
+          <div className="w-full flex-1 pt-4 px-5 pb-2 overflow-y-auto">
             <CustomTable
               heads={target_to_source_head}
               rows={target_to_source_data}

@@ -24,6 +24,7 @@
   "status": 10,
   "other-exchanges-rate": 50,
   "locale": 10,
+  "notify": 100,
   "check-email": 10,
   "send-email": 10,
   "forgot-password": 10,

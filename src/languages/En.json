@@ -71,6 +71,7 @@
   "first-name": "First Name",
   "last-name": "Last Name",
   "phone": "Phone",
+  "address": "Address",
   "change-password": "Change Password",
   "phone-number": "Phone Number",
   "nationality": "Nationality",
@@ -223,7 +224,7 @@
   "back": "Back",
   "upload-document-profile-note-1st": "You have to send your photo and ID directly and online as a selfie",
   "upload-document-profile-note-2nd": "Your photo and ID must be in the same box",
-  "upload-document-profile-note-3rd": "Cover the unique code of your identification document",
+  "upload-document-profile-note-3rd": "The unique code of your identification document must be clear",
   "upload-document-profile-note-4th": "The size of the photo should be less than 1 MB",
   "search": "Search",
   "complete-profile-step-3-not-required-message-1st": "This step is not necessary",
@@ -610,5 +611,7 @@
   "Tether_token_on_bep20_network": "Tether tokens are on BEP20 network",
   "hesab-pay-number": "Hesab Pay Number",
   "crypto-wallet-address": "Crypto Wallet Address",
-  "using": "Using"
+  "using": "Using",
+  "deposit-secret-code": "Transaction Code",
+  "deposit-secret-code-message": "You should enter this code in the note section of your Paypal transaction"
 }
