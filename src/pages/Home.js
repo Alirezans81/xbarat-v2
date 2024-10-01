@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Children, useEffect, useRef, useState } from "react";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import Exchanging from "../components/pages/layout/Home/Exchanging";
@@ -16,8 +16,12 @@ import ListOtherExchanges from "../components/pages/layout/Home/ListMode/ListOth
 import ListPendingExchange from "../components/pages/layout/Home/ListMode/ListPendingExchange";
 import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 import { useWalletState } from "../Providers/WalletProvider";
-
+import { useUserState } from "../Providers/UserProvider";
+import { useModalDataSetState } from "../Providers/ModalDataProvider";
+import FreeExchangeModal from "../components/modals/freeExchangeModal";
 export default function Home({ isDemo, platform }) {
+  const setModalData = useModalDataSetState();
+  const user = useUserState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
@@ -126,6 +130,23 @@ export default function Home({ isDemo, platform }) {
       }
     }
   };
+  const freeExchangeModal = () => {
+    setModalData({
+      title: "🥳",
+      children: <FreeExchangeModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
+  useEffect(() => {
+    if (
+      user &&
+      user.free_exchange &&
+      !localStorage.getItem("freeExchangeShown")
+    )
+      freeExchangeModal();
+    localStorage.setItem("freeExchangeShown", true);
+  }, [user]);
 
   if (pageMode === "card" || window.innerWidth <= canSwitchPageModeWidth) {
     return (

@@ -5,7 +5,7 @@ const PendingRequestTipsUploadDocument = ({ setTips }) => {
   const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const context = lang.TipsPending ? lang.TipsPending : [{ one: 2 }];
+  const context = lang.TipsPending ? lang.TipsPending : [];
   const [haveRead, setHaveRead] = useState(false);
   const [bottomPage, setBottomPage] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
