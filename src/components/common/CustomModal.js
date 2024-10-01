@@ -47,7 +47,7 @@ export default function CustomModal() {
             </button>
           )}
         </div>
-        {children}
+        <div className="max-h-[85dvh] overflow-y-scroll">{children}</div>
       </div>
     </div>
   );
