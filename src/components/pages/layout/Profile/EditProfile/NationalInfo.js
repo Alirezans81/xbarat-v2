@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
-import EditButton from "./common/EditButton";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import {
   CustomDropdown2,
@@ -15,7 +14,6 @@ import {
 } from "../../../../../apis/common/location/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../../Providers/IsLoadingSplashScreenProvider";
 import { useUpdateNationalInfo } from "../../../../../apis/pages/Profile/hooks";
-import { useUserSetState } from "../../../../../Providers/UserProvider";
 import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function NationalInfo({ userInfo }) {
@@ -25,7 +23,6 @@ export default function NationalInfo({ userInfo }) {
   const lang = useLanguageState();
   const font = useFontState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
-  const setUser = useUserSetState();
 
   const [nationality, setNationality] = useState();
   const [country, setCountry] = useState();
@@ -53,7 +50,9 @@ export default function NationalInfo({ userInfo }) {
       getNationality(userInfo.nationality, setNationality);
 
     userInfo.country && getCountry(userInfo.country, setCountry);
-    userInfo.city && getCity(userInfo.city, setCity);
+    userInfo.city
+      ? getCity(userInfo.city, setCity)
+      : userInfo.city_str && setCity(userInfo.city_str);
   }, []);
 
   const { getCountries, isLoading: getCountriesIsLoading } = useGetCountries();

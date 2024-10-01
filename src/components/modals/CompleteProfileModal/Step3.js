@@ -11,6 +11,7 @@ import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import CustomUploader from "../../common/CustomUploader";
 import { useFontState } from "../../../Providers/FontProvider";
 import { CustomTooltip } from "../../common/CustomTooltip";
+import UploadDocumentHint from "../CompleteProfileModal/UploadDocumentHint";
 
 const Note = ({ lang, font }) => {
   return (
@@ -85,22 +86,8 @@ export default function Step3({
   if (handleBlur && handleChange && values) {
     return (
       <div className="flex flex-col">
-        <div
-          className={`w-full bg-${theme}-glass px-0.5 py-3 md:py-1 rounded-xl flex items-center`}
-        >
-          <img
-            className="w-10 h-10"
-            src={require(`../../../Images/exclamation.png`)}
-            alt="info"
-          />
-          <span
-            className={`text-yellow text-sm md:text-base font-${font}-regular -mb-1`}
-          >
-            {lang["complete-profile-step-3-not-required-message-1st"] +
-              ". " +
-              lang["complete-profile-step-3-not-required-message-2nd"] +
-              "."}
-          </span>
+        <div className="block md:hidden -mt-5">
+          <UploadDocumentHint />
         </div>
         <div className="w-full flex gap-x-10 my-5 relative">
           <div className="flex-1">

@@ -12,7 +12,6 @@ import { useUserState } from "../../Providers/UserProvider";
 export function Notif({ notif, getNotifications }) {
   const theme = useThemeState();
   const font = useFontState();
-  const lang = useLanguageState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const convertNotif = useConvertNotif();
@@ -60,7 +59,9 @@ export function Notif({ notif, getNotifications }) {
       </div>
       <span
         dir={font === "Fa" ? "rtl" : "ltr"}
-        className={`max-w-[80dvw] md:w-96 ${font === "Fa" ? "pb-2" : ""}`}
+        className={`max-w-[80dvw] md:w-96 border-t pt-2.5 border-gray-700 ${
+          font === "Fa" ? "pb-2" : ""
+        }`}
       >
         {convertNotif(notif.message)}
       </span>
