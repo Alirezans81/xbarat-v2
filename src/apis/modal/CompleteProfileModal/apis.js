@@ -11,6 +11,7 @@ const fetchStep1 = (username, params) => {
   formData.append("first_name", params.first_name);
   formData.append("last_name", params.last_name);
   formData.append("phone", params.phone);
+  formData.append("address", params.address);
 
   return axios.patch(api["patch-profile"] + username + "/", formData);
 };
@@ -21,6 +22,7 @@ const fetchStep2 = (username, params) => {
   formData.append("nationality", params.nationality);
   formData.append("country", params.country);
   formData.append("city", params.city);
+  formData.append("city_str", params.city_str);
 
   return axios.patch(api["patch-profile"] + username + "/", formData);
 };

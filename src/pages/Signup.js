@@ -48,6 +48,9 @@ export default function Signup({ platform }) {
     resetApp();
   }, []);
 
+  const queryParameters = new URLSearchParams(window.location.search);
+  const initReferral = queryParameters.get("referral");
+
   return (
     <>
       <button
@@ -82,7 +85,10 @@ export default function Signup({ platform }) {
                 <div
                   className={`bg-${theme}-glass rounded-3xl login-width p-8`}
                 >
-                  <Form setIsSplashScreenLoading={setIsSplashScreenLoading} />
+                  <Form
+                    setIsSplashScreenLoading={setIsSplashScreenLoading}
+                    initReferral={initReferral}
+                  />
                 </div>
               </div>
             </div>
@@ -97,7 +103,10 @@ export default function Signup({ platform }) {
                 <div
                   className={`bg-${theme}-glass rounded-3xl login-width p-8`}
                 >
-                  <Form setIsSplashScreenLoading={setIsSplashScreenLoading} />
+                  <Form
+                    setIsSplashScreenLoading={setIsSplashScreenLoading}
+                    initReferral={initReferral}
+                  />
                 </div>
               </div>
               <Slogan />

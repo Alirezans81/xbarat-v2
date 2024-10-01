@@ -83,6 +83,20 @@ export default function Step1({
                 {phoneError}
               </span>
             )}
+            <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+              <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                {lang["address"]}
+              </span>
+              <div className="w-full flex">
+                <input
+                  className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                  name="address"
+                  onBlur={handleBlur("address")}
+                  onChange={handleChange("address")}
+                  value={values.address ? values.address : ""}
+                />
+              </div>
+            </div>
           </form>
         </div>
 

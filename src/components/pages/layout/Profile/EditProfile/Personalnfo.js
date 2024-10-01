@@ -8,6 +8,11 @@ import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider
 import { useUpdatePhone } from "../../../../../apis/pages/Profile/hooks";
 import CopyText from "../../../../common/CopyText";
 import { useFontState } from "../../../../../Providers/FontProvider";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import prod from "../../../../../apis/api";
+import dev from "../../../../../apis/api-dev";
+import { CustomTooltip } from "../../../../common/CustomTooltip";
+const api = process.env.REACT_APP_MODE === "DEVELOPMENT" ? dev() : prod();
 
 export default function Personalnfo({ userInfo }) {
   const theme = useThemeState();
@@ -100,28 +105,81 @@ export default function Personalnfo({ userInfo }) {
                 </span>
               )}
             </div>
-            <div className="col-span-1 md:col-span-2 row-span-1 flex flex-col">
+            <div className="col-span-2 lg:col-span-1 row-span-1 flex flex-col">
+              <span className={`text-gray font-${font}-regular`}>
+                {lang["address"]}
+              </span>
+              {canEdit ? (
+                <input
+                  className={`bg-${theme} focus-outline-blue px-2.5 font-mint-regular outline-1 outline-white py-1 w-52 rounded-lg text-${oppositeTheme}`}
+                  type="text"
+                  onChange={handleChange("address")}
+                  onBlur={handleBlur("address")}
+                  value={values.address}
+                />
+              ) : (
+                <span
+                  className={`font-${font}-regular -mt-1 text-${oppositeTheme} w-full line-clamp-2 leading-6`}
+                >
+                  {userInfo && userInfo.address ? userInfo.address : ""}
+                </span>
+              )}
+            </div>
+            <div className="col-span-2 md:col-span-1 row-span-1 flex flex-col">
               <span className={`text-gray font-${font}-regular`}>
                 {lang["referral-code"]}
               </span>
-              <span
-                className={`flex items-center font-${font}-regular border-2 border-dashed border-gray rounded-full w-fit px-3 mt-1 text-${oppositeTheme}`}
-              >
-                <span className="pt-1.5 pb-1">
-                  {userInfo && userInfo.referral_code
-                    ? userInfo.referral_code
-                    : ""}
-                </span>
-                <div className="h-full border border-gray border-dashed mx-2" />
-
-                <CopyText
-                  text={
-                    userInfo && userInfo.referral_code
-                      ? userInfo.referral_code
-                      : ""
-                  }
-                />
-              </span>
+              <div className="flex items-center gap-x-3">
+                <div className="flex">
+                  <span
+                    className={`flex items-center font-${font}-regular border-2 border-dashed border-gray rounded-full w-fit px-3 mt-1 text-${oppositeTheme}`}
+                  >
+                    <span className="pt-1.5 pb-1">
+                      {userInfo && userInfo.referral_code
+                        ? userInfo.referral_code
+                        : ""}
+                    </span>
+                    <div className="h-full border border-gray border-dashed mx-2" />
+                    <CopyText
+                      text={
+                        userInfo && userInfo.referral_code
+                          ? userInfo.referral_code
+                          : ""
+                      }
+                    />
+                  </span>
+                </div>
+                <div className="">
+                  <CustomTooltip
+                    trigger="click"
+                    placement="top"
+                    style={oppositeTheme}
+                    content={
+                      api["sign-up"] +
+                      "?referral=" +
+                      (userInfo ? userInfo.referral_code : "") +
+                      " " +
+                      lang["copied"] +
+                      "!"
+                    }
+                    className={`font-${font}-bold pt-2.5`}
+                  >
+                    <CopyToClipboard
+                      text={
+                        api["sign-up"] +
+                        "?referral=" +
+                        (userInfo ? userInfo.referral_code : "")
+                      }
+                    >
+                      <button>
+                        <span className="text-blue w-fit">
+                          {lang["copy-link"]}
+                        </span>
+                      </button>
+                    </CopyToClipboard>
+                  </CustomTooltip>
+                </div>
+              </div>
             </div>
           </>
         )}

@@ -156,6 +156,24 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 ? receiverTanks[selectedWalletTank].account_name
                 : ""}
             </span>
+            {data && (
+              <div
+                className={`flex flex-col bg-${theme}-back rounded-md py-2.5 px-3 font-${font}-regular text-${oppositeTheme}`}
+              >
+                <div className="w-full flex justify-between pb-3 border-b border-gray">
+                  <span className="-mb-1">
+                    {lang["deposit-secret-code"] + ":"}
+                  </span>
+                  <div className="flex items-center gap-x-1">
+                    <span className="-mb-1">{data.secret_code}</span>
+                    <CopyText text={data.secret_code} />
+                  </div>
+                </div>
+                <span className={`pt-2  ${font === "Fa" ? "pb-2.5" : "-mb-1"}`}>
+                  {lang["deposit-secret-code-message"] + "."}
+                </span>
+              </div>
+            )}
             <div className="w-full flex relative">
               <CustomDropdown
                 label={
@@ -168,7 +186,8 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 labelClassName={
                   selectedWalletTank >= 0 &&
                   receiverTanks[selectedWalletTank] &&
-                  receiverTanks[selectedWalletTank].bank_info
+                  receiverTanks[selectedWalletTank].bank_info &&
+                  receiverTanks[selectedWalletTank].currency_abb === "USDT"
                     ? "ml-20 w-[55%] line-clamp-1"
                     : ""
                 }

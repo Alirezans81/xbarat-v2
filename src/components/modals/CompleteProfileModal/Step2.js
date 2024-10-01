@@ -22,7 +22,12 @@ const Note = ({ lang, font }) => {
   );
 };
 
-export default function Step2({ setFieldValue }) {
+export default function Step2({
+  values,
+  handleBlur,
+  handleChange,
+  setFieldValue,
+}) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
@@ -34,6 +39,7 @@ export default function Step2({ setFieldValue }) {
   const [selectedCountryIndex, setSelectedCountryIndex] = useState(-1);
   const [cities, setCities] = useState([]);
   const [selectedCityIndex, setSelectedCityIndex] = useState(-1);
+  const [customCity, setCustomCity] = useState(false);
 
   useEffect(() => {
     if (
@@ -213,55 +219,75 @@ export default function Step2({ setFieldValue }) {
               {lang["city"]}
             </span>
             <div className="w-full flex">
-              <CustomDropdown
-                label={
-                  selectedCityIndex >= 0 ? cities[selectedCityIndex].title : ""
-                }
-                searchable
-              >
-                {cities.map((city, index) => {
-                  if (index === 0 && index === cities.length - 1) {
-                    return (
-                      <CustomItem
-                        key={index}
-                        className="rounded-xl"
-                        onClick={() => setSelectedCityIndex(index)}
-                      >
-                        {city && city.title ? city.title : "error"}
-                      </CustomItem>
-                    );
-                  } else if (index === 0) {
-                    return (
-                      <CustomItem
-                        key={index}
-                        className="rounded-t-xl"
-                        onClick={() => setSelectedCityIndex(index)}
-                      >
-                        {city && city.title ? city.title : "error"}
-                      </CustomItem>
-                    );
-                  } else if (index === cities.length - 1) {
-                    return (
-                      <CustomItem
-                        key={index}
-                        className="rounded-b-xl"
-                        onClick={() => setSelectedCityIndex(index)}
-                      >
-                        {city && city.title ? city.title : "error"}
-                      </CustomItem>
-                    );
-                  } else {
-                    return (
-                      <CustomItem
-                        key={index}
-                        onClick={() => setSelectedCityIndex(index)}
-                      >
-                        {city && city.title ? city.title : "error"}
-                      </CustomItem>
-                    );
+              {customCity ? (
+                <div className="w-full flex flex-1">
+                  <input
+                    className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                    name="city_str"
+                    onBlur={handleBlur("city_str")}
+                    onChange={handleChange("city_str")}
+                    value={values.city_str ? values.city_str : ""}
+                  />
+                </div>
+              ) : (
+                <CustomDropdown
+                  label={
+                    selectedCityIndex >= 0
+                      ? cities[selectedCityIndex].title
+                      : ""
                   }
-                })}
-              </CustomDropdown>
+                  searchable
+                >
+                  <CustomItem
+                    className="rounded-xl"
+                    onClick={() => setCustomCity(true)}
+                  >
+                    + Custom
+                  </CustomItem>
+                  {cities.map((city, index) => {
+                    if (index === 0 && index === cities.length - 1) {
+                      return (
+                        <CustomItem
+                          key={index}
+                          className="rounded-xl"
+                          onClick={() => setSelectedCityIndex(index)}
+                        >
+                          {city && city.title ? city.title : "error"}
+                        </CustomItem>
+                      );
+                    } else if (index === 0) {
+                      return (
+                        <CustomItem
+                          key={index}
+                          className="rounded-t-xl"
+                          onClick={() => setSelectedCityIndex(index)}
+                        >
+                          {city && city.title ? city.title : "error"}
+                        </CustomItem>
+                      );
+                    } else if (index === cities.length - 1) {
+                      return (
+                        <CustomItem
+                          key={index}
+                          className="rounded-b-xl"
+                          onClick={() => setSelectedCityIndex(index)}
+                        >
+                          {city && city.title ? city.title : "error"}
+                        </CustomItem>
+                      );
+                    } else {
+                      return (
+                        <CustomItem
+                          key={index}
+                          onClick={() => setSelectedCityIndex(index)}
+                        >
+                          {city && city.title ? city.title : "error"}
+                        </CustomItem>
+                      );
+                    }
+                  })}
+                </CustomDropdown>
+              )}
             </div>
           </div>
         </form>

@@ -97,29 +97,32 @@ export default function CompleteProfileModal() {
 
   useEffect(() => {
     if (userInfo) {
-      step === 1 &&
+      if (
         userInfo.first_name &&
         userInfo.last_name &&
         userInfo.phone &&
-        setStep(2);
-      step === 2 &&
-        userInfo.nationality &&
-        userInfo.country &&
-        userInfo.city &&
-        setStep(3);
-      step === 3 &&
-        userInfo.identity_type &&
-        userInfo.identity_code &&
-        userInfo.document &&
-        setStep(4);
+        userInfo.address
+      ) {
+        if (
+          userInfo.nationality &&
+          userInfo.country &&
+          (userInfo.city || userInfo.city_str)
+        ) {
+          if (
+            userInfo.identity_type &&
+            userInfo.identity_code &&
+            userInfo.document
+          ) {
+            if (walletTanks[0]) setStep(5);
+            else setStep(4);
+          } else setStep(3);
+        } else setStep(2);
+      }
 
       userInfo.rejection_reason &&
         openRejectionErrorToast(userInfo.rejection_reason);
     }
-  }, [userInfo]);
-  useEffect(() => {
-    step === 4 && walletTanks[0] && setStep(5);
-  }, [walletTanks, step]);
+  }, [userInfo, walletTanks]);
 
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
@@ -143,7 +146,11 @@ export default function CompleteProfileModal() {
     return false;
   };
   const validateFetchStep2 = (values) => {
-    if (values.nationality && values.country && values.city) {
+    if (
+      values.nationality &&
+      values.country &&
+      (values.city || values.city_str)
+    ) {
       return true;
     }
     return false;
@@ -152,6 +159,7 @@ export default function CompleteProfileModal() {
     if (values.identity_type && values.identity_code && values.document) {
       return true;
     }
+
     return false;
   };
   const validateFetchStep4 = (values) => {
@@ -220,7 +228,7 @@ export default function CompleteProfileModal() {
   };
 
   return (
-    <div className="flex flex-col px-4 justify-center items-center md:flex-row w-complete-profile">
+    <div className="flex flex-col px-4 justify-center items-center md:flex-row w-[90dvw] md:w-fit">
       <div className="w-full flex flex-col justify-center items-center">
         <Stepper step={step} />
         <div className="w-full mt-5 h-full flex flex-col justify-between">
@@ -242,6 +250,10 @@ export default function CompleteProfileModal() {
                 userInfo && userInfo.phone && userInfo.phone !== "undefined"
                   ? userInfo.phone
                   : "",
+              address:
+                userInfo && userInfo.address && userInfo.address !== "undefined"
+                  ? userInfo.address
+                  : "",
               nationality:
                 userInfo &&
                 userInfo.nationality &&
@@ -255,6 +267,12 @@ export default function CompleteProfileModal() {
               city:
                 userInfo && userInfo.city && userInfo.city !== "undefined"
                   ? userInfo.city
+                  : "",
+              city_str:
+                userInfo &&
+                userInfo.city_str &&
+                userInfo.city_str !== "undefined"
+                  ? userInfo.city_str
                   : "",
               identity_type:
                 userInfo &&
@@ -286,22 +304,9 @@ export default function CompleteProfileModal() {
               step === 2 &&
                 validateFetchStep2(values) &&
                 fetchStep2(values, nextStep);
-              if (step === 3) {
-                validateFetchStep3(values)
-                  ? fetchStep3(values, nextStep)
-                  : nextStep();
-              }
-              if (step === 3) {
-                if (
-                  values.identity_type ||
-                  values.identity_code ||
-                  values.document
-                ) {
-                  fetchStep3(values, nextStep);
-                } else {
-                  nextStep();
-                }
-              }
+              step === 3 &&
+                validateFetchStep3(values) &&
+                fetchStep3(values, nextStep);
               if (step === 4) {
                 validateFetchStep4(values)
                   ? fetchStep4(values, nextStep)
@@ -336,7 +341,12 @@ export default function CompleteProfileModal() {
               } else if (step === 2) {
                 return (
                   <>
-                    <Step2 setFieldValue={setFieldValue} />
+                    <Step2
+                      values={values}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      setFieldValue={setFieldValue}
+                    />
                     <Buttons
                       step={step}
                       previousStep={previousStep}
@@ -388,7 +398,9 @@ export default function CompleteProfileModal() {
           </Formik>
         </div>
       </div>
-      {step === 3 && <UploadDocumentHint />}
+      <div className="hidden md:block">
+        {step === 3 && <UploadDocumentHint />}
+      </div>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 import { useLogin } from "../../../apis/pages/Login/hooks";
 import { useTimer } from "react-timer-hook";
 
-export default function Form({ setIsSplashScreenLoading }) {
+export default function Form({ setIsSplashScreenLoading, initReferral }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
   const lang = useLanguageState();
@@ -200,7 +200,7 @@ export default function Form({ setIsSplashScreenLoading }) {
         email: "",
         password: "",
         confirmPassword: "",
-        referral: "",
+        referral: initReferral || "",
         verify_email_code: "",
       }}
       onSubmit={(values) => {

@@ -18,7 +18,7 @@ export default function Stepper({ type, step }) {
       <div className="w-full flex flex-row items-center justify-center pb-3 pt-14 pr-2">
         <div className={step < 1 ? notActiveCircle : activeCircle}>
           <div
-            className={`text-base -left-4 absolute -top-14 text-center-important font-${font}-regular`}
+            className={`text-base -left-4 absolute -top-14 text-center-important font-${font}-regular leading-5`}
           >
             <span className={step < 1 ? notActiveText : activeText}>
               {lang["admin-assign"]}
@@ -28,7 +28,7 @@ export default function Stepper({ type, step }) {
         <div className={step < 2 ? notActiveLine : activeLine} />
         <div className={step < 2 ? notActiveCircle : activeCircle}>
           <div
-            className={`text-base -left-7 absolute -top-14 text-center-important font-${font}-regular`}
+            className={`text-base -left-7 absolute -top-14 text-center-important font-${font}-regular leading-5`}
           >
             <span className={step < 2 ? notActiveText : activeText}>
               {lang["upload-document"]}
@@ -38,7 +38,7 @@ export default function Stepper({ type, step }) {
         <div className={step < 3 ? notActiveLine : activeLine} />
         <div className={step < 3 ? notActiveCircle : activeCircle}>
           <div
-            className={`text-base -left-6 absolute -top-14 text-center-important font-${font}-regular`}
+            className={`text-base -left-6 absolute -top-14 text-center-important font-${font}-regular leading-5`}
           >
             <span className={step < 3 ? notActiveText : activeText}>
               {lang["admin-approve"]}
@@ -48,7 +48,7 @@ export default function Stepper({ type, step }) {
         <div className={step < 4 ? notActiveLine : activeLine} />
         <div className={step < 4 ? notActiveCircle : activeCircle}>
           <div
-            className={`text-base -left-[1.5rem] absolute -top-14 text-center-important font-${font}-regular`}
+            className={`text-base -left-[1.5rem] absolute -top-14 text-center-important font-${font}-regular leading-5`}
           >
             <span className={step < 4 ? notActiveText : activeText}>
               {lang["accept"] + "/\n" + lang["reject"]}
@@ -62,7 +62,7 @@ export default function Stepper({ type, step }) {
       <div className="w-full flex flex-row items-center justify-center pb-3 pt-14 pr-2">
         <div className={step < 1 ? notActiveCircle : activeCircle}>
           <div
-            className={`text-base -left-6 absolute -top-14 text-center-important font-${font}-regular`}
+            className={`text-base -left-6 absolute -top-14 text-center-important font-${font}-regular leading-5`}
           >
             <span className={step < 1 ? notActiveText : activeText}>
               {lang["admin-approve"]}
@@ -72,7 +72,7 @@ export default function Stepper({ type, step }) {
         <div className={step < 2 ? notActiveLine : activeLine} />
         <div className={step < 2 ? notActiveCircle : activeCircle}>
           <div
-            className={`text-base -left-5 absolute -top-14 text-center-important font-${font}-regular`}
+            className={`text-base -left-5 absolute -top-14 text-center-important font-${font}-regular leading-5`}
           >
             <span className={step < 2 ? notActiveText : activeText}>
               {lang["accept"] + "/\n" + lang["reject"]}
