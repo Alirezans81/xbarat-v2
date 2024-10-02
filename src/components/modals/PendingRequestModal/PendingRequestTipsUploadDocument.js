@@ -42,10 +42,10 @@ const PendingRequestTipsUploadDocument = ({ setTips }) => {
   }, []);
 
   return (
-    <div className="w-screen h-screen absolute top-0 left-0 z-30 bg-transparent">
+    <div className="w-screen h-screen absolute top-0 left-0 z-30 bg-dark-glass">
       <div className="w-full h-full flex justify-center items-center flex-col">
         <div
-          className={` w-full h-full flex flex-col bg-${theme} max-w-lg max-h-96 overflow-y-scroll rounded-2xl p-5 gap-y-2`}
+          className={` w-full h-full flex flex-col bg-${theme} max-w-lg max-h-96 overflow-y-scroll rounded-2xl p-5 gap-y-2 shadow-md`}
         >
           <span
             className={`text-${oppositeTheme} w-full flex flex-row font-bold`}
