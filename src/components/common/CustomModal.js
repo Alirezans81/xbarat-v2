@@ -47,7 +47,9 @@ export default function CustomModal() {
             </button>
           )}
         </div>
-        <div className="max-h-[85dvh] overflow-y-scroll">{children}</div>
+        <div className="max-h-[85dvh] overflow-y-auto md:overflow-y-hidden overflow-x-hidden">
+          {children}
+        </div>
       </div>
     </div>
   );
