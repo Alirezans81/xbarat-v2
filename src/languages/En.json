@@ -11,6 +11,15 @@
   "submit": "Submit",
   "exchange": "Exchange",
   "remember-me": "Remember Me",
+  "member": "Member",
+  "reason-free-exchange": "Credit Worthy",
+  "dear": "Dear",
+  "congratulations": "Congratulations",
+  "congratulateFreeExchangeYouHaveWonFreeToken": "You Have Won a Free-exchange Token",
+  "congratulateFreeExchangeYouHaveBeenReason": "You Have Been a",
+  "congratulateFreeExchangeYouHaveBeenFamily": "Member of The X-Barat Family.",
+  "congratulateFreeExchangeYourExchangeWillBeFree": "Your Exchange's Will Be Free of Charge",
+  "congratulateFreeExchangeThankYouForChoosing": "Thank You For Choosing X-Barat",
   "forgot-password": "Forgot Password?",
   "not-logged-in-error": "You should be logged in to access this page",
   "email-empty-error": "Enter your email address",
@@ -312,6 +321,25 @@
   "was_made_succesfully": "Was Made Successfully",
   "privacyPolicy": "Privacy And Policy",
   "privacyLanding": "Welcome to Xbarat.We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and share your data.",
+  "tips": "Tips",
+  "tipsAgreement": "I Have Read The Terms Above Hence XBarat Will Not Be Resposible For Further Mistakes.",
+  "TipsPending": [
+    {
+      "one": "1.asduysadaiduasydgaidusagdaysiduhagdaiuhgcfewf fe f  fesfs fse f sf sef se fe fs ffjrihg firugfiruhgifheifhschjrsvirsuhv riuvh vsuhi"
+    },
+    {
+      "two": "2.asduysadaiduasydgaidusagdaysiduhagdaiuhgcfewf fe f  fesfs fse f sf sef se fe fs ffjrihg firugfiruhgifheifhschjrsvirsuhv riuvh vsuhi"
+    },
+    {
+      "three": "3.asduysadaiduasydgaidusagdaysiduhagdaiuhgcfewf fe f  fesfs fse f sf sef se fe fs ffjrihg firugfiruhgifheifhschjrsvirsuhv riuvh vsuhi"
+    },
+    {
+      "four": "4.asduysadaiduasydgaidusagdaysiduhagdaiuhgcfewf fe f  fesfs fse f sf sef se fe fs ffjrihg firugfiruhgifheifhschjrsvirsuhv riuvh vsuhi"
+    },
+    {
+      "five": "5.asduysadaiduasydgaidusagdaysiduhagdaiuhgcfewf fe f  fesfs fse f sf sef se fe fs ffjrihg firugfiruhgifheifhschjrsvirsuhv riuvh vsuhi"
+    }
+  ],
 
   "indexPrivacyPolicy": [
     {
@@ -411,6 +439,26 @@
         }
       }
     },
+    "Exchange": {
+      "context": [
+        "If You Want to Exchange Your Money.Here is the Step By Step Solution",
+        "1-Go to the \"Home\" Section.",
+        "2-Enter The Currencies Of Your Exchange.",
+        "3-Type The Amount That You Want To Exchange.",
+        "4-Type The Rate That You Want To Exchange.",
+        "5-Click The \"Submit\" Button"
+      ],
+      "status": {
+        "Accept": {
+          "desc": "Your Request Was Accepted",
+          "full": "This Means That Your Exchange Request Was Completed Successfully And The Money Is Available In The \"Your Balance\" Section On Your Destination Currency Card"
+        },
+        "Reject": {
+          "desc": "Your Requet Was Rejected",
+          "full": "Your Exchange Request Was Rejected Possibly Because Of An Error In The Transfer Flow Of the Money"
+        }
+      }
+    },
     "Withdraw": {
       "context": [
         "If You Want to Withdraw Your Money. Here is the Step By Step Solution",
@@ -448,26 +496,6 @@
         "Reject": {
           "desc": "Your Requet Was Rejected",
           "full": "Your Transfer Request Was Rejected Becuase You May Not Have Had The Suficient Amount Of Money To Transfer Or Because The End User Provided By You May Not Have Been Valid"
-        }
-      }
-    },
-    "Exchange": {
-      "context": [
-        "If You Want to Exchange Your Money.Here is the Step By Step Solution",
-        "1-Go to the \"Home\" Section.",
-        "2-Enter The Currencies Of Your Exchange.",
-        "3-Type The Amount That You Want To Exchange.",
-        "4-Type The Rate That You Want To Exchange.",
-        "5-Click The \"Submit\" Button"
-      ],
-      "status": {
-        "Accept": {
-          "desc": "Your Request Was Accepted",
-          "full": "This Means That Your Exchange Request Was Completed Successfully And The Money Is Available In The \"Your Balance\" Section On Your Destination Currency Card"
-        },
-        "Reject": {
-          "desc": "Your Requet Was Rejected",
-          "full": "Your Exchange Request Was Rejected Possibly Because Of An Error In The Transfer Flow Of the Money"
         }
       }
     }

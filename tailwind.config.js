@@ -10,12 +10,22 @@ module.exports = {
   theme: {
     extend: {
       animation: {
+        float: "float 6s ease-in-out infinite",
+        fadeIn: "fadeIn 2s ease-in-out",
         upward: "upward 2s ease-out 1",
         rightward: "rightward 2s ease-out 1",
         leftward: "leftward 2s ease-out 1",
         appear: "appear 2s ease-out 1",
       },
       keyframes: {
+        float: {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(-100vh)" },
+        },
+        fadeIn: {
+          "0%": { opacity: "0", transform: "translateY(-50px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
         upward: {
           "0%": { margin: "30px 0px 0px 0px" },
           "100%": { margin: "0px" },
