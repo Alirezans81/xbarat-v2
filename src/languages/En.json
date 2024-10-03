@@ -18,7 +18,7 @@
   "congratulateFreeExchangeYouHaveWonFreeToken": "You Have Won a Free-exchange Token",
   "congratulateFreeExchangeYouHaveBeenReason": "You Have Been a",
   "congratulateFreeExchangeYouHaveBeenFamily": "Member of The X-Barat Family.",
-  "congratulateFreeExchangeYourExchangeWillBeFree": "Your Exchange's Will Be Free of Charge",
+  "congratulateFreeExchangeYourExchangeWillBeFree": "Your Exchanges Will Be Free of Charge",
   "congratulateFreeExchangeThankYouForChoosing": "Thank You For Choosing X-Barat",
   "forgot-password": "Forgot Password?",
   "not-logged-in-error": "You should be logged in to access this page",
@@ -27,7 +27,7 @@
   "password-empty-error": "Enter your password",
   "password-short-error": "Password should be at least 8 characters long",
   "password-contain-error": "Password should contain one of the following characters: [a-z], [A-Z], [0-9], [!@#$%*?]",
-  "password-match-error": "Password does not match",
+  "password-match-error": "Passwords do not match",
   "home": "Home",
   "wallet": "Wallet",
   "reports": "Reports",
@@ -129,22 +129,22 @@
   "skip": "Skip",
   "next": "Next",
   "done": "Done",
-  "complete-profile-modal-step1-note-1st": "To create a user account, your contact number needs to be registered in the system",
+  "complete-profile-modal-step1-note-1st": "To create a user account, your contact information needs to be registered in the system",
   "complete-profile-modal-step1-note-2nd": "And the security of your account and the notifications of your account operations will depend on this contact number",
-  "complete-profile-modal-step1-note-3rd": "If you ever forgot your password, your only way recover your password is your number",
+  "complete-profile-modal-step1-note-3rd": "If you ever forgot your password, the only way to recover your password is your number",
   "complete-profile-modal-step2-note-1st": "We need to know your nationality to receive a proper identity document",
-  "complete-profile-modal-step2-note-2nd": "And also we need your location to find out how we are going to cooperate together",
+  "complete-profile-modal-step2-note-2nd": "And we also need your location to find out how we are going to cooperate together",
   "type-of-identity-document": "Type of identity document",
   "number-of-document": "Number of document",
   "upload-your-document": "Upload your document",
-  "complete-profile-modal-step3-note-1st": "To authenticate and secure your account you need to specify your identity document type",
-  "complete-profile-modal-step3-note-2nd": "And after that, enter the number of your document so that our admins can approve your account as soon as possible",
+  "complete-profile-modal-step3-note-1st": "To authenticate and secure your account, you need to specify your identity document type",
+  "complete-profile-modal-step3-note-2nd": "Admin that, enter the number of your document so that our admins can approve your account as soon as possible",
   "card-number": "Card number",
   "shaba-number": "Shaba number",
   "paypal-email": "Paypal email",
-  "complete-profile-modal-step4-note-1st": "To send your money to your real account we need to have some information about it",
-  "complete-profile-modal-step4-note-2nd": "Card number is for times that the money is not much",
-  "complete-profile-modal-step4-note-3rd": "And Shaba number is for time we want to send you a big amount of money",
+  "complete-profile-modal-step4-note-1st": "To send your money to your real account,we need to have some information about it",
+  "complete-profile-modal-step4-note-2nd": "Card number is for times that the money doesn'nt exceed a certain amount",
+  "complete-profile-modal-step4-note-3rd": "And Shaba number is for time we want to send you a substantial amount of money",
   "complete-profile-modal-step5-note-1st": "Thank you for completing your profile",
   "complete-profile-modal-step5-note-2nd": "Please wait for admin approve",
   "person-code": "Person Code",
@@ -163,7 +163,7 @@
   "cancel-request-modal-message": "Are you sure to cancel the request",
   "cancel-exchange-modal-message": "Are you sure to cancel the exchange",
   "accept-transaction-message": "Your transaction was successfully accepted",
-  "not-enough-balance-error": "You have not enough balance",
+  "not-enough-balance-error": "You dont have enough balance",
   "low-amount-error": "Your balance must be more than",
   "high-amount-error": "Your balance must be less than",
   "not-in-range-rate-error-1st": "Your rate must be between",
@@ -209,7 +209,7 @@
   "add-card": "Add Card",
   "complete-profile-toast-message": "Please complete your profile information to work with the platform properly",
   "file-too-big-toast-message": "The image is too big (Must be less than 4 MB)",
-  "not-enough-balance-toast-message-1st": "You have not enough balance",
+  "not-enough-balance-toast-message-1st": "You dont have enough balance",
   "not-enough-balance-toast-message-2nd": "It must be less than",
   "switch-page-mode": "Switch Page Mode",
   "week-low": "Week Low",
@@ -268,32 +268,32 @@
   "index-features-security-title": "Security",
   "index-features-security-desc": "One of the most obvious features of the Xbarat site is the high level of security and protection of users' identity documents. Using the most professional site security expert team and using the most up-to-date security tools, XBarat tries to provide a secure platform for the authentication of its users.",
   "index-features-easy-transfer-title": "Easy transfer",
-  "index-features-easy-transfer-desc": "Xbarat has solved your concern for visiting in person and standing in long queues at exchanges and banks. You can do your financial transactions easily and without wasting time from your home or office.",
+  "index-features-easy-transfer-desc": "Xbarat has solved your concern for visiting in person and standing in long queues at exchange offices and banks. You can do your financial transactions easily and without wasting time from your home or office.",
   "index-features-high-transaction-speed-title": "High Transaction Speed",
   "index-features-high-transaction-speed-desc": "Unlike the slow performance of exchanges, in Xbarat transactions and financial transfers of users are done online and due to fast response and high support, transactions will be done within two hours (during office hours) after sending the request.",
   "index-features-low-fees-title": "Low Fees",
-  "index-features-low-fees-desc": "By receiving only one percent of the fee from the total amount, which is much lower than the fees charged by banks and exchanges, X-Brat takes steps in order to benefit users from transactions as much as possible.",
+  "index-features-low-fees-desc": "By receiving only one percent of the fee from the total amount, which is much lower than the fees charged by banks and exchanges, X-Barat takes steps in order to benefit users from transactions as much as possible.",
   "index-features-freedom-of-rate-title": "Freedom Of Action Of Users In Choosing The Rate",
-  "index-features-freedom-of-rate-desc": "One of the most common problems of users in transactions and financial exchanges is the single rate of exchanges and banks. Xbarat has provided a platform to choose the desired rate in transactions, and users have more freedom of action in transactions.",
+  "index-features-freedom-of-rate-desc": "One of the most common problems of users in transactions and financial exchanges is the single rate of exchange offices and banks. X-Barat has provided a platform to choose the desired rate in transactions, and users have more freedom of action in transactions.",
   "index-features-support-languages-title": "Xbarat Supports International Languages",
-  "index-features-support-languages-desc": "On Xbarat site, users can choose their preferred language. This feature will make it easier for users to communicate with the site. To choose the desired language, after entering the site, enter the main page and select the desired language from the header section.",
+  "index-features-support-languages-desc": "On the Xbarat site, users can choose their preferred language. This feature will make it easier for users to communicate with the site. To choose the desired language, after entering the site, enter the main page and select the desired language from the header section.",
   "index-social-media": "Social Media",
   "index-social-media-title": "Our services in instagram",
   "index-social-media-desc-1-title": "Answering your questions",
   "index-social-media-desc-1-desc": "You can visit the direct page at any hour of the day and ask your questions. Admins will answer your questions as soon as possible.",
-  "index-social-media-desc-2-title": "Sign up & exchange toturiales",
-  "index-social-media-desc-2-desc": "On the Xbarat Instagram page, complete and practical training posts about how to register, transfer and withdraw currency, etc., have been uploaded, which will familiarize you with how to work with the site.",
+  "index-social-media-desc-2-title": "Sign up & exchange tutorials",
+  "index-social-media-desc-2-desc": "On the Xbarat Instagram page, complete and practical training posts about how to register, transfer and withdraw currency and etc, have been uploaded. which will familiarize you with how to work with the site.",
   "index-social-media-desc-3-title": "News",
-  "index-social-media-desc-3-desc": "All news related to Xbarat, such as closures, adding new currency, updating rates, etc., will be communicated to users and dear customers through the Instagram page.",
+  "index-social-media-desc-3-desc": "All news related to Xbarat, such as closures, adding new currency, updating rates and etc, will be communicated to users and dear customers through the Instagram page.",
   "index-journey-title": "The journey of transfering your money",
   "index-journey-desc-1": "We transfer your money in 4 steps",
   "index-journey-desc-2": "Signup & Complete Profile - Deposit - Exchange - Withdraw or Transfer",
   "index-journey-step-1-title": "Signup & Complete Profile",
-  "index-journey-step-1-desc": "Enter the system from the login button, select the registration option and enter your email. Create a personal password and after repeating it in the next field, agree to the terms of Xbarat. The confirmation code will be sent to the email you registered on the site. After entering the code in the relevant field and confirming, your account will be created and you will be transferred to the Xbarat main page. On the main page, go to the profile section and enter your details.",
+  "index-journey-step-1-desc": "Enter the system through the login button, select the registration option and enter your email. Create a personal password and after repeating it in the next field, agree to the terms of Xbarat. The confirmation code will be sent to the email you registered on the site. After entering the code in the relevant field and confirming, your account will be created and you will be transferred to the Xbarat main page. On the main page, go to the profile section and enter your details.",
   "index-journey-step-2-title": "Deposit",
-  "index-journey-step-2-desc": "Enter the wallet section (bar on the left side of the site) and select your desired currency (the currency you want to convert), enter the currency amount, after selecting the send option, wait for the admin's approval. After admin approval, depending on your chosen currency (riyal, dollar, euro, etc.), Shaba number, card number or PayPal address will be displayed in the wallet top-up request section. Make the deposit and upload the deposit slip in the same section of the request. After admin approval, your wallet will be charged.",
+  "index-journey-step-2-desc": "Enter the wallet section (bar on the left side of the site) and select your desired currency (the currency you want to convert), enter the currency amount, after selecting the send option, wait for the admin's approval. After admin approval, depending on your chosen currency (Riyal, Dollar, Euro, etc.), Shaba number, card number or PayPal address will be displayed in the wallet top-up request section. Make the deposit and upload the deposit slip in the same section of the request. After admin approval, your wallet will be charged.",
   "index-journey-step-3-title": "Exchange",
-  "index-journey-step-3-desc": "Enter the main page of the site, click on the desired currency pair (for example: Rial to Euro) in the Watch List section, enter the amount and rate you offer and select the send option. Wait for the admin's approval to convert your currency.",
+  "index-journey-step-3-desc": "Enter the main page of the site, click on the desired currency pair (example: Rial to Euro) in the Watch List section, enter the amount and rate you offer and select the send option. Wait for the admin's approval to convert your currency.",
   "index-journey-step-4-title": "Transfer/Withdrawal",
   "index-journey-step-4-desc": "Note that only users who have an authenticated user account on the Xbarat site are able to transfer currency. In the wallet section, click on the desired currency and select the transfer option. In the first field, select the amount of currency and in the second field, enter the user code of the recipient of the currency (person or account to which you want to transfer). After selecting the send option and admin confirmation, the currency will be transferred. Go to your wallet and click on the desired currency, select the withdrawal option and enter the withdrawal amount, in the Bank Account field, enter the Shaba number, card number or PayPal address of the destination and send the option. Choose. Wait for the admin to upload the deposit slip in the withdrawal request section.",
   "index-support-map": "Currency support Map",
@@ -302,7 +302,7 @@
   "index-footer-trust-title-1": "Our credibility, Our",
   "index-footer-trust-title-2": "Trust",
   "index-footer-trust-title-3": "",
-  "index-footer-trust-desc": "One of the most obvious reasons for users' trust in us is direct user-to-user connection and not having a financial pool. Xbarat's role during transactions is to connect users to each other, validate users, guarantee transactions, and review and confirm transfer procedures.",
+  "index-footer-trust-desc": "One of the most obvious reasons for users trust in us is direct user-to-user connection and not having a money pool. Xbarat's role during transactions is to connect users to each other, validate users, guarantee transactions, and review and confirm transfer procedures.",
   "index-footer-trust-bottom": "Lorem ipsum dolor sit",
   "index-product": "Product",
   "index-features": "Features",
@@ -335,7 +335,7 @@
         },
         {
           "head": "Support",
-          "value": "We At Xbarat Feel The Need To Provide The Best Service To Our Users And Since We Have User WorldWide Gathering Information Helps us Offer The Quickest And Best Customer Support Which We Do By Connecting People To Our Representers That Station Nearby And Also Connect Them Based On Their Need's."
+          "value": "We At Xbarat Feel The Need To Provide The Best Service To Our Users And Since We Have Users WorldWide, Gathering Information Helps us Offer The Quickest And Best Customer Support.Which We Do By Connecting People To Our Representers That are Stationed Nearby And Also Connect Them Based On Their Needs."
         },
         {
           "head": "Validate Identity",
@@ -353,7 +353,7 @@
         },
         {
           "head": "Transaction Receipts",
-          "value": "Each Transaction Between Every Two User Comes Through Our Transaction Verification Team Which They Examine Every Detail Of Every Transaction That Is Provided By The Users Making Them."
+          "value": "Each Transaction Between Every Two Users Transfers Through Our Transaction Verification Team Which They Examine Every Detail Of Every Transaction That Is Provided By The Users Making Them."
         }
       ]
     },
@@ -362,15 +362,15 @@
       "drop": [
         {
           "head": "Contact Info",
-          "value": "We Collect Your Phone Number,Email Address Your City/Country"
+          "value": "We Collect Your Phone Number,Email Address and Your City/Country"
         },
         {
           "head": "Identity Info",
-          "value": "As Said Earlier We Have To Verify Identities And To Do So We Collect An Identification Record Such as a Passport Picture Or An ID Card Picture"
+          "value": "As Said Earlier We Have To Verify Identities;To Do So We Collect An Identification Record Such as a Passport Picture or An ID Card Picture"
         },
         {
           "head": "Banking Information",
-          "value": "We Are In a Money Exchange Bussiness Hence Making Us Collect Information Regarding The Banks That The Deposits Should Go To Or Where Will Our Users Deposit Their Money From"
+          "value": "We Are In a Money Exchange Bussiness.This Makes Us Collect Information Regarding The Banks That The Deposits Should Go To,or Where Will Our Users Deposit Their Money From"
         }
       ]
     }
@@ -406,7 +406,7 @@
         "2-Enter The Currency Of Your Deposit.",
         "3-Type The Amount That You Want To Deposit.",
         "4-Click The \"Submit\" Button",
-        "5-Wait For Admin Assign"
+        "5-Wait For Admin Assignment"
       ],
       "status": {
         "Accept": {
@@ -415,7 +415,7 @@
         },
         "Reject": {
           "desc": "Your Requet Was Rejected",
-          "full": "Your Deposit Request Was Rejected Possibly Because Of A Flaw In Your Uploaded Document Or An Error In The Transfer Flow Of the Money"
+          "full": "Your Deposit Request Was Rejected Possibly Because of a Flaw In Your Uploaded Document or an Error In The Transfer Flow Of the Money"
         },
         "Upload Document": {
           "desc": "In This Situation You Must Upload A Document Of Your Deposit Recipt",
@@ -427,7 +427,7 @@
       "context": [
         "If You Want to Exchange Your Money.Here is the Step By Step Solution",
         "1-Go to the \"Home\" Section.",
-        "2-Enter The Currencies Of Your Exchange.",
+        "2-Enter The Currency Pair Of Your Exchange.",
         "3-Type The Amount That You Want To Exchange.",
         "4-Type The Rate That You Want To Exchange.",
         "5-Click The \"Submit\" Button"
@@ -439,7 +439,7 @@
         },
         "Reject": {
           "desc": "Your Requet Was Rejected",
-          "full": "Your Exchange Request Was Rejected Possibly Because Of An Error In The Transfer Flow Of the Money"
+          "full": "Your Exchange Request Was Rejected Possibly Because of an Error In The Transfer Flow Of the Money"
         }
       }
     },
@@ -455,11 +455,11 @@
       "status": {
         "Accept": {
           "desc": "Your Request Was Accepted",
-          "full": "Your Withdrawal Request Was Completed Successfully And It Should Show On Your Back Acccount You Selected by You In The Previous Steps "
+          "full": "Your Withdrawal Request Was Completed Successfully. It Should Show On Your Back Acccount Selected by You In The Previous Steps "
         },
         "Reject": {
           "desc": "Your Requet Was Rejected",
-          "full": "Your Withdrawal Request Was Rejected nd This Could Happen Bacause You may Have Not Had The Sufficient Amount Of Money On That Currency"
+          "full": "Your Withdrawal Request Was Rejected. This Could Happen Bacause You may not Have Had The Sufficient Amount Of Money On That Currency"
         }
       }
     },
@@ -495,26 +495,26 @@
   "add-to-home-screen-modal-step-3-2nd": " Add ",
   "add-to-home-screen-modal-step-3-3rd": "at the top.",
   "add-to-home-screen-modal-close-button-text": "Understood",
-  "privacy-&-policy-error": "You have not accepted the privacy & policy!",
+  "privacy-&-policy-error": "You have not accepted our privacy & policy!",
   "completed-profile-notif-subject-1st": "Your profile has been activated.",
   "completed-profile-notif-subject-2nd": "",
   "completed-profile-notif-subject-3rd": "",
-  "completed-profile-notif-desc-1st": "Now you can create a deposit/withdrawal/transfer or exchange request.",
+  "completed-profile-notif-desc-1st": "Now you can create a deposit, withdrawal ,transfer or an exchange request.",
   "completed-profile-notif-desc-2nd": "",
   "completed-profile-notif-desc-3rd": "",
-  "deposit-notif-admin-assign-subject-1st": "The deposit request with amount of",
+  "deposit-notif-admin-assign-subject-1st": "The deposit request with the amount of",
   "deposit-notif-admin-assign-subject-2nd": "is wating for admin assignment",
   "deposit-notif-admin-assign-subject-3rd": "",
-  "deposit-notif-admin-assign-desc-1st": "Your deposit request is waiting for admins to assign it to a withdrawal request",
+  "deposit-notif-admin-assign-desc-1st": "Your deposit request is waiting for admins to be assigned to a withdrawal request",
   "deposit-notif-admin-assign-desc-2nd": "",
   "deposit-notif-admin-assign-desc-3rd": "",
-  "deposit-notif-upload-document-subject-1st": "The deposit request with amount of",
+  "deposit-notif-upload-document-subject-1st": "The deposit request with the amount of",
   "deposit-notif-upload-document-subject-2nd": "is wating for you to deposit and then upload the doucment",
   "deposit-notif-upload-document-subject-3rd": "",
-  "deposit-notif-upload-document-desc-1st": "In pending request section click on your request to see what address you should send your money. And after sending the money you should upload its document in related section in the opened window",
+  "deposit-notif-upload-document-desc-1st": "In the pending request section click on your request to see what address you should send your money to. After sending the money, you should upload its document in the related section in the opened window",
   "deposit-notif-upload-document-desc-2nd": "",
   "deposit-notif-upload-document-desc-3rd": "",
-  "deposit-notif-admin-approve-subject-1st": "The deposit request with amount of",
+  "deposit-notif-admin-approve-subject-1st": "The deposit request with the amount of",
   "deposit-notif-admin-approve-subject-2nd": "is wating for admins to approve your uploaded document",
   "deposit-notif-admin-approve-subject-3rd": "",
   "deposit-notif-admin-approve-desc-1st": "Your deposit request is waiting for admins to approve the document. if the document was correct your deposit request will be accepted",
@@ -535,35 +535,35 @@
   "exchange-notif-pending-subject-1st": "The exchange request with the amount of",
   "exchange-notif-pending-subject-2nd": "to",
   "exchange-notif-pending-subject-3rd": "has been added to pending list",
-  "exchange-notif-pending-desc-1st": "Your exchange request with fee of",
-  "exchange-notif-pending-desc-2nd": "has been added to pending list. Now it's wating for match another exchange request.",
+  "exchange-notif-pending-desc-1st": "Your exchange request with the fee of",
+  "exchange-notif-pending-desc-2nd": "has been added to the pending list. Now it's wating to match another exchange request.",
   "exchange-notif-pending-desc-3rd": "",
   "exchange-notif-done-subject-1st": "The exchange request with the amount of",
   "exchange-notif-done-subject-2nd": "has been exchanged to",
   "exchange-notif-done-subject-3rd": "",
-  "exchange-notif-done-desc-1st": "Your exchange request with fee of",
+  "exchange-notif-done-desc-1st": "Your exchange request with the fee of",
   "exchange-notif-done-desc-2nd": "has been completed. You can see your exchanged money in wallet page in the balance section.",
   "exchange-notif-done-desc-3rd": "",
-  "withdrawal-notif-admin-assign-subject-1st": "The withdrawal request with amount of",
+  "withdrawal-notif-admin-assign-subject-1st": "The withdrawal request with the amount of",
   "withdrawal-notif-admin-assign-subject-2nd": "is wating for admin assignment",
   "withdrawal-notif-admin-assign-subject-3rd": "",
   "withdrawal-notif-admin-assign-desc-1st": "Your withdrawal request is waiting for admins to assign it to a deposit request",
   "withdrawal-notif-admin-assign-desc-2nd": "",
   "withdrawal-notif-admin-assign-desc-3rd": "",
-  "withdrawal-notif-waiting-for-payment-subject-1st": "The deposit request with amount of",
-  "withdrawal-notif-waiting-for-payment-subject-2nd": "is wating for sending the money to your address",
+  "withdrawal-notif-waiting-for-payment-subject-1st": "The deposit request with the amount of",
+  "withdrawal-notif-waiting-for-payment-subject-2nd": "is wating to be sent to your address",
   "withdrawal-notif-waiting-for-payment-subject-3rd": "",
   "withdrawal-notif-waiting-for-payment-desc-1st": "You should wait for payment of your money",
   "withdrawal-notif-waiting-for-payment-desc-2nd": "",
   "withdrawal-notif-waiting-for-payment-desc-3rd": "",
-  "withdrawal-notif-admin-approve-subject-1st": "The deposit request with amount of",
+  "withdrawal-notif-admin-approve-subject-1st": "The deposit request with the amount of",
   "withdrawal-notif-admin-approve-subject-2nd": "is wating for admins to approve the uploaded document",
   "withdrawal-notif-admin-approve-subject-3rd": "",
   "withdrawal-notif-admin-approve-desc-1st": "Your withdrawal request is waiting for admins to approve the document. if the document was correct your withdrawal request will be accepted",
   "withdrawal-notif-admin-approve-desc-2nd": "",
   "withdrawal-notif-admin-approve-desc-3rd": "",
-  "withdrawal-notif-accept-subject-1st": "The withdrawal request with amount of",
-  "withdrawal-notif-accept-subject-2nd": "has withdrew from your wallet",
+  "withdrawal-notif-accept-subject-1st": "The withdrawal request with the amount of",
+  "withdrawal-notif-accept-subject-2nd": "has been withdrew from your wallet",
   "withdrawal-notif-accept-subject-3rd": "",
   "withdrawal-notif-accept-desc-1st": "Your withdrawal request has been accepted.",
   "withdrawal-notif-accept-desc-2nd": "",

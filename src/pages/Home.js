@@ -18,7 +18,6 @@ import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 import { useWalletState } from "../Providers/WalletProvider";
 import { useUserState } from "../Providers/UserProvider";
 import { useModalDataSetState } from "../Providers/ModalDataProvider";
-import FreeExchangeModal from "../components/modals/freeExchangeModal";
 export default function Home({ isDemo, platform }) {
   const setModalData = useModalDataSetState();
   const user = useUserState();
@@ -130,23 +129,6 @@ export default function Home({ isDemo, platform }) {
       }
     }
   };
-  const freeExchangeModal = () => {
-    setModalData({
-      title: "🥳",
-      children: <FreeExchangeModal />,
-      canClose: true,
-      isOpen: true,
-    });
-  };
-  useEffect(() => {
-    if (
-      user &&
-      user.free_exchange &&
-      !localStorage.getItem("freeExchangeShown")
-    )
-      freeExchangeModal();
-    localStorage.setItem("freeExchangeShown", true);
-  }, [user]);
 
   if (pageMode === "card" || window.innerWidth <= canSwitchPageModeWidth) {
     return (

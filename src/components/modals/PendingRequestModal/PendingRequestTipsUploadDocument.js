@@ -1,11 +1,13 @@
 import { React, useState, useEffect, useRef } from "react";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
+import { useFontState } from "../../../Providers/FontProvider";
 const PendingRequestTipsUploadDocument = ({ setTips }) => {
   const lang = useLanguageState();
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const context = lang.TipsPending ? lang.TipsPending : [];
+  const context = [{ one: "۱-خیلی" }];
   const [haveRead, setHaveRead] = useState(false);
   const [bottomPage, setBottomPage] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
@@ -54,6 +56,7 @@ const PendingRequestTipsUploadDocument = ({ setTips }) => {
           </span>
 
           <div
+            dir={font !== "Fa" ? "ltr" : "rtl"}
             ref={containerRef}
             onScroll={handleScroll}
             className={`bg-${theme}-back w-full h-full  text-${oppositeTheme} overflow-scroll rounded-2xl p-5`}
@@ -68,7 +71,10 @@ const PendingRequestTipsUploadDocument = ({ setTips }) => {
               </div>
             ))}
           </div>
-          <div className="w-full h-fit flex flex-row items-center gap-x-3 p-2">
+          <div
+            dir={font !== "Fa" ? "ltr" : "rtl"}
+            className="w-full h-fit flex flex-row items-center gap-x-3 p-2"
+          >
             <button
               onClick={() => setHaveRead(!haveRead)}
               className={`w-4 h-4 rounded-sm ${

@@ -43,6 +43,7 @@ import TutorialModal from "../components/modals/Tutorials/WalletTutorialModal/Tu
 import AddToHomeScreenModal from "../components/modals/AddToHomeScreenModal";
 import { useGetNews } from "../apis/pages/Layout/hooks";
 import NewsModal from "../components/modals/NewsModal";
+import FreeExchangeModal from "../components/modals/freeExchangeModal";
 
 export default function Layout({ platform }) {
   const theme = useThemeState();
@@ -294,7 +295,23 @@ export default function Layout({ platform }) {
       });
     }
   }, [newOpenNumber]);
-
+  const freeExchangeModal = () => {
+    setModalData({
+      title: "🥳",
+      children: <FreeExchangeModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
+  useEffect(() => {
+    if (
+      user &&
+      user.free_exchange &&
+      !localStorage.getItem("freeExchangeShown")
+    )
+      freeExchangeModal();
+    localStorage.setItem("freeExchangeShown", true);
+  }, [user]);
   return (
     <>
       <button
