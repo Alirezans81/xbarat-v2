@@ -122,7 +122,7 @@ export default function CompleteProfileModal() {
       userInfo.rejection_reason &&
         openRejectionErrorToast(userInfo.rejection_reason);
     }
-  }, [userInfo, walletTanks]);
+  }, []);
 
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();

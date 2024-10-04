@@ -25,8 +25,8 @@ export default function CustomModal() {
         containerClass
       }
     >
-      <div className={`w-max bg-${theme} rounded-2xl px-4 py-2`}>
-        <div className="flex justify-between items-center mb-3">
+      <div className={`w-max bg-${theme} rounded-2xl px-4 pb-2`}>
+        <div className="flex justify-between items-center">
           <span
             className={`font-${font}-bold text-${oppositeTheme} mt-2 mr-10 text-xl`}
           >
@@ -41,13 +41,14 @@ export default function CustomModal() {
               }}
             >
               <img
+                alt=""
                 className="w-5 h-5"
                 src={require(`../../Images/close-${oppositeTheme}.png`)}
               />
             </button>
           )}
         </div>
-        <div className="max-h-[85dvh] overflow-y-auto md:overflow-y-hidden overflow-x-hidden">
+        <div className="max-h-[100dvh] overflow-y-auto md:overflow-y-hidden overflow-x-hidden pt-5">
           {children}
         </div>
       </div>

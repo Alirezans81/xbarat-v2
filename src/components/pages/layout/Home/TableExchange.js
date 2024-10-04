@@ -9,6 +9,7 @@ import {
   roundDown,
   useAddComma,
   useCalculateReverseRate,
+  useRemoveComma,
 } from "../../../../hooks/useNumberFunctions";
 import { CustomTooltip } from "../../../common/CustomTooltip";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
@@ -28,6 +29,7 @@ export default function TableExchange({
   const lang = useLanguageState();
   const font = useFontState();
   const addComma = useAddComma();
+  const removeComma = useRemoveComma();
   const setLoading = useIsLoadingSplashScreenSetState();
   const { endComplete: direction } = useDirectionState();
   const currencies = useCurrenciesState();
@@ -99,94 +101,86 @@ export default function TableExchange({
     ) {
       set_source_to_target_data(
         tableExchangeData.source_to_target.map((row) => {
-          if (row.rate) {
-            let temp = {};
-            temp.quantity = addComma(row.quantity);
-            temp.total_amount = (
-              <CustomTooltip
-                placement="top"
-                content={
-                  addComma(
-                    roundDown(
-                      computeSourceToTargetReversedAmount(
-                        row.total_amount,
-                        row.rate,
-                        +selectedCurrecnyPair.rate_multiplier
-                      ),
-                      availableTargets[selectedTargetIndex].floating_number
-                    )
-                  ) +
-                  " " +
-                  selectedCurrecnyPair.currency_destination_abb
-                }
-                className={`tooltip-${oppositeTheme}`}
-                style={oppositeTheme}
-              >
-                <span>
-                  {addComma(row.total_amount) +
-                    " " +
-                    selectedCurrecnyPair.currency_source_abb}
-                </span>
-              </CustomTooltip>
-            );
-            temp.rate = rateIsReversed
-              ? addComma(
-                  calculateReverseRate(
-                    +row.rate,
-                    +selectedCurrecnyPair.rate_multiplier,
-                    +selectedCurrecnyPair.floating_number
+          let temp = {};
+          temp.quantity = addComma(row.quantity);
+          temp.total_amount = (
+            <CustomTooltip
+              placement="top"
+              content={
+                addComma(
+                  roundDown(
+                    computeSourceToTargetReversedAmount(
+                      row.total_amount,
+                      row.rate,
+                      +selectedCurrecnyPair.rate_multiplier
+                    ),
+                    availableTargets[selectedTargetIndex].floating_number
                   )
-                )
-              : addComma(+row.rate);
+                ) +
+                " " +
+                selectedCurrecnyPair.currency_destination_abb
+              }
+              className={`tooltip-${oppositeTheme}`}
+              style={oppositeTheme}
+            >
+              <span>
+                {addComma(row.total_amount) +
+                  " " +
+                  selectedCurrecnyPair.currency_source_abb}
+              </span>
+            </CustomTooltip>
+          );
+          temp.rate = rateIsReversed
+            ? calculateReverseRate(
+                +removeComma(row.rate),
+                +selectedCurrecnyPair.rate_multiplier,
+                +selectedCurrecnyPair.floating_number
+              )
+            : row.rate;
 
-            return temp;
-          }
+          return temp;
         })
       );
       set_target_to_source_data(
         tableExchangeData.target_to_source.map((row) => {
-          if (row.rate) {
-            let temp = {};
-            temp.rate = rateIsReversed
-              ? addComma(
-                  calculateReverseRate(
-                    +row.rate,
-                    +selectedCurrecnyPair.rate_multiplier,
-                    +selectedCurrecnyPair.floating_number
+          let temp = {};
+          temp.rate = rateIsReversed
+            ? calculateReverseRate(
+                +removeComma(row.rate),
+                +selectedCurrecnyPair.rate_multiplier,
+                +selectedCurrecnyPair.floating_number
+              )
+            : row.rate;
+          temp.total_amount = (
+            <CustomTooltip
+              placement="top"
+              content={
+                addComma(
+                  roundDown(
+                    computeTargetToSourceReversedAmount(
+                      row.total_amount,
+                      row.rate,
+                      +selectedCurrecnyPair.rate_multiplier
+                    ),
+                    +currencies[selectedSourceIndex].floating_number
                   )
-                )
-              : addComma(+row.rate);
-            temp.total_amount = (
-              <CustomTooltip
-                placement="top"
-                content={
-                  addComma(
-                    roundDown(
-                      computeTargetToSourceReversedAmount(
-                        row.total_amount,
-                        row.rate,
-                        +selectedCurrecnyPair.rate_multiplier
-                      ),
-                      +currencies[selectedSourceIndex].floating_number
-                    )
-                  ) +
+                ) +
+                " " +
+                selectedCurrecnyPair.currency_source_abb
+              }
+              className={`tooltip-${oppositeTheme}`}
+              style={oppositeTheme}
+            >
+              <span>
+                {addComma(row.total_amount) +
                   " " +
-                  selectedCurrecnyPair.currency_source_abb
-                }
-                className={`tooltip-${oppositeTheme}`}
-                style={oppositeTheme}
-              >
-                <span>
-                  {addComma(row.total_amount) +
-                    " " +
-                    selectedCurrecnyPair.currency_destination_abb}
-                </span>
-              </CustomTooltip>
-            );
-            temp.quantity = addComma(row.quantity);
+                  selectedCurrecnyPair.currency_destination_abb}
+              </span>
+            </CustomTooltip>
+          );
+          temp.quantity = addComma(row.quantity);
 
-            return temp;
-          }
+          return temp;
         })
       );
     } else {
