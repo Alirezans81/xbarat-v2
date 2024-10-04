@@ -113,7 +113,7 @@ export default function CompleteProfileModal() {
             userInfo.identity_code &&
             userInfo.document
           ) {
-            if (walletTanks[0]) setStep(5);
+            if (walletTanks[0]) setStep(1);
             else setStep(4);
           } else setStep(3);
         } else setStep(2);
