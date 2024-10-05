@@ -26,7 +26,7 @@ export default function CustomModal() {
       }
     >
       <div className={`w-max bg-${theme} rounded-2xl px-4 pb-2`}>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center pt-4">
           <span
             className={`font-${font}-bold text-${oppositeTheme} mt-2 mr-10 text-xl`}
           >

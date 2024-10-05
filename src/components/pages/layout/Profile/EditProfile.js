@@ -5,6 +5,7 @@ import { useUserState } from "../../../../Providers/UserProvider";
 import NationalInfo from "./EditProfile/NationalInfo";
 import DocumentInfo from "./EditProfile/DocumentInfo";
 import CompleteProfileMessage from "./EditProfile/CompleteProfileMessage";
+import WaitForAdminMessage from "./EditProfile/WaitForAdminMessage";
 
 export default function EditProfile() {
   const userInfo = useUserState();
@@ -20,7 +21,11 @@ export default function EditProfile() {
         </div>
       ) : (
         <div className="h-full flex justify-center items-center">
-          <CompleteProfileMessage />
+          {userInfo.has_completed_profile ? (
+            <WaitForAdminMessage />
+          ) : (
+            <CompleteProfileMessage />
+          )}
         </div>
       )}
     </div>
