@@ -25,7 +25,7 @@ export default function DocumentInfo({ userInfo }) {
 
   return (
     <div
-      className={`bg-${theme}-back grid grid-cols-2 gap-y-2 lg:gap-y-0 rounded-3xl w-full flex-1 px-5 py-4`}
+      className={`bg-${theme}-back grid grid-cols-2 gap-y-2 gap-x-4 lg:gap-y-0 rounded-3xl w-full flex-1 px-5 py-4`}
     >
       {userInfo && userInfo.document ? (
         <>

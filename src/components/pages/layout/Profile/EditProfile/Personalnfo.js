@@ -45,7 +45,7 @@ export default function Personalnfo({ userInfo }) {
 
   return (
     <div
-      className={`bg-${theme}-back rounded-3xl w-full relative grid grid-cols-2 grid-rows-2 gap-y-2 lg:gap-y-0 px-5 py-4`}
+      className={`bg-${theme}-back rounded-3xl w-full relative grid grid-cols-2 grid-rows-2 gap-y-2 gap-x-4 lg:gap-y-0 px-5 py-4`}
     >
       <Formik
         innerRef={formikRef}
@@ -105,7 +105,7 @@ export default function Personalnfo({ userInfo }) {
                 </span>
               )}
             </div>
-            <div className="col-span-2 lg:col-span-1 row-span-1 flex flex-col">
+            <div className="col-span-2 lg:col-span-1 row-span-1 flex flex-col justify-between">
               <span className={`text-gray font-${font}-regular`}>
                 {lang["address"]}
               </span>
@@ -119,7 +119,7 @@ export default function Personalnfo({ userInfo }) {
                 />
               ) : (
                 <span
-                  className={`font-${font}-regular -mt-1 text-${oppositeTheme} w-full line-clamp-2 leading-6`}
+                  className={`font-${font}-regular -mb-0.5 text-${oppositeTheme} w-full line-clamp-2 leading-5`}
                 >
                   {userInfo && userInfo.address ? userInfo.address : ""}
                 </span>
