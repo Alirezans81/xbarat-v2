@@ -40,12 +40,13 @@ const getMessages = (ticketCode) => {
 
 const sendMessages = (params) => {
   const formData = new FormData();
-
-  params && params.ticket && formData.append("ticket", params.ticket);
+  params &&
+    params.ticket &&
+    formData.append("ticket", api["ticket"] + params.ticket + "/");
   params && params.user && formData.append("user", params.user);
   params && params.text && formData.append("text", params.text);
   params && params.file && formData.append("file", params.file);
-
+  console.log(api["ticket"] + params.ticket + "/");
   return axios.post(api["ticket-detail"], formData);
 };
 

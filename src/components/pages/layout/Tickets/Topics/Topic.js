@@ -8,7 +8,9 @@ export default function Topic({ data, selected, onSelect }) {
   const font = useFontState();
 
   return (
-    <div
+    <button
+      disabled={selected}
+      onClick={onSelect}
       className={`transition-all duration-200 ${
         selected ? "bg-blue" : `bg-${theme}-back`
       } min-h-[9rem] rounded-2xl px-4 py-3.5 flex flex-col gap-y-1`}
@@ -21,7 +23,7 @@ export default function Topic({ data, selected, onSelect }) {
         >
           {data && data.title ? data.title : ""}
         </span>
-        <button
+        <div
           disabled={selected}
           onClick={onSelect}
           className={`transition-all duration-200 ${
@@ -33,16 +35,16 @@ export default function Topic({ data, selected, onSelect }) {
             className="w-7 h-7"
             src={require(`../../../../../Images/arrow-right-${oppositeTheme}.png`)}
           />
-        </button>
+        </div>
       </div>
 
       <span
-        className={`w-full font-${font}-regular ${
+        className={`w-full font-${font}-regular text-start ${
           selected ? "text-light" : "text-gray"
         }`}
       >
         {data && data.description ? data.description : ""}
       </span>
-    </div>
+    </button>
   );
 }
