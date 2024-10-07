@@ -64,18 +64,6 @@ export default function Chats({
                 <CustomDateTimeInput placeHolder={"From Date"} />
               </div>
             </div>
-            <div>
-              <button
-                onClick={openNewTicketModal}
-                className="bg-blue rounded-full p-3"
-              >
-                <img
-                  alt=""
-                  src={require("../../../../Images/pages/Tickets/new-ticket.png")}
-                  className="w-6 h-6"
-                />
-              </button>
-            </div>
           </div>
           {data && data.length > 0 ? (
             <div className="w-full h-full flex flex-wrap gap-6 overflow-y-scroll">
@@ -96,6 +84,19 @@ export default function Chats({
               <span className="text-5xl -mt-5">{lang["no-data"]}</span>
             </div>
           )}
+          <div>
+            <button
+              onClick={openNewTicketModal}
+              className="bg-blue rounded-full p-3 w-full flex justify-center font-extrabold"
+            >
+              {/* <img
+                alt=""
+                src={require("../../../../Images/pages/Tickets/new-ticket.png")}
+                className="w-6 h-6"
+              /> */}
+              Create New Ticket
+            </button>
+          </div>
         </div>
       </>
     );

@@ -16,7 +16,7 @@ export default function NewTicketModal({
   setOnLoadMessage,
   setOnLoadFile,
 }) {
-  const lang = useLanguageState();
+  const lang = require("../../languages/En.json");
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -50,9 +50,18 @@ export default function NewTicketModal({
         }}
       >
         {({ handleBlur, handleChange, values, handleSubmit }) => (
-          <div className={`flex flex-col gap-y-3 font-${font}-regular`}>
-            <div className="flex flex-col gap-1">
-              <span className={`text-${oppositeTheme}`}>Title</span>
+          <div className={`flex flex-col gap-y-3 font-${font}-regular px-1`}>
+            <div
+              className="flex flex-col gap-1 text-start"
+              dir={font !== "Fa" ? "ltr" : "rtl"}
+            >
+              <span className={`text-${oppositeTheme} text-xl `}>
+                {lang["ticket-title"]}
+              </span>
+              <span className={`text-${oppositeTheme}`}>
+                {lang["ticket-title-descrition"]}
+              </span>
+
               <input
                 className={`hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-9 rounded-lg w-full`}
                 name="title"
@@ -61,10 +70,19 @@ export default function NewTicketModal({
                 value={values.title}
               />
             </div>
-            <div className="flex flex-col gap-1">
-              <span className={`text-${oppositeTheme}`}>Message</span>
+            <div
+              className="flex flex-col gap-1 text-start"
+              dir={font !== "Fa" ? "ltr" : "rtl"}
+            >
+              <span className={`text-${oppositeTheme} text-xl`}>
+                {lang["ticket-message"]}
+              </span>
+              <span className={`text-${oppositeTheme}`}>
+                {lang["ticket-message-descrition"]}
+              </span>
+
               <textarea
-                className={`hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-32 rounded-lg w-full`}
+                className={`hide-input-arrows text-center-important font-${font}-regular text-${oppositeTheme} border border-gray bg-${theme} px-3 outline-1 h-48 rounded-lg w-full`}
                 name="message"
                 onChange={handleChange}
                 onBlur={handleBlur}

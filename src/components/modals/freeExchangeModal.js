@@ -32,37 +32,37 @@ const FreeExchangeModal = () => {
         </h1>
 
         <div
-          dir={font === "En" ? "ltr" : "rtl"}
+          dir={font !== "Fa" ? "ltr" : "rtl"}
           className={`w-full flex gap-x-1  px-5 ${
             font === "En" ? "flex-row" : "flex-row-reverse justify-end"
           }`}
         >
           <span>{lang["dear"]}</span>
-          <span>{name}</span>
+          <span className="text-[#e7bf3b]">{name}</span>
         </div>
         <div
-          dir={font === "En" ? "ltr" : "rtl"}
+          dir={font !== "Fa" ? "ltr" : "rtl"}
           className="flex flex-row gap-x-1 mt-2 px-5"
         >
           <span>{lang["congratulateFreeExchangeYouHaveBeenReason"]}</span>
-          <span>{reason}</span>
+          <span className="text-[#e7bf3b]">{reason}</span>
           <span>{lang["congratulateFreeExchangeYouHaveBeenFamily"]}</span>
         </div>
         <span
-          dir={font === "En" ? "ltr" : "rtl"}
+          dir={font !== "Fa" ? "ltr" : "rtl"}
           className={`px-5 mt-2 w-full gap-x-1`}
         >
           {lang["congratulateFreeExchangeYouHaveWonFreeToken"]}🎉
         </span>
         <span
-          dir={font === "En" ? "ltr" : "rtl"}
+          dir={font !== "Fa" ? "ltr" : "rtl"}
           className={`px-5 mt-2 w-full 
             `}
         >
           {lang["congratulateFreeExchangeYourExchangeWillBeFree"]}🤑
         </span>
         <span
-          dir={font === "En" ? "ltr" : "rtl"}
+          dir={font !== "Fa" ? "ltr" : "rtl"}
           className={`bg-[#e7bf3b] text-center text-light p-2 w-full font-bold rounded-2xl mt-2`}
         >
           {lang["congratulateFreeExchangeThankYouForChoosing"]}
