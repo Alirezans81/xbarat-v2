@@ -600,6 +600,6 @@
   "crypto-wallet-address": "آدرش کیف پول",
   "using": "با استفاده از",
   "deposit-secret-code": "کد تراکنش",
-  "deposit-secret-code-message": "این کد را باید در قسمت یادداشت تراکنش پی پال خود وارد کنید",
+  "deposit-secret-code-message": "این کد را باید در قسمت یادداشت تراکنش خود وارد کنید",
   "copy-link": "کپی لینک"
 }

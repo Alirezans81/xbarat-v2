@@ -12,6 +12,7 @@ import {
   useFetchStep2,
   useFetchStep3,
   useFetchStep4,
+  useFetchStep5,
 } from "../../apis/modal/CompleteProfileModal/hooks";
 import { Formik } from "formik";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
@@ -26,12 +27,14 @@ import { useLanguageState } from "../../Providers/LanguageProvider";
 import UploadDocumentHint from "./CompleteProfileModal/UploadDocumentHint";
 import { useGetUserInfo } from "../../apis/pages/Profile/hooks";
 import { useToastDataSetState } from "../../Providers/ToastDataProvider";
+import { useModalDataClose } from "../../Providers/ModalDataProvider";
 
 export default function CompleteProfileModal() {
   const userInfo = useUserState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const lang = useLanguageState();
   const setToastData = useToastDataSetState();
+  const closeModal = useModalDataClose();
 
   const openRejectionErrorToast = (message) => {
     setToastData({
@@ -113,7 +116,7 @@ export default function CompleteProfileModal() {
             userInfo.identity_code &&
             userInfo.document
           ) {
-            if (walletTanks[0]) setStep(5);
+            if (walletTanks[0]) setStep(1);
             else setStep(4);
           } else setStep(3);
         } else setStep(2);
@@ -122,7 +125,7 @@ export default function CompleteProfileModal() {
       userInfo.rejection_reason &&
         openRejectionErrorToast(userInfo.rejection_reason);
     }
-  }, [userInfo, walletTanks]);
+  }, []);
 
   const { createWalletTank, isLoading: createWalletTankIsLoading } =
     useCreateWalletTank();
@@ -202,6 +205,7 @@ export default function CompleteProfileModal() {
     };
     createWalletTank(createWalletTankParams, customFunction);
   };
+  const { fetchStep5, isLoading: fetchStep5IsLoading } = useFetchStep5();
 
   useEffect(
     () => setIsLoadingSplashScreen(fetchStep1IsLoading),
@@ -218,6 +222,10 @@ export default function CompleteProfileModal() {
   useEffect(
     () => setIsLoadingSplashScreen(fetchStep4IsLoading),
     [fetchStep4IsLoading]
+  );
+  useEffect(
+    () => setIsLoadingSplashScreen(fetchStep5IsLoading),
+    [fetchStep5IsLoading]
   );
 
   const nextStep = () => {
@@ -312,6 +320,9 @@ export default function CompleteProfileModal() {
                   ? fetchStep4(values, nextStep)
                   : nextStep();
               }
+              if (step === 5) {
+                fetchStep5(closeModal);
+              }
             }}
           >
             {({
@@ -392,7 +403,7 @@ export default function CompleteProfileModal() {
                   </>
                 );
               } else if (step === 5) {
-                return <Step5 />;
+                return <Step5 nextFunction={handleSubmit} />;
               }
             }}
           </Formik>

@@ -2,16 +2,13 @@ import React from "react";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import SubmitButton from "../../common/SubmitButton";
-import { useModalDataClose } from "../../../Providers/ModalDataProvider";
 import { useFontState } from "../../../Providers/FontProvider";
 
-export default function Step5() {
+export default function Step5({ nextFunction }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
-
-  const closeModal = useModalDataClose();
 
   return (
     <div className="w-done-complete-profile h-done-complete-profile complete-profile-back -mx-8 -mb-2 -mt-12 flex justify-center items-center">
@@ -33,7 +30,7 @@ export default function Step5() {
           {lang["complete-profile-modal-step5-note-2nd"] + "."}
         </span>
         <SubmitButton
-          onClick={closeModal}
+          onClick={nextFunction}
           className="px-10 text-xl mt-2"
           rounded="full"
         >
