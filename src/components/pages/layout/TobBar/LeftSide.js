@@ -25,7 +25,7 @@ export default function LeftSide() {
 
   return (
     <div dir="ltr" className="flex">
-      <Link to="/">
+      <Link to={userInfo ? "/home" : "/"}>
         <img
           className="h-16 w-h-16"
           src={require("../../../../Images/pages/layout/logo.png")}
@@ -34,7 +34,7 @@ export default function LeftSide() {
       </Link>
       <div className={`flex flex-col justify-center ml-2 pt-1.5`}>
         <div className="flex justify-start items-start">
-          <Link to="/">
+          <Link to={userInfo ? "/home" : "/"}>
             <h1
               className={`font-${font}-bold text-5xl text-yellow-gradient pt-1 -mt-1 -mb-3`}
             >
@@ -57,7 +57,7 @@ export default function LeftSide() {
             </button>
           )}
         </div>
-        <Link to="/">
+        <Link to={userInfo ? "/home" : "/"}>
           <h5 className={`text-${oppositeTheme} font-${font}-thin text-base`}>
             {font !== "Fa" ? lang["slogan"] : "⠀"}
           </h5>
