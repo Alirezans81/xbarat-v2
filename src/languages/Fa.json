@@ -230,10 +230,10 @@
   "wrong-phone-error": "تلفن نامعتبر",
   "from": "از",
   "back": "بازگشت",
-  "upload-document-profile-note-1st": "شما باید عکس و مدرک شناسایی خود را به صورت سلفی ارسال کنید",
-  "upload-document-profile-note-2nd": "عکس و شناسنامه شما باید در یک کادر باشد",
-  "upload-document-profile-note-3rd": "کد منحصر به فرد مدرک شناسایی شما باید مشخص باشد",
-  "upload-document-profile-note-4th": "حجم عکس باید کمتر از 1 مگابایت باشد",
+  "upload-document-profile-note-1st": "شما باید یک عکس سلفی از خود به همراه مدرک شناسایی‌تان ارسال کنید.",
+  "upload-document-profile-note-2nd": "عکس و مدرک هویتی شما باید در یک کادر باشد.",
+  "upload-document-profile-note-3rd": "ارقام و حروف مدرک شناسایی شما باید واضح و خوانا باشد.",
+  "upload-document-profile-note-4th": "حجم عکس باید کمتر از ۴ مگابایت باشد.",
   "search": "جستجو",
   "complete-profile-step-3-not-required-message-1st": "این مرحله ضروری نیست",
   "complete-profile-step-3-not-required-message-2nd": "می توانید مدرک خود را بارگزاری کنید و یا به مرحله بعدی بروید",
@@ -248,7 +248,7 @@
   "transfer-amount-error-message-1st": "مقدار انتفال شما باید بین",
   "transfer-amount-error-message-2nd": "و",
   "transfer-amount-error-message-3rd": "باشد",
-  "card-number-or-paypal-email": "شماره کارت/ایمیل پی پال",
+  "card-number-or-paypal-email": "یک حساب را انتخاب کنید",
   "wallet-tank-paypal-description-code": "لطفا مبلغ درخواستی خود را در سامانه paypal به صورت \"انتقال برای دوست و خیشاوند\" برای ادرس ایمیل بالا ارسال فرمایید تا فرایند انتقالتان با کمترین کارمزد ممکن انجام پذیرد",
   "type-of-account": "نوع حساب",
   "delete-wallet-tank-modal-message": "آیا از حذف کارت خود مطمعن هستید",
@@ -605,5 +605,21 @@
   "using": "با استفاده از",
   "deposit-secret-code": "کد تراکنش",
   "deposit-secret-code-message": "این کد را باید در قسمت یادداشت تراکنش خود وارد کنید",
-  "copy-link": "کپی لینک"
+  "copy-link": "کپی لینک",
+  "ContextPendingRequestTips": [
+    { "one": "(پی پال)" },
+    {
+      "two": "لطفا کد تراکنش را در قسمت توضیحات پی‌پال بنویسید؛ سپس اسکرین‌شات گرفته و تصویر را بارگذاری کنید تا فیش واریزی شما تائید شود."
+    },
+    { "three": "\n" },
+    { "four": "(تتر)" },
+    {
+      "five": "برای واریز تتر حتما از شبکه Bep20 استفاده کنید و در آخر Transaction hach رو به دوستان پشتیبان همراه رسید اعلام کنید."
+    },
+    { "six": "\n" },
+    { "seven": "(درهم)" },
+    {
+      "eight": "برای واریز درهم از بانک الماریا به شماره کارت بزنید. اگر خارج از بانک الماریا به شماره IBAN بزنید."
+    }
+  ]
 }
