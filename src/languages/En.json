@@ -605,13 +605,19 @@
   "copy-link": "Copy Link",
   "ContextPendingRequestTips": [
     {
-      "one": "(PayPal)",
-      "two": "Please write the transaction code in the PayPal description; after submiting take a screenshot and upload the image to confirm your deposit requres.",
-      "three": "\n",
-      "four": "(Tether)",
-      "five": "To deposit Tether, make sure to use the Bep20 network and at the end, provide the transaction hash to the support team along with the receipt.",
-      "six": "\n",
-      "seven": "(Dirham)",
+      "one": "(PayPal)"
+    },
+    {
+      "two": "Please write the transaction code in the PayPal description; after submiting take a screenshot and upload the image to confirm your deposit requres."
+    },
+    { "three": "\n" },
+    { "four": "(Tether)" },
+    {
+      "five": "To deposit Tether, make sure to use the Bep20 network and at the end, provide the transaction hash to the support team along with the receipt."
+    },
+    { "six": "\n" },
+    { "seven": "(Dirham)" },
+    {
       "eight": "To deposit Dirham, use the bank Al-Maria's card number. If you are outside of Al-Maria bank, please use the IBAN."
     }
   ]

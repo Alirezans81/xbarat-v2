@@ -7,7 +7,7 @@ const PendingRequestTipsUploadDocument = ({ setTips }) => {
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-  const context = lang["ContextPendingRequestTips"] | [];
+  const context = lang["ContextPendingRequestTips"] || [];
   const [haveRead, setHaveRead] = useState(false);
   const [bottomPage, setBottomPage] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
