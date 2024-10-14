@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useLanguageState } from "../Providers/LanguageProvider";
 import { useThemeState } from "../Providers/ThemeProvider";
@@ -53,12 +54,13 @@ export default function OnLoad({ children }) {
         setUser(null);
         setWallet({ wallets: [], walletAssets: [], walletTanks: [] });
       }
-
-      navigate("/home");
     } else {
       user && user.username && getWalletData(user.username, token);
     }
   }, []);
+  useEffect(() => {
+    user && token && navigate("/home");
+  }, [user, token]);
 
   if (children) {
     return <div>{children}</div>;

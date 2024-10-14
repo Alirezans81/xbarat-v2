@@ -20,7 +20,7 @@ export default function CopyText({ text, small }) {
         content={text + " " + lang["copied"] + "!"}
         className={`font-${font}-bold pt-2.5`}
       >
-        <CopyToClipboard text={text || ""}>
+        <CopyToClipboard text={text || ""} >
           <button className="flex items-center">
             <img
               className={small ? "w-4 h-4 md:w-5 md:h-5" : "w-5 h-5"}

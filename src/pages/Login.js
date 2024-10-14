@@ -14,9 +14,11 @@ import { useNavigate } from "react-router-dom";
 import CustomToast from "../components/common/CustomToast";
 import { useModalDataSetState } from "../Providers/ModalDataProvider";
 import TutorialModal from "../components/modals/Tutorials/WalletTutorialModal/TutorialModal";
+import { useUserSetState } from "../Providers/UserProvider";
 
 export default function Login({ platform }) {
   const setToken = useTokenSetState();
+  const setUser = useUserSetState();
   const setModalData = useModalDataSetState();
   const openTutorialModal = () => {
     setModalData({
@@ -39,6 +41,7 @@ export default function Login({ platform }) {
 
   const resetApp = () => {
     setToken(null);
+    setUser(null);
     window.localStorage.removeItem("authToken");
     window.localStorage.removeItem("userInfo");
     window.localStorage.removeItem("expireTime");
@@ -79,9 +82,7 @@ export default function Login({ platform }) {
             <LeftSide />
           </div>
           <div className="hidden md:flex h-full">
-            <RightSide
-              setIsSplashScreenLoading={setIsSplashScreenLoading}
-            />
+            <RightSide setIsSplashScreenLoading={setIsSplashScreenLoading} />
           </div>
           <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center">
             <button onClick={() => navigate("/")}>
@@ -90,9 +91,7 @@ export default function Login({ platform }) {
                 src={require("../Images/pages/layout/logo.png")}
               />
             </button>
-            <RightSide
-              setIsSplashScreenLoading={setIsSplashScreenLoading}
-            />
+            <RightSide setIsSplashScreenLoading={setIsSplashScreenLoading} />
             <Slogan />
           </div>
         </div>

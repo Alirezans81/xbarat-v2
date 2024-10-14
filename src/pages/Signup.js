@@ -12,9 +12,11 @@ import Slogan from "../components/common/Slogan";
 import CustomToast from "../components/common/CustomToast";
 import { useModalDataSetState } from "../Providers/ModalDataProvider";
 import TutorialModal from "../components/modals/Tutorials/WalletTutorialModal/TutorialModal";
+import { useUserSetState } from "../Providers/UserProvider";
 
 export default function Signup({ platform }) {
   const setToken = useTokenSetState();
+  const setUser = useUserSetState();
   const setModalData = useModalDataSetState();
   const openTutorialModal = () => {
     setModalData({
@@ -37,6 +39,7 @@ export default function Signup({ platform }) {
 
   const resetApp = () => {
     setToken(null);
+    setUser(null);
     window.localStorage.removeItem("authToken");
     window.localStorage.removeItem("userInfo");
     window.localStorage.removeItem("expireTime");
