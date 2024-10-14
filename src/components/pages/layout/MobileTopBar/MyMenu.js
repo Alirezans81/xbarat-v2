@@ -7,8 +7,12 @@ import { useFontState } from "../../../../Providers/FontProvider";
 import ThemeSwitcher from "../../../common/ThemeSwitcher";
 import { useLogout } from "../../../../apis/pages/Layout/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
-import { useUserState } from "../../../../Providers/UserProvider";
+import {
+  useUserSetState,
+  useUserState,
+} from "../../../../Providers/UserProvider";
 import Element from "../NavbarSetting/Element";
+import { useTokenSetState } from "../../../../Providers/TokenProvider";
 
 export default function MyMenu({ switchBlur, links: allLinks }) {
   const theme = useThemeState();
@@ -17,6 +21,18 @@ export default function MyMenu({ switchBlur, links: allLinks }) {
   const font = useFontState();
   const setLoading = useIsLoadingSplashScreenSetState();
   const userInfo = useUserState();
+  const setToken = useTokenSetState();
+  const setUser = useUserSetState();
+
+  const resetApp = () => {
+    setToken(null);
+    setUser(null);
+    window.localStorage.removeItem("authToken");
+    window.localStorage.removeItem("userInfo");
+    window.localStorage.removeItem("expireTime");
+    window.localStorage.removeItem("statuses");
+    window.localStorage.removeItem("linksShown");
+  };
 
   const { logout, error, isLoading } = useLogout();
   useEffect(() => setLoading(isLoading), [isLoading]);
@@ -118,7 +134,10 @@ export default function MyMenu({ switchBlur, links: allLinks }) {
             <ThemeSwitcher horizental />
             {userInfo && (
               <Link
-                onClick={() => logout()}
+                onClick={() => {
+                  resetApp();
+                  logout();
+                }}
                 to="/login"
                 data-tooltip-id="logout-tooltip"
               >

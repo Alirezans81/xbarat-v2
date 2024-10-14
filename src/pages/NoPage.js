@@ -63,7 +63,7 @@ export default function NoPage() {
           </div>
           {token ? (
             <button
-              onClick={() => navigate("/home")}
+              onClick={() => navigate("/")}
               className={`bg-blue-gradient rounded-full pt-2 px-8 text-xl p font-${font}-regular text-light mt-3`}
             >
               {lang["home"]}
