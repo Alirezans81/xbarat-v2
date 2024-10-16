@@ -11,7 +11,7 @@ const getCurrencies = () => {
 
   const urlWithQueries = queryString.stringifyUrl({
     url: api["currency"],
-    query: { limit },
+    query: { limit, is_active: true },
   });
 
   return axios.get(urlWithQueries);
@@ -27,14 +27,14 @@ const getCurrencyPairs = (filtersObject) => {
   if (filtersObject) {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["currency-pair"],
-      query: { limit, ...filtersObject },
+      query: { limit, ...filtersObject, is_active: true },
     });
 
     return axios.get(urlWithQueries);
   } else {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["currency-pair"],
-      query: { limit },
+      query: { limit, is_active: true },
     });
 
     return axios.get(urlWithQueries);

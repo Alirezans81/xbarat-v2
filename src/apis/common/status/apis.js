@@ -11,7 +11,7 @@ const getStatuses = () => {
 
   const urlWithQueries = queryString.stringifyUrl({
     url: api["status"],
-    query: { limit },
+    query: { limit, is_active: true },
   });
 
   return axios.get(urlWithQueries);

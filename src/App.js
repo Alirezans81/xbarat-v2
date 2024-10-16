@@ -124,6 +124,8 @@ export default function App() {
           setLang(require("./languages/En.json"));
         });
       }
+    } else {
+      setLang("");
     }
   }, [languageList]);
 

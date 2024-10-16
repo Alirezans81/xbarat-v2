@@ -1,10 +1,5 @@
 import axios from "axios";
 
-import prod from "../../api";
-import dev from "../../api-dev";
-
-const api = process.env.REACT_APP_MODE === "DEVELOPMENT" ? dev() : prod();
-
 const updateWalletTank = (walletTankUrl, params) => {
   const formData = new FormData();
 
