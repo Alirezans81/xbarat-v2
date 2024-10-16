@@ -8,7 +8,7 @@ const getLanguages = () => {
 
   const urlWithQueries = queryString.stringifyUrl({
     url: api["locale"],
-    query: { limit },
+    query: { limit, is_active: true },
   });
 
   return axios.get(urlWithQueries);

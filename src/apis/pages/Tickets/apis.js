@@ -10,7 +10,7 @@ const limit = require("../../pagination/limit.json");
 const getTopics = () => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["ticket-category"],
-    query: { limit: limit["ticket-category"] },
+    query: { limit: limit["ticket-category"], is_active: true },
   });
 
   return axios.get(urlWithQueries);
@@ -19,7 +19,12 @@ const getTopics = () => {
 const getChats = (topicSlug, username) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["ticket"],
-    query: { limit: limit["ticket"], user: username, category: topicSlug },
+    query: {
+      limit: limit["ticket"],
+      user: username,
+      category: topicSlug,
+      is_active: true,
+    },
   });
 
   return axios.get(urlWithQueries);
@@ -32,6 +37,7 @@ const getMessages = (ticketCode) => {
       limit: limit["ticket-detail"],
       ticket: ticketCode,
       ordering: "datetime",
+      is_active: true,
     },
   });
 

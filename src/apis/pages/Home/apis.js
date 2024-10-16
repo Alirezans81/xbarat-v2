@@ -25,14 +25,14 @@ const getOtherExchangesRate = (filtersObject) => {
   if (filtersObject) {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["other-exchanges-rate"],
-      query: { limit, ...filtersObject },
+      query: { limit, ...filtersObject, is_active: true },
     });
 
     return axios.get(urlWithQueries);
   } else {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["other-exchanges-rate"],
-      query: { limit },
+      query: { limit, is_active: true },
     });
 
     return axios.get(urlWithQueries);

@@ -10,7 +10,7 @@ const limit = require("../../pagination/limit.json");
 const getGiftCardSites = () => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["giftcard-site"],
-    query: { limit: limit["giftcard-site"] },
+    query: { limit: limit["giftcard-site"], is_active: true },
   });
 
   return axios.get(urlWithQueries);

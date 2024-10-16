@@ -19,7 +19,7 @@ const getNews = () => {
 
   const urlWithQueries = queryString.stringifyUrl({
     url: api["news"],
-    query: { limit },
+    query: { limit, is_active: true },
   });
 
   return axios.get(urlWithQueries);
@@ -30,7 +30,7 @@ const getNotifs = (user) => {
 
   const urlWithQueries = queryString.stringifyUrl({
     url: api["notify"],
-    query: { limit, user },
+    query: { limit, user, is_active: true },
   });
 
   return axios.get(urlWithQueries);

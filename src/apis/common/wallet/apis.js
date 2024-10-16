@@ -12,14 +12,14 @@ const getWallets = (filtersObject) => {
   if (filtersObject) {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet"],
-      query: { limit, ...filtersObject },
+      query: { limit, ...filtersObject, is_active: true },
     });
 
     return axios.get(urlWithQueries);
   } else {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet"],
-      query: { limit },
+      query: { limit, is_active: true },
     });
 
     return axios.get(urlWithQueries);
@@ -32,14 +32,14 @@ const getWalletAssets = (filtersObject, token) => {
   if (filtersObject) {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet-asset"],
-      query: { limit, ...filtersObject },
+      query: { limit, ...filtersObject, is_active: true },
     });
 
     return axios.get(urlWithQueries);
   } else {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet-asset"],
-      query: { limit },
+      query: { limit, is_active: true },
     });
 
     return axios.get(urlWithQueries);
@@ -52,14 +52,14 @@ const getWalletTanks = (filtersObject) => {
   if (filtersObject) {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet-tank"],
-      query: { limit, ...filtersObject },
+      query: { limit, ...filtersObject, is_active: true },
     });
 
     return axios.get(urlWithQueries);
   } else {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet-tank"],
-      query: { limit },
+      query: { limit, is_active: true },
     });
 
     return axios.get(urlWithQueries);
@@ -72,14 +72,14 @@ const getWalletTankTypes = (filtersObject) => {
   if (filtersObject) {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet-tank-type"],
-      query: { limit, ...filtersObject },
+      query: { limit, ...filtersObject, is_active: true },
     });
 
     return axios.get(urlWithQueries);
   } else {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet-tank-type"],
-      query: { limit },
+      query: { limit, is_active: true },
     });
 
     return axios.get(urlWithQueries);

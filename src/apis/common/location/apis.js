@@ -10,7 +10,7 @@ const limit = require("../../pagination/limit.json");
 const getNationalities = () => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["nationality"],
-    query: { limit: limit["nationality"] },
+    query: { limit: limit["nationality"], is_active: true },
   });
 
   return axios.get(urlWithQueries);
@@ -19,7 +19,7 @@ const getNationalities = () => {
 const getCounties = () => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["country"],
-    query: { limit: limit["country"] },
+    query: { limit: limit["country"], is_active: true },
   });
 
   return axios.get(urlWithQueries);
@@ -28,7 +28,7 @@ const getCounties = () => {
 const getCities = (filtersObject) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["city"],
-    query: { ...filtersObject, limit: limit["city"] },
+    query: { ...filtersObject, limit: limit["city"], is_active: true },
   });
 
   return axios.get(urlWithQueries);
