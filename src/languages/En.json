@@ -603,6 +603,45 @@
   "deposit-secret-code": "Transaction Code",
   "deposit-secret-code-message": "You should enter this code in the note section of your transaction",
   "copy-link": "Copy Link",
+  "security-guidline": [
+    {
+      "one": "Dear users, please pay attention to the following security tips:"
+    },
+    {
+      "two": "1.The ways to communicate with XBrat are as follows:"
+    },
+    { "three": "          Site chat" },
+    { "four": "          Direct messages via the Xbarat page" },
+    {
+      "five": "          Contact number: 05138481625"
+    },
+    {
+      "six": "          WhatsApp number provided to you by Xbarat support."
+    },
+    { "seven": "\n" },
+    {
+      "eight": "Xbarat support will only contact you through the channels mentioned above, and any interaction outside of these specified communication methods is not associated with XBrat, and the user will be solely responsible for any harmful consequences."
+    },
+    {
+      "nine": "2.All of your transactions with XBrat will only take place through the website. No operations (deposit, transfer, withdrawal, or exchange) are possible outside of the site."
+    },
+    {
+      "ten": "3.To prevent any misuse of your account in XBrat, please refrain from sharing or providing your registered information, which includes the following:"
+    },
+    { "eleven": "          Photo of your ID card" },
+    {
+      "twelve": "          National ID number (the ID number uploaded on the site)"
+    },
+    { "thirteen": "          Email" },
+    { "fourteen": "          Xbarat account password" },
+    {
+      "fifteen": "Finally, users who connect to Xbarat support outside of the mentioned communication channels or share their uploaded documents with others will be at risk of fraud, and any consequences will be the sole responsibility of the user."
+    }
+  ],
+  "important-note": "Important Note",
+
+  "securityGuidlineAgreement": "I Have Read The Terms Above,Hence Xbarat Will not Be Responsible for Further Mistakes.",
+
   "ContextPendingRequestTips": [
     {
       "one": "(PayPal)"
