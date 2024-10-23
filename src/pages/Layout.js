@@ -319,6 +319,7 @@ export default function Layout({ platform }) {
     if (
       user &&
       user.free_exchange &&
+      user.is_verified &&
       !localStorage.getItem("freeExchangeShown")
     )
       freeExchangeModal();
@@ -336,11 +337,14 @@ export default function Layout({ platform }) {
       isOpen: true,
     });
   };
+  localStorage.setItem("has_read_guidline",false)
   useEffect(() => {
-    if (user && !localStorage.getItem("has_read_guidline"))
+    if (user && user.is_verified && !localStorage.getItem("has_read_guidline")) {
       securityGuidlineModal();
-    localStorage.setItem("has_read_guidline", true);
-  }, [user]);
+  
+      localStorage.setItem("has_read_guidline", true);
+    }
+  }, [user]); 
   return (
     <>
       <button

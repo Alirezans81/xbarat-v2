@@ -87,7 +87,7 @@ const SecurityGuidline = () => {
       </div>
       <div className="w-full h-fit">
         <button
-          onClick={() => closeModal()}
+          onClick={enableSubmit?() => closeModal():""}
           className={`w-full h-full p-1 rounded-2xl text-light ${
             enableSubmit ? "bg-blue" : "bg-gray"
           }`}
