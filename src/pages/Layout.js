@@ -44,7 +44,6 @@ import AddToHomeScreenModal from "../components/modals/AddToHomeScreenModal";
 import { useGetNews, useLogout } from "../apis/pages/Layout/hooks";
 import NewsModal from "../components/modals/NewsModal";
 import FreeExchangeModal from "../components/modals/freeExchangeModal";
-import SecurityGuidline from "../components/modals/SecurityGuidline";
 export default function Layout({ platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
@@ -326,25 +325,6 @@ export default function Layout({ platform }) {
     localStorage.setItem("freeExchangeShown", true);
   }, [user]);
 
-  const securityGuidlineModal = () => {
-    setModalData({
-      title:
-        font !== "Fa"
-          ? lang["important-note"] + "❗❗❗"
-          : "❗❗❗" + lang["important-note"],
-      children: <SecurityGuidline />,
-      canClose: false,
-      isOpen: true,
-    });
-  };
-  localStorage.setItem("has_read_guidline",false)
-  useEffect(() => {
-    if (user && user.is_verified && !localStorage.getItem("has_read_guidline")) {
-      securityGuidlineModal();
-  
-      localStorage.setItem("has_read_guidline", true);
-    }
-  }, [user]); 
   return (
     <>
       <button
