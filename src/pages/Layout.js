@@ -44,7 +44,6 @@ import AddToHomeScreenModal from "../components/modals/AddToHomeScreenModal";
 import { useGetNews, useLogout } from "../apis/pages/Layout/hooks";
 import NewsModal from "../components/modals/NewsModal";
 import FreeExchangeModal from "../components/modals/freeExchangeModal";
-
 export default function Layout({ platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
@@ -319,11 +318,13 @@ export default function Layout({ platform }) {
     if (
       user &&
       user.free_exchange &&
+      user.is_verified &&
       !localStorage.getItem("freeExchangeShown")
     )
       freeExchangeModal();
     localStorage.setItem("freeExchangeShown", true);
   }, [user]);
+
   return (
     <>
       <button

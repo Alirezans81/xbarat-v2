@@ -22,7 +22,6 @@ import { CurrencyPairsProvider } from "./Providers/CurrencyPairsProvider";
 import { LanguageListProvider } from "./Providers/LanguageListProvider";
 import { FontProvider } from "./Providers/FontProvider";
 import App from "./App";
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <MyQueryClientProvider>
