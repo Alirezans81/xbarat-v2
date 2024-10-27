@@ -17,7 +17,7 @@ const SecurityGuidline = () => {
   const context = lang["security-guidline"];
   const handleScroll = (e) => {
     const bottom =
-      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+      e.target.scrollHeight - e.target.scrollTop <= e.target.clientHeight;
     if (bottom) {
       setBottomPage(true);
     }
@@ -42,8 +42,12 @@ const SecurityGuidline = () => {
       }
     }
   }, []);
+  const handleSaveClose = () => {
+    localStorage.setItem("read_guidline", true);
+    closeModal();
+  };
   return (
-    <div className="w-fit max-w-3xl h-fit max-h-[70dvh] flex flex-col">
+    <div className="w-fit max-w-3xl h-fit max-h-[65dvh] flex flex-col">
       <div
         dir={font !== "Fa" ? "ltr" : "rtl"}
         className={`bg-${theme}-back p-2 rounded-2xl overflow-scroll`}
@@ -87,7 +91,7 @@ const SecurityGuidline = () => {
       </div>
       <div className="w-full h-fit">
         <button
-          onClick={enableSubmit?() => closeModal():""}
+          onClick={enableSubmit ? () => handleSaveClose() : ""}
           className={`w-full h-full p-1 rounded-2xl text-light ${
             enableSubmit ? "bg-blue" : "bg-gray"
           }`}
