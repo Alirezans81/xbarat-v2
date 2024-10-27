@@ -64,7 +64,7 @@ const SecurityGuidline = () => {
             index === 11 ||
             index === 12 ||
             index === 13 ? (
-              <pre className="text-sm text-blue">{Object.values(tip)[0]}</pre>
+              <p className="text-sm text-blue px-10">{Object.values(tip)[0]}</p>
             ) : (
               <p className="text-lg">{Object.values(tip)[0]}</p>
             )}
