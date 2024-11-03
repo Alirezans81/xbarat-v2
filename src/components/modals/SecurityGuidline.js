@@ -16,10 +16,15 @@ const SecurityGuidline = () => {
   const lang = useLanguageState();
   const context = lang["security-guidline"];
   const handleScroll = (e) => {
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop <= e.target.clientHeight;
-    if (bottom) {
+    const scrollThreshold = 110;
+    const isNearBottom =
+      e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <=
+      scrollThreshold;
+
+    if (isNearBottom && !bottomPage) {
       setBottomPage(true);
+    } else if (!isNearBottom && bottomPage) {
+      setBottomPage(false);
     }
   };
   useEffect(() => {
