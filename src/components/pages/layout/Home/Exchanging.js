@@ -109,10 +109,7 @@ export default function Exchanging({
   }, [selectedSourceIndex, selectedTargetIndex]);
   const openTutorialModal = () => {
     setModalData({
-      title:
-        font !== "Fa" || font !== "Ar"
-          ? lang["exchange"] + " " + lang["tutorial"]
-          : lang["tutorial"] + " " + lang["exchange"],
+      title: lang["exchange"],
       children: <Tutorial />,
       canClose: true,
       isOpen: true,
