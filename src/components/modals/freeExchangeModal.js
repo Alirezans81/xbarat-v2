@@ -17,6 +17,7 @@ const FreeExchangeModal = () => {
       : lang["reason-free-exchange"];
 
   const oppositeTheme = theme === "dark" ? "light" : "dark";
+  localStorage.setItem("freeExchangeShown", true);
 
   return (
     <div className="w-full h-full flex flex-col">
