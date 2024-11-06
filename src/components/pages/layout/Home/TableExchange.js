@@ -221,7 +221,7 @@ export default function TableExchange({
     selectedCurrecnyPair.currency_destination
   ) {
     return (
-      <div className="p-3 grid grid-cols-2 grid-rows-1 gap-y-16 mr-2 h-full">
+      <div className="p-3 grid grid-cols-2 grid-rows-1 gap-y-16 mr-2 h-full overflow-hidden">
         <div className="col-span-2 md:col-span-1 relative flex flex-col items-center">
           <div
             className={`flex items-center absolute -mt-8 -mr-4 md:mr-0 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
