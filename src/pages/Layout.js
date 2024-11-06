@@ -318,11 +318,9 @@ export default function Layout({ platform }) {
     if (
       user &&
       user.free_exchange &&
-      user.is_verified &&
       !localStorage.getItem("freeExchangeShown")
     )
       freeExchangeModal();
-    localStorage.setItem("freeExchangeShown", true);
   }, [user]);
 
   return (

@@ -15,6 +15,7 @@ export default function RateType({
   selectedCurrecnyPair,
   default_rate_type_title,
   setFormDefaultRate,
+  openTutorialModal,
 }) {
   const theme = useThemeState();
   const font = useFontState();
@@ -38,7 +39,7 @@ export default function RateType({
 
   return (
     <div className="flex flex-col w-full">
-      <div className="flex">
+      <div className="flex flex-row gap-x-3">
         <button
           onClick={() => {
             const formDefaultRate =
@@ -70,6 +71,12 @@ export default function RateType({
           <span className={`font-${font}-thin text-blue  m${oneDirection}-1`}>
             {rateIsReversed ? reversedRateType : default_rate_type_title}
           </span>
+        </button>
+        <button
+          onClick={openTutorialModal}
+          className="flex-1 bg-none text-blue h-full flex justify-start px-2"
+        >
+          ?
         </button>
       </div>
       <div className="flex -mt-1">
