@@ -221,7 +221,7 @@ export default function TableExchange({
     selectedCurrecnyPair.currency_destination
   ) {
     return (
-      <div className="p-3 grid grid-cols-2 grid-rows-1 gap-y-16 mr-2 h-full overflow-hidden">
+      <div className="p-3 grid grid-cols-2 grid-rows-1 gap-y-16 mr-2 h-full">
         <div className="col-span-2 md:col-span-1 relative flex flex-col items-center">
           <div
             className={`flex items-center absolute -mt-8 -mr-4 md:mr-0 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
@@ -252,8 +252,9 @@ export default function TableExchange({
               </span>
             </div>
           </div>
-          <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2  overflow-y-auto max-h-[35dvh] ">
+          <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2 overflow-hidden max-h-[35dvh]">
             <CustomTable
+              maxheight={35}
               heads={source_to_target_head}
               rows={source_to_target_data}
               haverable
@@ -294,8 +295,9 @@ export default function TableExchange({
               </span>
             </div>
           </div>
-          <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2  overflow-y-auto max-h-[35dvh]">
+          <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2  overflow-hidden max-h-[35dvh]">
             <CustomTable
+              maxheight={35}
               heads={target_to_source_head}
               rows={target_to_source_data}
               selectRow={(row) => {

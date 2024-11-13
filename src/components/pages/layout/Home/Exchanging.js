@@ -31,6 +31,8 @@ export default function Exchanging({
   rateInputRef,
   focusOnInput,
   isDemo,
+  setSource,
+  setTarget,
 }) {
   const lang = useLanguageState();
   const font = useFontState();
@@ -185,6 +187,8 @@ export default function Exchanging({
           amountInputRef={amountInputRef}
           rateInputRef={rateInputRef}
           isDemo={isDemo}
+          setSource={setSource}
+          setTarget={setTarget}
         />
       </div>
     </div>

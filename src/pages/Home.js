@@ -88,7 +88,7 @@ export default function Home({ isDemo, platform }) {
     result = currencies.findIndex(
       (currency) => currency.slug === currency_slug
     );
-    result >= 0 && setSelectedSourceIndex(result);
+    result >= 0 ? setSelectedSourceIndex(result) : setSelectedSourceIndex(-1);
   };
   const [target, setTarget] = useState();
   const findTarget = (currency_slug) => {
@@ -96,7 +96,7 @@ export default function Home({ isDemo, platform }) {
     result = availableTargets.findIndex(
       (currency) => currency.slug === currency_slug
     );
-    result >= 0 && setSelectedTargetIndex(result);
+    result >= 0 ? setSelectedTargetIndex(result) : setSelectedTargetIndex(-1);
   };
 
   useEffect(() => {
@@ -185,16 +185,16 @@ export default function Home({ isDemo, platform }) {
                 rateInputRef={rateInputRef}
                 focusOnInput={focusOnRateInput}
                 isDemo={isDemo}
+                setSource={setSource}
+                setTarget={setTarget}
               />
             </div>
             <div
               className={`order-1 md:order-2 h-72 bg-${theme} xl:rounded-3xl lg:rounded-l-3xl row-span-3 xl:col-span-5 lg:col-span-7 md:rounded-r-none md:col-span-6 md:rounded-l-3xl col-span-12 rounded-3xl`}
             >
               <WatchList
-                selectedSourceIndex={selectedSourceIndex}
-                availableTargets={availableTargets}
-                findSource={findSource}
-                findTarget={findTarget}
+                setSource={setSource}
+                setTarget={setTarget}
                 rateIsReversed={rateIsReversed}
                 selectedCurrecnyPair={selectedCurrecnyPair}
                 platform={platform}
@@ -267,10 +267,10 @@ export default function Home({ isDemo, platform }) {
               className={`h-72 bg-${theme} col-span-11 row-span-3 rounded-l-3xl`}
             >
               <ListWatchList
-                selectedSourceIndex={selectedSourceIndex}
-                setSelectedSourceIndex={setSelectedSourceIndex}
-                availableTargets={availableTargets}
-                setSelectedTargetIndex={setSelectedTargetIndex}
+                setSource={setSource}
+                setTarget={setTarget}
+                rateIsReversed={rateIsReversed}
+                selectedCurrecnyPair={selectedCurrecnyPair}
                 platform={platform}
               />
             </div>

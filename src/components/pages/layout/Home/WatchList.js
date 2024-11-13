@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useGetWatchList } from "../../../../apis/pages/Home/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
@@ -11,14 +12,11 @@ import {
 } from "../../../../hooks/useNumberFunctions";
 import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
 import TutorialModal from "../../../modals/Tutorials/WatchlistTutorialModal/Tutorial";
-import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
 
 export default function WatchList({
-  selectedSourceIndex,
-  availableTargets,
-  findSource,
-  findTarget,
+  setSource,
+  setTarget,
   rateIsReversed,
   selectedCurrecnyPair,
   platform,
@@ -31,8 +29,6 @@ export default function WatchList({
   const setLoading = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
   const calculateReverseRate = useCalculateReverseRate();
-
-  const currencies = useCurrenciesState();
 
   const head = [lang["currency-pair"], lang["rate"], lang["low"], lang["high"]];
   const [data, setData] = useState([]);
@@ -50,8 +46,6 @@ export default function WatchList({
   useEffect(() => {
     getWatchList(setData);
   }, []);
-
-  const [targetSlug, setTargetSlug] = useState();
 
   const [watch_list_data, set_watch_list_data] = useState([]);
   useEffect(() => {
@@ -102,11 +96,7 @@ export default function WatchList({
       });
 
       if (platform === "ios") {
-        set_watch_list_data(
-          a.filter(
-            (e) => !e.title.includes("IRR")
-          )
-        );
+        set_watch_list_data(a.filter((e) => !e.title.includes("IRR")));
       } else {
         set_watch_list_data(a);
       }
@@ -116,29 +106,9 @@ export default function WatchList({
   }, [data, rateIsReversed]);
 
   useEffect(() => {
-    if (availableTargets.length > 0 && targetSlug) {
-      findTarget(targetSlug);
-    }
-  }, [availableTargets, selectedSourceIndex, targetSlug]);
-
-  useEffect(() => {
-    if (
-      data &&
-      data.watch_list &&
-      data.watch_list[0] &&
-      currencies.length > 0
-    ) {
-      findSource(data.watch_list[0].source);
-    }
-  }, [data, currencies]);
-  useEffect(() => {
-    if (
-      data &&
-      data.watch_list &&
-      data.watch_list[0] &&
-      data.watch_list[0].target
-    ) {
-      setTargetSlug(data.watch_list[0].target);
+    if (data && data.watch_list && data.watch_list[0]) {
+      setSource(data.watch_list[0].source);
+      setTarget(data.watch_list[0].target);
     }
   }, [data]);
 
@@ -162,12 +132,13 @@ export default function WatchList({
       <div className={`flex-1 mt-2 pr-0 md:pr-4 overflow-y-scroll`}>
         <div className="min-w-[20rem] h-full">
           <CustomTable
+            maxheight={35}
             heads={head}
             rows={watch_list_data}
             selectRow={(row, index) => {
               if (data && data.watch_list) {
-                findSource(data.watch_list[index].source);
-                setTargetSlug(data.watch_list[index].target);
+                setSource(data.watch_list[index].source);
+                setTarget(data.watch_list[index].target);
               }
             }}
           />
