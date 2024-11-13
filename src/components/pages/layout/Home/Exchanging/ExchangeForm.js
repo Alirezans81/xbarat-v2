@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Formik } from "formik";
 import SubmitModal from "../../../../modals/SubmitModal/SubmitModal";
 import React, { useEffect, useRef, useState } from "react";
@@ -46,6 +47,8 @@ export default function ExchangeForm({
   amountInputRef,
   rateInputRef,
   isDemo,
+  setSource,
+  setTarget,
 }) {
   const setModalData = useModalDataSetState();
   const userInfo = useUserState();
@@ -82,16 +85,6 @@ export default function ExchangeForm({
   }, [errorMessage]);
   const [submitButtonFunction, setSubmitButtonFunction] = useState("submit");
 
-  const [targetSlug, setTargetSlug] = useState();
-
-  const findSource = (currency_slug) => {
-    let result = -1;
-    result = currencies.findIndex(
-      (currency) => currency.slug === currency_slug
-    );
-    result >= 0 && setSelectedSourceIndex(result);
-  };
-
   const openSubmitModal = (values, exchange) => {
     setModalData({
       title: lang["submit"],
@@ -101,25 +94,18 @@ export default function ExchangeForm({
     });
   };
 
-  const findTarget = (currency_slug) => {
-    let result = -1;
-    result = availableTargets.findIndex(
-      (currency) => currency.slug === currency_slug
-    );
-    result >= 0 && setSelectedTargetIndex(result);
-  };
-
-  useEffect(() => {
-    if (availableTargets.length > 0 && targetSlug) {
-      findTarget(targetSlug);
-    }
-  }, [availableTargets, targetSlug]);
-
+  const [switchSourceSlug, setSwitchSourceSlug] = useState("");
+  const [switchTargetSlug, setSwitchTargetSlug] = useState("");
   const switchSourceAndTarget = () => {
-    const newTargetSlug = currencies[selectedSourceIndex].slug;
-    setTargetSlug(newTargetSlug);
-    findSource(availableTargets[selectedTargetIndex].slug);
+    setSwitchSourceSlug(availableTargets[selectedTargetIndex].slug);
+    setSwitchTargetSlug(currencies[selectedSourceIndex].slug);
   };
+  useEffect(() => {
+    if (switchSourceSlug && switchTargetSlug) {
+      setSource(switchSourceSlug);
+      setTarget(switchTargetSlug);
+    }
+  }, [switchSourceSlug, switchTargetSlug]);
 
   const computingTargetAmount = (amount, rate, multi) => {
     if (
