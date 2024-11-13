@@ -102,11 +102,7 @@ export default function WatchList({
       });
 
       if (platform === "ios") {
-        set_watch_list_data(
-          a.filter(
-            (e) => !e.title.includes("IRR")
-          )
-        );
+        set_watch_list_data(a.filter((e) => !e.title.includes("IRR")));
       } else {
         set_watch_list_data(a);
       }
@@ -162,6 +158,7 @@ export default function WatchList({
       <div className={`flex-1 mt-2 pr-0 md:pr-4 overflow-y-scroll`}>
         <div className="min-w-[20rem] h-full">
           <CustomTable
+            maxheight={35}
             heads={head}
             rows={watch_list_data}
             selectRow={(row, index) => {
