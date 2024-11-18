@@ -166,7 +166,7 @@ export default function ExchangingExchangeFormTutorialComponent({ hovered }) {
       </div>
       <div
         className={`flex flex-row ${
-          font === "Fa" && "-reverse"
+          font === "Fa" || (font === "Ar" && "-reverse")
         } items-center w-full gap-7 text-${oppositeTheme} font-${font}-regular mt-2`}
       >
         <div className="flex-1 flex relative">

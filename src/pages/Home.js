@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import Exchanging from "../components/pages/layout/Home/Exchanging";
@@ -16,11 +16,7 @@ import ListOtherExchanges from "../components/pages/layout/Home/ListMode/ListOth
 import ListPendingExchange from "../components/pages/layout/Home/ListMode/ListPendingExchange";
 import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 import { useWalletState } from "../Providers/WalletProvider";
-import { useUserState } from "../Providers/UserProvider";
-import { useModalDataSetState } from "../Providers/ModalDataProvider";
 export default function Home({ isDemo, platform }) {
-  const setModalData = useModalDataSetState();
-  const user = useUserState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
@@ -220,7 +216,7 @@ export default function Home({ isDemo, platform }) {
                 setTarget={setTarget}
                 setAmount={setFormDefaultAmount}
                 setRate={setFormDefaultRate}
-                focusOnRateInput={focusOnRateInput}
+                focusOnAmountInput={focusOnAmountInput}
                 selectedCurrecnyPair={selectedCurrecnyPair}
                 rateIsReversed={rateIsReversed}
               />

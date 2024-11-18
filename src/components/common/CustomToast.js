@@ -57,7 +57,9 @@ export default function CustomToast() {
         </div>
       )}
       <span
-        className={`text-${oppositeTheme} ${font === "Fa" ? "rtl" : ""} mt-0.5`}
+        className={`text-${oppositeTheme} ${
+          font === "Fa" || font === "Ar" ? "rtl" : ""
+        } mt-0.5`}
       >
         {toastData.message}
       </span>

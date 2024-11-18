@@ -26,13 +26,15 @@ export default function Notch() {
           <div className="flex flex-col">
             <div dir="ltr" className="flex gap-x-0.5 items-center">
               <img
-                className={`h-6 w-h-6 ${font === "Fa" ? "-mb-2" : ""}`}
+                className={`h-6 w-h-6 ${
+                  font === "Fa" || font === "Ar" ? "-mb-2" : ""
+                }`}
                 src={require("../../../../Images/pages/layout/logo.png")}
                 alt="logo"
               />
               <h1
                 className={`font-${font}-bold ${
-                  font === "Fa" ? "text-2xl" : "text-[1.75rem]"
+                  font === "Fa" || font === "Ar" ? "text-2xl" : "text-[1.75rem]"
                 } text-yellow-gradient pt-1 -mb-1`}
               >
                 {lang["logo-header"]}
@@ -40,7 +42,7 @@ export default function Notch() {
             </div>
             <h5
               className={`text-${oppositeTheme} ${
-                font === "Fa" ? "" : "-mt-1.5"
+                font === "Fa" || font === "Ar" ? "" : "-mt-1.5"
               } whitespace-nowrap font-${font}-thin text-xs`}
             >
               {lang["slogan"] + "."}
