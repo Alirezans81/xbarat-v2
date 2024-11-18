@@ -117,7 +117,7 @@ export default function WatchList({
       <div className="flex flex-row gap-x-2 justify-start">
         <h1
           className={`font-${font}-bold text-2xl text-${oppositeTheme} ${
-            font === "Fa" ? "-mt-2" : ""
+            font === "Fa" || font === "Ar" ? "-mt-2" : ""
           }`}
         >
           {lang["watch-list-label"]}

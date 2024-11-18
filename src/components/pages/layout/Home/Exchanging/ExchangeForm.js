@@ -544,7 +544,7 @@ export default function ExchangeForm({
             </div>
             <div
               className={`flex flex-row ${
-                font === "Fa" && "-reverse"
+                font === "Fa" || (font === "Ar" && "-reverse")
               } items-center w-full gap-7 text-${oppositeTheme} font-${font}-regular mt-2`}
             >
               <div className="flex-1 flex relative">
@@ -697,17 +697,24 @@ export default function ExchangeForm({
                 />
               </div>
             </div>
-            {tip && (
-              <div className="-mb-7 mt-0.5">
-                <div className="-mt-0.5">
-                  <span
-                    className={`text-${oppositeTheme} font-${font}-regular`}
-                  >
-                    {tip}
-                  </span>
+            {tip &&
+              !(
+                values.amount &&
+                removeComma(values.amount) !== 0 &&
+                selectedCurrecnyPair &&
+                values.rate &&
+                removeComma(values.rate) !== 0
+              ) && (
+                <div className="-mb-7 mt-0.5">
+                  <div className="-mt-0.5">
+                    <span
+                      className={`text-${oppositeTheme} font-${font}-regular`}
+                    >
+                      {tip}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             {values.amount &&
               removeComma(values.amount) !== 0 &&
               selectedCurrecnyPair &&
