@@ -1,8 +1,10 @@
 import React from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useFontState } from "../../../../../Providers/FontProvider";
+import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 
 export default function Topic({ data, selected, onSelect }) {
+  const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
@@ -11,7 +13,7 @@ export default function Topic({ data, selected, onSelect }) {
     <button
       disabled={selected}
       onClick={onSelect}
-      className={`transition-all duration-200 ${
+      className={`w-full transition-all duration-200 ${
         selected ? "bg-blue" : `bg-${theme}-back`
       } min-h-[9rem] rounded-2xl px-4 py-3.5 flex flex-col gap-y-1`}
     >
@@ -21,7 +23,11 @@ export default function Topic({ data, selected, onSelect }) {
             selected ? "text-light" : `text-${oppositeTheme}`
           } text-xl`}
         >
-          {data && data.title ? data.title : ""}
+          {data && data.title
+            ? lang && lang[data.title]
+              ? lang[data.title]
+              : ""
+            : ""}
         </span>
         <div
           disabled={selected}
@@ -43,7 +49,11 @@ export default function Topic({ data, selected, onSelect }) {
           selected ? "text-light" : "text-gray"
         }`}
       >
-        {data && data.description ? data.description : ""}
+        {data && data.description
+          ? lang && lang[data.description]
+            ? lang[data.description]
+            : ""
+          : ""}
       </span>
     </button>
   );

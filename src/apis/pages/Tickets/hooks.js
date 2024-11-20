@@ -115,12 +115,12 @@ const useCreateChat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (params, customFunction) => {
+  const fetch = async (params, customFunctionWithData) => {
     setIsLoading(true);
     await createChat(params)
       .then((data) => {
         process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
-        customFunction && customFunction();
+        customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
         return data.data;
       })

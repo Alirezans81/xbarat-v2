@@ -245,6 +245,7 @@ export default function Withdrawal({
                       ? walletTankTypes[selectedWalletTankType].url
                       : "",
                   bank_info: values.bank_info,
+                  bank_name: values.bank_name,
                 };
                 createWalletTank(createWalletTankParams, null, (data) => {
                   createWithdrawal(
@@ -446,6 +447,20 @@ export default function Withdrawal({
                     onBlur={handleBlur("bank_info")}
                     onChange={handleChange("bank_info")}
                     value={values.bank_info ? values.bank_info : ""}
+                  />
+                </div>
+              </div>
+              <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+                <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                  {lang["Bank_Name"]}
+                </span>
+                <div className="w-full flex">
+                  <input
+                    className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+                    name="bank_name"
+                    onBlur={handleBlur("bank_name")}
+                    onChange={handleChange("bank_name")}
+                    value={values.bank_name ? values.bank_name : ""}
                   />
                 </div>
               </div>
