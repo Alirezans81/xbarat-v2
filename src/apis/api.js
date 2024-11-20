@@ -14,7 +14,7 @@ export default function api() {
     "currency-pair": `${apiDomain}api/currency-pair/`,
     wallet: `${apiDomain}api/wallet/`,
     "wallet-asset": `${apiDomain}api/wallet-asset/`,
-    "wallet-tank": `${apiDomain}api/wallet-tank/`,
+    "wallet-tank": `${apiDomain}api/wallet-tank-detail/`,
     "wallet-tank-type": `${apiDomain}api/wallet-tank-type/`,
     branch: `${apiDomain}api/branch/`,
     deposit: `${apiDomain}api/order/deposit/`,

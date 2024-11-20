@@ -2,8 +2,10 @@ import React from "react";
 import { useFontState } from "../../../../Providers/FontProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useConvertDateTime } from "../../../../hooks/useConvertDateTime";
+import { useLanguageState } from "../../../../Providers/LanguageProvider";
 
 export default function ChatCard({ data, onSelect, lastTicketButtonRef }) {
+  const lang = useLanguageState();
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -28,7 +30,13 @@ export default function ChatCard({ data, onSelect, lastTicketButtonRef }) {
             {data && data.title ? data.title : ""}
           </span>
           <div className="flex gap-x-2">
-            <span className="text-blue text-sm -mt-0.5">New Message</span>
+            <span className="text-blue text-sm -mt-0.5">
+              {data && data.status_detail && data.status_detail.title
+                ? lang && lang[data.status_detail.title]
+                  ? lang[data.status_detail.title]
+                  : ""
+                : ""}
+            </span>
           </div>
         </div>
         <div className="line-clamp-3 w-fit">

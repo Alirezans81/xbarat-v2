@@ -26,8 +26,10 @@ export function Notif({ notif, getNotifications }) {
   );
 
   const getStatusImage = (status_link) => {
-    const result = statuses.find((e) => e.url === status_link);
-    return result.image_url;
+    if (statuses && !status_link.length) {
+      const result = statuses.find((e) => e.url === status_link);
+      return result.image_url;
+    }
   };
 
   return (
@@ -149,6 +151,12 @@ export default function Notification() {
   useEffect(() => {
     userInfo && userInfo.username && getNotifications(userInfo.username);
   }, [userInfo]);
+
+  useEffect(() => {
+    if (notifs && notifs.length !== 0 && wrapperRef && wrapperRef.current) {
+      wrapperRef.current.click();
+    }
+  }, [notifs, wrapperRef]);
 
   return (
     <CustomTooltip2

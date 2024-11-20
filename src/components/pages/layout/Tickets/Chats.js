@@ -46,7 +46,7 @@ export default function Chats({
     return (
       <div className="w-full h-full flex justify-center items-center">
         <span className={`text-${oppositeTheme} font-${font}-thin text-5xl`}>
-          Select a topic!
+          {lang["ticket-select-topic"]}
         </span>
       </div>
     );
@@ -89,12 +89,7 @@ export default function Chats({
               onClick={openNewTicketModal}
               className="bg-blue rounded-full p-3 w-full flex justify-center font-extrabold"
             >
-              {/* <img
-                alt=""
-                src={require("../../../../Images/pages/Tickets/new-ticket.png")}
-                className="w-6 h-6"
-              /> */}
-              Create New Ticket
+              {lang["ticket-new-message-button"]}
             </button>
           </div>
         </div>
