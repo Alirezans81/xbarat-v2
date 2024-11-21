@@ -2,13 +2,7 @@ import React from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useFontState } from "../../Providers/FontProvider";
 
-export default function CustomTable({
-  rows,
-  heads,
-  selectRow,
-  haverable,
-  maxheight,
-}) {
+export default function CustomTable({ rows, heads, selectRow, haverable }) {
   const theme = useThemeState();
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -29,9 +23,7 @@ export default function CustomTable({
           </span>
         ))}
       </div>
-      <div
-        className={`w-full h-full overflow-scroll flex flex-col max-h-[${maxheight}dvh]`}
-      >
+      <div className={`w-full h-full overflow-hidden flex flex-col`}>
         {selectRow
           ? rows.map((row, trIndex) => (
               <button
