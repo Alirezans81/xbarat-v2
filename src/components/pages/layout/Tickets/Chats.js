@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useFontState } from "../../../../Providers/FontProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import ChatCard from "../Referral/ChatCard";
