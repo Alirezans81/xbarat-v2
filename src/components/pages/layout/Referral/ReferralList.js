@@ -22,7 +22,6 @@ export default function ReferralList({ data, currency }) {
     return (
       <div className="flex flex-col md:pb-0 pb-5 h-[35dvh] w-[43rem] md:w-full px-6 pt-5">
         <CustomTable
-          maxheight={35}
           heads={heads}
           rows={data.map((e) => {
             let temp = {};

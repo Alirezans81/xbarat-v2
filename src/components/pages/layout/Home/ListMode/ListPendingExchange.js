@@ -138,11 +138,7 @@ export default function ListPendingExchange({
       </div>
       <div className="mt-3.5 w-full px-4 h-full relative">
         {pendingExchanges.length !== 0 ? (
-          <CustomTable
-            maxheight={20}
-            heads={head}
-            rows={pending_exchanges_data}
-          />
+          <CustomTable heads={head} rows={pending_exchanges_data} />
         ) : (
           <div className="absolute left-0 h-full w-full -mt-8 top-0 flex justify-center items-center">
             <span

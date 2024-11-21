@@ -121,7 +121,6 @@ export default function ListWatchList({
       </h1>
       <div className={`flex-1 overflow-y-auto mt-2 p${endDirection}-4`}>
         <CustomTable
-          maxheight={35}
           heads={head}
           rows={watch_list_data}
           selectRow={(row, index) => {
