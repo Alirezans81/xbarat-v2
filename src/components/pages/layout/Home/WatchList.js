@@ -117,7 +117,7 @@ export default function WatchList({
       <div className="flex flex-row gap-x-2 justify-start">
         <h1
           className={`font-${font}-bold text-2xl text-${oppositeTheme} ${
-            font === "Fa" ? "-mt-2" : ""
+            font === "Fa" || font === "Ar" ? "-mt-2" : ""
           }`}
         >
           {lang["watch-list-label"]}
@@ -132,7 +132,6 @@ export default function WatchList({
       <div className={`flex-1 mt-2 pr-0 md:pr-4 overflow-y-scroll`}>
         <div className="min-w-[20rem] h-full">
           <CustomTable
-            maxheight={35}
             heads={head}
             rows={watch_list_data}
             selectRow={(row, index) => {

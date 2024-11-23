@@ -39,7 +39,14 @@ const customTheme = {
   inlineWrapper: "flex items-center",
 };
 
-function CustomDropdown({ children, label, className, labelClassName, disabled, searchable }) {
+function CustomDropdown({
+  children,
+  label,
+  className,
+  labelClassName,
+  disabled,
+  searchable,
+}) {
   const theme = useThemeState();
   const lang = useLanguageState();
   const font = useFontState();
@@ -48,8 +55,9 @@ function CustomDropdown({ children, label, className, labelClassName, disabled, 
       ? {
           backgroundColor: "#152831",
           color: "#fff",
-          fontFamily: font === "Fa" ? "ModamFaNum-bold" : "manjari-bold",
-          paddingBottom: font === "Fa" ? 2 : 0,
+          fontFamily:
+            font === "Fa" || font === "Ar" ? "ModamFaNum-bold" : "manjari-bold",
+          paddingBottom: font === "Fa" || font === "Ar" ? 2 : 0,
           flex: 1,
           minWidth: 0,
           overflow: "hidden",
@@ -57,8 +65,9 @@ function CustomDropdown({ children, label, className, labelClassName, disabled, 
       : {
           backgroundColor: "#EEEEEE",
           color: "#2A2B2E",
-          fontFamily: font === "Fa" ? "ModamFaNum-bold" : "manjari-bold",
-          paddingBottom: font === "Fa" ? 2 : 0,
+          fontFamily:
+            font === "Fa" || font === "Ar" ? "ModamFaNum-bold" : "manjari-bold",
+          paddingBottom: font === "Fa" || font === "Ar" ? 2 : 0,
           flex: 1,
           minWidth: 0,
           overflow: "hidden",

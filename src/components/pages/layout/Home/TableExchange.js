@@ -252,9 +252,8 @@ export default function TableExchange({
               </span>
             </div>
           </div>
-          <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2 overflow-hidden max-h-[35dvh]">
+          <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2 overflow-scroll">
             <CustomTable
-              maxheight={35}
               heads={source_to_target_head}
               rows={source_to_target_data}
               haverable
@@ -297,7 +296,6 @@ export default function TableExchange({
           </div>
           <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2  overflow-hidden max-h-[35dvh]">
             <CustomTable
-              maxheight={35}
               heads={target_to_source_head}
               rows={target_to_source_data}
               selectRow={(row) => {

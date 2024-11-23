@@ -170,7 +170,8 @@ export default function CompleteProfileModal() {
       values.wallet_asset_currency &&
       values.title &&
       values.wallet_tank_type &&
-      values.bank_info
+      values.bank_info &&
+      values.bank_name
     ) {
       return true;
     }
@@ -202,6 +203,7 @@ export default function CompleteProfileModal() {
       account_name: values.title,
       wallet_tank_type: values.wallet_tank_type,
       bank_info: values.bank_info,
+      bank_name: values.bank_name,
     };
     createWalletTank(createWalletTankParams, customFunction);
   };
@@ -304,6 +306,7 @@ export default function CompleteProfileModal() {
               title: "",
               wallet_tank_type: "",
               bank_info: "",
+              bank_name: "",
             }}
             onSubmit={(values) => {
               step === 1 &&

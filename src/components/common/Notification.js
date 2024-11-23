@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import { CustomTooltip2 } from "./CustomTooltip2";
 import { useThemeState } from "../../Providers/ThemeProvider";
@@ -6,6 +7,7 @@ import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useDeleteNotification } from "../../apis/pages/Layout/hooks";
 import { useGetNotifs } from "../../apis/pages/Layout/hooks";
 import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
+import { useStatusesState } from "../../Providers/StatusesProvider";
 import { useConvertNotif } from "../../hooks/useConvertNotif";
 import { useUserState } from "../../Providers/UserProvider";
 
@@ -15,13 +17,20 @@ export function Notif({ notif, getNotifications }) {
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const convertNotif = useConvertNotif();
-
+  const statuses = useStatusesState();
   const { deleteNotification, isLoading: deleteNotificationIsLoading } =
     useDeleteNotification();
   useEffect(
     () => setIsLoadingSplashScreen(deleteNotificationIsLoading),
     [deleteNotificationIsLoading]
   );
+
+  const getStatusImage = (status_link) => {
+    if (statuses && !status_link.length) {
+      const result = statuses.find((e) => e.url === status_link);
+      return result.image_url;
+    }
+  };
 
   return (
     <div
@@ -31,11 +40,11 @@ export function Notif({ notif, getNotifications }) {
         <div className="flex items-center gap-x-2.5">
           <img
             alt=""
-            src={require(`../../Images/pages/layout/Navbar/wallet-${oppositeTheme}.png`)}
+            src={getStatusImage(notif.status)}
             className={`w-12 h-12 bg-${theme}-back p-3 rounded-full float-left inline`}
           />
           <span
-            dir={font === "Fa" ? "rtl" : "ltr"}
+            dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
             className={`-mb-1 text-lg max-w-[60dvw] md:w-72 leading-5`}
           >
             {convertNotif(notif.subject)}
@@ -58,9 +67,9 @@ export function Notif({ notif, getNotifications }) {
         </button>
       </div>
       <span
-        dir={font === "Fa" ? "rtl" : "ltr"}
+        dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
         className={`max-w-[80dvw] md:w-96 border-t pt-2.5 border-gray-700 ${
-          font === "Fa" ? "pb-2" : ""
+          font === "Fa" || font === "Ar" ? "pb-2" : ""
         }`}
       >
         {convertNotif(notif.message)}
@@ -134,12 +143,20 @@ export default function Notification() {
     () => setIsLoadingSplashScreen(getNotifsIsLoading),
     [getNotifsIsLoading]
   );
-  function getNotifications(username) {
-    getNotifs(username, setNotifs, null, null);
+  function getNotifications() {
+    userInfo &&
+      userInfo.username &&
+      getNotifs(userInfo.username, setNotifs, null, null);
   }
   useEffect(() => {
     userInfo && userInfo.username && getNotifications(userInfo.username);
   }, [userInfo]);
+
+  useEffect(() => {
+    if (notifs && notifs.length !== 0 && wrapperRef && wrapperRef.current) {
+      wrapperRef.current.click();
+    }
+  }, [notifs, wrapperRef]);
 
   return (
     <CustomTooltip2
@@ -156,7 +173,11 @@ export default function Notification() {
         className={`relative font-${font}-bold`}
       >
         <span className="absolute right-0 bg-red text-light w-5 h-5 rounded-full flex justify-center items-center">
-          <span className={`${font === "Fa" ? "-mb-0.5" : "-mb-1.5"} text-sm`}>
+          <span
+            className={`${
+              font === "Fa" || font === "Ar" ? "-mb-0.5" : "-mb-1.5"
+            } text-sm`}
+          >
             {notifs ? notifs.length : 0}
           </span>
         </span>

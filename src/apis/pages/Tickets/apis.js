@@ -52,7 +52,7 @@ const sendMessages = (params) => {
   params && params.user && formData.append("user", params.user);
   params && params.text && formData.append("text", params.text);
   params && params.file && formData.append("file", params.file);
-  console.log(api["ticket"] + params.ticket + "/");
+
   return axios.post(api["ticket-detail"], formData);
 };
 
@@ -62,6 +62,7 @@ const createChat = (params) => {
   params && params.user && formData.append("user", params.user);
   params && params.category && formData.append("category", params.category);
   params && params.title && formData.append("title", params.title);
+  formData.append("is_active", true + "");
 
   return axios.post(api["ticket"], formData);
 };

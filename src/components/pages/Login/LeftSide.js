@@ -22,7 +22,7 @@ export default function LeftSide() {
         {lang["logo-header"]}
       </h1>
       <span className={`text-4xl font-${font}-thin text-${oppositeTheme}`}>
-        {font === "Fa" ? "" : lang["slogan"] + "."}
+        {font === "Fa" || font === "Ar" ? "" : lang["slogan"] + "."}
       </span>
     </Link>
   );
