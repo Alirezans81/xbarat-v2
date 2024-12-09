@@ -66,6 +66,26 @@ const getWalletTanks = (filtersObject) => {
   }
 };
 
+const getWalletTankDetails = (filtersObject) => {
+  const limit = require("../../pagination/limit.json")["wallet-tank"];
+
+  if (filtersObject) {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-tank-detail"],
+      query: { limit, ...filtersObject, is_active: true },
+    });
+
+    return axios.get(urlWithQueries);
+  } else {
+    const urlWithQueries = queryString.stringifyUrl({
+      url: api["wallet-tank-detail"],
+      query: { limit, is_active: true },
+    });
+
+    return axios.get(urlWithQueries);
+  }
+};
+
 const getWalletTankTypes = (filtersObject) => {
   const limit = require("../../pagination/limit.json")["wallet-tank-type"];
 
@@ -150,6 +170,7 @@ export {
   getWallets,
   getWalletAssets,
   getWalletTanks,
+  getWalletTankDetails,
   getWalletTankTypes,
   createWalletTank,
   createDeposit,
