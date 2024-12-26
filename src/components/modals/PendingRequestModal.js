@@ -12,7 +12,6 @@ import { useStatusesState } from "../../Providers/StatusesProvider";
 import { useModalDataClose } from "../../Providers/ModalDataProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useGetWalletTanks } from "../../apis/common/wallet/hooks";
-import { useGetWalletTankDetails } from "../../apis/common/wallet/hooks";
 import { CustomDropdown, CustomItem } from "../common/CustomDropdown";
 import Stepper from "./PendingRequestModal/Stepper";
 import CopyText from "../common/CopyText";
@@ -48,15 +47,9 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     [getWalletTanksIsLoading]
   );
 
-  const { getWalletTankDetails, isLoading: getWalletTankDetailsIsLoading } =
-    useGetWalletTankDetails();
-  useEffect(
-    () => setLoading(getWalletTankDetailsIsLoading),
-    [getWalletTankDetailsIsLoading]
-  );
   useEffect(() => {
     if (data && data.user_receiver_username && data.currency_slug) {
-      getWalletTankDetails(
+      getWalletTanks(
         {
           user: data.user_receiver_username,
           currency: data.currency_slug,
@@ -326,8 +319,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   data.url,
                   {
                     document,
-                    wallet_tank_detail_receiver:
-                      receiverTanks[selectedWalletTank].url,
+                    wallet_tank_receiver: receiverTanks[selectedWalletTank].url,
                     status: statuses
                       ? statuses.find(
                           (status) => status.title === "Admin Approve"

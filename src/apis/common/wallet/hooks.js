@@ -2,7 +2,6 @@ import {
   getWallets,
   getWalletAssets,
   getWalletTanks,
-  getWalletTankDetails,
   getWalletTankTypes,
   createWalletTank,
   createDeposit,
@@ -95,30 +94,6 @@ const useGetWalletTanks = () => {
   };
 
   return { getWalletTanks: fetch, error, isLoading };
-};
-
-const useGetWalletTankDetails = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
-
-  const fetch = async (filtersObject, setState, customFunction) => {
-    setIsLoading(true);
-    await getWalletTankDetails(filtersObject)
-      .then((data) => {
-        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
-        setState(data.data.results);
-        customFunction && customFunction();
-        setIsLoading(false);
-        return FilterIsActive(data.data.results);
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error);
-        setIsLoading(false);
-      });
-  };
-
-  return { getWalletTankDetails: fetch, error, isLoading };
 };
 
 const useGetWalletTankTypes = () => {
@@ -277,5 +252,4 @@ export {
   useCreateWithdrawal,
   useCreateTransfer,
   useEditWalletTanks,
-  useGetWalletTankDetails,
 };
