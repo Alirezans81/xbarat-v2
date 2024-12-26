@@ -54,13 +54,12 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     () => setLoading(getWalletTankDetailsIsLoading),
     [getWalletTankDetailsIsLoading]
   );
-  console.log(data);
   useEffect(() => {
     if (data && data.user_receiver_username && data.currency_slug) {
-      getWalletTanks(
+      getWalletTankDetails(
         {
           user: data.user_receiver_username,
-          currency_slug: data.currency_slug,
+          currency: data.currency_slug,
         },
         (walletTanks) => {
           if (data.currency_abb === "IRR") {
@@ -327,7 +326,8 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   data.url,
                   {
                     document,
-                    wallet_tank_receiver: receiverTanks[selectedWalletTank].url,
+                    wallet_tank_detail_receiver:
+                      receiverTanks[selectedWalletTank].url,
                     status: statuses
                       ? statuses.find(
                           (status) => status.title === "Admin Approve"

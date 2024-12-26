@@ -67,7 +67,7 @@ const getWalletTanks = (filtersObject) => {
 };
 
 const getWalletTankDetails = (filtersObject) => {
-  const limit = require("../../pagination/limit.json")["wallet-tank"];
+  const limit = require("../../pagination/limit.json")["wallet-tank-detail"];
 
   if (filtersObject) {
     const urlWithQueries = queryString.stringifyUrl({
