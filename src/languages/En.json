@@ -407,91 +407,94 @@
     "fee": "This Is Our Exchange Fee"
   },
   "ContextTutorial": {
-    "Deposit": {
-      "context": [
-        "If You Want to Deposit Your Money.Here is the Step By Step Solution",
-        "1-Go to the \"wallet\" Section.",
-        "2-Enter The Currency Of Your Deposit.",
-        "3-Type The Amount That You Want To Deposit.",
-        "4-Click The \"Submit\" Button",
-        "5-Wait For Admin Assignment"
-      ],
-      "status": {
-        "Accept": {
-          "desc": "Your Request Was Accepted",
-          "full": "This Means That Your Deposit Request Was Completed Successfully And The Money Is Available In The \"Your Balance\" Section"
+        "Deposit": {
+            "context": [
+                "Deposit process:",
+                "1- Go to the \"Wallet\" section.",
+                "2- Select the desired currency (the currency you want to convert).",
+                "3- Enter the amount of the deposit.",
+                "4- Click the \"Submit\" button and wait for admin approval.",
+                "5- After admin approval, depending on the selected currency, the IBAN, card number, or PayPal address will be displayed in the \"Request\" section.",
+                "6- Complete the deposit.",
+                "7- Upload the deposit receipt."
+            ],
+            "status": {
+                "Accepted": {
+                    "desc": "Your request has been approved",
+                    "full": "Your request has been approved, and your wallet has been credited. The currency amount is visible in the \"Balance\" section of your wallet."
+                },
+                "Rejected": {
+                    "desc": "Your request has been rejected",
+                    "full": "Your request has been rejected. The reason has been reported in the \"Request Box\"."
+                },
+                "Upload Photo": {
+                    "desc": "At this stage, you need to submit evidence of your completed deposit process",
+                    "full": "You must submit a photo of the receipt showing the amount deposited, including the sender, recipient, and predetermined amount."
+                }
+            }
         },
-        "Reject": {
-          "desc": "Your Requet Was Rejected",
-          "full": "Your Deposit Request Was Rejected Possibly Because of a Flaw In Your Uploaded Document or an Error In The Transfer Flow Of the Money"
+        "Exchange": {
+            "context": [
+                "If you want to exchange your money, you can follow the steps of the exchange process here:",
+                "1- Go to the \"Home\" section.",
+                "2- Select the desired currency.",
+                "3- Enter the amount of money you want to exchange.",
+                "4- Choose the exchange rate from the rates table or enter your proposed rate.",
+                "5- Click the \"Submit\" button."
+            ],
+            "status": {
+                "Accepted": {
+                    "desc": "Your request has been approved",
+                    "full": "The money exchange request was successfully completed. You can view your balance in the source and destination cards."
+                },
+                "Rejected": {
+                    "desc": "Your request has been rejected",
+                    "full": "Your exchange request was likely rejected due to an error during the money transfer process."
+                }
+            }
         },
-        "Upload Document": {
-          "desc": "In This Situation You Must Upload A Document Of Your Deposit Recipt",
-          "full": "You Have To Upload A Picture of The Recipt That Contains The End Users's Account And The Amount Entered By You In The Previous Steps"
+        "Withdraw": {
+            "context": [
+                "Withdrawal process:",
+                "1- Go to the \"Wallet\" section.",
+                "2- Select the withdrawal option (from the field of the currency you wish to withdraw).",
+                "3- Enter the withdrawal amount.",
+                "4- Select your desired account (this can include a card number, IBAN, or PayPal address).",
+                "5- Click the \"Submit\" button and wait for the admin to upload the payment receipt in the withdrawal request section."
+            ],
+            "status": {
+                "Accepted": {
+                    "desc": "Your request has been approved",
+                    "full": "Your request has been approved. Wait for the admin to upload the payment receipt in the request section."
+                },
+                "Rejected": {
+                    "desc": "Your request has been rejected",
+                    "full": "Your withdrawal request has been rejected. The reason has been reported in the \"Request Box.\""
+                }
+            }
+        },
+        "Transfer": {
+            "context": [
+                "If you want to transfer your money, you can follow the steps of the transfer process here:",
+                "1- Go to the \"Wallet\" section.",
+                "2- Select the card from which you want to transfer currency.",
+                "3- Choose the \"Transfer\" option.",
+                "4- Enter the transferable amount.",
+                "5- Enter the user code of the person to whom you want to transfer money in the respective field.",
+                "6- Click the \"Submit\" button."
+            ],
+            "status": {
+                "Accepted": {
+                    "desc": "Your request has been approved",
+                    "full": "Your request has been approved."
+                },
+                "Rejected": {
+                    "desc": "Your request has been rejected",
+                    "full": "Your transfer request has been rejected, possibly due to insufficient balance in your transfer currency."
+                }
+            }
         }
-      }
     },
-    "Exchange": {
-      "context": [
-        "If You Want to Exchange Your Money.Here is the Step By Step Solution",
-        "1-Go to the \"Home\" Section.",
-        "2-Enter The Currency Pair Of Your Exchange.",
-        "3-Type The Amount That You Want To Exchange.",
-        "4-Type The Rate That You Want To Exchange.",
-        "5-Click The \"Submit\" Button"
-      ],
-      "status": {
-        "Accept": {
-          "desc": "Your Request Was Accepted",
-          "full": "This Means That Your Exchange Request Was Completed Successfully And The Money Is Available In The \"Your Balance\" Section On Your Destination Currency Card"
-        },
-        "Reject": {
-          "desc": "Your Requet Was Rejected",
-          "full": "Your Exchange Request Was Rejected Possibly Because of an Error In The Transfer Flow Of the Money"
-        }
-      }
-    },
-    "Withdraw": {
-      "context": [
-        "If You Want to Withdraw Your Money. Here is the Step By Step Solution",
-        "1-Go to the \"wallet\" Section.",
-        "2-Select The \"Withdrawal\" Button In The Card Regarding Your Desiered Currency.",
-        "3-Type The Amount That You Want Withdrawed.",
-        "4-Select Your Bank Account",
-        "5-Click The \"Submit\" Button"
-      ],
-      "status": {
-        "Accept": {
-          "desc": "Your Request Was Accepted",
-          "full": "Your Withdrawal Request Was Completed Successfully. It Should Show On Your Back Acccount Selected by You In The Previous Steps "
-        },
-        "Reject": {
-          "desc": "Your Requet Was Rejected",
-          "full": "Your Withdrawal Request Was Rejected. This Could Happen Bacause You may not Have Had The Sufficient Amount Of Money On That Currency"
-        }
-      }
-    },
-    "Transfer": {
-      "context": [
-        "If You Want to Transfer Your Money. Here is the Step By Step Solution",
-        "1-Go to the \"wallet\" Section.",
-        "2-Select The \"Transfer\" Button In The Card Regarding Your Desiered Currency.",
-        "3-Type The Amount That You Want.",
-        "4-Type The Destination User Code",
-        "5-Click The \"Submit\" Button"
-      ],
-      "status": {
-        "Accept": {
-          "desc": "Your Request Was Accepted",
-          "full": "The Money Has Been Transfered Successfully And You Can Verify This By Contacting The End User Provided By You In The Previous Steps"
-        },
-        "Reject": {
-          "desc": "Your Requet Was Rejected",
-          "full": "Your Transfer Request Was Rejected Becuase You May Not Have Had The Suficient Amount Of Money To Transfer Or Because The End User Provided By You May Not Have Been Valid"
-        }
-      }
-    }
-  },
   "add-to-home-screen-modal-title": "Add the Xbarat's web application to your home screen.",
   "add-to-home-screen-modal-step-1-1st": "Click on the",
   "add-to-home-screen-modal-step-1-2nd": " Share ",

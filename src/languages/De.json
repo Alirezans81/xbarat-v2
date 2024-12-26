@@ -405,91 +405,94 @@
     "fee": "Das ist unsere Austauschgebühr."
   },
   "ContextTutorial": {
-    "Deposit": {
-      "context": [
-        "Wenn du dein Geld einzahlen möchtest, hier ist die Schritt-für-Schritt-Lösung.",
-        "1. Gehe zum Abschnitt \"Brieftasche\".",
-        "2. Gib die Währung deiner Einzahlung ein.",
-        "3. Gib den Betrag ein, den du einzahlen möchtest.",
-        "4. Klicke auf die Schaltfläche \"Abschicken\".",
-        "5. Warte auf die Zuweisung des Admins."
-      ],
-      "status": {
-        "Accept": {
-          "desc": "Deine Anfrage wurde akzeptiert.",
-          "full": "Das bedeutet, dass deine Einzahlungsanfrage erfolgreich abgeschlossen wurde und das Geld im Abschnitt \"Dein Guthaben\" verfügbar ist."
+        "Deposit": {
+            "context": [
+                "Einzahlungsprozess:",
+                "1- Gehen Sie zum Abschnitt \"Wallet\".",
+                "2- Wählen Sie die gewünschte Währung aus (die Währung, die Sie umwandeln möchten).",
+                "3- Geben Sie den Betrag der Einzahlung ein.",
+                "4- Klicken Sie auf die Schaltfläche \"Senden\" und warten Sie auf die Genehmigung des Administrators.",
+                "5- Nach der Genehmigung durch den Administrator werden je nach ausgewählter Währung die IBAN, die Kartennummer oder die PayPal-Adresse im Abschnitt \"Anfrage\" angezeigt.",
+                "6- Führen Sie die Einzahlung durch.",
+                "7- Laden Sie die Einzahlungsquittung hoch."
+            ],
+            "status": {
+                "Akzeptiert": {
+                    "desc": "Ihre Anfrage wurde genehmigt",
+                    "full": "Ihre Anfrage wurde genehmigt und Ihr Wallet wurde aufgeladen. Der Betrag der Währung ist im Abschnitt \"Guthaben\" Ihres Wallets sichtbar."
+                },
+                "Abgelehnt": {
+                    "desc": "Ihre Anfrage wurde abgelehnt",
+                    "full": "Ihre Anfrage wurde abgelehnt. Der Grund wurde im \"Anfragefeld\" gemeldet."
+                },
+                "Foto hochladen": {
+                    "desc": "In diesem Schritt müssen Sie einen Nachweis über den abgeschlossenen Einzahlungsprozess einreichen",
+                    "full": "Sie müssen ein Foto der Quittung hochladen, das den eingezahlten Betrag, einschließlich Absender, Empfänger und den festgelegten Betrag, zeigt."
+                }
+            }
         },
-        "Reject": {
-          "desc": "Deine Anfrage wurde abgelehnt.",
-          "full": "Deine Einzahlungsanfrage wurde abgelehnt, möglicherweise wegen eines Fehlers in deinem hochgeladenen Dokument oder eines Problems im Geldfluss."
+        "Exchange": {
+            "context": [
+                "Wenn Sie Ihr Geld umtauschen möchten, können Sie hier die Schritte des Austauschprozesses verfolgen:",
+                "1- Gehen Sie zum Abschnitt \"Home\".",
+                "2- Wählen Sie die gewünschte Währung aus.",
+                "3- Geben Sie den Betrag ein, den Sie umtauschen möchten.",
+                "4- Wählen Sie den Wechselkurs aus der Tabelle oder geben Sie Ihren vorgeschlagenen Kurs ein.",
+                "5- Klicken Sie auf die Schaltfläche \"Senden\"."
+            ],
+            "status": {
+                "Akzeptiert": {
+                    "desc": "Ihre Anfrage wurde genehmigt",
+                    "full": "Der Geldumtausch wurde erfolgreich abgeschlossen. Sie können Ihr Guthaben in der Ausgangs- und Zielkarte einsehen."
+                },
+                "Abgelehnt": {
+                    "desc": "Ihre Anfrage wurde abgelehnt",
+                    "full": "Ihre Umtauschanfrage wurde wahrscheinlich aufgrund eines Fehlers während des Geldtransfers abgelehnt."
+                }
+            }
         },
-        "Upload Document": {
-          "desc": "In diesem Fall musst du ein Dokument deines Einzahlungsscheins hochladen.",
-          "full": "Du musst ein Bild des Belegs hochladen, der die Kontoinformationen des Endbenutzers und den von dir angegebenen Betrag enthält."
+        "Withdraw": {
+            "context": [
+                "Auszahlungsprozess:",
+                "1- Gehen Sie zum Abschnitt \"Wallet\".",
+                "2- Wählen Sie die Auszahlungsoption aus (aus dem Feld der Währung, die Sie abheben möchten).",
+                "3- Geben Sie den Auszahlungsbetrag ein.",
+                "4- Wählen Sie Ihr gewünschtes Konto aus (dies kann eine Kartennummer, IBAN oder PayPal-Adresse sein).",
+                "5- Klicken Sie auf die Schaltfläche \"Senden\" und warten Sie, bis der Administrator die Zahlungsquittung im Abschnitt für Auszahlungsanfragen hochlädt."
+            ],
+            "status": {
+                "Akzeptiert": {
+                    "desc": "Ihre Anfrage wurde genehmigt",
+                    "full": "Ihre Anfrage wurde genehmigt. Warten Sie, bis der Administrator die Zahlungsquittung im Anfrageabschnitt hochlädt."
+                },
+                "Abgelehnt": {
+                    "desc": "Ihre Anfrage wurde abgelehnt",
+                    "full": "Ihre Auszahlungsanfrage wurde abgelehnt. Der Grund wurde im \"Anfragefeld\" gemeldet."
+                }
+            }
+        },
+        "Transfer": {
+            "context": [
+                "Wenn Sie Ihr Geld überweisen möchten, können Sie hier die Schritte des Überweisungsprozesses verfolgen:",
+                "1- Gehen Sie zum Abschnitt \"Wallet\".",
+                "2- Wählen Sie die Karte aus, von der Sie Währung übertragen möchten.",
+                "3- Wählen Sie die Option \"Überweisen\".",
+                "4- Geben Sie den übertragbaren Betrag ein.",
+                "5- Geben Sie den Benutzer-Code der Person, an die Sie Geld überweisen möchten, in das entsprechende Feld ein.",
+                "6- Klicken Sie auf die Schaltfläche \"Senden\"."
+            ],
+            "status": {
+                "Akzeptiert": {
+                    "desc": "Ihre Anfrage wurde genehmigt",
+                    "full": "Ihre Anfrage wurde genehmigt."
+                },
+                "Abgelehnt": {
+                    "desc": "Ihre Anfrage wurde abgelehnt",
+                    "full": "Ihre Überweisungsanfrage wurde abgelehnt, möglicherweise aufgrund eines unzureichenden Guthabens in Ihrer Übertragungswährung."
+                }
+            }
         }
-      }
     },
-    "Exchange": {
-      "context": [
-        "Wenn du dein Geld tauschen möchtest, hier ist die Schritt-für-Schritt-Lösung.",
-        "1. Gehe zum Abschnitt \"Startseite\".",
-        "2. Gib das Währungspaar deines Austauschs ein.",
-        "3. Gib den Betrag ein, den du tauschen möchtest.",
-        "4. Gib den Kurs ein, den du wünschen würdest.",
-        "5. Klicke auf die Schaltfläche \"Abschicken\"."
-      ],
-      "status": {
-        "Accept": {
-          "desc": "Deine Anfrage wurde akzeptiert.",
-          "full": "Das bedeutet, dass deine Austausch-Anfrage erfolgreich abgeschlossen wurde und das Geld im Abschnitt \"Dein Guthaben\" in deiner Zielwährungs-Karte verfügbar ist."
-        },
-        "Reject": {
-          "desc": "Deine Anfrage wurde abgelehnt.",
-          "full": "Deine Austausch-Anfrage wurde abgelehnt, möglicherweise aufgrund eines Fehlers im Geldfluss."
-        }
-      }
-    },
-    "Withdraw": {
-      "context": [
-        "Wenn du dein Geld abheben möchtest. Hier ist die Schritt-für-Schritt-Lösung.",
-        "1. Gehe zum Abschnitt \"Brieftasche\".",
-        "2. Wähle die Schaltfläche \"Abheben\" in der Karte für deine gewünschte Währung.",
-        "3. Gib den Betrag ein, den du abheben möchtest.",
-        "4. Wähle dein Bankkonto.",
-        "5. Klicke auf die Schaltfläche \"Abschicken\"."
-      ],
-      "status": {
-        "Accept": {
-          "desc": "Deine Anfrage wurde akzeptiert.",
-          "full": "Deine Abhebungsanfrage wurde erfolgreich abgeschlossen. Es sollte auf deinem Bankkonto angezeigt werden, das du in den vorherigen Schritten gewählt hast."
-        },
-        "Reject": {
-          "desc": "Deine Anfrage wurde abgelehnt.",
-          "full": "Deine Abhebungsanfrage wurde abgelehnt. Dies könnte geschehen, weil du möglicherweise nicht über ausreichende Mittel für diese Währung verfügst."
-        }
-      }
-    },
-    "Transfer": {
-      "context": [
-        "Wenn du dein Geld überweisen möchtest. Hier ist die Schritt-für-Schritt-Lösung.",
-        "1. Gehe zum Abschnitt \"Brieftasche\".",
-        "2. Wähle die Schaltfläche \"Überweisung\" in der Karte für deine gewünschte Währung.",
-        "3. Gib den Betrag ein, den du möchtest.",
-        "4. Gib den Zielbenutzer-Code ein.",
-        "5. Klicke auf die Schaltfläche \"Abschicken\"."
-      ],
-      "status": {
-        "Accept": {
-          "desc": "Deine Anfrage wurde akzeptiert.",
-          "full": "Das Geld wurde erfolgreich überwiesen, und du kannst dies überprüfen, indem du den Endbenutzer kontaktierst, den du in den vorherigen Schritten angegeben hast."
-        },
-        "Reject": {
-          "desc": "Deine Anfrage wurde abgelehnt.",
-          "full": "Deine Überweisungsanfrage wurde abgelehnt, weil du möglicherweise nicht über ausreichende Mittel für die Überweisung verfügst oder weil der von dir angegebene Endbenutzer nicht gültig ist."
-        }
-      }
-    }
-  },
   "add-to-home-screen-modal-title": "Füge die Webanwendung von Xbarat zu deinem Startbildschirm hinzu.",
   "add-to-home-screen-modal-step-1-1st": "Klicke auf die",
   "add-to-home-screen-modal-step-1-2nd": "teilen",

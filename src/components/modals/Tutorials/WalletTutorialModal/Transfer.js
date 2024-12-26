@@ -12,7 +12,7 @@ const Transfer = ({ transfer }) => {
 
   return (
     <div
-      className={`w-full max-w-[1280px] overflow-scroll  h-full animate-upward flex justify-center`}
+      className={`w-full max-w-4xl overflow-scroll  h-full animate-upward flex justify-center`}
     >
       <div
         className={`grid grid-cols-${
@@ -29,7 +29,7 @@ const Transfer = ({ transfer }) => {
             : statusCount < 4
             ? statusCount
             : 4
-        }  gap-x-5   gap-y-2 w-3/4 `}
+        }  gap-x-5   gap-y-2 w-full `}
       >
         {status ? (
           Object.entries(status).map(([statusName, statusDetails]) => (
