@@ -7,16 +7,19 @@ import dev from "../../api-dev";
 const api = process.env.REACT_APP_MODE === "DEVELOPMENT" ? dev() : prod();
 const limit = require("../../pagination/limit.json");
 
-const getTopics = () => {
+const getTopics = (token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["ticket-category"],
     query: { limit: limit["ticket-category"], is_active: true },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const getChats = (topicSlug, username) => {
+const getChats = (topicSlug, username, token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["ticket"],
     query: {
@@ -27,10 +30,13 @@ const getChats = (topicSlug, username) => {
     },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const getMessages = (ticketCode) => {
+const getMessages = (ticketCode, token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["ticket-detail"],
     query: {
@@ -41,10 +47,13 @@ const getMessages = (ticketCode) => {
     },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const sendMessages = (params) => {
+const sendMessages = (params, token) => {
   const formData = new FormData();
   params &&
     params.ticket &&
@@ -53,10 +62,13 @@ const sendMessages = (params) => {
   params && params.text && formData.append("text", params.text);
   params && params.file && formData.append("file", params.file);
 
-  return axios.post(api["ticket-detail"], formData);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.post(api["ticket-detail"], formData, { headers });
 };
 
-const createChat = (params) => {
+const createChat = (params, token) => {
   const formData = new FormData();
 
   params && params.user && formData.append("user", params.user);
@@ -64,7 +76,10 @@ const createChat = (params) => {
   params && params.title && formData.append("title", params.title);
   formData.append("is_active", true + "");
 
-  return axios.post(api["ticket"], formData);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.post(api["ticket"], formData, { headers });
 };
 
 export { getTopics, getChats, getMessages, sendMessages, createChat };

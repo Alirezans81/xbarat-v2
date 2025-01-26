@@ -5,37 +5,18 @@ import { Link } from "react-router-dom";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
 import ThemeSwitcher from "../../../common/ThemeSwitcher";
-import { useLogout } from "../../../../apis/pages/Layout/hooks";
-import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
-import {
-  useUserSetState,
-  useUserState,
-} from "../../../../Providers/UserProvider";
+import { useUserState } from "../../../../Providers/UserProvider";
 import Element from "../NavbarSetting/Element";
-import { useTokenSetState } from "../../../../Providers/TokenProvider";
+import { useLogout } from "../../../../hooks/useAuth";
 
 export default function MyMenu({ switchBlur, links: allLinks }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
-  const setLoading = useIsLoadingSplashScreenSetState();
   const userInfo = useUserState();
-  const setToken = useTokenSetState();
-  const setUser = useUserSetState();
 
-  const resetApp = () => {
-    setToken(null);
-    setUser(null);
-    window.localStorage.removeItem("authToken");
-    window.localStorage.removeItem("userInfo");
-    window.localStorage.removeItem("expireTime");
-    window.localStorage.removeItem("statuses");
-    window.localStorage.removeItem("linksShown");
-  };
-
-  const { logout, error, isLoading } = useLogout();
-  useEffect(() => setLoading(isLoading), [isLoading]);
+  const logout = useLogout();
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
@@ -134,10 +115,7 @@ export default function MyMenu({ switchBlur, links: allLinks }) {
             <ThemeSwitcher horizental />
             {userInfo && (
               <Link
-                onClick={() => {
-                  resetApp();
-                  logout();
-                }}
+                onClick={logout}
                 to="/login"
                 data-tooltip-id="logout-tooltip"
               >

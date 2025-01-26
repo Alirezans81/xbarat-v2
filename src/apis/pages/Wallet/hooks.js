@@ -1,3 +1,5 @@
+import { useCheckTokenExpired } from "../../../hooks/useAuth";
+import { useTokenState } from "../../../Providers/TokenProvider";
 import {
   getPendingRequests,
   cancelPendingRequest,
@@ -9,21 +11,26 @@ const useGetPendingRequests = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (token, setState, customFunction) => {
-    setIsLoading(true);
-    await getPendingRequests(token)
-      .then((data) => {
-        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
-        setState(data.data.results);
-        customFunction && customFunction();
-        setIsLoading(false);
-        return data.data.results;
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error);
-        setIsLoading(false);
-      });
+  const token = useTokenState();
+  const checkTokenExpired = useCheckTokenExpired();
+
+  const fetch = (_token, setState, customFunction) => {
+    checkTokenExpired(async () => {
+      setIsLoading(true);
+      await getPendingRequests(token.access)
+        .then((data) => {
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+          setState(data.data.results);
+          customFunction && customFunction();
+          setIsLoading(false);
+          return data.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
+    });
   };
 
   return { getPendingRequests: fetch, error, isLoading };
@@ -33,20 +40,25 @@ const useCancelPendingRequest = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (requestUrl, customFunction) => {
-    setIsLoading(true);
-    await cancelPendingRequest(requestUrl)
-      .then((data) => {
-        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
-        customFunction && customFunction();
-        setIsLoading(false);
-        return data.data;
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error);
-        setIsLoading(false);
-      });
+  const token = useTokenState();
+  const checkTokenExpired = useCheckTokenExpired();
+
+  const fetch = (requestUrl, customFunction) => {
+    checkTokenExpired(async () => {
+      setIsLoading(true);
+      await cancelPendingRequest(requestUrl, token.access)
+        .then((data) => {
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+          customFunction && customFunction();
+          setIsLoading(false);
+          return data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
+    });
   };
 
   return { cancelPendingRequest: fetch, error, isLoading };
@@ -56,20 +68,25 @@ const useUploadRequestDocument = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (requestUrl, params, customFunction) => {
-    setIsLoading(true);
-    await uploadRequestDocument(requestUrl, params)
-      .then((data) => {
-        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
-        customFunction && customFunction();
-        setIsLoading(false);
-        return data.data;
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error);
-        setIsLoading(false);
-      });
+  const token = useTokenState();
+  const checkTokenExpired = useCheckTokenExpired();
+
+  const fetch = (requestUrl, params, customFunction) => {
+    checkTokenExpired(async () => {
+      setIsLoading(true);
+      await uploadRequestDocument(requestUrl, params, token.access)
+        .then((data) => {
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+          customFunction && customFunction();
+          setIsLoading(false);
+          return data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
+    });
   };
 
   return { uploadRequestDocument: fetch, error, isLoading };

@@ -6,7 +6,7 @@ import dev from "../../api-dev";
 
 const api = process.env.REACT_APP_MODE === "DEVELOPMENT" ? dev() : prod();
 
-const getWallets = (filtersObject) => {
+const getWallets = (filtersObject, token) => {
   const limit = require("../../pagination/limit.json")["wallet"];
 
   if (filtersObject) {
@@ -15,14 +15,20 @@ const getWallets = (filtersObject) => {
       query: { limit, ...filtersObject, is_active: true },
     });
 
-    return axios.get(urlWithQueries);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    return axios.get(urlWithQueries, { headers });
   } else {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet"],
       query: { limit, is_active: true },
     });
 
-    return axios.get(urlWithQueries);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    return axios.get(urlWithQueries, { headers });
   }
 };
 
@@ -35,18 +41,24 @@ const getWalletAssets = (filtersObject, token) => {
       query: { limit, ...filtersObject, is_active: true },
     });
 
-    return axios.get(urlWithQueries);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    return axios.get(urlWithQueries, { headers });
   } else {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet-asset"],
       query: { limit, is_active: true },
     });
 
-    return axios.get(urlWithQueries);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    return axios.get(urlWithQueries, { headers });
   }
 };
 
-const getWalletTanks = (filtersObject) => {
+const getWalletTanks = (filtersObject, token) => {
   const limit = require("../../pagination/limit.json")["wallet-tank"];
 
   if (filtersObject) {
@@ -55,18 +67,24 @@ const getWalletTanks = (filtersObject) => {
       query: { limit, ...filtersObject, is_active: true },
     });
 
-    return axios.get(urlWithQueries);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    return axios.get(urlWithQueries, { headers });
   } else {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet-tank"],
       query: { limit, is_active: true },
     });
 
-    return axios.get(urlWithQueries);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    return axios.get(urlWithQueries, { headers });
   }
 };
 
-const getWalletTankTypes = (filtersObject) => {
+const getWalletTankTypes = (filtersObject, token) => {
   const limit = require("../../pagination/limit.json")["wallet-tank-type"];
 
   if (filtersObject) {
@@ -75,22 +93,31 @@ const getWalletTankTypes = (filtersObject) => {
       query: { limit, ...filtersObject, is_active: true },
     });
 
-    return axios.get(urlWithQueries);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    return axios.get(urlWithQueries, { headers });
   } else {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["wallet-tank-type"],
       query: { limit, is_active: true },
     });
 
-    return axios.get(urlWithQueries);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    return axios.get(urlWithQueries, { headers });
   }
 };
 
-const createWalletTank = (params) => {
-  return axios.post(api["wallet-tank"], params);
+const createWalletTank = (params, token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.post(api["wallet-tank"], params, { headers });
 };
 
-const editWalletTank = (walletTankUrl, params) => {
+const editWalletTank = (walletTankUrl, params, token) => {
   const formData = new FormData();
   params.url && formData.append("url", params.url);
   params.currency_abb && formData.append("currency_abb", params.currency_abb);
@@ -106,10 +133,13 @@ const editWalletTank = (walletTankUrl, params) => {
   params.account_name && formData.append("account_name", params.account_name);
   formData.append("is_favorite", params.is_favorite);
 
-  return axios.patch(walletTankUrl, formData);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.patch(walletTankUrl, formData, { headers });
 };
 
-const createDeposit = (params) => {
+const createDeposit = (params, token) => {
   const formData = new FormData();
 
   formData.append("user_sender", params.user_sender);
@@ -118,23 +148,29 @@ const createDeposit = (params) => {
   formData.append("status", params.status);
   params.branch && formData.append("branch", params.branch);
 
-  return axios.post(api["deposit"], formData);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.post(api["deposit"], formData, { headers });
 };
 
-const createWithdrawal = (params) => {
+const createWithdrawal = (params, token) => {
   const formData = new FormData();
 
   formData.append("user_receiver", params.user_receiver);
-  formData.append("wallet_tank_receiver", params.wallet_tank_receiver);
+  formData.append("wallet_tank_detail_receiver", params.wallet_tank_receiver);
   formData.append("currency", params.currency);
   formData.append("amount", params.amount);
   formData.append("status", params.status);
   params.branch && formData.append("branch", params.branch);
 
-  return axios.post(api["withdrawal"], formData);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.post(api["withdrawal"], formData, { headers });
 };
 
-const createTransfer = (params) => {
+const createTransfer = (params, token) => {
   const formData = new FormData();
 
   formData.append("user_sender", params.user_sender);
@@ -143,7 +179,10 @@ const createTransfer = (params) => {
   formData.append("amount", params.amount);
   formData.append("status", params.status);
 
-  return axios.post(api["transfer"], formData);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.post(api["transfer"], formData, { headers });
 };
 
 export {

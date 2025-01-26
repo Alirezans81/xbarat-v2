@@ -136,11 +136,22 @@ export default function CompleteProfileModal() {
 
   const [phoneError, setPhoneError] = useState();
   const validateFetchStep1 = (values) => {
-    if (values.first_name && values.last_name && values.phone) {
-      const phoneRegex =
-        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-      if (phoneRegex.test(values.phone.replace(/ /g, ""))) {
-        return true;
+    if (
+      values.first_name &&
+      values.last_name &&
+      values.phone &&
+      values.address
+    ) {
+      if (values.phone.startsWith("+")) {
+        console.log(values.phone);
+        const phoneRegex =
+          /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+        if (phoneRegex.test(values.phone.replace(/ /g, ""))) {
+          return true;
+        }
+      } else {
+        setPhoneError(lang["wrong-phone-error"] || "Invalid phone");
+        return false;
       }
 
       setPhoneError(lang["wrong-phone-error"] || "Invalid phone");
@@ -148,6 +159,7 @@ export default function CompleteProfileModal() {
     }
     return false;
   };
+  console.log(phoneError);
   const validateFetchStep2 = (values) => {
     if (
       values.nationality &&
@@ -259,7 +271,7 @@ export default function CompleteProfileModal() {
               phone:
                 userInfo && userInfo.phone && userInfo.phone !== "undefined"
                   ? userInfo.phone
-                  : "",
+                  : "+",
               address:
                 userInfo && userInfo.address && userInfo.address !== "undefined"
                   ? userInfo.address
