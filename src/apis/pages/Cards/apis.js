@@ -22,4 +22,11 @@ const updateWalletTank = (walletTankUrl, params, token) => {
   return axios.patch(walletTankUrl, formData, { headers });
 };
 
-export { updateWalletTank };
+const deleteWalletTank = (walletTankUrl, token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.delete(walletTankUrl, { headers });
+};
+
+export { updateWalletTank, deleteWalletTank };
