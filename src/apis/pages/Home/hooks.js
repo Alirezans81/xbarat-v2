@@ -86,20 +86,25 @@ const useExchange = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (params, customFunctionWithData) => {
-    setIsLoading(true);
-    await exchange(params)
-      .then((data) => {
-        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
-        customFunctionWithData && customFunctionWithData(data.data);
-        setIsLoading(false);
-        return data.data;
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error);
-        setIsLoading(false);
-      });
+  const token = useTokenState();
+  const checkTokenExpired = useCheckTokenExpired();
+
+  const fetch = (params, customFunctionWithData) => {
+    checkTokenExpired(async () => {
+      setIsLoading(true);
+      await exchange(params, token.access)
+        .then((data) => {
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+          customFunctionWithData && customFunctionWithData(data.data);
+          setIsLoading(false);
+          return data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
+    });
   };
 
   return { exchange: fetch, error, isLoading };

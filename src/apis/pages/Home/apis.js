@@ -39,7 +39,7 @@ const getOtherExchangesRate = (filtersObject) => {
   }
 };
 
-const exchange = (params) => {
+const exchange = (params, token) => {
   const formData = new FormData();
 
   formData.append("user", params.user);
@@ -49,7 +49,10 @@ const exchange = (params) => {
   formData.append("rate", params.rate);
   formData.append("status", params.status);
 
-  return axios.post(api["exchange"], formData);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.post(api["exchange"], formData, { headers });
 };
 
 const getPendingExchanges = (token) => {
