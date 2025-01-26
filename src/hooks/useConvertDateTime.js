@@ -16,7 +16,6 @@ const convertDateTime = (dateTime) => {
       : newFormat.getMinutes())
   );
 };
-
 const useConvertDateTime = () => {
   return convertDateTime;
 };
@@ -32,7 +31,6 @@ const sortByCreateDate = (a, b) => {
   }
   return 0;
 };
-
 const useSortByCreateDate = () => {
   return sortByCreateDate;
 };

@@ -1,48 +1,33 @@
-import { useTokenSetState } from "../../../Providers/TokenProvider";
-import { useUserSetState } from "../../../Providers/UserProvider";
-import { login } from "./apis";
 import { useState } from "react";
+import { useTokenSetState } from "../../../Providers/TokenProvider";
+import { login } from "./apis";
 
 const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
   const setToken = useTokenSetState();
-  const setUser = useUserSetState();
 
   const fetch = async (params, customFunctionWithData, rememberMe) => {
     setIsLoading(true);
     login(params)
       .then((data) => {
         process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
-        setUser(data.data.results.user);
-        setToken(data.data.results.token);
 
+        setToken(data.data);
         if (rememberMe) {
-          window.localStorage.setItem(
-            "userInfo",
-            JSON.stringify(data.data.results.user)
-          );
-          window.localStorage.setItem(
-            "authToken",
-            JSON.stringify(data.data.results.token)
-          );
+          window.localStorage.setItem("authToken", JSON.stringify(data.data));
         } else {
-          const expireTime = new Date();
-          expireTime.setDate(expireTime.getDate() + 1);
-          window.localStorage.setItem("expireTime", expireTime.toISOString());
-
-          window.localStorage.setItem(
-            "userInfo",
-            JSON.stringify(data.data.results.user)
-          );
-          window.localStorage.setItem(
-            "authToken",
-            JSON.stringify(data.data.results.token)
-          );
+          let temp = {
+            access: data.data.access,
+            exp_access: data.data.access_expiration,
+            refresh: "",
+            exp_refresh: Math.floor(Date.now() / 1000),
+          };
+          window.localStorage.setItem("authToken", JSON.stringify(temp));
         }
 
-        customFunctionWithData && customFunctionWithData(data.data.results);
+        customFunctionWithData && customFunctionWithData(data.data);
         setIsLoading(false);
       })
       .catch((error) => {

@@ -1,11 +1,6 @@
 import axios from "axios";
 
-import prod from "../../api";
-import dev from "../../api-dev";
-
-const api = process.env.REACT_APP_MODE === "DEVELOPMENT" ? dev() : prod();
-
-const updateWalletTank = (walletTankUrl, params) => {
+const updateWalletTank = (walletTankUrl, params, token) => {
   const formData = new FormData();
 
   params.bank_info && formData.append("bank_info", params.bank_info);
@@ -21,7 +16,10 @@ const updateWalletTank = (walletTankUrl, params) => {
     params.is_deleted !== undefined &&
     formData.append("is_deleted", params.is_deleted);
 
-  return axios.patch(walletTankUrl, formData);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.patch(walletTankUrl, formData, { headers });
 };
 
 export { updateWalletTank };

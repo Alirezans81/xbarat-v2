@@ -7,47 +7,68 @@ import dev from "../../api-dev";
 const api = process.env.REACT_APP_MODE === "DEVELOPMENT" ? dev() : prod();
 const limit = require("../../pagination/limit.json");
 
-const getNationalities = () => {
+const getNationalities = (token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["nationality"],
-    query: { limit: limit["nationality"] },
+    query: { limit: limit["nationality"], is_active: true },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const getCounties = () => {
+const getCounties = (token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["country"],
-    query: { limit: limit["country"] },
+    query: { limit: limit["country"], is_active: true },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const getCities = (filtersObject) => {
+const getCities = (filtersObject, token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["city"],
-    query: { ...filtersObject, limit: limit["city"] },
+    query: { ...filtersObject, limit: limit["city"], is_active: true },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const getNationality = (nationalityUrl) => {
-  return axios.get(nationalityUrl);
+const getNationality = (nationalityUrl, token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(nationalityUrl, { headers });
 };
 
-const getCountry = (countryUrl) => {
-  return axios.get(countryUrl);
+const getCountry = (countryUrl, token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(countryUrl, { headers });
 };
 
-const getCity = (cityUrl) => {
-  return axios.get(cityUrl);
+const getCity = (cityUrl, token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(cityUrl, { headers });
 };
 
-const getRequiredFeild = (requiredFeildUrl) => {
-  return axios.get(requiredFeildUrl);
+const getRequiredFeild = (requiredFeildUrl, token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(requiredFeildUrl, { headers });
 };
 
 export {

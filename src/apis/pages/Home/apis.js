@@ -25,14 +25,14 @@ const getOtherExchangesRate = (filtersObject) => {
   if (filtersObject) {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["other-exchanges-rate"],
-      query: { limit, ...filtersObject },
+      query: { limit, ...filtersObject, is_active: true },
     });
 
     return axios.get(urlWithQueries);
   } else {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["other-exchanges-rate"],
-      query: { limit },
+      query: { limit, is_active: true },
     });
 
     return axios.get(urlWithQueries);
@@ -54,16 +54,18 @@ const exchange = (params) => {
 
 const getPendingExchanges = (token) => {
   if (token) {
-    const formData = new FormData();
-
-    formData.append("token", token);
-
-    return axios.post(api["pending-exchange"], formData);
+    const headers = {
+      authorization: `Bearer ${token}`,
+    };
+    return axios.get(api["pending-exchange"], { headers });
   }
 };
 
-const cancelPendingExchange = (pendingExchangeUrl) => {
-  return axios.delete(pendingExchangeUrl);
+const cancelPendingExchange = (pendingExchangeUrl, token) => {
+  const headers = {
+    authorization: `Bearer ${token}`,
+  };
+  return axios.delete(pendingExchangeUrl, { headers });
 };
 
 export {

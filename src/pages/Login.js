@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import LeftSide from "../components/pages/Login/LeftSide";
 import RightSide from "../components/pages/Login/RightSide";
 import { useThemeState } from "../Providers/ThemeProvider";
 import ThemeSwitcher from "../components/common/ThemeSwitcher";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import LoadingSplashScreen from "../components/common/LoadingSplashScreen";
-import { useTokenSetState } from "../Providers/TokenProvider";
 import LanguageSwitcher from "../components/common/LanguageSwitcher";
-import { useGetLanguages } from "../apis/common/language/hooks";
-import { useLanguageListSetState } from "../Providers/LanguageListProvider";
 import Slogan from "../components/common/Slogan";
 import { useNavigate } from "react-router-dom";
 import CustomToast from "../components/common/CustomToast";
@@ -16,7 +13,6 @@ import { useModalDataSetState } from "../Providers/ModalDataProvider";
 import TutorialModal from "../components/modals/Tutorials/WalletTutorialModal/TutorialModal";
 
 export default function Login({ platform }) {
-  const setToken = useTokenSetState();
   const setModalData = useModalDataSetState();
   const openTutorialModal = () => {
     setModalData({
@@ -36,19 +32,6 @@ export default function Login({ platform }) {
   const [isSplashScreenLoading, setIsSplashScreenLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  const resetApp = () => {
-    setToken(null);
-    window.localStorage.removeItem("authToken");
-    window.localStorage.removeItem("userInfo");
-    window.localStorage.removeItem("expireTime");
-    window.localStorage.removeItem("statuses");
-    window.localStorage.removeItem("linksShown");
-  };
-
-  useEffect(() => {
-    resetApp();
-  }, []);
 
   return (
     <>
@@ -79,20 +62,17 @@ export default function Login({ platform }) {
             <LeftSide />
           </div>
           <div className="hidden md:flex h-full">
-            <RightSide
-              setIsSplashScreenLoading={setIsSplashScreenLoading}
-            />
+            <RightSide setIsSplashScreenLoading={setIsSplashScreenLoading} />
           </div>
           <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center">
             <button onClick={() => navigate("/")}>
               <img
+                alt=""
                 className="w-24 h-24"
                 src={require("../Images/pages/layout/logo.png")}
               />
             </button>
-            <RightSide
-              setIsSplashScreenLoading={setIsSplashScreenLoading}
-            />
+            <RightSide setIsSplashScreenLoading={setIsSplashScreenLoading} />
             <Slogan />
           </div>
         </div>

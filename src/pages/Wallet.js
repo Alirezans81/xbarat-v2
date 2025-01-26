@@ -9,12 +9,17 @@ import { useIsLoadingSplashScreenSetState } from "../Providers/IsLoadingSplashSc
 import { useTokenState } from "../Providers/TokenProvider";
 import { useLanguageState } from "../Providers/LanguageProvider";
 import { useFontState } from "../Providers/FontProvider";
+import { useModalDataSetState } from "../Providers/ModalDataProvider";
+import { useUserState } from "../Providers/UserProvider";
+import SecurityGuidline from "../components/modals/SecurityGuidline";
 // import { useLocation, useNavigation } from "react-router-dom";
 // import { useModalDataSetState } from "../Providers/ModalDataProvider";
 // import TransactionModal from "../components/modals/TransactionModal";
 
 export default function Wallet() {
   const theme = useThemeState();
+  const setModalData = useModalDataSetState();
+  const user = useUserState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
@@ -58,6 +63,22 @@ export default function Wallet() {
   useEffect(() => {
     refreshPendingRequests();
   }, []);
+  const securityGuidlineModal = () => {
+    setModalData({
+      title:
+        font !== "Fa"
+          ? lang["important-note"] + "❗❗❗"
+          : "❗❗❗" + lang["important-note"],
+      children: <SecurityGuidline />,
+      canClose: false,
+      isOpen: true,
+    });
+  };
+  useEffect(() => {
+    if (user && !localStorage.getItem("read_guidline")) {
+      securityGuidlineModal();
+    }
+  }, [user]);
 
   return (
     <div className="absolute w-full h-full overflow-y-auto pl-8 pr-8 md:pl-0 md:pr-6 pb-20 md:pb-0">

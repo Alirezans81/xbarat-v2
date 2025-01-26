@@ -10,6 +10,7 @@
   "sign-up": "ثبت نام",
   "submit": "ارسال",
   "exchange": "تبادل",
+  "tutorial": "آموزش",
   "remember-me": "من را به خاطر بسپار",
   "member": "عضو",
   "reason-free-exchange": "خوش حساب",
@@ -18,7 +19,7 @@
   "congratulateFreeExchangeYouHaveWonFreeToken": "شما موفق به دریافت جایزه معامله بدون کارمزد شده اید",
   "congratulateFreeExchangeYouHaveBeenReason": "شما یک عضو",
   "congratulateFreeExchangeYouHaveBeenFamily": "از خانواده ایکس برات هستید.",
-  "congratulateFreeExchangeYourExchangeWillBeFree": "از این به بعد معاملات شما بدون کارمز خواهد بود ",
+  "congratulateFreeExchangeYourExchangeWillBeFree": "از این به بعد معاملات شما بدون کارمزد خواهد بود ",
   "congratulateFreeExchangeThankYouForChoosing": "متشکریم از انتخابتون",
   "forgot-password": "گذرواژه را فراموش کرده اید؟",
   "not-logged-in-error": "برای دسترسی به این صفحه باید وارد سیستم شوید",
@@ -80,9 +81,16 @@
   "confirm-password": "تایید گذرواژه",
   "referral-code-placeholder": "کد معرف (اختیاری)",
   "last-tickets": "آخرین تیکت ها",
+  "topics": "دسته بندی ها",
+  "ticket-select-topic": "یک دسته بندی را انتخاب کنید",
+  "ticket-new-message-button": "تیکت جدید",
   "ticket-new-message": "شما یک پیام جدید دارید",
   "ticket-ended": "پایان یافته",
   "ticket-sended-message": "شما پیامی ارسال کردید",
+  "ticket-title": "عنوان",
+  "ticket-title-descrition": "لطفا یک عنوان کلی در وصف علت ایجاد تیکت خود ارائه دهید",
+  "ticket-message": "پیام",
+  "ticket-message-descrition": "لطفا یک توصیف کامل در مورد مشکلی که با آن مواجه هستید ارائه دهید",
   "complete-profile-message": "لطفا برای تکمیل پروفایل خود اینجا را کلیک کنید",
   "deposit": "واریز",
   "currency": "ارز",
@@ -154,7 +162,7 @@
   "transaction": "عملیات",
   "user-code": "کد کاربر",
   "pending-request": "درخواست در حال انتظار",
-  "are-you-sure-modal-title": "آیا مطمئنید؟",
+  "are-you-sure-modal-title": "آیا مطمئنید",
   "yes": "بله",
   "cancel-request-modal-message": "آیا مطمئنید که می خواهید درخواست خود را لغو کنید؟",
   "cancel-exchange-modal-message": "آیا مطمئنید که می خواهید معامله خود را لغو کنید؟",
@@ -163,7 +171,7 @@
   "low-amount-error": "مبلغ شما باید بیشتر از",
   "high-amount-error": "مبلغ شما باید کمتر از",
   "not-in-range-rate-error-1st": "نرخ شما باید بین",
-  "not-in-range-rate-error-&": "&",
+  "not-in-range-rate-error-&": "و",
   "not-in-range-rate-error-2nd": "",
   "watch-list-label": "دیده بان",
   "quantity": "تعداد",
@@ -226,10 +234,10 @@
   "wrong-phone-error": "تلفن نامعتبر",
   "from": "از",
   "back": "بازگشت",
-  "upload-document-profile-note-1st": "شما باید عکس و مدرک شناسایی خود را به صورت سلفی ارسال کنید",
-  "upload-document-profile-note-2nd": "عکس و شناسنامه شما باید در یک کادر باشد",
-  "upload-document-profile-note-3rd": "کد منحصر به فرد مدرک شناسایی شما باید مشخص باشد",
-  "upload-document-profile-note-4th": "حجم عکس باید کمتر از 1 مگابایت باشد",
+  "upload-document-profile-note-1st": "شما باید یک عکس سلفی از خود به همراه مدرک شناسایی‌تان ارسال کنید.",
+  "upload-document-profile-note-2nd": "عکس و مدرک هویتی شما باید در یک کادر باشد.",
+  "upload-document-profile-note-3rd": "ارقام و حروف مدرک شناسایی شما باید واضح و خوانا باشد.",
+  "upload-document-profile-note-4th": "حجم عکس باید کمتر از ۴ مگابایت باشد.",
   "search": "جستجو",
   "complete-profile-step-3-not-required-message-1st": "این مرحله ضروری نیست",
   "complete-profile-step-3-not-required-message-2nd": "می توانید مدرک خود را بارگزاری کنید و یا به مرحله بعدی بروید",
@@ -244,7 +252,7 @@
   "transfer-amount-error-message-1st": "مقدار انتفال شما باید بین",
   "transfer-amount-error-message-2nd": "و",
   "transfer-amount-error-message-3rd": "باشد",
-  "card-number-or-paypal-email": "شماره کارت/ایمیل پی پال",
+  "card-number-or-paypal-email": "یک حساب را انتخاب کنید",
   "wallet-tank-paypal-description-code": "لطفا مبلغ درخواستی خود را در سامانه paypal به صورت \"انتقال برای دوست و خیشاوند\" برای ادرس ایمیل بالا ارسال فرمایید تا فرایند انتقالتان با کمترین کارمزد ممکن انجام پذیرد",
   "type-of-account": "نوع حساب",
   "delete-wallet-tank-modal-message": "آیا از حذف کارت خود مطمعن هستید",
@@ -282,7 +290,7 @@
       "drop": [
         {
           "head": "داده های شخصی",
-          "value": "هنگام ثبت‌نام در سایت، اطلاعاتی که در فرم ثبت‌نام وارد می‌کنید، به عنوان داده‌های شخصی شما در ایکس‌برات ثبت و حراست خواهد شد؛این اطلاعات، صرفا جهت اعتبارسنجی است."
+          "value": "هنگام ثبت‌نام در سایت، اطلاعاتی که در فرم ثبت‌نام وارد می‌کنید، به عنوان داده‌های شخصی شما در ایکس‌برات ثبت و حراست خواهد شد؛این اطلاعات، صرفا جهت اعتبارسنجی است. همچنین مسئولیت محافظت از این اطلاعات نیز به عهده خود کاربر است."
         },
         {
           "head": "رسیدهای تراکنش",
@@ -431,7 +439,7 @@
   "index-go-to-platform-button": "ورود به سامانه",
   "index-privacy-&-policy": "قوانین و مقررات",
   "index-how-it-works": "ما چگونه کار می‌کنیم؟",
-  "index-how-it-works-title": "بدون جابه‌جایی و خروج ارز از کشورها، پول خود را با کارمزد کم انتقال داده یا تبدیل کنید",
+  "index-how-it-works-title": "بدون جابه‌جایی و خروج ارز از هر کشوری، پول خود را با کارمزد کم انتقال داده یا تبدیل کنید",
   "index-how-it-works-desc": "ایکس‌برات بستری برای آشنایی شما با سایر کاربران است؛ شما به کمک این پلتفرم می‌توانید با کاربران احراز هویت شده معامله کرده و پول خود را به هر کجای دنیا بفرستید.",
   "index-features-title": "ویژگی‌ها",
   "index-features-desc": "ما ویژگی‌ها و گزینه‌های مختلفی را برای کمک به شما در فرآیند انتقال پول ارائه می‌کنیم",
@@ -577,6 +585,36 @@
   "withdrawal-notif-reject-desc-1st": "درخواست برداشت شما به دلیل",
   "withdrawal-notif-reject-desc-2nd": "رد شد. شما می توانید درخواست جدیدی ثبت کنید.",
   "withdrawal-notif-reject-desc-3rd": "",
+  "transfer-notif-admin-approve-subject-1st": "درخواست انتقال",
+  "transfer-notif-admin-approve-subject-2nd": "به کد کاربری ",
+  "transfer-notif-admin-approve-subject-3rd": "در انتظار تایید ادمین است",
+  "transfer-notif-admin-approve-desc-1st": "درخواست انتقال شما در انتظار تایید ادمین است. اگر شرایط قابل قبول باشد، درخواست انتقال شما پذیرفته خواهد شد",
+  "transfer-notif-admin-approve-desc-2nd": "",
+  "transfer-notif-admin-approve-desc-3rd": "",
+  "transfer-notif-accept-subject-1st": "درخواست انتقال",
+  "transfer-notif-accept-subject-2nd": "به کد کاربری",
+  "transfer-notif-accept-subject-3rd": "پذیرفته شده است",
+  "transfer-notif-accept-desc-1st": "درخواست انتقال شما پذیرفته شده است",
+  "transfer-notif-accept-desc-2nd": "",
+  "transfer-notif-accept-desc-3rd": "",
+  "transfer-notif-reject-subject-1st": "درخواست انتقال",
+  "transfer-notif-reject-subject-2nd": "رد شده است",
+  "transfer-notif-reject-subject-3rd": "",
+  "transfer-notif-reject-desc-1st": "درخواست انتقال شما به دلیل",
+  "transfer-notif-reject-desc-2nd": "می‌توانید یک درخواست انتقال جدید ثبت کنید",
+  "transfer-notif-reject-desc-3rd": "",
+  "transfer-notif-recieve-subject-1st": "شما مبلغ",
+  "transfer-notif-recieve-subject-2nd": "توسط کد کاربری",
+  "transfer-notif-recieve-subject-3rd": "دریافت کردید",
+  "transfer-notif-recieve-desc-1st": "کد کاربری",
+  "transfer-notif-recieve-desc-2nd": "با موفقیت به حساب شما پول انتقال داده است",
+  "transfer-notif-recieve-desc-3rd": "",
+  "ticket-notif-new-message-subject-1st": "شما",
+  "ticket-notif-new-message-subject-2nd": "پیام جدید درباره‌ی",
+  "ticket-notif-new-message-subject-3rd": "دارید",
+  "ticket-notif-new-message-desc-1st": "برای مشاهده و پاسخ دادن به پیام ها، به صفحه تیکت ها بروید",
+  "ticket-notif-new-message-desc-2nd": "",
+  "ticket-notif-new-message-desc-3rd": "",
   "referrals": "دعوت ها",
   "referral": "دعوت",
   "full-name": "اسم کامل",
@@ -601,5 +639,58 @@
   "using": "با استفاده از",
   "deposit-secret-code": "کد تراکنش",
   "deposit-secret-code-message": "این کد را باید در قسمت یادداشت تراکنش خود وارد کنید",
-  "copy-link": "کپی لینک"
+  "copy-link": "کپی لینک",
+  "security-guidline": [
+    {
+      "one": "کاربران گرامی لطفا به نکات امنیتی زیر توجه کنید:"
+    },
+    {
+      "two": "۱. راه‌های ارتباطی شما با ایکس‌برات به شرح زیر است:"
+    },
+    { "three": "          گفتینوی سایت" },
+    { "four": "          دایرکت پیج ایکس‌برات" },
+    {
+      "five": "          شماره تماس 05138481625"
+    },
+    {
+      "six": "          شماره واتساپی که پشتیبانان ایکس‌برات، در اختیار شما قرار می‌دهند."
+    },
+    { "seven": "\n" },
+    {
+      "eight": "پشتیبانان ایکس‌برات تنها از روش‌هایی که ذکر شد با شما ارتباط می‌گیرند و هرگونه اتصال با کاربر خارج از محورهای ارتباطی ذکر شده، به ایکس‌برات مرتبط نبوده و پیامد زیان‌بار آن به عهده‌ی کاربر خواهد بود."
+    },
+    {
+      "nine": "۲. تمام روند معاملاتی شما در ایکس‌برات صرفا از طریق سایت بوده و هیچ‌گونه عملیاتی(واریز، انتقال، برداشت و تبادل) خارج از سایت امکان‌پذیر نیست."
+    },
+    {
+      "ten": "۳. جهت جلوگیری از هرگونه سوءاستفاده از حساب شما در ایکس‌برات از  اشتراک‌گذاری و یا دادن اطلاعات ثبت شده‌ی خود که به شرح زیر می‌باشد، جدا خودداری کنید:"
+    },
+    { "eleven": "          عکس کارت شناسایی" },
+    {
+      "twelve": "          شماره ملی(شماره کارت شناسایی بارگذاری شده در سایت)"
+    },
+    { "thirteen": "          ایمیل" },
+    { "fourteen": "          رمز اکانت ایکس‌برات" },
+    {
+      "fifteen": "در نهایت کاربرانی که جز روش‌های ارتباطی ذکر شده به پشتیبانان ایکس‌برات متصل شوند و یا اسناد و مدارک بارگذاری شده‌ی خود در سایت را با دیگران به اشتراک بگذارند، در معرض خطر کلاهبرداری قرار گرفته و مسئولیت هرگونه پیامدی به عهده‌ی شخص کاربر خواهد بود."
+    }
+  ],
+  "important-note": "مهم",
+  "securityGuidlineAgreement": "بنده مطالب بالا را خوانده و درنتیجه ایکس برات مسئولیتی در باب اشتباهات احتمالی آینده نخواهد داشت.",
+  "ContextPendingRequestTips": [
+    { "one": "(پی پال)" },
+    {
+      "two": "لطفا کد تراکنش را در قسمت توضیحات پی‌پال بنویسید؛ سپس اسکرین‌شات گرفته و تصویر را بارگذاری کنید تا فیش واریزی شما تائید شود."
+    },
+    { "three": "\n" },
+    { "four": "(تتر)" },
+    {
+      "five": "برای واریز تتر حتما از شبکه Bep20 استفاده کنید و در آخر Transaction hach رو به دوستان پشتیبان همراه رسید اعلام کنید."
+    },
+    { "six": "\n" },
+    { "seven": "(درهم)" },
+    {
+      "eight": "برای واریز درهم از بانک الماریا به شماره کارت بزنید. اگر خارج از بانک الماریا به شماره IBAN بزنید."
+    }
+  ]
 }

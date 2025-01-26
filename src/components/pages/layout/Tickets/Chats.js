@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useFontState } from "../../../../Providers/FontProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import ChatCard from "../Referral/ChatCard";
@@ -46,7 +46,7 @@ export default function Chats({
     return (
       <div className="w-full h-full flex justify-center items-center">
         <span className={`text-${oppositeTheme} font-${font}-thin text-5xl`}>
-          Select a topic!
+          {lang["ticket-select-topic"]}
         </span>
       </div>
     );
@@ -63,18 +63,6 @@ export default function Chats({
                 <CustomDateTimeInput placeHolder={"From Date"} />
                 <CustomDateTimeInput placeHolder={"From Date"} />
               </div>
-            </div>
-            <div>
-              <button
-                onClick={openNewTicketModal}
-                className="bg-blue rounded-full p-3"
-              >
-                <img
-                  alt=""
-                  src={require("../../../../Images/pages/Tickets/new-ticket.png")}
-                  className="w-6 h-6"
-                />
-              </button>
             </div>
           </div>
           {data && data.length > 0 ? (
@@ -96,6 +84,14 @@ export default function Chats({
               <span className="text-5xl -mt-5">{lang["no-data"]}</span>
             </div>
           )}
+          <div>
+            <button
+              onClick={openNewTicketModal}
+              className="bg-blue rounded-full p-3 w-full flex justify-center font-extrabold"
+            >
+              {lang["ticket-new-message-button"]}
+            </button>
+          </div>
         </div>
       </>
     );

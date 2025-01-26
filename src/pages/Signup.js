@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useThemeState } from "../Providers/ThemeProvider";
 import ThemeSwitcher from "../components/common/ThemeSwitcher";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import LoadingSplashScreen from "../components/common/LoadingSplashScreen";
-import { useTokenSetState } from "../Providers/TokenProvider";
 import Form from "../components/pages/Signup/Form";
 import LeftSide from "../components/pages/Login/LeftSide";
 import LanguageSwitcher from "../components/common/LanguageSwitcher";
@@ -14,7 +13,6 @@ import { useModalDataSetState } from "../Providers/ModalDataProvider";
 import TutorialModal from "../components/modals/Tutorials/WalletTutorialModal/TutorialModal";
 
 export default function Signup({ platform }) {
-  const setToken = useTokenSetState();
   const setModalData = useModalDataSetState();
   const openTutorialModal = () => {
     setModalData({
@@ -34,19 +32,6 @@ export default function Signup({ platform }) {
   const [isSplashScreenLoading, setIsSplashScreenLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  const resetApp = () => {
-    setToken(null);
-    window.localStorage.removeItem("authToken");
-    window.localStorage.removeItem("userInfo");
-    window.localStorage.removeItem("expireTime");
-    window.localStorage.removeItem("statuses");
-    window.localStorage.removeItem("linksShown");
-  };
-
-  useEffect(() => {
-    resetApp();
-  }, []);
 
   const queryParameters = new URLSearchParams(window.location.search);
   const initReferral = queryParameters.get("referral");
@@ -95,6 +80,7 @@ export default function Signup({ platform }) {
             <div className="h-full w-full flex md:hidden flex-col justify-evenly items-center">
               <button onClick={() => navigate("/")}>
                 <img
+                  alt=""
                   className="w-24 h-24"
                   src={require("../Images/pages/layout/logo.png")}
                 />

@@ -31,6 +31,8 @@ export default function Exchanging({
   rateInputRef,
   focusOnInput,
   isDemo,
+  setSource,
+  setTarget,
 }) {
   const lang = useLanguageState();
   const font = useFontState();
@@ -109,13 +111,12 @@ export default function Exchanging({
   }, [selectedSourceIndex, selectedTargetIndex]);
   const openTutorialModal = () => {
     setModalData({
-      title: "Exchange Tutorial",
+      title: lang["exchange"],
       children: <Tutorial />,
       canClose: true,
       isOpen: true,
     });
   };
-
   return (
     <div className="flex flex-col px-6 w-full h-full py-5 relative">
       <div className="absolute w-full left-0 -top-5 flex justify-center">
@@ -152,14 +153,9 @@ export default function Exchanging({
               }
               setFormDefaultRate={setFormDefaultRate}
               focusOnInput={focusOnInput}
+              openTutorialModal={openTutorialModal}
             />
           )}
-          <button
-            onClick={openTutorialModal}
-            className="flex-1 bg-none text-blue  h-full flex justify-start px-2"
-          >
-            ?
-          </button>
         </div>
       </div>
       <div className="flex-1 mt-auto">
@@ -191,6 +187,8 @@ export default function Exchanging({
           amountInputRef={amountInputRef}
           rateInputRef={rateInputRef}
           isDemo={isDemo}
+          setSource={setSource}
+          setTarget={setTarget}
         />
       </div>
     </div>

@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import LoadingSplashScreen from "../components/common/LoadingSplashScreen";
 import ThemeSwitcher from "../components/common/ThemeSwitcher";
 import LanguageSwitcher from "../components/common/LanguageSwitcher";
 import LeftSide from "../components/pages/Login/LeftSide";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
-import { useTokenSetState } from "../Providers/TokenProvider";
 import Form from "../components/pages/ForgotPassword/Form";
 import Slogan from "../components/common/Slogan";
 import { useNavigate } from "react-router-dom";
 import CustomToast from "../components/common/CustomToast";
 
 export default function ForgotPassword() {
-  const setToken = useTokenSetState();
-
   const theme = useThemeState();
   const { three: direction } = useDirectionState();
   const themeSwitcherDivClasses = direction === "rtl" ? "left-4" : "right-4";
@@ -22,19 +19,6 @@ export default function ForgotPassword() {
   const [isSplashScreenLoading, setIsSplashScreenLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  const resetApp = () => {
-    setToken(null);
-    window.localStorage.removeItem("authToken");
-    window.localStorage.removeItem("userInfo");
-    window.localStorage.removeItem("expireTime");
-    window.localStorage.removeItem("statuses");
-    window.localStorage.removeItem("linksShown");
-  };
-
-  useEffect(() => {
-    resetApp();
-  }, []);
 
   return (
     <>

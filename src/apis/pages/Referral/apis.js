@@ -6,7 +6,7 @@ import dev from "../../api-dev";
 
 const api = process.env.REACT_APP_MODE === "DEVELOPMENT" ? dev() : prod();
 
-const getReferraledUser = (referred_by) => {
+const getReferraledUser = (referred_by, token) => {
   const limit = require("../../pagination/limit.json")["patch-profile"];
 
   const urlWithQueries = queryString.stringifyUrl({
@@ -14,7 +14,10 @@ const getReferraledUser = (referred_by) => {
     query: { limit, referred_by },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
 export { getReferraledUser };

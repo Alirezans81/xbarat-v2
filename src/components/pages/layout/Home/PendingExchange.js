@@ -14,7 +14,7 @@ export default function PendingExchange({
   setTarget,
   setAmount,
   setRate,
-  focusOnRateInput,
+  focusOnAmountInput,
   selectedCurrecnyPair,
   rateIsReversed,
 }) {
@@ -50,7 +50,7 @@ export default function PendingExchange({
                   setTarget={setTarget}
                   setAmount={setAmount}
                   setRate={setRate}
-                  focusOnRateInput={focusOnRateInput}
+                  focusOnAmountInput={focusOnAmountInput}
                   selectedCurrecnyPair={selectedCurrecnyPair}
                   rateIsReversed={rateIsReversed}
                 />

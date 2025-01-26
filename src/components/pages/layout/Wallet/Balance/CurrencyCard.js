@@ -50,15 +50,11 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
         <div
           className={`flex flex-row font-${font}-bold text-xl max-w-[10rem] md:max-w-none overflow-x-auto scroll-horizental`}
         >
-          {currency[`sym_pic_${oppositeTheme}`] ? (
+          {currency[`sym_pic_${oppositeTheme}`] && (
             <img
               className="w-7 h-7 -mt-1"
               src={currency[`sym_pic_${oppositeTheme}`]}
             />
-          ) : (
-            <span className={`text-${oppositeTheme} font-${font}-regular`}>
-              {currency && currency.abbreviation ? currency.abbreviation : ""}
-            </span>
           )}
           <span className={`text-${oppositeTheme}`}>
             {addComma(
@@ -68,6 +64,11 @@ export default function CurrencyCard({ walletAsset, refreshPendingRequests }) {
               )
             )}
           </span>
+          {!currency[`sym_pic_${oppositeTheme}`] && (
+            <span className={`text-${oppositeTheme} font-${font}-regular ml-1`}>
+              {currency && currency.abbreviation ? currency.abbreviation : ""}
+            </span>
+          )}
           <span className="text-gray mx-1">{walletAsset.title}</span>
         </div>
         <div

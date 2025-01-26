@@ -26,7 +26,7 @@ export default function PendingExchangeCard({
   setTarget,
   setAmount,
   setRate,
-  focusOnRateInput,
+  focusOnAmountInput,
   selectedCurrecnyPair,
   rateIsReversed,
 }) {
@@ -69,7 +69,7 @@ export default function PendingExchangeCard({
                 setTarget(data.currency_destination_slug);
                 setAmount(addComma(+data.amount_source));
                 setRate(addComma(+data.rate));
-                focusOnRateInput();
+                focusOnAmountInput();
               });
           }}
           message={lang["edit-exchange-modal-message"] + "?"}

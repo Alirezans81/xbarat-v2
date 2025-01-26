@@ -34,12 +34,11 @@ export default function Chat({
   }, []);
 
   const { sendMessages } = useSendMessage();
-
   const formikRef = useRef();
   const AddMessage = (values) => {
     const params = {
       user: user.url,
-      ticket: data.url,
+      ticket: data.code,
       text: values.text,
     };
     sendMessages(params, () => getMessages(data.code, setMessages));

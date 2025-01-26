@@ -29,7 +29,7 @@ const SubmitModal = ({ data, exchange }) => {
           className={`col-span-1 row-span-5 bg-${theme}-back flex flex-col  rounded-2xl p-5 `}
         >
           <div
-            dir={font === "Fa" ? "rtl" : "ltr"}
+            dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
             className="flex flex-row gap-x-2"
           >
             <span className="text-blue-gradient w-1/2 flex justify-start">
@@ -40,7 +40,7 @@ const SubmitModal = ({ data, exchange }) => {
             </span>
           </div>
           <div
-            dir={font === "Fa" ? "rtl" : "ltr"}
+            dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
             className="flex flex-row gap-x-2"
           >
             <span className="text-blue-gradient w-1/2 flex justify-start">
@@ -51,7 +51,7 @@ const SubmitModal = ({ data, exchange }) => {
             </span>
           </div>
           <div
-            dir={font === "Fa" ? "rtl" : "ltr"}
+            dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
             className="flex flex-row gap-x-2"
           >
             <div className="text-blue-gradient gap-x-1 flex flex-row w-1/2">
@@ -63,7 +63,7 @@ const SubmitModal = ({ data, exchange }) => {
             </span>
           </div>
           <div
-            dir={font === "Fa" ? "rtl" : "ltr"}
+            dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
             className="flex flex-row gap-x-2"
           >
             <span className="text-blue-gradient flex justify-start w-1/2">
@@ -74,7 +74,7 @@ const SubmitModal = ({ data, exchange }) => {
             </span>
           </div>
           <div
-            dir={font === "Fa" ? "rtl" : "ltr"}
+            dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
             className="flex flex-row gap-x-2 w-full"
           >
             <div className="text-blue-gradient gap-x-1 flex flex-row w-1/2 justify-start">

@@ -40,7 +40,7 @@ const TutorialModal = () => {
             {lang["deposit"]}
           </span>
           <span
-            dir={font === "Fa" ? "rtl" : "ltr"}
+            dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
             className={`w-full h-full bg-${theme} rounded-2xl p-5 text-start mt-5`}
           >
             {deposit.context[0]}
@@ -68,7 +68,7 @@ const TutorialModal = () => {
             {lang["withdrawal"]}
           </span>
           <span
-            dir={font === "Fa" ? "rtl" : "ltr"}
+            dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
             className={`w-full h-full  bg-${theme} rounded-2xl p-5 text-start mt-5`}
           >
             {withdraw.context[0]}
@@ -92,7 +92,7 @@ const TutorialModal = () => {
             {lang["transfer"]}
           </span>
           <span
-            dir={font === "Fa" ? "rtl" : "ltr"}
+            dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
             className={`w-full h-full  bg-${theme} rounded-2xl p-5 text-start mt-5`}
           >
             {transfer.context[0]}
@@ -116,7 +116,7 @@ const TutorialModal = () => {
             {lang["exchange"]}
           </span>
           <span
-            dir={font === "Fa" ? "rtl" : "ltr"}
+            dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
             className={`w-full h-full  bg-${theme} rounded-2xl p-5 text-start mt-5`}
           >
             {exchange.context[0]}
@@ -143,9 +143,11 @@ const TutorialModal = () => {
         }
       >
         <div
-          dir={font === "Fa" ? "rtl" : "ltr"}
+          dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
           className={`col-span-12 row-span-1 flex flex-row justify-start items-center px-5 gap-x-5 ${
-            font === "Fa" ? "animate-leftward" : "animate-rightward"
+            font === "Fa" || font === "Ar"
+              ? "animate-leftward"
+              : "animate-rightward"
           }`}
         >
           <button
@@ -169,9 +171,11 @@ const TutorialModal = () => {
         }
       >
         <div
-          dir={font === "Fa" ? "rtl" : "ltr"}
+          dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
           className={`col-span-12 row-span-1 flex flex-row justify-start items-center px-5 gap-x-5 ${
-            font === "Fa" ? "animate-leftward" : "animate-rightward"
+            font === "Fa" || font === "Ar"
+              ? "animate-leftward"
+              : "animate-rightward"
           }`}
         >
           {" "}
@@ -196,9 +200,11 @@ const TutorialModal = () => {
         }
       >
         <div
-          dir={font === "Fa" ? "rtl" : "ltr"}
+          dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
           className={`col-span-12 row-span-1 flex flex-row justify-start items-center px-5 gap-x-5 ${
-            font === "Fa" ? "animate-leftward" : "animate-rightward"
+            font === "Fa" || font === "Ar"
+              ? "animate-leftward"
+              : "animate-rightward"
           }`}
         >
           {" "}
@@ -223,9 +229,11 @@ const TutorialModal = () => {
         }
       >
         <div
-          dir={font === "Fa" ? "rtl" : "ltr"}
+          dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
           className={`col-span-12 row-span-1 flex flex-row justify-start items-center px-5 gap-x-5 ${
-            font === "Fa" ? "animate-leftward" : "animate-rightward"
+            font === "Fa" || font === "Ar"
+              ? "animate-leftward"
+              : "animate-rightward"
           }`}
         >
           {" "}

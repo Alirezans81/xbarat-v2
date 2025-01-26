@@ -28,7 +28,6 @@ import ForgotPassword from "./pages/ForgotPassword";
 import WaitLink from "./pages/WaitLink";
 import NoPage from "./pages/NoPage";
 import Layout from "./pages/Layout";
-import Giftcard from "./pages/GiftCards/Giftcard";
 import OnLoad from "./pages/OnLoad";
 import Home from "./pages/Home";
 import Wallet from "./pages/Wallet";
@@ -52,6 +51,7 @@ import Singular from "./pages/Currency/Singular";
 import Pair from "./pages/Currency/Pair";
 import Robots from "./pages/More/Robots";
 import GiftCard from "./pages/Profile/GiftCard";
+import { useCheckLoggedIn } from "./hooks/useAuth";
 
 export default function App() {
   const lang = useLanguageState();
@@ -124,8 +124,15 @@ export default function App() {
           setLang(require("./languages/En.json"));
         });
       }
+    } else {
+      setLang("");
     }
   }, [languageList]);
+
+  const checkLoggedIn = useCheckLoggedIn();
+  useEffect(() => {
+    checkLoggedIn();
+  }, []);
 
   if (lang === "") {
     return <Updating />;
@@ -190,7 +197,6 @@ export default function App() {
                 <Route path="singular" element={<Singular />} />
                 <Route path="pair" element={<Pair />} />
               </Route>
-              <Route path="gift-card" element={<Giftcard />} />
               <Route path="more">
                 <Route path="robots" element={<Robots />} />
               </Route>

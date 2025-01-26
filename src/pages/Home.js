@@ -1,4 +1,5 @@
-import React, { Children, useEffect, useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState } from "react";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import Exchanging from "../components/pages/layout/Home/Exchanging";
@@ -16,12 +17,8 @@ import ListOtherExchanges from "../components/pages/layout/Home/ListMode/ListOth
 import ListPendingExchange from "../components/pages/layout/Home/ListMode/ListPendingExchange";
 import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 import { useWalletState } from "../Providers/WalletProvider";
-import { useUserState } from "../Providers/UserProvider";
-import { useModalDataSetState } from "../Providers/ModalDataProvider";
-import FreeExchangeModal from "../components/modals/freeExchangeModal";
+
 export default function Home({ isDemo, platform }) {
-  const setModalData = useModalDataSetState();
-  const user = useUserState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
@@ -81,7 +78,7 @@ export default function Home({ isDemo, platform }) {
   const refreshPendingExchange = () => {
     token && getPendingExchanges(token, setPendingExchanges);
   };
-  useEffect(() => refreshPendingExchange(), []);
+  useEffect(() => refreshPendingExchange(), [token]);
 
   const [source, setSource] = useState();
   const findSource = (currency_slug) => {
@@ -89,7 +86,7 @@ export default function Home({ isDemo, platform }) {
     result = currencies.findIndex(
       (currency) => currency.slug === currency_slug
     );
-    result >= 0 && setSelectedSourceIndex(result);
+    result >= 0 ? setSelectedSourceIndex(result) : setSelectedSourceIndex(-1);
   };
   const [target, setTarget] = useState();
   const findTarget = (currency_slug) => {
@@ -97,7 +94,7 @@ export default function Home({ isDemo, platform }) {
     result = availableTargets.findIndex(
       (currency) => currency.slug === currency_slug
     );
-    result >= 0 && setSelectedTargetIndex(result);
+    result >= 0 ? setSelectedTargetIndex(result) : setSelectedTargetIndex(-1);
   };
 
   useEffect(() => {
@@ -130,23 +127,6 @@ export default function Home({ isDemo, platform }) {
       }
     }
   };
-  const freeExchangeModal = () => {
-    setModalData({
-      title: "🥳",
-      children: <FreeExchangeModal />,
-      canClose: true,
-      isOpen: true,
-    });
-  };
-  useEffect(() => {
-    if (
-      user &&
-      user.free_exchange &&
-      !localStorage.getItem("freeExchangeShown")
-    )
-      freeExchangeModal();
-    localStorage.setItem("freeExchangeShown", true);
-  }, [user]);
 
   if (pageMode === "card" || window.innerWidth <= canSwitchPageModeWidth) {
     return (
@@ -161,6 +141,7 @@ export default function Home({ isDemo, platform }) {
               className="flex gap-x-2 items-center bg-blue rounded-full p-2.5"
             >
               <img
+                alt=""
                 className="w-5 h-5"
                 src={require(`../Images/pages/layout/Home/list-mode.png`)}
               />
@@ -203,16 +184,16 @@ export default function Home({ isDemo, platform }) {
                 rateInputRef={rateInputRef}
                 focusOnInput={focusOnRateInput}
                 isDemo={isDemo}
+                setSource={setSource}
+                setTarget={setTarget}
               />
             </div>
             <div
               className={`order-1 md:order-2 h-72 bg-${theme} xl:rounded-3xl lg:rounded-l-3xl row-span-3 xl:col-span-5 lg:col-span-7 md:rounded-r-none md:col-span-6 md:rounded-l-3xl col-span-12 rounded-3xl`}
             >
               <WatchList
-                selectedSourceIndex={selectedSourceIndex}
-                availableTargets={availableTargets}
-                findSource={findSource}
-                findTarget={findTarget}
+                setSource={setSource}
+                setTarget={setTarget}
                 rateIsReversed={rateIsReversed}
                 selectedCurrecnyPair={selectedCurrecnyPair}
                 platform={platform}
@@ -238,7 +219,7 @@ export default function Home({ isDemo, platform }) {
                 setTarget={setTarget}
                 setAmount={setFormDefaultAmount}
                 setRate={setFormDefaultRate}
-                focusOnRateInput={focusOnRateInput}
+                focusOnAmountInput={focusOnAmountInput}
                 selectedCurrecnyPair={selectedCurrecnyPair}
                 rateIsReversed={rateIsReversed}
               />
@@ -273,6 +254,7 @@ export default function Home({ isDemo, platform }) {
               className="flex gap-x-2 items-center bg-blue rounded-full p-2.5"
             >
               <img
+                alt=""
                 className="w-5 h-5"
                 src={require(`../Images/pages/layout/Home/card-mode.png`)}
               />
@@ -285,10 +267,10 @@ export default function Home({ isDemo, platform }) {
               className={`h-72 bg-${theme} col-span-11 row-span-3 rounded-l-3xl`}
             >
               <ListWatchList
-                selectedSourceIndex={selectedSourceIndex}
-                setSelectedSourceIndex={setSelectedSourceIndex}
-                availableTargets={availableTargets}
-                setSelectedTargetIndex={setSelectedTargetIndex}
+                setSource={setSource}
+                setTarget={setTarget}
+                rateIsReversed={rateIsReversed}
+                selectedCurrecnyPair={selectedCurrecnyPair}
                 platform={platform}
               />
             </div>

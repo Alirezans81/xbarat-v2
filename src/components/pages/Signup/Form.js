@@ -8,6 +8,7 @@ import { useFontState } from "../../../Providers/FontProvider";
 import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
 import { useLogin } from "../../../apis/pages/Login/hooks";
 import { useTimer } from "react-timer-hook";
+import { useGetUserInfo } from "../../../apis/pages/Profile/hooks";
 
 export default function Form({ setIsSplashScreenLoading, initReferral }) {
   const theme = useThemeState();
@@ -109,6 +110,22 @@ export default function Form({ setIsSplashScreenLoading, initReferral }) {
       verifyEmailError.response &&
       showErrorToast(Object.values(verifyEmailError.response.data).join(" ")),
     [verifyEmailError]
+  );
+
+  const {
+    getUserInfo,
+    isLoading: getUserInfoIsLoading,
+    error: getUserInfoError,
+  } = useGetUserInfo();
+  useEffect(() => {
+    setIsSplashScreenLoading(getUserInfoIsLoading);
+  }, [getUserInfoIsLoading]);
+  useEffect(
+    () =>
+      getUserInfoError &&
+      getUserInfoError.response &&
+      showErrorToast(Object.values(getUserInfoError.response.data).join(" ")),
+    [getUserInfoError]
   );
 
   const { login, isLoading: loginIsLoading, error: loginError } = useLogin();
@@ -220,18 +237,23 @@ export default function Form({ setIsSplashScreenLoading, initReferral }) {
             setValidationErrors(newValidationErrors);
           }
         } else if (mode === "submit") {
-          verifyEmail(values.verify_email_code, () => {
-            showSuccessToast(
-              lang["successful-signup-1st"] +
-                ". " +
-                lang["successful-signup-2nd"] +
-                "."
-            );
+          verifyEmail(
+            { email: values.email, code: values.verify_email_code },
+            () => {
+              showSuccessToast(
+                lang["successful-signup-1st"] +
+                  ". " +
+                  lang["successful-signup-2nd"] +
+                  "."
+              );
 
-            login({ email: values.email, password: values.password }, () =>
-              navigateToHome()
-            );
-          });
+              login({ email: values.email, password: values.password }, 
+                (data) => {
+                  getUserInfo(data, navigateToHome);
+                }
+              , true);
+            }
+          );
         }
       }}
     >
@@ -385,6 +407,7 @@ export default function Form({ setIsSplashScreenLoading, initReferral }) {
                     onClick={() => sendCode(values)}
                   >
                     <img
+                      alt=""
                       className="absolute right-2.5 top-6 w-7 h-7"
                       src={
                         resendButtonEnabled
@@ -422,12 +445,13 @@ export default function Form({ setIsSplashScreenLoading, initReferral }) {
                     onClick={toggleAcceptedPolicy}
                   >
                     <img
+                      alt=""
                       className="w-4 h-4 md:w-5 md:h-5"
                       src={require(`../../../Images/pages/Login/check-${acceptedPolicy}.png`)}
                     />
                   </button>
                   <a
-                    href="https://xbarat.net/privacy-policy"
+                    href="https://xbarat.com/privacy-&-policy"
                     className={`flex-1 font-${font}-regular pt-1 text-blue underline underline-offset-2 text-sm`}
                     target="_blank"
                     rel="noreferrer"

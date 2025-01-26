@@ -26,7 +26,9 @@ export default function Startup() {
             <span
               className={`text-3xl md:text-4xl font-${font}-thin text-${oppositeTheme}`}
             >
-              {font === "Fa" ? "" : "When you are enough" + "."}
+              {font === "Fa" || font === "Ar"
+                ? ""
+                : "When you are enough" + "."}
             </span>
           </div>
         </div>

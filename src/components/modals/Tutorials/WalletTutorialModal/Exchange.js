@@ -32,7 +32,7 @@ const Exchange = ({ exchange }) => {
         {status ? (
           Object.entries(status).map(([statusName, statusDetails]) => (
             <div
-              dir={font === "Fa" ? "rtl" : "ltr"}
+              dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
               className={`bg-${theme}-back rounded-2xl p-5 col-span-1 row-span-1 grid grid-cols-1 grid-rows-6 gap-y-2 animate-upward`}
             >
               <div className="bg-blue flex justify-center items-center rounded-2xl p-2 col-span-1 row-span-1 text-light h-fit text-center">

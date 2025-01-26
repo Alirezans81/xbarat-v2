@@ -15,7 +15,7 @@ export default function AddToHomeScreenModal() {
 
   return (
     <div
-      dir={font === "Fa" ? "rtl" : "ltr"}
+      dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
       className="w-[90dvw] h-[95dvh] flex flex-col items-center py-4 text-start"
     >
       <div className="flex-1 w-full flex flex-col items-center gap-y-16">
@@ -41,7 +41,7 @@ export default function AddToHomeScreenModal() {
             <span
               dir="rtl"
               className={`${
-                font === "Fa" ? "!text-right" : "!text-left"
+                font === "Fa" || font === "Ar" ? "!text-right" : "!text-left"
               } text-lg font-${font}-regular text-gray mt-3`}
             >
               {"1- " + lang["add-to-home-screen-modal-step-1-1st"]}
@@ -60,7 +60,7 @@ export default function AddToHomeScreenModal() {
             <span
               dir="rtl"
               className={`${
-                font === "Fa" ? "!text-right" : "!text-left"
+                font === "Fa" || font === "Ar" ? "!text-right" : "!text-left"
               } text-lg font-${font}-regular text-gray mt-2.5`}
             >
               {"2- " + lang["add-to-home-screen-modal-step-2-1st"]}
@@ -79,7 +79,7 @@ export default function AddToHomeScreenModal() {
             <span
               dir="rtl"
               className={`${
-                font === "Fa" ? "!text-right" : "!text-left"
+                font === "Fa" || font === "Ar" ? "!text-right" : "!text-left"
               } text-lg font-${font}-regular text-gray mt-2.5`}
             >
               {"3- " + lang["add-to-home-screen-modal-step-3-1st"]}

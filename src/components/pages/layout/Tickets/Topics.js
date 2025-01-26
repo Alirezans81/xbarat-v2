@@ -8,6 +8,7 @@ export default function Topics({
   selectedTopicIndex,
   setSelectedTopicIndex,
 }) {
+  const lang = useLanguageState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useLanguageState();
@@ -15,9 +16,9 @@ export default function Topics({
   return (
     <div className="w-full h-full flex flex-col gap-y-4 px-5 pb-5 pt-4">
       <span className={`text-${oppositeTheme} font-${font}-bold text-2xl`}>
-        Topics
+        {lang["topics"]}
       </span>
-      <div className="flex-1 overflow-y-auto">
+      <div className="w-full flex-1 overflow-y-auto">
         {topics.map((topic, index) => (
           <div key={index} className={index === 0 ? "" : "mt-3"}>
             <Topic

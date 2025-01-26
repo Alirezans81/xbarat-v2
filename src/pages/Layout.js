@@ -43,6 +43,8 @@ import TutorialModal from "../components/modals/Tutorials/WalletTutorialModal/Tu
 import AddToHomeScreenModal from "../components/modals/AddToHomeScreenModal";
 import { useGetNews } from "../apis/pages/Layout/hooks";
 import NewsModal from "../components/modals/NewsModal";
+import FreeExchangeModal from "../components/modals/freeExchangeModal";
+import { useLogout } from "../hooks/useAuth";
 
 export default function Layout({ platform }) {
   const theme = useThemeState();
@@ -67,6 +69,8 @@ export default function Layout({ platform }) {
   const [links, setLinks] = useState([]);
 
   const setToastData = useToastDataSetState();
+
+  const logout = useLogout();
 
   const openCompleteProfileMessageToast = () => {
     setToastData({
@@ -294,6 +298,22 @@ export default function Layout({ platform }) {
       });
     }
   }, [newOpenNumber]);
+  const freeExchangeModal = () => {
+    setModalData({
+      title: "🥳",
+      children: <FreeExchangeModal />,
+      canClose: true,
+      isOpen: true,
+    });
+  };
+  useEffect(() => {
+    if (
+      user &&
+      user.free_exchange &&
+      !localStorage.getItem("freeExchangeShown")
+    )
+      freeExchangeModal();
+  }, [user]);
 
   return (
     <>
@@ -352,9 +372,7 @@ export default function Layout({ platform }) {
                     {lang["not-logged-in-error"] + "."}
                   </span>
                   <Link
-                    onClick={() => {
-                      setToken(null);
-                    }}
+                    onClick={logout}
                     to="/login"
                     className="button mt-3 w-28 flex justify-center"
                   >

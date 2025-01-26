@@ -21,7 +21,6 @@ const convertNotif = (lang, _str) => {
 
 const useConvertNotif = () => {
   const lang = useLanguageState();
-  console.log(lang);
   return (_str) => convertNotif(lang, _str);
 };
 

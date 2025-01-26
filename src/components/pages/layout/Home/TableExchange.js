@@ -221,88 +221,154 @@ export default function TableExchange({
     selectedCurrecnyPair.currency_destination
   ) {
     return (
-      <div className="p-3 grid grid-cols-2 grid-rows-1 gap-y-16 mr-2 h-full">
-        <div className="col-span-2 md:col-span-1 relative flex flex-col items-center">
-          <div
-            className={`flex items-center absolute -mt-8 -mr-4 md:mr-0 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
-          >
-            <div className="flex items-center">
+      <div className="h-full md:pr-5">
+        <div className="hidden md:grid p-3 grid-cols-2 grid-rows-1 mr-2">
+          <div className="col-span-2 md:col-span-1 flex flex-col items-center">
+            <div
+              className={`flex items-center -mt-8 -mr-4 md:mr-0 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
+            >
+              <div className="flex items-center">
+                <img
+                  alt=""
+                  className="w-6 h-6"
+                  src={selectedCurrecnyPair.currency_source_sym_pic_light}
+                />
+                <span className={`text-light font-${font}-bold -mb-1.5`}>
+                  {selectedCurrecnyPair.currency_source_abb}
+                </span>
+              </div>
               <img
                 alt=""
-                className="w-6 h-6"
-                src={selectedCurrecnyPair.currency_source_sym_pic_light}
+                className="w-5 h-5"
+                src={require(`../../../../Images/arrow-${direction}-light.png`)}
               />
-              <span className={`text-light font-${font}-bold -mb-1.5`}>
-                {selectedCurrecnyPair.currency_source_abb}
-              </span>
-            </div>
-            <img
-              alt=""
-              className="w-5 h-5"
-              src={require(`../../../../Images/arrow-${direction}-light.png`)}
-            />
-            <div className="flex items-center">
-              <img
-                alt=""
-                className="w-6 h-6"
-                src={selectedCurrecnyPair.currency_destination_sym_pic_light}
-              />
-              <span className={`text-light font-${font}-bold -mb-1.5`}>
-                {selectedCurrecnyPair.currency_destination_abb}
-              </span>
+              <div className="flex items-center">
+                <img
+                  alt=""
+                  className="w-6 h-6"
+                  src={selectedCurrecnyPair.currency_destination_sym_pic_light}
+                />
+                <span className={`text-light font-${font}-bold -mb-1.5`}>
+                  {selectedCurrecnyPair.currency_destination_abb}
+                </span>
+              </div>
             </div>
           </div>
-          <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2  overflow-y-auto">
-            <CustomTable
-              heads={source_to_target_head}
-              rows={source_to_target_data}
-              haverable
-              selectRow={(row) => {
-                setFormDefaultRate(row.rate);
-                focusOnInput();
-              }}
-            />
+          <div className="col-span-2 md:col-span-1 flex flex-col items-center">
+            <div
+              className={`flex items-center -mt-8 -mr-4 md:mr-0 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
+            >
+              <div className="flex items-center">
+                <img
+                  alt=""
+                  className="w-6 h-6"
+                  src={selectedCurrecnyPair.currency_destination_sym_pic_light}
+                />
+                <span className={`text-light font-${font}-bold -mb-1.5`}>
+                  {selectedCurrecnyPair.currency_destination_abb}
+                </span>
+              </div>
+              <img
+                alt=""
+                className="w-5 h-5"
+                src={require(`../../../../Images/arrow-${direction}-light.png`)}
+              />
+              <div className="flex items-center">
+                <img
+                  alt=""
+                  className="w-6 h-6"
+                  src={selectedCurrecnyPair.currency_source_sym_pic_light}
+                />
+                <span className={`text-light font-${font}-bold -mb-1.5`}>
+                  {selectedCurrecnyPair.currency_source_abb}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="col-span-2 md:col-span-1 relative flex flex-col items-center">
-          <div
-            className={`flex items-center absolute -mt-8 -mr-4 md:mr-0 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
-          >
-            <div className="flex items-center">
+        <div className="px-3 md:pb-10 pt-16 md:pt-0 -mt-3 grid grid-cols-2 grid-rows-1 gap-y-14 mr-2 overflow-hidden h-full">
+          <div className="col-span-2 md:col-span-1 relative flex flex-col items-center max-h-[40dvh]">
+            <div
+              className={`flex md:hidden items-center -mt-8 -mr-4 md:mr-0 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
+            >
+              <div className="flex items-center">
+                <img
+                  alt=""
+                  className="w-6 h-6"
+                  src={selectedCurrecnyPair.currency_source_sym_pic_light}
+                />
+                <span className={`text-light font-${font}-bold -mb-1.5`}>
+                  {selectedCurrecnyPair.currency_source_abb}
+                </span>
+              </div>
               <img
                 alt=""
-                className="w-6 h-6"
-                src={selectedCurrecnyPair.currency_destination_sym_pic_light}
+                className="w-5 h-5"
+                src={require(`../../../../Images/arrow-${direction}-light.png`)}
               />
-              <span className={`text-light font-${font}-bold -mb-1.5`}>
-                {selectedCurrecnyPair.currency_destination_abb}
-              </span>
+              <div className="flex items-center">
+                <img
+                  alt=""
+                  className="w-6 h-6"
+                  src={selectedCurrecnyPair.currency_destination_sym_pic_light}
+                />
+                <span className={`text-light font-${font}-bold -mb-1.5`}>
+                  {selectedCurrecnyPair.currency_destination_abb}
+                </span>
+              </div>
             </div>
-            <img
-              alt=""
-              className="w-5 h-5"
-              src={require(`../../../../Images/arrow-${direction}-light.png`)}
-            />
-            <div className="flex items-center">
-              <img
-                alt=""
-                className="w-6 h-6"
-                src={selectedCurrecnyPair.currency_source_sym_pic_light}
+            <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2 overflow-y-auto">
+              <CustomTable
+                heads={source_to_target_head}
+                rows={source_to_target_data}
+                haverable
+                selectRow={(row) => {
+                  setFormDefaultRate(row.rate);
+                  focusOnInput();
+                }}
               />
-              <span className={`text-light font-${font}-bold -mb-1.5`}>
-                {selectedCurrecnyPair.currency_source_abb}
-              </span>
             </div>
           </div>
-          <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2  overflow-y-auto">
-            <CustomTable
-              heads={target_to_source_head}
-              rows={target_to_source_data}
-              selectRow={(row) => {
-                setFormDefaultRate(row.rate);
-                focusOnInput();
-              }}
-            />
+          <div className="col-span-2 md:col-span-1 relative flex flex-col items-center max-h-[40dvh]">
+            <div
+              className={`flex md:hidden items-center -mt-8 -mr-4 md:mr-0 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
+            >
+              <div className="flex items-center">
+                <img
+                  alt=""
+                  className="w-6 h-6"
+                  src={selectedCurrecnyPair.currency_destination_sym_pic_light}
+                />
+                <span className={`text-light font-${font}-bold -mb-1.5`}>
+                  {selectedCurrecnyPair.currency_destination_abb}
+                </span>
+              </div>
+              <img
+                alt=""
+                className="w-5 h-5"
+                src={require(`../../../../Images/arrow-${direction}-light.png`)}
+              />
+              <div className="flex items-center">
+                <img
+                  alt=""
+                  className="w-6 h-6"
+                  src={selectedCurrecnyPair.currency_source_sym_pic_light}
+                />
+                <span className={`text-light font-${font}-bold -mb-1.5`}>
+                  {selectedCurrecnyPair.currency_source_abb}
+                </span>
+              </div>
+            </div>
+            <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2 overflow-y-auto">
+              <CustomTable
+                heads={target_to_source_head}
+                rows={target_to_source_data}
+                selectRow={(row) => {
+                  setFormDefaultRate(row.rate);
+                  focusOnInput();
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

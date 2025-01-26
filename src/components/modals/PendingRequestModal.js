@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
@@ -157,7 +158,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 : ""}
             </span>
             <div
-              dir={font === "Fa" ? "rtl" : "ltr"}
+              dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
               className={`flex flex-col bg-${theme}-back rounded-md py-2.5 px-3 font-${font}-regular text-${oppositeTheme}`}
             >
               <div className="w-full flex justify-between pb-3 border-b border-gray">
@@ -169,7 +170,11 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   <CopyText text={data.secret_code} />
                 </div>
               </div>
-              <span className={`pt-2  ${font === "Fa" ? "pb-2.5" : "-mb-1"}`}>
+              <span
+                className={`pt-2  ${
+                  font === "Fa" || font === "Ar" ? "pb-2.5" : "-mb-1"
+                }`}
+              >
                 {lang["deposit-secret-code-message"] + "."}
               </span>
             </div>
@@ -265,6 +270,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             {receiverTanks[selectedWalletTank] &&
               receiverTanks[selectedWalletTank].bank_info_image && (
                 <img
+                  alt=""
                   className="mx-auto w-5/12 object-contain rounded-xl"
                   src={receiverTanks[selectedWalletTank].bank_info_image}
                 />
@@ -274,10 +280,14 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
 
         {data && data.secret_code && data.status_title === "Admin Approve" && (
           <div
-            dir={font === "Fa" ? "rtl" : "ltr"}
-            className={`flex flex-col bg-${theme}-back rounded-md py-2.5 px-3 font-${font}-regular text-${oppositeTheme}`}
+            dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
+            className={`flex flex-col bg-${theme}-back rounded-md py-2.5 px-3 font-${font}-regular text-${oppositeTheme} mt-1.5`}
           >
-            <div className="w-full flex justify-between pb-3">
+            <div
+              className={`w-full flex justify-between ${
+                font === "Fa" || font === "Ar" ? "pb-2.5" : "pb-0.5"
+              }`}
+            >
               <span className="-mb-1">{lang["deposit-secret-code"] + ":"}</span>
               <div className="flex items-center gap-x-1">
                 <span className="-mb-1">{data.secret_code}</span>
