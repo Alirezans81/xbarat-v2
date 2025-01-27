@@ -53,14 +53,13 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
       getWalletTanks(
         {
           user: data.user_receiver_username,
-          currency_slug: data.currency_slug,
+          currency: data.currency_slug,
         },
         (walletTanks) => {
           if (data.currency_abb === "IRR") {
             if (+data.amount <= 100000000) {
               const temp = walletTanks.filter(
                 (d) =>
-                  d.show_order &&
                   d.is_active &&
                   d.bank_info &&
                   d.wallet_tank_type_title === "Card Number"
@@ -69,7 +68,6 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             } else {
               const temp = walletTanks.filter(
                 (d) =>
-                  d.show_order &&
                   d.is_active &&
                   d.bank_info &&
                   d.wallet_tank_type_title === "Shaba Number"
@@ -77,9 +75,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               setReceiverTanks(temp);
             }
           } else {
-            const temp = walletTanks.filter(
-              (d) => d.show_order && d.is_active && d.bank_info
-            );
+            const temp = walletTanks.filter((d) => d.is_active && d.bank_info);
             setReceiverTanks(temp);
           }
         }
