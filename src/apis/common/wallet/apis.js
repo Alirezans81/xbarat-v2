@@ -174,7 +174,7 @@ const createTransfer = (params, token) => {
   const formData = new FormData();
 
   formData.append("user_sender", params.user_sender);
-  formData.append("user_receiver", params.user_receiver);
+  formData.append("user_receiver_code", params.user_receiver);
   formData.append("currency", params.currency);
   formData.append("amount", params.amount);
   formData.append("status", params.status);
