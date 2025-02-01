@@ -17,7 +17,7 @@ export function Notif({ notif, getNotifications }) {
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const convertNotif = useConvertNotif();
-  const statuses = useStatusesState();
+  const statuses = useStatusesState([]);
   const { deleteNotification, isLoading: deleteNotificationIsLoading } =
     useDeleteNotification();
   useEffect(
@@ -40,7 +40,7 @@ export function Notif({ notif, getNotifications }) {
         <div className="flex items-center gap-x-2.5">
           <img
             alt=""
-            src={getStatusImage(notif.status)}
+            src={notif && notif.status && getStatusImage(notif.status)}
             className={`w-12 h-12 bg-${theme}-back p-3 rounded-full float-left inline`}
           />
           <span

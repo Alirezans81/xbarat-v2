@@ -76,7 +76,7 @@ export default function Balance({ refreshPendingRequests }) {
           </div>
           <button
             onClick={() => openTransactionModal("deposit")}
-            className="hidden md:flex xl:hidden gap-x-2 items-center border border-green rounded-full px-4 pt-2 pb-1"
+            className="flex xl:hidden gap-x-2 items-center border border-green rounded-full px-4 pt-2 pb-1"
           >
             <img
               className="w-5 h-5 -mt-1"

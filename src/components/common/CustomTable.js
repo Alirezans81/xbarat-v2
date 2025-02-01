@@ -10,7 +10,7 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
   const colsQuantity = heads.length;
 
   return (
-    <div className="flex-1 w-full flex flex-col overflow-hidden">
+    <div className="w-full flex flex-col">
       <div
         className={`grid grid-cols-${colsQuantity} gap-x-4 w-full items-center px-4 md:px-0`}
       >
@@ -23,7 +23,7 @@ export default function CustomTable({ rows, heads, selectRow, haverable }) {
           </span>
         ))}
       </div>
-      <div className={`w-full h-full overflow-hidden flex flex-col`}>
+      <div className={`w-full min-h-full flex flex-col`}>
         {selectRow
           ? rows.map((row, trIndex) => (
               <button

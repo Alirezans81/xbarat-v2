@@ -8,7 +8,7 @@ const limit = require("../../pagination/limit.json");
 
 const user = JSON.parse(window.localStorage.getItem("userInfo"));
 
-const getDepositHistorySingleUser = (filtersObject) => {
+const getDepositHistorySingleUser = (filtersObject, token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["deposit"] + "?user_sender=" + user.username,
     query: filtersObject
@@ -16,10 +16,13 @@ const getDepositHistorySingleUser = (filtersObject) => {
       : { limit: limit["deposit"] },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const getWithdrawHistorySingleUser = (filtersObject) => {
+const getWithdrawHistorySingleUser = (filtersObject, token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["withdrawal"] + "?user_receiver=" + user.username,
     query: filtersObject
@@ -27,10 +30,13 @@ const getWithdrawHistorySingleUser = (filtersObject) => {
       : { limit: limit["withdrawal"] },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const getExchangeHistorySingleUser = (filtersObject) => {
+const getExchangeHistorySingleUser = (filtersObject, token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["exchange"] + "?user=" + user.username,
     query: filtersObject
@@ -38,10 +44,13 @@ const getExchangeHistorySingleUser = (filtersObject) => {
       : { limit: limit["exchange"] },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const getTransferHistorySingleUser = (filtersObject) => {
+const getTransferHistorySingleUser = (filtersObject, token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["transfer"] + "?user_sender=" + user.username,
     query: filtersObject
@@ -49,10 +58,13 @@ const getTransferHistorySingleUser = (filtersObject) => {
       : { limit: limit["transfer"] },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const getDepositHistory = (filtersObject) => {
+const getDepositHistory = (filtersObject, token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["deposit"],
     query: { limit: limit["deposit"], offset: filtersObject } || {
@@ -60,10 +72,13 @@ const getDepositHistory = (filtersObject) => {
     },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const getWithdrawHistory = (filtersObject) => {
+const getWithdrawHistory = (filtersObject, token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["withdrawal"],
     query: { limit: limit["withdrawal"], ...filtersObject } || {
@@ -71,10 +86,13 @@ const getWithdrawHistory = (filtersObject) => {
     },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const getTransferHistory = (filtersObject) => {
+const getTransferHistory = (filtersObject, token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["transfer"],
     query: { limit: limit["transfer"], ...filtersObject } || {
@@ -82,10 +100,13 @@ const getTransferHistory = (filtersObject) => {
     },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
-const getExchangeHistory = (filtersObject) => {
+const getExchangeHistory = (filtersObject, token) => {
   const urlWithQueries = queryString.stringifyUrl({
     url: api["exchange"],
     query: { limit: limit["exchange"], ...filtersObject } || {
@@ -93,16 +114,21 @@ const getExchangeHistory = (filtersObject) => {
     },
   });
 
-  return axios.get(urlWithQueries);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.get(urlWithQueries, { headers });
 };
 
 const getTop5Report = (token, params) => {
   const formData = new FormData();
 
-  token && formData.append("token", token);
   params.count && formData.append("count", params.count);
 
-  return axios.post(api["top-5-report"], formData);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.post(api["top-5-report"], formData, { headers });
 };
 
 export {

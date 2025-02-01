@@ -1,3 +1,5 @@
+import { useCheckTokenExpired } from "../../../hooks/useAuth";
+import { useTokenState } from "../../../Providers/TokenProvider";
 import {
   getWatchList,
   getTableExchange,
@@ -84,20 +86,25 @@ const useExchange = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (params, customFunctionWithData) => {
-    setIsLoading(true);
-    await exchange(params)
-      .then((data) => {
-        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
-        customFunctionWithData && customFunctionWithData(data.data);
-        setIsLoading(false);
-        return data.data;
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error);
-        setIsLoading(false);
-      });
+  const token = useTokenState();
+  const checkTokenExpired = useCheckTokenExpired();
+
+  const fetch = (params, customFunctionWithData) => {
+    checkTokenExpired(async () => {
+      setIsLoading(true);
+      await exchange(params, token.access)
+        .then((data) => {
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+          customFunctionWithData && customFunctionWithData(data.data);
+          setIsLoading(false);
+          return data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
+    });
   };
 
   return { exchange: fetch, error, isLoading };
@@ -107,21 +114,26 @@ const useGetPendingExchanges = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (token, setState, customFunctionWithData) => {
-    setIsLoading(true);
-    await getPendingExchanges(token)
-      .then((data) => {
-        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
-        setState(data.data.results);
-        customFunctionWithData && customFunctionWithData(data.data.results);
-        setIsLoading(false);
-        return data.data.results;
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error);
-        setIsLoading(false);
-      });
+  const token = useTokenState();
+  const checkTokenExpired = useCheckTokenExpired();
+
+  const fetch = (_token, setState, customFunctionWithData) => {
+    checkTokenExpired(async () => {
+      setIsLoading(true);
+      await getPendingExchanges(token.access)
+        .then((data) => {
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+          setState(data.data.results);
+          customFunctionWithData && customFunctionWithData(data.data.results);
+          setIsLoading(false);
+          return data.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
+    });
   };
 
   return { getPendingExchanges: fetch, error, isLoading };
@@ -131,20 +143,25 @@ const useCancelPendingExchange = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (pendingExchangeUrl, customFunction) => {
-    setIsLoading(true);
-    await cancelPendingExchange(pendingExchangeUrl)
-      .then((data) => {
-        process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
-        customFunction && customFunction();
-        setIsLoading(false);
-        return data.data;
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error);
-        setIsLoading(false);
-      });
+  const token = useTokenState();
+  const checkTokenExpired = useCheckTokenExpired();
+
+  const fetch = (pendingExchangeUrl, customFunction) => {
+    checkTokenExpired(async () => {
+      setIsLoading(true);
+      await cancelPendingExchange(pendingExchangeUrl, token.access)
+        .then((data) => {
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+          customFunction && customFunction();
+          setIsLoading(false);
+          return data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
+    });
   };
 
   return { cancelPendingExchange: fetch, error, isLoading };

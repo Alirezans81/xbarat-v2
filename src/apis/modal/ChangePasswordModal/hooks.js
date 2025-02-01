@@ -1,3 +1,4 @@
+import { useCheckTokenExpired } from "../../../hooks/useAuth";
 import { useTokenState } from "../../../Providers/TokenProvider";
 import { changePassword } from "./apis";
 import { useState } from "react";
@@ -7,11 +8,12 @@ const useChangePassword = () => {
   const [error, setError] = useState();
 
   const token = useTokenState();
+  const checkTokenExpired = useCheckTokenExpired();
 
-  const fetch = async (params, customFunction) => {
-    if (token) {
+  const fetch = (params, customFunction) => {
+    checkTokenExpired(async () => {
       setIsLoading(true);
-      await changePassword(token, params)
+      await changePassword(params, token)
         .then((data) => {
           process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           customFunction();
@@ -23,7 +25,7 @@ const useChangePassword = () => {
           setError(error);
           setIsLoading(false);
         });
-    }
+    });
   };
 
   return { changePassword: fetch, error, isLoading };

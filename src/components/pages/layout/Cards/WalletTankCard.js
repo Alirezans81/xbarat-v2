@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
 import { useFontState } from "../../../../Providers/FontProvider";
-import { useUpdateWalletTank } from "../../../../apis/pages/Cards/hooks";
+import {
+  useDeleteWalletTank,
+  useUpdateWalletTank,
+} from "../../../../apis/pages/Cards/hooks";
 import { useRefreshWallet } from "../../../../hooks/useRefreshWallet";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
 import {
@@ -21,7 +24,6 @@ const Card = ({
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
-  const lang = useLanguageState();
 
   const getBankInfoClass = (type) => {
     if (type === "Card Number") {
@@ -144,6 +146,13 @@ export default function WalletTankCard({
     setChangedData(null);
   }, [selectedCurrencyIndex]);
 
+  const { deleteWalletTank, isLoading: deleteWalletTankIsLoading } =
+    useDeleteWalletTank();
+  useEffect(
+    () => setLoading(deleteWalletTankIsLoading),
+    [deleteWalletTankIsLoading]
+  );
+
   const { updateWalletTank, isLoading: updateWalletTankIsLoading } =
     useUpdateWalletTank();
   useEffect(
@@ -181,7 +190,7 @@ export default function WalletTankCard({
       children: (
         <AreYouSureModal
           onClick={() => {
-            updateWalletTank(data.url, { is_deleted: true }, (data) => {
+            deleteWalletTank(data.url, (data) => {
               refreshWallet();
               setChangedData(data);
               setDeletCardCount((prev) => !prev);

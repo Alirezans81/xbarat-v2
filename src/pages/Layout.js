@@ -41,9 +41,11 @@ import { useCheckCompletedProfile } from "../hooks/useCheckCompletedProfile";
 import MobileBottomBar from "../components/pages/layout/MobileBottomBar";
 import TutorialModal from "../components/modals/Tutorials/WalletTutorialModal/TutorialModal";
 import AddToHomeScreenModal from "../components/modals/AddToHomeScreenModal";
-import { useGetNews, useLogout } from "../apis/pages/Layout/hooks";
+import { useGetNews } from "../apis/pages/Layout/hooks";
 import NewsModal from "../components/modals/NewsModal";
 import FreeExchangeModal from "../components/modals/freeExchangeModal";
+import { useLogout } from "../hooks/useAuth";
+
 export default function Layout({ platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
@@ -68,17 +70,7 @@ export default function Layout({ platform }) {
 
   const setToastData = useToastDataSetState();
 
-  const { logout, error, isLoading } = useLogout();
-  useEffect(() => setIsLoadingSplashScreen(isLoading), [isLoading]);
-  const resetApp = () => {
-    setToken(null);
-    setUser(null);
-    window.localStorage.removeItem("authToken");
-    window.localStorage.removeItem("userInfo");
-    window.localStorage.removeItem("expireTime");
-    window.localStorage.removeItem("statuses");
-    window.localStorage.removeItem("linksShown");
-  };
+  const logout = useLogout();
 
   const openCompleteProfileMessageToast = () => {
     setToastData({
@@ -380,10 +372,7 @@ export default function Layout({ platform }) {
                     {lang["not-logged-in-error"] + "."}
                   </span>
                   <Link
-                    onClick={() => {
-                      logout();
-                      resetApp();
-                    }}
+                    onClick={logout}
                     to="/login"
                     className="button mt-3 w-28 flex justify-center"
                   >

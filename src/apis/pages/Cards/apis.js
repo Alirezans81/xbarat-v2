@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const updateWalletTank = (walletTankUrl, params) => {
+const updateWalletTank = (walletTankUrl, params, token) => {
   const formData = new FormData();
 
   params.bank_info && formData.append("bank_info", params.bank_info);
@@ -16,7 +16,17 @@ const updateWalletTank = (walletTankUrl, params) => {
     params.is_deleted !== undefined &&
     formData.append("is_deleted", params.is_deleted);
 
-  return axios.patch(walletTankUrl, formData);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.patch(walletTankUrl, formData, { headers });
 };
 
-export { updateWalletTank };
+const deleteWalletTank = (walletTankUrl, token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.delete(walletTankUrl, { headers });
+};
+
+export { updateWalletTank, deleteWalletTank };

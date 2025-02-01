@@ -74,6 +74,7 @@ export default function Step1({
                     phoneError && setPhoneError(null);
                     handleChange(e);
                   }}
+                  maxLength={15}
                   value={values.phone ? values.phone : ""}
                 />
               </div>

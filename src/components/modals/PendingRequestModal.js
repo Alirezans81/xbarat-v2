@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
@@ -52,14 +53,13 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
       getWalletTanks(
         {
           user: data.user_receiver_username,
-          currency_slug: data.currency_slug,
+          currency: data.currency_slug,
         },
         (walletTanks) => {
           if (data.currency_abb === "IRR") {
             if (+data.amount <= 100000000) {
               const temp = walletTanks.filter(
                 (d) =>
-                  d.show_order &&
                   d.is_active &&
                   d.bank_info &&
                   d.wallet_tank_type_title === "Card Number"
@@ -68,7 +68,6 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             } else {
               const temp = walletTanks.filter(
                 (d) =>
-                  d.show_order &&
                   d.is_active &&
                   d.bank_info &&
                   d.wallet_tank_type_title === "Shaba Number"
@@ -76,9 +75,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               setReceiverTanks(temp);
             }
           } else {
-            const temp = walletTanks.filter(
-              (d) => d.show_order && d.is_active && d.bank_info
-            );
+            const temp = walletTanks.filter((d) => d.is_active && d.bank_info);
             setReceiverTanks(temp);
           }
         }
@@ -269,6 +266,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             {receiverTanks[selectedWalletTank] &&
               receiverTanks[selectedWalletTank].bank_info_image && (
                 <img
+                  alt=""
                   className="mx-auto w-5/12 object-contain rounded-xl"
                   src={receiverTanks[selectedWalletTank].bank_info_image}
                 />
@@ -279,9 +277,13 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
         {data && data.secret_code && data.status_title === "Admin Approve" && (
           <div
             dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
-            className={`flex flex-col bg-${theme}-back rounded-md py-2.5 px-3 font-${font}-regular text-${oppositeTheme}`}
+            className={`flex flex-col bg-${theme}-back rounded-md py-2.5 px-3 font-${font}-regular text-${oppositeTheme} mt-1.5`}
           >
-            <div className="w-full flex justify-between pb-3">
+            <div
+              className={`w-full flex justify-between ${
+                font === "Fa" || font === "Ar" ? "pb-2.5" : "pb-0.5"
+              }`}
+            >
               <span className="-mb-1">{lang["deposit-secret-code"] + ":"}</span>
               <div className="flex items-center gap-x-1">
                 <span className="-mb-1">{data.secret_code}</span>

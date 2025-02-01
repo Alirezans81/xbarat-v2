@@ -141,7 +141,6 @@ export default function Form({ setIsSplashScreenLoading }) {
             }
           );
         } else if (mode === "confirm") {
-          console.log(token);
           token &&
             forgetPasswordSet(
               { password: values.password, token },

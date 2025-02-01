@@ -20,7 +20,7 @@ const useGetWalletTankByCurrency = () => {
       for (let i = 0; i < wallet.walletTanks.length; i++) {
         for (let j = 0; j < walletAssetsTemp.length; j++) {
           if (
-            walletAssetsTemp[j].url === wallet.walletTanks[i].wallet_asset &&
+            walletAssetsTemp[j].url === wallet.walletTanks[i].wallet_asset_url &&
             !wallet.walletTanks[i].is_deleted
           ) {
             walletTanksTemp.push(wallet.walletTanks[i]);

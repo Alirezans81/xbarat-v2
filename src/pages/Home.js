@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
@@ -16,6 +17,7 @@ import ListOtherExchanges from "../components/pages/layout/Home/ListMode/ListOth
 import ListPendingExchange from "../components/pages/layout/Home/ListMode/ListPendingExchange";
 import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 import { useWalletState } from "../Providers/WalletProvider";
+
 export default function Home({ isDemo, platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -76,7 +78,7 @@ export default function Home({ isDemo, platform }) {
   const refreshPendingExchange = () => {
     token && getPendingExchanges(token, setPendingExchanges);
   };
-  useEffect(() => refreshPendingExchange(), []);
+  useEffect(() => refreshPendingExchange(), [token]);
 
   const [source, setSource] = useState();
   const findSource = (currency_slug) => {
@@ -139,6 +141,7 @@ export default function Home({ isDemo, platform }) {
               className="flex gap-x-2 items-center bg-blue rounded-full p-2.5"
             >
               <img
+                alt=""
                 className="w-5 h-5"
                 src={require(`../Images/pages/layout/Home/list-mode.png`)}
               />
@@ -251,6 +254,7 @@ export default function Home({ isDemo, platform }) {
               className="flex gap-x-2 items-center bg-blue rounded-full p-2.5"
             >
               <img
+                alt=""
                 className="w-5 h-5"
                 src={require(`../Images/pages/layout/Home/card-mode.png`)}
               />
