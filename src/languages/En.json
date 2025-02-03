@@ -29,6 +29,7 @@
   "password-short-error": "Password should be at least 8 characters long",
   "password-contain-error": "Password should contain one of the following characters: [a-z], [A-Z], [0-9], [!@#$%*?]",
   "password-match-error": "Passwords do not match",
+  "is-active":"Is Active",
   "home": "Home",
   "wallet": "Wallet",
   "reports": "Reports",
