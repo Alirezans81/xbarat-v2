@@ -475,8 +475,8 @@ export default function Withdrawal({
                   label={
                     selectedWalletTankIndex >= 0 &&
                     walletTanks[selectedWalletTankIndex] &&
-                    walletTanks[selectedWalletTankIndex].account_name
-                      ? walletTanks[selectedWalletTankIndex].account_name
+                    walletTanks[selectedWalletTankIndex].wallet_tank_account_name
+                      ? walletTanks[selectedWalletTankIndex].wallet_tank_account_name
                       : ""
                   }
                   searchable
