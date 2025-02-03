@@ -24,7 +24,7 @@ const Card = ({
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
-
+  const lang = useLanguageState();
   const getBankInfoClass = (type) => {
     if (type === "Card Number") {
       return "text-xl md:text-2xl";
@@ -68,7 +68,7 @@ const Card = ({
           <span
             className={`hidden xs:block text-xl text-${oppositeTheme} font-${font}-regular pt-1.5`}
           >
-            {data.bank_name}
+            {data.wallet_tank_bank_name}
           </span>
         </div>
         <div className="flex-1 flex justify-end">
@@ -107,7 +107,7 @@ const Card = ({
           {giveSpaceBetween(data.bank_info)}
         </span>
         <span className={`text-xl text-gray font-${font}-regular -mt-0.5`}>
-          {data.account_name}
+          {data.wallet_tank_account_name}
         </span>
       </div>
       <div className="w-full flex justify-end items-center mt-1">
@@ -115,7 +115,7 @@ const Card = ({
           <span
             className={`text-sm md:text-base text-${oppositeTheme} font-${font}-regular pt-1`}
           >
-            Is Active
+            {lang["is-active"]}
           </span>
           <button
             type="button"

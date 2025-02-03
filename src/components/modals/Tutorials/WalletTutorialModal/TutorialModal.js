@@ -28,7 +28,7 @@ const TutorialModal = () => {
           tutorial === ""
             ? `py-5 grid grid-cols-${cols} grid-rows-10 text-${oppositeTheme} gap-5 h-[25rem] w-[${
                 cols * 8
-              }rem] overflow-y-scroll animate-upward`
+              }rem] max-w-3xl overflow-y-scroll animate-upward`
             : "hidden"
         }
       >
