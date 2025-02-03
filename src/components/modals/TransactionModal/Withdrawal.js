@@ -475,8 +475,8 @@ export default function Withdrawal({
                   label={
                     selectedWalletTankIndex >= 0 &&
                     walletTanks[selectedWalletTankIndex] &&
-                    walletTanks[selectedWalletTankIndex].wallet_tank_account_name
-                      ? walletTanks[selectedWalletTankIndex].wallet_tank_account_name
+                    walletTanks[selectedWalletTankIndex].bank_info
+                      ? walletTanks[selectedWalletTankIndex].bank_info
                       : ""
                   }
                   searchable
@@ -489,8 +489,8 @@ export default function Withdrawal({
                           className="rounded-t-xl"
                           onClick={() => setSelectedWalletTankIndex(index)}
                         >
-                          {walletTank && walletTank.wallet_tank_account_name
-                            ? walletTank.wallet_tank_account_name
+                          {walletTank && walletTank.bank_info
+                            ? walletTank.bank_info
                             : "error"}
                         </CustomItem>
                       );
@@ -500,8 +500,8 @@ export default function Withdrawal({
                           key={index}
                           onClick={() => setSelectedWalletTankIndex(index)}
                         >
-                          {walletTank && walletTank.wallet_tank_account_name
-                            ? walletTank.wallet_tank_account_name
+                          {walletTank && walletTank.bank_info
+                            ? walletTank.bank_info
                             : "error"}
                         </CustomItem>
                       );
