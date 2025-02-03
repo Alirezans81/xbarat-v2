@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../../../apis/pages/Login/hooks";
 import { useFontState } from "../../../../Providers/FontProvider";
 import { useToastDataSetState } from "../../../../Providers/ToastDataProvider";
+import { useGetUserInfo } from "../../../../apis/pages/Profile/hooks";
 
 export default function LoginForm({ setIsSplashScreenLoading }) {
   const theme = useThemeState();
@@ -41,6 +42,22 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
       loginError.response &&
       showErrorToast(Object.values(loginError.response.data).join(" ")),
     [loginError]
+  );
+
+  const {
+    getUserInfo,
+    isLoading: getUserInfoIsLoading,
+    error: getUserInfoError,
+  } = useGetUserInfo();
+  useEffect(() => {
+    setIsSplashScreenLoading(getUserInfoIsLoading);
+  }, [getUserInfoIsLoading]);
+  useEffect(
+    () =>
+      getUserInfoError &&
+      getUserInfoError.response &&
+      showErrorToast(Object.values(getUserInfoError.response.data).join(" ")),
+    [getUserInfoError]
   );
 
   const navigate = useNavigate();
@@ -91,7 +108,7 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
         login(
           values,
           (data) => {
-            navigateToHome();
+            getUserInfo(data, navigateToHome);
           },
           rememberMeCheck
         )

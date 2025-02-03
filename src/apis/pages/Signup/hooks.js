@@ -28,9 +28,9 @@ const useVerifyEmail = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const fetch = async (code, customFunction) => {
+  const fetch = async (params, customFunction) => {
     setIsLoading(true);
-    await verifyEmail(code)
+    await verifyEmail(params)
       .then((data) => {
         process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
         customFunction && customFunction();

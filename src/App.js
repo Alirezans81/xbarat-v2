@@ -51,6 +51,7 @@ import Singular from "./pages/Currency/Singular";
 import Pair from "./pages/Currency/Pair";
 import Robots from "./pages/More/Robots";
 import GiftCard from "./pages/Profile/GiftCard";
+import { useCheckLoggedIn } from "./hooks/useAuth";
 
 export default function App() {
   const lang = useLanguageState();
@@ -127,6 +128,11 @@ export default function App() {
       setLang("");
     }
   }, [languageList]);
+
+  const checkLoggedIn = useCheckLoggedIn();
+  useEffect(() => {
+    checkLoggedIn();
+  }, []);
 
   if (lang === "") {
     return <Updating />;

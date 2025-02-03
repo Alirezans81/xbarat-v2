@@ -1,3 +1,4 @@
+import { useTokenState } from "../../../Providers/TokenProvider";
 import { useUserSetState, useUserState } from "../../../Providers/UserProvider";
 import {
   fetchStep1,
@@ -12,15 +13,18 @@ const useFetchStep1 = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const userInfo = useUserState();
+  const token = useTokenState();
+
+  const user = useUserState();
   const setUser = useUserSetState();
   const saveUser = (value) =>
     window.localStorage.setItem("userInfo", JSON.stringify(value));
 
   const fetch = async (params, customFunction) => {
-    if (userInfo && userInfo.username) {
+    console.log(user);
+    if (user && token) {
       setIsLoading(true);
-      await fetchStep1(userInfo.username, params)
+      await fetchStep1(user.username, token.access, params)
         .then((data) => {
           process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data.results);
@@ -44,15 +48,17 @@ const useFetchStep2 = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const userInfo = useUserState();
+  const token = useTokenState();
+
+  const user = useUserState();
   const setUser = useUserSetState();
   const saveUser = (value) =>
     window.localStorage.setItem("userInfo", JSON.stringify(value));
 
   const fetch = async (params, customFunction) => {
-    if (userInfo && userInfo.username) {
+    if (user && user.username && token) {
       setIsLoading(true);
-      await fetchStep2(userInfo.username, params)
+      await fetchStep2(user.username, token.access, params)
         .then((data) => {
           process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data.results);
@@ -76,15 +82,17 @@ const useFetchStep3 = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const userInfo = useUserState();
+  const token = useTokenState();
+
+  const user = useUserState();
   const setUser = useUserSetState();
   const saveUser = (value) =>
     window.localStorage.setItem("userInfo", JSON.stringify(value));
 
   const fetch = async (params, customFunction) => {
-    if (userInfo && userInfo.username) {
+    if (user && user.username && token) {
       setIsLoading(true);
-      await fetchStep3(userInfo.username, params)
+      await fetchStep3(user.username, token.access, params)
         .then((data) => {
           process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data.results);
@@ -108,15 +116,17 @@ const useFetchStep4 = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const userInfo = useUserState();
+  const token = useTokenState();
+
+  const user = useUserState();
   const setUser = useUserSetState();
   const saveUser = (value) =>
     window.localStorage.setItem("userInfo", JSON.stringify(value));
 
   const fetch = async (params, customFunction) => {
-    if (userInfo && userInfo.username) {
+    if (user && user.username && token) {
       setIsLoading(true);
-      await fetchStep4(userInfo.username, params)
+      await fetchStep4(user.username, token.access, params)
         .then((data) => {
           process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data.results);
@@ -140,15 +150,17 @@ const useFetchStep5 = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const userInfo = useUserState();
+  const token = useTokenState();
+
+  const user = useUserState();
   const setUser = useUserSetState();
   const saveUser = (value) =>
     window.localStorage.setItem("userInfo", JSON.stringify(value));
 
   const fetch = async (customFunction) => {
-    if (userInfo && userInfo.username) {
+    if (user && user.username && token) {
       setIsLoading(true);
-      await fetchStep5(userInfo.username)
+      await fetchStep5(user.username, token.access)
         .then((data) => {
           process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setUser(data.data.results);

@@ -15,10 +15,11 @@ const signup = (params) => {
   return axios.post(api["sign-up"], formData);
 };
 
-const verifyEmail = (code) => {
+const verifyEmail = (params) => {
   const formData = new FormData();
 
-  formData.append("code", code);
+  params && formData.append("email", params.email);
+  params && formData.append("code", params.code);
 
   return axios.post(api["verify-email"], formData);
 };

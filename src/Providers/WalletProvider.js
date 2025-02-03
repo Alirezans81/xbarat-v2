@@ -80,7 +80,6 @@ const WalletProvider = ({ children }) => {
           : () => {}
       );
       getWalletAssets(
-        token,
         userFilter,
         setWalletAssets,
         customFunction && customFunction.asset

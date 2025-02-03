@@ -5,6 +5,7 @@ export default function api() {
     "sign-up": `${apiDomain}api/user/signup/`,
     "verify-email": `${apiDomain}api/user/verify-email/`,
     "log-in": `${apiDomain}api/user/login/`,
+    refresh: `${apiDomain}api/user/refresh/`,
     "log-out": `${apiDomain}api/user/logout/`,
     "patch-profile": `${apiDomain}api/user/`,
     nationality: `${apiDomain}api/location/nationality/`,

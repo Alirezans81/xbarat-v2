@@ -34,7 +34,7 @@ export default function Notch() {
               />
               <h1
                 className={`font-${font}-bold ${
-                  font === "Fa" || font === "Ar" ? "text-2xl" : "text-[1.75rem]"
+                  font === "Fa" || font === "Ar" ? "text-[5.5dvw]" : "text-[1.75rem]"
                 } text-yellow-gradient pt-1 -mb-1`}
               >
                 {lang["logo-header"]}
@@ -43,7 +43,7 @@ export default function Notch() {
             <h5
               className={`text-${oppositeTheme} ${
                 font === "Fa" || font === "Ar" ? "" : "-mt-1.5"
-              } whitespace-nowrap font-${font}-thin text-xs`}
+              } whitespace-nowrap font-${font}-thin text-[3dvw]`}
             >
               {lang["slogan"] + "."}
             </h5>
