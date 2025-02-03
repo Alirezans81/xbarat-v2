@@ -91,7 +91,7 @@ const PendingRequestTipsUploadDocument = ({ setTips }) => {
           </div>
           <div className="w-full h-fit">
             <button
-              onClick={() => setTips(true)}
+              onClick={() => (enableSubmit ? setTips(true) : "")}
               className={`w-full h-full p-1 rounded-2xl text-light ${
                 enableSubmit ? "bg-blue" : "bg-gray"
               }`}

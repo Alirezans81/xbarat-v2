@@ -10,7 +10,7 @@ const Deposit = ({ deposit }) => {
 
   return (
     <div
-      className={`w-full max-w-[1280px] overflow-scroll  h-full animate-upward flex justify-center`}
+      className={`w-full max-w-4xl overflow-scroll  h-full animate-upward flex justify-center`}
     >
       <div
         className={`grid grid-cols-${
@@ -27,13 +27,13 @@ const Deposit = ({ deposit }) => {
             : statusCount < 4
             ? statusCount
             : 4
-        }  gap-x-5   gap-y-2 w-3/4 `}
+        }  gap-x-5   gap-y-2 w-full `}
       >
         {status ? (
           Object.entries(status).map(([statusName, statusDetails]) => (
             <div
               dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
-              className={`bg-${theme}-back rounded-2xl p-5 col-span-1 row-span-1 grid grid-cols-1 grid-rows-6 gap-y-2 animate-upward`}
+              className={`bg-${theme}-back rounded-2xl p-5 col-span-1 row-span-1 grid grid-cols-1 grid-rows-6 gap-y-2 animate-upward text-start`}
             >
               <div className="bg-blue flex justify-center items-center rounded-2xl p-2 col-span-1 row-span-1 text-light h-fit text-center">
                 {statusName}
