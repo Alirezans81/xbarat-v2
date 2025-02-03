@@ -23,10 +23,10 @@ const PendingRequestTipsUploadDocument = ({ setTips }) => {
     if (Object.keys(context).length === 0) {
       setTips(true);
     }
-    if (haveRead && bottomPage) {
+    if (haveRead) {
       setEnableSubmit(true);
     }
-    if (!haveRead || !bottomPage) {
+    if (!haveRead) {
       setEnableSubmit(false);
     }
   }, [haveRead, bottomPage]);
