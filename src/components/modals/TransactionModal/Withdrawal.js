@@ -489,8 +489,8 @@ export default function Withdrawal({
                           className="rounded-t-xl"
                           onClick={() => setSelectedWalletTankIndex(index)}
                         >
-                          {walletTank && walletTank.account_name
-                            ? walletTank.account_name
+                          {walletTank && walletTank.wallet_tank_account_name
+                            ? walletTank.wallet_tank_account_name
                             : "error"}
                         </CustomItem>
                       );
@@ -500,8 +500,8 @@ export default function Withdrawal({
                           key={index}
                           onClick={() => setSelectedWalletTankIndex(index)}
                         >
-                          {walletTank && walletTank.account_name
-                            ? walletTank.account_name
+                          {walletTank && walletTank.wallet_tank_account_name
+                            ? walletTank.wallet_tank_account_name
                             : "error"}
                         </CustomItem>
                       );
