@@ -489,9 +489,23 @@ export default function Withdrawal({
                           className="rounded-t-xl"
                           onClick={() => setSelectedWalletTankIndex(index)}
                         >
-                          {walletTank && walletTank.bank_info
-                            ? walletTank.bank_info
-                            : "error"}
+                          <div className="flex flex-col items-center gap-1">
+                            <span className="text-gray">
+                              {walletTank && walletTank.wallet_tank_account_name
+                                ? walletTank.wallet_tank_bank_name
+                                  ? walletTank.wallet_tank_account_name +
+                                    " (" +
+                                    walletTank.wallet_tank_bank_name +
+                                    ")"
+                                  : walletTank.wallet_tank_account_name
+                                : "error"}
+                            </span>
+                            <span className="text-base">
+                              {walletTank && walletTank.bank_info
+                                ? walletTank.bank_info
+                                : "error"}
+                            </span>
+                          </div>
                         </CustomItem>
                       );
                     } else {
@@ -500,9 +514,23 @@ export default function Withdrawal({
                           key={index}
                           onClick={() => setSelectedWalletTankIndex(index)}
                         >
-                          {walletTank && walletTank.bank_info
-                            ? walletTank.bank_info
-                            : "error"}
+                          <div className="flex flex-col items-center gap-1">
+                            <span className="text-gray">
+                              {walletTank && walletTank.wallet_tank_account_name
+                                ? walletTank.wallet_tank_bank_name
+                                  ? walletTank.wallet_tank_account_name +
+                                    " (" +
+                                    walletTank.wallet_tank_bank_name +
+                                    ")"
+                                  : walletTank.wallet_tank_account_name
+                                : "error"}
+                            </span>
+                            <span className="text-base">
+                              {walletTank && walletTank.bank_info
+                                ? walletTank.bank_info
+                                : "error"}
+                            </span>
+                          </div>
                         </CustomItem>
                       );
                     }
