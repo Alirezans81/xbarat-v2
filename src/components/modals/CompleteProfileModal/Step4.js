@@ -144,6 +144,12 @@ export default function Step4({
                     })}
                   </CustomDropdown>
                 </div>
+                {touched.wallet_asset_currency &&
+                  errors.wallet_asset_currency && (
+                    <span className="text-red-500 font-thin text-sm ml-1">
+                      {errors.wallet_asset_currency}
+                    </span>
+                  )}
               </div>
               <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
                 <span className={`font-${font}-regular text-${oppositeTheme}`}>
@@ -209,6 +215,11 @@ export default function Step4({
                     })}
                   </CustomDropdown>
                 </div>
+                {touched.wallet_tank_type && errors.wallet_tank_type && (
+                  <span className="text-red-500 font-thin text-sm ml-1">
+                    {errors.wallet_tank_type}
+                  </span>
+                )}
               </div>
               <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
                 <span className={`font-${font}-regular text-${oppositeTheme}`}>

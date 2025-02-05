@@ -41,6 +41,11 @@ const getErrorMessages = (lang) => ({
       lang["wallet-asset-currency-required"] || "Please Select a Currency",
     pattern: "",
   },
+  wallet_tank_type: {
+    required:
+      lang["wallet_tank_type-required"] || "Please Select a Type of Account",
+    pattern: "",
+  },
   cardholder_name: {
     required:
       lang["cardholder-name-required"] || "Cardholder's name is required",
@@ -102,6 +107,9 @@ const getValidationSchema = (currentStep, lang) => {
       return Yup.object({
         wallet_asset_currency: Yup.string().required(
           errorMessages.wallet_asset_currency.required
+        ),
+        wallet_tank_type: Yup.string().required(
+          errorMessages.wallet_tank_type.required
         ),
         title: Yup.string()
           .matches(/^[a-zA-Z\s]+$/, errorMessages.cardholder_name.pattern)
