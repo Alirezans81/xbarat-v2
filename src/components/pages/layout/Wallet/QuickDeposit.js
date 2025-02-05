@@ -18,7 +18,7 @@ import { useRefreshWallet } from "../../../../hooks/useRefreshWallet";
 import { useFontState } from "../../../../Providers/FontProvider";
 import { useToastDataSetState } from "../../../../Providers/ToastDataProvider";
 import { useModalDataSetState } from "../../../../Providers/ModalDataProvider";
-import CompleteProfileModal from "../../../modals/CompleteProfileModal";
+import CompleteProfileModal from "../../../modals/CompleteProfileModal/CompleteProfileModal";
 
 export default function QuickDeposit({ refreshPendingRequests }) {
   const theme = useThemeState();

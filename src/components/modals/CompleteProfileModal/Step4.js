@@ -26,6 +26,8 @@ export default function Step4({
   handleBlur,
   handleChange,
   values,
+  errors,
+  touched,
   setFieldValue,
 }) {
   const theme = useThemeState();
@@ -221,6 +223,11 @@ export default function Step4({
                     value={values.title ? values.title : ""}
                   />
                 </div>
+                {touched.title && errors.title && (
+                  <span className="text-red-500 font-thin text-sm ml-1">
+                    {errors.title}
+                  </span>
+                )}
               </div>
               <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
                 <span className={`font-${font}-regular text-${oppositeTheme}`}>
@@ -235,6 +242,11 @@ export default function Step4({
                     value={values.bank_info ? values.bank_info : ""}
                   />
                 </div>
+                {touched.bank_info && errors.bank_info && (
+                  <span className="text-red-500 font-thin text-sm ml-1">
+                    {errors.bank_info}
+                  </span>
+                )}
               </div>
               <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
                 <span className={`font-${font}-regular text-${oppositeTheme}`}>
@@ -249,6 +261,11 @@ export default function Step4({
                     value={values.bank_name ? values.bank_name : ""}
                   />
                 </div>
+                {touched.bank_name && errors.bank_name && (
+                  <span className="text-red-500 font-thin text-sm ml-1">
+                    {errors.bank_name}
+                  </span>
+                )}
               </div>
             </form>
           </div>

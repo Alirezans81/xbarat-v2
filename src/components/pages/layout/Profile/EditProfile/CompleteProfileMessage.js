@@ -2,7 +2,7 @@ import React from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
-import CompleteProfileModal from "../../../../modals/CompleteProfileModal";
+import CompleteProfileModal from "../../../../modals/CompleteProfileModal/CompleteProfileModal";
 import { useFontState } from "../../../../../Providers/FontProvider";
 
 export default function CompleteProfileMessage() {

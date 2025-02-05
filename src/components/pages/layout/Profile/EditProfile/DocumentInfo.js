@@ -5,7 +5,7 @@ import CustomPreviewer from "../../../../common/CustomPreviewer";
 import { useFontState } from "../../../../../Providers/FontProvider";
 import SubmitButton from "../../../../common/SubmitButton";
 import { useModalDataSetState } from "../../../../../Providers/ModalDataProvider";
-import CompleteProfileModal from "../../../../modals/CompleteProfileModal";
+import CompleteProfileModal from "../../../../modals/CompleteProfileModal/CompleteProfileModal";
 
 export default function DocumentInfo({ userInfo }) {
   const theme = useThemeState();

@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { useUserState } from "../../Providers/UserProvider";
-import Stepper from "./CompleteProfileModal/Stepper";
-import Step1 from "./CompleteProfileModal/Step1";
-import Step2 from "./CompleteProfileModal/Step2";
-import Step3 from "./CompleteProfileModal/Step3";
-import Step4 from "./CompleteProfileModal/Step4";
-import Step5 from "./CompleteProfileModal/Step5";
-import Buttons from "./CompleteProfileModal/Buttons";
+import { useUserState } from "../../../Providers/UserProvider";
+import Stepper from "./Stepper";
+import Step1 from "./Step1";
+import Step2 from "./Step2";
+import Step3 from "./Step3";
+import Step4 from "./Step4";
+import Step5 from "./Step5";
+import Buttons from "./Buttons";
 import {
   useFetchStep1,
   useFetchStep2,
   useFetchStep3,
   useFetchStep4,
   useFetchStep5,
-} from "../../apis/modal/CompleteProfileModal/hooks";
+} from "../../../apis/modal/CompleteProfileModal/hooks";
 import { Formik } from "formik";
-import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplashScreenProvider";
+import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSplashScreenProvider";
 import {
   useGetWalletAssets,
   useGetWalletTanks,
   useGetWallets,
   useCreateWalletTank,
-} from "../../apis/common/wallet/hooks";
-import { useCurrenciesState } from "../../Providers/CurrenciesProvider";
-import { useLanguageState } from "../../Providers/LanguageProvider";
-import UploadDocumentHint from "./CompleteProfileModal/UploadDocumentHint";
-import { useGetUserInfo } from "../../apis/pages/Profile/hooks";
-import { useToastDataSetState } from "../../Providers/ToastDataProvider";
-import { useModalDataClose } from "../../Providers/ModalDataProvider";
-
+} from "../../../apis/common/wallet/hooks";
+import { useCurrenciesState } from "../../../Providers/CurrenciesProvider";
+import { useLanguageState } from "../../../Providers/LanguageProvider";
+import UploadDocumentHint from "./UploadDocumentHint";
+import { useGetUserInfo } from "../../../apis/pages/Profile/hooks";
+import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
+import { useModalDataClose } from "../../../Providers/ModalDataProvider";
+import { getValidationSchema } from "./Errors";
 export default function CompleteProfileModal() {
   const userInfo = useUserState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
@@ -134,7 +134,32 @@ export default function CompleteProfileModal() {
     [createWalletTankIsLoading]
   );
 
-  const [phoneError, setPhoneError] = useState();
+  // const [phoneError, setPhoneError] = useState();
+  // const validateFetchStep1 = (values) => {
+  //   console.log(values);
+  //   if (
+  //     values.first_name &&
+  //     values.last_name &&
+  //     values.phone &&
+  //     values.address
+  //   ) {
+  //     if (values.phone.startsWith("+")) {
+  //       console.log(values.phone);
+  //       const phoneRegex =
+  //         /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+  //       if (phoneRegex.test(values.phone.replace(/ /g, ""))) {
+  //         return true;
+  //       }
+  //     } else {
+  //       setPhoneError(lang["wrong-phone-error"] || "Invalid phone");
+  //       return false;
+  //     }
+
+  //     setPhoneError(lang["wrong-phone-error"] || "Invalid phone");
+  //     return false;
+  //   }
+  //   return false;
+  // };
   const validateFetchStep1 = (values) => {
     if (
       values.first_name &&
@@ -142,24 +167,10 @@ export default function CompleteProfileModal() {
       values.phone &&
       values.address
     ) {
-      if (values.phone.startsWith("+")) {
-        console.log(values.phone);
-        const phoneRegex =
-          /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-        if (phoneRegex.test(values.phone.replace(/ /g, ""))) {
-          return true;
-        }
-      } else {
-        setPhoneError(lang["wrong-phone-error"] || "Invalid phone");
-        return false;
-      }
-
-      setPhoneError(lang["wrong-phone-error"] || "Invalid phone");
-      return false;
+      return true;
     }
     return false;
   };
-  console.log(phoneError);
   const validateFetchStep2 = (values) => {
     if (
       values.nationality &&
@@ -320,6 +331,7 @@ export default function CompleteProfileModal() {
               bank_info: "",
               bank_name: "",
             }}
+            validationSchema={getValidationSchema(step, lang)}
             onSubmit={(values) => {
               step === 1 &&
                 validateFetchStep1(values) &&
@@ -344,6 +356,8 @@ export default function CompleteProfileModal() {
               handleBlur,
               handleChange,
               values,
+              errors,
+              touched,
               handleSubmit,
               setFieldValue,
             }) => {
@@ -354,8 +368,8 @@ export default function CompleteProfileModal() {
                       handleBlur={handleBlur}
                       handleChange={handleChange}
                       values={values}
-                      phoneError={phoneError}
-                      setPhoneError={setPhoneError}
+                      errors={errors}
+                      touched={touched}
                     />
                     <Buttons
                       step={step}
@@ -371,6 +385,8 @@ export default function CompleteProfileModal() {
                       values={values}
                       handleChange={handleChange}
                       handleBlur={handleBlur}
+                      errors={errors}
+                      touched={touched}
                       setFieldValue={setFieldValue}
                     />
                     <Buttons
@@ -387,6 +403,8 @@ export default function CompleteProfileModal() {
                       handleBlur={handleBlur}
                       handleChange={handleChange}
                       values={values}
+                      errors={errors}
+                      touched={touched}
                       setFieldValue={setFieldValue}
                     />
                     <Buttons
@@ -401,6 +419,8 @@ export default function CompleteProfileModal() {
                   <>
                     <Step4
                       currencies={currencies}
+                      errors={errors}
+                      touched={touched}
                       selectedCurrencyIndex={selectedCurrencyIndex}
                       setSelectedCurrencyIndex={setSelectedCurrencyIndex}
                       handleBlur={handleBlur}

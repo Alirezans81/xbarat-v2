@@ -21,7 +21,7 @@ import { useStatusesState } from "../../../../../Providers/StatusesProvider";
 import { useExchange } from "../../../../../apis/pages/Home/hooks";
 import { useFontState } from "../../../../../Providers/FontProvider";
 import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
-import CompleteProfileModal from "../../../../modals/CompleteProfileModal";
+import CompleteProfileModal from "../../../../modals/CompleteProfileModal/CompleteProfileModal";
 import { useToastDataSetState } from "../../../../../Providers/ToastDataProvider";
 import LoginSignupModal from "../../../../modals/LoginSignupModal";
 import { useNavigate } from "react-router-dom";

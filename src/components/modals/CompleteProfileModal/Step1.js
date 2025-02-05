@@ -20,8 +20,8 @@ export default function Step1({
   handleBlur,
   handleChange,
   values,
-  phoneError,
-  setPhoneError,
+  errors,
+  touched,
 }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -46,6 +46,11 @@ export default function Step1({
                   value={values.first_name ? values.first_name : ""}
                 />
               </div>
+              {touched.first_name && errors.first_name && (
+                <span className="text-red-500 font-thin text-sm ml-1">
+                  {errors.first_name}
+                </span>
+              )}
             </div>
             <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
               <span className={`font-${font}-regular text-${oppositeTheme}`}>
@@ -60,6 +65,11 @@ export default function Step1({
                   value={values.last_name ? values.last_name : ""}
                 />
               </div>
+              {touched.last_name && errors.last_name && (
+                <span className="text-red-500 font-thin text-sm ml-1">
+                  {errors.last_name}
+                </span>
+              )}
             </div>
             <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
               <span className={`font-${font}-regular text-${oppositeTheme}`}>
@@ -70,20 +80,17 @@ export default function Step1({
                   className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                   name="phone"
                   onBlur={handleBlur("phone")}
-                  onChange={(e) => {
-                    phoneError && setPhoneError(null);
-                    handleChange(e);
-                  }}
+                  onChange={handleChange("phone")}
                   maxLength={15}
                   value={values.phone ? values.phone : ""}
                 />
               </div>
+              {touched.phone && errors.phone && (
+                <span className="text-red-500 font-thin text-sm ml-1">
+                  {errors.phone}
+                </span>
+              )}
             </div>
-            {phoneError && (
-              <span className={`text-red font-${font}-thin ml-0.5`}>
-                {phoneError}
-              </span>
-            )}
             <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
               <span className={`font-${font}-regular text-${oppositeTheme}`}>
                 {lang["address"]}
@@ -97,6 +104,11 @@ export default function Step1({
                   value={values.address ? values.address : ""}
                 />
               </div>
+              {touched.address && errors.address && (
+                <span className="text-red-500 font-thin text-sm ml-1">
+                  {errors.address}
+                </span>
+              )}
             </div>
           </form>
         </div>
