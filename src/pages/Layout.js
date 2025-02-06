@@ -29,7 +29,7 @@ import {
 } from "../apis/common/currency/hooks";
 import { useCurrencyPairsSetState } from "../Providers/CurrencyPairsProvider";
 import { useGetLanguages } from "../apis/common/language/hooks";
-import CompleteProfileModal from "../components/modals/CompleteProfileModal";
+import CompleteProfileModal from "../components/modals/CompleteProfileModal/CompleteProfileModal";
 import {
   useModalDataSetState,
   useModalDataState,

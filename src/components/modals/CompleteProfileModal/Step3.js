@@ -28,6 +28,8 @@ export default function Step3({
   handleBlur,
   handleChange,
   values,
+  errors,
+  touched,
   setFieldValue,
 }) {
   const theme = useThemeState();
@@ -170,6 +172,11 @@ export default function Step3({
                     value={values.identity_code ? values.identity_code : ""}
                   />
                 </div>
+                {touched.identity_code && errors.identity_code && (
+                  <span className="text-red-500 font-thin text-sm ml-1">
+                    {errors.identity_code}
+                  </span>
+                )}
               </div>
               <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
                 <span className={`font-${font}-regular text-${oppositeTheme}`}>
