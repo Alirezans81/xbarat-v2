@@ -25,6 +25,8 @@ const Note = ({ lang, font }) => {
 export default function Step2({
   values,
   handleBlur,
+  errors,
+  touched,
   handleChange,
   setFieldValue,
 }) {
@@ -155,6 +157,11 @@ export default function Step2({
                 })}
               </CustomDropdown>
             </div>
+            {touched.nationality && errors.nationality && (
+              <span className="text-red-500 font-thin text-sm ml-1">
+                {errors.nationality}
+              </span>
+            )}
           </div>
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
@@ -213,6 +220,11 @@ export default function Step2({
                 })}
               </CustomDropdown>
             </div>
+            {touched.country && errors.country && (
+              <span className="text-red-500 font-thin text-sm ml-1">
+                {errors.country}
+              </span>
+            )}
           </div>
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
@@ -289,6 +301,11 @@ export default function Step2({
                 </CustomDropdown>
               )}
             </div>
+            {touched.city && errors.city && (
+              <span className="text-red-500 font-thin text-sm ml-1">
+                {errors.city}
+              </span>
+            )}
           </div>
         </form>
       </div>

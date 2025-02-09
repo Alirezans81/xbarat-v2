@@ -13,23 +13,29 @@ const PendingRequestTipsUploadDocument = ({ setTips }) => {
   const [enableSubmit, setEnableSubmit] = useState(false);
   const containerRef = useRef(null);
   const handleScroll = (e) => {
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-    if (bottom) {
+    const scrollThreshold = 80;
+
+    const isNearBottom =
+      e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight <=
+      scrollThreshold;
+
+    if (isNearBottom) {
       setBottomPage(true);
     }
   };
+
   useEffect(() => {
     if (Object.keys(context).length === 0) {
       setTips(true);
     }
-    if (haveRead) {
+    if (haveRead && bottomPage) {
       setEnableSubmit(true);
     }
-    if (!haveRead) {
+    if (!haveRead || !bottomPage) {
       setEnableSubmit(false);
     }
   }, [haveRead, bottomPage]);
+
   useEffect(() => {
     const container = containerRef.current;
     if (container) {
