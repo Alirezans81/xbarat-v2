@@ -19,7 +19,6 @@ export default function Form({ setIsSplashScreenLoading }) {
   const [mode, setMode] = useState("");
   const [token, setToken] = useState();
 
-  const [code, setCode] = useState();
   const [codeError, setCodeError] = useState();
 
   const navigate = useNavigate();
@@ -132,18 +131,21 @@ export default function Form({ setIsSplashScreenLoading }) {
         } else if (mode === "verify") {
           forgetPasswordCheck(
             { code: values.verify_email_code },
-            null,
             (data) => {
-              if (data && data.results && data.results.token) {
-                setToken(data.results.token);
+              if (data && data.token) {
+                setToken(data.token);
                 setMode("confirm");
               }
+            },
+            (error) => {
+              error && error.message && setCodeError(error.message);
             }
           );
         } else if (mode === "confirm") {
           token &&
             forgetPasswordSet(
-              { password: values.password, token },
+              { password: values.password },
+              token,
               navigateToLogin
             );
         }

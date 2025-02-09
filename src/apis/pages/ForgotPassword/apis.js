@@ -13,27 +13,21 @@ const forgetPasswordSendEmail = (params) => {
   return axios.post(api["forget-password-send-mail"], formData);
 };
 
-const forgetPasswordCheck = (params, token) => {
+const forgetPasswordCheck = (params) => {
   const formData = new FormData();
 
   formData.append("code", params.code);
 
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-  return axios.post(api["forget-password-check"], formData, { headers });
+  return axios.post(api["forget-password-check"], formData);
 };
 
 const forgetPasswordSet = (params, token) => {
   const formData = new FormData();
 
-  formData.append("token", params.token);
   formData.append("password", params.password);
+  formData.append("token", token);
 
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-  return axios.post(api["forget-password-set"], formData, { headers });
+  return axios.post(api["forget-password-set"], formData);
 };
 
 export { forgetPasswordSendEmail, forgetPasswordCheck, forgetPasswordSet };
