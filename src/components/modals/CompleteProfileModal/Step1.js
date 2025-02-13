@@ -3,15 +3,21 @@ import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useFontState } from "../../../Providers/FontProvider";
 import { CustomTooltip } from "../../common/CustomTooltip";
-
+import DirectionSetter from "../../../functions/DirectionSetter";
 const Note = ({ lang, font }) => {
   return (
     <div
       className={`flex flex-col gap-y-5 text-gray font-${font}-regular w-72 px-2 pt-1.5 pb-0.5`}
     >
-      <span>{"•	" + lang["complete-profile-modal-step1-note-1st"] + "."}</span>
-      <span>{"•	" + lang["complete-profile-modal-step1-note-2nd"] + "."}</span>
-      <span>{"•	" + lang["complete-profile-modal-step1-note-3rd"] + "."}</span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step1-note-1st"] + "."}
+      </span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step1-note-2nd"] + "."}
+      </span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step1-note-3rd"] + "."}
+      </span>
     </div>
   );
 };
@@ -27,6 +33,7 @@ export default function Step1({
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
+  const direction = DirectionSetter(font);
 
   if (handleBlur && handleChange && values) {
     return (
@@ -47,7 +54,10 @@ export default function Step1({
                 />
               </div>
               {touched.first_name && errors.first_name && (
-                <span className="text-red-500 font-thin text-sm ml-1">
+                <span
+                  dir={direction}
+                  className="text-red-500 font-thin text-sm ml-1"
+                >
                   {errors.first_name}
                 </span>
               )}
@@ -66,7 +76,10 @@ export default function Step1({
                 />
               </div>
               {touched.last_name && errors.last_name && (
-                <span className="text-red-500 font-thin text-sm ml-1">
+                <span
+                  dir={direction}
+                  className="text-red-500 font-thin text-sm ml-1"
+                >
                   {errors.last_name}
                 </span>
               )}
@@ -86,7 +99,10 @@ export default function Step1({
                 />
               </div>
               {touched.phone && errors.phone && (
-                <span className="text-red-500 font-thin text-sm ml-1">
+                <span
+                  dir={direction}
+                  className="text-red-500 font-thin text-sm ml-1"
+                >
                   {errors.phone}
                 </span>
               )}
@@ -105,7 +121,10 @@ export default function Step1({
                 />
               </div>
               {touched.address && errors.address && (
-                <span className="text-red-500 font-thin text-sm ml-1">
+                <span
+                  dir={direction}
+                  className="text-red-500 font-thin text-sm ml-1"
+                >
                   {errors.address}
                 </span>
               )}
@@ -129,9 +148,15 @@ export default function Step1({
           <div
             className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}
           >
-            <span>{lang["complete-profile-modal-step1-note-1st"] + "."}</span>
-            <span>{lang["complete-profile-modal-step1-note-2nd"] + "."}</span>
-            <span>{lang["complete-profile-modal-step1-note-3rd"] + "."}</span>
+            <span dir={DirectionSetter(font)} className="text-start">
+              {lang["complete-profile-modal-step1-note-1st"] + "."}
+            </span>
+            <span dir={DirectionSetter(font)} className="text-start">
+              {lang["complete-profile-modal-step1-note-2nd"] + "."}
+            </span>
+            <span dir={DirectionSetter(font)} className="text-start">
+              {lang["complete-profile-modal-step1-note-3rd"] + "."}
+            </span>
           </div>
         </div>
 

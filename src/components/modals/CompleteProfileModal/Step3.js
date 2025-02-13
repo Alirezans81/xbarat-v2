@@ -12,14 +12,18 @@ import CustomUploader from "../../common/CustomUploader";
 import { useFontState } from "../../../Providers/FontProvider";
 import { CustomTooltip } from "../../common/CustomTooltip";
 import UploadDocumentHint from "../CompleteProfileModal/UploadDocumentHint";
-
+import DirectionSetter from "../../../functions/DirectionSetter";
 const Note = ({ lang, font }) => {
   return (
     <div
       className={`flex flex-col gap-y-5 text-gray font-${font}-regular w-72 px-2 pt-1.5 pb-0.5`}
     >
-      <span>{"•	" + lang["complete-profile-modal-step3-note-1st"] + "."}</span>
-      <span>{"•	" + lang["complete-profile-modal-step3-note-2nd"] + "."}</span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step3-note-1st"] + "."}
+      </span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step3-note-2nd"] + "."}
+      </span>
     </div>
   );
 };
@@ -37,7 +41,7 @@ export default function Step3({
   const lang = useLanguageState();
   const font = useFontState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
-
+  const direction = DirectionSetter(font);
   const [nationality, setNationality] = useState();
   const { getNationality, isLoading: isLoadingNationality } =
     useGetNationality();
@@ -89,7 +93,7 @@ export default function Step3({
     return (
       <div className="flex flex-col">
         <div className="block md:hidden -mt-5">
-          <UploadDocumentHint />
+          <UploadDocumentHint direction={direction} />
         </div>
         <div className="w-full flex gap-x-10 my-5 relative">
           <div className="flex-1">
@@ -173,7 +177,10 @@ export default function Step3({
                   />
                 </div>
                 {touched.identity_code && errors.identity_code && (
-                  <span className="text-red-500 font-thin text-sm ml-1">
+                  <span
+                    dir={direction}
+                    className="text-red-500 font-thin text-sm ml-1"
+                  >
                     {errors.identity_code}
                   </span>
                 )}
@@ -182,7 +189,7 @@ export default function Step3({
                 <span className={`font-${font}-regular text-${oppositeTheme}`}>
                   {lang["upload-document"]}
                 </span>
-                <div className="w-full flex">
+                <div className="w-full flex ">
                   <CustomUploader
                     setImage={(image) => {
                       setDocument(image);
@@ -212,8 +219,12 @@ export default function Step3({
             <div
               className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}
             >
-              <span>{lang["complete-profile-modal-step3-note-1st"] + "."}</span>
-              <span>{lang["complete-profile-modal-step3-note-2nd"] + "."}</span>
+              <span dir={direction} className="text-start">
+                {lang["complete-profile-modal-step3-note-1st"] + "."}
+              </span>
+              <span dir={direction} className="text-start">
+                {lang["complete-profile-modal-step3-note-2nd"] + "."}
+              </span>
             </div>
           </div>
 
