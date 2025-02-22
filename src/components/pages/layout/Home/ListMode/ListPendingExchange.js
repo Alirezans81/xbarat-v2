@@ -12,7 +12,7 @@ import {
   useModalDataClose,
   useModalDataSetState,
 } from "../../../../../Providers/ModalDataProvider";
-
+import DirectionSetter from "../../../../../functions/DirectionSetter";
 export default function ListPendingExchange({
   pendingExchanges,
   refreshPendingExchange,
@@ -26,17 +26,20 @@ export default function ListPendingExchange({
   const setModalData = useModalDataSetState();
   const closeModal = useModalDataClose();
   const refreshWallet = useRefreshWallet();
-
+  const direction = DirectionSetter(font);
   const { cancelPendingExchange, isLoading: cancelPendingExchangeIsLoading } =
     useCancelPendingExchange();
   useEffect(
     () => setLoading(cancelPendingExchangeIsLoading),
     [cancelPendingExchangeIsLoading]
   );
-
+  console.log(direction);
   const openEditAreYouSureModal = (url) => {
     setModalData({
-      title: lang["are-you-sure-modal-title"] + "?",
+      title:
+        direction === "ltr"
+          ? lang["are-you-sure-modal-title"] + "?"
+          : lang["are-you-sure-modal-title"] + "؟",
       children: (
         <AreYouSureModal
           onClick={() => {
@@ -47,7 +50,11 @@ export default function ListPendingExchange({
                 closeModal();
               });
           }}
-          message={lang["edit-exchange-modal-message"] + "?"}
+          message={
+            direction === "ltr"
+              ? lang["edit-exchange-modal-message"] + "?"
+              : lang["edit-exchange-modal-message"] + "؟"
+          }
         />
       ),
       canClose: true,
@@ -68,7 +75,11 @@ export default function ListPendingExchange({
                 closeModal();
               });
           }}
-          message={lang["cancel-exchange-modal-message"] + "?"}
+          message={
+            direction === "ltr"
+              ? lang["cancel-exchange-modal-message"] + "?"
+              : lang["cancel-exchange-modal-message"] + "؟"
+          }
         />
       ),
       canClose: true,
