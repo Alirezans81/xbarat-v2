@@ -13,6 +13,8 @@ import {
   useModalDataSetState,
 } from "../../../../../Providers/ModalDataProvider";
 import DirectionSetter from "../../../../../functions/DirectionSetter";
+import EditExchangeModal from "../../../../modals/EditExchangeModal";
+import { useExchange } from "../../../../../apis/pages/Home/hooks";
 export default function ListPendingExchange({
   pendingExchanges,
   refreshPendingExchange,
@@ -27,36 +29,26 @@ export default function ListPendingExchange({
   const closeModal = useModalDataClose();
   const refreshWallet = useRefreshWallet();
   const direction = DirectionSetter(font);
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { cancelPendingExchange, isLoading: cancelPendingExchangeIsLoading } =
     useCancelPendingExchange();
   useEffect(
     () => setLoading(cancelPendingExchangeIsLoading),
     [cancelPendingExchangeIsLoading]
   );
-  console.log(direction);
-  const openEditAreYouSureModal = (url) => {
+  const { exchange, isLoading: exchangeIsLoading } = useExchange();
+  useEffect(
+    () => setIsLoadingSplashScreen(exchangeIsLoading),
+    [exchangeIsLoading]
+  );
+  const openEditAreYouSureModal = (data, exchange) => {
     setModalData({
       title:
         direction === "ltr"
           ? lang["are-you-sure-modal-title"] + "?"
           : lang["are-you-sure-modal-title"] + "؟",
-      children: (
-        <AreYouSureModal
-          onClick={() => {
-            url &&
-              cancelPendingExchange(url, () => {
-                refreshPendingExchange();
-                refreshWallet();
-                closeModal();
-              });
-          }}
-          message={
-            direction === "ltr"
-              ? lang["edit-exchange-modal-message"] + "?"
-              : lang["edit-exchange-modal-message"] + "؟"
-          }
-        />
-      ),
+      children: <EditExchangeModal data={data} exchange={exchange} />,
+
       canClose: true,
       isOpen: true,
     });
@@ -111,7 +103,30 @@ export default function ListPendingExchange({
           <div className="flex items-center gap-x-2 py-2 -mt-1">
             <button
               onClick={() => {
-                row && row.url && openEditAreYouSureModal(row.url);
+                row &&
+                  row.url &&
+                  openEditAreYouSureModal(row, (customFunction) => {
+                    cancelPendingExchange(row.url, () => {
+                      refreshPendingExchange();
+                      refreshWallet(null, {
+                        asset: (row) => findCurrencyBalanceInWallet(row),
+                      });
+                      closeModal();
+                    });
+                    exchange(row, () => {
+                      customFunction && customFunction();
+                      resetForm({
+                        values: {
+                          amount: "",
+                          rate: "",
+                        },
+                      });
+                      refreshWallet(null, {
+                        asset: (row) => findCurrencyBalanceInWallet(row),
+                      });
+                      refreshPendingExchange();
+                    });
+                  });
               }}
               type="button"
             >
