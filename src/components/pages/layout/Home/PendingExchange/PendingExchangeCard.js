@@ -161,12 +161,7 @@ export default function PendingExchangeCard({
               });
               exchange(data, () => {
                 customFunction && customFunction();
-                resetForm({
-                  values: {
-                    amount: "",
-                    rate: "",
-                  },
-                });
+
                 refreshWallet(null, {
                   asset: (data) => findCurrencyBalanceInWallet(data),
                 });

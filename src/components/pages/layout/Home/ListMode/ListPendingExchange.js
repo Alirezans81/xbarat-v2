@@ -108,22 +108,12 @@ export default function ListPendingExchange({
                   openEditAreYouSureModal(row, (customFunction) => {
                     cancelPendingExchange(row.url, () => {
                       refreshPendingExchange();
-                      refreshWallet(null, {
-                        asset: (row) => findCurrencyBalanceInWallet(row),
-                      });
+
                       closeModal();
                     });
                     exchange(row, () => {
                       customFunction && customFunction();
-                      resetForm({
-                        values: {
-                          amount: "",
-                          rate: "",
-                        },
-                      });
-                      refreshWallet(null, {
-                        asset: (row) => findCurrencyBalanceInWallet(row),
-                      });
+
                       refreshPendingExchange();
                     });
                   });
