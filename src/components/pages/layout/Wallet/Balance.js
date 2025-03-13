@@ -68,7 +68,7 @@ export default function Balance({ refreshPendingRequests }) {
               {lang["your-balance"]}
             </span>
             <button
-              className="text-blue text-2xl mb-2 flex justify-start items-start bg-red"
+              className="text-blue text-2xl mb-2 flex justify-start items-start"
               onClick={() => openTutorialModal()}
             >
               ?
@@ -147,16 +147,14 @@ export default function Balance({ refreshPendingRequests }) {
             >
               ?
             </button>
-            <div className="flex-1 w-full flex justify-end">
+            <div className="flex flex-1 w-full h-full justify-end">
               <button
                 onClick={() => openTransactionModal("deposit")}
-                className="flex xl:hidden gap-x-2 items-center border border-green rounded-full px-4 pt-2 pb-1"
+                className="w-full flex xl:hidden gap-x-2 items-center bg-blue text-light rounded-2xl px-4 pt-2 pb-1"
               >
-                <img
-                  className="w-5 h-5 -mt-1"
-                  src={require("../../../../Images/pages/layout/Wallet/deposit.png")}
-                />
-                <span className={`text-green font-${font}-regular`}>
+                <span
+                  className={`w-full h-full text-light text-xl flex justify-center items-center font-${font}-regular`}
+                >
                   {lang["deposit"]}
                 </span>
               </button>

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useFontState } from "../../../Providers/FontProvider";
 import { CustomTooltip } from "../../common/CustomTooltip";
+import countryCodes from "./CountryCodesStep1";
 import DirectionSetter from "../../../functions/DirectionSetter";
 const Note = ({ lang, font }) => {
   return (
@@ -34,7 +36,18 @@ export default function Step1({
   const lang = useLanguageState();
   const font = useFontState();
   const direction = DirectionSetter(font);
+  const [selectedCode, setSelectedCode] = useState();
+  const [phoneWithoutCode, setPhoneWithoutCode] = useState();
+  const handlePhoneChange = () => {
+    handleChange("phone")({
+      target: { value: selectedCode + phoneWithoutCode },
+    });
+  };
 
+  useEffect(() => {
+    handlePhoneChange();
+  }, [selectedCode]);
+  console.log(values.phone);
   if (handleBlur && handleChange && values) {
     return (
       <div className="w-full flex gap-x-10 my-5 relative">
@@ -88,14 +101,28 @@ export default function Step1({
               <span className={`font-${font}-regular text-${oppositeTheme}`}>
                 {lang["phone"]}
               </span>
-              <div className="w-full flex">
+              <div className="w-full flex flex-row gap-x-2">
+                <div className="w-fit">
+                  <CustomDropdown label={selectedCode}>
+                    {countryCodes.map((data) => (
+                      <CustomItem
+                        onClick={() => setSelectedCode(data.code)}
+                        value={selectedCode}
+                        className={"flex flex-row gap-x-1 w-full"}
+                      >
+                        <span className="">{data.code}</span>
+                        <div className="">{data.label}</div>
+                      </CustomItem>
+                    ))}
+                  </CustomDropdown>
+                </div>
                 <input
                   className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                   name="phone"
-                  onBlur={handleBlur("phone")}
-                  onChange={handleChange("phone")}
+                  onChange={(e) => setPhoneWithoutCode(e.target.value)}
+                  onBlur={handlePhoneChange}
                   maxLength={15}
-                  value={values.phone ? values.phone : ""}
+                  value={phoneWithoutCode ? phoneWithoutCode : ""}
                 />
               </div>
               {touched.phone && errors.phone && (

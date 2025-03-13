@@ -17,7 +17,7 @@ import ListOtherExchanges from "../components/pages/layout/Home/ListMode/ListOth
 import ListPendingExchange from "../components/pages/layout/Home/ListMode/ListPendingExchange";
 import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 import { useWalletState } from "../Providers/WalletProvider";
-
+import PiechartAssets from "../components/pages/Dashboard/PiechartAssets";
 export default function Home({ isDemo, platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -148,7 +148,7 @@ export default function Home({ isDemo, platform }) {
             </button>
           </div>
         )}
-        <div className="absolute flex flex-col w-full h-full overflow-y-auto px-8 md:p-0 pb-20">
+        <div className="absolute flex flex-col w-full h-full overflow-y-auto px-0 md:px-8 md:p-0 pb-20">
           <div
             className={`w-full bg-${theme} shadow-${theme} rounded-2xl flex justify-center md:hidden pt-5 pb-2.5 px-5 mt-2`}
           >
@@ -158,9 +158,19 @@ export default function Home({ isDemo, platform }) {
               {lang["home"]}
             </span>
           </div>
-          <div className="mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16 pt-4">
+          <div className="hidden grid-cols-11 grid-rows-1 md:gap-x-10 gap-y-7 pb-16 pt-4">
             <div
-              className={`order-2 md:order-1 h-72 bg-${theme} border-4 border-blue rounded-3xl flex justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12`}
+              className={`xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-11 bg-${theme} rounded-3xl h-72 w-full flex justify-center items-center`}
+            >
+              <PiechartAssets />
+            </div>
+            <div className="xl:col-span-8 lg:col-span-7 md:col-span-6 col-span-11">
+              Other
+            </div>
+          </div>
+          <div className="flex-1 mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16 pt-4">
+            <div
+              className={`order-3 md:order-1 h-72 bg-${theme} border-4 border-blue rounded-3xl flex justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12`}
             >
               <Exchanging
                 selectedCurrecnyPair={selectedCurrecnyPair}
@@ -225,7 +235,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`order-3 md:order-5 min-h-72 md:h-72 mt-2 pb-2 md:pb-0 md:mt-0 bg-${theme} rounded-${oneDirection}-3xl row-span-3 xl:col-span-8 lg:col-span-11 md:col-span-11 col-span-12 rounded-3xl`}
+              className={`order-2 md:order-5 min-h-72 md:h-72 mt-2 pb-2 md:pb-0 md:mt-0 rounded-2xl md:bg-${theme} rounded-${oneDirection}-3xl row-span-3 xl:col-span-8 lg:col-span-11 md:col-span-11 col-span-12 rounded-3xl`}
             >
               <TableExchange
                 selectedSourceIndex={selectedSourceIndex}

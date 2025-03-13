@@ -149,8 +149,8 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             >
               {receiverTanks &&
               receiverTanks[selectedWalletTank] &&
-              receiverTanks[selectedWalletTank].account_name
-                ? receiverTanks[selectedWalletTank].account_name
+              receiverTanks[selectedWalletTank].wallet_tank_account_name
+                ? receiverTanks[selectedWalletTank].wallet_tank_account_name
                 : ""}
             </span>
             <div
