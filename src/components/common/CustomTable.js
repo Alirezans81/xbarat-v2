@@ -8,28 +8,41 @@ export default function CustomTable({
   selectRow,
   haverable,
   color_text,
+  custom_head,
 }) {
   const theme = useThemeState();
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-
   const colsQuantity = heads.length;
   const textColor = color_text ? color_text : oppositeTheme;
   return (
     <div className="w-full flex flex-col h-full">
       <div
-        className={`grid grid-cols-${colsQuantity} gap-x-4 w-full items-center px-4 md:px-0`}
+        className={`grid grid-cols-${colsQuantity} gap-x-4 w-full items-center px-4 md:px-0 ${
+          custom_head && custom_head.roundedDirection
+            ? `rounded-${custom_head.roundedDirection}-2xl`
+            : "rounded-none"
+        } bg-${custom_head ? custom_head.bg : "transparent"}`}
       >
-        {heads.map((head, index) => (
-          <span
-            key={index}
-            className={`col-span-1 text-center-important text-sm md:text-base font-${font}-regular text-gray`}
-          >
-            {head}
-          </span>
-        ))}
+        {custom_head
+          ? heads.map((head, index) => (
+              <span
+                key={index}
+                className={` col-span-1 text-center-important text-sm md:text-base font-${font}-regular text-${custom_head.color}`}
+              >
+                {head}
+              </span>
+            ))
+          : heads.map((head, index) => (
+              <span
+                key={index}
+                className={`col-span-1 text-center-important text-sm md:text-base font-${font}-regular text-gray`}
+              >
+                {head}
+              </span>
+            ))}
       </div>
-      <div className={`w-full min-h-full flex flex-col`}>
+      <div className={`w-full min-h-full flex flex-col justify-between`}>
         {selectRow
           ? rows.map((row, trIndex) => (
               <button
@@ -48,7 +61,7 @@ export default function CustomTable({
                 {Object.values(row).map((value, tdIndex) => (
                   <span
                     key={tdIndex}
-                    className={`flex whitespace-nowrap text-sm md:text-base justify-center col-span-1 text-center-important font-${font}-regular  mt-0.5 -mb-0.5 text-${textColor}`}
+                    className={`flex whitespace-nowrap text-sm md:text-base justify-center col-span-1 text-center-important font-${font}-regular  mt-0.5 -mb-0.5 text-${textColor} max-w-3 overflow-scroll`}
                   >
                     {value}
                   </span>

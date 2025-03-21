@@ -13,6 +13,7 @@ import { useStatusesState } from "../../Providers/StatusesProvider";
 import { useModalDataClose } from "../../Providers/ModalDataProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useGetWalletTanks } from "../../apis/common/wallet/hooks";
+import DirectionSetter from "../../functions/DirectionSetter";
 import { CustomDropdown, CustomItem } from "../common/CustomDropdown";
 import Stepper from "./PendingRequestModal/Stepper";
 import CopyText from "../common/CopyText";
@@ -85,9 +86,9 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
 
   const hasPreviewImage = () => {
     if (
-      data.status_title === "Admin Approve" ||
-      data.status_title === "Accept" ||
-      data.status_title === "Reject"
+      data.status_str === "admin_approve" ||
+      data.status_str === "accept" ||
+      data.status_str === "reject"
     ) {
       return true;
     }
@@ -96,17 +97,17 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
 
   const findStep = () => {
     const type = data && data.type ? data.type : "";
-    const status = data && data.status_title ? data.status_title : "";
+    const status = data && data.status_str ? data.status_str : "";
 
     if (data) {
       if (type === "deposit" || type === "withdrawal") {
-        if (status === "Admin Assign") return 1;
-        if (status === "Upload Document") return 2;
-        if (status === "Admin Approve") return 3;
-        if (status === "Accept" || status === "Reject") return 4;
+        if (status === "admin_assign") return 1;
+        if (status === "upload_document") return 2;
+        if (status === "admin_approve") return 3;
+        if (status === "accept" || status === "reject") return 4;
       } else if (type === "transfer") {
-        if (status === "Admin Approve") return 1;
-        if (status === "Accept" || status === "Reject") return 2;
+        if (status === "admin_approve") return 1;
+        if (status === "accept" || status === "reject") return 2;
       }
     }
   };
@@ -139,10 +140,10 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
         {addComma(+data.amount) + " " + data.currency_abb}
       </span>
       <div className="w-80 mt-3">
-        {data && data.status_title && data.document && hasPreviewImage() && (
+        {data && data.status_str && data.document && hasPreviewImage() && (
           <CustomPreviewer2 imageUrl={data.document} />
         )}
-        {data && data.status_title === "Upload Document" && (
+        {data && data.status_str === "upload_document" && (
           <div className="flex flex-col gap-y-2 mb-5">
             <span
               className={`text-yellow text-xl font-${font}-regular text-center`}
@@ -154,7 +155,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 : ""}
             </span>
             <div
-              dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
+              dir={DirectionSetter(font)}
               className={`flex flex-col bg-${theme}-back rounded-md py-2.5 px-3 font-${font}-regular text-${oppositeTheme}`}
             >
               <div className="w-full flex justify-between pb-3 border-b border-gray">
@@ -274,9 +275,9 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
           </div>
         )}
 
-        {data && data.secret_code && data.status_title === "Admin Approve" && (
+        {data && data.secret_code && data.status_str === "Admin Approve" && (
           <div
-            dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
+            dir={DirectionSetter(font)}
             className={`flex flex-col bg-${theme}-back rounded-md py-2.5 px-3 font-${font}-regular text-${oppositeTheme} mt-1.5`}
           >
             <div
@@ -294,13 +295,13 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
         )}
         <div className="my-1.5">
           <PendingRequestModalStatus
-            status={data.status_title}
+            status={data.status_str}
             rejectReason={
               data && data.reject_description ? data.reject_description : ""
             }
           />
         </div>
-        {data && data.status_title === "Upload Document" && (
+        {data && data.status_str === "upload_document" && (
           <SubmitButton
             disabled={
               !(
@@ -322,11 +323,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   {
                     document,
                     wallet_tank_receiver: receiverTanks[selectedWalletTank].url,
-                    status: statuses
-                      ? statuses.find(
-                          (status) => status.title === "Admin Approve"
-                        ).url
-                      : "",
+                    status: "admin_approve",
                   },
                   () => {
                     refreshPendingRequests();

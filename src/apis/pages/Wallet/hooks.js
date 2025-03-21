@@ -19,6 +19,7 @@ const useGetPendingRequests = () => {
       setIsLoading(true);
       await getPendingRequests(token.access)
         .then((data) => {
+          console.log(data);
           process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setState(data.data.results);
           customFunction && customFunction();

@@ -73,6 +73,18 @@ export default function Balance({ refreshPendingRequests }) {
             >
               ?
             </button>
+            <div className="flex flex-1 w-full h-full justify-end">
+              <button
+                onClick={() => openTransactionModal("deposit")}
+                className="w-full flex xl:hidden gap-x-2 items-center bg-blue text-light rounded-2xl px-4 pt-2 pb-1"
+              >
+                <span
+                  className={`w-full h-full text-light text-xl flex justify-center items-center font-${font}-regular`}
+                >
+                  {lang["deposit"]}
+                </span>
+              </button>
+            </div>
           </div>
           <button
             onClick={() => openTransactionModal("deposit")}
@@ -114,6 +126,18 @@ export default function Balance({ refreshPendingRequests }) {
             >
               ?
             </button>
+            <div className="flex flex-1 w-full h-full justify-end">
+              <button
+                onClick={() => openTransactionModal("deposit")}
+                className="w-full flex xl:hidden gap-x-2 items-center bg-blue text-light rounded-2xl px-4 pt-2 pb-1"
+              >
+                <span
+                  className={`w-full h-full text-light text-xl flex justify-center items-center font-${font}-regular`}
+                >
+                  {lang["deposit"]}
+                </span>
+              </button>
+            </div>
           </div>
         </div>
         <div className="flex-1 px-7 relative flex flex-row justify-center items-center w-full">

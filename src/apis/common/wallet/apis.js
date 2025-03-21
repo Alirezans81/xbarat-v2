@@ -145,7 +145,8 @@ const createDeposit = (params, token) => {
   formData.append("user_sender", params.user_sender);
   formData.append("currency", params.currency);
   formData.append("amount", params.amount);
-  formData.append("status", params.status);
+  formData.append("status_str", params.status);
+  console.log(formData);
   params.branch && formData.append("branch", params.branch);
 
   const headers = {

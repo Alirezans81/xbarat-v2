@@ -45,7 +45,12 @@ import { useGetNews } from "../apis/pages/Layout/hooks";
 import NewsModal from "../components/modals/NewsModal";
 import FreeExchangeModal from "../components/modals/freeExchangeModal";
 import { useLogout } from "../hooks/useAuth";
-
+import Instagram from "../Images/pages/layout/Instagram.png";
+import Whatsapp from "../Images/pages/layout/Whatsapp.png";
+import Telegram from "../Images/pages/layout/Telegram.png";
+import Email from "../Images/pages/layout/Email.png";
+import X from "../Images/pages/layout/X.png";
+import Facebook from "../Images/pages/layout/Facebook.png";
 export default function Layout({ platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
@@ -67,7 +72,8 @@ export default function Layout({ platform }) {
   const userInfo = useUserState();
 
   const [links, setLinks] = useState([]);
-
+  const [expandedSocial, setExpandedSocial] = useState(false);
+  const [enter, setEnter] = useState("");
   const setToastData = useToastDataSetState();
 
   const logout = useLogout();
@@ -322,10 +328,84 @@ export default function Layout({ platform }) {
           platform === "ios"
             ? "bottom-[110px] md:bottom-[20px]"
             : "bottom-[170px] md:bottom-[90px]"
-        } right-[19px] w-[60px] h-[60px] flex justify-center items-center text-3xl bg-${theme}-back shadow-dark shadow-sm-light rounded-full text-${oppositeTheme}`}
-        onClick={openTutorialModal}
+        } right-[19px] w-[60px] h-[${
+          expandedSocial ? "512px" : "60px"
+        }] text-3xl bg-${theme}-back shadow-dark shadow-sm-light rounded-full text-${oppositeTheme}`}
+        onClick={() => setExpandedSocial(!expandedSocial)}
       >
-        <span className="text-4xl -mt-1">?</span>
+        <span
+          className={`text-4xl justify-center items-center rounded-full ${
+            expandedSocial ? "hidden" : "flex"
+          }`}
+        >
+          !
+        </span>
+        <div
+          className={`${
+            expandedSocial ? "flex" : "hidden"
+          } text-base w-full h-full justify-center gap-y-3 items-center flex-col`}
+        >
+          <a
+            onMouseEnter={() => setEnter("Instagram")}
+            onMouseLeave={() => setEnter("")}
+            className="p-2"
+            href="https://www.instagram.com/xbarat.team?igsh=MXEzZTRucjBybmx5Zw=="
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img className="w-8 h-8" src={Instagram} alt="Instagram" />
+          </a>
+          <a
+            onMouseEnter={() => setEnter("Telegram")}
+            onMouseLeave={() => setEnter("")}
+            className="p-2"
+            href="https://t.me/xbaratteam_rate"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img className="w-8 h-8" src={Telegram} alt="Telegram" />
+          </a>
+          <a
+            onMouseEnter={() => setEnter("Email")}
+            onMouseLeave={() => setEnter("")}
+            className="p-2"
+            href="https://github.com/sinabook"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img className="w-8 h-8" src={Email} alt="Email" />
+          </a>
+          <a
+            onMouseEnter={() => setEnter("Whatsapp")}
+            onMouseLeave={() => setEnter("")}
+            className="p-2"
+            href="https://wa.me/989360758639"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img className="w-8 h-8" src={Whatsapp} alt="Whatsapp" />
+          </a>
+          <a
+            onMouseEnter={() => setEnter("Facebook")}
+            onMouseLeave={() => setEnter("")}
+            className="p-2"
+            href="https://www.facebook.com/xbarat.team?mibextid=ZbWKwL"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img className="w-8 h-8" src={Facebook} alt="Facebook" />
+          </a>
+          <a
+            onMouseEnter={() => setEnter("X")}
+            onMouseLeave={() => setEnter("")}
+            className="p-2"
+            href="https://x.com/xbaratteam?t=KcuxFsnaTcYGAeKeSBg9EA&s=09"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img className="w-8 h-8" src={X} alt="X" />
+          </a>
+        </div>
       </button>
       <CustomToast />
       <CustomModal />

@@ -29,7 +29,9 @@
   "password-short-error": "Das Passwort muss mindestens 8 Zeichen lang sein.",
   "password-contain-error": "Das Passwort muss eines der folgenden Zeichen enthalten: [a-z], [A-Z], [0-9], [!@#$%*?]",
   "password-match-error": "Die Passwörter stimmen nicht überein.",
-  "is-active":"ist aktiv",
+  "is-active": "ist aktiv",
+  "list-sellers": "Liste der Verkäufer",
+  "list-buyers": "Liste der Käufer",
   "home": "Startseite",
   "wallet": "Brieftasche",
   "reports": "Berichte",
@@ -406,95 +408,95 @@
     "fee": "Das ist unsere Austauschgebühr."
   },
   "ContextTutorial": {
-        "Deposit": {
-            "context": [
-                "Einzahlungsprozess:",
-                "1- Gehen Sie zum Abschnitt \"Wallet\".",
-                "2- Wählen Sie die gewünschte Währung aus (die Währung, die Sie umwandeln möchten).",
-                "3- Geben Sie den Betrag der Einzahlung ein.",
-                "4- Klicken Sie auf die Schaltfläche \"Senden\" und warten Sie auf die Genehmigung des Administrators.",
-                "5- Nach der Genehmigung durch den Administrator werden je nach ausgewählter Währung die IBAN, die Kartennummer oder die PayPal-Adresse im Abschnitt \"Anfrage\" angezeigt.",
-                "6- Führen Sie die Einzahlung durch.",
-                "7- Laden Sie die Einzahlungsquittung hoch."
-            ],
-            "status": {
-                "Akzeptiert": {
-                    "desc": "Ihre Anfrage wurde genehmigt",
-                    "full": "Ihre Anfrage wurde genehmigt und Ihr Wallet wurde aufgeladen. Der Betrag der Währung ist im Abschnitt \"Guthaben\" Ihres Wallets sichtbar."
-                },
-                "Abgelehnt": {
-                    "desc": "Ihre Anfrage wurde abgelehnt",
-                    "full": "Ihre Anfrage wurde abgelehnt. Der Grund wurde im \"Anfragefeld\" gemeldet."
-                },
-                "Foto hochladen": {
-                    "desc": "In diesem Schritt müssen Sie einen Nachweis über den abgeschlossenen Einzahlungsprozess einreichen",
-                    "full": "Sie müssen ein Foto der Quittung hochladen, das den eingezahlten Betrag, einschließlich Absender, Empfänger und den festgelegten Betrag, zeigt."
-                }
-            }
+    "Deposit": {
+      "context": [
+        "Einzahlungsprozess:",
+        "1- Gehen Sie zum Abschnitt \"Wallet\".",
+        "2- Wählen Sie die gewünschte Währung aus (die Währung, die Sie umwandeln möchten).",
+        "3- Geben Sie den Betrag der Einzahlung ein.",
+        "4- Klicken Sie auf die Schaltfläche \"Senden\" und warten Sie auf die Genehmigung des Administrators.",
+        "5- Nach der Genehmigung durch den Administrator werden je nach ausgewählter Währung die IBAN, die Kartennummer oder die PayPal-Adresse im Abschnitt \"Anfrage\" angezeigt.",
+        "6- Führen Sie die Einzahlung durch.",
+        "7- Laden Sie die Einzahlungsquittung hoch."
+      ],
+      "status": {
+        "Akzeptiert": {
+          "desc": "Ihre Anfrage wurde genehmigt",
+          "full": "Ihre Anfrage wurde genehmigt und Ihr Wallet wurde aufgeladen. Der Betrag der Währung ist im Abschnitt \"Guthaben\" Ihres Wallets sichtbar."
         },
-        "Exchange": {
-            "context": [
-                "Wenn Sie Ihr Geld umtauschen möchten, können Sie hier die Schritte des Austauschprozesses verfolgen:",
-                "1- Gehen Sie zum Abschnitt \"Home\".",
-                "2- Wählen Sie die gewünschte Währung aus.",
-                "3- Geben Sie den Betrag ein, den Sie umtauschen möchten.",
-                "4- Wählen Sie den Wechselkurs aus der Tabelle oder geben Sie Ihren vorgeschlagenen Kurs ein.",
-                "5- Klicken Sie auf die Schaltfläche \"Senden\"."
-            ],
-            "status": {
-                "Akzeptiert": {
-                    "desc": "Ihre Anfrage wurde genehmigt",
-                    "full": "Der Geldumtausch wurde erfolgreich abgeschlossen. Sie können Ihr Guthaben in der Ausgangs- und Zielkarte einsehen."
-                },
-                "Abgelehnt": {
-                    "desc": "Ihre Anfrage wurde abgelehnt",
-                    "full": "Ihre Umtauschanfrage wurde wahrscheinlich aufgrund eines Fehlers während des Geldtransfers abgelehnt."
-                }
-            }
+        "Abgelehnt": {
+          "desc": "Ihre Anfrage wurde abgelehnt",
+          "full": "Ihre Anfrage wurde abgelehnt. Der Grund wurde im \"Anfragefeld\" gemeldet."
         },
-        "Withdraw": {
-            "context": [
-                "Auszahlungsprozess:",
-                "1- Gehen Sie zum Abschnitt \"Wallet\".",
-                "2- Wählen Sie die Auszahlungsoption aus (aus dem Feld der Währung, die Sie abheben möchten).",
-                "3- Geben Sie den Auszahlungsbetrag ein.",
-                "4- Wählen Sie Ihr gewünschtes Konto aus (dies kann eine Kartennummer, IBAN oder PayPal-Adresse sein).",
-                "5- Klicken Sie auf die Schaltfläche \"Senden\" und warten Sie, bis der Administrator die Zahlungsquittung im Abschnitt für Auszahlungsanfragen hochlädt."
-            ],
-            "status": {
-                "Akzeptiert": {
-                    "desc": "Ihre Anfrage wurde genehmigt",
-                    "full": "Ihre Anfrage wurde genehmigt. Warten Sie, bis der Administrator die Zahlungsquittung im Anfrageabschnitt hochlädt."
-                },
-                "Abgelehnt": {
-                    "desc": "Ihre Anfrage wurde abgelehnt",
-                    "full": "Ihre Auszahlungsanfrage wurde abgelehnt. Der Grund wurde im \"Anfragefeld\" gemeldet."
-                }
-            }
-        },
-        "Transfer": {
-            "context": [
-                "Wenn Sie Ihr Geld überweisen möchten, können Sie hier die Schritte des Überweisungsprozesses verfolgen:",
-                "1- Gehen Sie zum Abschnitt \"Wallet\".",
-                "2- Wählen Sie die Karte aus, von der Sie Währung übertragen möchten.",
-                "3- Wählen Sie die Option \"Überweisen\".",
-                "4- Geben Sie den übertragbaren Betrag ein.",
-                "5- Geben Sie den Benutzer-Code der Person, an die Sie Geld überweisen möchten, in das entsprechende Feld ein.",
-                "6- Klicken Sie auf die Schaltfläche \"Senden\"."
-            ],
-            "status": {
-                "Akzeptiert": {
-                    "desc": "Ihre Anfrage wurde genehmigt",
-                    "full": "Ihre Anfrage wurde genehmigt."
-                },
-                "Abgelehnt": {
-                    "desc": "Ihre Anfrage wurde abgelehnt",
-                    "full": "Ihre Überweisungsanfrage wurde abgelehnt, möglicherweise aufgrund eines unzureichenden Guthabens in Ihrer Übertragungswährung."
-                }
-            }
+        "Foto hochladen": {
+          "desc": "In diesem Schritt müssen Sie einen Nachweis über den abgeschlossenen Einzahlungsprozess einreichen",
+          "full": "Sie müssen ein Foto der Quittung hochladen, das den eingezahlten Betrag, einschließlich Absender, Empfänger und den festgelegten Betrag, zeigt."
         }
+      }
     },
-  
+    "Exchange": {
+      "context": [
+        "Wenn Sie Ihr Geld umtauschen möchten, können Sie hier die Schritte des Austauschprozesses verfolgen:",
+        "1- Gehen Sie zum Abschnitt \"Home\".",
+        "2- Wählen Sie die gewünschte Währung aus.",
+        "3- Geben Sie den Betrag ein, den Sie umtauschen möchten.",
+        "4- Wählen Sie den Wechselkurs aus der Tabelle oder geben Sie Ihren vorgeschlagenen Kurs ein.",
+        "5- Klicken Sie auf die Schaltfläche \"Senden\"."
+      ],
+      "status": {
+        "Akzeptiert": {
+          "desc": "Ihre Anfrage wurde genehmigt",
+          "full": "Der Geldumtausch wurde erfolgreich abgeschlossen. Sie können Ihr Guthaben in der Ausgangs- und Zielkarte einsehen."
+        },
+        "Abgelehnt": {
+          "desc": "Ihre Anfrage wurde abgelehnt",
+          "full": "Ihre Umtauschanfrage wurde wahrscheinlich aufgrund eines Fehlers während des Geldtransfers abgelehnt."
+        }
+      }
+    },
+    "Withdraw": {
+      "context": [
+        "Auszahlungsprozess:",
+        "1- Gehen Sie zum Abschnitt \"Wallet\".",
+        "2- Wählen Sie die Auszahlungsoption aus (aus dem Feld der Währung, die Sie abheben möchten).",
+        "3- Geben Sie den Auszahlungsbetrag ein.",
+        "4- Wählen Sie Ihr gewünschtes Konto aus (dies kann eine Kartennummer, IBAN oder PayPal-Adresse sein).",
+        "5- Klicken Sie auf die Schaltfläche \"Senden\" und warten Sie, bis der Administrator die Zahlungsquittung im Abschnitt für Auszahlungsanfragen hochlädt."
+      ],
+      "status": {
+        "Akzeptiert": {
+          "desc": "Ihre Anfrage wurde genehmigt",
+          "full": "Ihre Anfrage wurde genehmigt. Warten Sie, bis der Administrator die Zahlungsquittung im Anfrageabschnitt hochlädt."
+        },
+        "Abgelehnt": {
+          "desc": "Ihre Anfrage wurde abgelehnt",
+          "full": "Ihre Auszahlungsanfrage wurde abgelehnt. Der Grund wurde im \"Anfragefeld\" gemeldet."
+        }
+      }
+    },
+    "Transfer": {
+      "context": [
+        "Wenn Sie Ihr Geld überweisen möchten, können Sie hier die Schritte des Überweisungsprozesses verfolgen:",
+        "1- Gehen Sie zum Abschnitt \"Wallet\".",
+        "2- Wählen Sie die Karte aus, von der Sie Währung übertragen möchten.",
+        "3- Wählen Sie die Option \"Überweisen\".",
+        "4- Geben Sie den übertragbaren Betrag ein.",
+        "5- Geben Sie den Benutzer-Code der Person, an die Sie Geld überweisen möchten, in das entsprechende Feld ein.",
+        "6- Klicken Sie auf die Schaltfläche \"Senden\"."
+      ],
+      "status": {
+        "Akzeptiert": {
+          "desc": "Ihre Anfrage wurde genehmigt",
+          "full": "Ihre Anfrage wurde genehmigt."
+        },
+        "Abgelehnt": {
+          "desc": "Ihre Anfrage wurde abgelehnt",
+          "full": "Ihre Überweisungsanfrage wurde abgelehnt, möglicherweise aufgrund eines unzureichenden Guthabens in Ihrer Übertragungswährung."
+        }
+      }
+    }
+  },
+
   "first-name-required": "Vorname ist erforderlich",
   "first-name-pattern": "Der Vorname darf nur Buchstaben enthalten",
   "last-name-required": "Nachname ist erforderlich",

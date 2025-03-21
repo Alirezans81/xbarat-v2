@@ -4,6 +4,7 @@ import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
 import Exchanging from "../components/pages/layout/Home/Exchanging";
 import TableExchange from "../components/pages/layout/Home/TableExchange";
+import TableExchangeExchanging from "../components/pages/layout/Home/TableExchangeExchanging";
 import PendingExchange from "../components/pages/layout/Home/PendingExchange";
 import OtherExchanges from "../components/pages/layout/Home/OtherExchanges";
 import { useGetPendingExchanges } from "../apis/pages/Home/hooks";
@@ -158,6 +159,8 @@ export default function Home({ isDemo, platform }) {
               {lang["home"]}
             </span>
           </div>
+
+          {/* Pie Chart */}
           <div className="hidden grid-cols-11 grid-rows-1 md:gap-x-10 gap-y-7 pb-16 pt-4">
             <div
               className={`xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-11 bg-${theme} rounded-3xl h-72 w-full flex justify-center items-center`}
@@ -168,9 +171,10 @@ export default function Home({ isDemo, platform }) {
               Other
             </div>
           </div>
+
           <div className="flex-1 mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16 pt-4">
             <div
-              className={`order-3 md:order-1 h-72 bg-${theme} border-4 border-blue rounded-3xl flex justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12`}
+              className={`order-3 md:order-1 h-72 bg-${theme} border-4 border-blue rounded-3xl md:flex hidden justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12`}
             >
               <Exchanging
                 selectedCurrecnyPair={selectedCurrecnyPair}
@@ -235,7 +239,20 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`order-2 md:order-5 min-h-72 md:h-72 mt-2 pb-2 md:pb-0 md:mt-0 rounded-2xl md:bg-${theme} rounded-${oneDirection}-3xl row-span-3 xl:col-span-8 lg:col-span-11 md:col-span-11 col-span-12 rounded-3xl`}
+              className={`order-2 md:hidden min-h-72 mt-2 bg-${theme} rounded-2xl row-span-6 xl:col-span-8   col-span-12 `}
+            >
+              <TableExchangeExchanging
+                selectedSourceIndex={selectedSourceIndex}
+                availableTargets={availableTargets}
+                selectedTargetIndex={selectedTargetIndex}
+                selectedCurrecnyPair={selectedCurrecnyPair}
+                setFormDefaultRate={setFormDefaultRate}
+                focusOnInput={focusOnRateInput}
+                rateIsReversed={rateIsReversed}
+              />
+            </div>
+            <div
+              className={`md:flex hidden md:order-5 min-h-72 md:h-72 mt-2 pb-2 md:pb-0 md:mt-0 rounded-2xl md:bg-${theme} rounded-${oneDirection}-3xl row-span-3 xl:col-span-8 lg:col-span-11 md:col-span-11 col-span-12 rounded-3xl`}
             >
               <TableExchange
                 selectedSourceIndex={selectedSourceIndex}
