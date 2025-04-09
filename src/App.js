@@ -52,8 +52,6 @@ import Pair from "./pages/Currency/Pair";
 import Robots from "./pages/More/Robots";
 import GiftCard from "./pages/Profile/GiftCard";
 import { useCheckLoggedIn } from "./hooks/useAuth";
-import { useGoftinoSetUser } from "./apis/common/goftino/hooks";
-import { useUserState } from "./Providers/UserProvider";
 
 export default function App() {
   const lang = useLanguageState();
@@ -135,14 +133,6 @@ export default function App() {
   useEffect(() => {
     checkLoggedIn();
   }, []);
-
-  const user = useUserState();
-  const { goftinoSetUser } = useGoftinoSetUser();
-  useEffect(() => {
-    if (user) {
-      goftinoSetUser();
-    }
-  }, [user]);
 
   if (lang === "") {
     return <Updating />;

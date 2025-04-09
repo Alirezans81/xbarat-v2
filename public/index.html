@@ -93,7 +93,7 @@
     <!-- Goftino -->
     <script type="text/javascript">
       !(function () {
-        var i = "P69DyA",
+        var i = "syp9af",
           a = window,
           d = document;
         function g() {
@@ -117,6 +117,16 @@
           hasIcon: false,
           counter: "#unread_counter",
         });
+
+        const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+        if (userInfo) {
+          Goftino.setUser({
+            email: userInfo.email,
+            name: userInfo.first_name + " " + userInfo.last_name,
+            phone: userInfo.phone,
+            forceUpdate: true,
+          });
+        }
 
         document
           .getElementById("new_widget_button")
