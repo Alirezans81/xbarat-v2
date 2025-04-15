@@ -373,8 +373,9 @@ const ExchangingSmallScreen = ({
           }) => {
             return (
               <form
-                className={`w-full h-full grid grid-cols-3 gird-rows-2 p-3 pb-5 rounded-b-2xl gap-x-3 gap-y-2`}
+                className={`w-full h-full grid grid-cols-2 gird-rows-6 p-3 pb-8 rounded-b-2xl gap-x-3 gap-y-2`}
               >
+                {/* This Is From Dropdown To Choose Currency */}
                 <div className="col-span-1 row-span-1">
                   <span
                     className={`font-${font}-regular text-${oppositeTheme}`}
@@ -384,7 +385,7 @@ const ExchangingSmallScreen = ({
                   <CustomDropdown2
                     className={`flex-1 font-${font}-regular`}
                     label={
-                      <div className="">
+                      <div className="w-full">
                         {selectedSourceIndex >= 0 ? (
                           <img
                             alt=""
@@ -445,6 +446,7 @@ const ExchangingSmallScreen = ({
                   </CustomDropdown2>
                 </div>
 
+                {/* This To Dropdown To Choose Currency */}
                 <div className="col-span-1 row-span-1">
                   <span
                     className={`font-${font}-regular text-${oppositeTheme} `}
@@ -513,6 +515,7 @@ const ExchangingSmallScreen = ({
                   </CustomDropdown2>
                 </div>
 
+                {/* This Is Amount Input */}
                 <div className="col-span-1 row-span-1 flex flex-col">
                   <span className={`w-full h-fit text-${oppositeTheme}`}>
                     Amount
@@ -574,7 +577,9 @@ const ExchangingSmallScreen = ({
                       value={addComma(values.amount, false)}
                     />
                   </div>
-                  {(values.amount === 0 || values.amount === "") &&
+
+                  {/* This is To Display the Max Button */}
+                  {/* {(values.amount === 0 || values.amount === "") &&
                     selectedSourceIndex >= 0 &&
                     selectedTargetIndex >= 0 &&
                     +walletBalance !== 0 && (
@@ -598,8 +603,10 @@ const ExchangingSmallScreen = ({
                           {lang["amount-input-max-button-label"]}
                         </span>
                       </button>
-                    )}
+                    )} */}
                 </div>
+
+                {/* This is The Rate Input */}
                 <div className="col-span-1 row-span-1 flex flex-col">
                   <span className={`w-full h-fit text-${oppositeTheme}`}>
                     Rate
@@ -674,123 +681,129 @@ const ExchangingSmallScreen = ({
                       }}
                       value={addComma(values.rate, true)}
                     />
-                    {tip &&
-                      !(
-                        values.amount &&
-                        removeComma(values.amount) !== 0 &&
-                        selectedCurrecnyPair &&
-                        values.rate &&
-                        removeComma(values.rate) !== 0
-                      ) && (
-                        <div className="-mb-7 mt-0.5">
-                          <div className="-mt-0.5">
-                            <span
-                              className={`text-${oppositeTheme} font-${font}-regular`}
-                            >
-                              {tip}
-                            </span>
-                          </div>
-                        </div>
-                      )}
                   </div>
                 </div>
-                {values.amount &&
-                  removeComma(values.amount) !== 0 &&
-                  selectedCurrecnyPair &&
-                  values.rate &&
-                  removeComma(values.rate) !== 0 && (
-                    <div className="mt-1 flex items-center">
-                      {errorMessage && errorMessage !== "" ? (
-                        <span
-                          className={`text-red font-${font}-regular mt-0.5 text-sm`}
-                        >
-                          {errorMessage}
-                        </span>
-                      ) : (
-                        <div className="w-full flex items-center justify-between">
-                          <div className="flex items-center gap-x-1">
-                            <img
-                              className="w-5 h-5"
-                              src={require(`../../../../Images/arrow-right-${oppositeTheme}.png`)}
-                            />
+                <div className="col-span-2 row-span-1 ">
+                  {values.amount &&
+                    removeComma(values.amount) !== 0 &&
+                    selectedCurrecnyPair &&
+                    values.rate &&
+                    removeComma(values.rate) !== 0 && (
+                      <div className="mt-1 flex items-center">
+                        {errorMessage && errorMessage !== "" ? (
+                          <span
+                            className={`text-red font-${font}-regular mt-0.5 text-sm`}
+                          >
+                            {errorMessage}
+                          </span>
+                        ) : (
+                          <div className="w-full flex flex-row items-center justify-between">
+                            <div className="w-full flex justify-center items-center gap-x-1">
+                              <img
+                                className="w-5 h-5"
+                                src={require(`../../../../Images/arrow-right-${oppositeTheme}.png`)}
+                              />
+                              <span
+                                className={`text-green font-${font}-regular text`}
+                              >
+                                {addComma(
+                                  roundDown(
+                                    computingTargetAmount(
+                                      removeComma(values.amount),
+                                      removeComma(values.rate),
+                                      selectedCurrecnyPair.rate_multiplier
+                                    ),
+                                    availableTargets[selectedTargetIndex]
+                                      .floating_number
+                                  )
+                                ) +
+                                  " " +
+                                  (availableTargets[selectedTargetIndex]
+                                    ? availableTargets[selectedTargetIndex]
+                                        .abbreviation
+                                    : "")}
+                              </span>
+                            </div>
                             <span
-                              className={`text-${oppositeTheme} font-${font}-regular mt-0.5 text`}
+                              className={`w-full text-${oppositeTheme} font-${font}-regular -mb-0.5`}
                             >
-                              {addComma(
-                                roundDown(
-                                  computingTargetAmount(
-                                    removeComma(values.amount),
-                                    removeComma(values.rate),
-                                    selectedCurrecnyPair.rate_multiplier
-                                  ),
-                                  availableTargets[selectedTargetIndex]
-                                    .floating_number
-                                )
-                              ) +
-                                " " +
-                                (availableTargets[selectedTargetIndex]
-                                  ? availableTargets[selectedTargetIndex]
-                                      .abbreviation
-                                  : "")}
+                              {+selectedCurrecnyPair.fee_percentage
+                                ? "-" +
+                                  addComma(
+                                    (+removeComma(values.amount) *
+                                      +selectedCurrecnyPair.fee_percentage) /
+                                      100
+                                  ) +
+                                  " " +
+                                  currencies[selectedSourceIndex].abbreviation +
+                                  " " +
+                                  lang["fee"]
+                                : ""}
                             </span>
                           </div>
+                        )}
+                      </div>
+                    )}
+                </div>
+                <div className={`col-span-2 row-span-1`}>
+                  {tip &&
+                    !(
+                      values.amount &&
+                      removeComma(values.amount) !== 0 &&
+                      selectedCurrecnyPair &&
+                      values.rate &&
+                      removeComma(values.rate) !== 0
+                    ) && (
+                      <div className="-mb-7 mt-0.5">
+                        <div className="-mt-0.5">
                           <span
-                            className={`text-${oppositeTheme} font-${font}-regular -mb-0.5`}
+                            className={`text-${oppositeTheme} font-${font}-regular`}
                           >
-                            {+selectedCurrecnyPair.fee_percentage
-                              ? "-" +
-                                addComma(
-                                  (+removeComma(values.amount) *
-                                    +selectedCurrecnyPair.fee_percentage) /
-                                    100
-                                ) +
-                                " " +
-                                currencies[selectedSourceIndex].abbreviation +
-                                " " +
-                                lang["fee"]
-                              : ""}
+                            {tip}
                           </span>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
+                </div>
+                <div className="col-span-2 row-span-1 flex flex-col">
+                  {submitButtonFunction === "submit" ? (
+                    <button
+                      type={isDemo ? "button" : "submit"}
+                      onClick={isDemo ? OpenLoginSignupModal : handleSubmit}
+                      className={
+                        values.amount &&
+                        removeComma(values.amount) !== 0 &&
+                        values.rate &&
+                        removeComma(values.rate) !== 0
+                          ? "flex justify-center mt-0.5 items-center w-full h-fit py-0.5 bg-green rounded-lg text-light"
+                          : "flex justify-center mt-7 items-center w-full h-fit py-0.5 bg-green rounded-lg text-light"
+                      }
+                    >
+                      {lang["submit"]}
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        navigate("/wallet", {
+                          state: {
+                            selectedCurrency: currencies[selectedSourceIndex],
+                          },
+                        })
+                      }
+                      className={
+                        values.amount &&
+                        removeComma(values.amount) !== 0 &&
+                        values.rate &&
+                        removeComma(values.rate) !== 0
+                          ? `flex justify-center mt-0.5 items-center w-full pt-2 pb-1 rounded-lg bg-green font-${font}-bold text-light`
+                          : `flex justify-center mt-7 items-center w-full pt-2 pb-1 rounded-lg bg-green font-${font}-bold text-light`
+                      }
+                    >
+                      {lang["deposit"]}
+                    </button>
                   )}
-                {submitButtonFunction === "submit" ? (
-                  <button
-                    type={isDemo ? "button" : "submit"}
-                    onClick={isDemo ? OpenLoginSignupModal : handleSubmit}
-                    className={
-                      values.amount &&
-                      removeComma(values.amount) !== 0 &&
-                      values.rate &&
-                      removeComma(values.rate) !== 0
-                        ? "flex justify-center mt-0.5 items-center w-full py-0.5 bg-green rounded-lg text-light"
-                        : "flex justify-center mt-7 items-center w-full py-0.5 bg-green rounded-lg text-light"
-                    }
-                  >
-                    {lang["submit"]}
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() =>
-                      navigate("/wallet", {
-                        state: {
-                          selectedCurrency: currencies[selectedSourceIndex],
-                        },
-                      })
-                    }
-                    className={
-                      values.amount &&
-                      removeComma(values.amount) !== 0 &&
-                      values.rate &&
-                      removeComma(values.rate) !== 0
-                        ? `flex justify-center mt-0.5 items-center w-full pt-2 pb-1 rounded-lg bg-green font-${font}-bold text-light`
-                        : `flex justify-center mt-7 items-center w-full pt-2 pb-1 rounded-lg bg-green font-${font}-bold text-light`
-                    }
-                  >
-                    {lang["deposit"]}
-                  </button>
-                )}
+                </div>
               </form>
             );
           }}
