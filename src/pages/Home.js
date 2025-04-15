@@ -249,6 +249,22 @@ export default function Home({ isDemo, platform }) {
                 setFormDefaultRate={setFormDefaultRate}
                 focusOnInput={focusOnRateInput}
                 rateIsReversed={rateIsReversed}
+                setSelectedCurrencnyPair={setSelectedCurrencnyPair}
+                formDefaultAmount={formDefaultAmount}
+                setFormDefaultAmount={setFormDefaultAmount}
+                formDefaultRate={formDefaultRate}
+                setRateIsReversed={setRateIsReversed}
+                refreshPendingExchange={refreshPendingExchange}
+                setSelectedSourceIndex={setSelectedSourceIndex}
+                setAvailableTargets={setAvailableTargets}
+                setSelectedTargetIndex={setSelectedTargetIndex}
+                selectedCurrecnyWalletData={selectedCurrecnyWalletData}
+                findCurrencyBalanceInWallet={findCurrencyBalanceInWallet}
+                amountInputRef={amountInputRef}
+                rateInputRef={rateInputRef}
+                isDemo={isDemo}
+                setSource={setSource}
+                setTarget={setTarget}
               />
             </div>
             <div

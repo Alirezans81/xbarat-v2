@@ -10,8 +10,9 @@ import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
 import { useCurrenciesState } from "../../../../Providers/CurrenciesProvider";
 import { useGetTableExchange } from "../../../../apis/pages/Home/hooks";
-import CustomTable from "../../../common/CustomTable";
 import { CustomTooltip } from "../../../common/CustomTooltip";
+import { useCurrencyPairsState } from "../../../../Providers/CurrencyPairsProvider";
+import ExchangingSmallScreen from "./ExchangingSmallScreen";
 const TableExchangeExchanging = ({
   selectedSourceIndex,
   availableTargets,
@@ -20,6 +21,23 @@ const TableExchangeExchanging = ({
   setFormDefaultRate,
   focusOnInput,
   rateIsReversed,
+  amountInputRef,
+  setSelectedCurrencnyPair,
+  formDefaultAmount,
+  setFormDefaultAmount,
+  formDefaultRate,
+  setRateIsReversed,
+  refreshPendingExchange,
+  setSelectedSourceIndex,
+  setAvailableTargets,
+  setSelectedTargetIndex,
+  selectedCurrecnyWalletData,
+  findCurrencyBalanceInWallet,
+  rateInputRef,
+  isDemo,
+  setSource,
+  setTarget,
+  focusOnRateInput,
 }) => {
   const font = useFontState();
   const theme = useThemeState();
@@ -27,56 +45,50 @@ const TableExchangeExchanging = ({
   const lang = useLanguageState();
   const addComma = useAddComma();
   const setLoading = useIsLoadingSplashScreenSetState();
-  const currencies = useCurrenciesState();
   const calculateReverseRate = useCalculateReverseRate();
-
+  const pairs = useCurrencyPairsState();
   const [tableExchangeData, setTableExchangeData] = useState();
 
-  const computeSourceToTargetReversedAmount = (amount, rate, multi) => {
-    if (
-      selectedCurrecnyPair &&
-      selectedSourceIndex >= 0 &&
-      selectedTargetIndex >= 0
-    ) {
-      const newAmount =
-        +selectedCurrecnyPair.fee_percentage === 0
-          ? amount
-          : amount * ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
-      if (
-        selectedCurrecnyPair.default_numerator ===
-        availableTargets[selectedTargetIndex].url
-      ) {
-        return (newAmount * multi) / rate;
+  const computeAmountToUSD = (amount, sourceCurrency, targetCurrency, rate) => {
+    const rateToUSD = pairs.filter(
+      (data) =>
+        data.currency_destination_abb === "USD" &&
+        data.currency_source_abb === sourceCurrency
+    );
+    const rateFromUSD = pairs.filter(
+      (data) =>
+        data.currency_destination_abb === sourceCurrency &&
+        data.currency_source_abb === "USD"
+    );
+
+    if (sourceCurrency === "USD") {
+      return [amount, ""];
+    } else if (targetCurrency === "USD") {
+      if (rateToUSD && rateToUSD.length !== 0) {
+        return rateToUSD[0].has_reverse_rate
+          ? [amount * rate, ""]
+          : [amount / rate, ""];
+      } else if (rateFromUSD && rateFromUSD.length !== 0) {
+        return rateToUSD[0].has_reverse_rate
+          ? [amount * rate, ""]
+          : [amount / rate, ""];
       } else {
-        return (newAmount * rate) / multi;
+        return [amount, "No Currency Pair Between the Two"];
       }
-    } else return 0;
-  };
-
-  const computeTargetToSourceReversedAmount = (amount, rate, multi) => {
-    if (
-      selectedCurrecnyPair &&
-      selectedSourceIndex >= 0 &&
-      selectedTargetIndex >= 0
-    ) {
-      const newAmount =
-        +selectedCurrecnyPair.fee_percentage === 0
-          ? amount
-          : amount * ((100 - +selectedCurrecnyPair.fee_percentage) / 100);
-      if (
-        selectedCurrecnyPair.default_numerator ===
-        availableTargets[selectedTargetIndex].url
-      ) {
-        return (newAmount * rate) / multi;
-      } else {
-        return (newAmount * multi) / rate;
+    } else {
+      if (rateToUSD && rateToUSD.length !== 0) {
+        return rateToUSD[0].has_reverse_rate
+          ? [amount * rateToUSD[0].rate, ""]
+          : [amount / rateToUSD[0].rate, ""];
       }
-    } else return 0;
+      if (rateFromUSD && rateFromUSD.length !== 0) {
+        return rateToUSD[0].has_reverse_rate
+          ? [amount * rateFromUSD[0].rate, ""]
+          : [amount / rateFromUSD[0].rate, ""];
+      }
+      return [amount, "No Currency Pair Between the Two"];
+    }
   };
-
-  const source_to_target_head = [lang["amount"], lang["rate"]];
-  const target_to_source_head = [lang["rate"], lang["amount"]];
-
   const [source_to_target_data, set_source_to_target_data] = useState([]);
   const [target_to_source_data, set_target_to_source_data] = useState([]);
   const selectRow = (row) => {
@@ -99,24 +111,37 @@ const TableExchangeExchanging = ({
                 content={
                   addComma(
                     roundDown(
-                      computeSourceToTargetReversedAmount(
-                        row.total_amount,
-                        row.rate,
-                        +selectedCurrecnyPair.rate_multiplier
-                      ),
+                      row.total_amount,
                       availableTargets[selectedTargetIndex].floating_number
                     )
                   ) +
                   " " +
-                  selectedCurrecnyPair.currency_destination_abb
+                  selectedCurrecnyPair.currency_source_abb
                 }
                 className={`tooltip-${oppositeTheme}`}
                 style={oppositeTheme}
               >
                 <span>
-                  {addComma(row.total_amount) +
+                  {addComma(
+                    roundDown(
+                      computeAmountToUSD(
+                        row.total_amount,
+                        selectedCurrecnyPair.currency_source_abb,
+                        selectedCurrecnyPair.currency_destination_abb,
+                        row.rate
+                      )[0],
+                      availableTargets[selectedTargetIndex].floating_number
+                    )
+                  ) +
                     " " +
-                    selectedCurrecnyPair.currency_source_abb}
+                    (computeAmountToUSD(
+                      row.total_amount,
+                      selectedCurrecnyPair.currency_source_abb,
+                      selectedCurrecnyPair.currency_destination_abb,
+                      row.rate
+                    )[1] === "No Currency Pair Between the Two"
+                      ? selectedCurrecnyPair.currency_source_abb
+                      : "USD")}
                 </span>
               </CustomTooltip>
             );
@@ -153,24 +178,37 @@ const TableExchangeExchanging = ({
                 content={
                   addComma(
                     roundDown(
-                      computeTargetToSourceReversedAmount(
-                        row.total_amount,
-                        row.rate,
-                        +selectedCurrecnyPair.rate_multiplier
-                      ),
-                      +currencies[selectedSourceIndex].floating_number
+                      row.total_amount,
+                      availableTargets[selectedTargetIndex].floating_number
                     )
                   ) +
                   " " +
-                  selectedCurrecnyPair.currency_source_abb
+                  selectedCurrecnyPair.currency_destination_abb
                 }
                 className={`tooltip-${oppositeTheme}`}
                 style={oppositeTheme}
               >
                 <span>
-                  {addComma(row.total_amount) +
+                  {addComma(
+                    roundDown(
+                      computeAmountToUSD(
+                        row.total_amount,
+                        selectedCurrecnyPair.currency_destination_abb,
+                        selectedCurrecnyPair.currency_source_abb,
+                        row.rate
+                      )[0],
+                      availableTargets[selectedTargetIndex].floating_number
+                    )
+                  ) +
                     " " +
-                    selectedCurrecnyPair.currency_destination_abb}
+                    (computeAmountToUSD(
+                      row.total_amount,
+                      selectedCurrecnyPair.currency_destination_abb,
+                      selectedCurrecnyPair.currency_source_abb,
+                      row.rate
+                    )[1] === "No Currency Pair Between the Two"
+                      ? selectedCurrecnyPair.currency_destination_abb
+                      : "USD")}
                 </span>
               </CustomTooltip>
             );
@@ -210,10 +248,17 @@ const TableExchangeExchanging = ({
     selectedCurrecnyPair.currency_destination
   ) {
     return (
-      <div className="w-full h-full flex flex-col p-3 ">
-        <div className="w-full h-fit flex flex-row gap-x-2">
+      <div className="w-full h-full flex flex-col gap-y-2 px-6 pt-5 pb-9">
+        <h1
+          className={`font-${font}-bold text-2xl text-${oppositeTheme} ${
+            font === "Fa" || font === "Ar" ? "-mt-2" : ""
+          }`}
+        >
+          {lang["exchange"]}
+        </h1>
+        <div className="w-full h-fit max-h-48 flex flex-row gap-x-2">
           <div
-            className={`bg-${theme}-back rounded-2xl flex flex-col w-1/2 h-full max-h-52`}
+            className={`bg-${theme}-back rounded-2xl flex flex-col w-1/2 h-full `}
           >
             <div
               className={`font-${font}-regular p-2  text-light flex flex-row w-full h-fit justify-between`}
@@ -232,9 +277,9 @@ const TableExchangeExchanging = ({
                       {Object.values(row).map((value, tdIndex) => (
                         <span
                           key={tdIndex}
-                          className={`text-sm mb-2 max-w-3 ${
+                          className={`text-sm mb-2 ${
                             tdIndex === 0 ? "text-red" : `text-${oppositeTheme}`
-                          } overflow-x-scroll`}
+                          } `}
                         >
                           {value}
                         </span>
@@ -250,9 +295,9 @@ const TableExchangeExchanging = ({
                       {Object.values(row).map((value, tdIndex) => (
                         <span
                           key={tdIndex}
-                          className={`text-sm mb-2 max-w-3 ${
+                          className={`text-sm mb-2 ${
                             tdIndex === 0 ? "text-red" : `text-${oppositeTheme}`
-                          } overflow-x-scroll`}
+                          } `}
                         >
                           {value}
                         </span>
@@ -263,7 +308,7 @@ const TableExchangeExchanging = ({
           </div>
 
           <div
-            className={`bg-${theme}-back rounded-2xl flex flex-col w-1/2 h-full max-h-52`}
+            className={`bg-${theme}-back rounded-2xl flex flex-col w-1/2 h-full max-h-48`}
           >
             <div
               className={`font-${font}-regular p-2  text-light flex flex-row w-full h-fit justify-between`}
@@ -283,11 +328,11 @@ const TableExchangeExchanging = ({
                       {Object.values(row).map((value, tdIndex) => (
                         <span
                           key={tdIndex}
-                          className={`text-sm mb-2 max-w-3 ${
+                          className={`text-sm mb-2 ${
                             tdIndex === 1
                               ? "text-green"
                               : `text-${oppositeTheme}`
-                          } overflow-x-scroll`}
+                          } `}
                         >
                           {value}
                         </span>
@@ -303,11 +348,11 @@ const TableExchangeExchanging = ({
                       {Object.values(row).map((value, tdIndex) => (
                         <span
                           key={tdIndex}
-                          className={`text-sm mb-2 max-w-3 ${
+                          className={`text-sm mb-2  ${
                             tdIndex === 1
                               ? "text-green"
                               : `text-${oppositeTheme}`
-                          } overflow-x-scroll`}
+                          } `}
                         >
                           {value}
                         </span>
@@ -317,19 +362,68 @@ const TableExchangeExchanging = ({
             </div>
           </div>
         </div>
-        <div className="flex-1 w-full h-full"></div>
+        <ExchangingSmallScreen
+          selectedCurrecnyPair={selectedCurrecnyPair}
+          setSelectedCurrencnyPair={setSelectedCurrencnyPair}
+          formDefaultAmount={formDefaultAmount}
+          setFormDefaultAmount={setFormDefaultAmount}
+          formDefaultRate={formDefaultRate}
+          setFormDefaultRate={setFormDefaultRate}
+          rateIsReversed={rateIsReversed}
+          setRateIsReversed={setRateIsReversed}
+          refreshPendingExchange={refreshPendingExchange}
+          selectedSourceIndex={selectedSourceIndex}
+          setSelectedSourceIndex={setSelectedSourceIndex}
+          availableTargets={availableTargets}
+          selectedTargetIndex={selectedTargetIndex}
+          setAvailableTargets={setAvailableTargets}
+          setSelectedTargetIndex={setSelectedTargetIndex}
+          selectedCurrecnyWalletData={selectedCurrecnyWalletData}
+          findCurrencyBalanceInWallet={findCurrencyBalanceInWallet}
+          amountInputRef={amountInputRef}
+          rateInputRef={rateInputRef}
+          focusOnInput={focusOnRateInput}
+          isDemo={isDemo}
+          setSource={setSource}
+          setTarget={setTarget}
+        />
       </div>
     );
   } else {
     return (
-      <div
-        className={`bg-${theme} rounded-2xl h-full w-full flex justify-center items-center px-10`}
-      >
-        <span
-          className={`text-2xl md:text-3xl text-center-important text-${oppositeTheme} font-${font}-thin`}
+      <div className="w-full h-full flex flex-col gap-y-2 px-6 py-5">
+        <h1
+          className={`font-${font}-bold text-2xl text-${oppositeTheme} ${
+            font === "Fa" || font === "Ar" ? "-mt-2" : ""
+          }`}
         >
-          {lang["select-currency-error"] + "."}
-        </span>
+          {lang["exchange"]}
+        </h1>
+        <ExchangingSmallScreen
+          selectedCurrecnyPair={selectedCurrecnyPair}
+          setSelectedCurrencnyPair={setSelectedCurrencnyPair}
+          formDefaultAmount={formDefaultAmount}
+          setFormDefaultAmount={setFormDefaultAmount}
+          formDefaultRate={formDefaultRate}
+          setFormDefaultRate={setFormDefaultRate}
+          rateIsReversed={rateIsReversed}
+          setRateIsReversed={setRateIsReversed}
+          refreshPendingExchange={refreshPendingExchange}
+          selectedSourceIndex={selectedSourceIndex}
+          setSelectedSourceIndex={setSelectedSourceIndex}
+          availableTargets={availableTargets}
+          selectedTargetIndex={selectedTargetIndex}
+          setAvailableTargets={setAvailableTargets}
+          setSelectedTargetIndex={setSelectedTargetIndex}
+          selectedCurrecnyWalletData={selectedCurrecnyWalletData}
+          findCurrencyBalanceInWallet={findCurrencyBalanceInWallet}
+          amountInputRef={amountInputRef}
+          rateInputRef={rateInputRef}
+          focusOnInput={focusOnRateInput}
+          isDemo={isDemo}
+          setSource={setSource}
+          setTarget={setTarget}
+        />
       </div>
     );
   }
