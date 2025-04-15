@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
@@ -51,6 +51,7 @@ import Telegram from "../Images/pages/layout/Telegram.png";
 import Email from "../Images/pages/layout/Email.png";
 import X from "../Images/pages/layout/X.png";
 import Facebook from "../Images/pages/layout/Facebook.png";
+import { CustomTooltip } from "../components/common/CustomTooltip";
 export default function Layout({ platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
@@ -70,12 +71,11 @@ export default function Layout({ platform }) {
   const { pathname: activeRoute } = useLocation();
   const { pathname: currentRoute } = useLocation();
   const userInfo = useUserState();
-
   const [links, setLinks] = useState([]);
   const [expandedSocial, setExpandedSocial] = useState(false);
   const [enter, setEnter] = useState("");
   const setToastData = useToastDataSetState();
-
+  const expandSocialRef = useRef();
   const logout = useLogout();
 
   const openCompleteProfileMessageToast = () => {
@@ -321,9 +321,28 @@ export default function Layout({ platform }) {
       freeExchangeModal();
   }, [user]);
 
+  // This UseEffect Closes Expand Social Button When User clicks outisde of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        expandSocialRef.current &&
+        !expandSocialRef.current.contains(event.target)
+      ) {
+        setExpandedSocial(false);
+      }
+    };
+    if (expandedSocial) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [expandedSocial]);
   return (
     <>
       <button
+        ref={expandSocialRef}
         className={`z-[50] absolute ${
           platform === "ios"
             ? "bottom-[110px] md:bottom-[20px]"
@@ -369,7 +388,7 @@ export default function Layout({ platform }) {
             onMouseEnter={() => setEnter("Email")}
             onMouseLeave={() => setEnter("")}
             className="p-2"
-            href="https://github.com/sinabook"
+            href="mailto:xbarat.team@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
           >
