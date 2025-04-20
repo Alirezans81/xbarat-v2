@@ -12,6 +12,7 @@ import { useFontState } from "../Providers/FontProvider";
 import { useModalDataSetState } from "../Providers/ModalDataProvider";
 import { useUserState } from "../Providers/UserProvider";
 import SecurityGuidline from "../components/modals/SecurityGuidline";
+import { useWalletState } from "../Providers/WalletProvider";
 // import { useLocation, useNavigation } from "react-router-dom";
 // import { useModalDataSetState } from "../Providers/ModalDataProvider";
 // import TransactionModal from "../components/modals/TransactionModal";
@@ -24,6 +25,7 @@ export default function Wallet() {
   const lang = useLanguageState();
   const font = useFontState();
   const token = useTokenState();
+  const wallet = useWalletState();
   // const setModalData = useModalDataSetState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   // const location = useLocation();

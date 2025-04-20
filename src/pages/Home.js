@@ -19,6 +19,7 @@ import ListPendingExchange from "../components/pages/layout/Home/ListMode/ListPe
 import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 import { useWalletState } from "../Providers/WalletProvider";
 import PiechartAssets from "../components/pages/Dashboard/PiechartAssets";
+import Joyride from "react-joyride";
 export default function Home({ isDemo, platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -128,10 +129,81 @@ export default function Home({ isDemo, platform }) {
       }
     }
   };
+  const [runTour, setRunTour] = useState(true);
+  const width = window.innerWidth;
+
+  const steps =
+    width > 767
+      ? [
+          {
+            target: ".exchanging-component",
+            content: "Enter the amount and rate to exchange currencies.",
+          },
+          {
+            target: ".watchlist-component",
+            content:
+              "This is your watchlist. Select currencies to exchange here.",
+          },
+          {
+            target: ".other-exchange-component",
+            content: "Check Other exchanges in Currency Exchanges.",
+          },
+          {
+            target: ".pending-exchange-component",
+            content: "Check your pending exchanges and manage them here.",
+          },
+          {
+            target: ".table-exchange-component",
+            content: "Check Table exchanges and see them here.",
+          },
+        ]
+      : [
+          {
+            target: ".watchlist-component",
+            content:
+              "This is your watchlist. Select currencies to exchange here.",
+          },
+          {
+            target: ".table-exchange-exchanging-component",
+            content: "Check Table exchanges and see them here.",
+          },
+          {
+            target: ".other-exchange-component",
+            content: "Check Other exchanges in Currency Exchanges.",
+          },
+          {
+            target: ".pending-exchange-component",
+            content: "Check your pending exchanges and manage them here.",
+          },
+        ];
 
   if (pageMode === "card" || window.innerWidth <= canSwitchPageModeWidth) {
     return (
       <>
+        <Joyride
+          steps={steps}
+          run={runTour}
+          continuous
+          hideBackButton={true}
+          hideCloseButton={true}
+          showSkipButton={false}
+          showProgress={true}
+          styles={{
+            beaconInner: { borderRadius: "50px" },
+            options: {
+              zIndex: 10000,
+              arrowColor: theme === "dark" ? "#152831" : "#FFFFFF",
+              backgroundColor: theme === "dark" ? "#152831" : "#FFFFFF",
+              textColor: theme === "dark" ? "#FFFFFF" : "#2A2B2E",
+              primaryColor: "#0A8DFF",
+            },
+          }}
+          callback={(data) => {
+            if (data.status === "finished" || data.status === "skipped") {
+              setRunTour(false);
+            }
+          }}
+        />
         {window.innerWidth >= canSwitchPageModeWidth && (
           <div className={`fixed left-4 ${isDemo ? "bottom-32" : "bottom-60"}`}>
             <button
@@ -174,7 +246,7 @@ export default function Home({ isDemo, platform }) {
 
           <div className="flex-1 mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16 pt-4">
             <div
-              className={`order-3 md:order-1 h-72 bg-${theme} border-4 border-blue rounded-3xl md:flex hidden justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12`}
+              className={`order-3 md:order-1 h-72 bg-${theme} border-4 border-blue rounded-3xl md:flex hidden justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12 exchanging-component`}
             >
               <Exchanging
                 selectedCurrecnyPair={selectedCurrecnyPair}
@@ -203,7 +275,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`order-1 md:order-2 h-72 bg-${theme} xl:rounded-3xl lg:rounded-l-3xl row-span-3 xl:col-span-5 lg:col-span-7 md:rounded-r-none md:col-span-6 md:rounded-l-3xl col-span-12 rounded-3xl`}
+              className={`order-1 md:order-2 h-72 bg-${theme} xl:rounded-3xl lg:rounded-l-3xl row-span-3 xl:col-span-5 lg:col-span-7 md:rounded-r-none md:col-span-6 md:rounded-l-3xl col-span-12 rounded-3xl watchlist-component`}
             >
               <WatchList
                 setSource={setSource}
@@ -214,7 +286,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`order-4 md:order-3 h-72 bg-${theme} lg:rounded-3xl xl:rounded-l-3xl xl:rounded-r-none row-span-3 xl:col-span-3 lg:col-span-5 md:col-span-5 md:rounded-3xl col-span-12 rounded-3xl`}
+              className={`order-4 md:order-3 h-72 bg-${theme} lg:rounded-3xl xl:rounded-l-3xl xl:rounded-r-none row-span-3 xl:col-span-3 lg:col-span-5 md:col-span-5 md:rounded-3xl col-span-12 rounded-3xl other-exchange-component`}
             >
               <OtherExchanges
                 selectedCurrecnyPair={selectedCurrecnyPair}
@@ -222,7 +294,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`order-5 md:order-4 h-72 bg-${theme} lg:rounde xl:rounded-3xl row-span-3 xl:col-span-3 lg:col-span-6 lg:rounded-r-none md:col-span-6 md:rounded-r-none col-span-12 rounded-3xl`}
+              className={`order-5 md:order-4 h-72 bg-${theme} lg:rounde xl:rounded-3xl row-span-3 xl:col-span-3 lg:col-span-6 lg:rounded-r-none md:col-span-6 md:rounded-r-none col-span-12 rounded-3xl pending-exchange-component`}
             >
               <PendingExchange
                 pendingExchanges={pendingExchanges}
@@ -239,7 +311,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`order-2 md:hidden min-h-72 mt-2 bg-${theme} rounded-2xl row-span-6 xl:col-span-8   col-span-12 `}
+              className={`order-2 md:hidden min-h-72 mt-2 bg-${theme} rounded-2xl row-span-6 xl:col-span-8   col-span-12 table-exchange-exchanging-component`}
             >
               <TableExchangeExchanging
                 selectedSourceIndex={selectedSourceIndex}
@@ -268,7 +340,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`md:flex hidden md:order-5 min-h-72 md:h-72 mt-2 pb-2 md:pb-0 md:mt-0 rounded-2xl md:bg-${theme} rounded-${oneDirection}-3xl row-span-3 xl:col-span-8 lg:col-span-11 md:col-span-11 col-span-12 rounded-3xl`}
+              className={`md:flex hidden md:order-5 min-h-72 md:h-72 mt-2 pb-2 md:pb-0 md:mt-0 rounded-2xl md:bg-${theme} rounded-${oneDirection}-3xl row-span-3 xl:col-span-8 lg:col-span-11 md:col-span-11 col-span-12 rounded-3xl table-exchange-component`}
             >
               <TableExchange
                 selectedSourceIndex={selectedSourceIndex}
@@ -285,6 +357,19 @@ export default function Home({ isDemo, platform }) {
       </>
     );
   } else if (pageMode === "list") {
+    <Joyride
+      steps={steps}
+      run={runTour}
+      continuous
+      showSkipButton
+      showProgress
+      styles={{ options: { zIndex: 10000 } }}
+      callback={(data) => {
+        if (data.status === "finished" || data.status === "skipped") {
+          setRunTour(false);
+        }
+      }}
+    />;
     return (
       <>
         {window.innerWidth >= canSwitchPageModeWidth && (
@@ -318,7 +403,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`h-72 bg-${theme} border-4 border-blue rounded-3xl flex justify-center items-center row-span-3 col-span-3`}
+              className={`h-72 bg-${theme} border-4 border-blue rounded-3xl flex justify-center items-center row-span-3 col-span-3 exchanging-component`}
             >
               <Exchanging
                 selectedCurrecnyPair={selectedCurrecnyPair}
@@ -345,7 +430,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`h-72 pb-0 mt-0 bg-${theme} rounded-${oneDirection}-3xl row-span-3 col-span-8 `}
+              className={`h-72 pb-0 mt-0 bg-${theme} rounded-${oneDirection}-3xl row-span-3 col-span-8 table-exchange-component`}
             >
               <TableExchange
                 selectedSourceIndex={selectedSourceIndex}
