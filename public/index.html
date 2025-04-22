@@ -93,7 +93,7 @@
     <!-- Goftino -->
     <script type="text/javascript">
       !(function () {
-        var i = "8zbZU0",
+        var i = "syp9af",
           a = window,
           d = document;
         function g() {
@@ -118,9 +118,32 @@
           counter: "#unread_counter",
         });
 
+        const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+        if (userInfo) {
+          Goftino.setUser({
+            email: userInfo.email,
+            name: userInfo.first_name + " " + userInfo.last_name,
+            phone: userInfo.phone,
+            forceUpdate: true,
+          });
+          console.log(userInfo);
+        }
+
         document
           .getElementById("new_widget_button")
           .addEventListener("click", function () {
+            const userInfo = JSON.parse(
+              window.localStorage.getItem("userInfo")
+            );
+            if (userInfo) {
+              Goftino.setUser({
+                email: userInfo.email,
+                name: userInfo.first_name + " " + userInfo.last_name,
+                phone: userInfo.phone,
+                forceUpdate: true,
+              });
+            }
+
             Goftino.toggle();
           });
       });
