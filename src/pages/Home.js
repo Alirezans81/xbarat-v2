@@ -30,7 +30,6 @@ export default function Home({ isDemo, platform }) {
   const token = useTokenState();
   const currencies = useCurrenciesState();
   const wallet = useWalletState();
-
   const amountInputRef = useRef();
   const focusOnAmountInput = () => {
     amountInputRef.current.focus();
@@ -77,6 +76,7 @@ export default function Home({ isDemo, platform }) {
     () => setLoading(getPendingExchangesIsLoading),
     [getPendingExchangesIsLoading]
   );
+
   const refreshPendingExchange = () => {
     token && getPendingExchanges(token, setPendingExchanges);
   };
@@ -133,28 +133,33 @@ export default function Home({ isDemo, platform }) {
   const width = window.innerWidth;
 
   const steps =
-    width > 767
+    width > 768
       ? [
           {
             target: ".exchanging-component",
             content: "Enter the amount and rate to exchange currencies.",
+            placement: "bottom",
           },
           {
             target: ".watchlist-component",
             content:
               "This is your watchlist. Select currencies to exchange here.",
+            placement: "top",
           },
           {
             target: ".other-exchange-component",
             content: "Check Other exchanges in Currency Exchanges.",
+            placement: "top",
           },
           {
             target: ".pending-exchange-component",
             content: "Check your pending exchanges and manage them here.",
+            placement: "top",
           },
           {
             target: ".table-exchange-component",
             content: "Check Table exchanges and see them here.",
+            placement: "top",
           },
         ]
       : [
@@ -162,28 +167,42 @@ export default function Home({ isDemo, platform }) {
             target: ".watchlist-component",
             content:
               "This is your watchlist. Select currencies to exchange here.",
+            placement: "top",
           },
           {
             target: ".table-exchange-exchanging-component",
             content: "Check Table exchanges and see them here.",
+            placement: "top",
           },
           {
             target: ".other-exchange-component",
             content: "Check Other exchanges in Currency Exchanges.",
+            placement: "top",
           },
           {
             target: ".pending-exchange-component",
             content: "Check your pending exchanges and manage them here.",
+            placement: "top",
           },
         ];
-
+  console.log(width);
+  console.log(width > 1024);
   if (pageMode === "card" || window.innerWidth <= canSwitchPageModeWidth) {
     return (
       <>
+        <button
+          onClick={() => setRunTour(true)}
+          className="fixed top-24 right-6 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg z-[9999]"
+        >
+          Start Guide
+        </button>
         <Joyride
           steps={steps}
+          key={runTour}
           run={runTour}
           continuous
+          disableScrolling={width > 1276 ? true : false}
+          scrollOffset={0}
           hideBackButton={true}
           hideCloseButton={true}
           showSkipButton={false}

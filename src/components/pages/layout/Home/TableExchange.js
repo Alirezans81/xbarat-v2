@@ -221,7 +221,7 @@ export default function TableExchange({
   ) {
     return (
       <>
-        <div className={`hidden md:flex w-full h-full max-h-[40dvh] `}>
+        <div className={`hidden md:flex w-full h-[36dvh] `}>
           <div className=" w-full h-full grid grid-cols-2 grid-rows-1 gap-y-14 ">
             <div className="col-span-1 row-span-1 w-full flex flex-col items-center">
               <div
