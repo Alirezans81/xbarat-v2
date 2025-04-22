@@ -1,5 +1,6 @@
 export default function api() {
   const apiDomain = process.env.REACT_APP_API_DOMAIN;
+  const goftinoApiDomain = process.env.REACT_APP_GOFTINO_DOMAIN;
 
   return {
     "sign-up": `${apiDomain}api/user/signup/`,
@@ -42,5 +43,6 @@ export default function api() {
     ticket: `${apiDomain}api/ticket/`,
     "ticket-detail": `${apiDomain}api/ticket-detail/`,
     "giftcard-site": `${apiDomain}api/giftcard-site/`,
+    "goftino-set-user": `${goftinoApiDomain}user_data/`,
   };
 }
