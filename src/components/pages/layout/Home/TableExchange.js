@@ -214,168 +214,115 @@ export default function TableExchange({
         setTableExchangeData
       );
   }, [selectedCurrecnyPair]);
-
   if (
     selectedCurrecnyPair &&
     selectedCurrecnyPair.currency_source &&
     selectedCurrecnyPair.currency_destination
   ) {
     return (
-      <div className="h-full md:pr-5">
-        <div className="hidden md:grid p-3 grid-cols-2 grid-rows-1 mr-2">
-          <div className="col-span-2 md:col-span-1 flex flex-col items-center">
-            <div
-              className={`flex items-center -mt-8 -mr-4 md:mr-0 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
-            >
-              <div className="flex items-center">
-                <img
-                  alt=""
-                  className="w-6 h-6"
-                  src={selectedCurrecnyPair.currency_source_sym_pic_light}
-                />
-                <span className={`text-light font-${font}-bold -mb-1.5`}>
-                  {selectedCurrecnyPair.currency_source_abb}
-                </span>
+      <>
+        <div className={`hidden md:flex w-full h-full max-h-[40dvh] `}>
+          <div className=" w-full h-full grid grid-cols-2 grid-rows-1 gap-y-14 ">
+            <div className="col-span-1 row-span-1 w-full flex flex-col items-center">
+              <div
+                className={`w-2/3 text-xl  font-${font}-regular flex items-center justify-center text-light  -mr-4 md:mr-0 bg-red rounded-xl px-3 pt-2 pb-1.5`}
+              >
+                {lang["list-sellers"]}
               </div>
-              <img
-                alt=""
-                className="w-5 h-5"
-                src={require(`../../../../Images/arrow-${direction}-light.png`)}
-              />
-              <div className="flex items-center">
-                <img
-                  alt=""
-                  className="w-6 h-6"
-                  src={selectedCurrecnyPair.currency_destination_sym_pic_light}
+              <div
+                className={`bg-${theme} overflow-y-scroll rounded-l-2xl flex flex-1 w-full h-full pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2`}
+              >
+                <CustomTable
+                  color_text={`red`}
+                  heads={source_to_target_head}
+                  rows={source_to_target_data}
+                  haverable
+                  selectRow={(row) => {
+                    setFormDefaultRate(row.rate);
+                    focusOnInput();
+                  }}
                 />
-                <span className={`text-light font-${font}-bold -mb-1.5`}>
-                  {selectedCurrecnyPair.currency_destination_abb}
-                </span>
               </div>
             </div>
-          </div>
-          <div className="col-span-2 md:col-span-1 flex flex-col items-center">
-            <div
-              className={`flex items-center -mt-8 -mr-4 md:mr-0 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
-            >
-              <div className="flex items-center">
-                <img
-                  alt=""
-                  className="w-6 h-6"
-                  src={selectedCurrecnyPair.currency_destination_sym_pic_light}
-                />
-                <span className={`text-light font-${font}-bold -mb-1.5`}>
-                  {selectedCurrecnyPair.currency_destination_abb}
-                </span>
+            <div className="col-span-1 row-span-1 w-full flex flex-col items-center">
+              <div
+                className={`w-2/3 bg-green text-light text-xl font-${font}-regular justify-center flex items-center   md:mr-0 rounded-xl px-3 pt-2 pb-1.5`}
+              >
+                {lang["list-buyers"]}
               </div>
-              <img
-                alt=""
-                className="w-5 h-5"
-                src={require(`../../../../Images/arrow-${direction}-light.png`)}
-              />
-              <div className="flex items-center">
-                <img
-                  alt=""
-                  className="w-6 h-6"
-                  src={selectedCurrecnyPair.currency_source_sym_pic_light}
+              <div
+                className={`bg-${theme} overflow-y-scroll flex flex-1 w-full h-full pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2`}
+              >
+                <CustomTable
+                  color_text={`green`}
+                  heads={target_to_source_head}
+                  rows={target_to_source_data}
+                  haverable
+                  selectRow={(row) => {
+                    setFormDefaultRate(row.rate);
+                    focusOnInput();
+                  }}
                 />
-                <span className={`text-light font-${font}-bold -mb-1.5`}>
-                  {selectedCurrecnyPair.currency_source_abb}
-                </span>
               </div>
             </div>
           </div>
         </div>
-        <div className="px-3 md:pb-10 pt-16 md:pt-0 -mt-3 grid grid-cols-2 grid-rows-1 gap-y-14 mr-2 overflow-hidden h-full">
-          <div className="col-span-2 md:col-span-1 relative flex flex-col items-center max-h-[40dvh]">
-            <div
-              className={`flex md:hidden items-center -mt-8 -mr-4 md:mr-0 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
-            >
-              <div className="flex items-center">
-                <img
-                  alt=""
-                  className="w-6 h-6"
-                  src={selectedCurrecnyPair.currency_source_sym_pic_light}
-                />
-                <span className={`text-light font-${font}-bold -mb-1.5`}>
-                  {selectedCurrecnyPair.currency_source_abb}
-                </span>
+
+        {/* for screen < md */}
+        <div
+          className={`md:hidden w-full h-full max-h-[40dvh] min-w-[620px] overflow-scroll`}
+        >
+          <div className=" w-full grid grid-cols-2 grid-rows-1 gap-y-14  overflow-x-scroll h-full">
+            <div className="col-span-1 row-span-1 w-full flex flex-col items-center">
+              <div
+                className={`w-2/3 text-xl  font-${font}-regular  flex items-center justify-center text-light  -mr-4 md:mr-0 bg-red rounded-xl px-3 pt-2 pb-1.5`}
+              >
+                {lang["list-sellers"]}
               </div>
-              <img
-                alt=""
-                className="w-5 h-5"
-                src={require(`../../../../Images/arrow-${direction}-light.png`)}
-              />
-              <div className="flex items-center">
-                <img
-                  alt=""
-                  className="w-6 h-6"
-                  src={selectedCurrecnyPair.currency_destination_sym_pic_light}
+              <div
+                className={`bg-${theme} rounded-l-2xl w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2 overflow-y-auto`}
+              >
+                <CustomTable
+                  color_text={`red`}
+                  heads={source_to_target_head}
+                  rows={source_to_target_data}
+                  haverable
+                  selectRow={(row) => {
+                    setFormDefaultRate(row.rate);
+                    focusOnInput();
+                  }}
                 />
-                <span className={`text-light font-${font}-bold -mb-1.5`}>
-                  {selectedCurrecnyPair.currency_destination_abb}
-                </span>
               </div>
             </div>
-            <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2 overflow-y-auto">
-              <CustomTable
-                heads={source_to_target_head}
-                rows={source_to_target_data}
-                haverable
-                selectRow={(row) => {
-                  setFormDefaultRate(row.rate);
-                  focusOnInput();
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-span-2 md:col-span-1 relative flex flex-col items-center max-h-[40dvh]">
-            <div
-              className={`flex md:hidden items-center -mt-8 -mr-4 md:mr-0 bg-blue-gradient rounded-xl px-3 pt-2 pb-1.5`}
-            >
-              <div className="flex items-center">
-                <img
-                  alt=""
-                  className="w-6 h-6"
-                  src={selectedCurrecnyPair.currency_destination_sym_pic_light}
-                />
-                <span className={`text-light font-${font}-bold -mb-1.5`}>
-                  {selectedCurrecnyPair.currency_destination_abb}
-                </span>
+            <div className="col-span-1 row-span-1 w-full flex flex-col items-center">
+              <div
+                className={`w-2/3 bg-green text-light text-xl font-${font}-regular justify-center flex items-center   md:mr-0 rounded-xl px-3 pt-2 pb-1.5`}
+              >
+                {lang["list-buyers"]}
               </div>
-              <img
-                alt=""
-                className="w-5 h-5"
-                src={require(`../../../../Images/arrow-${direction}-light.png`)}
-              />
-              <div className="flex items-center">
-                <img
-                  alt=""
-                  className="w-6 h-6"
-                  src={selectedCurrecnyPair.currency_source_sym_pic_light}
+              <div
+                className={`bg-${theme} rounded-r-2xl w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2 overflow-y-auto h-full`}
+              >
+                <CustomTable
+                  color_text={`green`}
+                  heads={target_to_source_head}
+                  rows={target_to_source_data}
+                  selectRow={(row) => {
+                    setFormDefaultRate(row.rate);
+                    focusOnInput();
+                  }}
                 />
-                <span className={`text-light font-${font}-bold -mb-1.5`}>
-                  {selectedCurrecnyPair.currency_source_abb}
-                </span>
               </div>
-            </div>
-            <div className="w-full flex-1 pt-4 px-0 -mr-1.5 md:mr-0 md:px-5 pb-2 overflow-y-auto">
-              <CustomTable
-                heads={target_to_source_head}
-                rows={target_to_source_data}
-                selectRow={(row) => {
-                  setFormDefaultRate(row.rate);
-                  focusOnInput();
-                }}
-              />
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   } else {
     return (
-      <div className="h-full w-full flex justify-center items-center px-10">
+      <div
+        className={`bg-${theme} rounded-2xl h-full w-full flex justify-center items-center px-10`}
+      >
         <span
           className={`text-2xl md:text-3xl text-center-important text-${oppositeTheme} font-${font}-thin`}
         >

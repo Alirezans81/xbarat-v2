@@ -12,7 +12,9 @@ import {
   useModalDataClose,
   useModalDataSetState,
 } from "../../../../../Providers/ModalDataProvider";
-
+import DirectionSetter from "../../../../../functions/DirectionSetter";
+import EditExchangeModal from "../../../../modals/EditExchangeModal";
+import { useExchange } from "../../../../../apis/pages/Home/hooks";
 export default function ListPendingExchange({
   pendingExchanges,
   refreshPendingExchange,
@@ -26,30 +28,27 @@ export default function ListPendingExchange({
   const setModalData = useModalDataSetState();
   const closeModal = useModalDataClose();
   const refreshWallet = useRefreshWallet();
-
+  const direction = DirectionSetter(font);
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { cancelPendingExchange, isLoading: cancelPendingExchangeIsLoading } =
     useCancelPendingExchange();
   useEffect(
     () => setLoading(cancelPendingExchangeIsLoading),
     [cancelPendingExchangeIsLoading]
   );
-
-  const openEditAreYouSureModal = (url) => {
+  const { exchange, isLoading: exchangeIsLoading } = useExchange();
+  useEffect(
+    () => setIsLoadingSplashScreen(exchangeIsLoading),
+    [exchangeIsLoading]
+  );
+  const openEditAreYouSureModal = (data, exchange) => {
     setModalData({
-      title: lang["are-you-sure-modal-title"] + "?",
-      children: (
-        <AreYouSureModal
-          onClick={() => {
-            url &&
-              cancelPendingExchange(url, () => {
-                refreshPendingExchange();
-                refreshWallet();
-                closeModal();
-              });
-          }}
-          message={lang["edit-exchange-modal-message"] + "?"}
-        />
-      ),
+      title:
+        direction === "ltr"
+          ? lang["are-you-sure-modal-title"] + "?"
+          : lang["are-you-sure-modal-title"] + "؟",
+      children: <EditExchangeModal data={data} exchange={exchange} />,
+
       canClose: true,
       isOpen: true,
     });
@@ -68,7 +67,11 @@ export default function ListPendingExchange({
                 closeModal();
               });
           }}
-          message={lang["cancel-exchange-modal-message"] + "?"}
+          message={
+            direction === "ltr"
+              ? lang["cancel-exchange-modal-message"] + "?"
+              : lang["cancel-exchange-modal-message"] + "؟"
+          }
         />
       ),
       canClose: true,
@@ -100,7 +103,20 @@ export default function ListPendingExchange({
           <div className="flex items-center gap-x-2 py-2 -mt-1">
             <button
               onClick={() => {
-                row && row.url && openEditAreYouSureModal(row.url);
+                row &&
+                  row.url &&
+                  openEditAreYouSureModal(row, (customFunction) => {
+                    cancelPendingExchange(row.url, () => {
+                      refreshPendingExchange();
+
+                      closeModal();
+                    });
+                    exchange(row, () => {
+                      customFunction && customFunction();
+
+                      refreshPendingExchange();
+                    });
+                  });
               }}
               type="button"
             >

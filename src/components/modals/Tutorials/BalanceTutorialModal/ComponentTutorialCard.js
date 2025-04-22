@@ -37,14 +37,16 @@ export default function ComponentTutorialCardBalance({
           {currency[`sym_pic_${oppositeTheme}`] ? (
             <img
               className={`${
-                hovered === "balance" ? "w-9 h-9" : "w-7 h-7"
+                hovered === "balance"
+                  ? "w-10 h-10 transition-all duration-500"
+                  : "w-7 h-7"
               } -mt-1`}
               src={currency[`sym_pic_${oppositeTheme}`]}
             />
           ) : (
             <span
               className={`text-${oppositeTheme} text-${
-                hovered === "balance" ? "3xl" : "xl"
+                hovered === "balance" ? "4xl" : "xl"
               } font-${font}-regular`}
             >
               {currency && currency.abbreviation ? currency.abbreviation : ""}
@@ -52,7 +54,7 @@ export default function ComponentTutorialCardBalance({
           )}
           <span
             className={`text-${oppositeTheme} text-${
-              hovered === "balance" ? "3xl" : "xl"
+              hovered === "balance" ? "4xl" : "xl"
             }`}
           >
             {addComma(
@@ -69,7 +71,9 @@ export default function ComponentTutorialCardBalance({
         >
           <span
             className={`w-fit px-5 text-green text-center leading-none md:leading-snug -mt-1 transition-all duration-500 ${
-              hovered === "pending" ? "font-black text-xl" : "font-light"
+              hovered === "pending"
+                ? `font-black text-xl underline bg-${oppositeTheme} py-1 px-3`
+                : "font-light"
             } rounded-2xl`}
           >
             {"+ " +
@@ -84,7 +88,9 @@ export default function ComponentTutorialCardBalance({
           </span>
           <span
             className={`w-fit px-5 text-red text-center leading-none md:leading-snug mt-1 transition-all duration-500 ${
-              hovered === "locked" ? "font-black text-xl" : "font-light"
+              hovered === "locked"
+                ? `font-black text-xl underline bg-${oppositeTheme} py-1 px-3`
+                : "font-light"
             } rounded-2xl`}
           >
             {"+ " +
@@ -103,14 +109,18 @@ export default function ComponentTutorialCardBalance({
         >
           <div
             className={`border-2 border-blue border-solid text-blue rounded-lg  px-10 pt-2 pb-0.5 w-full  flex justify-center ${
-              hovered === "transfer" ? "text-lg font-bold" : "text-sm"
+              hovered === "transfer"
+                ? `text-lg font-bold bg-${oppositeTheme} transition-all duration-500 border-4`
+                : "text-sm"
             }`}
           >
             {lang["transfer"]}
           </div>
           <div
             className={`border-2 border-red border-solid text-red rounded-lg pt-2  px-10 pb-0.5 w-full transitioin-all duration-500 flex justify-center ${
-              hovered === "withdraw" ? "text-lg font-bold" : "text-sm"
+              hovered === "withdraw"
+                ? `text-lg font-bold bg-${oppositeTheme} transition-all duration-500 border-4`
+                : "text-sm"
             }`}
           >
             {lang["withdrawal"]}

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import DirectionSetter from "../../../../functions/DirectionSetter";
 import { useFontState } from "../../../../Providers/FontProvider";
 import { useThemeState } from "../../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../../Providers/LanguageProvider";
@@ -15,20 +16,25 @@ const Tutorial = () => {
     min_rate: 1.3,
     max_rate: 1.8,
   };
-  const heads = [lang['currency-pair'], lang['rate'], lang["low"], lang["high"]];
+  const heads = [
+    lang["currency-pair"],
+    lang["rate"],
+    lang["low"],
+    lang["high"],
+  ];
   const [hovered, setHovered] = useState(-1);
   return (
     <div className="w-fit h-fit flex flex-col justify-center items-center gap-y-3 py-3 px-5">
       <ul
-        dir={font !== "Fa" ? "ltr" : "rtl"}
-
+        dir={DirectionSetter(font)}
         className={`w-full h-fit flex justify-start items-start gap-y-1 flex-col text-${oppositeTheme} pl-1 py-1 transition-all duration-500`}
       >
         <li
-          className={`${hovered === 0
-            ? "bg-blue rounded-2xl transition-all duration-500 p-2"
-            : "bg-none p-2"
-            }`}
+          className={`${
+            hovered === 0
+              ? "bg-blue rounded-2xl text-light  transition-all duration-500 p-2"
+              : "bg-none p-2"
+          }`}
           onMouseEnter={() => setHovered(0)}
           onClick={() => setHovered(0)}
           onMouseLeave={() => setHovered(-1)}
@@ -37,10 +43,11 @@ const Tutorial = () => {
           {context["currencyPair"]}
         </li>
         <li
-          className={`${hovered === 1
-            ? "bg-blue rounded-2xl transition-all duration-500 p-2"
-            : "bg-none p-2"
-            }`}
+          className={`${
+            hovered === 1
+              ? "bg-blue rounded-2xl text-light transition-all duration-500 p-2"
+              : "bg-none p-2"
+          }`}
           onMouseEnter={() => setHovered(1)}
           onClick={() => setHovered(1)}
           onMouseLeave={() => setHovered(-1)}
@@ -49,10 +56,11 @@ const Tutorial = () => {
           {context["rate"]}
         </li>
         <li
-          className={`${hovered === 2
-            ? "bg-blue rounded-2xl transition-all duration-500 p-2"
-            : "bg-none p-2"
-            }`}
+          className={`${
+            hovered === 2
+              ? "bg-blue text-light  rounded-2xl transition-all duration-500 p-2"
+              : "bg-none p-2"
+          }`}
           onMouseEnter={() => setHovered(2)}
           onMouseLeave={() => setHovered(-1)}
           onClick={() => setHovered(2)}
@@ -61,10 +69,11 @@ const Tutorial = () => {
           {context["low"]}
         </li>
         <li
-          className={`${hovered === 3
-            ? "bg-blue rounded-2xl transition-all duration-500 p-2"
-            : "bg-none p-2"
-            }`}
+          className={`${
+            hovered === 3
+              ? "bg-blue text-light  rounded-2xl transition-all duration-500 p-2"
+              : "bg-none p-2"
+          }`}
           onMouseEnter={() => setHovered(3)}
           onClick={() => setHovered(3)}
           onMouseLeave={() => setHovered(-1)}
@@ -89,10 +98,11 @@ const Tutorial = () => {
         {Object.values(row).map((value, tdIndex) => (
           <span
             key={tdIndex}
-            className={`flex whitespace-nowrap ${hovered === tdIndex
-              ? "px-2 text-2xl underline animate-appear"
-              : "px-2 text-2xl"
-              } justify-center col-span-1 text-center-important font-${font}-regular text-${oppositeTheme}`}
+            className={`flex whitespace-nowrap ${
+              hovered === tdIndex
+                ? "px-2 text-2xl underline animate-appear"
+                : "px-2 text-2xl"
+            } justify-center col-span-1 text-center-important font-${font}-regular text-${oppositeTheme}`}
           >
             {value}
           </span>

@@ -23,15 +23,12 @@ export default function ExchangingExchangeFormTutorialComponent({ hovered }) {
       <div className="flex items-center gap-1">
         <CustomDropdown2
           className={`flex-1 font-${font}-regular ${
-            hovered === "Source Currency" ? "animate-leftward" : ""
+            hovered === "Source Currency"
+              ? "animate-leftward underline border-4 border-${oppositeTheme} rounded-2xl px-3 py-1 w-full"
+              : ""
           }`}
           label={
             <div className="flex">
-              {/* <img
-                className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
-                src={currencies[0] ? currencies[0].sym_pic_gray : ""}
-              /> */}
-
               <span className={`-m${oneDirection}-0.5`}>{lang["source"]}</span>
             </div>
           }
@@ -96,7 +93,9 @@ export default function ExchangingExchangeFormTutorialComponent({ hovered }) {
         </button>
         <CustomDropdown2
           className={`flex-1 font-${font}-regular ${
-            hovered === "Target Currency" ? "animate-leftward" : ""
+            hovered === "Target Currency"
+              ? `animate-leftward underline border-4 border-${oppositeTheme} rounded-2xl px-3 py-1 w-full`
+              : ""
           }`}
           label={
             <div className="flex">
@@ -172,7 +171,7 @@ export default function ExchangingExchangeFormTutorialComponent({ hovered }) {
         <div className="flex-1 flex relative">
           <input
             className={`flex-1 text-left ${
-              hovered === "Source Amount" ? "animate-leftward" : ""
+              hovered === "Source Amount" ? `animate-rightward underline` : ""
             } hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
             placeholder={lang["amount"]}
             name="amount"
@@ -183,8 +182,8 @@ export default function ExchangingExchangeFormTutorialComponent({ hovered }) {
         <div className="flex-1 flex">
           <input
             className={`flex-1 ${
-              hovered === "Custom Rate" ? "animate-leftward" : ""
-            } text-center hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
+              hovered === "Custom Rate" ? "animate-rightward underline" : ""
+            } text-start hide-input-arrows bg-${theme}-back px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
             placeholder={lang["rate"]}
             name="rate"
             value={addComma(1.6, true)}
