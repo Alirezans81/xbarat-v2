@@ -47,7 +47,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     () => setLoading(getWalletTanksIsLoading),
     [getWalletTanksIsLoading]
   );
-  console.log(receiverTanks);
+
   useEffect(() => {
     if (data && data.user_receiver_username && data.currency_slug) {
       getWalletTanks(
