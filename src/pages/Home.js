@@ -379,21 +379,45 @@ export default function Home({ isDemo, platform }) {
       </>
     );
   } else if (pageMode === "list") {
-    <Joyride
-      steps={steps}
-      run={runTour}
-      continuous
-      showSkipButton
-      showProgress
-      styles={{ options: { zIndex: 10000 } }}
-      callback={(data) => {
-        if (data.status === "finished" || data.status === "skipped") {
-          setRunTour(false);
-        }
-      }}
-    />;
     return (
       <>
+        <button
+          onClick={() => setRunTour(true)}
+          className={`${
+            runTour ? "hidden" : ""
+          } font-${font}-regular fixed top-24 right-6 bg-blue  text-white px-4 pb-1 pt-2 rounded-full shadow-lg z-[9999]`}
+        >
+          Start Guide
+        </button>
+        <Joyride
+          steps={steps}
+          key={runTour}
+          run={runTour}
+          beaconComponent={CustomBeacon}
+          tooltipComponent={CustomTooltip}
+          continuous
+          disableScrolling={false}
+          scrollOffset={0}
+          hideBackButton={true}
+          hideCloseButton={true}
+          showSkipButton={false}
+          showProgress={true}
+          styles={{
+            beaconInner: { borderRadius: "50px" },
+            options: {
+              zIndex: 10000,
+              arrowColor: theme === "dark" ? "#152831" : "#FFFFFF",
+              backgroundColor: theme === "dark" ? "#152831" : "#FFFFFF",
+              textColor: theme === "dark" ? "#FFFFFF" : "#2A2B2E",
+              primaryColor: "#0A8DFF",
+            },
+          }}
+          callback={(data) => {
+            if (data.status === "finished" || data.status === "skipped") {
+              setRunTour(false);
+            }
+          }}
+        />
         {window.innerWidth >= canSwitchPageModeWidth && (
           <div className={`fixed left-4 ${isDemo ? "bottom-32" : "bottom-60"}`}>
             <button
@@ -411,10 +435,10 @@ export default function Home({ isDemo, platform }) {
             </button>
           </div>
         )}
-        <div className="absolute flex flex-col w-full h-full overflow-y-auto px-8 md:p-0">
+        <div className="absolute flex flex-col w-full h-full overflow-y-scroll px-8 md:p-0">
           <div className="mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16">
             <div
-              className={`h-72 bg-${theme} col-span-11 row-span-3 rounded-l-3xl`}
+              className={`h-72 bg-${theme} col-span-11 row-span-3 rounded-l-3xl watchlist-component`}
             >
               <ListWatchList
                 setSource={setSource}
@@ -463,14 +487,16 @@ export default function Home({ isDemo, platform }) {
                 focusOnInput={focusOnRateInput}
               />
             </div>
-            <div className={`h-72 bg-${theme} rounded-l-3xl col-span-11`}>
+            <div
+              className={`h-72 bg-${theme} rounded-l-3xl col-span-11 other-exchange-component`}
+            >
               <ListOtherExchanges
                 selectedCurrecnyPair={selectedCurrecnyPair}
                 rateIsReversed={rateIsReversed}
               />
             </div>
             <div
-              className={`h-72 bg-${theme} row-span-3 col-span-11 rounded-l-3xl`}
+              className={`h-72 bg-${theme} row-span-3 col-span-11 rounded-l-3xl pending-exchange-component`}
             >
               <ListPendingExchange
                 pendingExchanges={pendingExchanges}
