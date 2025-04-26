@@ -20,6 +20,8 @@ import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 import { useWalletState } from "../Providers/WalletProvider";
 import PiechartAssets from "../components/pages/Dashboard/PiechartAssets";
 import Joyride from "react-joyride";
+import CustomBeacon from "../components/common/Tour/CustomBeacon";
+import CustomTooltip from "../components/common/Tour/CustomTooltip";
 export default function Home({ isDemo, platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -137,62 +139,61 @@ export default function Home({ isDemo, platform }) {
       ? [
           {
             target: ".exchanging-component",
-            content: "Enter the amount and rate to exchange currencies.",
+            content: lang["exchangin-component-tour"],
             placement: "bottom",
           },
           {
             target: ".watchlist-component",
-            content:
-              "This is your watchlist. Select currencies to exchange here.",
+            content: lang["watchlist-component-tour"],
             placement: "top",
           },
           {
             target: ".other-exchange-component",
-            content: "Check Other exchanges in Currency Exchanges.",
+            content: lang["other-exchange-component-tour"],
             placement: "top",
           },
           {
             target: ".pending-exchange-component",
-            content: "Check your pending exchanges and manage them here.",
+            content: lang["pending-exchange-component-tour"],
             placement: "top",
           },
           {
             target: ".table-exchange-component",
-            content: "Check Table exchanges and see them here.",
+            content: lang["table-exchange-component-tour"],
             placement: "top",
           },
         ]
       : [
           {
             target: ".watchlist-component",
-            content:
-              "This is your watchlist. Select currencies to exchange here.",
+            content: lang["watchlist-component-tour"],
             placement: "top",
           },
           {
             target: ".table-exchange-exchanging-component",
-            content: "Check Table exchanges and see them here.",
+            content: lang["table-exchange-exchanging-tour"],
             placement: "top",
           },
           {
             target: ".other-exchange-component",
-            content: "Check Other exchanges in Currency Exchanges.",
+            content: lang["other-exchange-component-tour"],
             placement: "top",
           },
           {
             target: ".pending-exchange-component",
-            content: "Check your pending exchanges and manage them here.",
+            content: lang["pending-exchange-component-tour"],
             placement: "top",
           },
         ];
-  console.log(width);
-  console.log(width > 1024);
+
   if (pageMode === "card" || window.innerWidth <= canSwitchPageModeWidth) {
     return (
       <>
         <button
           onClick={() => setRunTour(true)}
-          className="fixed top-24 right-6 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg z-[9999]"
+          className={`${
+            runTour ? "hidden" : ""
+          } font-${font}-regular fixed top-24 right-6 bg-blue  text-white px-4 pb-1 pt-2 rounded-full shadow-lg z-[9999]`}
         >
           Start Guide
         </button>
@@ -200,6 +201,8 @@ export default function Home({ isDemo, platform }) {
           steps={steps}
           key={runTour}
           run={runTour}
+          beaconComponent={CustomBeacon}
+          tooltipComponent={CustomTooltip}
           continuous
           disableScrolling={width > 1276 ? true : false}
           scrollOffset={0}
