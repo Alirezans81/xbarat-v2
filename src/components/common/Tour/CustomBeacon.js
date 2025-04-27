@@ -1,7 +1,8 @@
 import { forwardRef } from "react";
 import { useFontState } from "../../../Providers/FontProvider";
-import { useThemeState } from "../../../Providers/ThemeProvider";
+import { useLanguageState } from "../../../Providers/LanguageProvider";
 const CustomBeacon = forwardRef(({ onClick, ...props }, ref) => {
+  const lang = useLanguageState();
   const font = useFontState();
   return (
     <button
@@ -10,7 +11,7 @@ const CustomBeacon = forwardRef(({ onClick, ...props }, ref) => {
       {...props}
       className={`bg-blue text-light white animate-pulse py-6 px-4 rounded-full font-${font}-bold`}
     >
-      Start
+      {lang["start"]}
     </button>
   );
 });

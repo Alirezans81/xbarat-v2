@@ -36,7 +36,7 @@ function CustomTooltip({
               {...primaryProps}
               className="px-4 py-1.5 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-sm"
             >
-              {primaryProps.title || "Next"}
+              {primaryProps.title || "بعدی"}
             </button>
           )}
         </div>

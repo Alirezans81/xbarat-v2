@@ -199,7 +199,7 @@ export default function Home({ isDemo, platform }) {
           },
           {
             target: ".table-exchange-exchanging-component",
-            content: lang["table-exchange-exchanging-tour"],
+            content: lang["table-exchange-exchanging-component-tour"],
             placement: "top",
           },
           {
@@ -223,12 +223,21 @@ export default function Home({ isDemo, platform }) {
             runTour ? "hidden" : ""
           } font-${font}-regular fixed top-24 right-6 bg-blue  text-white px-4 pb-1 pt-2 rounded-full shadow-lg z-[9999]`}
         >
-          Start Guide
+          {lang["start"] + " " + lang["guide"]}
         </button>
         <Joyride
           steps={steps}
           key={runTour}
           run={runTour}
+          locale={{
+            back: lang["back"],
+            close: lang["close"],
+            last: lang["last"],
+            next: lang["next"],
+            nextLabelWithProgress: `${lang["next"]} (${lang["step"]} {step} ${lang["of"]} {steps})`,
+            open: lang["open"],
+            skip: lang["skip"],
+          }}
           beaconComponent={CustomBeacon}
           tooltipComponent={CustomTooltip}
           continuous
@@ -415,7 +424,7 @@ export default function Home({ isDemo, platform }) {
             runTour ? "hidden" : ""
           } font-${font}-regular fixed top-24 right-6 bg-blue  text-white px-4 pb-1 pt-2 rounded-full shadow-lg z-[9999]`}
         >
-          Start Guide
+          {lang["start"] + " " + lang["guide"]}
         </button>
         <Joyride
           steps={steps}
