@@ -135,7 +135,7 @@ export default function Home({ isDemo, platform }) {
   const width = window.innerWidth;
 
   const steps =
-    width > 768
+    width > 768 && pageMode === "card"
       ? [
           {
             target: ".exchanging-component",
@@ -160,6 +160,34 @@ export default function Home({ isDemo, platform }) {
           {
             target: ".table-exchange-component",
             content: lang["table-exchange-component-tour"],
+            placement: "top",
+          },
+        ]
+      : width > 768 && pageMode === "list"
+      ? [
+          {
+            target: ".watchlist-component",
+            content: lang["watchlist-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".exchanging-component",
+            content: lang["exchangin-component-tour"],
+            placement: "bottom",
+          },
+          {
+            target: ".table-exchange-component",
+            content: lang["table-exchange-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".other-exchange-component",
+            content: lang["other-exchange-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".pending-exchange-component",
+            content: lang["pending-exchange-component-tour"],
             placement: "top",
           },
         ]
@@ -435,7 +463,7 @@ export default function Home({ isDemo, platform }) {
             </button>
           </div>
         )}
-        <div className="absolute flex flex-col w-full h-full overflow-y-scroll px-8 md:p-0">
+        <div className="absolute flex flex-col w-full h-full overflow-y-auto px-8 md:p-0">
           <div className="mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16">
             <div
               className={`h-72 bg-${theme} col-span-11 row-span-3 rounded-l-3xl watchlist-component`}
