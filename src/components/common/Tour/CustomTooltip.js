@@ -1,4 +1,6 @@
 import { useThemeState } from "../../../Providers/ThemeProvider";
+import { useFontState } from "../../../Providers/FontProvider";
+import DirectionSetter from "../../../functions/DirectionSetter";
 function CustomTooltip({
   closeProps,
   continuous,
@@ -6,6 +8,7 @@ function CustomTooltip({
   step,
   tooltipProps,
 }) {
+  const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   return (
@@ -25,10 +28,15 @@ function CustomTooltip({
       {step.title && <h3 className="text-xl font-bold mb-2">{step.title}</h3>}
 
       {/* Step Content */}
-      <div className="text-base mb-4">{step.content}</div>
+      <div dir={DirectionSetter(font)} className="text-base mb-4">
+        {step.content}
+      </div>
 
       {/* Footer Buttons */}
-      <div className="flex justify-between items-center">
+      <div
+        dir={DirectionSetter(font)}
+        className="flex justify-between items-center"
+      >
         {/* Right Side: Back and Next */}
         <div className="flex gap-2">
           {continuous && (
@@ -36,7 +44,7 @@ function CustomTooltip({
               {...primaryProps}
               className="px-4 py-1.5 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-sm"
             >
-              {primaryProps.title || "بعدی"}
+              {primaryProps.title || "Next"}
             </button>
           )}
         </div>

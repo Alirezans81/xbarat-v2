@@ -115,13 +115,22 @@ export default function Wallet() {
           runTour ? "hidden" : ""
         } font-${font}-regular fixed top-24 right-6 bg-blue  text-white px-4 pb-1 pt-2 rounded-full shadow-lg z-[9999]`}
       >
-        Start Guide
+        {lang["start"] + " " + lang["guide"]}
       </button>
       <Joyride
         steps={steps}
         key={runTour}
         run={runTour}
         beaconComponent={CustomBeacon}
+        locale={{
+          back: lang["back"],
+          close: lang["close"],
+          last: lang["last"],
+          next: lang["next"],
+          nextLabelWithProgress: `${lang["next"]} (${lang["step"]} {step} ${lang["of"]} {steps})`,
+          open: lang["open"],
+          skip: lang["skip"],
+        }}
         tooltipComponent={CustomTooltip}
         continuous
         scrollOffset={0}

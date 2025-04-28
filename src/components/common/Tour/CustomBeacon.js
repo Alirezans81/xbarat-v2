@@ -9,7 +9,7 @@ const CustomBeacon = forwardRef(({ onClick, ...props }, ref) => {
       ref={ref}
       onClick={onClick}
       {...props}
-      className={`bg-blue text-light white animate-pulse py-6 px-4 rounded-full font-${font}-bold`}
+      className={`w-full h-full bg-blue text-light flex justify-center items-center animate-pulse p-3 rounded-2xl font-${font}-bold`}
     >
       {lang["start"]}
     </button>
