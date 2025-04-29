@@ -407,7 +407,7 @@ export default function Layout({ platform }) {
               key={index}
               trigger="hover"
               content={item.content}
-              placement="right" // or "top" or "bottom" depending on your design
+              placement="right"
               className={`z-50 text-xs p-2 bg-${theme} text-${oppositeTheme} border border-gray-200 rounded-md shadow-md`}
             >
               <a

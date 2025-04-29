@@ -37,7 +37,6 @@ export default function Withdrawal({
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
-
   const setToastData = useToastDataSetState();
   const openNotEnoughBalanceToast = () => {
     setToastData({
@@ -174,7 +173,8 @@ export default function Withdrawal({
     if (currencies[selectedCurrencyIndex]) {
       const min =
         +currencies[selectedCurrencyIndex].min_withdrawal_lot *
-        +currencies[selectedCurrencyIndex].lot;
+          +currencies[selectedCurrencyIndex].lot +
+        removeComma(feeWithdrawal);
       const max =
         +currencies[selectedCurrencyIndex].max_withdrawal_lot *
         +currencies[selectedCurrencyIndex].lot;
@@ -187,7 +187,14 @@ export default function Withdrawal({
       }
     }
   };
-
+  const [feeWithdrawal, setFeeWithdrawal] = useState("");
+  useEffect(() => {
+    setFeeWithdrawal(
+      currencies.filter(
+        (currency) => currency.abbreviation === data.currency_abb
+      )[0].fee_withdrawal
+    );
+  }, []);
   return (
     <Formik
       initialValues={{ amount: amount || "", title: "", bank_info: "" }}
@@ -211,7 +218,7 @@ export default function Withdrawal({
                     walletTanks[selectedWalletTankIndex].url
                       ? walletTanks[selectedWalletTankIndex].url
                       : "",
-                  amount: removeComma(values.amount),
+                  amount: removeComma(values.amount - feeWithdrawal),
                   status: statuses
                     ? statuses.find((status) => status.title === "Admin Assign")
                         .url
@@ -258,7 +265,7 @@ export default function Withdrawal({
                           ? currencies[selectedCurrencyIndex].url
                           : "",
                       wallet_tank_receiver: data && data.url ? data.url : "",
-                      amount: removeComma(values.amount),
+                      amount: removeComma(values.amount - feeWithdrawal),
                       status: statuses
                         ? statuses.find(
                             (status) => status.title === "Admin Assign"
@@ -286,7 +293,7 @@ export default function Withdrawal({
                       walletTanks[selectedWalletTankIndex].url
                         ? walletTanks[selectedWalletTankIndex].url
                         : "",
-                    amount: removeComma(values.amount),
+                    amount: removeComma(values.amount - feeWithdrawal),
                     status: statuses
                       ? statuses.find(
                           (status) => status.title === "Admin Assign"
@@ -307,16 +314,47 @@ export default function Withdrawal({
     >
       {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
         <div className="flex flex-col">
-          <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-            <span className={`font-${font}-regular text-${oppositeTheme}`}>
-              {lang["balance"]}
-            </span>
-            <div className="w-full flex -mt-1">
-              <span
-                className={`text-${oppositeTheme} font-${font}-bold text-2xl`}
-              >
-                {addComma(+data.balance) + " " + data.currency_abb}
+          <div className="w-full h-fit flex flex-row">
+            <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+              <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                {lang["balance"]}
               </span>
+              <div className="w-full flex -mt-1">
+                <span
+                  className={`text-${oppositeTheme} font-${font}-bold text-2xl`}
+                >
+                  {addComma(+data.balance) + " " + data.currency_abb}
+                </span>
+              </div>
+            </div>
+
+            {/* fee Withdrawal */}
+            <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+              <span
+                className={`font-${font}-regular justify-center w-full flex text-${oppositeTheme}`}
+              >
+                Fee
+              </span>
+              <div className="w-full flex  justify-center items-center -mt-1">
+                <span className={`text-red font-${font}-bold text-2xl`}>
+                  {addComma(+feeWithdrawal)}
+                </span>
+              </div>
+            </div>
+            {/* balance - fee */}
+            <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+              <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                Max Withdraw
+              </span>
+              <div className="w-full flex -mt-1">
+                <span
+                  className={`text-${oppositeTheme} font-${font}-bold text-2xl`}
+                >
+                  {addComma(+data.balance - feeWithdrawal) +
+                    " " +
+                    data.currency_abb}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -346,6 +384,18 @@ export default function Withdrawal({
                     </span>
                   </button>
                 )}
+            </div>
+            <div className="w-full h-fit flex flex-col">
+              <span className={`text-${oppositeTheme} font-${font}-regular`}>
+                Total withdrawed amount
+              </span>
+              <span className="text-green font-bold text-lg flex justify-center">
+                {+(removeComma(values.amount) - feeWithdrawal) > 0
+                  ? addComma(+(removeComma(values.amount) - feeWithdrawal)) +
+                    " " +
+                    data.currency_abb
+                  : 0 + " " + data.currency_abb}
+              </span>
             </div>
           </div>
           {newCardMode ? (
@@ -625,7 +675,11 @@ export default function Withdrawal({
           <div className="mt-10">
             <SubmitButton
               onClick={handleSubmit}
-              className="w-full py-0.5 text-lg"
+              className={
+                removeComma(values.amount) - feeWithdrawal < 0
+                  ? `w-full py-0.5 text-lg`
+                  : `w-full py-0.5 text-lg`
+              }
               rounded="lg"
             >
               {lang["submit"]}
