@@ -179,7 +179,10 @@ export default function Withdrawal({
         +currencies[selectedCurrencyIndex].max_withdrawal_lot *
         +currencies[selectedCurrencyIndex].lot;
 
-      if (min <= amount && max >= amount) {
+      if (
+        min <= amount - removeComma(feeWithdrawal) &&
+        max >= amount - removeComma(feeWithdrawal)
+      ) {
         return true;
       } else {
         openNotRightAmountToast(min, max);
@@ -218,7 +221,9 @@ export default function Withdrawal({
                     walletTanks[selectedWalletTankIndex].url
                       ? walletTanks[selectedWalletTankIndex].url
                       : "",
-                  amount: removeComma(values.amount - feeWithdrawal),
+                  amount: removeComma(
+                    values.amount - removeComma(feeWithdrawal)
+                  ),
                   status: statuses
                     ? statuses.find((status) => status.title === "Admin Assign")
                         .url
@@ -265,7 +270,9 @@ export default function Withdrawal({
                           ? currencies[selectedCurrencyIndex].url
                           : "",
                       wallet_tank_receiver: data && data.url ? data.url : "",
-                      amount: removeComma(values.amount - feeWithdrawal),
+                      amount: removeComma(
+                        values.amount - removeComma(feeWithdrawal)
+                      ),
                       status: statuses
                         ? statuses.find(
                             (status) => status.title === "Admin Assign"
@@ -293,7 +300,9 @@ export default function Withdrawal({
                       walletTanks[selectedWalletTankIndex].url
                         ? walletTanks[selectedWalletTankIndex].url
                         : "",
-                    amount: removeComma(values.amount - feeWithdrawal),
+                    amount: removeComma(
+                      values.amount - removeComma(feeWithdrawal)
+                    ),
                     status: statuses
                       ? statuses.find(
                           (status) => status.title === "Admin Assign"
@@ -350,7 +359,7 @@ export default function Withdrawal({
                 <span
                   className={`text-${oppositeTheme} font-${font}-bold text-2xl`}
                 >
-                  {addComma(+data.balance - feeWithdrawal) +
+                  {addComma(+data.balance - removeComma(feeWithdrawal)) +
                     " " +
                     data.currency_abb}
                 </span>
