@@ -396,7 +396,7 @@ export default function Withdrawal({
             </div>
             <div className="w-full h-fit flex flex-col">
               <span className={`text-${oppositeTheme} font-${font}-regular`}>
-                Total withdrawed amount
+                Total Withdrawed amout
               </span>
               <span className="text-green font-bold text-lg flex justify-center">
                 {+(removeComma(values.amount) - feeWithdrawal) > 0
