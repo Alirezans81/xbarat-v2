@@ -28,8 +28,7 @@ export default function Withdrawal({
   getWalletData,
   amount,
 }) {
-  // const lang = useLanguageState();
-  const lang = require("../../../languages/Fa.json");
+  const lang = useLanguageState();
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -37,7 +36,7 @@ export default function Withdrawal({
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
-
+  console.log(lang);
   const setToastData = useToastDataSetState();
   const openNotEnoughBalanceToast = () => {
     setToastData({
@@ -665,33 +664,60 @@ export default function Withdrawal({
           {/* step 1 */}
           <div
             dir={direction}
-            className={`w-full h-fit ${
+            className={`w-80 h-fit  ${
               step === 0 ? "hidden" : "flex"
-            } flex-col text-${oppositeTheme} max-w-lg`}
+            } flex-col text-${oppositeTheme} text-start `}
           >
             <span
               dir={direction}
-              className={`font-${font}-regular text-${oppositeTheme} text-base mt-5`}
+              className={`font-${font}-regular text-${oppositeTheme} flex ${
+                direction === "rtl" ? "justify-end" : "justify-start"
+              } text-base mt-5 w-full`}
             >
               {lang["method_desc"]}
             </span>
+
             <div
-              className={`w-full font-${font}-regular text-base flex flex-col`}
+              dir={direction}
+              className={`w-full font-${font}-regular text-base flex flex-col ${
+                direction === "rtl" ? "justify-end" : "justify-start"
+              }`}
             >
-              <span dir={direction} className="text-blue w-fit">
+              <span
+                dir={direction}
+                className={`text-blue text-start w-full ${
+                  direction === "rtl" ? "justify-end" : "justify-start"
+                }`}
+              >
                 {lang["service"]}
               </span>
-              <span dir={direction}>{lang["service_desc"]}</span>
+              <span
+                className={`w-full flex ${
+                  direction === "rtl"
+                    ? "justify-end text-end"
+                    : "justify-start text-start"
+                }`}
+              >
+                {lang["service_desc"]}
+              </span>
             </div>
             <div
+              dir={direction}
               className={`w-full  font-${font}-regular text-base flex flex-col`}
             >
-              <span dir={direction} className={`text-blue w-fit`}>
+              <span
+                dir={direction}
+                className={`text-blue text-start w-full ${
+                  direction === "rtl" ? "justify-end" : "justify-start"
+                }`}
+              >
                 {lang["friends_and_family"]}
               </span>
               <span
-                className={`flex-1 flex w-full ${
-                  direction === "rtl" ? "justify-end" : "justify-start"
+                className={`w-full text-start flex ${
+                  direction === "rtl"
+                    ? "justify-end text-end"
+                    : "justify-start text-start"
                 }`}
               >
                 {lang["friends_and_family_desc"]}
@@ -796,7 +822,7 @@ export default function Withdrawal({
               <SubmitButton
                 className="w-full py-0.5 text-lg"
                 rounded="lg"
-                onClick={() => setStep(1)}
+                onClick={handleSubmit}
               >
                 {lang["submit"]}
               </SubmitButton>
