@@ -10,7 +10,7 @@ import { useIsLoadingSplashScreenSetState } from "../../Providers/IsLoadingSplas
 import { useStatusesState } from "../../Providers/StatusesProvider";
 import { useConvertNotif } from "../../hooks/useConvertNotif";
 import { useUserState } from "../../Providers/UserProvider";
-
+import Close from "../../Images/close-light.png";
 export function Notif({ notif, getNotifications }) {
   const theme = useThemeState();
   const font = useFontState();
@@ -77,15 +77,33 @@ export function Notif({ notif, getNotifications }) {
     </div>
   );
 }
-
-function Content({ notifs, getNotifications }) {
+const handleDeleteAll = async (notifs, deleteNotification, setNotifs) => {
+  await Promise.all(notifs.map((notif) => deleteNotification(notif.url)));
+  setNotifs([]);
+};
+function Content({ notifs, getNotifications, setNotifs }) {
   const lang = useLanguageState();
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const font = useFontState();
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
-
+  const { deleteNotification, isLoading: deleteNotificationIsLoading } =
+    useDeleteNotification();
+  useEffect(
+    () => setIsLoadingSplashScreen(deleteNotificationIsLoading),
+    [deleteNotificationIsLoading]
+  );
   return (
     <div className="max-w-[90dvw] flex flex-col gap-y-3 px-1.5 py-2 max-h-[80dvh] overflow-y-auto">
+      <button
+        className={`w-full flex justify-start flex-row gap-x-2 items-center h-fit bg-red rounded-2xl p-2 font-${font}-bold hover:p-5 transition-all duration-500`}
+        onClick={() => handleDeleteAll(notifs, deleteNotification, setNotifs)}
+      >
+        <img alt="closeAllNotif" src={Close} className="w-5 h-5" />
+        <span className={`flex-1 w-full flex justify-center mt-1 `}>
+          Delete All
+        </span>
+      </button>
       {notifs &&
         notifs.map((notif, index) => (
           <Notif
@@ -161,7 +179,13 @@ export default function Notification() {
   return (
     <CustomTooltip2
       trigger="click"
-      content={<Content notifs={notifs} getNotifications={getNotifications} />}
+      content={
+        <Content
+          notifs={notifs}
+          getNotifications={getNotifications}
+          setNotifs={setNotifs}
+        />
+      }
       style={theme}
       placement="bottom"
       className="rounded-xl z-[200]"
