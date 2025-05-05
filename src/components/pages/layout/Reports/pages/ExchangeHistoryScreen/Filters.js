@@ -30,7 +30,6 @@ export default function Filters({ setFilterCards }) {
       range: selectionRange,
       clear: false,
     };
-    console.log(Filter);
 
     setFilterCards(Filter);
   };

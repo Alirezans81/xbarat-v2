@@ -264,6 +264,7 @@
   "type-of-account": "نوع الحساب",
   "delete-wallet-tank-modal-message": "هل أنت متأكد من حذف البطاقة",
   "edit-card": "تعديل البطاقة",
+  "delete_all": "احذف الكل",
   "accept-policy": "هل تقبل قواعد الخصوصية والسياسات للعمل مع المنصة",
   "password-updated": "تم تحديث كلمة المرور الخاصة بك",
   "email-exists-error": "البريد الإلكتروني موجود بالفعل",

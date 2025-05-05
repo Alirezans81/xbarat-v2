@@ -264,6 +264,7 @@
   "type-of-account": "Art des Kontos",
   "delete-wallet-tank-modal-message": "Bist du sicher, dass du die Karte löschen möchtest?",
   "edit-card": "Karte bearbeiten",
+  "delete_all": "Alles löschen",
   "accept-policy": "Akzeptierst du die Datenschutz- und Richtlinienregeln, um mit der Plattform arbeiten zu können?",
   "password-updated": "Dein Passwort wurde aktualisiert.",
   "email-exists-error": "E-Mail existiert bereits.",

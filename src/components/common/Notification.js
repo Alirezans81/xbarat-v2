@@ -101,7 +101,7 @@ function Content({ notifs, getNotifications, setNotifs }) {
       >
         <img alt="closeAllNotif" src={Close} className="w-5 h-5" />
         <span className={`flex-1 w-full flex justify-center mt-1 `}>
-          Delete All
+          {lang["delete_all"]}
         </span>
       </button>
       {notifs &&

@@ -264,6 +264,7 @@
   "type-of-account": "Type of Account",
   "delete-wallet-tank-modal-message": "Are you sure to delete the card",
   "edit-card": "Edit Card",
+  "delete_all": "Delete All",
   "accept-policy": "Do you accept privacy and policies rules in order to work with the platform",
   "password-updated": "Your password has been updated",
   "email-exists-error": "Email already exists",

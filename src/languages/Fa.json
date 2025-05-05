@@ -265,6 +265,7 @@
   "type-of-account": "نوع حساب",
   "delete-wallet-tank-modal-message": "آیا از حذف کارت خود مطمئن هستید",
   "edit-card": "ویراش کارت",
+  "delete_all": "حدف همه",
   "accept-policy": "آیا قوانین حریم خصوصی و سیاست را به منظور استفاده از سایت قبول میکنید",
   "password-updated": "پسورد شما تغییر پیدا کرد",
   "email-exists-error": "این ایمیل از قبل وجود دارد",
