@@ -75,7 +75,6 @@ export default function ExchangeForm({
     () => setIsLoadingSplashScreen(exchangeIsLoading),
     [exchangeIsLoading]
   );
-  console.log(userInfo);
   const [tip, setTip] = useState();
 
   const [errorMessage, setErrorMessage] = useState("");

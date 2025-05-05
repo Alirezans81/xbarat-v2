@@ -36,7 +36,6 @@ export default function Withdrawal({
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
-  console.log(lang);
   const setToastData = useToastDataSetState();
   const openNotEnoughBalanceToast = () => {
     setToastData({
@@ -664,33 +663,45 @@ export default function Withdrawal({
           {/* step 1 */}
           <div
             dir={direction}
-            className={`w-80 h-fit  ${
+            className={`w-80 h-fit gap-y-3 ${
               step === 0 ? "hidden" : "flex"
             } flex-col text-${oppositeTheme} text-start `}
           >
             <span
               dir={direction}
-              className={`font-${font}-regular text-${oppositeTheme} flex ${
-                direction === "rtl" ? "justify-end" : "justify-start"
-              } text-base mt-5 w-full`}
+              className={`w-full font-${font}-regular text-${oppositeTheme} text-base mt-5 ${
+                direction === "rtl" ? "text-right" : "text-left"
+              }`}
             >
               {lang["method_desc"]}
             </span>
 
             <div
               dir={direction}
-              className={`w-full font-${font}-regular text-base flex flex-col ${
+              className={`w-full font-${font}-regular text-base flex flex-col mt-5 ${
                 direction === "rtl" ? "justify-end" : "justify-start"
               }`}
             >
-              <span
-                dir={direction}
-                className={`text-blue text-start w-full ${
-                  direction === "rtl" ? "justify-end" : "justify-start"
-                }`}
-              >
-                {lang["service"]}
-              </span>
+              <div dir={direction} className="w-full flex flex-row ">
+                <span
+                  dir={direction}
+                  className={`text-blue text-start w-fit ${
+                    direction === "rtl" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  {lang["service"]}
+                </span>
+                <span
+                  dir={direction}
+                  className={`flex-1 w-full text-${oppositeTheme} ${
+                    font === "En" ? "hidden" : "flex"
+                  } text-start w-full ${
+                    direction === "rtl" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  {"(" + lang["service_en"] + ")"}
+                </span>
+              </div>
               <span
                 className={`w-full flex ${
                   direction === "rtl"
@@ -705,14 +716,26 @@ export default function Withdrawal({
               dir={direction}
               className={`w-full  font-${font}-regular text-base flex flex-col`}
             >
-              <span
-                dir={direction}
-                className={`text-blue text-start w-full ${
-                  direction === "rtl" ? "justify-end" : "justify-start"
-                }`}
-              >
-                {lang["friends_and_family"]}
-              </span>
+              <div dir={direction} className="w-full flex flex-row ">
+                <span
+                  dir={direction}
+                  className={`text-blue text-start w-fit ${
+                    direction === "rtl" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  {lang["friends_and_family"]}
+                </span>
+                <span
+                  dir={direction}
+                  className={`flex-1 w-full text-${oppositeTheme} ${
+                    font === "En" ? "hidden" : "flex"
+                  } text-start w-full ${
+                    direction === "rtl" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  {"(" + lang["friends_and_family_en"] + ")"}
+                </span>
+              </div>
               <span
                 className={`w-full text-start flex ${
                   direction === "rtl"
