@@ -30,8 +30,11 @@
   "password-contain-error": "گذرواژه باید دارای یکی از کاراکترهای زیر باشد: [a-z], [A-Z], [0-9], [!@#$%*?]",
   "password-match-error": "گذرواژه مطابقت ندارد",
   "is-active": "فعال است",
+<<<<<<< HEAD
   "list-sellers": "فروشندگان",
   "list-buyers": "خریداران",
+=======
+>>>>>>> ccfe5a5e251ae1e7cb3c221c926c6012273be829
   "home": "خانه",
   "wallet": "کیف پول",
   "reports": "گزارش ها",
@@ -256,6 +259,14 @@
   "transfer-amount-error-message-2nd": "و",
   "transfer-amount-error-message-3rd": "باشد",
   "card-number-or-paypal-email": "یک حساب را انتخاب کنید",
+  "method_desc": "شما اینجا می توانید نحوه برداشت پول خود را انتخاب نمایید",
+  "friends_and_family": "دوستان و آشنایان",
+  "friends_and_family_en": "Friends and Family",
+  "friends_and_family_desc": "در این روش مبلغ دریافتی شما برابر با مبلغ ورودی شما منهای مبلغ کارمزد پی پل می باشد",
+  "service": "خدمات",
+  "service_en": "Service",
+  "service_desc": "در این روش مبلغ کارمزد از حساب مقصد کسر شده و مبلغ برداشتی شما از وبسایت ایکس برات با مبلغ وارد شده شما برابر خواهد بود",
+  "total_recieved_amount": "مبلغ دریافتی نهایی",
   "wallet-tank-paypal-description-code": "لطفا مبلغ درخواستی خود را در سامانه paypal به صورت \"انتقال برای دوست و خیشاوند\" برای ادرس ایمیل بالا ارسال فرمایید تا فرایند انتقالتان با کمترین کارمزد ممکن انجام پذیرد",
   "type-of-account": "نوع حساب",
   "delete-wallet-tank-modal-message": "آیا از حذف کارت خود مطمئن هستید",

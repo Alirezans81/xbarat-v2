@@ -30,8 +30,11 @@
   "password-contain-error": "يجب أن تحتوي كلمة المرور على أحد الأحرف التالية: [a-z]، [A-Z]، [0-9]، [!@#$%*؟]",
   "password-match-error": "كلمات المرور غير متطابقة",
   "is-active": "نشط",
+<<<<<<< HEAD
   "list-sellers": "قائمة البائعين",
   "list-buyers": "قائمة المشترين",
+=======
+>>>>>>> ccfe5a5e251ae1e7cb3c221c926c6012273be829
   "home": "الرئيسية",
   "wallet": "المحفظة",
   "reports": "التقارير",
@@ -255,6 +258,14 @@
   "transfer-amount-error-message-2nd": "و",
   "transfer-amount-error-message-3rd": "",
   "card-number-or-paypal-email": "اختر حسابًا",
+  "method_desc": "لديك هنا خيارين بشأن كيفية استلام أموالك.",
+  "friends_and_family": "الأصدقاء والعائلة",
+  "friends_and_family_en": "Friends and Family",
+  "friends_and_family_desc": "وهذا يعني أن الرسوم النهائية لـPayPal سيتم خصمها من حسابك الخاص بعد أن نرسل لك الأموال.",
+  "service": "خدمة",
+  "service_en": "Service",
+  "service_desc": "هذا يعني أنه سيتم خصم الرسوم النهائية لباي بال من مبلغك قبل بدء الإيداع. نقترح عليك اختيار \"خدمة\".",
+  "total_recieved_amount": "إجمالي المبلغ المستلم",
   "wallet-tank-paypal-description-code": "يرجى دفع المبلغ المطلوب في نظام باي بال من خلال خيار \"الأصدقاء والعائلة\" إلى عنوان البريد الإلكتروني أعلاه حتى يتمكن عملية التحويل من التنفيذ بأقل رسوم ممكنة",
   "type-of-account": "نوع الحساب",
   "delete-wallet-tank-modal-message": "هل أنت متأكد من حذف البطاقة",

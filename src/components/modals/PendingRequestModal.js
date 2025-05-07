@@ -265,11 +265,15 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               )}
             <CustomUploader setImage={setDocument} />
             {receiverTanks[selectedWalletTank] &&
-              receiverTanks[selectedWalletTank].bank_info_image && (
+              receiverTanks[selectedWalletTank]
+                .wallet_tank_bank_info_image_url && (
                 <img
                   alt=""
                   className="mx-auto w-5/12 object-contain rounded-xl"
-                  src={receiverTanks[selectedWalletTank].bank_info_image}
+                  src={
+                    receiverTanks[selectedWalletTank]
+                      .wallet_tank_bank_info_image_url
+                  }
                 />
               )}
           </div>

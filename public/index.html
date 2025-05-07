@@ -132,9 +132,13 @@
         document
           .getElementById("new_widget_button")
           .addEventListener("click", function () {
+<<<<<<< HEAD
             const userInfo = JSON.parse(
               window.localStorage.getItem("userInfo")
             );
+=======
+            const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+>>>>>>> ccfe5a5e251ae1e7cb3c221c926c6012273be829
             if (userInfo) {
               Goftino.setUser({
                 email: userInfo.email,
@@ -142,6 +146,10 @@
                 phone: userInfo.phone,
                 forceUpdate: true,
               });
+<<<<<<< HEAD
+=======
+              console.log(userInfo);
+>>>>>>> ccfe5a5e251ae1e7cb3c221c926c6012273be829
             }
 
             Goftino.toggle();

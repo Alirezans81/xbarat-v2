@@ -30,8 +30,11 @@
   "password-contain-error": "Password should contain one of the following characters: [a-z], [A-Z], [0-9], [!@#$%*?]",
   "password-match-error": "Passwords do not match",
   "is-active": "Is Active",
+<<<<<<< HEAD
   "list-sellers": "List of Sellers",
   "list-buyers": "List of Buyers",
+=======
+>>>>>>> ccfe5a5e251ae1e7cb3c221c926c6012273be829
   "home": "Home",
   "wallet": "Wallet",
   "reports": "Reports",
@@ -175,8 +178,8 @@
   "cancel-exchange-modal-message": "Are you sure to cancel the exchange",
   "accept-transaction-message": "Your transaction was successfully accepted",
   "not-enough-balance-error": "You dont have enough balance",
-  "low-amount-error": "Your balance must be more than",
-  "high-amount-error": "Your balance must be less than",
+  "low-amount-error": "Your amount must be more than",
+  "high-amount-error": "Your amount must be less than",
   "not-in-range-rate-error-1st": "Your rate must be between",
   "not-in-range-rate-error-&": "&",
   "not-in-range-rate-error-2nd": "",
@@ -255,6 +258,14 @@
   "transfer-amount-error-message-2nd": "&",
   "transfer-amount-error-message-3rd": "",
   "card-number-or-paypal-email": "Select an account",
+  "method_desc": "Here You Have Two Choices on How to Recieve Your Money.",
+  "friends_and_family": "Friends and Family",
+  "friends_and_family_en": "Friends and Family",
+  "friends_and_family_desc": "This Means That The Final Fee of Paypal Will be Deducted From Your Own Account AFTER We have Sent you the Money.",
+  "service": "Service",
+  "service_en": "Service",
+  "service_desc": "This Means That The Final Fee of Paypal Will be Deducted From Your Amount Before the Deposit Begins. We Suggest That You Choose \"Service\"",
+  "total_recieved_amount": "Total Recieved Amount",
   "wallet-tank-paypal-description-code": "Please pay your requested amount in paypal system through \"friends and family\" option to the above email address so that your transfer process can be done with the lowest possible fee",
   "type-of-account": "Type of Account",
   "delete-wallet-tank-modal-message": "Are you sure to delete the card",
@@ -498,10 +509,17 @@
       }
     }
   },
+<<<<<<< HEAD
   "first-name-required": "First name is required(English Only)",
   "first-name-pattern": "First name must only contain letters(English Only)",
   "last-name-required": "Last name is required(English Only)",
   "last-name-pattern": "Last name must only contain letters(English Only)",
+=======
+  "first-name-required": "First name is required",
+  "first-name-pattern": "First name must only contain letters",
+  "last-name-required": "Last name is required",
+  "last-name-pattern": "Last name must only contain letters",
+>>>>>>> ccfe5a5e251ae1e7cb3c221c926c6012273be829
   "phone-required": "Phone number is required",
   "phone-pattern": "Phone must be a valid international number starting with +",
   "address-required": "Address is required",

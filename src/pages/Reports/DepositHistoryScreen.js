@@ -14,7 +14,6 @@ export default function DepositHistoryScreen() {
   const theme = useThemeState();
   const lang = useLanguageState();
   const wallet = useWalletState();
-  console.log(wallet);
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { one: oneDirection } = useDirectionState();
   const [temp, setTemp] = useState("");
