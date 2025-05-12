@@ -30,7 +30,12 @@ export default function WatchList({
   const addComma = useAddComma();
   const calculateReverseRate = useCalculateReverseRate();
 
-  const head = [lang["currency-pair"], lang["rate"], lang["low"], lang["high"]];
+  const head = [
+    lang["currency-pair"],
+    "Latest Transaction",
+    lang["low"],
+    lang["high"],
+  ];
   const [data, setData] = useState([]);
   const openTutorialModal = () => {
     setModalData({
@@ -46,54 +51,68 @@ export default function WatchList({
   useEffect(() => {
     getWatchList(setData);
   }, []);
-
+  console.log(data);
   const [watch_list_data, set_watch_list_data] = useState([]);
+  console.log(head);
+  console.log(watch_list_data);
+  function processCurrencyPairs(data) {
+    const seen = new Set();
+    const result = [];
+
+    data.forEach((item) => {
+      if (seen.has(item.slug)) return;
+
+      const [source, target] = item.slug.split("-to-");
+      const reverseSlug = `${target}-to-${source}`;
+      const reverseItem = data.find((d) => d.slug === reverseSlug);
+
+      if (reverseItem) {
+        seen.add(item.slug);
+        seen.add(reverseItem.slug);
+
+        const rate1 = +item.rate;
+        const rate2 = +reverseItem.rate;
+
+        const minRate = Math.min(rate1, rate2);
+        const maxRate = Math.max(rate1, rate2);
+        const tip = Math.random();
+        const averageRate =
+          tip < 0.3
+            ? minRate
+            : tip > 0.7
+            ? maxRate
+            : ((rate1 + rate2) / 2).toFixed(minRate < 1 || maxRate < 1 ? 2 : 0);
+
+        result.push({
+          title: item.title
+            ? item.title
+            : `${source.toUpperCase()}/${target.toUpperCase()}`,
+          rate: addComma(averageRate),
+          min_rate: addComma(minRate),
+          max_rate: addComma(maxRate),
+        });
+      } else {
+        const rate = +item.rate;
+        const averageRate = rate;
+
+        result.push({
+          title: item.title,
+          rate: addComma(averageRate),
+          min_rate: addComma(rate),
+          max_rate: addComma(rate),
+        });
+
+        seen.add(item.slug);
+      }
+    });
+
+    return result;
+  }
+
   useEffect(() => {
     if (data && data.watch_list) {
-      let a = data.watch_list.map((row, index) => {
-        let temp = {};
-        temp.title = row.title;
-
-        if (
-          selectedCurrecnyPair &&
-          (selectedCurrecnyPair.url === row.currency_pair_url ||
-            selectedCurrecnyPair.url === row.currency_pair_reverse_url) &&
-          rateIsReversed
-        ) {
-          temp.rate = addComma(
-            calculateReverseRate(
-              +row.rate,
-              +selectedCurrecnyPair.rate_multiplier,
-              +row.floating_number
-            )
-          );
-
-          temp.min_rate = addComma(
-            calculateReverseRate(
-              +row.min_rate,
-              +selectedCurrecnyPair.rate_multiplier,
-              +row.floating_number
-            )
-          );
-          temp.max_rate = addComma(
-            calculateReverseRate(
-              +row.max_rate,
-              +selectedCurrecnyPair.rate_multiplier,
-              +row.floating_number
-            )
-          );
-        } else {
-          temp.rate = addComma(roundDown(+row.rate, +row.floating_number));
-          temp.min_rate = addComma(
-            roundDown(+row.min_rate, +row.floating_number)
-          );
-          temp.max_rate = addComma(
-            roundDown(+row.max_rate, +row.floating_number)
-          );
-        }
-
-        return temp;
-      });
+      const a = processCurrencyPairs(data.watch_list);
+      console.log(a);
 
       if (platform === "ios") {
         set_watch_list_data(a.filter((e) => !e.title.includes("IRR")));
