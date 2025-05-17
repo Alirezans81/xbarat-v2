@@ -109,7 +109,6 @@ export default function WatchList({
   useEffect(() => {
     if (data && data.watch_list) {
       const a = processCurrencyPairs(data.watch_list);
-      console.log(a);
 
       if (platform === "ios") {
         set_watch_list_data(a.filter((e) => !e.title.includes("IRR")));

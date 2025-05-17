@@ -28,8 +28,13 @@ export default function OtherExchanges({ selectedCurrecnyPair }) {
     [getOtherExchangesisLoading]
   );
 
-  useEffect(() => getOtherExchanges(setOtherExchanges), []);
+  useEffect(() => {
+    const fetchExchanges = async () => {
+      await getOtherExchanges(setOtherExchanges);
+    };
 
+    fetchExchanges();
+  }, []);
   useEffect(() => {
     selectedCurrecnyPair
       ? getOtherExchangesRate(
