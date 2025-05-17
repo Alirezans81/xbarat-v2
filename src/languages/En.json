@@ -182,6 +182,7 @@
   "quantity": "quantity",
   "low": "Low",
   "high": "High",
+  "latest-transation": "Latest Transaction",
   "cards-profile": "Cards",
   "account_name_null_cards": "title",
   "bank_info_null_cards": "0000 0000 0000 0000",

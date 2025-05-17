@@ -32,7 +32,7 @@ export default function WatchList({
 
   const head = [
     lang["currency-pair"],
-    "Latest Transaction",
+    lang["latest-transation"],
     lang["low"],
     lang["high"],
   ];
@@ -51,10 +51,7 @@ export default function WatchList({
   useEffect(() => {
     getWatchList(setData);
   }, []);
-  console.log(data);
   const [watch_list_data, set_watch_list_data] = useState([]);
-  console.log(head);
-  console.log(watch_list_data);
   function processCurrencyPairs(data) {
     const seen = new Set();
     const result = [];
