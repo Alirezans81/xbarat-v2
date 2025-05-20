@@ -52,6 +52,7 @@ export default function WatchList({
     getWatchList(setData);
   }, []);
   const [watch_list_data, set_watch_list_data] = useState([]);
+
   function processCurrencyPairs(data) {
     const seen = new Set();
     const result = [];
@@ -87,6 +88,8 @@ export default function WatchList({
           rate: addComma(averageRate),
           min_rate: addComma(minRate),
           max_rate: addComma(maxRate),
+          source: item.source,
+          target: item.target,
         });
       } else {
         const rate = +item.rate;
@@ -97,6 +100,8 @@ export default function WatchList({
           rate: addComma(averageRate),
           min_rate: addComma(rate),
           max_rate: addComma(rate),
+          source: item.source,
+          target: item.target,
         });
 
         seen.add(item.slug);
@@ -105,7 +110,6 @@ export default function WatchList({
 
     return result;
   }
-
   useEffect(() => {
     if (data && data.watch_list) {
       const a = processCurrencyPairs(data.watch_list);
@@ -148,11 +152,11 @@ export default function WatchList({
         <div className="min-w-[20rem] h-full">
           <CustomTable
             heads={head}
-            rows={watch_list_data}
+            rows={watch_list_data.map(({ source, target, ...rest }) => rest)}
             selectRow={(row, index) => {
-              if (data && data.watch_list) {
-                setSource(data.watch_list[index].source);
-                setTarget(data.watch_list[index].target);
+              if (watch_list_data) {
+                setSource(watch_list_data[index].source);
+                setTarget(watch_list_data[index].target);
               }
             }}
           />
