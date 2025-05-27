@@ -39,6 +39,10 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     [uploadRequestDocumentIsLoading]
   );
 
+  const method = "Bank";
+  const fakeTemporary =
+    "IR111111119876543211111111:3000000:Sina Mollazadeh,IR291827356787654645433234:1200000000:Mohammad Hosseini,IR123097263514236742123746:200000000:Ahmad Hematian";
+  const fakeTemporaryBankName = "Zeraat,Mellat,Saman";
   const [receiverTanks, setReceiverTanks] = useState([]);
   const [selectedWalletTank, setSelectedWalletTank] = useState(-1);
   const { getWalletTanks, isLoading: getWalletTanksIsLoading } =
@@ -56,27 +60,38 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
           currency: data.currency_slug,
         },
         (walletTanks) => {
-          if (data.currency_abb === "IRR") {
-            if (+data.amount <= 100000000) {
-              const temp = walletTanks.filter(
-                (d) =>
-                  d.is_active &&
-                  d.bank_info &&
-                  d.wallet_tank_type_title === "Card Number"
-              );
-              setReceiverTanks(temp);
+          if (method === "Bank") {
+            const temp = fakeTemporary.split(",").map((entry) => {
+              const [bank_info, amount, account_name] = entry.split(":");
+              return { bank_info, amount: Number(amount), account_name };
+            });
+
+            setReceiverTanks(temp);
+          } else {
+            if (data.currency_abb === "IRR") {
+              if (+data.amount <= 100000000) {
+                const temp = walletTanks.filter(
+                  (d) =>
+                    d.is_active &&
+                    d.bank_info &&
+                    d.wallet_tank_type_title === "Card Number"
+                );
+                setReceiverTanks(temp);
+              } else {
+                const temp = walletTanks.filter(
+                  (d) =>
+                    d.is_active &&
+                    d.bank_info &&
+                    d.wallet_tank_type_title === "Shaba Number"
+                );
+                setReceiverTanks(temp);
+              }
             } else {
               const temp = walletTanks.filter(
-                (d) =>
-                  d.is_active &&
-                  d.bank_info &&
-                  d.wallet_tank_type_title === "Shaba Number"
+                (d) => d.is_active && d.bank_info
               );
               setReceiverTanks(temp);
             }
-          } else {
-            const temp = walletTanks.filter((d) => d.is_active && d.bank_info);
-            setReceiverTanks(temp);
           }
         }
       );
@@ -145,7 +160,11 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
         {data && data.status_title === "Upload Document" && (
           <div className="flex flex-col gap-y-2 mb-5">
             <span
-              className={`text-yellow text-xl font-${font}-regular text-center`}
+              className={
+                method !== "Bank"
+                  ? `text-yellow text-xl font-${font}-regular text-center`
+                  : "hidden"
+              }
             >
               {receiverTanks &&
               receiverTanks[selectedWalletTank] &&
@@ -174,7 +193,9 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 {lang["deposit-secret-code-message"] + "."}
               </span>
             </div>
-            <div className="w-full flex relative">
+            <div
+              className={method !== "Bank" ? "w-full flex relative" : "hidden"}
+            >
               <CustomDropdown
                 label={
                   selectedWalletTank >= 0 &&
@@ -253,6 +274,49 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   </div>
                 )}
             </div>
+            <div
+              className={`w-full flex flex-col justify-start items-center bg-${theme}-back rounded-2xl p-3 gap-y-3 max-h-52 overflow-y-scroll`}
+            >
+              {receiverTanks.map((tank, index) => (
+                <div
+                  className={`w-full h-fit flex flex-col bg-${theme} rounded-xl p-3 font-${font}-regular text-${oppositeTheme} gap-y-2`}
+                >
+                  <div className="flex flex-col">
+                    <span className="text-base text-yellow  justify-start">
+                      Address:
+                    </span>
+                    <span className="w-full flex h-full justify-center">
+                      {tank.bank_info}
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-base text-yellow  justify-start">
+                      Amount:
+                    </span>
+                    <span className="w-full flex h-full justify-center">
+                      {addComma(tank.amount) + " " + data.currency_abb}
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-base text-yellow  justify-start">
+                      Account owner Name:
+                    </span>
+                    <span className="w-full flex h-full justify-center">
+                      {tank.account_name}
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-base text-yellow  justify-start">
+                      Bank Name:
+                    </span>
+                    <span className="w-full flex h-full justify-center">
+                      {fakeTemporaryBankName.split(",")[index]}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
             {receiverTanks[selectedWalletTank] &&
               receiverTanks[selectedWalletTank].description &&
               lang[receiverTanks[selectedWalletTank].description] && (
