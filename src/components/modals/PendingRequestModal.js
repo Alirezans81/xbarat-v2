@@ -14,6 +14,7 @@ import { useModalDataClose } from "../../Providers/ModalDataProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useGetWalletTanks } from "../../apis/common/wallet/hooks";
 import { CustomDropdown, CustomItem } from "../common/CustomDropdown";
+import { combineImagesWithGrid } from "../../functions/combineImages";
 import Stepper from "./PendingRequestModal/Stepper";
 import CopyText from "../common/CopyText";
 
@@ -28,6 +29,44 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
   const closeModal = useModalDataClose();
 
   const [document, setDocument] = useState();
+  const [singleImage, setSingleImage] = useState([]);
+
+  const layouts = {
+    1: [{ row: 0, col: 0, rowSpan: 2, colSpan: 2 }],
+    2: [
+      { row: 0, col: 0, rowSpan: 2, colSpan: 1 },
+      { row: 0, col: 1, rowSpan: 2, colSpan: 1 },
+    ],
+    3: [
+      { row: 0, col: 0, rowSpan: 2, colSpan: 1 },
+      { row: 0, col: 1, rowSpan: 2, colSpan: 1 },
+      { row: 2, col: 0, rowSpan: 1, colSpan: 2 },
+    ],
+    4: [
+      { row: 0, col: 0, rowSpan: 1, colSpan: 1 },
+      { row: 0, col: 1, rowSpan: 1, colSpan: 1 },
+      { row: 1, col: 0, rowSpan: 1, colSpan: 1 },
+      { row: 1, col: 1, rowSpan: 1, colSpan: 1 },
+    ],
+  };
+  function generateDefaultLayout(count) {
+    const layout = [];
+    for (let i = 0; i < count; i++) {
+      const row = Math.floor(i / 2);
+      const col = i % 2;
+      layout.push({ row, col, rowSpan: 1, colSpan: 1 });
+    }
+    return layout;
+  }
+  const handleLayoutDocument = async () => {
+    const count = singleImage.length;
+    const layout = layouts[count] || generateDefaultLayout(count);
+
+    const blob = await combineImagesWithGrid(singleImage, layout);
+    setDocument(blob);
+  };
+  console.log(document);
+
   useEffect(() => {
     setLoading(false);
   }, [document]);
@@ -38,11 +77,11 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     () => setLoading(uploadRequestDocumentIsLoading),
     [uploadRequestDocumentIsLoading]
   );
-
+  const [mathUsers, setMathUsers] = useState([]);
   const method = "Bank";
   const fakeTemporary =
-    "IR111111119876543211111111:3000000:Sina Mollazadeh,IR291827356787654645433234:1200000000:Mohammad Hosseini,IR123097263514236742123746:200000000:Ahmad Hematian";
-  const fakeTemporaryBankName = "Zeraat,Mellat,Saman";
+    "IR111111119876543211111111:3000000:Sina Mollazadeh:Zeraat,IR291827356787654645433234:1200000000:Mohammad Hosseini:Mellat,IR123097263514236742123746:200000000:Ahmad Hematian:Saman";
+  const timeOut = "2025-12-12 08:12:33 +03:30";
   const [receiverTanks, setReceiverTanks] = useState([]);
   const [selectedWalletTank, setSelectedWalletTank] = useState(-1);
   const { getWalletTanks, isLoading: getWalletTanksIsLoading } =
@@ -60,40 +99,57 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
           currency: data.currency_slug,
         },
         (walletTanks) => {
+          // if (method === "Bank") {
+          // const temp = fakeTemporary.split(",").map((entry) => {
+          //   const [bank_info, amount, account_name, bank_name] =
+          //     entry.split(":");
+          //   return {
+          //     bank_info,
+          //     amount: Number(amount),
+          //     account_name,
+          //     bank_name,
+          //   };
+          // });
+
+          //   setReceiverTanks(temp);
+          // } else {
           if (method === "Bank") {
             const temp = fakeTemporary.split(",").map((entry) => {
-              const [bank_info, amount, account_name] = entry.split(":");
-              return { bank_info, amount: Number(amount), account_name };
+              const [bank_info, amount, account_name, bank_name] =
+                entry.split(":");
+              return {
+                bank_info,
+                amount: Number(amount),
+                account_name,
+                bank_name,
+              };
             });
-
-            setReceiverTanks(temp);
-          } else {
-            if (data.currency_abb === "IRR") {
-              if (+data.amount <= 100000000) {
-                const temp = walletTanks.filter(
-                  (d) =>
-                    d.is_active &&
-                    d.bank_info &&
-                    d.wallet_tank_type_title === "Card Number"
-                );
-                setReceiverTanks(temp);
-              } else {
-                const temp = walletTanks.filter(
-                  (d) =>
-                    d.is_active &&
-                    d.bank_info &&
-                    d.wallet_tank_type_title === "Shaba Number"
-                );
-                setReceiverTanks(temp);
-              }
+            setMathUsers(temp);
+          }
+          if (data.currency_abb === "IRR") {
+            if (+data.amount <= 100000000) {
+              const temp = walletTanks.filter(
+                (d) =>
+                  d.is_active &&
+                  d.bank_info &&
+                  d.wallet_tank_type_title === "Card Number"
+              );
+              setReceiverTanks(temp);
             } else {
               const temp = walletTanks.filter(
-                (d) => d.is_active && d.bank_info
+                (d) =>
+                  d.is_active &&
+                  d.bank_info &&
+                  d.wallet_tank_type_title === "Shaba Number"
               );
               setReceiverTanks(temp);
             }
+          } else {
+            const temp = walletTanks.filter((d) => d.is_active && d.bank_info);
+            setReceiverTanks(temp);
           }
         }
+        // }
       );
     }
   }, []);
@@ -275,9 +331,13 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 )}
             </div>
             <div
-              className={`w-full flex flex-col justify-start items-center bg-${theme}-back rounded-2xl p-3 gap-y-3 max-h-52 overflow-y-scroll`}
+              className={
+                method === "Bank"
+                  ? `w-full flex flex-col justify-start items-center bg-${theme}-back rounded-2xl p-3 gap-y-3 max-h-52 overflow-y-scroll`
+                  : "hidden"
+              }
             >
-              {receiverTanks.map((tank, index) => (
+              {mathUsers.map((tank) => (
                 <div
                   className={`w-full h-fit flex flex-col bg-${theme} rounded-xl p-3 font-${font}-regular text-${oppositeTheme} gap-y-2`}
                 >
@@ -310,14 +370,20 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                       Bank Name:
                     </span>
                     <span className="w-full flex h-full justify-center">
-                      {fakeTemporaryBankName.split(",")[index]}
+                      {tank.bank_name}
                     </span>
                   </div>
+                  <CustomUploader
+                    Crop={false}
+                    setImage={(img) => setSingleImage((prev) => [...prev, img])}
+                  />
                 </div>
               ))}
+              <button onClick={handleLayoutDocument}>Submit Documents</button>
             </div>
 
-            {receiverTanks[selectedWalletTank] &&
+            {method !== "Bank" &&
+              receiverTanks[selectedWalletTank] &&
               receiverTanks[selectedWalletTank].description &&
               lang[receiverTanks[selectedWalletTank].description] && (
                 <span
@@ -326,8 +392,10 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   {lang[receiverTanks[selectedWalletTank].description] + "."}
                 </span>
               )}
-            <CustomUploader setImage={setDocument} />
-            {receiverTanks[selectedWalletTank] &&
+
+            {method !== "Bank" && <CustomUploader setImage={setDocument} />}
+            {method !== "Bank" &&
+              receiverTanks[selectedWalletTank] &&
               receiverTanks[selectedWalletTank]
                 .wallet_tank_bank_info_image_url && (
                 <img
@@ -368,28 +436,17 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             }
           />
         </div>
+        {console.log(receiverTanks)}
         {data && data.status_title === "Upload Document" && (
           <SubmitButton
-            disabled={
-              !(
-                data &&
-                data.url &&
-                document &&
-                receiverTanks[selectedWalletTank]
-              )
-            }
+            disabled={!(data && data.url && document && receiverTanks[0])}
             onClick={() => {
-              if (
-                data &&
-                data.url &&
-                document &&
-                receiverTanks[selectedWalletTank]
-              ) {
+              if (data && data.url && document && receiverTanks[0]) {
                 uploadRequestDocument(
                   data.url,
                   {
                     document,
-                    wallet_tank_receiver: receiverTanks[selectedWalletTank].url,
+                    wallet_tank_receiver: receiverTanks[0].url,
                     status: statuses
                       ? statuses.find(
                           (status) => status.title === "Admin Approve"
