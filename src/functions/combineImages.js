@@ -1,9 +1,9 @@
 async function combineImagesWithGrid(
   images,
   layout,
-  cellSize = 200,
+  cellSize = 5000,
   padding = 0,
-  bgColor = "white"
+  bgColor = "black"
 ) {
   if (images.length !== layout.length)
     throw new Error("The number of images and layout items must match.");

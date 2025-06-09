@@ -61,9 +61,10 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
   const handleLayoutDocument = async () => {
     const count = singleImage.length;
     const layout = layouts[count] || generateDefaultLayout(count);
-
+    setLoading(true);
     const blob = await combineImagesWithGrid(singleImage, layout);
     setDocument(blob);
+    setLoading(false);
   };
   console.log(document);
 
@@ -379,7 +380,12 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   />
                 </div>
               ))}
-              <button onClick={handleLayoutDocument}>Submit Documents</button>
+              <button
+                onClick={handleLayoutDocument}
+                className={`bg-blue text-center font-${font}-regular rounded-2xl text-lg py-3 text-light w-full`}
+              >
+                Concat Reciepts
+              </button>
             </div>
 
             {method !== "Bank" &&
