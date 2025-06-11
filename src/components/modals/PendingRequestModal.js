@@ -95,7 +95,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     timeout = new Date(transaction.datetime_assign);
     timeout.setMinutes(
       timeout.getMinutes() +
-        (transaction.assign_exp_window ? transaction.assign_exp_window : 1)
+        (transaction.assign_exp_window ? transaction.assign_exp_window : 15)
     );
   }
   const [timeTillClose, setTimeTillClose] = useState();
@@ -410,9 +410,9 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   >
                     {timeTillClose &&
                     timeTillClose[0] !== undefined &&
-                    timeTillClose[0] > 0 &&
                     timeTillClose[1] !== undefined &&
-                    timeTillClose[1] > 0
+                    timeTillClose[0] >= 0 &&
+                    timeTillClose[1] >= 0
                       ? (timeTillClose[0] < 10
                           ? "0" + timeTillClose[0]
                           : timeTillClose[0]) +
