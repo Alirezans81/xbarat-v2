@@ -23,6 +23,7 @@ export default function api() {
     withdrawal: `${apiDomain}api/order/withdrawal/`,
     transfer: `${apiDomain}api/order/transfer/`,
     exchange: `${apiDomain}api/order/exchange/`,
+    "other-exchanges": `${apiDomain}api/exchange/`,
     "pending-requests": `${apiDomain}api/wallet-pending-request/`,
     "watch-list": `${apiDomain}api/index/watch-list/`,
     "table-exchange": `${apiDomain}api/index/table-exchange/`,
