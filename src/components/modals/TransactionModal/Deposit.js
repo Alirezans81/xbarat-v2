@@ -149,15 +149,11 @@ export default function Deposit({
                     ? currencies[selectedCurrencyIndex].url
                     : "",
                 amount: removeComma(values.amount),
-<<<<<<< HEAD
-                status: "admin_assign",
-=======
                 status: statuses
                   ? statuses.find((status) => status.title === "Admin Assign")
                       .url
                   : "",
                 method: values.method,
->>>>>>> 19bc9d87e69232ff3cd06df44c7881d1c47c17ff
               },
               () => {
                 getWalletData();

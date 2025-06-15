@@ -192,15 +192,9 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
 
   const hasPreviewImage = () => {
     if (
-<<<<<<< HEAD
-      data.status_str === "admin_approve" ||
-      data.status_str === "accept" ||
-      data.status_str === "reject"
-=======
       transaction.status_title === "Admin Approve" ||
       transaction.status_title === "Accept" ||
       transaction.status_title === "Reject"
->>>>>>> 19bc9d87e69232ff3cd06df44c7881d1c47c17ff
     ) {
       return true;
     }
@@ -208,14 +202,9 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
   };
 
   const findStep = () => {
-<<<<<<< HEAD
-    const type = data && data.type ? data.type : "";
-    const status = data && data.status_str ? data.status_str : "";
-=======
     const type = transaction && transaction.type ? transaction.type : "";
     const status =
       transaction && transaction.status_title ? transaction.status_title : "";
->>>>>>> 19bc9d87e69232ff3cd06df44c7881d1c47c17ff
 
     if (transaction) {
       if (type === "deposit" || type === "withdrawal") {
@@ -266,12 +255,6 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
         {addComma(+transaction.amount) + " " + transaction.currency_abb}
       </span>
       <div className="w-80 mt-3">
-<<<<<<< HEAD
-        {data && data.status_str && data.document && hasPreviewImage() && (
-          <CustomPreviewer2 imageUrl={data.document} />
-        )}
-        {data && data.status_str === "upload_document" && (
-=======
         {transaction &&
           transaction.status_title &&
           transaction.document &&
@@ -279,7 +262,6 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             <CustomPreviewer2 imageUrl={transaction.document} />
           )}
         {transaction && transaction.status_title === "Upload Document" && (
->>>>>>> 19bc9d87e69232ff3cd06df44c7881d1c47c17ff
           <div className="flex flex-col gap-y-2 mb-5">
             <span
               className={
@@ -521,17 +503,9 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
           </div>
         )}
 
-<<<<<<< HEAD
-        {data && data.secret_code && data.status_str === "Admin Approve" && (
-          <div
-            dir={DirectionSetter(font)}
-            className={`flex flex-col bg-${theme}-back rounded-md py-2.5 px-3 font-${font}-regular text-${oppositeTheme} mt-1.5`}
-          >
-=======
         {transaction &&
           transaction.secret_code &&
           transaction.status_title === "Admin Approve" && (
->>>>>>> 19bc9d87e69232ff3cd06df44c7881d1c47c17ff
             <div
               dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
               className={`flex flex-col bg-${theme}-back rounded-md py-2.5 px-3 font-${font}-regular text-${oppositeTheme} mt-1.5`}
@@ -553,11 +527,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
           )}
         <div className="my-1.5">
           <PendingRequestModalStatus
-<<<<<<< HEAD
-            status={data.status_str}
-=======
             status={transaction.status_title}
->>>>>>> 19bc9d87e69232ff3cd06df44c7881d1c47c17ff
             rejectReason={
               transaction && transaction.reject_description
                 ? transaction.reject_description
@@ -565,11 +535,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             }
           />
         </div>
-<<<<<<< HEAD
-        {data && data.status_str === "upload_document" && (
-=======
         {transaction && transaction.status_title === "Upload Document" && (
->>>>>>> 19bc9d87e69232ff3cd06df44c7881d1c47c17ff
           <SubmitButton
             disabled={
               !(transaction && transaction.url && document && method === "Bank"
@@ -586,10 +552,6 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   transaction.url,
                   {
                     document,
-<<<<<<< HEAD
-                    wallet_tank_receiver: receiverTanks[selectedWalletTank].url,
-                    status: "admin_approve",
-=======
                     wallet_tank_receiver:
                       method === "Bank"
                         ? receiverTanks[0].url
@@ -599,7 +561,6 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                           (status) => status.title === "Admin Approve"
                         ).url
                       : "",
->>>>>>> 19bc9d87e69232ff3cd06df44c7881d1c47c17ff
                   },
                   () => {
                     refreshPendingRequests();

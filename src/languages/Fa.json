@@ -30,11 +30,8 @@
   "password-contain-error": "گذرواژه باید دارای یکی از کاراکترهای زیر باشد: [a-z], [A-Z], [0-9], [!@#$%*?]",
   "password-match-error": "گذرواژه مطابقت ندارد",
   "is-active": "فعال است",
-<<<<<<< HEAD
   "list-sellers": "فروشندگان",
   "list-buyers": "خریداران",
-=======
->>>>>>> ccfe5a5e251ae1e7cb3c221c926c6012273be829
   "home": "خانه",
   "wallet": "کیف پول",
   "reports": "گزارش ها",

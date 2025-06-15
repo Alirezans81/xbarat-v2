@@ -30,11 +30,8 @@
   "password-contain-error": "Password should contain one of the following characters: [a-z], [A-Z], [0-9], [!@#$%*?]",
   "password-match-error": "Passwords do not match",
   "is-active": "Is Active",
-<<<<<<< HEAD
   "list-sellers": "List of Sellers",
   "list-buyers": "List of Buyers",
-=======
->>>>>>> ccfe5a5e251ae1e7cb3c221c926c6012273be829
   "home": "Home",
   "wallet": "Wallet",
   "reports": "Reports",
@@ -514,17 +511,10 @@
       }
     }
   },
-<<<<<<< HEAD
-  "first-name-required": "First name is required(English Only)",
-  "first-name-pattern": "First name must only contain letters(English Only)",
-  "last-name-required": "Last name is required(English Only)",
-  "last-name-pattern": "Last name must only contain letters(English Only)",
-=======
   "first-name-required": "First name is required",
   "first-name-pattern": "First name must only contain letters",
   "last-name-required": "Last name is required",
   "last-name-pattern": "Last name must only contain letters",
->>>>>>> ccfe5a5e251ae1e7cb3c221c926c6012273be829
   "phone-required": "Phone number is required",
   "phone-pattern": "Phone must be a valid international number starting with +",
   "address-required": "Address is required",

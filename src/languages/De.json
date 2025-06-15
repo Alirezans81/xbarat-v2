@@ -30,11 +30,8 @@
   "password-contain-error": "Das Passwort muss eines der folgenden Zeichen enthalten: [a-z], [A-Z], [0-9], [!@#$%*?]",
   "password-match-error": "Die Passwörter stimmen nicht überein.",
   "is-active": "ist aktiv",
-<<<<<<< HEAD
   "list-sellers": "Liste der Verkäufer",
   "list-buyers": "Liste der Käufer",
-=======
->>>>>>> ccfe5a5e251ae1e7cb3c221c926c6012273be829
   "home": "Startseite",
   "wallet": "Brieftasche",
   "reports": "Berichte",
