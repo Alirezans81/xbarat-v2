@@ -95,7 +95,7 @@ export default function PendingRequests({
       } else resetPending();
     }
   }, [showOrdersType]);
-
+  console.log(allPendingOrders);
   return (
     <div className="flex flex-col h-full">
       <div className="flex flex-col md:flex-row w-full gap-y-0.5 justify-between md:items-center">

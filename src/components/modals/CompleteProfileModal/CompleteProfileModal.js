@@ -282,7 +282,7 @@ export default function CompleteProfileModal() {
               phone:
                 userInfo && userInfo.phone && userInfo.phone !== "undefined"
                   ? userInfo.phone
-                  : "+",
+                  : "",
               address:
                 userInfo && userInfo.address && userInfo.address !== "undefined"
                   ? userInfo.address

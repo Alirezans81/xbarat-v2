@@ -4,6 +4,7 @@ import {
   getPendingRequests,
   cancelPendingRequest,
   uploadRequestDocument,
+  depositBackToAdminAssign,
 } from "./apis";
 import { useState } from "react";
 
@@ -19,6 +20,7 @@ const useGetPendingRequests = () => {
       setIsLoading(true);
       await getPendingRequests(token.access)
         .then((data) => {
+          console.log(data);
           process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
           setState(data.data.results);
           customFunction && customFunction();
@@ -35,7 +37,32 @@ const useGetPendingRequests = () => {
 
   return { getPendingRequests: fetch, error, isLoading };
 };
+const useDepositBackToAdminAssign = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+  const token = useTokenState();
+  const checkTokenExpired = useCheckTokenExpired();
 
+  const fetch = (requestUrl, setState, customFunction) => {
+    checkTokenExpired(async () => {
+      setIsLoading(true);
+      await depositBackToAdminAssign(requestUrl, token.access)
+        .then((data) => {
+          process.env.REACT_APP_MODE === "DEVELOPMENT" && console.log(data);
+          setState(data.data);
+          customFunction && customFunction();
+          setIsLoading(false);
+          return data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          setError(error);
+          setIsLoading(false);
+        });
+    });
+  };
+  return { depositBackToAdminAssign: fetch, error, isLoading };
+};
 const useCancelPendingRequest = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -96,4 +123,5 @@ export {
   useGetPendingRequests,
   useCancelPendingRequest,
   useUploadRequestDocument,
+  useDepositBackToAdminAssign,
 };

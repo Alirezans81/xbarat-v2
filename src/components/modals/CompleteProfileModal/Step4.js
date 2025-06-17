@@ -6,15 +6,21 @@ import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import { useGetWalletTankTypes } from "../../../apis/common/wallet/hooks";
 import { useFontState } from "../../../Providers/FontProvider";
 import { CustomTooltip } from "../../common/CustomTooltip";
-
+import DirectionSetter from "../../../functions/DirectionSetter";
 const Note = ({ lang, font }) => {
   return (
     <div
       className={`flex flex-col gap-y-5 text-gray font-${font}-regular w-72 px-2 pt-1.5 pb-0.5`}
     >
-      <span>{"•	" + lang["complete-profile-modal-step4-note-1st"] + "."}</span>
-      <span>{"•	" + lang["complete-profile-modal-step4-note-2nd"] + "."}</span>
-      <span>{"•	" + lang["complete-profile-modal-step4-note-3rd"] + "."}</span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step4-note-1st"] + "."}
+      </span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step4-note-2nd"] + "."}
+      </span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step4-note-3rd"] + "."}
+      </span>
     </div>
   );
 };
@@ -35,6 +41,7 @@ export default function Step4({
   const lang = useLanguageState();
   const font = useFontState();
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
+  const direction = DirectionSetter(font);
 
   const { getWalletTankTypes, isLoading: getWalletTankTypesIsLoading } =
     useGetWalletTankTypes();
@@ -146,7 +153,10 @@ export default function Step4({
                 </div>
                 {touched.wallet_asset_currency &&
                   errors.wallet_asset_currency && (
-                    <span className="text-red-500 font-thin text-sm ml-1">
+                    <span
+                      dir={direction}
+                      className="text-red-500 font-thin text-sm ml-1"
+                    >
                       {errors.wallet_asset_currency}
                     </span>
                   )}
@@ -216,7 +226,10 @@ export default function Step4({
                   </CustomDropdown>
                 </div>
                 {touched.wallet_tank_type && errors.wallet_tank_type && (
-                  <span className="text-red-500 font-thin text-sm ml-1">
+                  <span
+                    dir={direction}
+                    className="text-red-500 font-thin text-sm ml-1"
+                  >
                     {errors.wallet_tank_type}
                   </span>
                 )}
@@ -235,7 +248,10 @@ export default function Step4({
                   />
                 </div>
                 {touched.title && errors.title && (
-                  <span className="text-red-500 font-thin text-sm ml-1">
+                  <span
+                    dir={direction}
+                    className="text-red-500 font-thin text-sm ml-1"
+                  >
                     {errors.title}
                   </span>
                 )}
@@ -254,7 +270,10 @@ export default function Step4({
                   />
                 </div>
                 {touched.bank_info && errors.bank_info && (
-                  <span className="text-red-500 font-thin text-sm ml-1">
+                  <span
+                    dir={direction}
+                    className="text-red-500 font-thin text-sm ml-1"
+                  >
                     {errors.bank_info}
                   </span>
                 )}
@@ -273,7 +292,10 @@ export default function Step4({
                   />
                 </div>
                 {touched.bank_name && errors.bank_name && (
-                  <span className="text-red-500 font-thin text-sm ml-1">
+                  <span
+                    dir={direction}
+                    className="text-red-500 font-thin text-sm ml-1"
+                  >
                     {errors.bank_name}
                   </span>
                 )}
@@ -299,9 +321,15 @@ export default function Step4({
             <div
               className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}
             >
-              <span>{lang["complete-profile-modal-step4-note-1st"] + "."}</span>
-              <span>{lang["complete-profile-modal-step4-note-2nd"] + "."}</span>
-              <span>{lang["complete-profile-modal-step4-note-3rd"] + "."}</span>
+              <span dir={direction} className="text-start">
+                {lang["complete-profile-modal-step4-note-1st"] + "."}
+              </span>
+              <span dir={direction} className="text-start">
+                {lang["complete-profile-modal-step4-note-2nd"] + "."}
+              </span>
+              <span dir={direction} className="text-start">
+                {lang["complete-profile-modal-step4-note-3rd"] + "."}
+              </span>
             </div>
           </div>
 

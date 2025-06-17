@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import { useThemeState } from "../../../Providers/ThemeProvider";
 import { useLanguageState } from "../../../Providers/LanguageProvider";
 import { useFontState } from "../../../Providers/FontProvider";
 import { CustomTooltip } from "../../common/CustomTooltip";
-
+import countryCodes from "./CountryCodesStep1";
+import DirectionSetter from "../../../functions/DirectionSetter";
 const Note = ({ lang, font }) => {
   return (
     <div
       className={`flex flex-col gap-y-5 text-gray font-${font}-regular w-72 px-2 pt-1.5 pb-0.5`}
     >
-      <span>{"•	" + lang["complete-profile-modal-step1-note-1st"] + "."}</span>
-      <span>{"•	" + lang["complete-profile-modal-step1-note-2nd"] + "."}</span>
-      <span>{"•	" + lang["complete-profile-modal-step1-note-3rd"] + "."}</span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step1-note-1st"] + "."}
+      </span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step1-note-2nd"] + "."}
+      </span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step1-note-3rd"] + "."}
+      </span>
     </div>
   );
 };
@@ -27,7 +35,19 @@ export default function Step1({
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
+  const direction = DirectionSetter(font);
+  const [selectedCode, setSelectedCode] = useState();
+  const [phoneWithoutCode, setPhoneWithoutCode] = useState();
+  const handlePhoneChange = () => {
+    handleChange("phone")({
+      target: { value: selectedCode + phoneWithoutCode },
+    });
+  };
 
+  useEffect(() => {
+    handlePhoneChange();
+  }, [selectedCode]);
+  console.log(values.phone);
   if (handleBlur && handleChange && values) {
     return (
       <div className="w-full flex gap-x-10 my-5 relative">
@@ -47,7 +67,10 @@ export default function Step1({
                 />
               </div>
               {touched.first_name && errors.first_name && (
-                <span className="text-red-500 font-thin text-sm ml-1">
+                <span
+                  dir={direction}
+                  className="text-red-500 font-thin text-sm ml-1"
+                >
                   {errors.first_name}
                 </span>
               )}
@@ -66,7 +89,10 @@ export default function Step1({
                 />
               </div>
               {touched.last_name && errors.last_name && (
-                <span className="text-red-500 font-thin text-sm ml-1">
+                <span
+                  dir={direction}
+                  className="text-red-500 font-thin text-sm ml-1"
+                >
                   {errors.last_name}
                 </span>
               )}
@@ -75,18 +101,35 @@ export default function Step1({
               <span className={`font-${font}-regular text-${oppositeTheme}`}>
                 {lang["phone"]}
               </span>
-              <div className="w-full flex">
+              <div className="w-full flex flex-row gap-x-2">
+                <div className="w-fit">
+                  <CustomDropdown label={selectedCode}>
+                    {countryCodes.map((data) => (
+                      <CustomItem
+                        onClick={() => setSelectedCode(data.code)}
+                        value={selectedCode}
+                        className={"flex flex-row gap-x-1 w-full"}
+                      >
+                        <span className="">{data.code}</span>
+                        <div className="">{data.label}</div>
+                      </CustomItem>
+                    ))}
+                  </CustomDropdown>
+                </div>
                 <input
                   className={`flex-1 hide-input-arrows bg-${theme}-back font-${font}-regular text-${oppositeTheme} px-3 outline-1 h-9 outline-white rounded-lg w-0 pt-2 pb-1`}
                   name="phone"
-                  onBlur={handleBlur("phone")}
-                  onChange={handleChange("phone")}
+                  onChange={(e) => setPhoneWithoutCode(e.target.value)}
+                  onBlur={handlePhoneChange}
                   maxLength={15}
-                  value={values.phone ? values.phone : ""}
+                  value={phoneWithoutCode ? phoneWithoutCode : ""}
                 />
               </div>
               {touched.phone && errors.phone && (
-                <span className="text-red-500 font-thin text-sm ml-1">
+                <span
+                  dir={direction}
+                  className="text-red-500 font-thin text-sm ml-1"
+                >
                   {errors.phone}
                 </span>
               )}
@@ -105,7 +148,10 @@ export default function Step1({
                 />
               </div>
               {touched.address && errors.address && (
-                <span className="text-red-500 font-thin text-sm ml-1">
+                <span
+                  dir={direction}
+                  className="text-red-500 font-thin text-sm ml-1"
+                >
                   {errors.address}
                 </span>
               )}
@@ -129,9 +175,15 @@ export default function Step1({
           <div
             className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}
           >
-            <span>{lang["complete-profile-modal-step1-note-1st"] + "."}</span>
-            <span>{lang["complete-profile-modal-step1-note-2nd"] + "."}</span>
-            <span>{lang["complete-profile-modal-step1-note-3rd"] + "."}</span>
+            <span dir={DirectionSetter(font)} className="text-start">
+              {lang["complete-profile-modal-step1-note-1st"] + "."}
+            </span>
+            <span dir={DirectionSetter(font)} className="text-start">
+              {lang["complete-profile-modal-step1-note-2nd"] + "."}
+            </span>
+            <span dir={DirectionSetter(font)} className="text-start">
+              {lang["complete-profile-modal-step1-note-3rd"] + "."}
+            </span>
           </div>
         </div>
 

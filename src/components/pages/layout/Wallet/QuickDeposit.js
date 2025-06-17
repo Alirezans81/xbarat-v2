@@ -159,7 +159,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
         </span>
       </div>
       <Formik
-        initialValues={{ amount: "" }}
+        initialValues={{ amount: "", method: "Paypal" }}
         onSubmit={(values, { resetForm }) => {
           if (userInfo && userInfo.is_verified) {
             if (checkAmount(+removeComma(values.amount))) {
@@ -176,16 +176,13 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                         ? currencies[selectedCurrencyIndex].url
                         : "",
                     amount: removeComma(values.amount),
-                    status: statuses
-                      ? statuses.find(
-                          (status) => status.title === "Admin Assign"
-                        ).url
-                      : "",
+                    status: "admin_assign",
                     branch:
                       locations[selectedLocationIndex] &&
                       locations[selectedLocationIndex].url
                         ? locations[selectedLocationIndex].url
                         : "",
+                    method: values.method,
                   },
                   () => {
                     setSelectedCurrencyIndex(-1);
@@ -209,6 +206,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                           (status) => status.title === "Admin Assign"
                         ).url
                       : "",
+                    method: values.method,
                   },
                   () => {
                     setSelectedCurrencyIndex(-1);
@@ -225,9 +223,15 @@ export default function QuickDeposit({ refreshPendingRequests }) {
           }
         }}
       >
-        {({ handleChange, handleBlur, values, handleSubmit }) => (
-          <div className="grid grid-cols-2 grid-rows-2 gap-2">
-            <div className="col-span-1 row-span-1 flex">
+        {({
+          handleChange,
+          handleBlur,
+          values,
+          handleSubmit,
+          setFieldValue,
+        }) => (
+          <div className="grid grid-cols-2 grid-rows-3 gap-2">
+            <div className="col-span-1 row-span-1 flex w-full h-fit">
               <CustomDropdown
                 label={
                   selectedCurrencyIndex >= 0 &&
@@ -366,6 +370,40 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                 onChange={handleChange("amount")}
                 value={values && values.amount ? addComma(values.amount) : ""}
               />
+            </div>
+            {/* Payment Mehod */}
+            <div className="col-span-2 row-span-1">
+              <div
+                className={`flex-1 w-full h-fit flex justify-between items-center relative bg-transparent max-w-md mx-auto bg-${theme}-back rounded-lg`}
+              >
+                {/* Sliding Background */}
+                <div
+                  className="absolute top-0 left-0 w-1/2 h-full rounded-xl transition-all duration-500 bg-blue-gradient z-0"
+                  style={{
+                    transform:
+                      values.method === "Bank"
+                        ? "translateX(100%)"
+                        : "translateX(0%)",
+                  }}
+                />
+
+                {/* Buttons */}
+                <div className="flex w-full relative z-10">
+                  <button
+                    onClick={() => setFieldValue("method", "Paypal")}
+                    className={`w-1/2 py-1 rounded-xl text-center transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
+                  >
+                    Paypal Deposit
+                  </button>
+
+                  <button
+                    onClick={() => setFieldValue("method", "Bank")}
+                    className={`w-1/2 py-1 rounded-xl text-center transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
+                  >
+                    Bank Deposit
+                  </button>
+                </div>
+              </div>
             </div>
             <div className={submitButtonClass}>
               <SubmitButton

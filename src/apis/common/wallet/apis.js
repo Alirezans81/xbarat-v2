@@ -146,6 +146,7 @@ const createDeposit = (params, token) => {
   formData.append("currency", params.currency);
   formData.append("amount", params.amount);
   formData.append("status", params.status);
+  formData.append("method", params.method);
   params.branch && formData.append("branch", params.branch);
 
   const headers = {
@@ -162,6 +163,10 @@ const createWithdrawal = (params, token) => {
   formData.append("currency", params.currency);
   formData.append("amount", params.amount);
   formData.append("status", params.status);
+  formData.append("fee_withdrawal", params.fee_withdrawal);
+  console.log(typeof params.fee_withdrawal);
+  console.log(params.fee_withdrawal);
+
   params.branch && formData.append("branch", params.branch);
 
   const headers = {

@@ -4,7 +4,10 @@ import prod from "../../api";
 import dev from "../../api-dev";
 
 const api = process.env.REACT_APP_MODE === "DEVELOPMENT" ? dev() : prod();
-
+const base_route =
+  process.env.REACT_APP_MODE === "DEVELOPMENT"
+    ? process.env.REACT_APP_DEV_API_DOMAIN
+    : process.env.REACT_APP_API_DOMAIN;
 const getPendingRequests = (token) => {
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -24,7 +27,7 @@ const uploadRequestDocument = (requestUrl, params, token) => {
 
   formData.append("document", params.document, "document.png");
   formData.append("wallet_tank_detail_receiver", params.wallet_tank_receiver);
-  formData.append("status", params.status);
+  formData.append("status_str", params.status);
 
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -32,4 +35,20 @@ const uploadRequestDocument = (requestUrl, params, token) => {
   return axios.patch(requestUrl, formData, { headers });
 };
 
-export { getPendingRequests, cancelPendingRequest, uploadRequestDocument };
+const depositBackToAdminAssign = (request_url, token) => {
+  const formData = new FormData();
+  formData.append("status", base_route + "api/status/admin-assign/");
+  formData.append("status_title", "Admin Assign");
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return axios.patch(request_url, formData, { headers });
+};
+
+export {
+  getPendingRequests,
+  cancelPendingRequest,
+  uploadRequestDocument,
+  depositBackToAdminAssign,
+};

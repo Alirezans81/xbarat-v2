@@ -16,7 +16,7 @@ export default function DepositCard({ data }) {
     <div
       className={`flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-4 pb-1 overflow-hidden`}
     >
-      <div className="flex flex-col items-center w-full">
+      <div className="flex flex-col items-center w-full h-fit">
         <div
           className={`flex flex-row text-${oppositeTheme} font-${font}-regular items-center`}
         >
@@ -30,8 +30,23 @@ export default function DepositCard({ data }) {
           <span className="mx-1.5">{data.user_receiver_username}</span>
         </div>
         <RequestStatus status={data.status_title} />
+        <div
+          className={
+            data.status_title === "Reject" && data.reject_description
+              ? `flex overflow-x-scroll px-3 text-${oppositeTheme} h-6`
+              : "hidden"
+          }
+        >
+          {data.reject_description}
+        </div>
       </div>
-      <span className={`font-${font}-regular text-sm text-gray mt-20 mb-2`}>
+      <span
+        className={`font-${font}-regular text-sm text-gray ${
+          data.status_title === "Reject" && data.reject_description
+            ? "mt-14"
+            : "mt-20"
+        } mb-2`}
+      >
         {convertDateTime(data.datetime_create)}
       </span>
     </div>

@@ -72,7 +72,6 @@ export default function AddCardModal() {
   let AvailableTypes = "";
   if (types) {
     AvailableTypes = types.filter((data) => data.currencies.includes(asset[1]));
-    console.log(AvailableTypes);
   }
 
   const { createWalletTank, isLoading: createWalletTankIsLoading } =

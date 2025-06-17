@@ -6,7 +6,7 @@ import { useFontState } from "../../Providers/FontProvider";
 import { useLanguageState } from "../../Providers/LanguageProvider";
 import { useCropImageModalOpen } from "../../Providers/CropImageModalProvider";
 
-export default function CustomUploader({ setImage }) {
+export default function CustomUploader({ setImage, Crop = true }) {
   const lang = useLanguageState();
   const theme = useThemeState();
   const font = useFontState();
@@ -26,14 +26,19 @@ export default function CustomUploader({ setImage }) {
   const handleImageInputChange = (e) => {
     const file = e.target.files[0];
     if (limitImageSize(file)) {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => {
+      if (!Crop) {
         setFileName(file.name);
+        setImage(file);
+      } else {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+          setFileName(file.name);
 
-        const imageSrc = reader.result.toString() || "";
-        openCropImageModal(imageSrc, setImage);
-      });
-      reader.readAsDataURL(file);
+          const imageSrc = reader.result.toString() || "";
+          openCropImageModal(imageSrc, setImage);
+        });
+        reader.readAsDataURL(file);
+      }
     } else {
       setToastData({
         status: "failed",
