@@ -112,7 +112,7 @@ export default function CropImageModal({ imageSrc, setImage }) {
       <button
         type="button"
         onClick={handleSubmit}
-        className={`w-48 bg-blue text-white font-${font}-regular rounded-lg pt-2 pb-1`}
+        className={`w-48 bg-blue text-white font-${font}-regular rounded-lg pt-2 pb-1 flex justify-center`}
       >
         {lang["submit"]}
       </button>

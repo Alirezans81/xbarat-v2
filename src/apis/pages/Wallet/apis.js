@@ -27,7 +27,7 @@ const uploadRequestDocument = (requestUrl, params, token) => {
 
   formData.append("document", params.document, "document.png");
   formData.append("wallet_tank_detail_receiver", params.wallet_tank_receiver);
-  formData.append("status", params.status);
+  formData.append("status_str", params.status);
 
   const headers = {
     Authorization: `Bearer ${token}`,

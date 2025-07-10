@@ -15,7 +15,9 @@ import { useCancelPendingExchange } from "../../../../../apis/pages/Home/hooks";
 import AreYouSureModal from "../../../../../components/modals/AreYouSureModal";
 import { useFontState } from "../../../../../Providers/FontProvider";
 import { useRefreshWallet } from "../../../../../hooks/useRefreshWallet";
-
+import DirectionSetter from "../../../../../functions/DirectionSetter";
+import { useExchange } from "../../../../../apis/pages/Home/hooks";
+import EditExchangeModal from "../../../../modals/EditExchangeModal";
 export default function PendingExchangeCard({
   lang,
   data,
@@ -40,46 +42,30 @@ export default function PendingExchangeCard({
   const closeModal = useModalDataClose();
   const refreshWallet = useRefreshWallet();
   const calculateReverseRate = useCalculateReverseRate();
-
+  const direction = DirectionSetter(font);
+  const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const { cancelPendingExchange, isLoading: cancelPendingExchangeIsLoading } =
     useCancelPendingExchange();
   useEffect(
     () => setLoading(cancelPendingExchangeIsLoading),
     [cancelPendingExchangeIsLoading]
   );
-
-  const openEditAreYouSureModal = () => {
+  const { exchange, isLoading: exchangeIsLoading } = useExchange();
+  useEffect(
+    () => setIsLoadingSplashScreen(exchangeIsLoading),
+    [exchangeIsLoading]
+  );
+  const openEditAreYouSureModal = (data, exchange) => {
     setModalData({
-      title: lang["are-you-sure-modal-title"] + "?",
-      children: (
-        <AreYouSureModal
-          onClick={() => {
-            data &&
-              data.url &&
-              cancelPendingExchange(data.url, () => {
-                refreshPendingExchange();
-                refreshWallet(null, {
-                  asset: (data) => findCurrencyBalanceInWallet(data),
-                });
-                closeModal();
-
-                resetHome();
-
-                setSource(data.currency_source_slug);
-                setTarget(data.currency_destination_slug);
-                setAmount(addComma(+data.amount_source));
-                setRate(addComma(+data.rate));
-                focusOnAmountInput();
-              });
-          }}
-          message={lang["edit-exchange-modal-message"] + "?"}
-        />
-      ),
+      title:
+        direction === "ltr"
+          ? lang["edit-exchange-modal-message"] + "?"
+          : lang["edit-exchange-modal-message"] + "؟",
+      children: <EditExchangeModal data={data} exchange={exchange} />,
       canClose: true,
       isOpen: true,
     });
   };
-
   const openCancelAreYouSureModal = () => {
     setModalData({
       title: lang["are-you-sure-modal-title"] + "?",
@@ -96,7 +82,11 @@ export default function PendingExchangeCard({
                 closeModal();
               });
           }}
-          message={lang["cancel-exchange-modal-message"] + "?"}
+          message={
+            direction === "ltr"
+              ? lang["cancel-exchange-modal-message"] + "?"
+              : lang["cancel-exchange-modal-message"] + "؟"
+          }
         />
       ),
       canClose: true,
@@ -160,7 +150,25 @@ export default function PendingExchangeCard({
       <div className="flex gap-2 mt-2 w-full px-6">
         <button
           type="button"
-          onClick={openEditAreYouSureModal}
+          onClick={() => {
+            openEditAreYouSureModal(data, (customFunction) => {
+              cancelPendingExchange(data.url, () => {
+                refreshPendingExchange();
+                refreshWallet(null, {
+                  asset: (data) => findCurrencyBalanceInWallet(data),
+                });
+                closeModal();
+              });
+              exchange(data, () => {
+                customFunction && customFunction();
+
+                refreshWallet(null, {
+                  asset: (data) => findCurrencyBalanceInWallet(data),
+                });
+                refreshPendingExchange();
+              });
+            });
+          }}
           className="flex-1 border-2 border-blue rounded-lg pt-0.5"
         >
           <span className={`font-${font}-bold text-blue`}>{lang["edit"]}</span>

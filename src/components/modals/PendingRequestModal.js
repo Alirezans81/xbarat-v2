@@ -13,6 +13,7 @@ import { useStatusesState } from "../../Providers/StatusesProvider";
 import { useModalDataClose } from "../../Providers/ModalDataProvider";
 import { useFontState } from "../../Providers/FontProvider";
 import { useGetWalletTanks } from "../../apis/common/wallet/hooks";
+import DirectionSetter from "../../functions/DirectionSetter";
 import { CustomDropdown, CustomItem } from "../common/CustomDropdown";
 import { combineImagesWithGrid } from "../../functions/combineImages";
 import Stepper from "./PendingRequestModal/Stepper";
@@ -207,13 +208,13 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
 
     if (transaction) {
       if (type === "deposit" || type === "withdrawal") {
-        if (status === "Admin Assign") return 1;
-        if (status === "Upload Document") return 2;
-        if (status === "Admin Approve") return 3;
-        if (status === "Accept" || status === "Reject") return 4;
+        if (status === "admin_assign") return 1;
+        if (status === "upload_document") return 2;
+        if (status === "admin_approve") return 3;
+        if (status === "accept" || status === "reject") return 4;
       } else if (type === "transfer") {
-        if (status === "Admin Approve") return 1;
-        if (status === "Accept" || status === "Reject") return 2;
+        if (status === "admin_approve") return 1;
+        if (status === "accept" || status === "reject") return 2;
       }
     }
   };
@@ -290,7 +291,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 : ""}
             </span>
             <div
-              dir={font === "Fa" || font === "Ar" ? "rtl" : "ltr"}
+              dir={DirectionSetter(font)}
               className={`flex flex-col bg-${theme}-back rounded-md py-2.5 px-3 font-${font}-regular text-${oppositeTheme}`}
             >
               <div className="w-full flex justify-between pb-3 border-b border-gray">
