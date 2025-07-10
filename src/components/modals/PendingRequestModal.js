@@ -228,7 +228,14 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     }
   }, [singleImage]);
   return (
-    <div className="flex flex-col w-80">
+    <div
+      className={`flex flex-col ${
+        transaction.type === "deposit" &&
+        transaction.status_title === "Upload Document"
+          ? "w-[40rem]"
+          : "w-80"
+      }`}
+    >
       <div className="w-full mb-1">
         <Stepper
           type={transaction && transaction.type ? transaction.type : ""}
@@ -253,7 +260,14 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
       <span className={`font-${font}-regular text-xl text-${oppositeTheme}`}>
         {addComma(+transaction.amount) + " " + transaction.currency_abb}
       </span>
-      <div className="w-80 mt-3">
+      <div
+        className={`${
+          transaction.type === "deposit" &&
+          transaction.status_title === "Upload Document"
+            ? "w-[40rem]"
+            : "w-80"
+        } mt-3`}
+      >
         {transaction &&
           transaction.status_title &&
           transaction.document &&
@@ -378,14 +392,10 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 )}
             </div>
             <div
-              className={
-                method === "Bank"
-                  ? `w-full flex flex-col justify-start items-center bg-${theme}-back rounded-2xl p-3 gap-y-3 max-h-52 overflow-y-scroll`
-                  : "hidden"
-              }
+              className={`w-full h-fit flex flex-row p-2 gap-x-3 bg-${theme}-back rounded-2xl`}
             >
               <div
-                className={`flex flex-col bg-${theme} w-full h-fit rounded-2xl px-4 py-2 gap-y-3`}
+                className={`flex flex-col bg-${theme} w-2/3 h-full rounded-2xl px-4 py-2 gap-y-3`}
               >
                 <span
                   className={`w-full h-fit flex justify-center text-yellow text-lg`}
@@ -393,7 +403,12 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   {lang["Time_Till_Matches_Valid"]}
                 </span>
                 <span
-                  className={`text-xs text-${oppositeTheme} bg-${theme}-back p-2 rounded-2xl`}
+                  dir={
+                    font === "Ar" || font === "Fa" || font === "Af"
+                      ? "rtl"
+                      : "ltr"
+                  }
+                  className={`text-xs text-${oppositeTheme} bg-${theme}-back p-3 rounded-2xl`}
                 >
                   {lang["Note_Time_Valid"]}
                 </span>
@@ -424,54 +439,65 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   </span>
                 </div>
               </div>
-              {matchUsers.map((tank) => (
-                <div
-                  className={`w-full h-fit flex flex-col bg-${theme} rounded-xl p-3 font-${font}-regular text-${oppositeTheme} gap-y-2`}
-                >
-                  <div className="flex flex-col">
-                    <span className="text-base text-yellow  justify-start">
-                      {lang["address"]}
-                    </span>
-                    <span className="w-full flex h-full justify-center">
-                      {tank.bank_info}
-                    </span>
+              <div
+                className={
+                  method === "Bank"
+                    ? `w-full flex flex-col justify-start items-center bg-${theme}-back rounded-2xl p-3 gap-y-3 max-h-52 overflow-y-scroll`
+                    : "hidden"
+                }
+              >
+                {matchUsers.map((tank) => (
+                  <div
+                    className={`w-full h-fit flex flex-col bg-${theme} rounded-xl p-3 font-${font}-regular text-${oppositeTheme} gap-y-2`}
+                  >
+                    <div className="flex flex-col">
+                      <span className="text-base text-yellow  justify-start">
+                        {lang["address"]}
+                      </span>
+                      <span className="w-full flex h-full justify-center">
+                        {tank.bank_info}
+                      </span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-base text-yellow  justify-start">
+                        {lang["amount"]}
+                      </span>
+                      <span className="w-full flex h-full justify-center">
+                        {addComma(tank.amount) + " " + transaction.currency_abb}
+                      </span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-base text-yellow  justify-start">
+                        {lang["Account_Name"]}
+                      </span>
+                      {console.log(tank)}
+                      <span className="w-full flex h-full justify-center">
+                        {tank.account_name}
+                      </span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-base text-yellow  justify-start">
+                        {lang["Bank_Name"]}:
+                      </span>
+                      <span className="w-full flex h-full justify-center">
+                        {tank.bank_name}
+                      </span>
+                    </div>
+                    <CustomUploader
+                      Crop={false}
+                      setImage={(img) =>
+                        setSingleImage((prev) => [...prev, img])
+                      }
+                    />
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-base text-yellow  justify-start">
-                      {lang["amount"]}
-                    </span>
-                    <span className="w-full flex h-full justify-center">
-                      {addComma(tank.amount) + " " + transaction.currency_abb}
-                    </span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-base text-yellow  justify-start">
-                      {lang["account_name"]}
-                    </span>
-                    <span className="w-full flex h-full justify-center">
-                      {tank.account_name}
-                    </span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-base text-yellow  justify-start">
-                      {lang["Bank_Name"]}:
-                    </span>
-                    <span className="w-full flex h-full justify-center">
-                      {tank.bank_name}
-                    </span>
-                  </div>
-                  <CustomUploader
-                    Crop={false}
-                    setImage={(img) => setSingleImage((prev) => [...prev, img])}
-                  />
-                </div>
-              ))}
-              {/* <button
+                ))}
+                {/* <button
                 onClick={handleLayoutDocument}
                 className={`bg-blue text-center font-${font}-regular rounded-2xl text-lg py-3 text-light w-full`}
               >
                 Concat Reciepts
               </button> */}
+              </div>
             </div>
 
             {method !== "Bank" &&
