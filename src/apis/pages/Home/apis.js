@@ -58,7 +58,7 @@ const exchange = (params, token) => {
   formData.append("amount_source", params.amount_source);
   formData.append("amount_destination", params.amount_destination);
   formData.append("rate", params.rate);
-  formData.append("status_str", params.status);
+  formData.append("status", params.status);
 
   const headers = {
     Authorization: `Bearer ${token}`,

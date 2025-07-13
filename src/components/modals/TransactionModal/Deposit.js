@@ -126,7 +126,9 @@ export default function Deposit({
                     ? currencies[selectedCurrencyIndex].url
                     : "",
                 amount: removeComma(values.amount),
-                status: "admin_assign",
+                status: statuses.find(
+                  (status) => status.title === "Admin Assign"
+                ).url,
                 branch:
                   locations[selectedLocationIndex] &&
                   locations[selectedLocationIndex].url

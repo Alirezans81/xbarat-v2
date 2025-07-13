@@ -208,13 +208,13 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
 
     if (transaction) {
       if (type === "deposit" || type === "withdrawal") {
-        if (status === "admin_assign") return 1;
-        if (status === "upload_document") return 2;
-        if (status === "admin_approve") return 3;
-        if (status === "accept" || status === "reject") return 4;
+        if (status === "Admin Assign") return 1;
+        if (status === "Upload Document") return 2;
+        if (status === "Admin Approve") return 3;
+        if (status === "Accept" || status === "Reject") return 4;
       } else if (type === "transfer") {
-        if (status === "admin_approve") return 1;
-        if (status === "accept" || status === "reject") return 2;
+        if (status === "Admin Approve") return 1;
+        if (status === "Accept" || status === "Reject") return 2;
       }
     }
   };
@@ -399,29 +399,28 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 className={`flex flex-col bg-${theme} w-2/3 h-full rounded-2xl px-4 py-2 gap-y-3`}
               >
                 <span
-                  className={`w-full h-fit flex justify-center text-yellow text-lg`}
+                  dir={DirectionSetter(font)}
+                  className={`w-full h-fit flex justify-center text-yellow text-base font-${font}`}
                 >
                   {lang["Time_Till_Matches_Valid"]}
                 </span>
                 <span
-                  dir={
-                    font === "Ar" || font === "Fa" || font === "Af"
-                      ? "rtl"
-                      : "ltr"
-                  }
+                  dir={DirectionSetter(font)}
                   className={`text-xs text-${oppositeTheme} bg-${theme}-back p-3 rounded-2xl`}
                 >
                   {lang["Note_Time_Valid"]}
                 </span>
                 <div
-                  className={`w-full h-fit flex flex-row justify-center text-${oppositeTheme} font-bold gap-x-1`}
+                  dir={DirectionSetter(font)}
+                  className={`w-full h-fit flex flex-col justify-center items-center text-${oppositeTheme} font-bold gap-x-1`}
                 >
                   <span
-                    className={`w-fit h-full flex justify-center items-center mt-1`}
+                    className={`w-fit h-full flex justify-center items-center mt-1 font-${font} font-light`}
                   >
-                    {lang["Time_Remaining"] + ":"}
+                    {lang["Time_Remaining"]}
                   </span>
                   <span
+                    dir="ltr"
                     className={`w-fit h-full flex justify-center items-center text-${oppositeTheme} p-1 font-bold`}
                   >
                     {timeTillClose &&
@@ -443,13 +442,14 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               <div
                 className={
                   method === "Bank"
-                    ? `w-full flex flex-col justify-start items-center bg-${theme}-back rounded-2xl p-3 gap-y-3 max-h-52 overflow-y-scroll`
+                    ? `w-full flex flex-col justify-start items-center bg-${theme}-back rounded-2xl p-3 gap-y-3 max-h-56 overflow-y-scroll`
                     : "hidden"
                 }
               >
-                {matchUsers.map((tank) => (
+                {matchUsers.map((tank, ind) => (
                   <div
-                    className={`w-full h-fit flex flex-col bg-${theme} rounded-xl p-3 font-${font}-regular text-${oppositeTheme} gap-y-2`}
+                    key={ind}
+                    className={`w-full h-fit flex flex-col bg-${theme} rounded-xl font-${font}-regular text-${oppositeTheme} gap-y-2 p-5`}
                   >
                     <div className="flex flex-col">
                       <span className="text-base text-yellow  justify-start">
@@ -471,7 +471,6 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                       <span className="text-base text-yellow  justify-start">
                         {lang["Account_Name"]}
                       </span>
-                      {console.log(tank)}
                       <span className="w-full flex h-full justify-center">
                         {tank.account_name}
                       </span>
