@@ -263,8 +263,8 @@ const TableExchangeExchanging = ({
             <div
               className={`font-${font}-regular p-2  text-light flex flex-row w-full h-fit justify-between`}
             >
-              <span>Amount</span>
-              <span>Rate</span>
+              <span>{lang["amount"]}</span>
+              <span>{lang["rate"]}</span>
             </div>
             <div className="flex-1 w-full h-full overflow-scroll flex flex-col pt-1">
               {selectRow
@@ -313,9 +313,9 @@ const TableExchangeExchanging = ({
             <div
               className={`font-${font}-regular p-2  text-light flex flex-row w-full h-fit justify-between`}
             >
-              <span>Rate</span>
+              <span>{lang["rate"]}</span>
 
-              <span>Amount</span>
+              <span>{lang["amount"]}</span>
             </div>
             <div className="flex-1 w-full h-full overflow-scroll flex flex-col pt-1">
               {selectRow

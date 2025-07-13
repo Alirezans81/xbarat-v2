@@ -379,7 +379,7 @@ const ExchangingSmallScreen = ({
                   <span
                     className={`font-${font}-regular text-${oppositeTheme}`}
                   >
-                    From
+                    {lang["from"]}
                   </span>
                   <CustomDropdown2
                     className={`flex-1 font-${font}-regular`}
@@ -449,7 +449,7 @@ const ExchangingSmallScreen = ({
                   <span
                     className={`font-${font}-regular text-${oppositeTheme} `}
                   >
-                    To
+                    {lang["to"]}
                   </span>
                   <CustomDropdown2
                     className={`flex-1 font-${font}-regular`}
@@ -515,7 +515,7 @@ const ExchangingSmallScreen = ({
 
                 <div className="col-span-1 row-span-1 flex flex-col">
                   <span className={`w-full h-fit text-${oppositeTheme}`}>
-                    Amount
+                    {lang["amount"]}
                   </span>
                   <div className="flex-1">
                     <input
@@ -602,7 +602,7 @@ const ExchangingSmallScreen = ({
                 </div>
                 <div className="col-span-1 row-span-1 flex flex-col">
                   <span className={`w-full h-fit text-${oppositeTheme}`}>
-                    Rate
+                    {lang["rate"]}
                   </span>
                   <div className="flex-1">
                     <input
