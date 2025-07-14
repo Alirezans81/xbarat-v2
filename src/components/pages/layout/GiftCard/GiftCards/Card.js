@@ -17,7 +17,7 @@ export default function Card({ data }) {
             <img alt="" className="w-7 h-7" />
             <span className={`text-2xl font-${font}-bold -mb-2`}>10</span>
           </div>
-          <span className="text-blue">pending</span>
+          <span className="text-blue">{lang["pending"]}</span>
         </div>
         <button>
           <img

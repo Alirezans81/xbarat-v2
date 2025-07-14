@@ -88,12 +88,12 @@ export default function Wallet() {
     {
       target: ".quick-deposit-component",
       content: lang["quick-deposit-component-tour"],
-      placement: "bottom",
+      placement: "top",
     },
     {
       target: ".last-deposit-component",
       content: lang["last-deposit-component-tour"],
-      placement: "top",
+      placement: "bottom",
     },
     {
       target: ".balance-component",

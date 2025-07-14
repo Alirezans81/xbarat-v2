@@ -56,7 +56,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
       pendingOrder &&
       (pendingOrder.type === "deposit" || pendingOrder.type === "withdrawal")
     ) {
-      if (pendingOrder.status_str !== "admin_assign") {
+      if (pendingOrder.status_title !== "Admin Assign") {
         return true;
       }
       return false;
@@ -71,7 +71,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
       pendingOrder &&
       (pendingOrder.type === "deposit" || pendingOrder.type === "withdrawal")
     ) {
-      if (pendingOrder.status_str !== "admin_assign") {
+      if (pendingOrder.status_title !== "Admin Assign") {
         openWalletRequestModal();
       }
     } else if (pendingOrder && pendingOrder.type === "transfer") {
@@ -187,13 +187,13 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
             pendingOrder.currency_abb}
         </span>
         <div className="-mb-2">
-          <RequestStatus status={pendingOrder.status_str} />
+          <RequestStatus status={pendingOrder.status_title} />
         </div>
       </div>
       <div
         className={`flex flex-row w-full items-end gap-x-2 h-8 font-${font}-bold mt-4`}
       >
-        {pendingOrder && pendingOrder.status_str === "admin_assign" && (
+        {pendingOrder && pendingOrder.status_title === "Admin Assign" && (
           <>
             <button
               type="button"
@@ -211,7 +211,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
             </button>
           </>
         )}
-        {pendingOrder && pendingOrder.status_str === "upload_document" && (
+        {pendingOrder && pendingOrder.status_title === "Upload Document" && (
           <span
             className={`font-${font}-thin text-${oppositeTheme} text-sm md:text-lg md:leading-none`}
           >
@@ -219,7 +219,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
           </span>
         )}
         {pendingOrder &&
-          pendingOrder.status_str === "admin_approve" &&
+          pendingOrder.status_title === "Admin Approve" &&
           pendingOrder.type !== "transfer" && (
             <span
               className={`font-${font}-thin text-${oppositeTheme} text-sm md:text-lg md:leading-none`}
@@ -228,7 +228,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
             </span>
           )}
         {pendingOrder &&
-          pendingOrder.status_str === "admin_aprove" &&
+          pendingOrder.status_title === "Admin Approve" &&
           pendingOrder.type === "transfer" && (
             <>
               <button className="flex-1 border-2 rounded-lg pt-1.5 border-blue text-blue">
@@ -242,7 +242,7 @@ export default function RequestCard({ refreshPendingRequests, pendingOrder }) {
               </button>
             </>
           )}
-        {pendingOrder && pendingOrder.status_str === "reject" && (
+        {pendingOrder && pendingOrder.status_title === "Reject" && (
           <span
             className={`font-${font}-thin overflow-hidden whitespace-nowrap text-ellipsis text-${oppositeTheme} text-sm md:text-lg md:leading-none`}
           >
