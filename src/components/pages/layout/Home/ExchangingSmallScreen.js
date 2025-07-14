@@ -28,6 +28,7 @@ import Tutorial from "../../../modals/Tutorials/ExchangeTutorialModal/Tutorial";
 import { useExchange } from "../../../../apis/pages/Home/hooks";
 import LoginSignupModal from "../../../modals/LoginSignupModal";
 import { useNavigate } from "react-router-dom";
+import { useStatusesState } from "../../../../Providers/StatusesProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
 const ExchangingSmallScreen = ({
   selectedCurrecnyPair,
@@ -59,6 +60,7 @@ const ExchangingSmallScreen = ({
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const currencies = useCurrenciesState();
   const wallet = useWalletState();
+  const all_statuses = useStatusesState();
   const userInfo = useUserState();
   const addComma = useAddComma();
   const calculateReverseRate = useCalculateReverseRate();
@@ -340,7 +342,9 @@ const ExchangingSmallScreen = ({
                           availableTargets[selectedTargetIndex].floating_number
                         )
                       : 0,
-                  status: "pending",
+                  status:
+                    all_statuses.find((status) => status.slug === "Pending")
+                      .url || "",
                 };
                 openSubmitModal(params, (customFunction) => {
                   exchange(params, () => {
@@ -707,7 +711,7 @@ const ExchangingSmallScreen = ({
                           {errorMessage}
                         </span>
                       ) : (
-                        <div className="w-full flex items-center justify-between">
+                        <div className="w-full flex flex-col px-5 max-w-36 text-nowrap overflow-x-scroll overflow-y-hidden items-center justify-between">
                           <div className="flex items-center gap-x-1">
                             <img
                               className="w-5 h-5"
@@ -763,8 +767,8 @@ const ExchangingSmallScreen = ({
                       removeComma(values.amount) !== 0 &&
                       values.rate &&
                       removeComma(values.rate) !== 0
-                        ? "flex justify-center mt-0.5 items-center w-full py-0.5 bg-green rounded-lg text-light"
-                        : "flex justify-center mt-7 items-center w-full py-0.5 bg-green rounded-lg text-light"
+                        ? "flex justify-center mt-5 items-center w-full h-fit py-2 bg-green rounded-lg text-light"
+                        : "flex justify-center mt-6 items-center w-full h-fit py-1.5 bg-green rounded-lg text-light"
                     }
                   >
                     {lang["submit"]}
