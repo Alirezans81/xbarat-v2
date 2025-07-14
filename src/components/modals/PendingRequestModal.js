@@ -201,6 +201,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
       transaction.status_title === "Admin Approve" ||
       transaction.status_title === "Accept" ||
       transaction.status_title === "Reject"
+
     ) {
       return true;
     }
@@ -211,16 +212,18 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     const type = transaction && transaction.type ? transaction.type : "";
     const status =
       transaction && transaction.status_title ? transaction.status_title : "";
+    const type = data && data.type ? data.type : "";
+    const status = data && data.status_str ? data.status_str : "";
 
     if (transaction) {
       if (type === "deposit" || type === "withdrawal") {
-        if (status === "Admin Assign") return 1;
-        if (status === "Upload Document") return 2;
-        if (status === "Admin Approve") return 3;
-        if (status === "Accept" || status === "Reject") return 4;
+        if (status === "admin_assign") return 1;
+        if (status === "upload_document") return 2;
+        if (status === "admin_approve") return 3;
+        if (status === "accept" || status === "reject") return 4;
       } else if (type === "transfer") {
-        if (status === "Admin Approve") return 1;
-        if (status === "Accept" || status === "Reject") return 2;
+        if (status === "admin_approve") return 1;
+        if (status === "accept" || status === "reject") return 2;
       }
     }
   };
@@ -282,6 +285,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             <CustomPreviewer2 imageUrl={transaction.document} />
           )}
         {transaction && transaction.status_title === "Upload Document" && (
+
           <div className="flex flex-col gap-y-2 mb-5">
             <span
               className={

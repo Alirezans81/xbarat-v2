@@ -6,7 +6,7 @@ export default function RequestStatus({ status, isLarge }) {
   const lang = useLanguageState();
   const font = useFontState();
 
-  if (status === "Admin Assign") {
+  if (status === "admin_assign") {
     return (
       <div className="flex flex-row items-center -mt-1.5">
         <img
@@ -18,7 +18,7 @@ export default function RequestStatus({ status, isLarge }) {
         </span>
       </div>
     );
-  } else if (status === "Upload Document") {
+  } else if (status === "upload_document") {
     return (
       <div className="flex flex-row items-center -mt-1.5">
         <img
@@ -30,7 +30,7 @@ export default function RequestStatus({ status, isLarge }) {
         </span>
       </div>
     );
-  } else if (status === "Admin Approve") {
+  } else if (status === "admin_approve") {
     return (
       <div className="flex flex-row items-center -mt-1.5">
         <img
@@ -42,7 +42,7 @@ export default function RequestStatus({ status, isLarge }) {
         </span>
       </div>
     );
-  } else if (status === "Accept") {
+  } else if (status === "accept") {
     return (
       <div className="flex flex-row items-center -mt-1.5">
         <img
@@ -54,7 +54,7 @@ export default function RequestStatus({ status, isLarge }) {
         </span>
       </div>
     );
-  } else if (status === "Reject") {
+  } else if (status === "reject") {
     return (
       <div className="flex flex-row items-center -mt-1.5">
         <img
