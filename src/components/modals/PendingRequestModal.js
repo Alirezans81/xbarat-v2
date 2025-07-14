@@ -214,13 +214,13 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
 
     if (transaction) {
       if (type === "deposit" || type === "withdrawal") {
-        if (status === "admin_assign") return 1;
-        if (status === "upload_document") return 2;
-        if (status === "admin_approve") return 3;
-        if (status === "accept" || status === "reject") return 4;
+        if (status === "Admin Assign") return 1;
+        if (status === "Upload Document") return 2;
+        if (status === "Admin Approve") return 3;
+        if (status === "Accept" || status === "Reject") return 4;
       } else if (type === "transfer") {
-        if (status === "admin_approve") return 1;
-        if (status === "accept" || status === "reject") return 2;
+        if (status === "Admin Approve") return 1;
+        if (status === "Accept" || status === "Reject") return 2;
       }
     }
   };
