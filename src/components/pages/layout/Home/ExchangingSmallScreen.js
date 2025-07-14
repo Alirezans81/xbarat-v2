@@ -61,6 +61,7 @@ const ExchangingSmallScreen = ({
   const currencies = useCurrenciesState();
   const wallet = useWalletState();
   const all_statuses = useStatusesState();
+  console.log(all_statuses);
   const userInfo = useUserState();
   const addComma = useAddComma();
   const calculateReverseRate = useCalculateReverseRate();
@@ -319,7 +320,6 @@ const ExchangingSmallScreen = ({
                     +selectedCurrecnyPair.floating_number
                   )
                 : +removeComma(values.rate);
-
               if (findError(newAmount, +removeComma(values.rate))) {
                 const params = {
                   user: userInfo && userInfo.url ? userInfo.url : "",
@@ -343,7 +343,7 @@ const ExchangingSmallScreen = ({
                         )
                       : 0,
                   status:
-                    all_statuses.find((status) => status.slug === "Pending")
+                    all_statuses.find((status) => status.slug === "pending")
                       .url || "",
                 };
                 openSubmitModal(params, (customFunction) => {
@@ -584,7 +584,7 @@ const ExchangingSmallScreen = ({
                     +walletBalance !== 0 && (
                       <button
                         type="button"
-                        className="absolute top-2 right-3"
+                        className={`absolute top-2 right-3 hidden md:flex`}
                         onClick={() => {
                           if (+walletBalance !== 0) {
                             setFieldValue(

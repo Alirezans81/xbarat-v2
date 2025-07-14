@@ -92,11 +92,17 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
   const method = transaction.method;
 
   let timeout;
+  const tempTimeOut =
+    transaction.temporary_receiver_address.split(",").length > 2
+      ? transaction.temporary_receiver_address.split(",").length * 6
+      : 15;
   if (method === "Bank") {
     timeout = new Date(transaction.datetime_assign);
     timeout.setMinutes(
       timeout.getMinutes() +
-        (transaction.assign_exp_window ? transaction.assign_exp_window : 15)
+        (transaction.assign_exp_window
+          ? transaction.assign_exp_window
+          : tempTimeOut)
     );
   }
   const [timeTillClose, setTimeTillClose] = useState();
@@ -233,7 +239,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
       className={`flex flex-col ${
         transaction.type === "deposit" &&
         transaction.status_title === "Upload Document"
-          ? "w-[40rem]"
+          ? "w-full md:w-[40rem]"
           : "w-80"
       }`}
     >
@@ -265,7 +271,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
         className={`${
           transaction.type === "deposit" &&
           transaction.status_title === "Upload Document"
-            ? "w-[40rem]"
+            ? "w-full md:w-[40rem]"
             : "w-80"
         } mt-3`}
       >
@@ -393,10 +399,10 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 )}
             </div>
             <div
-              className={`w-full h-fit flex flex-row p-2 gap-x-3 bg-${theme}-back rounded-2xl`}
+              className={`w-full h-fit flex flex-col md:flex-row p-2 gap-x-3 bg-${theme}-back rounded-2xl`}
             >
               <div
-                className={`flex flex-col bg-${theme} w-2/3 h-full rounded-2xl px-4 py-2 gap-y-3`}
+                className={`flex flex-col bg-${theme} w-full md:w-2/3 h-full rounded-2xl px-4 py-2 gap-y-3`}
               >
                 <span
                   dir={DirectionSetter(font)}
@@ -442,7 +448,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               <div
                 className={
                   method === "Bank"
-                    ? `w-full flex flex-col justify-start items-center bg-${theme}-back rounded-2xl p-3 gap-y-3 max-h-56 overflow-y-scroll`
+                    ? `w-full flex flex-col justify-start items-center bg-${theme}-back rounded-2xl md:p-3 mt-3 md:mt-0 gap-y-3 max-h-56 overflow-y-scroll`
                     : "hidden"
                 }
               >
