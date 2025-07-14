@@ -201,7 +201,6 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
       transaction.status_title === "Admin Approve" ||
       transaction.status_title === "Accept" ||
       transaction.status_title === "Reject"
-
     ) {
       return true;
     }
@@ -212,8 +211,6 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
     const type = transaction && transaction.type ? transaction.type : "";
     const status =
       transaction && transaction.status_title ? transaction.status_title : "";
-    const type = data && data.type ? data.type : "";
-    const status = data && data.status_str ? data.status_str : "";
 
     if (transaction) {
       if (type === "deposit" || type === "withdrawal") {
@@ -285,7 +282,6 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             <CustomPreviewer2 imageUrl={transaction.document} />
           )}
         {transaction && transaction.status_title === "Upload Document" && (
-
           <div className="flex flex-col gap-y-2 mb-5">
             <span
               className={
