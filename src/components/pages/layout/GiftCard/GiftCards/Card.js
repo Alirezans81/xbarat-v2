@@ -1,12 +1,12 @@
 import React from "react";
 import { useThemeState } from "../../../../../Providers/ThemeProvider";
 import { useFontState } from "../../../../../Providers/FontProvider";
-
+import { useLanguageState } from "../../../../../Providers/LanguageProvider";
 export default function Card({ data }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
-
+  const lang = useLanguageState();
   return (
     <div
       className={`w-full h-44 bg-${theme}-back rounded-2xl pl-5 pr-4 pb-2.5 pt-4 flex flex-col justify-between`}
