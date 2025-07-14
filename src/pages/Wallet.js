@@ -65,7 +65,6 @@ export default function Wallet() {
   const refreshPendingRequests = () => {
     getPendingRequests(token, setPendingRequests);
   };
-
   useEffect(() => {
     refreshPendingRequests();
   }, []);

@@ -305,7 +305,7 @@ export default function Home({ isDemo, platform }) {
 
           <div className="flex-1 mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16 pt-4">
             <div
-              className={`order-3 md:order-1 h-72 bg-${theme} border-4 border-blue rounded-3xl md:flex hidden justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12 exchanging-component`}
+              className={`order-3 md:order-1 h-72 bg-${theme} border-4 border-blue rounded-3xl md:flex hidden justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12`}
             >
               <Exchanging
                 selectedCurrecnyPair={selectedCurrecnyPair}
@@ -370,7 +370,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`order-2 md:hidden min-h-72 mt-2 bg-${theme} rounded-2xl row-span-6 xl:col-span-8   col-span-12 table-exchange-exchanging-component`}
+              className={`order-2 md:hidden min-h-72 mt-2 bg-${theme} rounded-2xl row-span-6 xl:col-span-8   col-span-12 `}
             >
               <TableExchangeExchanging
                 selectedSourceIndex={selectedSourceIndex}
@@ -399,7 +399,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`md:flex hidden md:order-5 min-h-72 md:h-72 mt-2 pb-2 md:pb-0 md:mt-0 rounded-2xl md:bg-${theme} rounded-${oneDirection}-3xl row-span-3 xl:col-span-8 lg:col-span-11 md:col-span-11 col-span-12 rounded-3xl table-exchange-component`}
+              className={`md:flex hidden md:order-5 min-h-72 md:h-72 mt-2 pb-2 md:pb-0 md:mt-0 rounded-2xl md:bg-${theme} rounded-${oneDirection}-3xl row-span-3 xl:col-span-8 lg:col-span-11 md:col-span-11 col-span-12 rounded-3xl`}
             >
               <TableExchange
                 selectedSourceIndex={selectedSourceIndex}

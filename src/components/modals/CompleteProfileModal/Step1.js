@@ -47,6 +47,7 @@ export default function Step1({
   useEffect(() => {
     handlePhoneChange();
   }, [selectedCode]);
+
   if (handleBlur && handleChange && values) {
     return (
       <div className="w-full flex gap-x-10 my-5 relative">

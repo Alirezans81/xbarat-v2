@@ -105,14 +105,18 @@ function Content({ notifs, getNotifications, setNotifs }) {
         </span>
       </button>
       {notifs &&
-        notifs.map((notif, index) => (
-          <Notif
-            key={index}
-            notif={notif}
-            getNotifications={getNotifications}
-          />
-        ))}
-      {(!notifs || notifs.length === 0) && (
+        notifs
+          .filter((data) => data.message !== "" && data.subject !== "")
+          .map((notif, index) => (
+            <Notif
+              key={index}
+              notif={notif}
+              getNotifications={getNotifications}
+            />
+          ))}
+      {(!notifs ||
+        notifs.filter((data) => data.message !== "" && data.subject !== "")
+          .length === 0) && (
         <div className="px-10 pt-5 pb-4">
           <span
             className={`text-${oppositeTheme} font-${font}-regular text-lg md:text-xl`}
@@ -171,7 +175,13 @@ export default function Notification() {
   }, [userInfo]);
 
   useEffect(() => {
-    if (notifs && notifs.length !== 0 && wrapperRef && wrapperRef.current) {
+    if (
+      notifs &&
+      notifs.filter((data) => data.message !== "" && data.subject !== "")
+        .length !== 0 &&
+      wrapperRef &&
+      wrapperRef.current
+    ) {
       wrapperRef.current.click();
     }
   }, [notifs, wrapperRef]);
@@ -202,7 +212,11 @@ export default function Notification() {
               font === "Fa" || font === "Ar" ? "-mb-0.5" : "-mb-1.5"
             } text-sm`}
           >
-            {notifs ? notifs.length : 0}
+            {notifs
+              ? notifs.filter(
+                  (data) => data.message !== "" && data.subject !== ""
+                ).length
+              : 0}
           </span>
         </span>
         <img

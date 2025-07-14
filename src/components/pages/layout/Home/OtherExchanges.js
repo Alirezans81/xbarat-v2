@@ -6,7 +6,7 @@ import CustomSlider from "../../../common/CustomSlider";
 import OtherExchangeCard from "./OtherExchanges/OtherExchangeCard";
 import { useGetOtherExchangesRate } from "../../../../apis/pages/Home/hooks";
 import { useFontState } from "../../../../Providers/FontProvider";
-
+import { useGetOtherExchanges } from "../../../../apis/pages/Home/hooks";
 export default function OtherExchanges({ selectedCurrecnyPair }) {
   const lang = useLanguageState();
   const font = useFontState();
@@ -15,10 +15,26 @@ export default function OtherExchanges({ selectedCurrecnyPair }) {
   const setLoading = useIsLoadingSplashScreenSetState();
 
   const [exchanges, setExchanges] = useState(null);
+  const [otherExchanges, setOtherExchanges] = useState([]);
 
   const { getOtherExchangesRate, isLoading } = useGetOtherExchangesRate();
   useEffect(() => setLoading(isLoading), [isLoading]);
 
+  const { getOtherExchanges, isLoading: getOtherExchangesisLoading } =
+    useGetOtherExchanges();
+
+  useEffect(
+    () => setLoading(getOtherExchangesisLoading),
+    [getOtherExchangesisLoading]
+  );
+
+  useEffect(() => {
+    const fetchExchanges = async () => {
+      await getOtherExchanges(setOtherExchanges);
+    };
+
+    fetchExchanges();
+  }, []);
   useEffect(() => {
     selectedCurrecnyPair
       ? getOtherExchangesRate(
@@ -57,17 +73,24 @@ export default function OtherExchanges({ selectedCurrecnyPair }) {
       {exchanges && exchanges.length ? (
         <div className="w-11/12 px-5 flex flex-col justify-center">
           <CustomSlider slidesToShow={1} slidesToScroll={1}>
-            {exchanges.map((exchange, index) => (
-              <div
-                key={index}
-                className="flex justify-center items-center h-full px-4 mt-2.5"
-              >
-                <OtherExchangeCard
-                  selectedCurrecnyPair={selectedCurrecnyPair}
-                  data={exchange}
-                />
-              </div>
-            ))}
+            {exchanges
+              .filter((exchange) =>
+                otherExchanges.some(
+                  (other) => other.title === exchange.exchange_title
+                )
+              )
+              .map((exchange, index) => (
+                <div
+                  key={index}
+                  className="flex justify-center items-center h-full px-4 mt-2.5"
+                >
+                  <OtherExchangeCard
+                    selectedCurrecnyPair={selectedCurrecnyPair}
+                    data={exchange}
+                    otherExchanges={otherExchanges}
+                  />
+                </div>
+              ))}
           </CustomSlider>
         </div>
       ) : (

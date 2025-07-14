@@ -155,7 +155,7 @@ export default function LoginForm({ setIsSplashScreenLoading }) {
               {validationErrors.email}
             </span>
           )}
-          <div className="relative md:w-96">
+          <div className="relative w-full">
             <input
               name="password"
               type={showPassword ? "text" : "password"}
