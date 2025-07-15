@@ -28,6 +28,7 @@ import Tutorial from "../../../modals/Tutorials/ExchangeTutorialModal/Tutorial";
 import { useExchange } from "../../../../apis/pages/Home/hooks";
 import LoginSignupModal from "../../../modals/LoginSignupModal";
 import { useNavigate } from "react-router-dom";
+import { useStatusesState } from "../../../../Providers/StatusesProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
 const ExchangingSmallScreen = ({
   selectedCurrecnyPair,
@@ -59,6 +60,8 @@ const ExchangingSmallScreen = ({
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const currencies = useCurrenciesState();
   const wallet = useWalletState();
+  const all_statuses = useStatusesState();
+  console.log(all_statuses);
   const userInfo = useUserState();
   const addComma = useAddComma();
   const calculateReverseRate = useCalculateReverseRate();
@@ -317,7 +320,6 @@ const ExchangingSmallScreen = ({
                     +selectedCurrecnyPair.floating_number
                   )
                 : +removeComma(values.rate);
-
               if (findError(newAmount, +removeComma(values.rate))) {
                 const params = {
                   user: userInfo && userInfo.url ? userInfo.url : "",
@@ -340,7 +342,9 @@ const ExchangingSmallScreen = ({
                           availableTargets[selectedTargetIndex].floating_number
                         )
                       : 0,
-                  status: "pending",
+                  status:
+                    all_statuses.find((status) => status.slug === "pending")
+                      .url || "",
                 };
                 openSubmitModal(params, (customFunction) => {
                   exchange(params, () => {
@@ -379,7 +383,7 @@ const ExchangingSmallScreen = ({
                   <span
                     className={`font-${font}-regular text-${oppositeTheme}`}
                   >
-                    From
+                    {lang["from"]}
                   </span>
                   <CustomDropdown2
                     className={`flex-1 font-${font}-regular`}
@@ -449,7 +453,7 @@ const ExchangingSmallScreen = ({
                   <span
                     className={`font-${font}-regular text-${oppositeTheme} `}
                   >
-                    To
+                    {lang["to"]}
                   </span>
                   <CustomDropdown2
                     className={`flex-1 font-${font}-regular`}
@@ -515,7 +519,7 @@ const ExchangingSmallScreen = ({
 
                 <div className="col-span-1 row-span-1 flex flex-col">
                   <span className={`w-full h-fit text-${oppositeTheme}`}>
-                    Amount
+                    {lang["amount"]}
                   </span>
                   <div className="flex-1">
                     <input
@@ -580,7 +584,7 @@ const ExchangingSmallScreen = ({
                     +walletBalance !== 0 && (
                       <button
                         type="button"
-                        className="absolute top-2 right-3"
+                        className={`absolute top-2 right-3 hidden md:flex`}
                         onClick={() => {
                           if (+walletBalance !== 0) {
                             setFieldValue(
@@ -602,7 +606,7 @@ const ExchangingSmallScreen = ({
                 </div>
                 <div className="col-span-1 row-span-1 flex flex-col">
                   <span className={`w-full h-fit text-${oppositeTheme}`}>
-                    Rate
+                    {lang["rate"]}
                   </span>
                   <div className="flex-1">
                     <input
@@ -707,7 +711,7 @@ const ExchangingSmallScreen = ({
                           {errorMessage}
                         </span>
                       ) : (
-                        <div className="w-full flex items-center justify-between">
+                        <div className="w-full flex flex-col px-5 max-w-36 text-nowrap overflow-x-scroll overflow-y-hidden items-center justify-between">
                           <div className="flex items-center gap-x-1">
                             <img
                               className="w-5 h-5"
@@ -763,8 +767,8 @@ const ExchangingSmallScreen = ({
                       removeComma(values.amount) !== 0 &&
                       values.rate &&
                       removeComma(values.rate) !== 0
-                        ? "flex justify-center mt-0.5 items-center w-full py-0.5 bg-green rounded-lg text-light"
-                        : "flex justify-center mt-7 items-center w-full py-0.5 bg-green rounded-lg text-light"
+                        ? "flex justify-center mt-5 items-center w-full h-fit py-2 bg-green rounded-lg text-light"
+                        : "flex justify-center mt-6 items-center w-full h-fit py-1.5 bg-green rounded-lg text-light"
                     }
                   >
                     {lang["submit"]}

@@ -19,6 +19,9 @@ import ListPendingExchange from "../components/pages/layout/Home/ListMode/ListPe
 import { useCurrenciesState } from "../Providers/CurrenciesProvider";
 import { useWalletState } from "../Providers/WalletProvider";
 import PiechartAssets from "../components/pages/Dashboard/PiechartAssets";
+import Joyride from "react-joyride";
+import CustomBeacon from "../components/common/Tour/CustomBeacon";
+import CustomTooltip from "../components/common/Tour/CustomTooltip";
 export default function Home({ isDemo, platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
@@ -29,7 +32,6 @@ export default function Home({ isDemo, platform }) {
   const token = useTokenState();
   const currencies = useCurrenciesState();
   const wallet = useWalletState();
-
   const amountInputRef = useRef();
   const focusOnAmountInput = () => {
     amountInputRef.current.focus();
@@ -76,6 +78,7 @@ export default function Home({ isDemo, platform }) {
     () => setLoading(getPendingExchangesIsLoading),
     [getPendingExchangesIsLoading]
   );
+
   const refreshPendingExchange = () => {
     token && getPendingExchanges(token, setPendingExchanges);
   };
@@ -128,10 +131,138 @@ export default function Home({ isDemo, platform }) {
       }
     }
   };
+  const [runTour, setRunTour] = useState(true);
+  const width = window.innerWidth;
+
+  const steps =
+    width > 768 && pageMode === "card"
+      ? [
+          {
+            target: ".exchanging-component",
+            content: lang["exchangin-component-tour"],
+            placement: "bottom",
+          },
+          {
+            target: ".watchlist-component",
+            content: lang["watchlist-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".other-exchange-component",
+            content: lang["other-exchange-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".pending-exchange-component",
+            content: lang["pending-exchange-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".table-exchange-component",
+            content: lang["table-exchange-component-tour"],
+            placement: "top",
+          },
+        ]
+      : width > 768 && pageMode === "list"
+      ? [
+          {
+            target: ".watchlist-component",
+            content: lang["watchlist-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".exchanging-component",
+            content: lang["exchangin-component-tour"],
+            placement: "bottom",
+          },
+          {
+            target: ".table-exchange-component",
+            content: lang["table-exchange-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".other-exchange-component",
+            content: lang["other-exchange-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".pending-exchange-component",
+            content: lang["pending-exchange-component-tour"],
+            placement: "top",
+          },
+        ]
+      : [
+          {
+            target: ".watchlist-component",
+            content: lang["watchlist-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".table-exchange-exchanging-component",
+            content: lang["table-exchange-exchanging-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".other-exchange-component",
+            content: lang["other-exchange-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".pending-exchange-component",
+            content: lang["pending-exchange-component-tour"],
+            placement: "top",
+          },
+        ];
 
   if (pageMode === "card" || window.innerWidth <= canSwitchPageModeWidth) {
     return (
       <>
+        <button
+          onClick={() => setRunTour(true)}
+          className={`${
+            runTour ? "hidden" : ""
+          } font-${font}-regular fixed top-24 right-6 bg-blue  text-white px-4 pb-1 pt-2 rounded-full shadow-lg z-[9999]`}
+        >
+          {lang["start"] + " " + lang["guide"]}
+        </button>
+        <Joyride
+          steps={steps}
+          key={runTour}
+          run={runTour}
+          locale={{
+            back: lang["back"],
+            close: lang["close"],
+            last: lang["last"],
+            next: lang["next"],
+            nextLabelWithProgress: `${lang["next"]} (${lang["step"]} {step} ${lang["of"]} {steps})`,
+            open: lang["open"],
+            skip: lang["skip"],
+          }}
+          beaconComponent={CustomBeacon}
+          tooltipComponent={CustomTooltip}
+          continuous
+          disableScrolling={width > 1276 ? true : false}
+          scrollOffset={0}
+          hideBackButton={true}
+          hideCloseButton={true}
+          showSkipButton={false}
+          showProgress={true}
+          styles={{
+            beaconInner: { borderRadius: "50px" },
+            options: {
+              zIndex: 10000,
+              arrowColor: theme === "dark" ? "#152831" : "#FFFFFF",
+              backgroundColor: theme === "dark" ? "#152831" : "#FFFFFF",
+              textColor: theme === "dark" ? "#FFFFFF" : "#2A2B2E",
+              primaryColor: "#0A8DFF",
+            },
+          }}
+          callback={(data) => {
+            if (data.status === "finished" || data.status === "skipped") {
+              setRunTour(false);
+            }
+          }}
+        />
         {window.innerWidth >= canSwitchPageModeWidth && (
           <div className={`fixed left-4 ${isDemo ? "bottom-32" : "bottom-60"}`}>
             <button
@@ -174,7 +305,7 @@ export default function Home({ isDemo, platform }) {
 
           <div className="flex-1 mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16 pt-4">
             <div
-              className={`order-3 md:order-1 h-72 bg-${theme} border-4 border-blue rounded-3xl md:flex hidden justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12`}
+              className={`order-3 md:order-1 h-72 bg-${theme} border-4 border-blue rounded-3xl md:flex hidden justify-center items-center row-span-3 xl:col-span-3 lg:col-span-4 md:col-span-5 col-span-12 exchanging-component`}
             >
               <Exchanging
                 selectedCurrecnyPair={selectedCurrecnyPair}
@@ -203,7 +334,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`order-1 md:order-2 h-72 bg-${theme} xl:rounded-3xl lg:rounded-l-3xl row-span-3 xl:col-span-5 lg:col-span-7 md:rounded-r-none md:col-span-6 md:rounded-l-3xl col-span-12 rounded-3xl`}
+              className={`order-1 md:order-2 h-72 bg-${theme} xl:rounded-3xl lg:rounded-l-3xl row-span-3 xl:col-span-5 lg:col-span-7 md:rounded-r-none md:col-span-6 md:rounded-l-3xl col-span-12 rounded-3xl watchlist-component`}
             >
               <WatchList
                 setSource={setSource}
@@ -214,7 +345,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`order-4 md:order-3 h-72 bg-${theme} lg:rounded-3xl xl:rounded-l-3xl xl:rounded-r-none row-span-3 xl:col-span-3 lg:col-span-5 md:col-span-5 md:rounded-3xl col-span-12 rounded-3xl`}
+              className={`order-4 md:order-3 h-72 bg-${theme} lg:rounded-3xl xl:rounded-l-3xl xl:rounded-r-none row-span-3 xl:col-span-3 lg:col-span-5 md:col-span-5 md:rounded-3xl col-span-12 rounded-3xl other-exchange-component`}
             >
               <OtherExchanges
                 selectedCurrecnyPair={selectedCurrecnyPair}
@@ -222,7 +353,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`order-5 md:order-4 h-72 bg-${theme} lg:rounde xl:rounded-3xl row-span-3 xl:col-span-3 lg:col-span-6 lg:rounded-r-none md:col-span-6 md:rounded-r-none col-span-12 rounded-3xl`}
+              className={`order-5 md:order-4 h-72 bg-${theme} lg:rounde xl:rounded-3xl row-span-3 xl:col-span-3 lg:col-span-6 lg:rounded-r-none md:col-span-6 md:rounded-r-none col-span-12 rounded-3xl pending-exchange-component`}
             >
               <PendingExchange
                 pendingExchanges={pendingExchanges}
@@ -239,7 +370,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`order-2 md:hidden min-h-72 mt-2 bg-${theme} rounded-2xl row-span-6 xl:col-span-8   col-span-12 `}
+              className={`order-2 md:hidden min-h-72 mt-2 bg-${theme} rounded-2xl row-span-6 xl:col-span-8   col-span-12 table-exchange-exchanging-component`}
             >
               <TableExchangeExchanging
                 selectedSourceIndex={selectedSourceIndex}
@@ -268,7 +399,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`md:flex hidden md:order-5 min-h-72 md:h-72 mt-2 pb-2 md:pb-0 md:mt-0 rounded-2xl md:bg-${theme} rounded-${oneDirection}-3xl row-span-3 xl:col-span-8 lg:col-span-11 md:col-span-11 col-span-12 rounded-3xl`}
+              className={`md:flex hidden md:order-5 min-h-72 md:h-72 mt-2 pb-2 md:pb-0 md:mt-0 rounded-2xl md:bg-${theme} rounded-${oneDirection}-3xl row-span-3 xl:col-span-8 lg:col-span-11 md:col-span-11 col-span-12 rounded-3xl table-exchange-component`}
             >
               <TableExchange
                 selectedSourceIndex={selectedSourceIndex}
@@ -287,6 +418,43 @@ export default function Home({ isDemo, platform }) {
   } else if (pageMode === "list") {
     return (
       <>
+        <button
+          onClick={() => setRunTour(true)}
+          className={`${
+            runTour ? "hidden" : ""
+          } font-${font}-regular fixed top-24 right-6 bg-blue  text-white px-4 pb-1 pt-2 rounded-full shadow-lg z-[9999]`}
+        >
+          {lang["start"] + " " + lang["guide"]}
+        </button>
+        <Joyride
+          steps={steps}
+          key={runTour}
+          run={runTour}
+          beaconComponent={CustomBeacon}
+          tooltipComponent={CustomTooltip}
+          continuous
+          disableScrolling={false}
+          scrollOffset={0}
+          hideBackButton={true}
+          hideCloseButton={true}
+          showSkipButton={false}
+          showProgress={true}
+          styles={{
+            beaconInner: { borderRadius: "50px" },
+            options: {
+              zIndex: 10000,
+              arrowColor: theme === "dark" ? "#152831" : "#FFFFFF",
+              backgroundColor: theme === "dark" ? "#152831" : "#FFFFFF",
+              textColor: theme === "dark" ? "#FFFFFF" : "#2A2B2E",
+              primaryColor: "#0A8DFF",
+            },
+          }}
+          callback={(data) => {
+            if (data.status === "finished" || data.status === "skipped") {
+              setRunTour(false);
+            }
+          }}
+        />
         {window.innerWidth >= canSwitchPageModeWidth && (
           <div className={`fixed left-4 ${isDemo ? "bottom-32" : "bottom-60"}`}>
             <button
@@ -307,7 +475,7 @@ export default function Home({ isDemo, platform }) {
         <div className="absolute flex flex-col w-full h-full overflow-y-auto px-8 md:p-0">
           <div className="mt-5 md:mt-0 grid grid-cols-11 grid-rows-6 md:gap-x-10 gap-y-7 pb-16">
             <div
-              className={`h-72 bg-${theme} col-span-11 row-span-3 rounded-l-3xl`}
+              className={`h-72 bg-${theme} col-span-11 row-span-3 rounded-l-3xl watchlist-component`}
             >
               <ListWatchList
                 setSource={setSource}
@@ -318,7 +486,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`h-72 bg-${theme} border-4 border-blue rounded-3xl flex justify-center items-center row-span-3 col-span-3`}
+              className={`h-72 bg-${theme} border-4 border-blue rounded-3xl flex justify-center items-center row-span-3 col-span-3 exchanging-component`}
             >
               <Exchanging
                 selectedCurrecnyPair={selectedCurrecnyPair}
@@ -345,7 +513,7 @@ export default function Home({ isDemo, platform }) {
               />
             </div>
             <div
-              className={`h-72 pb-0 mt-0 bg-${theme} rounded-${oneDirection}-3xl row-span-3 col-span-8 `}
+              className={`h-72 pb-0 mt-0 bg-${theme} rounded-${oneDirection}-3xl row-span-3 col-span-8 table-exchange-component`}
             >
               <TableExchange
                 selectedSourceIndex={selectedSourceIndex}
@@ -356,14 +524,16 @@ export default function Home({ isDemo, platform }) {
                 focusOnInput={focusOnRateInput}
               />
             </div>
-            <div className={`h-72 bg-${theme} rounded-l-3xl col-span-11`}>
+            <div
+              className={`h-72 bg-${theme} rounded-l-3xl col-span-11 other-exchange-component`}
+            >
               <ListOtherExchanges
                 selectedCurrecnyPair={selectedCurrecnyPair}
                 rateIsReversed={rateIsReversed}
               />
             </div>
             <div
-              className={`h-72 bg-${theme} row-span-3 col-span-11 rounded-l-3xl`}
+              className={`h-72 bg-${theme} row-span-3 col-span-11 rounded-l-3xl pending-exchange-component`}
             >
               <ListPendingExchange
                 pendingExchanges={pendingExchanges}
