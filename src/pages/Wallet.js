@@ -84,28 +84,44 @@ export default function Wallet() {
       securityGuidlineModal();
     }
   }, [user]);
-  const steps = [
-    {
-      target: ".quick-deposit-component",
-      content: lang["quick-deposit-component-tour"],
-      placement: "top",
-    },
-    {
-      target: ".last-deposit-component",
-      content: lang["last-deposit-component-tour"],
-      placement: "bottom",
-    },
-    {
-      target: ".balance-component",
-      content: lang["balance-component-tour"],
-      placement: "top",
-    },
-    {
-      target: ".pending-requests-component",
-      content: lang["pending-requests-component-tour"],
-      placement: "top",
-    },
-  ];
+  const width = window.innerWidth;
+  console.log(width);
+  const steps =
+    width > 1280
+      ? [
+          {
+            target: ".quick-deposit-component",
+            content: lang["quick-deposit-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".last-deposit-component",
+            content: lang["last-deposit-component-tour"],
+            placement: "bottom",
+          },
+          {
+            target: ".balance-component",
+            content: lang["balance-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".pending-requests-component",
+            content: lang["pending-requests-component-tour"],
+            placement: "top",
+          },
+        ]
+      : [
+          {
+            target: ".balance-component",
+            content: lang["balance-component-tour"],
+            placement: "top",
+          },
+          {
+            target: ".pending-requests-component",
+            content: lang["pending-requests-component-tour"],
+            placement: "top",
+          },
+        ];
   return (
     <>
       <button
