@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useThemeState } from "../Providers/ThemeProvider";
 import { useDirectionState } from "../Providers/DirectionProvider";
@@ -51,6 +51,7 @@ import Telegram from "../Images/pages/layout/Telegram.png";
 import Email from "../Images/pages/layout/Email.png";
 import X from "../Images/pages/layout/X.png";
 import Facebook from "../Images/pages/layout/Facebook.png";
+import { CustomTooltip } from "../components/common/CustomTooltip";
 export default function Layout({ platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
@@ -70,12 +71,11 @@ export default function Layout({ platform }) {
   const { pathname: activeRoute } = useLocation();
   const { pathname: currentRoute } = useLocation();
   const userInfo = useUserState();
-
   const [links, setLinks] = useState([]);
   const [expandedSocial, setExpandedSocial] = useState(false);
   const [enter, setEnter] = useState("");
   const setToastData = useToastDataSetState();
-
+  const expandSocialRef = useRef();
   const logout = useLogout();
 
   const openCompleteProfileMessageToast = () => {
@@ -321,9 +321,28 @@ export default function Layout({ platform }) {
       freeExchangeModal();
   }, [user]);
 
+  // This UseEffect Closes Expand Social Button When User clicks outisde of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        expandSocialRef.current &&
+        !expandSocialRef.current.contains(event.target)
+      ) {
+        setExpandedSocial(false);
+      }
+    };
+    if (expandedSocial) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [expandedSocial]);
   return (
     <>
       <button
+        ref={expandSocialRef}
         className={`z-[50] absolute ${
           platform === "ios"
             ? "bottom-[110px] md:bottom-[20px]"
@@ -345,66 +364,64 @@ export default function Layout({ platform }) {
             expandedSocial ? "flex" : "hidden"
           } text-base w-full h-full justify-center gap-y-3 items-center flex-col`}
         >
-          <a
-            onMouseEnter={() => setEnter("Instagram")}
-            onMouseLeave={() => setEnter("")}
-            className="p-2"
-            href="https://www.instagram.com/xbarat.team?igsh=MXEzZTRucjBybmx5Zw=="
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img className="w-8 h-8" src={Instagram} alt="Instagram" />
-          </a>
-          <a
-            onMouseEnter={() => setEnter("Telegram")}
-            onMouseLeave={() => setEnter("")}
-            className="p-2"
-            href="https://t.me/xbaratteam_rate"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img className="w-8 h-8" src={Telegram} alt="Telegram" />
-          </a>
-          <a
-            onMouseEnter={() => setEnter("Email")}
-            onMouseLeave={() => setEnter("")}
-            className="p-2"
-            href="https://github.com/sinabook"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img className="w-8 h-8" src={Email} alt="Email" />
-          </a>
-          <a
-            onMouseEnter={() => setEnter("Whatsapp")}
-            onMouseLeave={() => setEnter("")}
-            className="p-2"
-            href="https://wa.me/989360758639"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img className="w-8 h-8" src={Whatsapp} alt="Whatsapp" />
-          </a>
-          <a
-            onMouseEnter={() => setEnter("Facebook")}
-            onMouseLeave={() => setEnter("")}
-            className="p-2"
-            href="https://www.facebook.com/xbarat.team?mibextid=ZbWKwL"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img className="w-8 h-8" src={Facebook} alt="Facebook" />
-          </a>
-          <a
-            onMouseEnter={() => setEnter("X")}
-            onMouseLeave={() => setEnter("")}
-            className="p-2"
-            href="https://x.com/xbaratteam?t=KcuxFsnaTcYGAeKeSBg9EA&s=09"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img className="w-8 h-8" src={X} alt="X" />
-          </a>
+          {[
+            {
+              href: "https://www.instagram.com/xbarat.team?igsh=MXEzZTRucjBybmx5Zw==",
+              img: Instagram,
+              alt: "Instagram",
+              content: "Visit Xbarat's Instagram Page",
+            },
+            {
+              href: "https://t.me/xbaratteam_rate",
+              img: Telegram,
+              alt: "Telegram",
+              content: "Contact us Through Telegram Here",
+            },
+            {
+              href: "mailto:xbarat.team@gmail.com",
+              img: Email,
+              alt: "Email",
+              content: "Email Xbarat Here",
+            },
+
+            {
+              href: "https://wa.me/989360758639",
+              img: Whatsapp,
+              alt: "Whatsapp",
+              content: "Visit Xbarat's Whatsapp Page",
+            },
+            {
+              href: "https://www.facebook.com/xbarat.team?mibextid=ZbWKwL",
+              img: Facebook,
+              alt: "Facebook",
+              content: "Visit Xbarat's Facebook Page",
+            },
+            {
+              href: "https://x.com/xbaratteam?t=KcuxFsnaTcYGAeKeSBg9EA&s=09",
+              img: X,
+              alt: "X",
+              content: "Visit Xbarat's X Page",
+            },
+          ].map((item, index) => (
+            <CustomTooltip
+              key={index}
+              trigger="hover"
+              content={item.content}
+              placement="right"
+              className={`z-50 text-xs p-2 bg-${theme} text-${oppositeTheme} border border-gray-200 rounded-md shadow-md`}
+            >
+              <a
+                className="p-2"
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onMouseEnter={() => setEnter(item.alt)}
+                onMouseLeave={() => setEnter("")}
+              >
+                <img className="w-8 h-8" src={item.img} alt={item.alt} />
+              </a>
+            </CustomTooltip>
+          ))}
         </div>
       </button>
       <CustomToast />

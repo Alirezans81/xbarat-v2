@@ -102,7 +102,6 @@ export default function EditCardModal() {
     }
     return result;
   };
-  console.log(modalData);
 
   return (
     <>

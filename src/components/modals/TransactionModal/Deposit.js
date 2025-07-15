@@ -110,7 +110,7 @@ export default function Deposit({
   };
   return (
     <Formik
-      initialValues={{ amount: amount || "" }}
+      initialValues={{ amount: amount || "", method: "Paypal" }}
       onSubmit={(values) => {
         if (checkAmount(+removeComma(values.amount))) {
           if (
@@ -126,12 +126,15 @@ export default function Deposit({
                     ? currencies[selectedCurrencyIndex].url
                     : "",
                 amount: removeComma(values.amount),
-                status: "admin_assign",
+                status: statuses.find(
+                  (status) => status.title === "Admin Assign"
+                ).url,
                 branch:
                   locations[selectedLocationIndex] &&
                   locations[selectedLocationIndex].url
                     ? locations[selectedLocationIndex].url
                     : "",
+                method: values.method,
               },
               () => {
                 refreshPendingRequests();
@@ -148,7 +151,11 @@ export default function Deposit({
                     ? currencies[selectedCurrencyIndex].url
                     : "",
                 amount: removeComma(values.amount),
-                status: "admin_assign",
+                status: statuses
+                  ? statuses.find((status) => status.title === "Admin Assign")
+                      .url
+                  : "",
+                method: values.method,
               },
               () => {
                 getWalletData();
@@ -160,7 +167,7 @@ export default function Deposit({
         }
       }}
     >
-      {({ handleChange, handleBlur, handleSubmit, values }) => (
+      {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
         <div className="flex flex-col">
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
@@ -302,7 +309,50 @@ export default function Deposit({
               />
             </div>
           </div>
-          <div className="mt-10">
+
+          {/* Payment Mehod */}
+          <span className={`font-${font}-regular text-${oppositeTheme} mt-5`}>
+            Payment Method
+          </span>
+          <div
+            className={`mt-2 w-full h-fit flex justify-between items-center relative bg-transparent max-w-md mx-auto bg-${theme}-back rounded-lg`}
+          >
+            {/* Sliding Background */}
+            <div
+              className="absolute top-0 left-0  w-1/2 h-full rounded-xl transition-all duration-500 bg-blue-gradient z-0"
+              style={{
+                transform:
+                  values.method === "Bank"
+                    ? "translateX(100%)"
+                    : "translateX(0%)",
+              }}
+            />
+
+            {/* Buttons */}
+            <div className="flex w-full relative z-10">
+              <button
+                onClick={() => setFieldValue("method", "Paypal")}
+                className={`w-1/2 py-1 text-center rounded-xl transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
+              >
+                Paypal Deposit
+              </button>
+
+              <button
+                // style={{
+                //   transform:
+                //     values.method === "Bank"
+                //       ? "translateX(-20%)"
+                //       : "translateX(0%)",
+                // }}
+                onClick={() => setFieldValue("method", "Bank")}
+                className={`w-1/2 py-1 rounded-xl text-center transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
+              >
+                Bank Deposit
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-5">
             <SubmitButton
               onClick={handleSubmit}
               className="w-full py-0.5 text-lg"

@@ -61,7 +61,7 @@ export default function CustomTable({
                 {Object.values(row).map((value, tdIndex) => (
                   <span
                     key={tdIndex}
-                    className={`flex whitespace-nowrap text-sm md:text-base justify-center col-span-1 text-center-important font-${font}-regular  mt-0.5 -mb-0.5 text-${textColor} max-w-3 overflow-scroll`}
+                    className={`flex whitespace-nowrap text-sm md:text-base justify-center col-span-1 text-center-important font-${font}-regular  mt-0.5 -mb-0.5 text-${textColor}`}
                   >
                     {value}
                   </span>

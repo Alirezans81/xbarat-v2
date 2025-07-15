@@ -75,7 +75,6 @@ export default function ExchangeForm({
     () => setIsLoadingSplashScreen(exchangeIsLoading),
     [exchangeIsLoading]
   );
-
   const [tip, setTip] = useState();
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -156,7 +155,12 @@ export default function ExchangeForm({
     if (selectedCurrecnyPair && +amount !== 0 && +rate !== 0) {
       const min_amount =
         selectedCurrecnyPair.min_limit_amount_lot *
-        currencies[selectedSourceIndex].lot;
+          currencies[selectedSourceIndex].lot +
+        userInfo.free_exchange
+          ? selectedCurrecnyPair.min_limit_amount_lot *
+            currencies[selectedSourceIndex].lot *
+            selectedCurrecnyPair.fee_percentage
+          : 0;
       const max_amount =
         selectedCurrecnyPair.max_limit_amount_lot *
         currencies[selectedSourceIndex].lot;
@@ -561,7 +565,13 @@ export default function ExchangeForm({
                   onFocus={() => {
                     const min_amount =
                       selectedCurrecnyPair.min_limit_amount_lot *
-                      currencies[selectedSourceIndex].lot;
+                        currencies[selectedSourceIndex].lot +
+                      (userInfo.free_exchange
+                        ? 0
+                        : (selectedCurrecnyPair.min_limit_amount_lot *
+                            currencies[selectedSourceIndex].lot *
+                            selectedCurrecnyPair.fee_percentage) /
+                          100);
                     const max_amount =
                       selectedCurrecnyPair.max_limit_amount_lot *
                       currencies[selectedSourceIndex].lot;
