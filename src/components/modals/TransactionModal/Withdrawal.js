@@ -172,12 +172,16 @@ export default function Withdrawal({
     if (currencies[selectedCurrencyIndex]) {
       const min =
         +currencies[selectedCurrencyIndex].min_withdrawal_lot *
-        +currencies[selectedCurrencyIndex].lot;
+          +currencies[selectedCurrencyIndex].lot +
+        removeComma(feeWithdrawal);
       const max =
         +currencies[selectedCurrencyIndex].max_withdrawal_lot *
         +currencies[selectedCurrencyIndex].lot;
 
-      if (min <= amount && max >= amount) {
+      if (
+        min <= amount - removeComma(feeWithdrawal) &&
+        max >= amount - removeComma(feeWithdrawal)
+      ) {
         return true;
       } else {
         openNotRightAmountToast(min, max);
@@ -202,6 +206,7 @@ export default function Withdrawal({
 
   const direction =
     font === "Fa" || font === "Af" || font === "Ar" ? "rtl" : "ltr";
+
   return (
     <Formik
       initialValues={{
@@ -230,7 +235,9 @@ export default function Withdrawal({
                     walletTanks[selectedWalletTankIndex].url
                       ? walletTanks[selectedWalletTankIndex].url
                       : "",
-                  amount: removeComma(values.amount),
+                  amount: removeComma(
+                    values.amount - removeComma(feeWithdrawal)
+                  ),
                   status: statuses
                     ? statuses.find((status) => status.title === "Admin Assign")
                         .url
@@ -279,7 +286,9 @@ export default function Withdrawal({
                           ? currencies[selectedCurrencyIndex].url
                           : "",
                       wallet_tank_receiver: data && data.url ? data.url : "",
-                      amount: removeComma(values.amount),
+                      amount: removeComma(
+                        values.amount - removeComma(feeWithdrawal)
+                      ),
                       status: statuses
                         ? statuses.find(
                             (status) => status.title === "Admin Assign"
@@ -311,7 +320,9 @@ export default function Withdrawal({
                       walletTanks[selectedWalletTankIndex].url
                         ? walletTanks[selectedWalletTankIndex].url
                         : "",
-                    amount: removeComma(values.amount),
+                    amount: removeComma(
+                      values.amount - removeComma(feeWithdrawal)
+                    ),
                     status: statuses
                       ? statuses.find(
                           (status) => status.title === "Admin Assign"
@@ -345,11 +356,32 @@ export default function Withdrawal({
               {lang["balance"]}
             </span>
             <div className="w-full flex -mt-1">
+
               <span
-                className={`text-${oppositeTheme} font-${font}-bold text-2xl`}
+                className={`font-${font}-regular justify-center w-full flex text-${oppositeTheme}`}
               >
-                {addComma(+data.balance) + " " + data.currency_abb}
+                Fee
               </span>
+              <div className="w-full flex  justify-center items-center -mt-1">
+                <span className={`text-red font-${font}-bold text-2xl`}>
+                  {addComma(+feeWithdrawal)}
+                </span>
+              </div>
+            </div>
+            {/* balance - fee */}
+            <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+              <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                Max Withdraw
+              </span>
+              <div className="w-full flex -mt-1">
+                <span
+                  className={`text-${oppositeTheme} font-${font}-bold text-2xl`}
+                >
+                  {addComma(+data.balance - removeComma(feeWithdrawal)) +
+                    " " +
+                    data.currency_abb}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -383,6 +415,18 @@ export default function Withdrawal({
                     </span>
                   </button>
                 )}
+            </div>
+            <div className="w-full h-fit flex flex-col">
+              <span className={`text-${oppositeTheme} font-${font}-regular`}>
+                Total Withdrawed amout
+              </span>
+              <span className="text-green font-bold text-lg flex justify-center">
+                {+(removeComma(values.amount) - feeWithdrawal) > 0
+                  ? addComma(+(removeComma(values.amount) - feeWithdrawal)) +
+                    " " +
+                    data.currency_abb
+                  : 0 + " " + data.currency_abb}
+              </span>
             </div>
           </div>
           {step === 0 && newCardMode ? (
@@ -715,6 +759,7 @@ export default function Withdrawal({
             <div
               dir={direction}
               className={`w-full  font-${font}-regular text-base flex flex-col`}
+
             >
               <div dir={direction} className="w-full flex flex-row ">
                 <span

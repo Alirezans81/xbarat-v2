@@ -104,7 +104,6 @@ function Content({ notifs, getNotifications, setNotifs }) {
           {lang["delete_all"]}
         </span>
       </button>
-      {console.log(notifs)}
       {notifs &&
         notifs
           .filter((data) => data.message !== "" && data.subject !== "")

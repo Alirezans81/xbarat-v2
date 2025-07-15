@@ -176,7 +176,9 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                         ? currencies[selectedCurrencyIndex].url
                         : "",
                     amount: removeComma(values.amount),
-                    status: "admin_assign",
+                    status: statuses.find(
+                      (status) => status.title === "Admin Assign"
+                    ).url,
                     branch:
                       locations[selectedLocationIndex] &&
                       locations[selectedLocationIndex].url
@@ -393,14 +395,14 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                     onClick={() => setFieldValue("method", "Paypal")}
                     className={`w-1/2 py-1 rounded-xl text-center transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
                   >
-                    Paypal Deposit
+                    {lang["paypal"]}
                   </button>
 
                   <button
                     onClick={() => setFieldValue("method", "Bank")}
                     className={`w-1/2 py-1 rounded-xl text-center transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
                   >
-                    Bank Deposit
+                    {lang["bank"]}
                   </button>
                 </div>
               </div>

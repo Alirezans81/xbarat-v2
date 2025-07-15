@@ -13,7 +13,7 @@ export default function AreYouSureModal({ onClick, message }) {
   return (
     <div
       dir={direction}
-      className="flex flex-col w-96 flex-justify-center -mt-3"
+      className={`flex flex-col flex-justify-center -mt-3 sm:w-full md:w-96`}
     >
       <span
         dir={direction}

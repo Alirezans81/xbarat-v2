@@ -73,31 +73,24 @@ export default function Balance({ refreshPendingRequests }) {
             >
               ?
             </button>
-            <div className="flex flex-1 w-full h-full justify-end">
+            <div
+              dir="ltr"
+              className="flex flex-1 w-full h-full justify-end pr-5"
+            >
               <button
                 onClick={() => openTransactionModal("deposit")}
-                className="w-full flex xl:hidden gap-x-2 items-center bg-blue text-light rounded-2xl px-4 pt-2 pb-1"
+                className="flex gap-x-2 items-center border border-green rounded-full px-4 pt-2 pb-1"
               >
-                <span
-                  className={`w-full h-full text-light text-xl flex justify-center items-center font-${font}-regular`}
-                >
+                <img
+                  className="w-5 h-5 -mt-1"
+                  src={require("../../../../Images/pages/layout/Wallet/deposit.png")}
+                />
+                <span className={`text-green font-${font}-regular`}>
                   {lang["deposit"]}
                 </span>
               </button>
             </div>
           </div>
-          <button
-            onClick={() => openTransactionModal("deposit")}
-            className="flex xl:hidden gap-x-2 items-center border border-green rounded-full px-4 pt-2 pb-1"
-          >
-            <img
-              className="w-5 h-5 -mt-1"
-              src={require("../../../../Images/pages/layout/Wallet/deposit.png")}
-            />
-            <span className={`text-green font-${font}-regular`}>
-              {lang["deposit"]}
-            </span>
-          </button>
         </div>
         <div className="flex-1 px-7 relative">
           <div className="absolute left-0 h-full w-full top-0 flex justify-center items-center">
@@ -126,14 +119,19 @@ export default function Balance({ refreshPendingRequests }) {
             >
               ?
             </button>
-            <div className="flex flex-1 w-full h-full justify-end">
+            <div
+              dir="ltr"
+              className="flex flex-1 w-full h-full justify-end pr-5"
+            >
               <button
                 onClick={() => openTransactionModal("deposit")}
-                className="w-full flex xl:hidden gap-x-2 items-center bg-blue text-light rounded-2xl px-4 pt-2 pb-1"
+                className="flex gap-x-2 items-center border border-green rounded-full px-4 pt-2 pb-1"
               >
-                <span
-                  className={`w-full h-full text-light text-xl flex justify-center items-center font-${font}-regular`}
-                >
+                <img
+                  className="w-5 h-5 -mt-1"
+                  src={require("../../../../Images/pages/layout/Wallet/deposit.png")}
+                />
+                <span className={`text-green font-${font}-regular`}>
                   {lang["deposit"]}
                 </span>
               </button>
@@ -171,14 +169,19 @@ export default function Balance({ refreshPendingRequests }) {
             >
               ?
             </button>
-            <div className="flex flex-1 w-full h-full justify-end">
+            <div
+              dir="ltr"
+              className="flex flex-1 w-full h-full justify-end pr-5"
+            >
               <button
                 onClick={() => openTransactionModal("deposit")}
-                className="w-full flex xl:hidden gap-x-2 items-center bg-blue text-light rounded-2xl px-4 pt-2 pb-1"
+                className="flex gap-x-2 items-center border border-green rounded-full px-4 pt-2 pb-1"
               >
-                <span
-                  className={`w-full h-full text-light text-xl flex justify-center items-center font-${font}-regular`}
-                >
+                <img
+                  className="w-5 h-5 -mt-1"
+                  src={require("../../../../Images/pages/layout/Wallet/deposit.png")}
+                />
+                <span className={`text-green font-${font}-regular`}>
                   {lang["deposit"]}
                 </span>
               </button>
