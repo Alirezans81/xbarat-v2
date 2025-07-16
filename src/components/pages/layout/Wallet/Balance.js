@@ -73,7 +73,10 @@ export default function Balance({ refreshPendingRequests }) {
             >
               ?
             </button>
-            <div className="flex flex-1 w-full h-full justify-end">
+            <div
+              dir="ltr"
+              className="flex flex-1 w-full h-full justify-end pr-5"
+            >
               <button
                 onClick={() => openTransactionModal("deposit")}
                 className="flex gap-x-2 items-center border border-green rounded-full px-4 pt-2 pb-1"
@@ -116,7 +119,10 @@ export default function Balance({ refreshPendingRequests }) {
             >
               ?
             </button>
-            <div className="flex flex-1 w-full h-full justify-end">
+            <div
+              dir="ltr"
+              className="flex flex-1 w-full h-full justify-end pr-5"
+            >
               <button
                 onClick={() => openTransactionModal("deposit")}
                 className="flex gap-x-2 items-center border border-green rounded-full px-4 pt-2 pb-1"
@@ -163,7 +169,10 @@ export default function Balance({ refreshPendingRequests }) {
             >
               ?
             </button>
-            <div className="flex flex-1 w-full h-full justify-end">
+            <div
+              dir="ltr"
+              className="flex flex-1 w-full h-full justify-end pr-5"
+            >
               <button
                 onClick={() => openTransactionModal("deposit")}
                 className="flex gap-x-2 items-center border border-green rounded-full px-4 pt-2 pb-1"
