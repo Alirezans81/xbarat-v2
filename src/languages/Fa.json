@@ -225,6 +225,7 @@
   "successful-signup-2nd": "لطفاًاکنون سعی کنید وارد شوید",
   "email-exsit-error": "ایمیل وجود دارد",
   "amount-input-max-button-label": "حداکثر",
+  "max": "حداکثر",
   "add-card": "اضافه کردن کارت",
   "complete-profile-toast-message": "لطفاً اطلاعات پروفایل خود را تکمیل کنید تا بتوانید با سامانه کار کنید",
   "file-too-big-toast-message": "تصویر خیلی بزرگ است (باید کمتر از 4 مگابایت باشد)",
@@ -694,6 +695,9 @@
   "deposit-secret-code": "کد تراکنش",
   "deposit-secret-code-message": "این کد را باید در قسمت یادداشت تراکنش خود وارد کنید",
   "copy-link": "کپی لینک",
+  "bank": "بانک",
+  "paypal": "پی پال",
+  "payment-method": "نحوه پرداخت",
   "security-guidline": [
     {
       "one": "کاربران گرامی لطفا به نکات امنیتی زیر توجه کنید:"
