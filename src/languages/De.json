@@ -221,6 +221,7 @@
   "successful-signup-2nd": "Bitte versuche jetzt, dich einzuloggen.",
   "email-exsit-error": "Die E-Mail existiert bereits.",
   "amount-input-max-button-label": "Max",
+  "max": "Max",
   "add-card": "Karte hinzufügen",
   "complete-profile-toast-message": "Bitte vervollständige deine Profilinformationen, um die Plattform richtig nutzen zu können.",
   "file-too-big-toast-message": "Das Bild ist zu groß (muss kleiner als 4 MB sein).",
@@ -692,6 +693,9 @@
   "deposit-secret-code": "Transaktionscode",
   "deposit-secret-code-message": "Du solltest diesen Code im Notizfeld deiner Transaktion eingeben.",
   "copy-link": "Link kopieren",
+  "bank": "Bank",
+  "paypal": "Paypal",
+  "payment-method": "Zahlungsmethode",
   "security-guidline": [
     {
       "one": "Liebe Benutzer, bitte achtet auf die folgenden Sicherheitstipps:"
