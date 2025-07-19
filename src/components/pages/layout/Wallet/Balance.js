@@ -23,13 +23,18 @@ export default function Balance({ refreshPendingRequests }) {
       isOpen: true,
     });
   };
-  const openTransactionModal = (defaultType, refreshPendingRequests) => {
+  const openTransactionModal = (
+    defaultType,
+    refreshPendingRequests,
+    walletAsset = walletAssets && walletAssets[0]
+  ) => {
     setModalData({
       title: lang["transaction"],
       children: <TransactionModal />,
       props: {
         defaultType,
         refreshPendingRequests,
+        walletAsset,
       },
       canClose: true,
       isOpen: true,

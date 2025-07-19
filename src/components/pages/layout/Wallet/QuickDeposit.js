@@ -393,14 +393,14 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                 <div className="flex w-full relative z-10">
                   <button
                     onClick={() => setFieldValue("method", "Paypal")}
-                    className={`w-1/2 py-1 rounded-xl text-center transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
+                    className={`w-1/2 py-1 rounded-xl text-center flex justify-center transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
                   >
                     {lang["paypal"]}
                   </button>
 
                   <button
                     onClick={() => setFieldValue("method", "Bank")}
-                    className={`w-1/2 py-1 rounded-xl text-center transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
+                    className={`w-1/2 py-1 rounded-xl text-center flex justify-center transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
                   >
                     {lang["bank"]}
                   </button>

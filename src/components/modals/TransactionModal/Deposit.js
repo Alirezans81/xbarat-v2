@@ -312,7 +312,7 @@ export default function Deposit({
 
           {/* Payment Mehod */}
           <span className={`font-${font}-regular text-${oppositeTheme} mt-5`}>
-            Payment Method
+            {lang["payment-method"]}
           </span>
           <div
             className={`mt-2 w-full h-fit flex justify-between items-center relative bg-transparent max-w-md mx-auto bg-${theme}-back rounded-lg`}
@@ -334,7 +334,7 @@ export default function Deposit({
                 onClick={() => setFieldValue("method", "Paypal")}
                 className={`w-1/2 py-1 text-center rounded-xl transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
               >
-                Paypal Deposit
+                {lang["paypal"]}
               </button>
 
               <button
@@ -347,7 +347,7 @@ export default function Deposit({
                 onClick={() => setFieldValue("method", "Bank")}
                 className={`w-1/2 py-1 rounded-xl text-center transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
               >
-                Bank Deposit
+                {lang["bank"]}
               </button>
             </div>
           </div>

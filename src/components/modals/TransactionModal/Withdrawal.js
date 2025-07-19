@@ -235,9 +235,7 @@ export default function Withdrawal({
                     walletTanks[selectedWalletTankIndex].url
                       ? walletTanks[selectedWalletTankIndex].url
                       : "",
-                  amount: removeComma(
-                    values.amount - removeComma(feeWithdrawal)
-                  ),
+                  amount: removeComma(values.amount),
                   status: statuses
                     ? statuses.find((status) => status.title === "Admin Assign")
                         .url
@@ -286,9 +284,7 @@ export default function Withdrawal({
                           ? currencies[selectedCurrencyIndex].url
                           : "",
                       wallet_tank_receiver: data && data.url ? data.url : "",
-                      amount: removeComma(
-                        values.amount - removeComma(feeWithdrawal)
-                      ),
+                      amount: removeComma(values.amount),
                       status: statuses
                         ? statuses.find(
                             (status) => status.title === "Admin Assign"
@@ -320,9 +316,7 @@ export default function Withdrawal({
                       walletTanks[selectedWalletTankIndex].url
                         ? walletTanks[selectedWalletTankIndex].url
                         : "",
-                    amount: removeComma(
-                      values.amount - removeComma(feeWithdrawal)
-                    ),
+                    amount: removeComma(values.amount),
                     status: statuses
                       ? statuses.find(
                           (status) => status.title === "Admin Assign"
@@ -352,17 +346,25 @@ export default function Withdrawal({
               step === 1 ? "hidden" : "flex"
             } flex-1 w-full flex-col gap-y-2 mt-5`}
           >
-            <span className={`font-${font}-regular text-${oppositeTheme}`}>
-              {lang["balance"]}
-            </span>
             <div className="w-full flex -mt-1">
-
               <span
-                className={`font-${font}-regular justify-center w-full flex text-${oppositeTheme}`}
+                className={`font-${font}-regular text-${oppositeTheme} text-xl`}
               >
-                Fee
+                {lang["balance"]}
               </span>
-              <div className="w-full flex  justify-center items-center -mt-1">
+              <div className="w-full flex  justify-end items-center -mt-1">
+                <span className={`text-red font-${font}-bold text-2xl`}>
+                  {addComma(+data.balance)}
+                </span>
+              </div>
+            </div>
+            <div className="w-full flex -mt-1">
+              <span
+                className={`font-${font}-regular justify-start w-full flex text-${oppositeTheme} text-xl`}
+              >
+                {lang["fee"]}
+              </span>
+              <div className="w-full flex  justify-end items-center -mt-1">
                 <span className={`text-red font-${font}-bold text-2xl`}>
                   {addComma(+feeWithdrawal)}
                 </span>
@@ -370,8 +372,11 @@ export default function Withdrawal({
             </div>
             {/* balance - fee */}
             <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
-              <span className={`font-${font}-regular text-${oppositeTheme}`}>
-                Max Withdraw
+              <span
+                dir={direction}
+                className={`font-${font}-regular text-${oppositeTheme}`}
+              >
+                {lang["max"] + " " + lang["withdrawal"]}
               </span>
               <div className="w-full flex -mt-1">
                 <span
@@ -759,7 +764,6 @@ export default function Withdrawal({
             <div
               dir={direction}
               className={`w-full  font-${font}-regular text-base flex flex-col`}
-
             >
               <div dir={direction} className="w-full flex flex-row ">
                 <span
