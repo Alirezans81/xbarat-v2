@@ -92,11 +92,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
   const method = transaction.method;
 
   let timeout;
-  const tempTimeOut =
-    transaction.temporary_receiver_address !== null &&
-    transaction.temporary_receiver_address.split(",").length > 2
-      ? transaction.temporary_receiver_address.split(",").length * 6
-      : 15;
+  const tempTimeOut = 1440;
   if (method === "Bank") {
     timeout = new Date(transaction.datetime_assign);
     timeout.setMinutes(

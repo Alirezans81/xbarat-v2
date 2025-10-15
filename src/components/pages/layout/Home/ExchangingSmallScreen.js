@@ -379,7 +379,7 @@ const ExchangingSmallScreen = ({
           }) => {
             return (
               <form
-                className={`w-full h-full grid grid-cols-3 gird-rows-2 p-3 pb-5 rounded-b-2xl gap-x-3 gap-y-2`}
+                className={`w-full h-full grid grid-cols-2 gird-rows-4 p-3 pb-5 rounded-b-2xl gap-x-3 gap-y-2`}
               >
                 <div className="order-1 col-span-1 row-span-1">
                   <span
@@ -388,9 +388,10 @@ const ExchangingSmallScreen = ({
                     {lang["from"]}
                   </span>
                   <CustomDropdown2
+                    customTarget="full"
                     className={`flex-1 font-${font}-regular`}
                     label={
-                      <div className="flex flex-row">
+                      <div className="flex flex-row w-16">
                         {selectedSourceIndex >= 0 ? (
                           <img
                             className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
@@ -468,6 +469,7 @@ const ExchangingSmallScreen = ({
                     {lang["to"]}
                   </span>
                   <CustomDropdown2
+                    customTarget="full"
                     className={`flex-1 font-${font}-regular`}
                     label={
                       <div className="flex flex-row">
@@ -539,7 +541,7 @@ const ExchangingSmallScreen = ({
                   </CustomDropdown2>
                 </div>
 
-                <div className="order-4 col-span-1 row-span-1 flex flex-col">
+                <div className="order-3 col-span-1 row-span-1 flex flex-col">
                   <span className={`w-full h-fit text-${oppositeTheme}`}>
                     {lang["amount"]}
                   </span>
@@ -626,7 +628,7 @@ const ExchangingSmallScreen = ({
                       </button>
                     )}
                 </div>
-                <div className="order-5 col-span-1 row-span-1 flex flex-col">
+                <div className="order-4 col-span-1 row-span-1 flex flex-col">
                   <span className={`w-full h-fit text-${oppositeTheme}`}>
                     {lang["rate"]}
                   </span>
@@ -721,7 +723,7 @@ const ExchangingSmallScreen = ({
                   </div>
                 </div>
 
-                <div className="order-3 col-span-1 row-span-1 flex flex-col">
+                <div className="order-6 col-span-2 row-span-1 flex flex-col">
                   {values.amount &&
                     removeComma(values.amount) !== 0 &&
                     selectedCurrecnyPair &&
@@ -735,7 +737,7 @@ const ExchangingSmallScreen = ({
                             {errorMessage}
                           </span>
                         ) : (
-                          <div className="w-full flex flex-col px-5 max-w-36 text-nowrap overflow-x-scroll overflow-y-hidden items-center justify-between">
+                          <div className="w-full flex flex-row px-5 max-w-36 text-nowrap overflow-x-scroll overflow-y-hidden items-center justify-between">
                             <div className="flex items-center gap-x-1">
                               <img
                                 className="w-5 h-5"
@@ -786,7 +788,7 @@ const ExchangingSmallScreen = ({
                     )}
                 </div>
 
-                <div className="order-6 col-span-1 row-span-1 flex flex-col">
+                <div className="order-7 col-span-2 row-span-1 flex flex-col">
                   {submitButtonFunction === "submit" ? (
                     <button
                       type={isDemo ? "button" : "submit"}
