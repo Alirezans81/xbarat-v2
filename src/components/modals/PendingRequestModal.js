@@ -93,6 +93,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
 
   let timeout;
   const tempTimeOut =
+    transaction.temporary_receiver_address !== null &&
     transaction.temporary_receiver_address.split(",").length > 2
       ? transaction.temporary_receiver_address.split(",").length * 6
       : 15;

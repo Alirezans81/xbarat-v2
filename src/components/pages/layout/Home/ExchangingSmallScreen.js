@@ -30,6 +30,7 @@ import LoginSignupModal from "../../../modals/LoginSignupModal";
 import { useNavigate } from "react-router-dom";
 import { useStatusesState } from "../../../../Providers/StatusesProvider";
 import { useIsLoadingSplashScreenSetState } from "../../../../Providers/IsLoadingSplashScreenProvider";
+import { useDirectionState } from "../../../../Providers/DirectionProvider";
 const ExchangingSmallScreen = ({
   selectedCurrecnyPair,
   setSelectedCurrencnyPair,
@@ -69,6 +70,7 @@ const ExchangingSmallScreen = ({
   const removeComma = useRemoveComma();
   const setModalData = useModalDataSetState();
   const refreshWallet = useRefreshWallet();
+  const { one: oneDirection } = useDirectionState();
   const currencyPairs = useCurrencyPairsState();
   const lang = useLanguageState();
   const walletBalance = selectedCurrecnyWalletData;
@@ -379,7 +381,7 @@ const ExchangingSmallScreen = ({
               <form
                 className={`w-full h-full grid grid-cols-3 gird-rows-2 p-3 pb-5 rounded-b-2xl gap-x-3 gap-y-2`}
               >
-                <div className="col-span-1 row-span-1">
+                <div className="order-1 col-span-1 row-span-1">
                   <span
                     className={`font-${font}-regular text-${oppositeTheme}`}
                   >
@@ -388,9 +390,10 @@ const ExchangingSmallScreen = ({
                   <CustomDropdown2
                     className={`flex-1 font-${font}-regular`}
                     label={
-                      <div className="">
+                      <div className="flex flex-row">
                         {selectedSourceIndex >= 0 ? (
                           <img
+                            className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
                             alt=""
                             src={currencies[selectedSourceIndex].sym_pic_gray}
                           />
@@ -411,7 +414,10 @@ const ExchangingSmallScreen = ({
                               className={"rounded-t-xl"}
                             >
                               <div className="flex flex-row">
-                                <img src={currency.sym_pic_gray} />
+                                <img
+                                  className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
+                                  src={currency.sym_pic_gray}
+                                />
                                 <span>{currency.abbreviation}</span>
                               </div>
                             </CustomItem2>
@@ -424,7 +430,10 @@ const ExchangingSmallScreen = ({
                               className={"rounded-b-xl"}
                             >
                               <div className="flex flex-row">
-                                <img src={currency.sym_pic_gray} />
+                                <img
+                                  className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
+                                  src={currency.sym_pic_gray}
+                                />
                                 <span>{currency.abbreviation}</span>
                               </div>
                             </CustomItem2>
@@ -436,7 +445,10 @@ const ExchangingSmallScreen = ({
                               onClick={() => setSelectedSourceIndex(index)}
                             >
                               <div className="flex flex-row">
-                                <img src={currency.sym_pic_gray} />
+                                <img
+                                  className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
+                                  src={currency.sym_pic_gray}
+                                />
                                 <span>{currency.abbreviation}</span>
                               </div>
                             </CustomItem2>
@@ -449,7 +461,7 @@ const ExchangingSmallScreen = ({
                   </CustomDropdown2>
                 </div>
 
-                <div className="col-span-1 row-span-1">
+                <div className="order-2 col-span-1 row-span-1">
                   <span
                     className={`font-${font}-regular text-${oppositeTheme} `}
                   >
@@ -458,9 +470,10 @@ const ExchangingSmallScreen = ({
                   <CustomDropdown2
                     className={`flex-1 font-${font}-regular`}
                     label={
-                      <div>
+                      <div className="flex flex-row">
                         {selectedTargetIndex >= 0 ? (
                           <img
+                            className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
                             alt=""
                             src={currencies[selectedTargetIndex].sym_pic_gray}
                           />
@@ -480,7 +493,10 @@ const ExchangingSmallScreen = ({
                               onClick={() => setSelectedTargetIndex(index)}
                             >
                               <div className="flex flex-row">
-                                <img src={currency.sym_pic_gray} />
+                                <img
+                                  className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
+                                  src={currency.sym_pic_gray}
+                                />
                                 <span>{currency.abbreviation}</span>
                               </div>
                             </CustomItem2>
@@ -492,7 +508,10 @@ const ExchangingSmallScreen = ({
                               onClick={() => setSelectedTargetIndex(index)}
                             >
                               <div className="flex flex-row">
-                                <img src={currency.sym_pic_gray} />
+                                <img
+                                  className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
+                                  src={currency.sym_pic_gray}
+                                />
                                 <span>{currency.abbreviation}</span>
                               </div>
                             </CustomItem2>
@@ -504,7 +523,10 @@ const ExchangingSmallScreen = ({
                               onClick={() => setSelectedTargetIndex(index)}
                             >
                               <div className="flex flex-row">
-                                <img src={currency.sym_pic_gray} />
+                                <img
+                                  className={`w-7 h-7 -mt-1.5 -m${oneDirection}-1`}
+                                  src={currency.sym_pic_gray}
+                                />
                                 <span>{currency.abbreviation}</span>
                               </div>
                             </CustomItem2>
@@ -517,7 +539,7 @@ const ExchangingSmallScreen = ({
                   </CustomDropdown2>
                 </div>
 
-                <div className="col-span-1 row-span-1 flex flex-col">
+                <div className="order-4 col-span-1 row-span-1 flex flex-col">
                   <span className={`w-full h-fit text-${oppositeTheme}`}>
                     {lang["amount"]}
                   </span>
@@ -604,7 +626,7 @@ const ExchangingSmallScreen = ({
                       </button>
                     )}
                 </div>
-                <div className="col-span-1 row-span-1 flex flex-col">
+                <div className="order-5 col-span-1 row-span-1 flex flex-col">
                   <span className={`w-full h-fit text-${oppositeTheme}`}>
                     {lang["rate"]}
                   </span>
@@ -698,103 +720,111 @@ const ExchangingSmallScreen = ({
                       )}
                   </div>
                 </div>
-                {values.amount &&
-                  removeComma(values.amount) !== 0 &&
-                  selectedCurrecnyPair &&
-                  values.rate &&
-                  removeComma(values.rate) !== 0 && (
-                    <div className="mt-1 flex items-center">
-                      {errorMessage && errorMessage !== "" ? (
-                        <span
-                          className={`text-red font-${font}-regular mt-0.5 text-sm`}
-                        >
-                          {errorMessage}
-                        </span>
-                      ) : (
-                        <div className="w-full flex flex-col px-5 max-w-36 text-nowrap overflow-x-scroll overflow-y-hidden items-center justify-between">
-                          <div className="flex items-center gap-x-1">
-                            <img
-                              className="w-5 h-5"
-                              src={require(`../../../../Images/arrow-right-${oppositeTheme}.png`)}
-                            />
+
+                <div className="order-3 col-span-1 row-span-1 flex flex-col">
+                  {values.amount &&
+                    removeComma(values.amount) !== 0 &&
+                    selectedCurrecnyPair &&
+                    values.rate &&
+                    removeComma(values.rate) !== 0 && (
+                      <div className="mt-1 flex items-center">
+                        {errorMessage && errorMessage !== "" ? (
+                          <span
+                            className={`text-red font-${font}-regular mt-0.5 text-sm`}
+                          >
+                            {errorMessage}
+                          </span>
+                        ) : (
+                          <div className="w-full flex flex-col px-5 max-w-36 text-nowrap overflow-x-scroll overflow-y-hidden items-center justify-between">
+                            <div className="flex items-center gap-x-1">
+                              <img
+                                className="w-5 h-5"
+                                src={require(`../../../../Images/arrow-right-${oppositeTheme}.png`)}
+                              />
+                              <span
+                                className={`text-${oppositeTheme} font-${font}-regular mt-0.5 text`}
+                              >
+                                {addComma(
+                                  roundDown(
+                                    computingTargetAmount(
+                                      removeComma(values.amount),
+                                      removeComma(values.rate),
+                                      selectedCurrecnyPair.rate_multiplier
+                                    ),
+                                    availableTargets[selectedTargetIndex]
+                                      .floating_number
+                                  )
+                                ) +
+                                  " " +
+                                  (availableTargets[selectedTargetIndex]
+                                    ? availableTargets[selectedTargetIndex]
+                                        .abbreviation
+                                    : "")}
+                              </span>
+                            </div>
                             <span
-                              className={`text-${oppositeTheme} font-${font}-regular mt-0.5 text`}
+                              className={`text-${oppositeTheme} font-${font}-regular -mb-0.5`}
                             >
-                              {addComma(
-                                roundDown(
-                                  computingTargetAmount(
-                                    removeComma(values.amount),
-                                    removeComma(values.rate),
-                                    selectedCurrecnyPair.rate_multiplier
-                                  ),
-                                  availableTargets[selectedTargetIndex]
-                                    .floating_number
-                                )
-                              ) +
-                                " " +
-                                (availableTargets[selectedTargetIndex]
-                                  ? availableTargets[selectedTargetIndex]
-                                      .abbreviation
-                                  : "")}
+                              {+selectedCurrecnyPair.fee_percentage
+                                ? "-" + userInfo && userInfo.free_exchange
+                                  ? 0
+                                  : addComma(
+                                      (+removeComma(values.amount) *
+                                        +selectedCurrecnyPair.fee_percentage) /
+                                        100
+                                    ) +
+                                    " " +
+                                    currencies[selectedSourceIndex]
+                                      .abbreviation +
+                                    " " +
+                                    lang["fee"]
+                                : ""}
                             </span>
                           </div>
-                          <span
-                            className={`text-${oppositeTheme} font-${font}-regular -mb-0.5`}
-                          >
-                            {+selectedCurrecnyPair.fee_percentage
-                              ? "-" +
-                                addComma(
-                                  (+removeComma(values.amount) *
-                                    +selectedCurrecnyPair.fee_percentage) /
-                                    100
-                                ) +
-                                " " +
-                                currencies[selectedSourceIndex].abbreviation +
-                                " " +
-                                lang["fee"]
-                              : ""}
-                          </span>
-                        </div>
-                      )}
-                    </div>
+                        )}
+                      </div>
+                    )}
+                </div>
+
+                <div className="order-6 col-span-1 row-span-1 flex flex-col">
+                  {submitButtonFunction === "submit" ? (
+                    <button
+                      type={isDemo ? "button" : "submit"}
+                      onClick={isDemo ? OpenLoginSignupModal : handleSubmit}
+                      className={
+                        values.amount &&
+                        removeComma(values.amount) !== 0 &&
+                        values.rate &&
+                        removeComma(values.rate) !== 0
+                          ? "flex justify-center mt-5 items-center w-full h-fit py-2 bg-green rounded-lg text-light"
+                          : "flex justify-center mt-6 items-center w-full h-fit py-1.5 bg-green rounded-lg text-light"
+                      }
+                    >
+                      {lang["submit"]}
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        navigate("/wallet", {
+                          state: {
+                            selectedCurrency: currencies[selectedSourceIndex],
+                          },
+                        })
+                      }
+                      className={
+                        values.amount &&
+                        removeComma(values.amount) !== 0 &&
+                        values.rate &&
+                        removeComma(values.rate) !== 0
+                          ? `flex justify-center mt-0.5 items-center w-full pt-2 pb-1 rounded-lg bg-green font-${font}-bold text-light`
+                          : `flex justify-center mt-7 items-center w-full pt-2 pb-1 rounded-lg bg-green font-${font}-bold text-light`
+                      }
+                    >
+                      {lang["deposit"]}
+                    </button>
                   )}
-                {submitButtonFunction === "submit" ? (
-                  <button
-                    type={isDemo ? "button" : "submit"}
-                    onClick={isDemo ? OpenLoginSignupModal : handleSubmit}
-                    className={
-                      values.amount &&
-                      removeComma(values.amount) !== 0 &&
-                      values.rate &&
-                      removeComma(values.rate) !== 0
-                        ? "flex justify-center mt-5 items-center w-full h-fit py-2 bg-green rounded-lg text-light"
-                        : "flex justify-center mt-6 items-center w-full h-fit py-1.5 bg-green rounded-lg text-light"
-                    }
-                  >
-                    {lang["submit"]}
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() =>
-                      navigate("/wallet", {
-                        state: {
-                          selectedCurrency: currencies[selectedSourceIndex],
-                        },
-                      })
-                    }
-                    className={
-                      values.amount &&
-                      removeComma(values.amount) !== 0 &&
-                      values.rate &&
-                      removeComma(values.rate) !== 0
-                        ? `flex justify-center mt-0.5 items-center w-full pt-2 pb-1 rounded-lg bg-green font-${font}-bold text-light`
-                        : `flex justify-center mt-7 items-center w-full pt-2 pb-1 rounded-lg bg-green font-${font}-bold text-light`
-                    }
-                  >
-                    {lang["deposit"]}
-                  </button>
-                )}
+                </div>
               </form>
             );
           }}
