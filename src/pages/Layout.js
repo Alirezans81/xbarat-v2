@@ -313,12 +313,7 @@ export default function Layout({ platform }) {
     });
   };
   useEffect(() => {
-    if (
-      user &&
-      user.free_exchange &&
-      !localStorage.getItem("freeExchangeShown")
-    )
-      freeExchangeModal();
+    if (user && !localStorage.getItem("freeExchangeShown")) freeExchangeModal();
   }, [user]);
 
   // This UseEffect Closes Expand Social Button When User clicks outisde of it

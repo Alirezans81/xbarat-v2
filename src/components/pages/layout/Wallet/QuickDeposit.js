@@ -159,7 +159,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
         </span>
       </div>
       <Formik
-        initialValues={{ amount: "", method: "Paypal" }}
+        initialValues={{ amount: "", method: "" }}
         onSubmit={(values, { resetForm }) => {
           if (userInfo && userInfo.is_verified) {
             if (checkAmount(+removeComma(values.amount))) {
@@ -230,9 +230,9 @@ export default function QuickDeposit({ refreshPendingRequests }) {
           handleBlur,
           values,
           handleSubmit,
-          setFieldValue,
+          // setFieldValue, #This was to set method(Bank,Paypal)
         }) => (
-          <div className="grid grid-cols-2 grid-rows-3 gap-2">
+          <div className="grid grid-cols-2 grid-rows-2 gap-y-4 gap-x-2">
             <div className="col-span-1 row-span-1 flex w-full h-fit">
               <CustomDropdown
                 label={
@@ -374,11 +374,10 @@ export default function QuickDeposit({ refreshPendingRequests }) {
               />
             </div>
             {/* Payment Mehod */}
-            <div className="col-span-2 row-span-1">
+            {/* <div className="col-span-2 row-span-1">
               <div
                 className={`flex-1 w-full h-fit flex justify-between items-center relative bg-transparent max-w-md mx-auto bg-${theme}-back rounded-lg`}
               >
-                {/* Sliding Background */}
                 <div
                   className="absolute top-0 left-0 w-1/2 h-full rounded-xl transition-all duration-500 bg-blue-gradient z-0"
                   style={{
@@ -389,7 +388,6 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                   }}
                 />
 
-                {/* Buttons */}
                 <div className="flex w-full relative z-10">
                   <button
                     onClick={() => setFieldValue("method", "Paypal")}
@@ -406,7 +404,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                   </button>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className={submitButtonClass}>
               <SubmitButton
                 type="button"
