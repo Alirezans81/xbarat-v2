@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useThemeState } from "../Providers/ThemeProvider";
 import QuickDeposit from "../components/pages/layout/Wallet/QuickDeposit";
 import LastDeposit from "../components/pages/layout/Wallet/LastDeposit";
@@ -13,9 +13,11 @@ import { useModalDataSetState } from "../Providers/ModalDataProvider";
 import { useUserState } from "../Providers/UserProvider";
 import SecurityGuidline from "../components/modals/SecurityGuidline";
 import { useWalletState } from "../Providers/WalletProvider";
+import { isMobile } from "react-device-detect";
 // import { useLocation, useNavigation } from "react-router-dom";
 // import { useModalDataSetState } from "../Providers/ModalDataProvider";
 // import TransactionModal from "../components/modals/TransactionModal";
+import CustomAvatarGuide from "../components/common/CustomAvatarGuide";
 import Joyride from "react-joyride";
 import CustomBeacon from "../components/common/Tour/CustomBeacon";
 import CustomTooltip from "../components/common/Tour/CustomTooltip";
@@ -29,30 +31,23 @@ export default function Wallet() {
   const token = useTokenState();
   const wallet = useWalletState();
   const [runTour, setRunTour] = useState(true);
+  const [currentCandidate, setCurrentCandidate] = useState("");
 
-  // const setModalData = useModalDataSetState();
+  const candidateComponents = {
+    mobile: [
+      {
+        key: "quick-deposit",
+        component: <span>This is the component for mobile quick deposit</span>,
+      },
+    ],
+    desktop: [
+      {
+        key: "quick-deposit",
+        component: <span>This is the component for desktop quick deposit</span>,
+      },
+    ],
+  };
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
-  // const location = useLocation();
-
-  // const openTransactionModal = (defaultType, refreshPendingRequests) => {
-  //   setModalData({
-  //     title: lang["transaction"],
-  //     children: <TransactionModal />,
-  //     props: {
-  //       defaultType,
-  //       refreshPendingRequests,
-  //     },
-  //     canClose: true,
-  //     isOpen: true,
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   const selectedCurrency = location.state && location.state.selectedCurrency
-  //     ? location.state.selectedCurrency
-  //     : null;
-  //   selectedCurrency && openTransactionModal("deposit", refreshPendingRequests);
-  // }, []);
 
   const { getPendingRequests, isLoading: getPendingRequestsIsLoading } =
     useGetPendingRequests();
@@ -85,7 +80,7 @@ export default function Wallet() {
     }
   }, [user]);
   const width = window.innerWidth;
-  console.log(width);
+
   const steps =
     width > 1280
       ? [
@@ -122,6 +117,66 @@ export default function Wallet() {
             placement: "top",
           },
         ];
+
+  const timeoutRef = useRef(null);
+  const [showGuide, setShowGuide] = useState(false);
+  const findComponentByKey = (key) => {
+    const allComponents = isMobile
+      ? [...candidateComponents.mobile]
+      : [...candidateComponents.desktop];
+
+    return allComponents.find((item) => item.key === key)?.component || null;
+  };
+
+  const handleMouseEnter = (candidate) => {
+    if (timeoutRef.current) {
+      console.log("ks2");
+
+      clearTimeout(timeoutRef.current);
+    }
+    console.log("ks");
+    timeoutRef.current = setTimeout(() => {
+      console.log("ks3");
+      const temp = findComponentByKey(candidate);
+      setCurrentCandidate(temp);
+      setShowGuide(true);
+    }, 2000);
+  };
+
+  // useEffect(() => {
+  //   currentCandidate && (
+  //     <CustomAvatarGuide
+  //       isMobile={isMobile}
+  //       component={currentCandidate}
+  //       timeout={5000}
+  //     />
+  //   );
+  // }, [currentCandidate]);
+
+  const handleMouseLeave = () => {
+    // Clear the timeout if mouse leaves before 2 seconds
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  };
+
+  const handleFocus = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setCurrentCandidate("quick-deposit-mobile");
+    }, 2000);
+  };
+
+  const handleBlur = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  };
   return (
     <>
       <button
@@ -183,9 +238,26 @@ export default function Wallet() {
           <div
             className={`h-72 col-span-12 md:col-span-3 flex md:hidden xl:flex row-span-3 flex-col gap-y-4 bg-${theme} p-5 rounded-3xl`}
           >
-            <div className={`flex-1 quick-deposit-component`}>
+            <div
+              onMouseEnter={
+                !isMobile ? () => handleMouseEnter("quick-deposit") : undefined
+              }
+              onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+              onFocus={isMobile ? handleFocus : undefined}
+              onBlur={isMobile ? handleBlur : undefined}
+              tabIndex={isMobile ? 0 : -1}
+              className={`flex-1 quick-deposit-component`}
+            >
               <QuickDeposit refreshPendingRequests={refreshPendingRequests} />
             </div>
+            {showGuide && currentCandidate && (
+              <CustomAvatarGuide
+                isMobile={isMobile}
+                component={currentCandidate}
+                timeout={5000}
+              />
+            )}
+
             <div className={`flex-1 last-deposit-component`}>
               <LastDeposit
                 refreshPendingRequests={refreshPendingRequests}

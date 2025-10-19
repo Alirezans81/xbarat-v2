@@ -93,7 +93,8 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
 
   let timeout;
   const tempTimeOut = 1440;
-  if (method === "Bank") {
+
+  if (method === "user") {
     timeout = new Date(transaction.datetime_assign);
     timeout.setMinutes(
       timeout.getMinutes() +
@@ -282,7 +283,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
           <div className="flex flex-col gap-y-2 mb-5">
             <span
               className={
-                method !== "Bank"
+                method !== "user"
                   ? `text-yellow text-xl font-${font}-regular text-center`
                   : "hidden"
               }
@@ -315,7 +316,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               </span>
             </div>
             <div
-              className={method !== "Bank" ? "w-full flex relative" : "hidden"}
+              className={method !== "user" ? "w-full flex relative" : "hidden"}
             >
               <CustomDropdown
                 label={
@@ -399,7 +400,11 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               className={`w-full h-fit flex flex-col md:flex-row p-2 gap-x-3 bg-${theme}-back rounded-2xl`}
             >
               <div
-                className={`flex flex-col bg-${theme} w-full md:w-2/3 h-full rounded-2xl px-4 py-2 gap-y-3`}
+                className={
+                  method === "user"
+                    ? `flex flex-col bg-${theme} w-full md:w-2/3 h-full rounded-2xl px-4 py-2 gap-y-3`
+                    : "hidden"
+                }
               >
                 <span
                   dir={DirectionSetter(font)}
