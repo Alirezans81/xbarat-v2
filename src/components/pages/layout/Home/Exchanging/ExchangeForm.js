@@ -769,16 +769,17 @@ export default function ExchangeForm({
                         className={`text-${oppositeTheme} font-${font}-regular -mb-0.5`}
                       >
                         {+selectedCurrecnyPair.fee_percentage
-                          ? "-" +
-                            addComma(
-                              (+removeComma(values.amount) *
-                                +selectedCurrecnyPair.fee_percentage) /
-                                100
-                            ) +
-                            " " +
-                            currencies[selectedSourceIndex].abbreviation +
-                            " " +
-                            lang["fee"]
+                          ? "-" + user.free_exchange
+                            ? 0
+                            : addComma(
+                                (+removeComma(values.amount) *
+                                  +selectedCurrecnyPair.fee_percentage) /
+                                  100
+                              ) +
+                              " " +
+                              currencies[selectedSourceIndex].abbreviation +
+                              " " +
+                              lang["fee"]
                           : ""}
                       </span>
                     </div>
