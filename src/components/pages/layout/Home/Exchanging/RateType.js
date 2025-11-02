@@ -74,7 +74,7 @@ export default function RateType({
         </button>
         <button
           onClick={openTutorialModal}
-          className="flex-1 bg-none text-blue h-full flex justify-start px-2"
+          className="flex-1 bg-none text-blue h-full flex justify-end px-2"
         >
           ?
         </button>

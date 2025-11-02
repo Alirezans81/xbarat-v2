@@ -52,6 +52,10 @@ module.exports = {
       blue: "#0A8DFF",
       green: "#0B9B08",
       red: "#E42F08",
+      "red-light": "#FF0800",
+      "red-dark": "#c21807",
+      "green-light": "#52a447",
+      "green-dark": "#276221",
       "blue-gradient": "linear-gradient(157deg, #0A8DFF 0%, #619AEF  100%)",
       "blue-gradient-opposite":
         "linear-gradient(157deg, #619AEF 0%, #0A8DFF  100%)",

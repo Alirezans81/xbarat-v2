@@ -39,6 +39,17 @@ const getOtherExchangesRate = (filtersObject) => {
   }
 };
 
+const getOtherExchanges = () => {
+  const limit = require("../../pagination/limit.json")["other-exchanges"];
+
+  const urlWithQueries = queryString.stringifyUrl({
+    url: api["other-exchanges"],
+    query: { limit, is_active: true, is_deleted: false },
+  });
+
+  return axios.get(urlWithQueries);
+};
+
 const exchange = (params, token) => {
   const formData = new FormData();
 
@@ -75,6 +86,7 @@ export {
   getWatchList,
   getTableExchange,
   getOtherExchangesRate,
+  getOtherExchanges,
   exchange,
   getPendingExchanges,
   cancelPendingExchange,

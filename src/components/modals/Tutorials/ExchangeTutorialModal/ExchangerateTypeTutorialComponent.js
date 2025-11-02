@@ -23,30 +23,34 @@ export default function ExchangeRateTypeTutorialComponent({ hovered }) {
         <button>
           <span
             className={`font-${font}-thin text-${oppositeTheme} transition-all duration-500 text-${
-              hovered === "Average Rate" ? "xl" : "base"
+              hovered === "Average Rate" ? "xl underline" : "base"
             }`}
           >
             {addComma(1.6)}
           </span>
           <span
             className={`font-${font}-thin text-blue  m${oneDirection}-1 transition-all duration-500 text-${
-              hovered === "Average Rate" ? "xl" : "base"
+              hovered === "Average Rate" ? "xl underline" : "base"
             }`}
           >
             IRR/AFN
           </span>
         </button>
       </div>
-      <div className="flex -mt-1">
+      <div className="flex mt-1">
         <button
           className={
             !rateIsReversed
               ? `flex-1 bg-${theme}-back pt-2 pb-1 px-2 text-${
-                  hovered === "Toggle" ? "base" : "xs"
+                  hovered === "Toggle"
+                    ? "base animate-rightward underline"
+                    : "xs"
                 } text-center-important text-light transition-all font-${font}-regular duration-500 rounded-${oneDirection}-full ` +
                 activeButtonClass
               : `flex-1 bg-${theme}-back pt-2 pb-1 px-2 text-${
-                  hovered === "Toggle" ? "base" : "xs"
+                  hovered === "Toggle"
+                    ? "base animate-leftward underline"
+                    : "xs"
                 } text-center-important text-${oppositeTheme} transition-all font-${font}-regular duration-500 rounded-${oneDirection}-full`
           }
         >
@@ -56,11 +60,15 @@ export default function ExchangeRateTypeTutorialComponent({ hovered }) {
           className={
             rateIsReversed
               ? `flex-1 bg-${theme}-back pt-2 pb-1 px-2 text-${
-                  hovered === "Toggle" ? "base" : "xs"
+                  hovered === "Toggle"
+                    ? "base animate-rightward underline"
+                    : "xs"
                 } text-center-important text-light transition-all font-${font}-regular duration-500 rounded-${oppositOneDirection}-full ` +
                 activeButtonClass
               : `flex-1 bg-${theme}-back pt-2 pb-1 px-2 text-${
-                  hovered === "Toggle" ? "base" : "xs"
+                  hovered === "Toggle"
+                    ? "base animate-leftward underline"
+                    : "xs"
                 } text-center-important text-${oppositeTheme} transition-all font-${font}-regular duration-500 rounded-${oppositOneDirection}-full`
           }
         >

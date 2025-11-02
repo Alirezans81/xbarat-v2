@@ -24,8 +24,6 @@ export default function NewTicketModal({
 
   const { createChat, isLoading: createChatIsLoading } = useCreateChat();
 
-  console.log(lastTicketButtonRef);
-
   return (
     <div className="">
       <Formik

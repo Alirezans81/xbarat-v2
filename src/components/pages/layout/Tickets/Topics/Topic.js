@@ -8,7 +8,6 @@ export default function Topic({ data, selected, onSelect }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
-
   return (
     <button
       disabled={selected}
@@ -26,7 +25,7 @@ export default function Topic({ data, selected, onSelect }) {
           {data && data.title
             ? lang && lang[data.title]
               ? lang[data.title]
-              : ""
+              : data.title
             : ""}
         </span>
         <div
@@ -52,7 +51,7 @@ export default function Topic({ data, selected, onSelect }) {
         {data && data.description
           ? lang && lang[data.description]
             ? lang[data.description]
-            : ""
+            : data.description
           : ""}
       </span>
     </button>

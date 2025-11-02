@@ -10,14 +10,18 @@ import { useIsLoadingSplashScreenSetState } from "../../../Providers/IsLoadingSp
 import { CustomDropdown, CustomItem } from "../../common/CustomDropdown";
 import { useFontState } from "../../../Providers/FontProvider";
 import { CustomTooltip } from "../../common/CustomTooltip";
-
+import DirectionSetter from "../../../functions/DirectionSetter";
 const Note = ({ lang, font }) => {
   return (
     <div
       className={`flex flex-col gap-y-5 text-gray font-${font}-regular w-72 px-2 pt-1.5 pb-0.5`}
     >
-      <span>{"•	" + lang["complete-profile-modal-step2-note-1st"] + "."}</span>
-      <span>{"•	" + lang["complete-profile-modal-step2-note-2nd"] + "."}</span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step2-note-1st"] + "."}
+      </span>
+      <span dir={DirectionSetter(font)} className="text-start">
+        {"•	" + lang["complete-profile-modal-step2-note-2nd"] + "."}
+      </span>
     </div>
   );
 };
@@ -34,7 +38,7 @@ export default function Step2({
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const lang = useLanguageState();
   const font = useFontState();
-
+  const direction = DirectionSetter(font);
   const [nationalities, setNationalities] = useState([]);
   const [selectedNationalityIndex, setSelectedNationalityIndex] = useState(-1);
   const [countries, setCountries] = useState([]);
@@ -158,7 +162,10 @@ export default function Step2({
               </CustomDropdown>
             </div>
             {touched.nationality && errors.nationality && (
-              <span className="text-red-500 font-thin text-sm ml-1">
+              <span
+                dir={direction}
+                className="text-red-500 font-thin text-sm ml-1"
+              >
                 {errors.nationality}
               </span>
             )}
@@ -221,7 +228,10 @@ export default function Step2({
               </CustomDropdown>
             </div>
             {touched.country && errors.country && (
-              <span className="text-red-500 font-thin text-sm ml-1">
+              <span
+                dir={direction}
+                className="text-red-500 font-thin text-sm ml-1"
+              >
                 {errors.country}
               </span>
             )}
@@ -302,7 +312,10 @@ export default function Step2({
               )}
             </div>
             {touched.city && errors.city && (
-              <span className="text-red-500 font-thin text-sm ml-1">
+              <span
+                dir={direction}
+                className="text-red-500 font-thin text-sm ml-1"
+              >
                 {errors.city}
               </span>
             )}
@@ -326,8 +339,12 @@ export default function Step2({
         <div
           className={`mt-4 flex flex-col gap-y-3 text-gray font-${font}-regular w-64`}
         >
-          <span>{lang["complete-profile-modal-step2-note-1st"] + "."}</span>
-          <span>{lang["complete-profile-modal-step2-note-2nd"] + "."}</span>
+          <span dir={direction} className="text-start">
+            {lang["complete-profile-modal-step2-note-1st"] + "."}
+          </span>
+          <span dir={direction} className="text-start">
+            {lang["complete-profile-modal-step2-note-2nd"] + "."}
+          </span>
         </div>
       </div>
 

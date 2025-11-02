@@ -20,7 +20,6 @@ import {
 import { useStatusesState } from "../../../Providers/StatusesProvider";
 import { useFontState } from "../../../Providers/FontProvider";
 import { useToastDataSetState } from "../../../Providers/ToastDataProvider";
-
 export default function Withdrawal({
   currencies,
   data,
@@ -37,7 +36,6 @@ export default function Withdrawal({
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
   const addComma = useAddComma();
   const removeComma = useRemoveComma();
-
   const setToastData = useToastDataSetState();
   const openNotEnoughBalanceToast = () => {
     setToastData({
@@ -174,12 +172,16 @@ export default function Withdrawal({
     if (currencies[selectedCurrencyIndex]) {
       const min =
         +currencies[selectedCurrencyIndex].min_withdrawal_lot *
-        +currencies[selectedCurrencyIndex].lot;
+          +currencies[selectedCurrencyIndex].lot +
+        removeComma(feeWithdrawal);
       const max =
         +currencies[selectedCurrencyIndex].max_withdrawal_lot *
         +currencies[selectedCurrencyIndex].lot;
 
-      if (min <= amount && max >= amount) {
+      if (
+        min <= amount - removeComma(feeWithdrawal) &&
+        max >= amount - removeComma(feeWithdrawal)
+      ) {
         return true;
       } else {
         openNotRightAmountToast(min, max);
@@ -187,10 +189,32 @@ export default function Withdrawal({
       }
     }
   };
+  const [curr, setCurr] = useState([]);
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    setCurr(
+      currencies.filter(
+        (currency) => currency.abbreviation === data.currency_abb
+      )[0]
+    );
+  }, []);
+
+  const [feeWithdrawal, setFeeWithdrawal] = useState(0);
+  useEffect(() => {
+    setFeeWithdrawal(Number(curr.fee_withdrawal));
+  }, [curr]);
+
+  const direction =
+    font === "Fa" || font === "Af" || font === "Ar" ? "rtl" : "ltr";
 
   return (
     <Formik
-      initialValues={{ amount: amount || "", title: "", bank_info: "" }}
+      initialValues={{
+        amount: amount || "",
+        title: "",
+        bank_info: "",
+        withdrawal_method: "Service",
+      }}
       onSubmit={(values) => {
         if (checkAmount(+removeComma(values.amount))) {
           if (+removeComma(values.amount) <= +walletAsset.balance) {
@@ -211,7 +235,9 @@ export default function Withdrawal({
                     walletTanks[selectedWalletTankIndex].url
                       ? walletTanks[selectedWalletTankIndex].url
                       : "",
-                  amount: removeComma(values.amount),
+                  amount: removeComma(
+                    values.amount - removeComma(feeWithdrawal)
+                  ),
                   status: statuses
                     ? statuses.find((status) => status.title === "Admin Assign")
                         .url
@@ -221,6 +247,8 @@ export default function Withdrawal({
                     locations[selectedLocationIndex].url
                       ? locations[selectedLocationIndex].url
                       : "",
+                  fee_withdrawal:
+                    values.withdrawal_method === "Service" ? 0 : feeWithdrawal,
                 },
                 () => {
                   closeModal();
@@ -258,12 +286,18 @@ export default function Withdrawal({
                           ? currencies[selectedCurrencyIndex].url
                           : "",
                       wallet_tank_receiver: data && data.url ? data.url : "",
-                      amount: removeComma(values.amount),
+                      amount: removeComma(
+                        values.amount - removeComma(feeWithdrawal)
+                      ),
                       status: statuses
                         ? statuses.find(
                             (status) => status.title === "Admin Assign"
                           ).url
                         : "",
+                      fee_withdrawal:
+                        values.withdrawal_method === "Service"
+                          ? 0
+                          : feeWithdrawal,
                     },
                     () => {
                       closeModal();
@@ -286,12 +320,18 @@ export default function Withdrawal({
                       walletTanks[selectedWalletTankIndex].url
                         ? walletTanks[selectedWalletTankIndex].url
                         : "",
-                    amount: removeComma(values.amount),
+                    amount: removeComma(
+                      values.amount - removeComma(feeWithdrawal)
+                    ),
                     status: statuses
                       ? statuses.find(
                           (status) => status.title === "Admin Assign"
                         ).url
                       : "",
+                    fee_withdrawal:
+                      values.withdrawal_method === "Service"
+                        ? 0
+                        : feeWithdrawal,
                   },
                   () => {
                     closeModal();
@@ -307,20 +347,49 @@ export default function Withdrawal({
     >
       {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
         <div className="flex flex-col">
-          <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+          <div
+            className={`${
+              step === 1 ? "hidden" : "flex"
+            } flex-1 w-full flex-col gap-y-2 mt-5`}
+          >
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["balance"]}
             </span>
             <div className="w-full flex -mt-1">
+
               <span
-                className={`text-${oppositeTheme} font-${font}-bold text-2xl`}
+                className={`font-${font}-regular justify-center w-full flex text-${oppositeTheme}`}
               >
-                {addComma(+data.balance) + " " + data.currency_abb}
+                Fee
               </span>
+              <div className="w-full flex  justify-center items-center -mt-1">
+                <span className={`text-red font-${font}-bold text-2xl`}>
+                  {addComma(+feeWithdrawal)}
+                </span>
+              </div>
+            </div>
+            {/* balance - fee */}
+            <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+              <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                Max Withdraw
+              </span>
+              <div className="w-full flex -mt-1">
+                <span
+                  className={`text-${oppositeTheme} font-${font}-bold text-2xl`}
+                >
+                  {addComma(+data.balance - removeComma(feeWithdrawal)) +
+                    " " +
+                    data.currency_abb}
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
+          <div
+            className={`${
+              step === 1 ? "hidden" : "flex"
+            } flex-1 w-full flex flex-col gap-y-2 mt-5`}
+          >
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["amount"]}
             </span>
@@ -347,8 +416,20 @@ export default function Withdrawal({
                   </button>
                 )}
             </div>
+            <div className="w-full h-fit flex flex-col">
+              <span className={`text-${oppositeTheme} font-${font}-regular`}>
+                Total Withdrawed amout
+              </span>
+              <span className="text-green font-bold text-lg flex justify-center">
+                {+(removeComma(values.amount) - feeWithdrawal) > 0
+                  ? addComma(+(removeComma(values.amount) - feeWithdrawal)) +
+                    " " +
+                    data.currency_abb
+                  : 0 + " " + data.currency_abb}
+              </span>
+            </div>
           </div>
-          {newCardMode ? (
+          {step === 0 && newCardMode ? (
             <div className="relative px-6 pb-6 border-2 border-dashed border-gray rounded-2xl mt-5">
               <button
                 onClick={() => setNewCardMode(false)}
@@ -466,7 +547,7 @@ export default function Withdrawal({
               </div>
             </div>
           ) : (
-            <div className={bankAccountDivClass}>
+            <div className={step === 0 ? bankAccountDivClass : "hidden"}>
               <span className={`font-${font}-regular text-${oppositeTheme}`}>
                 {lang["bank-account"]}
               </span>
@@ -562,7 +643,7 @@ export default function Withdrawal({
               </div>
             </div>
           )}
-          <div className={locationDivClass}>
+          <div className={step === 0 ? locationDivClass : "hidden"}>
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
               {lang["location"]}
             </span>
@@ -622,14 +703,206 @@ export default function Withdrawal({
               </CustomDropdown>
             </div>
           </div>
-          <div className="mt-10">
-            <SubmitButton
-              onClick={handleSubmit}
-              className="w-full py-0.5 text-lg"
-              rounded="lg"
+
+          {/* step 1 */}
+          <div
+            dir={direction}
+            className={`w-80 h-fit gap-y-3 ${
+              step === 0 ? "hidden" : "flex"
+            } flex-col text-${oppositeTheme} text-start `}
+          >
+            <span
+              dir={direction}
+              className={`w-full font-${font}-regular text-${oppositeTheme} text-base mt-5 ${
+                direction === "rtl" ? "text-right" : "text-left"
+              }`}
             >
-              {lang["submit"]}
-            </SubmitButton>
+              {lang["method_desc"]}
+            </span>
+
+            <div
+              dir={direction}
+              className={`w-full font-${font}-regular text-base flex flex-col mt-5 ${
+                direction === "rtl" ? "justify-end" : "justify-start"
+              }`}
+            >
+              <div dir={direction} className="w-full flex flex-row ">
+                <span
+                  dir={direction}
+                  className={`text-blue text-start w-fit ${
+                    direction === "rtl" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  {lang["service"]}
+                </span>
+                <span
+                  dir={direction}
+                  className={`flex-1 w-full text-${oppositeTheme} ${
+                    font === "En" ? "hidden" : "flex"
+                  } text-start w-full ${
+                    direction === "rtl" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  {"(" + lang["service_en"] + ")"}
+                </span>
+              </div>
+              <span
+                className={`w-full flex ${
+                  direction === "rtl"
+                    ? "justify-end text-end"
+                    : "justify-start text-start"
+                }`}
+              >
+                {lang["service_desc"]}
+              </span>
+            </div>
+            <div
+              dir={direction}
+              className={`w-full  font-${font}-regular text-base flex flex-col`}
+
+            >
+              <div dir={direction} className="w-full flex flex-row ">
+                <span
+                  dir={direction}
+                  className={`text-blue text-start w-fit ${
+                    direction === "rtl" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  {lang["friends_and_family"]}
+                </span>
+                <span
+                  dir={direction}
+                  className={`flex-1 w-full text-${oppositeTheme} ${
+                    font === "En" ? "hidden" : "flex"
+                  } text-start w-full ${
+                    direction === "rtl" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  {"(" + lang["friends_and_family_en"] + ")"}
+                </span>
+              </div>
+              <span
+                className={`w-full text-start flex ${
+                  direction === "rtl"
+                    ? "justify-end text-end"
+                    : "justify-start text-start"
+                }`}
+              >
+                {lang["friends_and_family_desc"]}
+              </span>
+            </div>
+          </div>
+          <div
+            className={`w-full h-fit ${
+              step === 0 ? "hidden" : "flex"
+            } flex-col mt-5 gap-y-2`}
+          >
+            <button
+              onClick={() => setFieldValue("withdrawal_method", "Service")}
+            >
+              <div className="w-fit h-fit flex flex-row gap-x-2">
+                <div
+                  className={`w-4 h-4 rounded-full border-2 border-solid border-blue text-transparent bg-${
+                    values.withdrawal_method === "Service"
+                      ? "blue"
+                      : "transparent"
+                  }`}
+                >
+                  .
+                </div>
+                <span
+                  className={`font-${font}-regular text-${oppositeTheme} text-base`}
+                >
+                  {lang["service"]}
+                </span>
+              </div>
+            </button>
+            <button
+              onClick={() =>
+                setFieldValue("withdrawal_method", "Friends_and_family")
+              }
+            >
+              <div className="w-fit h-fit flex flex-row gap-x-2">
+                <div
+                  className={`w-4 h-4 rounded-full border-2 border-solid border-blue text-transparent bg-${
+                    values.withdrawal_method === "Friends_and_family"
+                      ? "blue"
+                      : "transparent"
+                  }`}
+                >
+                  .
+                </div>
+                <span
+                  className={`font-${font}-regular text-${oppositeTheme} text-base`}
+                >
+                  {lang["friends_and_family"]}
+                </span>
+              </div>
+            </button>
+          </div>
+          <div
+            className={
+              step === 0 || values.withdrawal_method === "Service"
+                ? `hidden`
+                : `flex flex-col w-full h-fit`
+            }
+          >
+            <div className="w-full h-fit mt-5 flex flex-col">
+              <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                {lang["fee"]}
+              </span>
+              <span className={`font-${font}-regular text-red text-xl`}>
+                {addComma(feeWithdrawal.toFixed(2)) + " " + curr.abbreviation}
+              </span>
+            </div>
+            <div className="w-full h-fit mt-5 flex flex-col">
+              <span className={`font-${font}-regular text-${oppositeTheme}`}>
+                {lang["total_recieved_amount"]}
+              </span>
+              <span className={`font-${font}-regular text-green text-xl`}>
+                {removeComma(values.amount) - feeWithdrawal >= 0
+                  ? addComma(removeComma(values.amount) - feeWithdrawal) +
+                    " " +
+                    curr.abbreviation
+                  : "0" + " " + curr.abbreviation}
+              </span>
+            </div>
+          </div>
+          <div className="mt-10">
+            {step === 1 ? (
+              <div className="w-full flex flex-row gap-x-3">
+                <button
+                  onClick={() => setStep(0)}
+                  className={`w-fit bg-${theme}-back p-3 rounded-2xl text-${oppositeTheme}`}
+                >
+                  {lang["back"]}
+                </button>
+                <SubmitButton
+                  onClick={handleSubmit}
+                  className="w-full py-0.5 text-lg"
+                  rounded="lg"
+                >
+                  {lang["submit"]}
+                </SubmitButton>
+              </div>
+            ) : step === 0 &&
+              (curr.abbreviation === "IRR" || curr.abbreviation === "AFN") ? (
+              <SubmitButton
+                className="w-full py-0.5 text-lg"
+                rounded="lg"
+                onClick={handleSubmit}
+              >
+                {lang["submit"]}
+              </SubmitButton>
+            ) : (
+              <SubmitButton
+                className="w-full py-0.5 text-lg"
+                rounded="lg"
+                onClick={() => setStep(1)}
+              >
+                {lang["next"]}
+              </SubmitButton>
+            )}
           </div>
         </div>
       )}

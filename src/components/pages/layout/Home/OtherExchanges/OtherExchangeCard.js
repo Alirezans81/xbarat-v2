@@ -5,24 +5,39 @@ import { useAddComma } from "../../../../../hooks/useNumberFunctions";
 import { useConvertDateTime } from "../../../../../hooks/useConvertDateTime";
 import { useFontState } from "../../../../../Providers/FontProvider";
 
-export default function OtherExchangeCard({ selectedCurrecnyPair, data }) {
+export default function OtherExchangeCard({
+  selectedCurrecnyPair,
+  data,
+  otherExchanges,
+}) {
   const theme = useThemeState();
   const font = useFontState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const { endComplete: endCompleteDirection } = useDirectionState();
   const addComma = useAddComma();
   const convertDateTime = useConvertDateTime();
+  const link = otherExchanges.filter(
+    (other) => other.title === data.exchange_title
+  );
 
   return (
     <div
-      className={`flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-2 pb-1`}
+      className={
+        link && link[0]
+          ? `flex flex-col justify-center items-center bg-${theme}-back rounded-3xl h-full pt-2 pb-1`
+          : "hidden"
+      }
     >
       <div className="flex flex-col items-center">
-        <span
+        <a
+          href={link[0] ? link[0].link : ""}
+          target="_blank"
+          rel="noreferrer"
           className={`text-2xl font-${font}-regular text-center text-${oppositeTheme}`}
         >
           {data.exchange_title}
-        </span>
+        </a>
+
         <div className="flex flex-col gap-0.5 items-center">
           <div className="flex items-center gap-1">
             <div className="flex items-center">
