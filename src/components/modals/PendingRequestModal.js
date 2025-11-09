@@ -227,7 +227,10 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
   }, [receiverTanks]);
 
   useEffect(() => {
-    if (singleImage.length === temporaryRecieverAddress.split(",").length) {
+    if (
+      temporaryRecieverAddress &&
+      singleImage.length === temporaryRecieverAddress.split(",").length
+    ) {
       handleLayoutDocument();
     }
   }, [singleImage]);
