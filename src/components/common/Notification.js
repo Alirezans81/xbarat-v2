@@ -174,18 +174,6 @@ export default function Notification() {
     userInfo && userInfo.username && getNotifications(userInfo.username);
   }, [userInfo]);
 
-  useEffect(() => {
-    if (
-      notifs &&
-      notifs.filter((data) => data.message !== "" && data.subject !== "")
-        .length !== 0 &&
-      wrapperRef &&
-      wrapperRef.current
-    ) {
-      wrapperRef.current.click();
-    }
-  }, [notifs, wrapperRef]);
-
   return (
     <CustomTooltip2
       trigger="click"

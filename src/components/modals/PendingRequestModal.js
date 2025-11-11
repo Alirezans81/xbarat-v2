@@ -223,7 +223,8 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
   };
 
   useEffect(() => {
-    receiverTanks.length === 1 && setSelectedWalletTank(0);
+    (receiverTanks.length === 1 || method === "user") &&
+      setSelectedWalletTank(0);
   }, [receiverTanks]);
 
   useEffect(() => {
@@ -285,7 +286,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
           <div className="flex flex-col gap-y-2 mb-5">
             <span
               className={
-                method !== "Bank"
+                method !== "user"
                   ? `text-yellow text-xl font-${font}-regular text-center`
                   : "hidden"
               }
@@ -318,7 +319,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               </span>
             </div>
             <div
-              className={method !== "Bank" ? "w-full flex relative" : "hidden"}
+              className={method !== "user" ? "w-full flex relative" : "hidden"}
             >
               <CustomDropdown
                 label={
