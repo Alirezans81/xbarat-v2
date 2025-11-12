@@ -29,104 +29,106 @@ export default function Wallet() {
   const token = useTokenState();
   const wallet = useWalletState();
   const [runTour, setRunTour] = useState(true);
-  // const [currentCandidate, setCurrentCandidate] = useState([]);
+  // DO Not remove
 
-  const candidateComponents = {
-    mobile: [
-      {
-        key: "quick-deposit",
-        component: (
-          <div
-            className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
-          >
-            This is the component for mobile quick deposit
-          </div>
-        ),
-      },
-      {
-        key: "last-deposit",
-        component: (
-          <div
-            className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
-          >
-            This is the component for mobile last deposit
-          </div>
-        ),
-      },
-      {
-        key: "balance",
-        component: (
-          <div
-            className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
-          >
-            This is the component for mobile balance
-          </div>
-        ),
-      },
-      {
-        key: "pending-request",
-        component: (
-          <div
-            className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
-          >
-            This is the component for mobile pending request
-          </div>
-        ),
-      },
-    ],
-    desktop: [
-      {
-        key: "quick-deposit",
-        component: (
-          <div
-            className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
-          >
-            This is the component for desktop quick deposit
-          </div>
-        ),
-      },
-      {
-        key: "last-deposit",
-        component: (
-          <div
-            className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
-          >
-            This is the component for desktop last deposit
-          </div>
-        ),
-      },
-      {
-        key: "balance",
-        component: (
-          <div
-            className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
-          >
-            This is the component for desktop balance
-          </div>
-        ),
-      },
-      {
-        key: "pending-request",
-        component: (
-          <div
-            className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
-          >
-            This is the component for desktop pending request
-          </div>
-        ),
-      },
-    ],
-  };
-  const {
-    showGuide,
-    currentCandidate,
-    handleMouseEnter,
-    handleFocus,
-    handleMouseLeave,
-    handleBlur,
-    setCurrentCandidate,
-    hideGuide,
-  } = useCandidateGuide(candidateComponents, isMobile);
+  // const [currentCandidate, setCurrentCandidate] = useState([]);
+  // const candidateComponents = {
+  //   mobile: [
+  //     {
+  //       key: "quick-deposit",
+  //       component: (
+  //         <div
+  //           className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
+  //         >
+  //           This is the component for mobile quick deposit
+  //         </div>
+  //       ),
+  //     },
+  //     {
+  //       key: "last-deposit",
+  //       component: (
+  //         <div
+  //           className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
+  //         >
+  //           This is the component for mobile last deposit
+  //         </div>
+  //       ),
+  //     },
+  //     {
+  //       key: "balance",
+  //       component: (
+  //         <div
+  //           className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
+  //         >
+  //           This is the component for mobile balance
+  //         </div>
+  //       ),
+  //     },
+  //     {
+  //       key: "pending-request",
+  //       component: (
+  //         <div
+  //           className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
+  //         >
+  //           This is the component for mobile pending request
+  //         </div>
+  //       ),
+  //     },
+  //   ],
+  //   desktop: [
+  //     {
+  //       key: "quick-deposit",
+  //       component: (
+  //         <div
+  //           className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
+  //         >
+  //           This is the component for desktop quick deposit
+  //         </div>
+  //       ),
+  //     },
+  //     {
+  //       key: "last-deposit",
+  //       component: (
+  //         <div
+  //           className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
+  //         >
+  //           This is the component for desktop last deposit
+  //         </div>
+  //       ),
+  //     },
+  //     {
+  //       key: "balance",
+  //       component: (
+  //         <div
+  //           className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
+  //         >
+  //           This is the component for desktop balance
+  //         </div>
+  //       ),
+  //     },
+  //     {
+  //       key: "pending-request",
+  //       component: (
+  //         <div
+  //           className={`w-fit px-5 py-2 rounded-2xl bg-yellow-300 font-${font}-bold`}
+  //         >
+  //           This is the component for desktop pending request
+  //         </div>
+  //       ),
+  //     },
+  //   ],
+  // };
+
+  // const {
+  //   showGuide,
+  //   currentCandidate,
+  //   handleMouseEnter,
+  //   handleFocus,
+  //   handleMouseLeave,
+  //   handleBlur,
+  //   setCurrentCandidate,
+  //   hideGuide,
+  // } = useCandidateGuide(candidateComponents, isMobile);
 
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
@@ -201,14 +203,14 @@ export default function Wallet() {
 
   return (
     <>
-      {showGuide && currentCandidate.length > 0 && (
+      {/* {showGuide && currentCandidate.length > 0 && (
         <CustomAvatarGuide
           onTimeout={() => setCurrentCandidate([])}
           currentCandidate={currentCandidate}
           isMobile={isMobile}
           timeout={6000}
         />
-      )}
+      )} */}
       <button
         onClick={() => setRunTour(true)}
         className={`${
@@ -269,35 +271,31 @@ export default function Wallet() {
             className={`h-72 col-span-12 md:col-span-3 flex md:hidden xl:flex row-span-3 flex-col gap-y-4 bg-${theme} p-5 rounded-3xl`}
           >
             <div
-              onMouseEnter={
-                !isMobile ? () => handleMouseEnter("quick-deposit") : undefined
-              }
-              onMouseLeave={!isMobile ? handleMouseLeave : undefined}
-              onFocus={isMobile ? handleFocus : undefined}
-              onBlur={isMobile ? handleBlur : undefined}
-              tabIndex={isMobile ? 0 : -1}
-              className={`flex-1 quick-deposit-component transition-all duration-300 ${
-                currentCandidate[0] === "quick-deposit"
-                  ? "bg-light/20 p-2 border-2 border-blue rounded-xl"
-                  : "bg-transparent p-0 border-2 border-transparent"
-              }`}
+              // onMouseEnter={
+              //   !isMobile ? () => handleMouseEnter("quick-deposit") : undefined
+              // }
+              // onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+              // onFocus={isMobile ? handleFocus : undefined}
+              // onBlur={isMobile ? handleBlur : undefined}
+              // tabIndex={isMobile ? 0 : -1}
+              className={`flex-1 quick-deposit-component transition-all duration-300 
+                 bg-transparent p-0 border-2 border-transparent
+              `}
             >
               <QuickDeposit refreshPendingRequests={refreshPendingRequests} />
             </div>
 
             <div
-              onMouseEnter={
-                !isMobile ? () => handleMouseEnter("last-deposit") : undefined
-              }
-              onMouseLeave={!isMobile ? handleMouseLeave : undefined}
-              onFocus={isMobile ? handleFocus : undefined}
-              onBlur={isMobile ? handleBlur : undefined}
-              tabIndex={isMobile ? 0 : -1}
-              className={`flex-1 last-deposit-component transition-all duration-300 ${
-                currentCandidate[0] === "last-deposit"
-                  ? "bg-light/20 p-2 border-2 border-blue rounded-xl"
-                  : "bg-transparent p-0 border-2 border-transparent"
-              }`}
+              // onMouseEnter={
+              //   !isMobile ? () => handleMouseEnter("last-deposit") : undefined
+              // }
+              // onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+              // onFocus={isMobile ? handleFocus : undefined}
+              // onBlur={isMobile ? handleBlur : undefined}
+              // tabIndex={isMobile ? 0 : -1}
+              className={`flex-1 last-deposit-component transition-all duration-300
+                 "bg-transparent p-0 border-2 border-transparent"
+              `}
             >
               <LastDeposit
                 refreshPendingRequests={refreshPendingRequests}
@@ -312,34 +310,26 @@ export default function Wallet() {
             </div>
           </div>
           <div
-            onMouseEnter={
-              !isMobile ? () => handleMouseEnter("balance") : undefined
-            }
-            onMouseLeave={!isMobile ? handleMouseLeave : undefined}
-            onFocus={isMobile ? handleFocus : undefined}
-            onBlur={isMobile ? handleBlur : undefined}
-            tabIndex={isMobile ? 0 : -1}
-            className={`h-72 col-span-12 xl:col-span-9 row-span-3  p-5 rounded-3xl md:rounded-r-none balance-component ${
-              currentCandidate[0] === "balance"
-                ? "bg-light/30 p-2 border-2 border-blue rounded-xl"
-                : `bg-${theme} p-0 border-2 border-transparent`
-            }`}
+            // onMouseEnter={
+            //   !isMobile ? () => handleMouseEnter("balance") : undefined
+            // }
+            // onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+            // onFocus={isMobile ? handleFocus : undefined}
+            // onBlur={isMobile ? handleBlur : undefined}
+            // tabIndex={isMobile ? 0 : -1}
+            className={`h-72 col-span-12 xl:col-span-9 row-span-3  p-5 rounded-3xl md:rounded-r-none balance-component bg-${theme} p-0 border-2 border-transparent`}
           >
             <Balance refreshPendingRequests={refreshPendingRequests} />
           </div>
           <div
-            onMouseEnter={
-              !isMobile ? () => handleMouseEnter("pending-request") : undefined
-            }
-            onMouseLeave={!isMobile ? handleMouseLeave : undefined}
-            onFocus={isMobile ? handleFocus : undefined}
-            onBlur={isMobile ? handleBlur : undefined}
-            tabIndex={isMobile ? 0 : -1}
-            className={`-mt-3 md:-mt-0 h-72 col-span-12 row-span-3 pending-requests-component ${
-              currentCandidate[0] === "pending-request"
-                ? "bg-light/30 p-2 border-2 border-blue rounded-xl"
-                : `bg-${theme} p-5 rounded-3xl md:rounded-r-none pb-10 `
-            }`}
+            // onMouseEnter={
+            //   !isMobile ? () => handleMouseEnter("pending-request") : undefined
+            // }
+            // onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+            // onFocus={isMobile ? handleFocus : undefined}
+            // onBlur={isMobile ? handleBlur : undefined}
+            // tabIndex={isMobile ? 0 : -1}
+            className={`-mt-3 md:-mt-0 h-72 col-span-12 row-span-3 pending-requests-component bg-${theme} p-5 rounded-3xl md:rounded-r-none pb-10`}
           >
             <PendingRequests
               refreshPendingRequests={refreshPendingRequests}
