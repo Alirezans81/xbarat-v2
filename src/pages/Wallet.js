@@ -14,9 +14,7 @@ import { useUserState } from "../Providers/UserProvider";
 import SecurityGuidline from "../components/modals/SecurityGuidline";
 import { useWalletState } from "../Providers/WalletProvider";
 import { isMobile } from "react-device-detect";
-// import { useLocation, useNavigation } from "react-router-dom";
-// import { useModalDataSetState } from "../Providers/ModalDataProvider";
-// import TransactionModal from "../components/modals/TransactionModal";
+import useCandidateGuide from "../hooks/useCandidateGuide";
 import CustomAvatarGuide from "../components/common/CustomAvatarGuide";
 import Joyride from "react-joyride";
 import CustomBeacon from "../components/common/Tour/CustomBeacon";
@@ -31,7 +29,7 @@ export default function Wallet() {
   const token = useTokenState();
   const wallet = useWalletState();
   const [runTour, setRunTour] = useState(true);
-  const [currentCandidate, setCurrentCandidate] = useState([]);
+  // const [currentCandidate, setCurrentCandidate] = useState([]);
 
   const candidateComponents = {
     mobile: [
@@ -119,6 +117,17 @@ export default function Wallet() {
       },
     ],
   };
+  const {
+    showGuide,
+    currentCandidate,
+    handleMouseEnter,
+    handleFocus,
+    handleMouseLeave,
+    handleBlur,
+    setCurrentCandidate,
+    hideGuide,
+  } = useCandidateGuide(candidateComponents, isMobile);
+
   const setIsLoadingSplashScreen = useIsLoadingSplashScreenSetState();
 
   const { getPendingRequests, isLoading: getPendingRequestsIsLoading } =
@@ -189,52 +198,6 @@ export default function Wallet() {
             placement: "top",
           },
         ];
-
-  const timeoutRef = useRef(null);
-  const [showGuide, setShowGuide] = useState(false);
-
-  const findComponentByKey = (key) => {
-    const allComponents = isMobile
-      ? [...candidateComponents.mobile]
-      : [...candidateComponents.desktop];
-
-    return allComponents.find((item) => item.key === key)?.component || null;
-  };
-
-  const handleMouseEnter = (candidate) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    timeoutRef.current = setTimeout(() => {
-      const temp = findComponentByKey(candidate);
-      setCurrentCandidate([candidate, temp]);
-      setShowGuide(true);
-    }, 2000);
-  };
-
-  const handleMouseLeave = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-  };
-
-  const handleFocus = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-
-    timeoutRef.current = setTimeout(() => {
-      setCurrentCandidate("quick-deposit-mobile");
-    }, 2000);
-  };
-
-  const handleBlur = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-  };
 
   return (
     <>
