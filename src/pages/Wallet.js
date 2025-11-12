@@ -286,16 +286,14 @@ export default function Wallet() {
             </div>
 
             <div
-              // onMouseEnter={
-              //   !isMobile ? () => handleMouseEnter("last-deposit") : undefined
-              // }
-              // onMouseLeave={!isMobile ? handleMouseLeave : undefined}
-              // onFocus={isMobile ? handleFocus : undefined}
-              // onBlur={isMobile ? handleBlur : undefined}
-              // tabIndex={isMobile ? 0 : -1}
-              className={`flex-1 last-deposit-component transition-all duration-300
-                 "bg-transparent p-0 border-2 border-transparent"
-              `}
+            // onMouseEnter={
+            //   !isMobile ? () => handleMouseEnter("last-deposit") : undefined
+            // }
+            // onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+            // onFocus={isMobile ? handleFocus : undefined}
+            // onBlur={isMobile ? handleBlur : undefined}
+            // tabIndex={isMobile ? 0 : -1}
+            // className={`flex-1 last-deposit-component transition-all duration-300`}
             >
               <LastDeposit
                 refreshPendingRequests={refreshPendingRequests}
