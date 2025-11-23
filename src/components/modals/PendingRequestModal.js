@@ -92,10 +92,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
   const method = transaction.method;
 
   let timeout;
-  const tempTimeOut =
-    transaction.temporary_receiver_address.split(",").length > 2
-      ? transaction.temporary_receiver_address.split(",").length * 6
-      : 15;
+  const tempTimeOut = 1440;
   if (method === "Bank") {
     timeout = new Date(transaction.datetime_assign);
     timeout.setMinutes(
@@ -156,7 +153,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
           currency: transaction.currency_slug,
         },
         (walletTanks) => {
-          if (method === "Bank") {
+          if (method === "user") {
             const temp = temporaryRecieverAddress.split(",").map((entry) => {
               const [bank_info, amount, account_name, bank_name] =
                 entry.split(":");
@@ -226,11 +223,15 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
   };
 
   useEffect(() => {
-    receiverTanks.length === 1 && setSelectedWalletTank(0);
+    (receiverTanks.length === 1 || method === "user") &&
+      setSelectedWalletTank(0);
   }, [receiverTanks]);
 
   useEffect(() => {
-    if (singleImage.length === temporaryRecieverAddress.split(",").length) {
+    if (
+      temporaryRecieverAddress &&
+      singleImage.length === temporaryRecieverAddress.split(",").length
+    ) {
       handleLayoutDocument();
     }
   }, [singleImage]);
@@ -285,7 +286,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
           <div className="flex flex-col gap-y-2 mb-5">
             <span
               className={
-                method !== "Bank"
+                method !== "user"
                   ? `text-yellow text-xl font-${font}-regular text-center`
                   : "hidden"
               }
@@ -318,7 +319,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               </span>
             </div>
             <div
-              className={method !== "Bank" ? "w-full flex relative" : "hidden"}
+              className={method !== "user" ? "w-full flex relative" : "hidden"}
             >
               <CustomDropdown
                 label={
@@ -447,7 +448,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               </div>
               <div
                 className={
-                  method === "Bank"
+                  method === "user"
                     ? `w-full flex flex-col justify-start items-center bg-${theme}-back rounded-2xl md:p-3 mt-3 md:mt-0 gap-y-3 max-h-56 overflow-y-scroll`
                     : "hidden"
                 }
@@ -506,7 +507,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               </div>
             </div>
 
-            {method !== "Bank" &&
+            {method !== "user" &&
               receiverTanks[selectedWalletTank] &&
               receiverTanks[selectedWalletTank].description &&
               lang[receiverTanks[selectedWalletTank].description] && (
@@ -517,8 +518,8 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                 </span>
               )}
 
-            {method !== "Bank" && <CustomUploader setImage={setDocument} />}
-            {method !== "Bank" &&
+            {method !== "user" && <CustomUploader setImage={setDocument} />}
+            {method !== "user" &&
               receiverTanks[selectedWalletTank] &&
               receiverTanks[selectedWalletTank]
                 .wallet_tank_bank_info_image_url && (
@@ -569,13 +570,13 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
         {transaction && transaction.status_title === "Upload Document" && (
           <SubmitButton
             disabled={
-              !(transaction && transaction.url && document && method === "Bank"
+              !(transaction && transaction.url && document && method === "user"
                 ? receiverTanks[0]
                 : receiverTanks[selectedWalletTank])
             }
             onClick={() => {
               if (
-                transaction && transaction.url && document && method === "Bank"
+                transaction && transaction.url && document && method === "user"
                   ? receiverTanks[0]
                   : receiverTanks[selectedWalletTank]
               ) {
@@ -584,7 +585,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                   {
                     document,
                     wallet_tank_receiver:
-                      method === "Bank"
+                      method === "user"
                         ? receiverTanks[0].url
                         : receiverTanks[selectedWalletTank].url,
                     status: statuses

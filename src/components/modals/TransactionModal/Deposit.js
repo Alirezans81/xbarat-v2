@@ -110,7 +110,7 @@ export default function Deposit({
   };
   return (
     <Formik
-      initialValues={{ amount: amount || "", method: "Paypal" }}
+      initialValues={{ amount: amount || "", method: "" }}
       onSubmit={(values) => {
         if (checkAmount(+removeComma(values.amount))) {
           if (
@@ -167,7 +167,13 @@ export default function Deposit({
         }
       }}
     >
-      {({ handleChange, handleBlur, handleSubmit, values, setFieldValue }) => (
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        //setFieldValue
+      }) => (
         <div className="flex flex-col">
           <div className="flex-1 w-full flex flex-col gap-y-2 mt-5">
             <span className={`font-${font}-regular text-${oppositeTheme}`}>
@@ -309,15 +315,15 @@ export default function Deposit({
               />
             </div>
           </div>
-
-          {/* Payment Mehod */}
+          {/*
+          // Payment Mehod
           <span className={`font-${font}-regular text-${oppositeTheme} mt-5`}>
-            Payment Method
+            {lang["payment-method"]}
           </span>
           <div
             className={`mt-2 w-full h-fit flex justify-between items-center relative bg-transparent max-w-md mx-auto bg-${theme}-back rounded-lg`}
           >
-            {/* Sliding Background */}
+            // Sliding Background
             <div
               className="absolute top-0 left-0  w-1/2 h-full rounded-xl transition-all duration-500 bg-blue-gradient z-0"
               style={{
@@ -328,13 +334,13 @@ export default function Deposit({
               }}
             />
 
-            {/* Buttons */}
+            // Buttons 
             <div className="flex w-full relative z-10">
               <button
                 onClick={() => setFieldValue("method", "Paypal")}
                 className={`w-1/2 py-1 text-center rounded-xl transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
               >
-                Paypal Deposit
+                {lang["paypal"]}
               </button>
 
               <button
@@ -347,11 +353,11 @@ export default function Deposit({
                 onClick={() => setFieldValue("method", "Bank")}
                 className={`w-1/2 py-1 rounded-xl text-center transition-all duration-500 font-${font}-regular text-${oppositeTheme}`}
               >
-                Bank Deposit
+                {lang["bank"]}
               </button>
             </div>
           </div>
-
+          */}
           <div className="mt-5">
             <SubmitButton
               onClick={handleSubmit}

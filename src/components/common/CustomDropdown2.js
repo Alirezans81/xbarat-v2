@@ -3,7 +3,7 @@ import React from "react";
 import { useThemeState } from "../../Providers/ThemeProvider";
 import { useFontState } from "../../Providers/FontProvider";
 
-const customTheme = {
+const customThemeFit = {
   arrowIcon: "ml-2 h-4 w-4",
   content: "",
   floating: {
@@ -36,8 +36,47 @@ const customTheme = {
   },
   inlineWrapper: "flex items-center",
 };
+const customThemeFull = {
+  arrowIcon: "ml-2 h-4 w-4",
+  content: "",
+  floating: {
+    animation: "transition-opacity",
+    arrow: {
+      base: "z-10 h-2 w-2 rotate-45",
+      style: {
+        dark: "bg-gray-900 dark:bg-gray-700",
+        light: "bg-white",
+        auto: "bg-white dark:bg-gray-700",
+      },
+      placement: "-20px",
+    },
+    base: "z-10 w-fit rounded divide-y divide-gray-100 shadow focus:outline-none",
+    content: "py-1 text-sm text-gray-700 dark:text-gray-200",
+    divider: "my-1 h-px bg-gray-100 dark:bg-gray-600",
+    header: "block py-2 px-4 text-sm text-gray-700 dark:text-gray-200",
+    hidden: "invisible opacity-0",
+    item: {
+      container: "",
+      base: "flex items-center justify-center py-2 px-4 text-sm cursor-pointer w-full ",
+      icon: "mr-2 h-4 w-4",
+    },
+    style: {
+      dark: "bg-gray-900 text-white dark:bg-gray-700",
+      light: "border border-gray-200 bg-white text-gray-900",
+      auto: "border border-gray-200 bg-white text-gray-900 dark:border-none dark:bg-gray-700 dark:text-white",
+    },
+    target: "w-full",
+  },
+  inlineWrapper: "flex items-center",
+};
 
-function CustomDropdown2({ children, label, className, disabled }) {
+function CustomDropdown2({
+  children,
+  label,
+  className,
+  disabled,
+  customTarget = "fit",
+}) {
   const theme = useThemeState();
   const buttonStyle =
     theme === "dark"
@@ -55,7 +94,7 @@ function CustomDropdown2({ children, label, className, disabled }) {
           flex: 1,
           minWidth: 0,
         };
-
+  const customTheme = customTarget === "fit" ? customThemeFit : customThemeFull;
   return (
     <Dropdown
       theme={customTheme}
@@ -78,6 +117,7 @@ function CustomItem2({ children, className, onClick }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   const font = useFontState();
+  const customTheme = customThemeFit;
 
   return (
     <Dropdown.Item
@@ -88,7 +128,9 @@ function CustomItem2({ children, className, onClick }) {
         ` text-${oppositeTheme} bg-${theme} bg-${theme}-hover border-gray`
       }
     >
-      <div className={`w-full font-${font}-regular pt-1.5 text-${oppositeTheme}`}>
+      <div
+        className={`w-full font-${font}-regular pt-1.5 text-${oppositeTheme}`}
+      >
         {children}
       </div>
     </Dropdown.Item>

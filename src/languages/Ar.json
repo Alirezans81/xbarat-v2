@@ -76,6 +76,8 @@
   "last-name": "الاسم الأخير",
   "phone": "الهاتف",
   "address": "العنوان",
+  "referral-added": "تم التسجيل",
+  "referral-exchanged": "تم التبادل",
   "change-password": "تغيير كلمة المرور",
   "phone-number": "رقم الهاتف",
   "nationality": "الجنسية",
@@ -221,6 +223,7 @@
   "successful-signup-2nd": "يرجى محاولة تسجيل الدخول الآن",
   "email-exsit-error": "البريد الإلكتروني موجود",
   "amount-input-max-button-label": "الحد الأقصى",
+  "max": "الحد الأقصى",
   "add-card": "إضافة بطاقة",
   "complete-profile-toast-message": "يرجى إكمال معلومات ملفك الشخصي للعمل مع المنصة بشكل صحيح",
   "file-too-big-toast-message": "الصورة كبيرة جدًا (يجب أن تكون أقل من 4 ميجابايت)",
@@ -673,6 +676,7 @@
   "exchanged-at": "تاريخ التبادل",
   "total-benefit": "إجمالي الفائدة",
   "start": "بداية",
+  "guide": "مرشد",
   "end": "نهاية",
   "events": "الفعاليات",
   "register": "تسجيل",
@@ -691,6 +695,9 @@
   "deposit-secret-code": "رمز المعاملة",
   "deposit-secret-code-message": "يجب عليك إدخال هذا الرمز في قسم الملاحظات في معاملتك.",
   "copy-link": "نسخ الرابط",
+  "bank": "بنك",
+  "paypal": "باي بال",
+  "payment-method": "طريقة الدفع",
   "security-guidline": [
     {
       "one": "عزيزي المستخدمين، يرجى الانتباه إلى نصائح الأمان التالية:"
