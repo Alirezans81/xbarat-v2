@@ -76,6 +76,8 @@
   "last-name": "Last Name",
   "phone": "Phone",
   "address": "Address",
+  "referral-added": "Registered",
+  "referral-exchanged": "Exchanged",
   "change-password": "Change Password",
   "phone-number": "Phone Number",
   "nationality": "Nationality",

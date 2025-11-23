@@ -76,6 +76,8 @@
   "last-name": "الاسم الأخير",
   "phone": "الهاتف",
   "address": "العنوان",
+  "referral-added": "تم التسجيل",
+  "referral-exchanged": "تم التبادل",
   "change-password": "تغيير كلمة المرور",
   "phone-number": "رقم الهاتف",
   "nationality": "الجنسية",
