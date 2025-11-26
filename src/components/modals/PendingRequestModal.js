@@ -335,7 +335,9 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               </span>
             </div>
             <div
-              className={method !== "Bank" ? "w-full flex relative" : "hidden"}
+              className={
+                method === "xbarat" ? "w-full flex relative" : "hidden"
+              }
             >
               <CustomDropdown
                 label={
