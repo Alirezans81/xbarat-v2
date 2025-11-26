@@ -11,6 +11,7 @@ import { useFontState } from "../../../../../Providers/FontProvider";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import prod from "../../../../../apis/api";
 import dev from "../../../../../apis/api-dev";
+import DirectionSetter from "../../../../../functions/DirectionSetter";
 import { CustomTooltip } from "../../../../common/CustomTooltip";
 const api = process.env.REACT_APP_MODE === "DEVELOPMENT" ? dev() : prod();
 
@@ -21,7 +22,7 @@ export default function Personalnfo({ userInfo }) {
   const font = useFontState();
   const [canEdit, setCanEdit] = useState();
   const formikRef = useRef();
-
+  const direction = DirectionSetter(font);
   useEffect(() => {
     if (!canEdit) {
       formikRef.current?.resetForm();
@@ -32,6 +33,10 @@ export default function Personalnfo({ userInfo }) {
   const updatePhoneMine = (values) => {
     updatePhone({ phone: values && values.phone ? values.phone : "" });
   };
+  const textInvite1 =
+    "من مدتیه دارم پول‌هامو با ایکس‌برات منتقل می‌کنم،\n۱. کارمزداش فقط ۱ درصده،\n۲. کار کردن با سایتش خیلی راحته،\n۳. معمولا زیر ۲۴ ساعت پولو برام جابه‌جا می‌کنه.\n\nاگه با کد من وارد بشی، اولین معامله‌ت بدون کارمزده.\nاگه با کد من وارد بشی، اولین معامله‌ت بدون کارمزده.\nاینم کد رفرال من:\n";
+  const ref = userInfo && userInfo.referral_code ? userInfo.referral_code : "";
+  const invite = textInvite1 + ref;
 
   const setModalData = useModalDataSetState();
   const openOTPCodeModal = () => {
@@ -129,7 +134,7 @@ export default function Personalnfo({ userInfo }) {
               <span className={`text-gray font-${font}-regular`}>
                 {lang["referral-code"]}
               </span>
-              <div className={`flex items-center gap-x-3`}>
+              <div className="flex items-center gap-x-3">
                 <div className="flex">
                   <span
                     className={`flex items-center font-${font}-regular border-2 border-dashed border-gray rounded-full w-fit px-3 mt-1 text-${oppositeTheme}`}
@@ -149,13 +154,112 @@ export default function Personalnfo({ userInfo }) {
                     />
                   </span>
                 </div>
-                <div
-                  className={`flex flex-col text-sm font-${font}-regular text-${oppositeTheme} -mb-1`}
-                >
-                  <span>{lang['referral-added'] + ": " +  userInfo.signup_referrals.count}</span>
-                  <span>
-                    {lang['referral-exchanged'] + ": " + userInfo.exchange_only_referrals.count}
+                <div className="">
+                  <CustomTooltip
+                    trigger="click"
+                    placement="top"
+                    style={oppositeTheme}
+                    content={
+                      api["sign-up"] +
+                      "?referral=" +
+                      (userInfo ? userInfo.referral_code : "") +
+                      " " +
+                      lang["copied"] +
+                      "!"
+                    }
+                    className={`font-${font}-bold pt-2.5`}
+                  >
+                    <CopyToClipboard
+                      text={
+                        api["sign-up"] +
+                        "?referral=" +
+                        (userInfo ? userInfo.referral_code : "")
+                      }
+                    >
+                      <button>
+                        <span className="text-blue w-fit">
+                          {lang["copy-link"]}
+                        </span>
+                      </button>
+                    </CopyToClipboard>
+                  </CustomTooltip>
+                </div>
+              </div>
+            </div>
+
+            {/* Invite Text, Code */}
+            <div
+              dir={direction}
+              className={`bg-${theme} p-5 col-span-2 rounded-2xl mt-3 row-span-1 flex flex-col`}
+            >
+              <span
+                className={` w-full flex ${
+                  direction === "rtl" ? "justify-end" : "justify-start"
+                } text-gray font-${font}-regular`}
+              >
+                {lang["referral-code"]}
+              </span>
+              <div className="flex items-center gap-x-3 flex-col">
+                <div className="flex">
+                  <span
+                    className={`flex items-center font-${font}-regular rounded-full w-fit px-3 mt-1 text-${oppositeTheme}`}
+                  >
+                    <span dir={direction} className={`text-start pt-1.5 pb-1`}>
+                      <span className="w-full text-start text-lg">
+                        من مدتیه دارم پول‌هامو با ایکس‌برات منتقل می‌کنم،
+                      </span>
+                      <br />
+                      <span className="w-full text-start text-lg">چون</span>
+                      <br />
+                      <span className="w-full text-start text-lg">
+                        ۱. کارمزداش فقط ۱ درصده،
+                      </span>
+                      <br />
+                      <span className="w-full text-start text-lg">
+                        ۲. کار کردن با سایتش خیلی راحته،
+                      </span>
+                      <br />
+                      <span className="w-full text-start text-lg">
+                        ۳. معمولا زیر ۲۴ ساعت پولو برام جابه‌جا می‌کنه.
+                      </span>
+                      <br />
+                      <br />
+                      <span className="w-full text-start text-lg">
+                        اگه با کد من وارد بشی، اولین معامله‌ت بدون کارمزده.
+                      </span>
+                      <br />
+                      <span className="w-full text-start text-lg">
+                        اینم کد رفرال من:
+                      </span>
+                      <br />
+                      <span className="text-yellow-400 text-2xl">
+                        {userInfo && userInfo.referral_code
+                          ? userInfo.referral_code
+                          : ""}
+                      </span>
+                    </span>
                   </span>
+                </div>
+                <div className="">
+                  <CustomTooltip
+                    trigger="click"
+                    placement="top"
+                    style={oppositeTheme}
+                    content={
+                      <span dir={direction}>
+                        {lang["copied"]} <span>!</span>
+                      </span>
+                    }
+                    className={`font-${font}-bold pt-2.5`}
+                  >
+                    <CopyToClipboard text={invite}>
+                      <button>
+                        <span className="text-blue w-fit">
+                          {lang["copy-link"]}
+                        </span>
+                      </button>
+                    </CopyToClipboard>
+                  </CustomTooltip>
                 </div>
               </div>
             </div>
