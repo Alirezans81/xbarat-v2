@@ -309,7 +309,7 @@ export default function Layout({ platform }) {
 
   const blackFridayModal = () => {
     setModalData({
-      title: "Black Friday 🥳",
+      title: "کمپین سال صفر",
       children: <BlackFridayModal />,
       canClose: true,
       isOpen: true,

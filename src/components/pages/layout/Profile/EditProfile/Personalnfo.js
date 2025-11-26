@@ -33,7 +33,14 @@ export default function Personalnfo({ userInfo }) {
   const updatePhoneMine = (values) => {
     updatePhone({ phone: values && values.phone ? values.phone : "" });
   };
-  const inv = lang["invite-text"];
+  const inv = [
+    "من مدتیه دارم پول‌هامو با ایکس‌برات منتقل می‌کنم،",
+    "۱. کارمزداش فقط ۱ درصده،",
+    "۲. کار کردن با سایتش خیلی راحته،",
+    "۳. معمولا زیر ۲۴ ساعت پولو برام جابه‌جا می‌کنه.",
+    "اگه با کد من وارد بشی، اولین معامله‌ت بدون کارمزده.",
+    "اینم کد رفرال من:",
+  ];
   const textInvite1 =
     inv[0] +
     "\n" +
@@ -214,9 +221,9 @@ export default function Personalnfo({ userInfo }) {
               <div className="flex items-center gap-x-3 flex-col">
                 <div className="flex">
                   <span
-                    className={`flex items-center font-${font}-regular rounded-full w-fit px-3 mt-1 text-${oppositeTheme}`}
+                    className={`flex items-center font-Fa-regular rounded-full w-fit px-3 mt-1 text-${oppositeTheme}`}
                   >
-                    <span dir={direction} className={`text-start pt-1.5 pb-1`}>
+                    <span dir="rtl" className={`text-start pt-1.5 pb-1`}>
                       <span className="w-full text-start text-lg">
                         من مدتیه دارم پول‌هامو با ایکس‌برات منتقل می‌کنم،
                       </span>

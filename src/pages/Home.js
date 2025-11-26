@@ -221,11 +221,11 @@ export default function Home({ isDemo, platform }) {
           onClick={() => setRunTour(true)}
           className={`${
             runTour ? "hidden" : ""
-          } font-${font}-regular fixed top-24 right-6 bg-blue  text-white px-4 pb-1 pt-2 rounded-full shadow-lg z-[9999]`}
+          } font-${font}-regular fixed top-24 right-6 bg-blue  text-white px-4 pb-1 pt-2 rounded-full shadow-lg z-30`}
         >
           {lang["start"] + " " + lang["guide"]}
         </button>
-        <Joyride
+        {/* <Joyride
           steps={steps}
           key={runTour}
           run={runTour}
@@ -262,7 +262,7 @@ export default function Home({ isDemo, platform }) {
               setRunTour(false);
             }
           }}
-        />
+        /> */}
         {window.innerWidth >= canSwitchPageModeWidth && (
           <div className={`fixed left-4 ${isDemo ? "bottom-32" : "bottom-60"}`}>
             <button
