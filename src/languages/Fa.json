@@ -72,6 +72,8 @@
   "last-name": "نام خانوادگی",
   "phone": "شماره تلفن",
   "address": "آدرس",
+  "referral-added": "ثبت نام شده",
+  "referral-exchanged": "معامله داشته",
   "change-password": "تغییر گذرواژه",
   "phone-number": "شماره تلفن",
   "nationality": "ملیت",

@@ -129,7 +129,7 @@ export default function Personalnfo({ userInfo }) {
               <span className={`text-gray font-${font}-regular`}>
                 {lang["referral-code"]}
               </span>
-              <div className="flex items-center gap-x-3">
+              <div className={`flex items-center gap-x-3`}>
                 <div className="flex">
                   <span
                     className={`flex items-center font-${font}-regular border-2 border-dashed border-gray rounded-full w-fit px-3 mt-1 text-${oppositeTheme}`}
@@ -149,35 +149,13 @@ export default function Personalnfo({ userInfo }) {
                     />
                   </span>
                 </div>
-                <div className="">
-                  <CustomTooltip
-                    trigger="click"
-                    placement="top"
-                    style={oppositeTheme}
-                    content={
-                      api["sign-up"] +
-                      "?referral=" +
-                      (userInfo ? userInfo.referral_code : "") +
-                      " " +
-                      lang["copied"] +
-                      "!"
-                    }
-                    className={`font-${font}-bold pt-2.5`}
-                  >
-                    <CopyToClipboard
-                      text={
-                        api["sign-up"] +
-                        "?referral=" +
-                        (userInfo ? userInfo.referral_code : "")
-                      }
-                    >
-                      <button>
-                        <span className="text-blue w-fit">
-                          {lang["copy-link"]}
-                        </span>
-                      </button>
-                    </CopyToClipboard>
-                  </CustomTooltip>
+                <div
+                  className={`flex flex-col text-sm font-${font}-regular text-${oppositeTheme} -mb-1`}
+                >
+                  <span>{lang['referral-added'] + ": " +  userInfo.signup_referrals.count}</span>
+                  <span>
+                    {lang['referral-exchanged'] + ": " + userInfo.exchange_only_referrals.count}
+                  </span>
                 </div>
               </div>
             </div>

@@ -72,6 +72,8 @@
   "last-name": "Apellido",
   "phone": "Número de teléfono",
   "address": "Dirección",
+  "referral-added": "Registrado",
+  "referral-exchanged": "Intercambiado",
   "change-password": "Cambiar contraseña",
   "phone-number": "Número de teléfono",
   "nationality": "Nacionalidad",

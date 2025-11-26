@@ -226,11 +226,15 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
   };
 
   useEffect(() => {
-    receiverTanks.length === 1 && setSelectedWalletTank(0);
+    (receiverTanks.length === 1 || method === "user") &&
+      setSelectedWalletTank(0);
   }, [receiverTanks]);
 
   useEffect(() => {
-    if (singleImage.length === temporaryRecieverAddress.split(",").length) {
+    if (
+      temporaryRecieverAddress &&
+      singleImage.length === temporaryRecieverAddress.split(",").length
+    ) {
       handleLayoutDocument();
     }
   }, [singleImage]);
@@ -331,9 +335,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
               </span>
             </div>
             <div
-              className={
-                method === "xbarat" ? "w-full flex relative" : "hidden"
-              }
+              className={method !== "Bank" ? "w-full flex relative" : "hidden"}
             >
               <CustomDropdown
                 label={
