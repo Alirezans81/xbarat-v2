@@ -52,6 +52,7 @@ import X from "../Images/pages/layout/X.png";
 import Facebook from "../Images/pages/layout/Facebook.png";
 import BlackFridayModal from "../components/modals/BlackFridayModal";
 import { CustomTooltip } from "../components/common/CustomTooltip";
+import { useModalDataClose } from "../Providers/ModalDataProvider";
 export default function Layout({ platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
@@ -295,6 +296,7 @@ export default function Layout({ platform }) {
       });
     }
   }, [newOpenNumber]);
+  const closeModal = useModalDataClose();
   const freeExchangeModal = () => {
     setModalData({
       title: "🥳",
@@ -309,9 +311,11 @@ export default function Layout({ platform }) {
 
   const blackFridayModal = () => {
     setModalData({
-      title: "کمپین سال صفر",
-      children: <BlackFridayModal />,
-      canClose: true,
+      title: (
+        <span className="w-full h-full font-Fa-regular">کمپین سال صفر</span>
+      ),
+      children: <BlackFridayModal closeModal={closeModal} />,
+      canClose: false,
       isOpen: true,
     });
   };
