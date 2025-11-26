@@ -33,8 +33,20 @@ export default function Personalnfo({ userInfo }) {
   const updatePhoneMine = (values) => {
     updatePhone({ phone: values && values.phone ? values.phone : "" });
   };
+  const inv = lang["invite-text"];
   const textInvite1 =
-    "من مدتیه دارم پول‌هامو با ایکس‌برات منتقل می‌کنم،\n۱. کارمزداش فقط ۱ درصده،\n۲. کار کردن با سایتش خیلی راحته،\n۳. معمولا زیر ۲۴ ساعت پولو برام جابه‌جا می‌کنه.\n\nاگه با کد من وارد بشی، اولین معامله‌ت بدون کارمزده.\nاگه با کد من وارد بشی، اولین معامله‌ت بدون کارمزده.\nاینم کد رفرال من:\n";
+    inv[0] +
+    "\n" +
+    inv[1] +
+    "\n" +
+    inv[2] +
+    "\n" +
+    "\n" +
+    inv[3] +
+    "\n" +
+    inv[4] +
+    "\n" +
+    inv[5];
   const ref = userInfo && userInfo.referral_code ? userInfo.referral_code : "";
   const invite = textInvite1 + ref;
 

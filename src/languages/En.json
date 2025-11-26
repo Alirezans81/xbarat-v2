@@ -672,6 +672,14 @@
   "ticket-notif-new-message-desc-3rd": "",
   "referrals": "Referrals",
   "referral": "Referral",
+  "invite-text": [
+    "I’ve been transferring my money with XBrat for a while now,",
+    "1. The fees are only 1%,",
+    "2. Using their website is very easy,",
+    "3. It usually transfers the money for me in under 24 hours.",
+    "If you sign up with my code, your first transaction will be fee-free.",
+    "Here is my referral code:"
+  ],
   "full-name": "Full Name",
   "registered-at": "Registered At",
   "exchanged-at": "Exchanged At",

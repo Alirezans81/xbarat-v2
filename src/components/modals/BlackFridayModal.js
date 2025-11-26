@@ -13,7 +13,11 @@ const BlackFridayModal = () => {
   return (
     <div className="w-full h-full flex flex-col">
       <div className="absolute -z-10 w-screen h-screen top-0 left-0">
-        <Confetti width={window.innerWidth} height={window.innerHeight} />
+        <Confetti
+          colors={["#E42F08", "#FCB819"]}
+          width={window.innerWidth}
+          height={window.innerHeight}
+        />
       </div>
     </div>
   );
