@@ -9,8 +9,8 @@ const BlackFridayModal = ({ closeModal }) => {
   const theme = useThemeState();
   const font = useFontState();
   const photo = isMobile
-    ? require("../../Images/blackFridayXS.png")
-    : require("../../Images/blackFridayMD.png");
+    ? require("../../Images/blackFridayXS.webp")
+    : require("../../Images/blackFridayMD.webp");
   const oppositeTheme = theme === "dark" ? "light" : "dark";
   return (
     <div className="w-full h-full flex flex-col">
@@ -38,9 +38,22 @@ const BlackFridayModal = ({ closeModal }) => {
           dir="rtl"
           className="w-full h-fit flex text-xl text-white  text-start"
         >
-          برای بلک فرایدی تصمیم گرفتیم یک کار بزرگ وخاص انجام بدیم: ۵ نفر در
-          ایکس برات، یک سال کامل هیچ کارمزدی پرداخت نمی‌کنن!!! کارمزد صفر میشه؛
-          یعنی همون یک درصد هم حذف میشه.
+          بلک‌فرایدی ایکس برات شروع شد.🥳
+          <br />
+          کمپین سال صفر ـــ ۵ تا ۱۰ آذر🎯
+          <br />
+          در این طرح فوق العاده، ۵ کاربر به مدت یک سال از پرداخت هرگونه کارمزد
+          معاف خواهند بود وکارمزد ۱ درصد برای آن ها کاملا صفر می‌شود.🤝
+          <br />
+          با توجه به حجم بالای ترامنش بسیاری از کاربران، حذف کارمزد می‌تواند
+          موجب صرفه‌جویی مالی قابل توجهی شود؛ از حدود ۱۰۰ میلیون تا نزدیک به یک
+          میلیارد تومان در طول یک سال!📈
+          <br />
+          شرایط ورود به قرعه کشی:
+          <br />
+          انجام حداقل یک تراکنش در تاریخ ۵ تا ۱۰ آذر (حتی با مبلغ ۱۰ دلار)
+          <br />
+          اسامی برندگان در تاریخ ۱۱ آذر
         </span>
       </div>
       <div
