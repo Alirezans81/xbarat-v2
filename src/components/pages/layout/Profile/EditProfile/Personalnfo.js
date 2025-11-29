@@ -103,7 +103,7 @@ export default function Personalnfo({ userInfo }) {
                 />
               ) : (
                 <span
-                  className={`font-${font}-regular -mt-1 text-${oppositeTheme}`}
+                  className={`font-${font}-regular -mt-1 text-${oppositeTheme} overflow-x-scroll`}
                 >
                   {userInfo && userInfo.email ? userInfo.email : ""}
                 </span>
@@ -149,59 +149,41 @@ export default function Personalnfo({ userInfo }) {
                 </span>
               )}
             </div>
-            <div className="col-span-2 md:col-span-1 row-span-1 flex flex-col">
+            <div className="col-span-2 lg:col-span-1 row-span-1 flex flex-col">
               <span className={`text-gray font-${font}-regular`}>
                 {lang["referral-code"]}
               </span>
-              <div className="flex items-center gap-x-3">
-                <div className="flex">
-                  <span
-                    className={`flex items-center font-${font}-regular border-2 border-dashed border-gray rounded-full w-fit px-3 mt-1 text-${oppositeTheme}`}
-                  >
-                    <span className="pt-1.5 pb-1">
-                      {userInfo && userInfo.referral_code
-                        ? userInfo.referral_code
-                        : ""}
-                    </span>
-                    <div className="h-full border border-gray border-dashed mx-2" />
-                    <CopyText
-                      text={
-                        userInfo && userInfo.referral_code
-                          ? userInfo.referral_code
-                          : ""
-                      }
-                    />
+              <div className="w-full flex flex-col justify-between">
+                <span
+                  className={`w-fit flex items-center font-${font}-regular border-2 border-dashed border-gray rounded-full w-fit px-3 mt-1 text-${oppositeTheme}`}
+                >
+                  <span className="pt-1.5 pb-1">
+                    {userInfo && userInfo.referral_code
+                      ? userInfo.referral_code
+                      : ""}
                   </span>
-                </div>
-                <div className="">
-                  <CustomTooltip
-                    trigger="click"
-                    placement="top"
-                    style={oppositeTheme}
-                    content={
-                      api["sign-up"] +
-                      "?referral=" +
-                      (userInfo ? userInfo.referral_code : "") +
-                      " " +
-                      lang["copied"] +
-                      "!"
+                  <div className="h-full border border-gray border-dashed mx-2" />
+                  <CopyText
+                    text={
+                      userInfo && userInfo.referral_code
+                        ? userInfo.referral_code
+                        : ""
                     }
-                    className={`font-${font}-bold pt-2.5`}
-                  >
-                    <CopyToClipboard
-                      text={
-                        api["sign-up"] +
-                        "?referral=" +
-                        (userInfo ? userInfo.referral_code : "")
-                      }
-                    >
-                      <button>
-                        <span className="text-blue w-fit">
-                          {lang["copy-link"]}
-                        </span>
-                      </button>
-                    </CopyToClipboard>
-                  </CustomTooltip>
+                  />
+                </span>
+                <div
+                  className={`flex flex-col text-sm font-${font}-regular text-${oppositeTheme} mt-1`}
+                >
+                  <span>
+                    {lang["referral-added"] +
+                      ": " +
+                      userInfo.signup_referrals.count}
+                  </span>
+                  <span>
+                    {lang["referral-exchanged"] +
+                      ": " +
+                      userInfo.exchange_only_referrals.count}
+                  </span>
                 </div>
               </div>
             </div>
