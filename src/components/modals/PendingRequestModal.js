@@ -356,7 +356,6 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                     : ""
                 }
               >
-                {console.log(receiverTanks[0])}
                 {receiverTanks.map((receiverTank, index) => {
                   if (index === 0 && index === receiverTanks.length - 1) {
                     return (
