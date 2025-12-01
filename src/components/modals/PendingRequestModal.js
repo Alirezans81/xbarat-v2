@@ -298,7 +298,7 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
             <span
               className={
                 method === "xbarat"
-                  ? `text-yellow text-xl font-${font}-regular text-center`
+                  ? `text-yellow text-xl font-${font}-regular text-center flex justify-center`
                   : "hidden"
               }
             >
@@ -361,20 +361,20 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                     return (
                       <CustomItem
                         key={index}
-                        className="rounded-xl"
+                        className="rounded-xl bg-red-500"
                         onClick={() => setSelectedWalletTank(index)}
                       >
                         <div
-                          className={`w-full h-full flex flex-row justify-center items-center gap-x-1`}
+                          className={`w-full h-full flex flex-col items-center gap-x-1`}
                         >
-                          <span className="w-fit min-w-32 h-full overflow-x-scroll">
+                          <span className="w-fit h-full overflow-x-scroll">
                             {receiverTank && receiverTank.wallet_tank_bank_name
                               ? receiverTank.wallet_tank_bank_name
                               : ""}
                           </span>
-                          <span className="w-fit min-w-24 max-w-40 py-2 h-full flex overflow-x-scroll">
+                          <span className="flex-1 w-full  px-2 py-2 h-full flex overflow-x-scroll">
                             {receiverTank && receiverTank.bank_info
-                              ? "( " + receiverTank.bank_info + " )"
+                              ? `${receiverTank.bank_info}`
                               : "error"}
                           </span>
                         </div>
@@ -384,12 +384,23 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                     return (
                       <CustomItem
                         key={index}
-                        className="rounded-t-xl"
+                        className="rounded-t-xl bg-red-500"
                         onClick={() => setSelectedWalletTank(index)}
                       >
-                        {receiverTank && receiverTank.bank_info
-                          ? receiverTank.bank_info
-                          : "error"}
+                        <div
+                          className={`w-full h-full flex flex-col items-start gap-x-1`}
+                        >
+                          <span className="w-fit h-full overflow-x-scroll">
+                            {receiverTank && receiverTank.wallet_tank_bank_name
+                              ? receiverTank.wallet_tank_bank_name
+                              : ""}
+                          </span>
+                          <span className="flex-1 w-full max-w-72 px-2 py-2 h-full flex overflow-x-scroll">
+                            {receiverTank && receiverTank.bank_info
+                              ? `${receiverTank.bank_info}`
+                              : "error"}
+                          </span>
+                        </div>
                       </CustomItem>
                     );
                   } else if (index === receiverTanks.length - 1) {
@@ -399,9 +410,20 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                         className="rounded-b-xl"
                         onClick={() => setSelectedWalletTank(index)}
                       >
-                        {receiverTank && receiverTank.bank_info
-                          ? receiverTank.bank_info
-                          : "error"}
+                        <div
+                          className={`w-full h-full flex flex-col items-start gap-x-1`}
+                        >
+                          <span className="w-fit h-full overflow-x-scroll">
+                            {receiverTank && receiverTank.wallet_tank_bank_name
+                              ? receiverTank.wallet_tank_bank_name
+                              : ""}
+                          </span>
+                          <span className="flex-1 w-full max-w-72 px-2 py-2 h-full flex overflow-x-scroll">
+                            {receiverTank && receiverTank.bank_info
+                              ? `${receiverTank.bank_info}`
+                              : "error"}
+                          </span>
+                        </div>
                       </CustomItem>
                     );
                   } else {
@@ -410,9 +432,20 @@ export default function PendingRequestModal({ refreshPendingRequests, data }) {
                         key={index}
                         onClick={() => setSelectedWalletTank(index)}
                       >
-                        {receiverTank && receiverTank.bank_info
-                          ? receiverTank.bank_info
-                          : "error"}
+                        <div
+                          className={`w-full h-full flex flex-col items-start gap-x-1`}
+                        >
+                          <span className="w-fit h-full overflow-x-scroll">
+                            {receiverTank && receiverTank.wallet_tank_bank_name
+                              ? receiverTank.wallet_tank_bank_name
+                              : ""}
+                          </span>
+                          <span className="flex-1 w-full max-w-72 px-2 py-2 h-full flex overflow-x-scroll">
+                            {receiverTank && receiverTank.bank_info
+                              ? `${receiverTank.bank_info}`
+                              : "error"}
+                          </span>
+                        </div>
                       </CustomItem>
                     );
                   }
