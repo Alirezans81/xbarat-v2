@@ -50,9 +50,7 @@ import Telegram from "../Images/pages/layout/Telegram.png";
 import Email from "../Images/pages/layout/Email.png";
 import X from "../Images/pages/layout/X.png";
 import Facebook from "../Images/pages/layout/Facebook.png";
-import BlackFridayModal from "../components/modals/BlackFridayModal";
 import { CustomTooltip } from "../components/common/CustomTooltip";
-import { useModalDataClose } from "../Providers/ModalDataProvider";
 export default function Layout({ platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
@@ -296,7 +294,6 @@ export default function Layout({ platform }) {
       });
     }
   }, [newOpenNumber]);
-  const closeModal = useModalDataClose();
   const freeExchangeModal = () => {
     setModalData({
       title: "🥳",
@@ -308,20 +305,6 @@ export default function Layout({ platform }) {
   useEffect(() => {
     if (user && !localStorage.getItem("freeExchangeShown")) freeExchangeModal();
   }, [user]);
-
-  const blackFridayModal = () => {
-    setModalData({
-      title: (
-        <span className="w-full h-full font-Fa-regular">کمپین سال صفر</span>
-      ),
-      children: <BlackFridayModal closeModal={closeModal} />,
-      canClose: false,
-      isOpen: true,
-    });
-  };
-  useEffect(() => {
-    blackFridayModal();
-  }, []);
 
   // This UseEffect Closes Expand Social Button When User clicks outisde of it
   useEffect(() => {
