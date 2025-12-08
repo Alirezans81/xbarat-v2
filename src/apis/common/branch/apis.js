@@ -12,7 +12,7 @@ const getBranches = (filtersObject, token) => {
   if (filtersObject) {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["branch"],
-      query: { limit, ...filtersObject, is_active: true },
+      query: { limit, ...filtersObject, is_active: true, is_deleted: false },
     });
 
     const headers = {
@@ -22,7 +22,7 @@ const getBranches = (filtersObject, token) => {
   } else {
     const urlWithQueries = queryString.stringifyUrl({
       url: api["branch"],
-      query: { limit, is_active: true },
+      query: { limit, is_active: true, is_deleted: false },
     });
 
     const headers = {
