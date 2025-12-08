@@ -16,9 +16,10 @@ export default function OtherExchangeCard({
   const { endComplete: endCompleteDirection } = useDirectionState();
   const addComma = useAddComma();
   const convertDateTime = useConvertDateTime();
-  const link = otherExchanges.filter(
-    (other) => other.title === data.exchange_title
-  );
+  const link =
+    otherExchanges !== undefined &&
+    otherExchanges.length !== 0 &&
+    otherExchanges.filter((other) => other.title === data.exchange_title);
 
   return (
     <div

@@ -73,24 +73,25 @@ export default function OtherExchanges({ selectedCurrecnyPair }) {
       {exchanges && exchanges.length ? (
         <div className="w-11/12 px-5 flex flex-col justify-center">
           <CustomSlider slidesToShow={1} slidesToScroll={1}>
-            {exchanges
-              .filter((exchange) =>
-                otherExchanges.some(
-                  (other) => other.title === exchange.exchange_title
+            {exchanges.length !== 0 &&
+              exchanges
+                .filter((exchange) =>
+                  otherExchanges.some(
+                    (other) => other.title === exchange.exchange_title
+                  )
                 )
-              )
-              .map((exchange, index) => (
-                <div
-                  key={index}
-                  className="flex justify-center items-center h-full px-4 mt-2.5"
-                >
-                  <OtherExchangeCard
-                    selectedCurrecnyPair={selectedCurrecnyPair}
-                    data={exchange}
-                    otherExchanges={otherExchanges}
-                  />
-                </div>
-              ))}
+                .map((exchange, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-center items-center h-full px-4 mt-2.5"
+                  >
+                    <OtherExchangeCard
+                      selectedCurrecnyPair={selectedCurrecnyPair}
+                      data={exchange}
+                      otherExchanges={otherExchanges}
+                    />
+                  </div>
+                ))}
           </CustomSlider>
         </div>
       ) : (
