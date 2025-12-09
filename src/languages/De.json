@@ -671,6 +671,14 @@
   "ticket-notif-new-message-desc-3rd": "",
   "referrals": "Empfehlungen",
   "referral": "Empfehlung",
+  "invite-text": [
+    "Ich überweise mein Geld seit einiger Zeit mit XBrat,",
+    "1. Die Gebühren betragen nur 1%,",
+    "2. Die Nutzung der Website ist sehr einfach,",
+    "3. Normalerweise wird das Geld innerhalb von 24 Stunden für mich transferiert.",
+    "Wenn du dich mit meinem Code anmeldest, ist deine erste Transaktion gebührenfrei.",
+    "Hier ist mein Empfehlungs-Code:"
+  ],
   "full-name": "Vollständiger Name",
   "registered-at": "Registriert am",
   "exchanged-at": "Getauscht am",

@@ -62,7 +62,6 @@ const ExchangingSmallScreen = ({
   const currencies = useCurrenciesState();
   const wallet = useWalletState();
   const all_statuses = useStatusesState();
-  console.log(all_statuses);
   const userInfo = useUserState();
   const addComma = useAddComma();
   const calculateReverseRate = useCalculateReverseRate();

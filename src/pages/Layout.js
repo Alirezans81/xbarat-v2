@@ -39,7 +39,6 @@ import MobileTopBar from "../components/pages/layout/MobileTopBar";
 import { useToastDataSetState } from "../Providers/ToastDataProvider";
 import { useCheckCompletedProfile } from "../hooks/useCheckCompletedProfile";
 import MobileBottomBar from "../components/pages/layout/MobileBottomBar";
-import TutorialModal from "../components/modals/Tutorials/WalletTutorialModal/TutorialModal";
 import AddToHomeScreenModal from "../components/modals/AddToHomeScreenModal";
 import { useGetNews } from "../apis/pages/Layout/hooks";
 import NewsModal from "../components/modals/NewsModal";
@@ -51,7 +50,9 @@ import Telegram from "../Images/pages/layout/Telegram.png";
 import Email from "../Images/pages/layout/Email.png";
 import X from "../Images/pages/layout/X.png";
 import Facebook from "../Images/pages/layout/Facebook.png";
+import BlackFridayModal from "../components/modals/BlackFridayModal";
 import { CustomTooltip } from "../components/common/CustomTooltip";
+import { useModalDataClose } from "../Providers/ModalDataProvider";
 export default function Layout({ platform }) {
   const theme = useThemeState();
   const oppositeTheme = theme === "light" ? "dark" : "light";
@@ -85,15 +86,6 @@ export default function Layout({ platform }) {
       canClose: true,
       isOpen: true,
       showTime: 10000,
-    });
-  };
-
-  const openTutorialModal = () => {
-    setModalData({
-      title: "Tutorial",
-      children: <TutorialModal />,
-      canClose: true,
-      isOpen: true,
     });
   };
 
@@ -304,6 +296,7 @@ export default function Layout({ platform }) {
       });
     }
   }, [newOpenNumber]);
+  const closeModal = useModalDataClose();
   const freeExchangeModal = () => {
     setModalData({
       title: "🥳",
@@ -315,6 +308,20 @@ export default function Layout({ platform }) {
   useEffect(() => {
     if (user && !localStorage.getItem("freeExchangeShown")) freeExchangeModal();
   }, [user]);
+
+  const blackFridayModal = () => {
+    setModalData({
+      title: (
+        <span className="w-full h-full font-Fa-regular">کمپین سال صفر</span>
+      ),
+      children: <BlackFridayModal closeModal={closeModal} />,
+      canClose: false,
+      isOpen: true,
+    });
+  };
+  useEffect(() => {
+    blackFridayModal();
+  }, []);
 
   // This UseEffect Closes Expand Social Button When User clicks outisde of it
   useEffect(() => {

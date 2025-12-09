@@ -670,6 +670,14 @@
   "ticket-notif-new-message-desc-3rd": "",
   "referrals": "Referidos",
   "referral": "Referido",
+  "text-invite": [
+    "Llevo un tiempo transfiriendo mi dinero con XBrat,",
+    "1. Las comisiones son solo del 1%,",
+    "2. Usar su sitio web es muy fácil,",
+    "3. Normalmente me transfiere el dinero en menos de 24 horas.",
+    "Si ingresas con mi código, tu primera transacción no tendrá comisión.",
+    "Este es mi código de referido:"
+  ],
   "full-name": "Nombre completo",
   "registered-at": "Registrado en",
   "exchanged-at": "Intercambiado en",

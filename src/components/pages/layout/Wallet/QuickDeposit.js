@@ -37,7 +37,7 @@ export default function QuickDeposit({ refreshPendingRequests }) {
   const [selectedCurrencyIndex, setSelectedCurrencyIndex] = useState(-1);
   const [locations, setLocations] = useState([]);
   const [selectedLocationIndex, setSelectedLocationIndex] = useState(-1);
-
+  const [controller, setController] = useState("");
   const { getBranches, isLoading: getBranchesIsLoading } = useGetBranches();
   useEffect(
     () => setIsLoadingSplashScreen(getBranchesIsLoading),
@@ -63,9 +63,11 @@ export default function QuickDeposit({ refreshPendingRequests }) {
       setSubmitButtonClass("col-span-2 row-span-1 flex");
     }
   }, [selectedCurrencyIndex]);
-
-  const { createDeposit, isLoading: createDepositIsLoading } =
-    useCreateDeposit();
+  const {
+    createDeposit,
+    isLoading: createDepositIsLoading,
+    error: createDepositError,
+  } = useCreateDeposit();
   useEffect(
     () => setIsLoadingSplashScreen(createDepositIsLoading),
     [createDepositIsLoading]
@@ -128,6 +130,17 @@ export default function QuickDeposit({ refreshPendingRequests }) {
       showTime: 10000,
     });
   };
+
+  const openDepositError = (error) => {
+    setToastData({
+      status: "failed",
+      message: error,
+      canClose: true,
+      isOpen: true,
+      showTime: 10000,
+    });
+  };
+
   const checkAmount = (amount) => {
     if (currencies[selectedCurrencyIndex]) {
       const min =
@@ -138,7 +151,6 @@ export default function QuickDeposit({ refreshPendingRequests }) {
         +currencies[selectedCurrencyIndex].lot;
 
       if (min <= amount && max >= amount) {
-        openDepositSummary(amount, currencies[selectedCurrencyIndex]);
         return true;
       } else {
         openNotRightAmountToast(min, max);
@@ -147,6 +159,15 @@ export default function QuickDeposit({ refreshPendingRequests }) {
     }
   };
 
+  if (createDepositError !== undefined) {
+    openDepositError(createDepositError.response.data.user_sender[0]);
+  }
+  useEffect(() => {
+    if (controller[0] === "Summary") {
+      openDepositSummary(controller[1], controller[2]);
+      setController("");
+    }
+  }, [controller]);
   return (
     <div className="flex flex-col h-full justify-between">
       <div className="flex flex-row mb-2">
@@ -187,6 +208,11 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                     method: values.method,
                   },
                   () => {
+                    setController([
+                      "Summary",
+                      values.amount,
+                      currencies[selectedCurrencyIndex],
+                    ]);
                     setSelectedCurrencyIndex(-1);
                     resetForm();
                     refreshWallet();
@@ -211,6 +237,11 @@ export default function QuickDeposit({ refreshPendingRequests }) {
                     method: values.method,
                   },
                   () => {
+                    setController([
+                      "Summary",
+                      values.amount,
+                      currencies[selectedCurrencyIndex],
+                    ]);
                     setSelectedCurrencyIndex(-1);
                     resetForm();
                     refreshWallet();
