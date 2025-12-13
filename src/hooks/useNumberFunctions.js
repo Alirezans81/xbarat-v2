@@ -25,7 +25,7 @@ function addComma(number, returnsZero) {
       return returnsZero ? 0 : "";
     } else {
       return (
-        num.toLocaleString() +
+        num.toLocaleString("en-US") +
         (getFloatPart(number) ? "." + getFloatPart(number) : "")
       );
     }
@@ -109,7 +109,7 @@ const roundDown = (number, floating_number) => {
   if (floating_number === 0) {
     return Math.floor(number);
   } else {
-    const aaa =  10 ** floating_number;
+    const aaa = 10 ** floating_number;
     return Math.floor(number * aaa) / aaa;
   }
 };
