@@ -222,38 +222,90 @@ export default function Withdrawal({
               currencies[selectedCurrencyIndex] &&
               currencies[selectedCurrencyIndex].has_branches
             ) {
-              createWithdrawal(
-                {
-                  user_receiver: userInfo && userInfo.url ? userInfo.url : "",
+              if (walletTanks[0]) {
+                createWithdrawal(
+                  {
+                    user_receiver: userInfo && userInfo.url ? userInfo.url : "",
+                    currency:
+                      currencies[selectedCurrencyIndex] &&
+                      currencies[selectedCurrencyIndex].url
+                        ? currencies[selectedCurrencyIndex].url
+                        : "",
+                    wallet_tank_receiver: walletTanks[0].url,
+                    amount: removeComma(values.amount),
+                    status: statuses
+                      ? statuses.find(
+                          (status) => status.title === "Admin Assign"
+                        ).url
+                      : "",
+                    branch:
+                      locations[selectedLocationIndex] &&
+                      locations[selectedLocationIndex].url
+                        ? locations[selectedLocationIndex].url
+                        : "",
+                    fee_withdrawal:
+                      values.withdrawal_method === "Service"
+                        ? 0
+                        : feeWithdrawal,
+                  },
+                  () => {
+                    closeModal();
+                    refreshPendingRequests();
+                    getWalletData();
+                  }
+                );
+              } else {
+                const createWalletTankParams = {
+                  user: user && user.url ? user.url : "",
                   currency:
                     currencies[selectedCurrencyIndex] &&
                     currencies[selectedCurrencyIndex].url
                       ? currencies[selectedCurrencyIndex].url
                       : "",
-                  wallet_tank_receiver:
-                    walletTanks[selectedWalletTankIndex] &&
-                    walletTanks[selectedWalletTankIndex].url
-                      ? walletTanks[selectedWalletTankIndex].url
+                  title: "-",
+                  account_name: "-",
+                  wallet_tank_type:
+                    walletTankTypes[0] && walletTankTypes[0].url
+                      ? walletTankTypes[0].url
                       : "",
-                  amount: removeComma(values.amount),
-                  status: statuses
-                    ? statuses.find((status) => status.title === "Admin Assign")
-                        .url
-                    : "",
-                  branch:
-                    locations[selectedLocationIndex] &&
-                    locations[selectedLocationIndex].url
-                      ? locations[selectedLocationIndex].url
-                      : "",
-                  fee_withdrawal:
-                    values.withdrawal_method === "Service" ? 0 : feeWithdrawal,
-                },
-                () => {
-                  closeModal();
-                  refreshPendingRequests();
-                  getWalletData();
-                }
-              );
+                  bank_info: "-",
+                  bank_name: "-",
+                };
+                createWalletTank(createWalletTankParams, null, (data) => {
+                  createWithdrawal(
+                    {
+                      user_receiver:
+                        userInfo && userInfo.url ? userInfo.url : "",
+                      currency:
+                        currencies[selectedCurrencyIndex] &&
+                        currencies[selectedCurrencyIndex].url
+                          ? currencies[selectedCurrencyIndex].url
+                          : "",
+                      wallet_tank_receiver: data && data.url ? data.url : "",
+                      amount: removeComma(values.amount),
+                      status: statuses
+                        ? statuses.find(
+                            (status) => status.title === "Admin Assign"
+                          ).url
+                        : "",
+                      branch:
+                        locations[selectedLocationIndex] &&
+                        locations[selectedLocationIndex].url
+                          ? locations[selectedLocationIndex].url
+                          : "",
+                      fee_withdrawal:
+                        values.withdrawal_method === "Service"
+                          ? 0
+                          : feeWithdrawal,
+                    },
+                    () => {
+                      closeModal();
+                      refreshPendingRequests();
+                      getWalletData();
+                    }
+                  );
+                });
+              }
             } else {
               if (newCardMode) {
                 const createWalletTankParams = {
