@@ -132,34 +132,34 @@ export default function Layout({ platform }) {
   const { getStatuses, isLoading: getStatusesIsLoading } = useGetStatuses();
   useEffect(
     () => setIsLoadingSplashScreen(getStatusesIsLoading),
-    [getStatusesIsLoading]
+    [getStatusesIsLoading],
   );
 
   const { getCurrencyPairs, isLoading: getCurrencyPairsIsLoading } =
     useGetCurrencyPairs();
   useEffect(
     () => setIsLoadingSplashScreen(getCurrencyPairsIsLoading),
-    [getCurrencyPairsIsLoading]
+    [getCurrencyPairsIsLoading],
   );
 
   const { getCurrencies, isLoading: getCurrenciesIsLoading } =
     useGetCurrencies();
   useEffect(
     () => setIsLoadingSplashScreen(getCurrenciesIsLoading),
-    [getCurrenciesIsLoading]
+    [getCurrenciesIsLoading],
   );
 
   const { getLanguages, isLoading: getLanguagesIsLoading } = useGetLanguages();
   useEffect(
     () => setIsLoadingSplashScreen(getLanguagesIsLoading),
-    [getLanguagesIsLoading]
+    [getLanguagesIsLoading],
   );
 
   useEffect(() => {
     if (platform === "ios") {
       getCurrencies((data) => {
         setCurrencies(
-          data.filter((currency) => currency.abbreviation !== "IRR")
+          data.filter((currency) => currency.abbreviation !== "IRR"),
         );
       });
       getCurrencyPairs(null, (data) => {
@@ -167,8 +167,8 @@ export default function Layout({ platform }) {
           data.filter(
             (currencyPair) =>
               currencyPair.currency_source_abb !== "IRR" &&
-              currencyPair.currency_destination_abb !== "IRR"
-          )
+              currencyPair.currency_destination_abb !== "IRR",
+          ),
         );
       });
     } else {
@@ -185,7 +185,7 @@ export default function Layout({ platform }) {
       setStatuses(JSON.parse(stringStatuses));
     } else {
       getStatuses(setStatuses, null, (statuses) =>
-        localStorage.setItem("statuses", JSON.stringify(statuses))
+        localStorage.setItem("statuses", JSON.stringify(statuses)),
       );
     }
 
@@ -243,7 +243,7 @@ export default function Layout({ platform }) {
   const { getNews, isLoading: getNewsIsLoading } = useGetNews();
   useEffect(
     () => setIsLoadingSplashScreen(getNewsIsLoading),
-    [getNewsIsLoading]
+    [getNewsIsLoading],
   );
   const [news, setNews] = useState([]);
   const newsIsSaved = (slug) => {
@@ -303,7 +303,13 @@ export default function Layout({ platform }) {
     });
   };
   useEffect(() => {
-    if (user && !localStorage.getItem("freeExchangeShown")) freeExchangeModal();
+    if (
+      user &&
+      user.free_exchange &&
+      user.free_exhcnage &&
+      !localStorage.getItem("freeExchangeShown")
+    )
+      freeExchangeModal();
   }, [user]);
 
   // This UseEffect Closes Expand Social Button When User clicks outisde of it
